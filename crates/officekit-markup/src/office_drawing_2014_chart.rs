@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::chart;
 use officekit_markup_core::drawing;
@@ -447,63 +450,72 @@ pub static PTIDX_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Sh
 
 /// The `c16:bubble3D` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Bubble3D {
+pub struct Bubble3DWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartBubble3D,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
+/// The `c16:bubble3D` element of the tree a read gives: [`Bubble3DWith`] holding nothing in
+/// `extra`.
+pub type Bubble3D = Bubble3DWith<()>;
+
+impl Eq for Bubble3DWith<()> {}
+
 /// The `c16:categoryFilterException` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_CategoryFilterException`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CategoryFilterException {
+pub struct CategoryFilterExceptionWith<X: NodeExtra> {
     /// The child that is `Bubble3D`, when there is one.
-    pub bubble3d: Option<Box<Bubble3D>>,
+    pub bubble3d: Option<Box<Bubble3DWith<X>>>,
     /// The child that is `DLbl`, when there is one.
-    pub d_lbl: Option<Box<DLbl>>,
+    pub d_lbl: Option<Box<DLblWith<X>>>,
     /// The child that is `Explosion`, when there is one.
-    pub explosion: Option<Box<Explosion>>,
+    pub explosion: Option<Box<ExplosionWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartCategoryFilterException,
     /// The child that is `InvertIfNegative`, when there is one.
-    pub invert_if_negative: Option<Box<InvertIfNegative>>,
+    pub invert_if_negative: Option<Box<InvertIfNegativeWith<X>>>,
     /// The child that is `Marker`, when there is one.
-    pub marker: Option<Box<Marker>>,
+    pub marker: Option<Box<MarkerWith<X>>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// The child that is `UniqueId`, which the schema requires.
-    pub unique_id: Box<UniqueId>,
+    pub unique_id: Box<UniqueIdWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `c16:categoryFilterException` element of the tree a read gives:
+/// [`CategoryFilterExceptionWith`] holding nothing in `extra`.
+pub type CategoryFilterException = CategoryFilterExceptionWith<()>;
+
+impl Eq for CategoryFilterExceptionWith<()> {}
+
 /// The `c16:categoryFilterExceptions` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_CategoryFilterExceptions`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CategoryFilterExceptions {
+pub struct CategoryFilterExceptionsWith<X: NodeExtra> {
     /// The children that are `CategoryFilterException`, in order.
-    pub category_filter_exception: Vec<CategoryFilterException>,
+    pub category_filter_exception: Vec<CategoryFilterExceptionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartCategoryFilterExceptions,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c16:categoryFilterExceptions` element of the tree a read gives:
+/// [`CategoryFilterExceptionsWith`] holding nothing in `extra`.
+pub type CategoryFilterExceptions = CategoryFilterExceptionsWith<()>;
+
+impl Eq for CategoryFilterExceptionsWith<()> {}
 
 /// The hooks of a context for the `c16` namespace.
 ///
@@ -958,345 +970,398 @@ pub trait Context: crate::Context {
 
 /// The `c16:dLbl` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DLbl`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DLbl {
+pub struct DLblWith<X: NodeExtra> {
     /// The child that is `chart::ChartExtensibility`, when there is one.
-    pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    pub chart_extensibility: Option<Box<chart::ChartExtensibilityWith<X>>>,
     /// The children that are an item of `chart::DataLabelContent`, in order.
-    pub content: Vec<chart::DataLabelContent>,
+    pub content: Vec<chart::DataLabelContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartDLbl,
     /// The child that is `chart::Index`, which the schema requires.
-    pub index: Box<chart::Index>,
+    pub index: Box<chart::IndexWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c16:dLbl` element of the tree a read gives: [`DLblWith`] holding nothing in `extra`.
+pub type DLbl = DLblWith<()>;
+
+impl Eq for DLblWith<()> {}
 
 /// The `c16:datapointuniqueidmap` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_ChartDataPointUniqueIDMap`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Datapointuniqueidmap {
+pub struct DatapointuniqueidmapWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartDatapointuniqueidmap,
     /// The children that are `Ptentry`, in order.
-    pub ptentry: Vec<Ptentry>,
+    pub ptentry: Vec<PtentryWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c16:datapointuniqueidmap` element of the tree a read gives: [`DatapointuniqueidmapWith`]
+/// holding nothing in `extra`.
+pub type Datapointuniqueidmap = DatapointuniqueidmapWith<()>;
+
+impl Eq for DatapointuniqueidmapWith<()> {}
 
 /// The `c16:explosion` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_UnsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Explosion {
+pub struct ExplosionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartExplosion,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
+
+/// The `c16:explosion` element of the tree a read gives: [`ExplosionWith`] holding nothing in
+/// `extra`.
+pub type Explosion = ExplosionWith<()>;
+
+impl Eq for ExplosionWith<()> {}
 
 /// The `c16:filteredLitCache` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_MultiLvlStrFilteredLiteralCache`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilteredLitCacheMultiLvlStrFilteredLiteralCache {
+pub struct FilteredLitCacheMultiLvlStrFilteredLiteralCacheWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartFilteredLitCacheMultiLvlStrFilteredLiteralCache,
     /// The child that is `MultiLvlStrCache`, which the schema requires.
-    pub multi_lvl_str_cache: Box<MultiLvlStrCache>,
+    pub multi_lvl_str_cache: Box<MultiLvlStrCacheWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c16:filteredLitCache` element of the tree a read gives:
+/// [`FilteredLitCacheMultiLvlStrFilteredLiteralCacheWith`] holding nothing in `extra`.
+pub type FilteredLitCacheMultiLvlStrFilteredLiteralCache =
+    FilteredLitCacheMultiLvlStrFilteredLiteralCacheWith<()>;
+
+impl Eq for FilteredLitCacheMultiLvlStrFilteredLiteralCacheWith<()> {}
 
 /// The `c16:filteredLitCache` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_NumFilteredLiteralCache`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilteredLitCacheNumFilteredLiteralCache {
+pub struct FilteredLitCacheNumFilteredLiteralCacheWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartFilteredLitCacheNumFilteredLiteralCache,
     /// The child that is `NumCache`, which the schema requires.
-    pub num_cache: Box<NumCache>,
+    pub num_cache: Box<NumCacheWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c16:filteredLitCache` element of the tree a read gives:
+/// [`FilteredLitCacheNumFilteredLiteralCacheWith`] holding nothing in `extra`.
+pub type FilteredLitCacheNumFilteredLiteralCache = FilteredLitCacheNumFilteredLiteralCacheWith<()>;
+
+impl Eq for FilteredLitCacheNumFilteredLiteralCacheWith<()> {}
 
 /// The `c16:filteredLitCache` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_StrFilteredLiteralCache`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilteredLitCacheStrFilteredLiteralCache {
+pub struct FilteredLitCacheStrFilteredLiteralCacheWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartFilteredLitCacheStrFilteredLiteralCache,
     /// The child that is `StrCache`, which the schema requires.
-    pub str_cache: Box<StrCache>,
+    pub str_cache: Box<StrCacheWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c16:filteredLitCache` element of the tree a read gives:
+/// [`FilteredLitCacheStrFilteredLiteralCacheWith`] holding nothing in `extra`.
+pub type FilteredLitCacheStrFilteredLiteralCache = FilteredLitCacheStrFilteredLiteralCacheWith<()>;
+
+impl Eq for FilteredLitCacheStrFilteredLiteralCacheWith<()> {}
 
 /// The `c16:invertIfNegative` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_Boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InvertIfNegative {
+pub struct InvertIfNegativeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartInvertIfNegative,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
+
+/// The `c16:invertIfNegative` element of the tree a read gives: [`InvertIfNegativeWith`] holding
+/// nothing in `extra`.
+pub type InvertIfNegative = InvertIfNegativeWith<()>;
+
+impl Eq for InvertIfNegativeWith<()> {}
 
 /// The `c16:literalDataChart` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_LiteralDataChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LiteralDataChart {
+pub struct LiteralDataChartWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartLiteralDataChart,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
+/// The `c16:literalDataChart` element of the tree a read gives: [`LiteralDataChartWith`] holding
+/// nothing in `extra`.
+pub type LiteralDataChart = LiteralDataChartWith<()>;
+
+impl Eq for LiteralDataChartWith<()> {}
+
 /// The `c16:marker` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Marker`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Marker {
+pub struct MarkerWith<X: NodeExtra> {
     /// The child that is `chart::ChartExtensibility`, when there is one.
-    pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    pub chart_extensibility: Option<Box<chart::ChartExtensibilityWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartMarker,
     /// The child that is `chart::ShapeProperties`, when there is one.
-    pub shape_properties: Option<Box<chart::ShapeProperties>>,
+    pub shape_properties: Option<Box<chart::ShapePropertiesWith<X>>>,
     /// The child that is `chart::Size`, when there is one.
-    pub size: Option<Box<chart::Size>>,
+    pub size: Option<Box<chart::SizeWith<X>>>,
     /// The child that is `chart::Symbol`, when there is one.
-    pub symbol: Option<Box<chart::Symbol>>,
+    pub symbol: Option<Box<chart::SymbolWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c16:marker` element of the tree a read gives: [`MarkerWith`] holding nothing in `extra`.
+pub type Marker = MarkerWith<()>;
+
+impl Eq for MarkerWith<()> {}
 
 /// The `c16:multiLvlStrCache` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_MultiLvlStrData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MultiLvlStrCache {
+pub struct MultiLvlStrCacheWith<X: NodeExtra> {
     /// The child that is `chart::ChartExtensibility`, when there is one.
-    pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    pub chart_extensibility: Option<Box<chart::ChartExtensibilityWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartMultiLvlStrCache,
     /// The children that are `chart::Level`, in order.
-    pub level: Vec<chart::Level>,
+    pub level: Vec<chart::LevelWith<X>>,
     /// The child that is `chart::PointCount`, when there is one.
-    pub point_count: Option<Box<chart::PointCount>>,
+    pub point_count: Option<Box<chart::PointCountWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c16:multiLvlStrCache` element of the tree a read gives: [`MultiLvlStrCacheWith`] holding
+/// nothing in `extra`.
+pub type MultiLvlStrCache = MultiLvlStrCacheWith<()>;
+
+impl Eq for MultiLvlStrCacheWith<()> {}
 
 /// The `c16:numCache` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_NumData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NumCache {
+pub struct NumCacheWith<X: NodeExtra> {
     /// The child that is `chart::ChartExtensibility`, when there is one.
-    pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    pub chart_extensibility: Option<Box<chart::ChartExtensibilityWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartNumCache,
     /// The child that is `chart::FormatCode`, when there is one.
-    pub format_code: Option<Box<chart::FormatCode>>,
+    pub format_code: Option<Box<chart::FormatCodeWith<X>>>,
     /// The children that are `chart::NumericPoint`, in order.
-    pub numeric_point: Vec<chart::NumericPoint>,
+    pub numeric_point: Vec<chart::NumericPointWith<X>>,
     /// The child that is `chart::PointCount`, when there is one.
-    pub point_count: Option<Box<chart::PointCount>>,
+    pub point_count: Option<Box<chart::PointCountWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c16:numCache` element of the tree a read gives: [`NumCacheWith`] holding nothing in
+/// `extra`.
+pub type NumCache = NumCacheWith<()>;
+
+impl Eq for NumCacheWith<()> {}
 
 /// The `c16:pivotOptions16` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_PivotOptions16`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotOptions16 {
+pub struct PivotOptions16With<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartPivotOptions16,
     /// The child that is `ShowExpandCollapseFieldButtons`, when there is one.
-    pub show_expand_collapse_field_buttons: Option<Box<ShowExpandCollapseFieldButtons>>,
+    pub show_expand_collapse_field_buttons: Option<Box<ShowExpandCollapseFieldButtonsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c16:pivotOptions16` element of the tree a read gives: [`PivotOptions16With`] holding
+/// nothing in `extra`.
+pub type PivotOptions16 = PivotOptions16With<()>;
+
+impl Eq for PivotOptions16With<()> {}
 
 /// The `c16:ptentry` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ChartDataPointUniqueIDMapEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Ptentry {
+pub struct PtentryWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartPtentry,
     /// The child that is `Ptidx`, which the schema requires.
-    pub ptidx: Box<Ptidx>,
+    pub ptidx: Box<PtidxWith<X>>,
     /// The child that is `UniqueID`, which the schema requires.
-    pub unique_id: Box<UniqueID>,
+    pub unique_id: Box<UniqueIDWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `c16:ptentry` element of the tree a read gives: [`PtentryWith`] holding nothing in `extra`.
+pub type Ptentry = PtentryWith<()>;
+
+impl Eq for PtentryWith<()> {}
+
 /// The `c16:ptidx` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `unsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Ptidx {
+pub struct PtidxWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartPtidx,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `c16:ptidx` element of the tree a read gives: [`PtidxWith`] holding nothing in `extra`.
+pub type Ptidx = PtidxWith<()>;
+
+impl Eq for PtidxWith<()> {}
+
 /// The `c16:showExpandCollapseFieldButtons` element, declared by the schema data of the Open XML
 /// SDK, version 3.5.1. Its schema type is `CT_BooleanFalse`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShowExpandCollapseFieldButtons {
+pub struct ShowExpandCollapseFieldButtonsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartShowExpandCollapseFieldButtons,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
+/// The `c16:showExpandCollapseFieldButtons` element of the tree a read gives:
+/// [`ShowExpandCollapseFieldButtonsWith`] holding nothing in `extra`.
+pub type ShowExpandCollapseFieldButtons = ShowExpandCollapseFieldButtonsWith<()>;
+
+impl Eq for ShowExpandCollapseFieldButtonsWith<()> {}
+
 /// The `c16:spPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpPr {
+pub struct SpPrWith<X: NodeExtra> {
     /// The child that is `drawing::Apply3DShapeProperties`, when there is one.
-    pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,
+    pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapePropertiesWith<X>>>,
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
     /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
-    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartSpPr,
     /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
-    pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<drawing::FillPropertiesContentWith<X>>>,
     /// The child that is an item of `drawing::GeometryContent`, when there is one.
-    pub geometry_content: Option<Box<drawing::GeometryContent>>,
+    pub geometry_content: Option<Box<drawing::GeometryContentWith<X>>>,
     /// The child that is `drawing::Outline`, when there is one.
-    pub outline: Option<Box<drawing::Outline>>,
+    pub outline: Option<Box<drawing::OutlineWith<X>>>,
     /// The child that is `drawing::Scene3d`, when there is one.
-    pub scene3d: Option<Box<drawing::Scene3d>>,
+    pub scene3d: Option<Box<drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `drawing::XfrmTransform2D`, when there is one.
-    pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
+    pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2DWith<X>>>,
 }
+
+/// The `c16:spPr` element of the tree a read gives: [`SpPrWith`] holding nothing in `extra`.
+pub type SpPr = SpPrWith<()>;
+
+impl Eq for SpPrWith<()> {}
 
 /// The `c16:strCache` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StrData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StrCache {
+pub struct StrCacheWith<X: NodeExtra> {
     /// The child that is `chart::ChartExtensibility`, when there is one.
-    pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    pub chart_extensibility: Option<Box<chart::ChartExtensibilityWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartStrCache,
     /// The child that is `chart::PointCount`, when there is one.
-    pub point_count: Option<Box<chart::PointCount>>,
+    pub point_count: Option<Box<chart::PointCountWith<X>>>,
     /// The children that are `chart::StringPoint`, in order.
-    pub string_point: Vec<chart::StringPoint>,
+    pub string_point: Vec<chart::StringPointWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c16:strCache` element of the tree a read gives: [`StrCacheWith`] holding nothing in
+/// `extra`.
+pub type StrCache = StrCacheWith<()>;
+
+impl Eq for StrCacheWith<()> {}
 
 /// The `c16:uniqueID` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ChartUniqueID`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct UniqueID {
+pub struct UniqueIDWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartUniqueID,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `c16:uniqueID` element of the tree a read gives: [`UniqueIDWith`] holding nothing in
+/// `extra`.
+pub type UniqueID = UniqueIDWith<()>;
+
+impl Eq for UniqueIDWith<()> {}
+
 /// The `c16:uniqueId` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ChartUniqueID`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct UniqueId {
+pub struct UniqueIdWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartUniqueId,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c16:uniqueId` element of the tree a read gives: [`UniqueIdWith`] holding nothing in
+/// `extra`.
+pub type UniqueId = UniqueIdWith<()>;
+
+impl Eq for UniqueIdWith<()> {}
 
 /// The hooks of a visitor for the `c16` namespace.
 ///
@@ -1448,7 +1513,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl Bubble3D {
+impl<X: NodeExtra> Bubble3DWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> Bubble3DWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        Bubble3DWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1472,7 +1551,48 @@ impl officekit_markup_base::Write for Bubble3D {
     }
 }
 
-impl CategoryFilterException {
+impl<X: NodeExtra> CategoryFilterExceptionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> CategoryFilterExceptionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CategoryFilterExceptionWith {
+            bubble3d: officekit_markup_base::into_extra_optional(
+                &mut self.bubble3d,
+                Bubble3DWith::into_extra,
+            ),
+            d_lbl: officekit_markup_base::into_extra_optional(
+                &mut self.d_lbl,
+                DLblWith::into_extra,
+            ),
+            explosion: officekit_markup_base::into_extra_optional(
+                &mut self.explosion,
+                ExplosionWith::into_extra,
+            ),
+            extra: Default::default(),
+            invert_if_negative: officekit_markup_base::into_extra_optional(
+                &mut self.invert_if_negative,
+                InvertIfNegativeWith::into_extra,
+            ),
+            marker: officekit_markup_base::into_extra_optional(
+                &mut self.marker,
+                MarkerWith::into_extra,
+            ),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unique_id: officekit_markup_base::into_extra_required(
+                *self.unique_id,
+                UniqueIdWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1493,7 +1613,24 @@ impl officekit_markup_base::Write for CategoryFilterException {
     }
 }
 
-impl CategoryFilterExceptions {
+impl<X: NodeExtra> CategoryFilterExceptionsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CategoryFilterExceptionsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CategoryFilterExceptionsWith {
+            category_filter_exception: officekit_markup_base::into_extra_list(
+                self.category_filter_exception,
+                CategoryFilterExceptionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1514,7 +1651,32 @@ impl officekit_markup_base::Write for CategoryFilterExceptions {
     }
 }
 
-impl DLbl {
+impl<X: NodeExtra> DLblWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DLblWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DLblWith {
+            chart_extensibility: officekit_markup_base::into_extra_optional(
+                &mut self.chart_extensibility,
+                chart::ChartExtensibilityWith::into_extra,
+            ),
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                chart::DataLabelContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            index: officekit_markup_base::into_extra_required(
+                *self.index,
+                chart::IndexWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1535,7 +1697,21 @@ impl officekit_markup_base::Write for DLbl {
     }
 }
 
-impl Datapointuniqueidmap {
+impl<X: NodeExtra> DatapointuniqueidmapWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DatapointuniqueidmapWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DatapointuniqueidmapWith {
+            extra: Default::default(),
+            ptentry: officekit_markup_base::into_extra_list(self.ptentry, PtentryWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1556,7 +1732,21 @@ impl officekit_markup_base::Write for Datapointuniqueidmap {
     }
 }
 
-impl Explosion {
+impl<X: NodeExtra> ExplosionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExplosionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExplosionWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1580,7 +1770,24 @@ impl officekit_markup_base::Write for Explosion {
     }
 }
 
-impl FilteredLitCacheMultiLvlStrFilteredLiteralCache {
+impl<X: NodeExtra> FilteredLitCacheMultiLvlStrFilteredLiteralCacheWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FilteredLitCacheMultiLvlStrFilteredLiteralCacheWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FilteredLitCacheMultiLvlStrFilteredLiteralCacheWith {
+            extra: Default::default(),
+            multi_lvl_str_cache: officekit_markup_base::into_extra_required(
+                *self.multi_lvl_str_cache,
+                MultiLvlStrCacheWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1602,7 +1809,24 @@ impl officekit_markup_base::Write for FilteredLitCacheMultiLvlStrFilteredLiteral
     }
 }
 
-impl FilteredLitCacheNumFilteredLiteralCache {
+impl<X: NodeExtra> FilteredLitCacheNumFilteredLiteralCacheWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FilteredLitCacheNumFilteredLiteralCacheWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FilteredLitCacheNumFilteredLiteralCacheWith {
+            extra: Default::default(),
+            num_cache: officekit_markup_base::into_extra_required(
+                *self.num_cache,
+                NumCacheWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1623,7 +1847,24 @@ impl officekit_markup_base::Write for FilteredLitCacheNumFilteredLiteralCache {
     }
 }
 
-impl FilteredLitCacheStrFilteredLiteralCache {
+impl<X: NodeExtra> FilteredLitCacheStrFilteredLiteralCacheWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FilteredLitCacheStrFilteredLiteralCacheWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FilteredLitCacheStrFilteredLiteralCacheWith {
+            extra: Default::default(),
+            str_cache: officekit_markup_base::into_extra_required(
+                *self.str_cache,
+                StrCacheWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1644,7 +1885,21 @@ impl officekit_markup_base::Write for FilteredLitCacheStrFilteredLiteralCache {
     }
 }
 
-impl InvertIfNegative {
+impl<X: NodeExtra> InvertIfNegativeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> InvertIfNegativeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        InvertIfNegativeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1668,7 +1923,21 @@ impl officekit_markup_base::Write for InvertIfNegative {
     }
 }
 
-impl LiteralDataChart {
+impl<X: NodeExtra> LiteralDataChartWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LiteralDataChartWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LiteralDataChartWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1692,7 +1961,36 @@ impl officekit_markup_base::Write for LiteralDataChart {
     }
 }
 
-impl Marker {
+impl<X: NodeExtra> MarkerWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> MarkerWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MarkerWith {
+            chart_extensibility: officekit_markup_base::into_extra_optional(
+                &mut self.chart_extensibility,
+                chart::ChartExtensibilityWith::into_extra,
+            ),
+            extra: Default::default(),
+            shape_properties: officekit_markup_base::into_extra_optional(
+                &mut self.shape_properties,
+                chart::ShapePropertiesWith::into_extra,
+            ),
+            size: officekit_markup_base::into_extra_optional(
+                &mut self.size,
+                chart::SizeWith::into_extra,
+            ),
+            symbol: officekit_markup_base::into_extra_optional(
+                &mut self.symbol,
+                chart::SymbolWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1713,7 +2011,29 @@ impl officekit_markup_base::Write for Marker {
     }
 }
 
-impl MultiLvlStrCache {
+impl<X: NodeExtra> MultiLvlStrCacheWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> MultiLvlStrCacheWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MultiLvlStrCacheWith {
+            chart_extensibility: officekit_markup_base::into_extra_optional(
+                &mut self.chart_extensibility,
+                chart::ChartExtensibilityWith::into_extra,
+            ),
+            extra: Default::default(),
+            level: officekit_markup_base::into_extra_list(self.level, chart::LevelWith::into_extra),
+            point_count: officekit_markup_base::into_extra_optional(
+                &mut self.point_count,
+                chart::PointCountWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1734,7 +2054,36 @@ impl officekit_markup_base::Write for MultiLvlStrCache {
     }
 }
 
-impl NumCache {
+impl<X: NodeExtra> NumCacheWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NumCacheWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NumCacheWith {
+            chart_extensibility: officekit_markup_base::into_extra_optional(
+                &mut self.chart_extensibility,
+                chart::ChartExtensibilityWith::into_extra,
+            ),
+            extra: Default::default(),
+            format_code: officekit_markup_base::into_extra_optional(
+                &mut self.format_code,
+                chart::FormatCodeWith::into_extra,
+            ),
+            numeric_point: officekit_markup_base::into_extra_list(
+                self.numeric_point,
+                chart::NumericPointWith::into_extra,
+            ),
+            point_count: officekit_markup_base::into_extra_optional(
+                &mut self.point_count,
+                chart::PointCountWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1755,7 +2104,24 @@ impl officekit_markup_base::Write for NumCache {
     }
 }
 
-impl PivotOptions16 {
+impl<X: NodeExtra> PivotOptions16With<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PivotOptions16With<Y>
+    where
+        Y: NodeExtra,
+    {
+        PivotOptions16With {
+            extra: Default::default(),
+            show_expand_collapse_field_buttons: officekit_markup_base::into_extra_optional(
+                &mut self.show_expand_collapse_field_buttons,
+                ShowExpandCollapseFieldButtonsWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1776,7 +2142,25 @@ impl officekit_markup_base::Write for PivotOptions16 {
     }
 }
 
-impl Ptentry {
+impl<X: NodeExtra> PtentryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PtentryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PtentryWith {
+            extra: Default::default(),
+            ptidx: officekit_markup_base::into_extra_required(*self.ptidx, PtidxWith::into_extra),
+            unique_id: officekit_markup_base::into_extra_required(
+                *self.unique_id,
+                UniqueIDWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1797,7 +2181,21 @@ impl officekit_markup_base::Write for Ptentry {
     }
 }
 
-impl Ptidx {
+impl<X: NodeExtra> PtidxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PtidxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PtidxWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1821,7 +2219,21 @@ impl officekit_markup_base::Write for Ptidx {
     }
 }
 
-impl ShowExpandCollapseFieldButtons {
+impl<X: NodeExtra> ShowExpandCollapseFieldButtonsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShowExpandCollapseFieldButtonsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShowExpandCollapseFieldButtonsWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1845,7 +2257,53 @@ impl officekit_markup_base::Write for ShowExpandCollapseFieldButtons {
     }
 }
 
-impl SpPr {
+impl<X: NodeExtra> SpPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SpPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SpPrWith {
+            apply_3d_shape_properties: officekit_markup_base::into_extra_optional(
+                &mut self.apply_3d_shape_properties,
+                drawing::Apply3DShapePropertiesWith::into_extra,
+            ),
+            bw_mode: self.bw_mode,
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                drawing::FillPropertiesContentWith::into_extra,
+            ),
+            geometry_content: officekit_markup_base::into_extra_optional(
+                &mut self.geometry_content,
+                drawing::GeometryContentWith::into_extra,
+            ),
+            outline: officekit_markup_base::into_extra_optional(
+                &mut self.outline,
+                drawing::OutlineWith::into_extra,
+            ),
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                drawing::Scene3dWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm_transform2d: officekit_markup_base::into_extra_optional(
+                &mut self.xfrm_transform2d,
+                drawing::XfrmTransform2DWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1869,7 +2327,32 @@ impl officekit_markup_base::Write for SpPr {
     }
 }
 
-impl StrCache {
+impl<X: NodeExtra> StrCacheWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> StrCacheWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StrCacheWith {
+            chart_extensibility: officekit_markup_base::into_extra_optional(
+                &mut self.chart_extensibility,
+                chart::ChartExtensibilityWith::into_extra,
+            ),
+            extra: Default::default(),
+            point_count: officekit_markup_base::into_extra_optional(
+                &mut self.point_count,
+                chart::PointCountWith::into_extra,
+            ),
+            string_point: officekit_markup_base::into_extra_list(
+                self.string_point,
+                chart::StringPointWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1890,7 +2373,20 @@ impl officekit_markup_base::Write for StrCache {
     }
 }
 
-impl UniqueID {
+impl<X: NodeExtra> UniqueIDWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> UniqueIDWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UniqueIDWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1911,7 +2407,20 @@ impl officekit_markup_base::Write for UniqueID {
     }
 }
 
-impl UniqueId {
+impl<X: NodeExtra> UniqueIdWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> UniqueIdWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UniqueIdWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

@@ -322,6 +322,7 @@ pub fn design_tag_mk_lst(element: &Element) -> super::DesignTagMkLst {
 pub fn doc_mk(element: &Element) -> super::DocMk {
     let reader = officekit_markup_base::Reader::new(element, &super::DOC_MK_SHAPE);
     super::DocMk {
+        extra: (),
         unknown: reader.finish(),
     }
 }

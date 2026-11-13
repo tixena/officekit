@@ -112,7 +112,7 @@ fn node_reader(names: &Names<'_>, index: usize, function: &str) -> String {
         layout::statement("    let reader = ", &new_reader, &mut out);
         let _ = writeln!(
             out,
-            "    super::{} {{\n        unknown: reader.finish(),\n    }}\n}}",
+            "    super::{} {{\n        extra: (),\n        unknown: reader.finish(),\n    }}\n}}",
             node.name
         );
         return out;

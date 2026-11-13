@@ -17,6 +17,7 @@
 
 pub(crate) mod archive;
 mod enums;
+mod extra;
 pub(crate) mod names;
 mod readers;
 pub(crate) mod render;

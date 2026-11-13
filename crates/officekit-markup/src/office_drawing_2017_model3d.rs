@@ -223,6 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Write as _;
 use officekit_markup_base::Written;
 use officekit_markup_base::additional_characteristics;
@@ -796,105 +797,117 @@ pub static MODEL3D_EXTENSION_CONTENT_TAGS: officekit_markup_base::Accept =
 
 /// The `am3d:ambientLight` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_AmbientLight`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AmbientLight {
+pub struct AmbientLightWith<X: NodeExtra> {
     /// The child that is `Clr`, which the schema requires.
-    pub clr: Box<Clr>,
+    pub clr: Box<ClrWith<X>>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
-    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dAmbientLight,
     /// The child that is `Illuminance`, which the schema requires.
-    pub illuminance: Box<Illuminance>,
+    pub illuminance: Box<IlluminanceWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `am3d:ambientLight` element of the tree a read gives: [`AmbientLightWith`] holding nothing
+/// in `extra`.
+pub type AmbientLight = AmbientLightWith<()>;
+
+impl Eq for AmbientLightWith<()> {}
+
 /// The `am3d:attrSrcUrl` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_PictureAttributionSourceURL`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AttrSrcUrl {
+pub struct AttrSrcUrlWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dAttrSrcUrl,
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `am3d:attrSrcUrl` element of the tree a read gives: [`AttrSrcUrlWith`] holding nothing in
+/// `extra`.
+pub type AttrSrcUrl = AttrSrcUrlWith<()>;
+
+impl Eq for AttrSrcUrlWith<()> {}
+
 /// The `am3d:blip` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Blip`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Blip {
+pub struct BlipWith<X: NodeExtra> {
     /// The children that are an item of `drawing::BlipContent`, in order.
-    pub content: Vec<drawing::BlipContent>,
+    pub content: Vec<drawing::BlipContentWith<X>>,
     /// The attribute `cstate`, when the element has it.
     pub cstate: Option<drawing::BlipCompressionType>,
     /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dBlip,
     /// The attribute `r:link`, when the element has it.
     pub link: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `am3d:blip` element of the tree a read gives: [`BlipWith`] holding nothing in `extra`.
+pub type Blip = BlipWith<()>;
+
+impl Eq for BlipWith<()> {}
+
 /// The `am3d:camera` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Model3DCamera`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Camera {
+pub struct CameraWith<X: NodeExtra> {
     /// The child that is an item of `Model3DCameraContent`, which the schema requires.
-    pub content: Box<Model3DCameraContent>,
+    pub content: Box<Model3DCameraContentWith<X>>,
     /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
-    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dCamera,
     /// The child that is `LookAt`, which the schema requires.
-    pub look_at: Box<LookAt>,
+    pub look_at: Box<LookAtWith<X>>,
     /// The child that is `Pos`, which the schema requires.
-    pub pos: Box<Pos>,
+    pub pos: Box<PosWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `Up`, which the schema requires.
-    pub up: Box<Up>,
+    pub up: Box<UpWith<X>>,
 }
+
+/// The `am3d:camera` element of the tree a read gives: [`CameraWith`] holding nothing in `extra`.
+pub type Camera = CameraWith<()>;
+
+impl Eq for CameraWith<()> {}
 
 /// The `am3d:clr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Color`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Clr {
+pub struct ClrWith<X: NodeExtra> {
     /// The child that is an item of `drawing::ColorContent`, which the schema requires.
-    pub content: Box<drawing::ColorContent>,
+    pub content: Box<drawing::ColorContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dClr,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `am3d:clr` element of the tree a read gives: [`ClrWith`] holding nothing in `extra`.
+pub type Clr = ClrWith<()>;
+
+impl Eq for ClrWith<()> {}
 
 /// The hooks of a context for the `am3d` namespace.
 ///
@@ -1643,120 +1656,134 @@ pub trait Context: crate::Context {
 
 /// The `am3d:dirLight` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DirectionalLight`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DirLight {
+pub struct DirLightWith<X: NodeExtra> {
     /// The attribute `angularRad`, when the element has it.
     pub angular_rad: Option<String>,
     /// The child that is `Clr`, which the schema requires.
-    pub clr: Box<Clr>,
+    pub clr: Box<ClrWith<X>>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
-    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dDirLight,
     /// The child that is `Illuminance`, which the schema requires.
-    pub illuminance: Box<Illuminance>,
+    pub illuminance: Box<IlluminanceWith<X>>,
     /// The child that is `LookAt`, which the schema requires.
-    pub look_at: Box<LookAt>,
+    pub look_at: Box<LookAtWith<X>>,
     /// The child that is `Pos`, which the schema requires.
-    pub pos: Box<Pos>,
+    pub pos: Box<PosWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `am3d:dirLight` element of the tree a read gives: [`DirLightWith`] holding nothing in
+/// `extra`.
+pub type DirLight = DirLightWith<()>;
+
+impl Eq for DirLightWith<()> {}
+
 /// The `am3d:ext` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Model3DExtension`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Ext {
+pub struct ExtWith<X: NodeExtra> {
     /// The child that is an item of `Model3DExtensionContent`, which the schema requires.
-    pub content: Box<Model3DExtensionContent>,
+    pub content: Box<Model3DExtensionContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dExt,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `uri`, when the element has it.
     pub uri: Option<String>,
 }
 
+/// The `am3d:ext` element of the tree a read gives: [`ExtWith`] holding nothing in `extra`.
+pub type Ext = ExtWith<()>;
+
+impl Eq for ExtWith<()> {}
+
 /// The `am3d:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Model3DExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstModel3DExtensionList {
+pub struct ExtLstModel3DExtensionListWith<X: NodeExtra> {
     /// The children that are `Ext`, in order.
-    pub ext: Vec<Ext>,
+    pub ext: Vec<ExtWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dExtLstModel3DExtensionList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `am3d:extLst` element of the tree a read gives: [`ExtLstModel3DExtensionListWith`] holding
+/// nothing in `extra`.
+pub type ExtLstModel3DExtensionList = ExtLstModel3DExtensionListWith<()>;
+
+impl Eq for ExtLstModel3DExtensionListWith<()> {}
 
 /// The `am3d:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_OfficeArtExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstOfficeArtExtensionList {
+pub struct ExtLstOfficeArtExtensionListWith<X: NodeExtra> {
     /// The children that are `drawing::Extension`, in order.
-    pub extension: Vec<drawing::Extension>,
+    pub extension: Vec<drawing::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dExtLstOfficeArtExtensionList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `am3d:extLst` element of the tree a read gives: [`ExtLstOfficeArtExtensionListWith`] holding
+/// nothing in `extra`.
+pub type ExtLstOfficeArtExtensionList = ExtLstOfficeArtExtensionListWith<()>;
+
+impl Eq for ExtLstOfficeArtExtensionListWith<()> {}
 
 /// The `am3d:illuminance` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_PositiveRatio`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Illuminance {
+pub struct IlluminanceWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dIlluminance,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `am3d:illuminance` element of the tree a read gives: [`IlluminanceWith`] holding nothing in
+/// `extra`.
+pub type Illuminance = IlluminanceWith<()>;
+
+impl Eq for IlluminanceWith<()> {}
 
 /// The `am3d:intensity` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_PositiveRatio`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Intensity {
+pub struct IntensityWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dIntensity,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `am3d:intensity` element of the tree a read gives: [`IntensityWith`] holding nothing in
+/// `extra`.
+pub type Intensity = IntensityWith<()>;
+
+impl Eq for IntensityWith<()> {}
+
 /// The `am3d:lookAt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Point3D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LookAt {
+pub struct LookAtWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dLookAt,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `x`, when the element has it.
@@ -1767,540 +1794,582 @@ pub struct LookAt {
     pub z: Option<drawing::Coordinate>,
 }
 
+/// The `am3d:lookAt` element of the tree a read gives: [`LookAtWith`] holding nothing in `extra`.
+pub type LookAt = LookAtWith<()>;
+
+impl Eq for LookAtWith<()> {}
+
 /// The `am3d:meterPerModelUnit` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_PositiveRatio`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MeterPerModelUnit {
+pub struct MeterPerModelUnitWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dMeterPerModelUnit,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `am3d:meterPerModelUnit` element of the tree a read gives: [`MeterPerModelUnitWith`] holding
+/// nothing in `extra`.
+pub type MeterPerModelUnit = MeterPerModelUnitWith<()>;
+
+impl Eq for MeterPerModelUnitWith<()> {}
 
 /// One child element of a choice: choice in `CT_Model3DCamera`.
 ///
 /// The schema types that hold it: `CT_Model3DCamera`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum Model3DCameraContent {
+pub enum Model3DCameraContentWith<X: NodeExtra> {
     /// The element `am3d:orthographic`, a `Orthographic`.
-    Orthographic(Orthographic),
+    Orthographic(OrthographicWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `am3d:perspective`, a `Perspective`.
-    Perspective(Perspective),
+    Perspective(PerspectiveWith<X>),
 }
+
+/// [`Model3DCameraContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type Model3DCameraContent = Model3DCameraContentWith<()>;
+
+impl Eq for Model3DCameraContentWith<()> {}
 
 /// One child element of a choice: choice in `CT_Model3DExtension`.
 ///
 /// The schema types that hold it: `CT_Model3DExtension`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum Model3DExtensionContent {
+pub enum Model3DExtensionContentWith<X: NodeExtra> {
     /// The element `wp:anchor`, a `AnchorForFloatingDrawingMLObject`.
-    AnchorForFloatingDrawingMLObject(wordprocessing_drawing::AnchorForFloatingDrawingMLObject),
+    AnchorForFloatingDrawingMLObject(
+        wordprocessing_drawing::AnchorForFloatingDrawingMLObjectWith<X>,
+    ),
     /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
-    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLocked),
+    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>),
     /// The element `ap:Properties`, a `ApplicationSpecificFileProperties`.
     ApplicationSpecificFileProperties(
-        document_properties_extended::ApplicationSpecificFileProperties,
+        document_properties_extended::ApplicationSpecificFilePropertiesWith<X>,
     ),
     /// The element `v:arc`, a `ArcSegment`.
-    ArcSegment(vml::ArcSegment),
+    ArcSegment(vml::ArcSegmentWith<X>),
     /// The element `vt:array`, a `Array`.
-    Array(document_properties_variant_types::Array),
+    Array(document_properties_variant_types::ArrayWith<X>),
     /// The element `xvml:ClientData`, a `AttachedObjectData`.
-    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectData),
+    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectDataWith<X>),
     /// The element `vt:bstr`, a `BasicString`.
-    BasicString(document_properties_variant_types::BasicString),
+    BasicString(document_properties_variant_types::BasicStringWith<X>),
     /// The element `v:curve`, a `BezierCurve`.
-    BezierCurve(vml::BezierCurve),
+    BezierCurve(vml::BezierCurveWith<X>),
     /// The element `vt:blob`, a `BinaryBlob`.
-    BinaryBlob(document_properties_variant_types::BinaryBlob),
+    BinaryBlob(document_properties_variant_types::BinaryBlobWith<X>),
     /// The element `vt:oblob`, a `BinaryBlobObject`.
-    BinaryBlobObject(document_properties_variant_types::BinaryBlobObject),
+    BinaryBlobObject(document_properties_variant_types::BinaryBlobObjectWith<X>),
     /// The element `vt:storage`, a `BinaryStorage`.
-    BinaryStorage(document_properties_variant_types::BinaryStorage),
+    BinaryStorage(document_properties_variant_types::BinaryStorageWith<X>),
     /// The element `vt:ostorage`, a `BinaryStorageObject`.
-    BinaryStorageObject(document_properties_variant_types::BinaryStorageObject),
+    BinaryStorageObject(document_properties_variant_types::BinaryStorageObjectWith<X>),
     /// The element `vt:stream`, a `BinaryStream`.
-    BinaryStream(document_properties_variant_types::BinaryStream),
+    BinaryStream(document_properties_variant_types::BinaryStreamWith<X>),
     /// The element `vt:ostream`, a `BinaryStreamObject`.
-    BinaryStreamObject(document_properties_variant_types::BinaryStreamObject),
+    BinaryStreamObject(document_properties_variant_types::BinaryStreamObjectWith<X>),
     /// The element `vt:vstream`, a `BinaryVersionedStream`.
-    BinaryVersionedStream(document_properties_variant_types::BinaryVersionedStream),
+    BinaryVersionedStream(document_properties_variant_types::BinaryVersionedStreamWith<X>),
     /// The element `a:blip`, a `Blip`.
-    Blip(drawing::Blip),
+    Blip(drawing::BlipWith<X>),
     /// The element `vt:bool`, a `Boolean`.
-    Boolean(document_properties_variant_types::Boolean),
+    Boolean(document_properties_variant_types::BooleanWith<X>),
     /// The element `w10:borderbottom`, a `BottomBorder`.
-    BottomBorder(vml_wordprocessing_drawing::BottomBorder),
+    BottomBorder(vml_wordprocessing_drawing::BottomBorderWith<X>),
     /// The element `x:calcChain`, a `CalculationChainInfo`.
-    CalculationChainInfo(spreadsheet::CalculationChainInfo),
+    CalculationChainInfo(spreadsheet::CalculationChainInfoWith<X>),
     /// The element `o:callout`, a `Callout`.
-    Callout(vml_office_drawing::Callout),
+    Callout(vml_office_drawing::CalloutWith<X>),
     /// The element `x:chartsheet`, a `ChartSheet`.
-    ChartSheet(spreadsheet::ChartSheet),
+    ChartSheet(spreadsheet::ChartSheetWith<X>),
     /// The element `c:chartSpace`, a `ChartSpace`.
-    ChartSpace(chart::ChartSpace),
+    ChartSpace(chart::ChartSpaceWith<X>),
     /// The element `vt:clsid`, a `ClassID`.
-    ClassID(document_properties_variant_types::ClassID),
+    ClassID(document_properties_variant_types::ClassIDWith<X>),
     /// The element `dgm:colorsDefHdr`, a `ColorTransformDefinitionHeader`.
-    ColorTransformDefinitionHeader(diagram::ColorTransformDefinitionHeader),
+    ColorTransformDefinitionHeader(diagram::ColorTransformDefinitionHeaderWith<X>),
     /// The element `dgm:colorsDef`, a `ColorTransformDefinitions`.
-    ColorTransformDefinitions(diagram::ColorTransformDefinitions),
+    ColorTransformDefinitions(diagram::ColorTransformDefinitionsWith<X>),
     /// The element `dgm:colorsDefHdrLst`, a `ColorTransformHeaderList`.
-    ColorTransformHeaderList(diagram::ColorTransformHeaderList),
+    ColorTransformHeaderList(diagram::ColorTransformHeaderListWith<X>),
     /// The element `p:cmLst`, a `CommentList`.
-    CommentList(presentation::CommentList),
+    CommentList(presentation::CommentListWith<X>),
     /// The element `x:comments`, a `Comments`.
-    Comments(spreadsheet::Comments),
+    Comments(spreadsheet::CommentsWith<X>),
     /// The element `w:comments`, a `CommentsCollection`.
-    CommentsCollection(wordprocessing::CommentsCollection),
+    CommentsCollection(wordprocessing::CommentsCollectionWith<X>),
     /// The element `o:complex`, a `Complex`.
-    Complex(vml_office_drawing::Complex),
+    Complex(vml_office_drawing::ComplexWith<X>),
     /// The element `x:connections`, a `Connections`.
-    Connections(spreadsheet::Connections),
+    Connections(spreadsheet::ConnectionsWith<X>),
     /// The element `vt:cy`, a `Currency`.
-    Currency(document_properties_variant_types::Currency),
+    Currency(document_properties_variant_types::CurrencyWith<X>),
     /// The element `op:Properties`, a `CustomFileProperties`.
-    CustomFileProperties(document_properties_custom::CustomFileProperties),
+    CustomFileProperties(document_properties_custom::CustomFilePropertiesWith<X>),
     /// The element `ds:datastoreItem`, a `CustomXMLDataProperties`.
-    CustomXMLDataProperties(custom_xml_data_properties::CustomXMLDataProperties),
+    CustomXMLDataProperties(custom_xml_data_properties::CustomXMLDataPropertiesWith<X>),
     /// The element `dgm:dataModel`, a `DataModel`.
-    DataModel(diagram::DataModel),
+    DataModel(diagram::DataModelWith<X>),
     /// The element `vt:date`, a `DateAndTime`.
-    DateAndTime(document_properties_variant_types::DateAndTime),
+    DateAndTime(document_properties_variant_types::DateAndTimeWith<X>),
     /// The element `vt:decimal`, a `Decimal`.
-    Decimal(document_properties_variant_types::Decimal),
+    Decimal(document_properties_variant_types::DecimalWith<X>),
     /// The element `dgm:layoutDefHdrLst`, a `DiagramLayoutHeaderList`.
-    DiagramLayoutHeaderList(diagram::DiagramLayoutHeaderList),
+    DiagramLayoutHeaderList(diagram::DiagramLayoutHeaderListWith<X>),
     /// The element `x:dialogsheet`, a `DialogSheet`.
-    DialogSheet(spreadsheet::DialogSheet),
+    DialogSheet(spreadsheet::DialogSheetWith<X>),
     /// The element `o:signatureline`, a `DigitalSignatureLine`.
-    DigitalSignatureLine(vml_office_drawing::DigitalSignatureLine),
+    DigitalSignatureLine(vml_office_drawing::DigitalSignatureLineWith<X>),
     /// The element `w:document`, a `Document`.
-    Document(wordprocessing::Document),
+    Document(wordprocessing::DocumentWith<X>),
     /// The element `v:background`, a `DocumentBackground`.
-    DocumentBackground(vml::DocumentBackground),
+    DocumentBackground(vml::DocumentBackgroundWith<X>),
     /// The element `w:endnotes`, a `DocumentEndnotes`.
-    DocumentEndnotes(wordprocessing::DocumentEndnotes),
+    DocumentEndnotes(wordprocessing::DocumentEndnotesWith<X>),
     /// The element `w:footnotes`, a `DocumentFootnotes`.
-    DocumentFootnotes(wordprocessing::DocumentFootnotes),
+    DocumentFootnotes(wordprocessing::DocumentFootnotesWith<X>),
     /// The element `w:settings`, a `DocumentSettings`.
-    DocumentSettings(wordprocessing::DocumentSettings),
+    DocumentSettings(wordprocessing::DocumentSettingsWith<X>),
     /// The element `a:tbl`, a `Table`.
-    DrawingTable(drawing::Table),
+    DrawingTable(drawing::TableWith<X>),
     /// The element `a3danim:embedAnim`, a `EmbedAnim`.
-    EmbedAnim(super::office_drawing_2018_animation_model3d::EmbedAnim),
+    EmbedAnim(super::office_drawing_2018_animation_model3d::EmbedAnimWith<X>),
     /// The element `sl:schemaLibrary`, a `EmbeddedCustomXMLSchemaSupplementaryData`.
     EmbeddedCustomXMLSchemaSupplementaryData(
-        custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryData,
+        custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryDataWith<X>,
     ),
     /// The element `o:OLEObject`, a `EmbeddedOLEObject`.
-    EmbeddedOLEObject(vml_office_drawing::EmbeddedOLEObject),
+    EmbeddedOLEObject(vml_office_drawing::EmbeddedOLEObjectWith<X>),
     /// The element `p:oleObj`, a `EmbeddedObjectsAndControls`.
-    EmbeddedObjectsAndControls(presentation::EmbeddedObjectsAndControls),
+    EmbeddedObjectsAndControls(presentation::EmbeddedObjectsAndControlsWith<X>),
     /// The element `vt:empty`, a `Empty`.
-    Empty(document_properties_variant_types::Empty),
+    Empty(document_properties_variant_types::EmptyWith<X>),
     /// The element `xdr:to`, a `EndingAnchorPoint`.
-    EndingAnchorPoint(spreadsheet_drawing::EndingAnchorPoint),
+    EndingAnchorPoint(spreadsheet_drawing::EndingAnchorPointWith<X>),
     /// The element `vt:error`, a `ErrorStatusCode`.
-    ErrorStatusCode(document_properties_variant_types::ErrorStatusCode),
+    ErrorStatusCode(document_properties_variant_types::ErrorStatusCodeWith<X>),
     /// The element `dgm:relIds`, a `ExplicitRelationshipsToDiagramParts`.
-    ExplicitRelationshipsToDiagramParts(diagram::ExplicitRelationshipsToDiagramParts),
+    ExplicitRelationshipsToDiagramParts(diagram::ExplicitRelationshipsToDiagramPartsWith<X>),
     /// The element `x:externalLink`, a `ExternalReferenceExternalLink`.
-    ExternalReferenceExternalLink(spreadsheet::ExternalReferenceExternalLink),
+    ExternalReferenceExternalLink(spreadsheet::ExternalReferenceExternalLinkWith<X>),
     /// The element `o:extrusion`, a `Extrusion`.
-    Extrusion(vml_office_drawing::Extrusion),
+    Extrusion(vml_office_drawing::ExtrusionWith<X>),
     /// The element `vt:filetime`, a `FileTime`.
-    FileTime(document_properties_variant_types::FileTime),
+    FileTime(document_properties_variant_types::FileTimeWith<X>),
     /// The element `w:fonts`, a `FontTableRootElement`.
-    FontTableRootElement(wordprocessing::FontTableRootElement),
+    FontTableRootElement(wordprocessing::FontTableRootElementWith<X>),
     /// The element `w:ftr`, a `Footer`.
-    Footer(wordprocessing::Footer),
+    Footer(wordprocessing::FooterWith<X>),
     /// The element `w:glossaryDocument`, a `GlossaryDocumentRootElement`.
-    GlossaryDocumentRootElement(wordprocessing::GlossaryDocumentRootElement),
+    GlossaryDocumentRootElement(wordprocessing::GlossaryDocumentRootElementWith<X>),
     /// The element `a:graphic`, a `GraphicObject`.
-    GraphicObject(drawing::GraphicObject),
+    GraphicObject(drawing::GraphicObjectWith<X>),
     /// The element `p:handoutMaster`, a `HandoutMaster`.
-    HandoutMaster(presentation::HandoutMaster),
+    HandoutMaster(presentation::HandoutMasterWith<X>),
     /// The element `w:hdr`, a `Header`.
-    Header(wordprocessing::Header),
+    Header(wordprocessing::HeaderWith<X>),
     /// The element `vt:i1`, a `I1`.
-    I1(document_properties_variant_types::I1),
+    I1(document_properties_variant_types::I1With<X>),
     /// The element `vt:i2`, a `I2`.
-    I2(document_properties_variant_types::I2),
+    I2(document_properties_variant_types::I2With<X>),
     /// The element `vt:i4`, a `I4`.
-    I4(document_properties_variant_types::I4),
+    I4(document_properties_variant_types::I4With<X>),
     /// The element `vt:i8`, a `I8`.
-    I8(document_properties_variant_types::I8),
+    I8(document_properties_variant_types::I8With<X>),
     /// The element `v:imagedata`, a `ImageData`.
-    ImageData(vml::ImageData),
+    ImageData(vml::ImageDataWith<X>),
     /// The element `v:image`, a `ImageFile`.
-    ImageFile(vml::ImageFile),
+    ImageFile(vml::ImageFileWith<X>),
     /// The element `w:recipients`, a `InclusionExclusionDataForDataSource`.
-    InclusionExclusionDataForDataSource(wordprocessing::InclusionExclusionDataForDataSource),
+    InclusionExclusionDataForDataSource(wordprocessing::InclusionExclusionDataForDataSourceWith<X>),
     /// The element `o:ink`, a `Ink`.
-    Ink(vml_office_drawing::Ink),
+    Ink(vml_office_drawing::InkWith<X>),
     /// The element `pvml:iscomment`, a `InkAnnotationFlag`.
-    InkAnnotationFlag(vml_presentation_drawing::InkAnnotationFlag),
+    InkAnnotationFlag(vml_presentation_drawing::InkAnnotationFlagWith<X>),
     /// The element `wp:inline`, a `InlineDrawingMLObject`.
-    InlineDrawingMLObject(wordprocessing_drawing::InlineDrawingMLObject),
+    InlineDrawingMLObject(wordprocessing_drawing::InlineDrawingMLObjectWith<X>),
     /// The element `vt:int`, a `Integer`.
-    Integer(document_properties_variant_types::Integer),
+    Integer(document_properties_variant_types::IntegerWith<X>),
     /// The element `dgm:layoutDef`, a `LayoutDefinition`.
-    LayoutDefinition(diagram::LayoutDefinition),
+    LayoutDefinition(diagram::LayoutDefinitionWith<X>),
     /// The element `dgm:layoutDefHdr`, a `LayoutDefinitionHeader`.
-    LayoutDefinitionHeader(diagram::LayoutDefinitionHeader),
+    LayoutDefinitionHeader(diagram::LayoutDefinitionHeaderWith<X>),
     /// The element `w10:borderleft`, a `LeftBorder`.
-    LeftBorder(vml_wordprocessing_drawing::LeftBorder),
+    LeftBorder(vml_wordprocessing_drawing::LeftBorderWith<X>),
     /// The element `v:line`, a `Line`.
-    Line(vml::Line),
+    Line(vml::LineWith<X>),
     /// The element `v:stroke`, a `LineStrokeSettings`.
-    LineStrokeSettings(vml::LineStrokeSettings),
+    LineStrokeSettings(vml::LineStrokeSettingsWith<X>),
     /// The element `p:cmAuthorLst`, a `ListOfCommentAuthors`.
-    ListOfCommentAuthors(presentation::ListOfCommentAuthors),
+    ListOfCommentAuthors(presentation::ListOfCommentAuthorsWith<X>),
     /// The element `dgm:styleDefHdrLst`, a `ListOfStyleDefinitionHeaders`.
-    ListOfStyleDefinitionHeaders(diagram::ListOfStyleDefinitionHeaders),
+    ListOfStyleDefinitionHeaders(diagram::ListOfStyleDefinitionHeadersWith<X>),
     /// The element `lc:lockedCanvas`, a `LockedCanvasContainer`.
-    LockedCanvasContainer(locked_canvas::LockedCanvasContainer),
+    LockedCanvasContainer(locked_canvas::LockedCanvasContainerWith<X>),
     /// The element `vt:lpstr`, a `Lpstr`.
-    Lpstr(document_properties_variant_types::Lpstr),
+    Lpstr(document_properties_variant_types::LpstrWith<X>),
     /// The element `vt:lpwstr`, a `Lpwstr`.
-    Lpwstr(document_properties_variant_types::Lpwstr),
+    Lpwstr(document_properties_variant_types::LpwstrWith<X>),
     /// The element `m:mathPr`, a `MathProperties`.
-    MathProperties(math::MathProperties),
+    MathProperties(math::MathPropertiesWith<X>),
     /// The element `x:metadata`, a `Metadata`.
-    Metadata(spreadsheet::Metadata),
+    Metadata(spreadsheet::MetadataWith<X>),
     /// The element `v:polyline`, a `MultiplePathLine`.
-    MultiplePathLine(vml::MultiplePathLine),
+    MultiplePathLine(vml::MultiplePathLineWith<X>),
     /// The element `o:shapedefaults`, a `NewShapeDefaults`.
-    NewShapeDefaults(vml_office_drawing::NewShapeDefaults),
+    NewShapeDefaults(vml_office_drawing::NewShapeDefaultsWith<X>),
     /// The element `p:notesMaster`, a `NotesMaster`.
-    NotesMaster(presentation::NotesMaster),
+    NotesMaster(presentation::NotesMasterWith<X>),
     /// The element `p:notes`, a `NotesSlide`.
-    NotesSlide(presentation::NotesSlide),
+    NotesSlide(presentation::NotesSlideWith<X>),
     /// The element `vt:null`, a `Null`.
-    Null(document_properties_variant_types::Null),
+    Null(document_properties_variant_types::NullWith<X>),
     /// The element `w:numbering`, a `NumberingDefinitions`.
-    NumberingDefinitions(wordprocessing::NumberingDefinitions),
+    NumberingDefinitions(wordprocessing::NumberingDefinitionsWith<X>),
     /// The element `m:oMath`, a `OfficeMath`.
-    OfficeMath(math::OfficeMath),
+    OfficeMath(math::OfficeMathWith<X>),
     /// The element `m:oMathPara`, a `OfficeMathParagraph`.
-    OfficeMathParagraph(math::OfficeMathParagraph),
+    OfficeMathParagraph(math::OfficeMathParagraphWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `v:oval`, a `Oval`.
-    Oval(vml::Oval),
+    Oval(vml::OvalWith<X>),
     /// The element `pic:pic`, a `Picture`.
-    Picture(picture::Picture),
+    Picture(picture::PictureWith<X>),
     /// The element `x:pivotCacheDefinition`, a `PivotCacheDefinition`.
-    PivotCacheDefinition(spreadsheet::PivotCacheDefinition),
+    PivotCacheDefinition(spreadsheet::PivotCacheDefinitionWith<X>),
     /// The element `x:pivotCacheRecords`, a `PivotCacheRecords`.
-    PivotCacheRecords(spreadsheet::PivotCacheRecords),
+    PivotCacheRecords(spreadsheet::PivotCacheRecordsWith<X>),
     /// The element `x:pivotTableDefinition`, a `PivotTableDefinition`.
-    PivotTableDefinition(Box<spreadsheet::PivotTableDefinition>),
+    PivotTableDefinition(Box<spreadsheet::PivotTableDefinitionWith<X>>),
     /// The element `a3danim:posterFrame`, a `PosterFrame`.
-    PosterFrame(super::office_drawing_2018_animation_model3d::PosterFrame),
+    PosterFrame(super::office_drawing_2018_animation_model3d::PosterFrameWith<X>),
     /// The element `p:presentation`, a `Presentation`.
-    Presentation(presentation::Presentation),
+    Presentation(presentation::PresentationWith<X>),
     /// The element `p:sld`, a `PresentationSlideSlide`.
-    PresentationSlideSlide(presentation::PresentationSlideSlide),
+    PresentationSlideSlide(presentation::PresentationSlideSlideWith<X>),
     /// The element `p:presentationPr`, a `PresentationWideProperties`.
-    PresentationWideProperties(presentation::PresentationWideProperties),
+    PresentationWideProperties(presentation::PresentationWidePropertiesWith<X>),
     /// The element `p:viewPr`, a `PresentationWideViewProperties`.
-    PresentationWideViewProperties(presentation::PresentationWideViewProperties),
+    PresentationWideViewProperties(presentation::PresentationWideViewPropertiesWith<X>),
     /// The element `p:tagLst`, a `ProgrammableTabList`.
-    ProgrammableTabList(presentation::ProgrammableTabList),
+    ProgrammableTabList(presentation::ProgrammableTabListWith<X>),
     /// The element `x:queryTable`, a `QueryTable`.
-    QueryTable(spreadsheet::QueryTable),
+    QueryTable(spreadsheet::QueryTableWith<X>),
     /// The element `vt:r4`, a `R4`.
-    R4(document_properties_variant_types::R4),
+    R4(document_properties_variant_types::R4With<X>),
     /// The element `vt:r8`, a `R8`.
-    R8(document_properties_variant_types::R8),
+    R8(document_properties_variant_types::R8With<X>),
     /// The element `v:rect`, a `Rectangle`.
-    Rectangle(vml::Rectangle),
+    Rectangle(vml::RectangleWith<X>),
     /// The element `c:chart`, a `ReferenceToChartPart`.
-    ReferenceToChartPart(chart::ReferenceToChartPart),
+    ReferenceToChartPart(chart::ReferenceToChartPartWith<X>),
     /// The element `x:headers`, a `RevisionHeaders`.
-    RevisionHeaders(spreadsheet::RevisionHeaders),
+    RevisionHeaders(spreadsheet::RevisionHeadersWith<X>),
     /// The element `x:revisions`, a `Revisions`.
-    Revisions(spreadsheet::Revisions),
+    Revisions(spreadsheet::RevisionsWith<X>),
     /// The element `w:txbxContent`, a `RichTextBoxContentContainer`.
-    RichTextBoxContentContainer(wordprocessing::RichTextBoxContentContainer),
+    RichTextBoxContentContainer(wordprocessing::RichTextBoxContentContainerWith<X>),
     /// The element `w10:borderright`, a `RightBorder`.
-    RightBorder(vml_wordprocessing_drawing::RightBorder),
+    RightBorder(vml_wordprocessing_drawing::RightBorderWith<X>),
     /// The element `v:roundrect`, a `RoundedRectangle`.
-    RoundedRectangle(vml::RoundedRectangle),
+    RoundedRectangle(vml::RoundedRectangleWith<X>),
     /// The element `ac:additionalCharacteristics`, a `SetOfAdditionalCharacteristics`.
-    SetOfAdditionalCharacteristics(additional_characteristics::SetOfAdditionalCharacteristics),
+    SetOfAdditionalCharacteristics(
+        additional_characteristics::SetOfAdditionalCharacteristicsWith<X>,
+    ),
     /// The element `v:formulas`, a `SetOfFormulas`.
-    SetOfFormulas(vml::SetOfFormulas),
+    SetOfFormulas(vml::SetOfFormulasWith<X>),
     /// The element `v:handles`, a `SetOfHandles`.
-    SetOfHandles(vml::SetOfHandles),
+    SetOfHandles(vml::SetOfHandlesWith<X>),
     /// The element `v:shadow`, a `ShadowEffect`.
-    ShadowEffect(vml::ShadowEffect),
+    ShadowEffect(vml::ShadowEffectWith<X>),
     /// The element `o:clippath`, a `ShapeClippingPath`.
-    ShapeClippingPath(vml_office_drawing::ShapeClippingPath),
+    ShapeClippingPath(vml_office_drawing::ShapeClippingPathWith<X>),
     /// The element `v:shape`, a `ShapeDefinition`.
-    ShapeDefinition(vml::ShapeDefinition),
+    ShapeDefinition(vml::ShapeDefinitionWith<X>),
     /// The element `o:fill`, a `ShapeFillExtendedProperties`.
-    ShapeFillExtendedProperties(vml_office_drawing::ShapeFillExtendedProperties),
+    ShapeFillExtendedProperties(vml_office_drawing::ShapeFillExtendedPropertiesWith<X>),
     /// The element `v:fill`, a `ShapeFillProperties`.
-    ShapeFillProperties(vml::ShapeFillProperties),
+    ShapeFillProperties(vml::ShapeFillPropertiesWith<X>),
     /// The element `v:group`, a `ShapeGroup`.
-    ShapeGroup(vml::ShapeGroup),
+    ShapeGroup(vml::ShapeGroupWith<X>),
     /// The element `o:shapelayout`, a `ShapeLayoutProperties`.
-    ShapeLayoutProperties(vml_office_drawing::ShapeLayoutProperties),
+    ShapeLayoutProperties(vml_office_drawing::ShapeLayoutPropertiesWith<X>),
     /// The element `v:path`, a `ShapePath`.
-    ShapePath(vml::ShapePath),
+    ShapePath(vml::ShapePathWith<X>),
     /// The element `o:lock`, a `ShapeProtections`.
-    ShapeProtections(vml_office_drawing::ShapeProtections),
+    ShapeProtections(vml_office_drawing::ShapeProtectionsWith<X>),
     /// The element `v:shapetype`, a `ShapeTemplate`.
-    ShapeTemplate(vml::ShapeTemplate),
+    ShapeTemplate(vml::ShapeTemplateWith<X>),
     /// The element `x:sst`, a `SharedStringTable`.
-    SharedStringTable(spreadsheet::SharedStringTable),
+    SharedStringTable(spreadsheet::SharedStringTableWith<X>),
     /// The element `x:singleXmlCells`, a `SingleCells`.
-    SingleCells(spreadsheet::SingleCells),
+    SingleCells(spreadsheet::SingleCellsWith<X>),
     /// The element `o:skew`, a `SkewTransform`.
-    SkewTransform(vml_office_drawing::SkewTransform),
+    SkewTransform(vml_office_drawing::SkewTransformWith<X>),
     /// The element `p:sldLayout`, a `SlideLayout`.
-    SlideLayout(presentation::SlideLayout),
+    SlideLayout(presentation::SlideLayoutWith<X>),
     /// The element `p:sldMaster`, a `SlideMaster`.
-    SlideMaster(presentation::SlideMaster),
+    SlideMaster(presentation::SlideMasterWith<X>),
     /// The element `p:sldSyncPr`, a `SlideSynchronizationProperties`.
-    SlideSynchronizationProperties(presentation::SlideSynchronizationProperties),
+    SlideSynchronizationProperties(presentation::SlideSynchronizationPropertiesWith<X>),
     /// The element `b:Sources`, a `Sources`.
-    Sources(bibliography::Sources),
+    Sources(bibliography::SourcesWith<X>),
     /// The element `x:table`, a `Table`.
-    SpreadsheetTable(spreadsheet::Table),
+    SpreadsheetTable(spreadsheet::TableWith<X>),
     /// The element `xdr:from`, a `StartingAnchorPoint`.
-    StartingAnchorPoint(spreadsheet_drawing::StartingAnchorPoint),
+    StartingAnchorPoint(spreadsheet_drawing::StartingAnchorPointWith<X>),
     /// The element `o:equationxml`, a `StorageForAlternateMathContent`.
-    StorageForAlternateMathContent(vml_office_drawing::StorageForAlternateMathContent),
+    StorageForAlternateMathContent(vml_office_drawing::StorageForAlternateMathContentWith<X>),
     /// The element `dgm:styleDef`, a `StyleDefinition`.
-    StyleDefinition(diagram::StyleDefinition),
+    StyleDefinition(diagram::StyleDefinitionWith<X>),
     /// The element `dgm:styleDefHdr`, a `StyleDefinitionHeader`.
-    StyleDefinitionHeader(diagram::StyleDefinitionHeader),
+    StyleDefinitionHeader(diagram::StyleDefinitionHeaderWith<X>),
     /// The element `w:styles`, a `StyleDefinitions`.
-    StyleDefinitions(wordprocessing::StyleDefinitions),
+    StyleDefinitions(wordprocessing::StyleDefinitionsWith<X>),
     /// The element `x:styleSheet`, a `StyleSheet`.
-    StyleSheet(spreadsheet::StyleSheet),
+    StyleSheet(spreadsheet::StyleSheetWith<X>),
     /// The element `a:tblStyleLst`, a `TableStyleList`.
-    TableStyleList(drawing::TableStyleList),
+    TableStyleList(drawing::TableStyleListWith<X>),
     /// The element `v:textbox`, a `TextBox`.
-    TextBox(vml::TextBox),
+    TextBox(vml::TextBoxWith<X>),
     /// The element `o:bottom`, a `TextBoxBottomStroke`.
-    TextBoxBottomStroke(vml_office_drawing::TextBoxBottomStroke),
+    TextBoxBottomStroke(vml_office_drawing::TextBoxBottomStrokeWith<X>),
     /// The element `o:column`, a `TextBoxInteriorStroke`.
-    TextBoxInteriorStroke(vml_office_drawing::TextBoxInteriorStroke),
+    TextBoxInteriorStroke(vml_office_drawing::TextBoxInteriorStrokeWith<X>),
     /// The element `o:left`, a `TextBoxLeftStroke`.
-    TextBoxLeftStroke(vml_office_drawing::TextBoxLeftStroke),
+    TextBoxLeftStroke(vml_office_drawing::TextBoxLeftStrokeWith<X>),
     /// The element `o:right`, a `TextBoxRightStroke`.
-    TextBoxRightStroke(vml_office_drawing::TextBoxRightStroke),
+    TextBoxRightStroke(vml_office_drawing::TextBoxRightStrokeWith<X>),
     /// The element `o:top`, a `TextBoxTopStroke`.
-    TextBoxTopStroke(vml_office_drawing::TextBoxTopStroke),
+    TextBoxTopStroke(vml_office_drawing::TextBoxTopStrokeWith<X>),
     /// The element `v:textpath`, a `TextLayoutPath`.
-    TextLayoutPath(vml::TextLayoutPath),
+    TextLayoutPath(vml::TextLayoutPathWith<X>),
     /// The element `w10:wrap`, a `TextWrapping`.
-    TextWrapping(vml_wordprocessing_drawing::TextWrapping),
+    TextWrapping(vml_wordprocessing_drawing::TextWrappingWith<X>),
     /// The element `a:theme`, a `Theme`.
-    Theme(drawing::Theme),
+    Theme(drawing::ThemeWith<X>),
     /// The element `a:themeManager`, a `ThemeManager`.
-    ThemeManager(drawing::ThemeManager),
+    ThemeManager(drawing::ThemeManagerWith<X>),
     /// The element `a:themeOverride`, a `ThemeOverride`.
-    ThemeOverride(drawing::ThemeOverride),
+    ThemeOverride(drawing::ThemeOverrideWith<X>),
     /// The element `w10:bordertop`, a `TopBorder`.
-    TopBorder(vml_wordprocessing_drawing::TopBorder),
+    TopBorder(vml_wordprocessing_drawing::TopBorderWith<X>),
     /// The element `vt:ui1`, a `Ui1`.
-    Ui1(document_properties_variant_types::Ui1),
+    Ui1(document_properties_variant_types::Ui1With<X>),
     /// The element `vt:ui2`, a `Ui2`.
-    Ui2(document_properties_variant_types::Ui2),
+    Ui2(document_properties_variant_types::Ui2With<X>),
     /// The element `vt:ui4`, a `Ui4`.
-    Ui4(document_properties_variant_types::Ui4),
+    Ui4(document_properties_variant_types::Ui4With<X>),
     /// The element `vt:ui8`, a `Ui8`.
-    Ui8(document_properties_variant_types::Ui8),
+    Ui8(document_properties_variant_types::Ui8With<X>),
     /// The element `vt:uint`, a `UnsignedInteger`.
-    UnsignedInteger(document_properties_variant_types::UnsignedInteger),
+    UnsignedInteger(document_properties_variant_types::UnsignedIntegerWith<X>),
     /// The element `x:users`, a `UserList`.
-    UserList(spreadsheet::UserList),
+    UserList(spreadsheet::UserListWith<X>),
     /// The element `c:userShapes`, a `UserShapes`.
-    UserShapes(chart::UserShapes),
+    UserShapes(chart::UserShapesWith<X>),
     /// The element `o:diagram`, a `VMLDiagram`.
-    VMLDiagram(vml_office_drawing::VMLDiagram),
+    VMLDiagram(vml_office_drawing::VMLDiagramWith<X>),
     /// The element `pvml:textdata`, a `VMLDiagramText`.
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramText),
+    VMLDiagramText(vml_presentation_drawing::VMLDiagramTextWith<X>),
     /// The element `vt:variant`, a `Variant`.
-    Variant(document_properties_variant_types::Variant),
+    Variant(document_properties_variant_types::VariantWith<X>),
     /// The element `vt:vector`, a `Vector`.
-    Vector(document_properties_variant_types::Vector),
+    Vector(document_properties_variant_types::VectorWith<X>),
     /// The element `a:videoFile`, a `VideoFromFile`.
-    VideoFromFile(drawing::VideoFromFile),
+    VideoFromFile(drawing::VideoFromFileWith<X>),
     /// The element `x:volTypes`, a `VolatileDependencyTypes`.
-    VolatileDependencyTypes(spreadsheet::VolatileDependencyTypes),
+    VolatileDependencyTypes(spreadsheet::VolatileDependencyTypesWith<X>),
     /// The element `w:webSettings`, a `WebPageSettings`.
-    WebPageSettings(wordprocessing::WebPageSettings),
+    WebPageSettings(wordprocessing::WebPageSettingsWith<X>),
     /// The element `wp:wpc`, a `WordprocessingMLDrawingCanvas`.
-    WordprocessingMLDrawingCanvas(wordprocessing_drawing::WordprocessingMLDrawingCanvas),
+    WordprocessingMLDrawingCanvas(wordprocessing_drawing::WordprocessingMLDrawingCanvasWith<X>),
     /// The element `wp:wsp`, a `WordprocessingMLShape`.
-    WordprocessingMLShape(wordprocessing_drawing::WordprocessingMLShape),
+    WordprocessingMLShape(wordprocessing_drawing::WordprocessingMLShapeWith<X>),
     /// The element `wp:wgp`, a `WordprocessingMLShapeGroup`.
-    WordprocessingMLShapeGroup(wordprocessing_drawing::WordprocessingMLShapeGroup),
+    WordprocessingMLShapeGroup(wordprocessing_drawing::WordprocessingMLShapeGroupWith<X>),
     /// The element `x:workbook`, a `Workbook`.
-    Workbook(spreadsheet::Workbook),
+    Workbook(spreadsheet::WorkbookWith<X>),
     /// The element `x:worksheet`, a `Worksheet`.
-    Worksheet(spreadsheet::Worksheet),
+    Worksheet(spreadsheet::WorksheetWith<X>),
     /// The element `xdr:wsDr`, a `WorksheetDrawing`.
-    WorksheetDrawing(spreadsheet_drawing::WorksheetDrawing),
+    WorksheetDrawing(spreadsheet_drawing::WorksheetDrawingWith<X>),
     /// The element `x:MapInfo`, a `XMLMappingMapInfo`.
-    XMLMappingMapInfo(spreadsheet::XMLMappingMapInfo),
+    XMLMappingMapInfo(spreadsheet::XMLMappingMapInfoWith<X>),
 }
+
+/// [`Model3DExtensionContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type Model3DExtensionContent = Model3DExtensionContentWith<()>;
+
+impl Eq for Model3DExtensionContentWith<()> {}
 
 /// One child element of a choice: choice in `CT_Model3D`.
 ///
 /// The schema types that hold it: `CT_Model3D`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum Model3DLightContent {
+pub enum Model3DLightContentWith<X: NodeExtra> {
     /// The element `am3d:dirLight`, a `DirLight`.
-    DirLight(DirLight),
+    DirLight(DirLightWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `am3d:ptLight`, a `PtLight`.
-    PtLight(PtLight),
+    PtLight(PtLightWith<X>),
     /// The element `am3d:spotLight`, a `SpotLight`.
-    SpotLight(SpotLight),
+    SpotLight(SpotLightWith<X>),
     /// The element `am3d:unkLight`, a `UnkLight`.
-    UnkLight(UnkLight),
+    UnkLight(UnkLightWith<X>),
 }
+
+/// [`Model3DLightContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type Model3DLightContent = Model3DLightContentWith<()>;
+
+impl Eq for Model3DLightContentWith<()> {}
 
 /// One child element of a choice: choice in `CT_Model3D`.
 ///
 /// The schema types that hold it: `CT_Model3D`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum Model3DViewportContent {
+pub enum Model3DViewportContentWith<X: NodeExtra> {
     /// The element `am3d:objViewport`, a `ObjViewport`.
-    ObjViewport(ObjViewport),
+    ObjViewport(ObjViewportWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `am3d:winViewport`, a `WinViewport`.
-    WinViewport(WinViewport),
+    WinViewport(WinViewportWith<X>),
 }
+
+/// [`Model3DViewportContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type Model3DViewportContent = Model3DViewportContentWith<()>;
+
+impl Eq for Model3DViewportContentWith<()> {}
 
 /// The `am3d:model3d` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Model3D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Model3d {
+pub struct Model3dWith<X: NodeExtra> {
     /// The child that is `AmbientLight`, when there is one.
-    pub ambient_light: Option<Box<AmbientLight>>,
+    pub ambient_light: Option<Box<AmbientLightWith<X>>>,
     /// The child that is `AttrSrcUrl`, when there is one.
-    pub attr_src_url: Option<Box<AttrSrcUrl>>,
+    pub attr_src_url: Option<Box<AttrSrcUrlWith<X>>>,
     /// The child that is `Camera`, which the schema requires.
-    pub camera: Box<Camera>,
+    pub camera: Box<CameraWith<X>>,
     /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
     /// The child that is `ExtLstModel3DExtensionList`, when there is one.
-    pub ext_lst_model3d_extension_list: Option<Box<ExtLstModel3DExtensionList>>,
+    pub ext_lst_model3d_extension_list: Option<Box<ExtLstModel3DExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dModel3d,
     /// The children that are an item of `Model3DLightContent`, in order.
-    pub light_content: Vec<Model3DLightContent>,
+    pub light_content: Vec<Model3DLightContentWith<X>>,
     /// The attribute `r:link`, when the element has it.
     pub link: Option<String>,
     /// The child that is `Raster`, when there is one.
-    pub raster: Option<Box<Raster>>,
+    pub raster: Option<Box<RasterWith<X>>>,
     /// The child that is `SpPr`, which the schema requires.
-    pub sp_pr: Box<SpPr>,
+    pub sp_pr: Box<SpPrWith<X>>,
     /// The child that is `Trans`, which the schema requires.
-    pub trans: Box<Trans>,
+    pub trans: Box<TransWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is an item of `Model3DViewportContent`, which the schema requires.
-    pub viewport_content: Box<Model3DViewportContent>,
+    pub viewport_content: Box<Model3DViewportContentWith<X>>,
 }
+
+/// The `am3d:model3d` element of the tree a read gives: [`Model3dWith`] holding nothing in `extra`.
+pub type Model3d = Model3dWith<()>;
+
+impl Eq for Model3dWith<()> {}
 
 /// The `am3d:objViewport` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ObjectViewport`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ObjViewport {
+pub struct ObjViewportWith<X: NodeExtra> {
     /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
-    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dObjViewport,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `viewportSz`, when the element has it.
     pub viewport_sz: Option<String>,
 }
 
+/// The `am3d:objViewport` element of the tree a read gives: [`ObjViewportWith`] holding nothing in
+/// `extra`.
+pub type ObjViewport = ObjViewportWith<()>;
+
+impl Eq for ObjViewportWith<()> {}
+
 /// The `am3d:orthographic` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_OrthographicProjection`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Orthographic {
+pub struct OrthographicWith<X: NodeExtra> {
     /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
-    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dOrthographic,
     /// The child that is `SzPositiveRatio`, which the schema requires.
-    pub sz_positive_ratio: Box<SzPositiveRatio>,
+    pub sz_positive_ratio: Box<SzPositiveRatioWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `am3d:orthographic` element of the tree a read gives: [`OrthographicWith`] holding nothing
+/// in `extra`.
+pub type Orthographic = OrthographicWith<()>;
+
+impl Eq for OrthographicWith<()> {}
+
 /// The `am3d:perspective` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_PerspectiveProjection`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Perspective {
+pub struct PerspectiveWith<X: NodeExtra> {
     /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
-    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dPerspective,
     /// The attribute `fov`, when the element has it.
     pub fov: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `am3d:perspective` element of the tree a read gives: [`PerspectiveWith`] holding nothing in
+/// `extra`.
+pub type Perspective = PerspectiveWith<()>;
+
+impl Eq for PerspectiveWith<()> {}
+
 /// The `am3d:pos` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Point3D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Pos {
+pub struct PosWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dPos,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `x`, when the element has it.
@@ -2311,84 +2380,94 @@ pub struct Pos {
     pub z: Option<drawing::Coordinate>,
 }
 
+/// The `am3d:pos` element of the tree a read gives: [`PosWith`] holding nothing in `extra`.
+pub type Pos = PosWith<()>;
+
+impl Eq for PosWith<()> {}
+
 /// The `am3d:postTrans` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_Vector3D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PostTrans {
+pub struct PostTransWith<X: NodeExtra> {
     /// The attribute `dx`, when the element has it.
     pub dx: Option<drawing::Coordinate>,
     /// The attribute `dy`, when the element has it.
     pub dy: Option<drawing::Coordinate>,
     /// The attribute `dz`, when the element has it.
     pub dz: Option<drawing::Coordinate>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dPostTrans,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `am3d:postTrans` element of the tree a read gives: [`PostTransWith`] holding nothing in
+/// `extra`.
+pub type PostTrans = PostTransWith<()>;
+
+impl Eq for PostTransWith<()> {}
 
 /// The `am3d:preTrans` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Vector3D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PreTrans {
+pub struct PreTransWith<X: NodeExtra> {
     /// The attribute `dx`, when the element has it.
     pub dx: Option<drawing::Coordinate>,
     /// The attribute `dy`, when the element has it.
     pub dy: Option<drawing::Coordinate>,
     /// The attribute `dz`, when the element has it.
     pub dz: Option<drawing::Coordinate>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dPreTrans,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `am3d:preTrans` element of the tree a read gives: [`PreTransWith`] holding nothing in
+/// `extra`.
+pub type PreTrans = PreTransWith<()>;
+
+impl Eq for PreTransWith<()> {}
+
 /// The `am3d:ptLight` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_PointLight`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PtLight {
+pub struct PtLightWith<X: NodeExtra> {
     /// The child that is `Clr`, which the schema requires.
-    pub clr: Box<Clr>,
+    pub clr: Box<ClrWith<X>>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
-    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dPtLight,
     /// The child that is `Intensity`, which the schema requires.
-    pub intensity: Box<Intensity>,
+    pub intensity: Box<IntensityWith<X>>,
     /// The child that is `Pos`, which the schema requires.
-    pub pos: Box<Pos>,
+    pub pos: Box<PosWith<X>>,
     /// The attribute `rad`, when the element has it.
     pub rad: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `am3d:ptLight` element of the tree a read gives: [`PtLightWith`] holding nothing in `extra`.
+pub type PtLight = PtLightWith<()>;
+
+impl Eq for PtLightWith<()> {}
+
 /// The `am3d:raster` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Model3DRaster`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Raster {
+pub struct RasterWith<X: NodeExtra> {
     /// The child that is `Blip`, when there is one.
-    pub blip: Option<Box<Blip>>,
+    pub blip: Option<Box<BlipWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dRaster,
     /// The attribute `rName`, when the element has it.
     pub r_name: Option<String>,
     /// The attribute `rVer`, when the element has it.
@@ -2397,100 +2476,108 @@ pub struct Raster {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `am3d:raster` element of the tree a read gives: [`RasterWith`] holding nothing in `extra`.
+pub type Raster = RasterWith<()>;
+
+impl Eq for RasterWith<()> {}
+
 /// The `am3d:rot` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Rotate3D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Rot {
+pub struct RotWith<X: NodeExtra> {
     /// The attribute `ax`, when the element has it.
     pub ax: Option<String>,
     /// The attribute `ay`, when the element has it.
     pub ay: Option<String>,
     /// The attribute `az`, when the element has it.
     pub az: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dRot,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `am3d:rot` element of the tree a read gives: [`RotWith`] holding nothing in `extra`.
+pub type Rot = RotWith<()>;
+
+impl Eq for RotWith<()> {}
 
 /// The `am3d:scale` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Scale3D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Scale {
+pub struct ScaleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dScale,
     /// The child that is `Sx`, which the schema requires.
-    pub sx: Box<Sx>,
+    pub sx: Box<SxWith<X>>,
     /// The child that is `Sy`, which the schema requires.
-    pub sy: Box<Sy>,
+    pub sy: Box<SyWith<X>>,
     /// The child that is `SzRatio`, which the schema requires.
-    pub sz_ratio: Box<SzRatio>,
+    pub sz_ratio: Box<SzRatioWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `am3d:scale` element of the tree a read gives: [`ScaleWith`] holding nothing in `extra`.
+pub type Scale = ScaleWith<()>;
+
+impl Eq for ScaleWith<()> {}
 
 /// The `am3d:spPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpPr {
+pub struct SpPrWith<X: NodeExtra> {
     /// The child that is `drawing::Apply3DShapeProperties`, when there is one.
-    pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,
+    pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapePropertiesWith<X>>>,
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
     /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
-    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dSpPr,
     /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
-    pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<drawing::FillPropertiesContentWith<X>>>,
     /// The child that is an item of `drawing::GeometryContent`, when there is one.
-    pub geometry_content: Option<Box<drawing::GeometryContent>>,
+    pub geometry_content: Option<Box<drawing::GeometryContentWith<X>>>,
     /// The child that is `drawing::Outline`, when there is one.
-    pub outline: Option<Box<drawing::Outline>>,
+    pub outline: Option<Box<drawing::OutlineWith<X>>>,
     /// The child that is `drawing::Scene3d`, when there is one.
-    pub scene3d: Option<Box<drawing::Scene3d>>,
+    pub scene3d: Option<Box<drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `drawing::XfrmTransform2D`, when there is one.
-    pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
+    pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2DWith<X>>>,
 }
+
+/// The `am3d:spPr` element of the tree a read gives: [`SpPrWith`] holding nothing in `extra`.
+pub type SpPr = SpPrWith<()>;
+
+impl Eq for SpPrWith<()> {}
 
 /// The `am3d:spotLight` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_SpotLight`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpotLight {
+pub struct SpotLightWith<X: NodeExtra> {
     /// The child that is `Clr`, which the schema requires.
-    pub clr: Box<Clr>,
+    pub clr: Box<ClrWith<X>>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
-    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dSpotLight,
     /// The child that is `Intensity`, which the schema requires.
-    pub intensity: Box<Intensity>,
+    pub intensity: Box<IntensityWith<X>>,
     /// The child that is `LookAt`, which the schema requires.
-    pub look_at: Box<LookAt>,
+    pub look_at: Box<LookAtWith<X>>,
     /// The child that is `Pos`, which the schema requires.
-    pub pos: Box<Pos>,
+    pub pos: Box<PosWith<X>>,
     /// The attribute `rad`, when the element has it.
     pub rad: Option<String>,
     /// The attribute `spotAng`, when the element has it.
@@ -2499,133 +2586,155 @@ pub struct SpotLight {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `am3d:spotLight` element of the tree a read gives: [`SpotLightWith`] holding nothing in
+/// `extra`.
+pub type SpotLight = SpotLightWith<()>;
+
+impl Eq for SpotLightWith<()> {}
+
 /// The `am3d:sx` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Ratio`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Sx {
+pub struct SxWith<X: NodeExtra> {
     /// The attribute `d`, when the element has it.
     pub d: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dSx,
     /// The attribute `n`, when the element has it.
     pub n: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `am3d:sx` element of the tree a read gives: [`SxWith`] holding nothing in `extra`.
+pub type Sx = SxWith<()>;
+
+impl Eq for SxWith<()> {}
 
 /// The `am3d:sy` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Ratio`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Sy {
+pub struct SyWith<X: NodeExtra> {
     /// The attribute `d`, when the element has it.
     pub d: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dSy,
     /// The attribute `n`, when the element has it.
     pub n: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `am3d:sy` element of the tree a read gives: [`SyWith`] holding nothing in `extra`.
+pub type Sy = SyWith<()>;
+
+impl Eq for SyWith<()> {}
 
 /// The `am3d:sz` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_PositiveRatio`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SzPositiveRatio {
+pub struct SzPositiveRatioWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dSzPositiveRatio,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `am3d:sz` element of the tree a read gives: [`SzPositiveRatioWith`] holding nothing in
+/// `extra`.
+pub type SzPositiveRatio = SzPositiveRatioWith<()>;
+
+impl Eq for SzPositiveRatioWith<()> {}
+
 /// The `am3d:sz` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Ratio`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SzRatio {
+pub struct SzRatioWith<X: NodeExtra> {
     /// The attribute `d`, when the element has it.
     pub d: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dSzRatio,
     /// The attribute `n`, when the element has it.
     pub n: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `am3d:sz` element of the tree a read gives: [`SzRatioWith`] holding nothing in `extra`.
+pub type SzRatio = SzRatioWith<()>;
+
+impl Eq for SzRatioWith<()> {}
+
 /// The `am3d:trans` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Model3DTransform`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Trans {
+pub struct TransWith<X: NodeExtra> {
     /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
-    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dTrans,
     /// The child that is `MeterPerModelUnit`, when there is one.
-    pub meter_per_model_unit: Option<Box<MeterPerModelUnit>>,
+    pub meter_per_model_unit: Option<Box<MeterPerModelUnitWith<X>>>,
     /// The child that is `PostTrans`, when there is one.
-    pub post: Option<Box<PostTrans>>,
+    pub post: Option<Box<PostTransWith<X>>>,
     /// The child that is `PreTrans`, when there is one.
-    pub pre: Option<Box<PreTrans>>,
+    pub pre: Option<Box<PreTransWith<X>>>,
     /// The child that is `Rot`, when there is one.
-    pub rot: Option<Box<Rot>>,
+    pub rot: Option<Box<RotWith<X>>>,
     /// The child that is `Scale`, when there is one.
-    pub scale: Option<Box<Scale>>,
+    pub scale: Option<Box<ScaleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `am3d:trans` element of the tree a read gives: [`TransWith`] holding nothing in `extra`.
+pub type Trans = TransWith<()>;
+
+impl Eq for TransWith<()> {}
 
 /// The `am3d:unkLight` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_UnknownLight`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct UnkLight {
+pub struct UnkLightWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dUnkLight,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `am3d:unkLight` element of the tree a read gives: [`UnkLightWith`] holding nothing in
+/// `extra`.
+pub type UnkLight = UnkLightWith<()>;
+
+impl Eq for UnkLightWith<()> {}
+
 /// The `am3d:up` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Vector3D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Up {
+pub struct UpWith<X: NodeExtra> {
     /// The attribute `dx`, when the element has it.
     pub dx: Option<drawing::Coordinate>,
     /// The attribute `dy`, when the element has it.
     pub dy: Option<drawing::Coordinate>,
     /// The attribute `dz`, when the element has it.
     pub dz: Option<drawing::Coordinate>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dUp,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `am3d:up` element of the tree a read gives: [`UpWith`] holding nothing in `extra`.
+pub type Up = UpWith<()>;
+
+impl Eq for UpWith<()> {}
 
 /// The hooks of a visitor for the `am3d` namespace.
 ///
@@ -2859,21 +2968,47 @@ pub trait Visitor: crate::Visitor {
 
 /// The `am3d:winViewport` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_WindowViewport`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WinViewport {
+pub struct WinViewportWith<X: NodeExtra> {
     /// The child that is `ExtLstOfficeArtExtensionList`, when there is one.
-    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionList>>,
+    pub ext_lst_office_art_extension_list: Option<Box<ExtLstOfficeArtExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2017Model3dWinViewport,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-impl AmbientLight {
+/// The `am3d:winViewport` element of the tree a read gives: [`WinViewportWith`] holding nothing in
+/// `extra`.
+pub type WinViewport = WinViewportWith<()>;
+
+impl Eq for WinViewportWith<()> {}
+
+impl<X: NodeExtra> AmbientLightWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> AmbientLightWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AmbientLightWith {
+            clr: officekit_markup_base::into_extra_required(*self.clr, ClrWith::into_extra),
+            enabled: self.enabled,
+            ext_lst_office_art_extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst_office_art_extension_list,
+                ExtLstOfficeArtExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            illuminance: officekit_markup_base::into_extra_required(
+                *self.illuminance,
+                IlluminanceWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2897,7 +3032,21 @@ impl officekit_markup_base::Write for AmbientLight {
     }
 }
 
-impl AttrSrcUrl {
+impl<X: NodeExtra> AttrSrcUrlWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AttrSrcUrlWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AttrSrcUrlWith {
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2921,7 +3070,31 @@ impl officekit_markup_base::Write for AttrSrcUrl {
     }
 }
 
-impl Blip {
+impl<X: NodeExtra> BlipWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> BlipWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BlipWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::BlipContentWith::into_extra,
+            ),
+            cstate: self.cstate,
+            embed: self.embed,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            link: self.link,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2947,7 +3120,34 @@ impl officekit_markup_base::Write for Blip {
     }
 }
 
-impl Camera {
+impl<X: NodeExtra> CameraWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> CameraWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CameraWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                Model3DCameraContentWith::into_extra,
+            ),
+            ext_lst_office_art_extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst_office_art_extension_list,
+                ExtLstOfficeArtExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            look_at: officekit_markup_base::into_extra_required(
+                *self.look_at,
+                LookAtWith::into_extra,
+            ),
+            pos: officekit_markup_base::into_extra_required(*self.pos, PosWith::into_extra),
+            unknown: self.unknown,
+            up: officekit_markup_base::into_extra_required(*self.up, UpWith::into_extra),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2968,7 +3168,24 @@ impl officekit_markup_base::Write for Camera {
     }
 }
 
-impl Clr {
+impl<X: NodeExtra> ClrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ClrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ClrWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2989,7 +3206,36 @@ impl officekit_markup_base::Write for Clr {
     }
 }
 
-impl DirLight {
+impl<X: NodeExtra> DirLightWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DirLightWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DirLightWith {
+            angular_rad: self.angular_rad,
+            clr: officekit_markup_base::into_extra_required(*self.clr, ClrWith::into_extra),
+            enabled: self.enabled,
+            ext_lst_office_art_extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst_office_art_extension_list,
+                ExtLstOfficeArtExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            illuminance: officekit_markup_base::into_extra_required(
+                *self.illuminance,
+                IlluminanceWith::into_extra,
+            ),
+            look_at: officekit_markup_base::into_extra_required(
+                *self.look_at,
+                LookAtWith::into_extra,
+            ),
+            pos: officekit_markup_base::into_extra_required(*self.pos, PosWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3014,7 +3260,25 @@ impl officekit_markup_base::Write for DirLight {
     }
 }
 
-impl Ext {
+impl<X: NodeExtra> ExtWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                Model3DExtensionContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+            uri: self.uri,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3038,7 +3302,21 @@ impl officekit_markup_base::Write for Ext {
     }
 }
 
-impl ExtLstModel3DExtensionList {
+impl<X: NodeExtra> ExtLstModel3DExtensionListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstModel3DExtensionListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstModel3DExtensionListWith {
+            ext: officekit_markup_base::into_extra_list(self.ext, ExtWith::into_extra),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3059,7 +3337,24 @@ impl officekit_markup_base::Write for ExtLstModel3DExtensionList {
     }
 }
 
-impl ExtLstOfficeArtExtensionList {
+impl<X: NodeExtra> ExtLstOfficeArtExtensionListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstOfficeArtExtensionListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstOfficeArtExtensionListWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                drawing::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3080,7 +3375,20 @@ impl officekit_markup_base::Write for ExtLstOfficeArtExtensionList {
     }
 }
 
-impl Illuminance {
+impl<X: NodeExtra> IlluminanceWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> IlluminanceWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        IlluminanceWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3101,7 +3409,20 @@ impl officekit_markup_base::Write for Illuminance {
     }
 }
 
-impl Intensity {
+impl<X: NodeExtra> IntensityWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> IntensityWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        IntensityWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3122,7 +3443,23 @@ impl officekit_markup_base::Write for Intensity {
     }
 }
 
-impl LookAt {
+impl<X: NodeExtra> LookAtWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LookAtWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LookAtWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            x: self.x,
+            y: self.y,
+            z: self.z,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3148,7 +3485,20 @@ impl officekit_markup_base::Write for LookAt {
     }
 }
 
-impl MeterPerModelUnit {
+impl<X: NodeExtra> MeterPerModelUnitWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MeterPerModelUnitWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MeterPerModelUnitWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3169,9 +3519,24 @@ impl officekit_markup_base::Write for MeterPerModelUnit {
     }
 }
 
-impl Default for Model3DCameraContent {
+impl<X: NodeExtra> Model3DCameraContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> Model3DCameraContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::Orthographic(node) => Model3DCameraContentWith::Orthographic(node.into_extra()),
+            Self::Other(node) => Model3DCameraContentWith::Other(node),
+            Self::Perspective(node) => Model3DCameraContentWith::Perspective(node.into_extra()),
+        }
+    }
+}
+
+impl<X: NodeExtra> Default for Model3DCameraContentWith<X> {
     fn default() -> Self {
-        Self::Orthographic(Orthographic::default())
+        Self::Orthographic(OrthographicWith::default())
     }
 }
 
@@ -3203,10 +3568,65 @@ impl officekit_markup_base::Write for Model3DCameraContent {
     }
 }
 
-impl Default for Model3DExtensionContent {
+impl<X: NodeExtra> Model3DExtensionContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> Model3DExtensionContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        officekit_markup_base::into_extra_match!(self, Model3DExtensionContentWith;
+            plain [
+                AnchorForFloatingDrawingMLObject, AnchorLocationIsLocked,
+                ApplicationSpecificFileProperties, ArcSegment, Array, AttachedObjectData,
+                BasicString, BezierCurve, BinaryBlob, BinaryBlobObject, BinaryStorage,
+                BinaryStorageObject, BinaryStream, BinaryStreamObject, BinaryVersionedStream, Blip,
+                Boolean, BottomBorder, CalculationChainInfo, Callout, ChartSheet, ChartSpace,
+                ClassID, ColorTransformDefinitionHeader, ColorTransformDefinitions,
+                ColorTransformHeaderList, CommentList, Comments, CommentsCollection, Complex,
+                Connections, Currency, CustomFileProperties, CustomXMLDataProperties, DataModel,
+                DateAndTime, Decimal, DiagramLayoutHeaderList, DialogSheet, DigitalSignatureLine,
+                Document, DocumentBackground, DocumentEndnotes, DocumentFootnotes, DocumentSettings,
+                DrawingTable, EmbedAnim, EmbeddedCustomXMLSchemaSupplementaryData,
+                EmbeddedOLEObject, EmbeddedObjectsAndControls, Empty, EndingAnchorPoint,
+                ErrorStatusCode, ExplicitRelationshipsToDiagramParts, ExternalReferenceExternalLink,
+                Extrusion, FileTime, FontTableRootElement, Footer, GlossaryDocumentRootElement,
+                GraphicObject, HandoutMaster, Header, I1, I2, I4, I8, ImageData, ImageFile,
+                InclusionExclusionDataForDataSource, Ink, InkAnnotationFlag, InlineDrawingMLObject,
+                Integer, LayoutDefinition, LayoutDefinitionHeader, LeftBorder, Line,
+                LineStrokeSettings, ListOfCommentAuthors, ListOfStyleDefinitionHeaders,
+                LockedCanvasContainer, Lpstr, Lpwstr, MathProperties, Metadata, MultiplePathLine,
+                NewShapeDefaults, NotesMaster, NotesSlide, Null, NumberingDefinitions, OfficeMath,
+                OfficeMathParagraph, Oval, Picture, PivotCacheDefinition, PivotCacheRecords,
+                PosterFrame, Presentation, PresentationSlideSlide, PresentationWideProperties,
+                PresentationWideViewProperties, ProgrammableTabList, QueryTable, R4, R8, Rectangle,
+                ReferenceToChartPart, RevisionHeaders, Revisions, RichTextBoxContentContainer,
+                RightBorder, RoundedRectangle, SetOfAdditionalCharacteristics, SetOfFormulas,
+                SetOfHandles, ShadowEffect, ShapeClippingPath, ShapeDefinition,
+                ShapeFillExtendedProperties, ShapeFillProperties, ShapeGroup, ShapeLayoutProperties,
+                ShapePath, ShapeProtections, ShapeTemplate, SharedStringTable, SingleCells,
+                SkewTransform, SlideLayout, SlideMaster, SlideSynchronizationProperties, Sources,
+                SpreadsheetTable, StartingAnchorPoint, StorageForAlternateMathContent,
+                StyleDefinition, StyleDefinitionHeader, StyleDefinitions, StyleSheet,
+                TableStyleList, TextBox, TextBoxBottomStroke, TextBoxInteriorStroke,
+                TextBoxLeftStroke, TextBoxRightStroke, TextBoxTopStroke, TextLayoutPath,
+                TextWrapping, Theme, ThemeManager, ThemeOverride, TopBorder, Ui1, Ui2, Ui4, Ui8,
+                UnsignedInteger, UserList, UserShapes, VMLDiagram, VMLDiagramText, Variant, Vector,
+                VideoFromFile, VolatileDependencyTypes, WebPageSettings,
+                WordprocessingMLDrawingCanvas, WordprocessingMLShape, WordprocessingMLShapeGroup,
+                Workbook, Worksheet, WorksheetDrawing, XMLMappingMapInfo,
+            ]
+            boxed [
+                PivotTableDefinition,
+            ]
+        )
+    }
+}
+
+impl<X: NodeExtra> Default for Model3DExtensionContentWith<X> {
     fn default() -> Self {
         Self::AnchorForFloatingDrawingMLObject(
-            wordprocessing_drawing::AnchorForFloatingDrawingMLObject::default(),
+            wordprocessing_drawing::AnchorForFloatingDrawingMLObjectWith::default(),
         )
     }
 }
@@ -3899,6 +4319,23 @@ impl TryFrom<Model3DExtensionContent> for wordprocessing::VmlOfficeDrawingElemen
     }
 }
 
+impl<X: NodeExtra> Model3DLightContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> Model3DLightContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::DirLight(node) => Model3DLightContentWith::DirLight(node.into_extra()),
+            Self::Other(node) => Model3DLightContentWith::Other(node),
+            Self::PtLight(node) => Model3DLightContentWith::PtLight(node.into_extra()),
+            Self::SpotLight(node) => Model3DLightContentWith::SpotLight(node.into_extra()),
+            Self::UnkLight(node) => Model3DLightContentWith::UnkLight(node.into_extra()),
+        }
+    }
+}
+
 impl officekit_markup_base::Read for Model3DLightContent {
     fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
@@ -3927,9 +4364,24 @@ impl officekit_markup_base::Write for Model3DLightContent {
     }
 }
 
-impl Default for Model3DViewportContent {
+impl<X: NodeExtra> Model3DViewportContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> Model3DViewportContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ObjViewport(node) => Model3DViewportContentWith::ObjViewport(node.into_extra()),
+            Self::Other(node) => Model3DViewportContentWith::Other(node),
+            Self::WinViewport(node) => Model3DViewportContentWith::WinViewport(node.into_extra()),
+        }
+    }
+}
+
+impl<X: NodeExtra> Default for Model3DViewportContentWith<X> {
     fn default() -> Self {
-        Self::ObjViewport(ObjViewport::default())
+        Self::ObjViewport(ObjViewportWith::default())
     }
 }
 
@@ -3961,7 +4413,52 @@ impl officekit_markup_base::Write for Model3DViewportContent {
     }
 }
 
-impl Model3d {
+impl<X: NodeExtra> Model3dWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> Model3dWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        Model3dWith {
+            ambient_light: officekit_markup_base::into_extra_optional(
+                &mut self.ambient_light,
+                AmbientLightWith::into_extra,
+            ),
+            attr_src_url: officekit_markup_base::into_extra_optional(
+                &mut self.attr_src_url,
+                AttrSrcUrlWith::into_extra,
+            ),
+            camera: officekit_markup_base::into_extra_required(
+                *self.camera,
+                CameraWith::into_extra,
+            ),
+            embed: self.embed,
+            ext_lst_model3d_extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst_model3d_extension_list,
+                ExtLstModel3DExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            light_content: officekit_markup_base::into_extra_list(
+                self.light_content,
+                Model3DLightContentWith::into_extra,
+            ),
+            link: self.link,
+            raster: officekit_markup_base::into_extra_optional(
+                &mut self.raster,
+                RasterWith::into_extra,
+            ),
+            sp_pr: officekit_markup_base::into_extra_required(*self.sp_pr, SpPrWith::into_extra),
+            trans: officekit_markup_base::into_extra_required(*self.trans, TransWith::into_extra),
+            unknown: self.unknown,
+            viewport_content: officekit_markup_base::into_extra_required(
+                *self.viewport_content,
+                Model3DViewportContentWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3986,7 +4483,25 @@ impl officekit_markup_base::Write for Model3d {
     }
 }
 
-impl ObjViewport {
+impl<X: NodeExtra> ObjViewportWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ObjViewportWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ObjViewportWith {
+            ext_lst_office_art_extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst_office_art_extension_list,
+                ExtLstOfficeArtExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+            viewport_sz: self.viewport_sz,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4010,7 +4525,28 @@ impl officekit_markup_base::Write for ObjViewport {
     }
 }
 
-impl Orthographic {
+impl<X: NodeExtra> OrthographicWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> OrthographicWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        OrthographicWith {
+            ext_lst_office_art_extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst_office_art_extension_list,
+                ExtLstOfficeArtExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            sz_positive_ratio: officekit_markup_base::into_extra_required(
+                *self.sz_positive_ratio,
+                SzPositiveRatioWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4031,7 +4567,25 @@ impl officekit_markup_base::Write for Orthographic {
     }
 }
 
-impl Perspective {
+impl<X: NodeExtra> PerspectiveWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PerspectiveWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PerspectiveWith {
+            ext_lst_office_art_extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst_office_art_extension_list,
+                ExtLstOfficeArtExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fov: self.fov,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4055,7 +4609,23 @@ impl officekit_markup_base::Write for Perspective {
     }
 }
 
-impl Pos {
+impl<X: NodeExtra> PosWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PosWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PosWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            x: self.x,
+            y: self.y,
+            z: self.z,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4081,7 +4651,23 @@ impl officekit_markup_base::Write for Pos {
     }
 }
 
-impl PostTrans {
+impl<X: NodeExtra> PostTransWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PostTransWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PostTransWith {
+            dx: self.dx,
+            dy: self.dy,
+            dz: self.dz,
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4107,7 +4693,23 @@ impl officekit_markup_base::Write for PostTrans {
     }
 }
 
-impl PreTrans {
+impl<X: NodeExtra> PreTransWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PreTransWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PreTransWith {
+            dx: self.dx,
+            dy: self.dy,
+            dz: self.dz,
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4133,7 +4735,32 @@ impl officekit_markup_base::Write for PreTrans {
     }
 }
 
-impl PtLight {
+impl<X: NodeExtra> PtLightWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PtLightWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PtLightWith {
+            clr: officekit_markup_base::into_extra_required(*self.clr, ClrWith::into_extra),
+            enabled: self.enabled,
+            ext_lst_office_art_extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst_office_art_extension_list,
+                ExtLstOfficeArtExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            intensity: officekit_markup_base::into_extra_required(
+                *self.intensity,
+                IntensityWith::into_extra,
+            ),
+            pos: officekit_markup_base::into_extra_required(*self.pos, PosWith::into_extra),
+            rad: self.rad,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4158,7 +4785,23 @@ impl officekit_markup_base::Write for PtLight {
     }
 }
 
-impl Raster {
+impl<X: NodeExtra> RasterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> RasterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RasterWith {
+            blip: officekit_markup_base::into_extra_optional(&mut self.blip, BlipWith::into_extra),
+            extra: Default::default(),
+            r_name: self.r_name,
+            r_ver: self.r_ver,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4183,7 +4826,23 @@ impl officekit_markup_base::Write for Raster {
     }
 }
 
-impl Rot {
+impl<X: NodeExtra> RotWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RotWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RotWith {
+            ax: self.ax,
+            ay: self.ay,
+            az: self.az,
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4209,7 +4868,26 @@ impl officekit_markup_base::Write for Rot {
     }
 }
 
-impl Scale {
+impl<X: NodeExtra> ScaleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ScaleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ScaleWith {
+            extra: Default::default(),
+            sx: officekit_markup_base::into_extra_required(*self.sx, SxWith::into_extra),
+            sy: officekit_markup_base::into_extra_required(*self.sy, SyWith::into_extra),
+            sz_ratio: officekit_markup_base::into_extra_required(
+                *self.sz_ratio,
+                SzRatioWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4230,7 +4908,53 @@ impl officekit_markup_base::Write for Scale {
     }
 }
 
-impl SpPr {
+impl<X: NodeExtra> SpPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SpPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SpPrWith {
+            apply_3d_shape_properties: officekit_markup_base::into_extra_optional(
+                &mut self.apply_3d_shape_properties,
+                drawing::Apply3DShapePropertiesWith::into_extra,
+            ),
+            bw_mode: self.bw_mode,
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                drawing::FillPropertiesContentWith::into_extra,
+            ),
+            geometry_content: officekit_markup_base::into_extra_optional(
+                &mut self.geometry_content,
+                drawing::GeometryContentWith::into_extra,
+            ),
+            outline: officekit_markup_base::into_extra_optional(
+                &mut self.outline,
+                drawing::OutlineWith::into_extra,
+            ),
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                drawing::Scene3dWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm_transform2d: officekit_markup_base::into_extra_optional(
+                &mut self.xfrm_transform2d,
+                drawing::XfrmTransform2DWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4254,7 +4978,37 @@ impl officekit_markup_base::Write for SpPr {
     }
 }
 
-impl SpotLight {
+impl<X: NodeExtra> SpotLightWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SpotLightWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SpotLightWith {
+            clr: officekit_markup_base::into_extra_required(*self.clr, ClrWith::into_extra),
+            enabled: self.enabled,
+            ext_lst_office_art_extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst_office_art_extension_list,
+                ExtLstOfficeArtExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            intensity: officekit_markup_base::into_extra_required(
+                *self.intensity,
+                IntensityWith::into_extra,
+            ),
+            look_at: officekit_markup_base::into_extra_required(
+                *self.look_at,
+                LookAtWith::into_extra,
+            ),
+            pos: officekit_markup_base::into_extra_required(*self.pos, PosWith::into_extra),
+            rad: self.rad,
+            spot_ang: self.spot_ang,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4280,7 +5034,22 @@ impl officekit_markup_base::Write for SpotLight {
     }
 }
 
-impl Sx {
+impl<X: NodeExtra> SxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SxWith {
+            d: self.d,
+            extra: Default::default(),
+            n: self.n,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4305,7 +5074,22 @@ impl officekit_markup_base::Write for Sx {
     }
 }
 
-impl Sy {
+impl<X: NodeExtra> SyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SyWith {
+            d: self.d,
+            extra: Default::default(),
+            n: self.n,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4330,7 +5114,20 @@ impl officekit_markup_base::Write for Sy {
     }
 }
 
-impl SzPositiveRatio {
+impl<X: NodeExtra> SzPositiveRatioWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SzPositiveRatioWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SzPositiveRatioWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4351,7 +5148,22 @@ impl officekit_markup_base::Write for SzPositiveRatio {
     }
 }
 
-impl SzRatio {
+impl<X: NodeExtra> SzRatioWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SzRatioWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SzRatioWith {
+            d: self.d,
+            extra: Default::default(),
+            n: self.n,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4376,7 +5188,41 @@ impl officekit_markup_base::Write for SzRatio {
     }
 }
 
-impl Trans {
+impl<X: NodeExtra> TransWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TransWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TransWith {
+            ext_lst_office_art_extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst_office_art_extension_list,
+                ExtLstOfficeArtExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            meter_per_model_unit: officekit_markup_base::into_extra_optional(
+                &mut self.meter_per_model_unit,
+                MeterPerModelUnitWith::into_extra,
+            ),
+            post: officekit_markup_base::into_extra_optional(
+                &mut self.post,
+                PostTransWith::into_extra,
+            ),
+            pre: officekit_markup_base::into_extra_optional(
+                &mut self.pre,
+                PreTransWith::into_extra,
+            ),
+            rot: officekit_markup_base::into_extra_optional(&mut self.rot, RotWith::into_extra),
+            scale: officekit_markup_base::into_extra_optional(
+                &mut self.scale,
+                ScaleWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4397,7 +5243,20 @@ impl officekit_markup_base::Write for Trans {
     }
 }
 
-impl UnkLight {
+impl<X: NodeExtra> UnkLightWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> UnkLightWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UnkLightWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4418,7 +5277,23 @@ impl officekit_markup_base::Write for UnkLight {
     }
 }
 
-impl Up {
+impl<X: NodeExtra> UpWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> UpWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UpWith {
+            dx: self.dx,
+            dy: self.dy,
+            dz: self.dz,
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4444,7 +5319,24 @@ impl officekit_markup_base::Write for Up {
     }
 }
 
-impl WinViewport {
+impl<X: NodeExtra> WinViewportWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> WinViewportWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WinViewportWith {
+            ext_lst_office_art_extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst_office_art_extension_list,
+                ExtLstOfficeArtExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

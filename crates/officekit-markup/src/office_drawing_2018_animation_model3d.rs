@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -273,14 +276,9 @@ pub static ANIM_PR_SHAPE: officekit_markup_base::Shape = officekit_markup_base::
 
 /// The `a3danim:animPr` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_AnimationProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AnimPr {
+pub struct AnimPrWith<X: NodeExtra> {
     /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
     /// The attribute `count`, when the element has it.
@@ -288,7 +286,9 @@ pub struct AnimPr {
     /// The attribute `end`, when the element has it.
     pub end: Option<String>,
     /// The child that is `super::office_drawing_2018_animation::ExtLst`, when there is one.
-    pub ext_lst: Option<Box<super::office_drawing_2018_animation::ExtLst>>,
+    pub ext_lst: Option<Box<super::office_drawing_2018_animation::ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2018AnimationModel3dAnimPr,
     /// The attribute `length`, when the element has it.
     pub length: Option<String>,
     /// The attribute `name`, when the element has it.
@@ -300,6 +300,12 @@ pub struct AnimPr {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `a3danim:animPr` element of the tree a read gives: [`AnimPrWith`] holding nothing in
+/// `extra`.
+pub type AnimPr = AnimPrWith<()>;
+
+impl Eq for AnimPrWith<()> {}
 
 /// The hooks of a context for the `a3danim` namespace.
 ///
@@ -385,57 +391,66 @@ pub trait Context: crate::Context {
 
 /// The `a3danim:embedAnim` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_EmbeddedAnimation`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EmbedAnim {
+pub struct EmbedAnimWith<X: NodeExtra> {
     /// The attribute `animId`, when the element has it.
     pub anim_id: Option<String>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2018AnimationModel3dEmbedAnim,
     /// The child that is `AnimPr`, which the schema requires.
-    pub pr: Box<AnimPr>,
+    pub pr: Box<AnimPrWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `a3danim:embedAnim` element of the tree a read gives: [`EmbedAnimWith`] holding nothing in
+/// `extra`.
+pub type EmbedAnim = EmbedAnimWith<()>;
+
+impl Eq for EmbedAnimWith<()> {}
 
 /// The `a3danim:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_OfficeArtExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `drawing::Extension`, in order.
-    pub extension: Vec<drawing::Extension>,
+    pub extension: Vec<drawing::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2018AnimationModel3dExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `a3danim:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
+
 /// The `a3danim:posterFrame` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_PosterFrame`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PosterFrame {
+pub struct PosterFrameWith<X: NodeExtra> {
     /// The attribute `animId`, when the element has it.
     pub anim_id: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2018AnimationModel3dPosterFrame,
     /// The attribute `frame`, when the element has it.
     pub frame: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `a3danim:posterFrame` element of the tree a read gives: [`PosterFrameWith`] holding nothing
+/// in `extra`.
+pub type PosterFrame = PosterFrameWith<()>;
+
+impl Eq for PosterFrameWith<()> {}
 
 /// The hooks of a visitor for the `a3danim` namespace.
 ///
@@ -466,7 +481,31 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl AnimPr {
+impl<X: NodeExtra> AnimPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> AnimPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AnimPrWith {
+            auto: self.auto,
+            count: self.count,
+            end: self.end,
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                super::office_drawing_2018_animation::ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            length: self.length,
+            name: self.name,
+            offset: self.offset,
+            st: self.st,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -496,7 +535,26 @@ impl officekit_markup_base::Write for AnimPr {
     }
 }
 
-impl EmbedAnim {
+impl<X: NodeExtra> EmbedAnimWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> EmbedAnimWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EmbedAnimWith {
+            anim_id: self.anim_id,
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            pr: officekit_markup_base::into_extra_required(*self.pr, AnimPrWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -520,7 +578,24 @@ impl officekit_markup_base::Write for EmbedAnim {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                drawing::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -541,7 +616,22 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl PosterFrame {
+impl<X: NodeExtra> PosterFrameWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PosterFrameWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PosterFrameWith {
+            anim_id: self.anim_id,
+            extra: Default::default(),
+            frame: self.frame,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

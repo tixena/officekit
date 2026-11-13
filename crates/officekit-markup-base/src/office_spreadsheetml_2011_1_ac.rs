@@ -216,9 +216,12 @@
 //! elements. The `read` module has a function that reads an element into each, and the
 //! `write` module one that writes each back to an element.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use crate::NodeExtra;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -233,21 +236,37 @@ pub static LIST_SHAPE: crate::Shape = crate::Shape {
 
 /// The `x12ac:list` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `ST_Xstring`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct List {
+pub struct ListWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml20111AcList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
-impl List {
+/// The `x12ac:list` element of the tree a read gives: [`ListWith`] holding nothing in `extra`.
+pub type List = ListWith<()>;
+
+impl Eq for ListWith<()> {}
+
+impl<X: NodeExtra> ListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ListWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

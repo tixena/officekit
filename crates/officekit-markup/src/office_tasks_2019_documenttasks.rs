@@ -223,6 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
@@ -400,65 +401,74 @@ pub static TASK_HISTORY_EVENT_CONTENT_TAGS: officekit_markup_base::Accept =
 
 /// The `t:Anchor` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TaskAnchor`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Anchor {
+pub struct AnchorWith<X: NodeExtra> {
     /// The child that is `Comment`, when there is one.
-    pub comment: Option<Box<Comment>>,
+    pub comment: Option<Box<CommentWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksAnchor,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `t:Anchor` element of the tree a read gives: [`AnchorWith`] holding nothing in `extra`.
+pub type Anchor = AnchorWith<()>;
+
+impl Eq for AnchorWith<()> {}
 
 /// The `t:Assign` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TaskUser`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Assign {
+pub struct AssignWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksAssign,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `t:Assign` element of the tree a read gives: [`AssignWith`] holding nothing in `extra`.
+pub type Assign = AssignWith<()>;
+
+impl Eq for AssignWith<()> {}
 
 /// The `t:Attribution` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TaskUser`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Attribution {
+pub struct AttributionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksAttribution,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `t:Attribution` element of the tree a read gives: [`AttributionWith`] holding nothing in
+/// `extra`.
+pub type Attribution = AttributionWith<()>;
+
+impl Eq for AttributionWith<()> {}
+
 /// The `t:Comment` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_CommentAnchor`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Comment {
+pub struct CommentWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksComment,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `t:Comment` element of the tree a read gives: [`CommentWith`] holding nothing in `extra`.
+pub type Comment = CommentWith<()>;
+
+impl Eq for CommentWith<()> {}
 
 /// The hooks of a context for the `t` namespace.
 ///
@@ -831,50 +841,51 @@ pub trait Context: crate::Context {
 
 /// The `t:Create` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TaskCreateEventInfo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Create {
+pub struct CreateWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksCreate,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `t:Create` element of the tree a read gives: [`CreateWith`] holding nothing in `extra`.
+pub type Create = CreateWith<()>;
+
+impl Eq for CreateWith<()> {}
 
 /// The `t:Delete` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TaskDeleteEventInfo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Delete {
+pub struct DeleteWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksDelete,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `t:Delete` element of the tree a read gives: [`DeleteWith`] holding nothing in `extra`.
+pub type Delete = DeleteWith<()>;
+
+impl Eq for DeleteWith<()> {}
+
 /// The `t:Event` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TaskHistoryEvent`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Event {
+pub struct EventWith<X: NodeExtra> {
     /// The child that is `Anchor`, when there is one.
-    pub anchor: Option<Box<Anchor>>,
+    pub anchor: Option<Box<AnchorWith<X>>>,
     /// The child that is `Attribution`, which the schema requires.
-    pub attribution: Box<Attribution>,
+    pub attribution: Box<AttributionWith<X>>,
     /// The child that is an item of `TaskHistoryEventContent`, when there is one.
-    pub content: Option<Box<TaskHistoryEventContent>>,
+    pub content: Option<Box<TaskHistoryEventContentWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksEvent,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `time`, when the element has it.
@@ -883,235 +894,271 @@ pub struct Event {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `t:Event` element of the tree a read gives: [`EventWith`] holding nothing in `extra`.
+pub type Event = EventWith<()>;
+
+impl Eq for EventWith<()> {}
+
 /// The `t:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `super::office_2019_extlst::Ext`, in order.
-    pub ext: Vec<super::office_2019_extlst::Ext>,
+    pub ext: Vec<super::office_2019_extlst::ExtWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `t:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
 
 /// The `t:History` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TaskHistory`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct History {
+pub struct HistoryWith<X: NodeExtra> {
     /// The children that are `Event`, in order.
-    pub event: Vec<Event>,
+    pub event: Vec<EventWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksHistory,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `t:History` element of the tree a read gives: [`HistoryWith`] holding nothing in `extra`.
+pub type History = HistoryWith<()>;
+
+impl Eq for HistoryWith<()> {}
+
 /// The `t:Priority` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TaskPriorityEventInfo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Priority {
+pub struct PriorityWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksPriority,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `value`, when the element has it.
     pub value: Option<String>,
 }
 
+/// The `t:Priority` element of the tree a read gives: [`PriorityWith`] holding nothing in `extra`.
+pub type Priority = PriorityWith<()>;
+
+impl Eq for PriorityWith<()> {}
+
 /// The `t:Progress` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TaskProgressEventInfo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Progress {
+pub struct ProgressWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksProgress,
     /// The attribute `percentComplete`, when the element has it.
     pub percent_complete: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `t:Progress` element of the tree a read gives: [`ProgressWith`] holding nothing in `extra`.
+pub type Progress = ProgressWith<()>;
+
+impl Eq for ProgressWith<()> {}
+
 /// The `t:Schedule` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TaskScheduleEventInfo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Schedule {
+pub struct ScheduleWith<X: NodeExtra> {
     /// The attribute `dueDate`, when the element has it.
     pub due_date: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksSchedule,
     /// The attribute `startDate`, when the element has it.
     pub start_date: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `t:Schedule` element of the tree a read gives: [`ScheduleWith`] holding nothing in `extra`.
+pub type Schedule = ScheduleWith<()>;
+
+impl Eq for ScheduleWith<()> {}
+
 /// The `t:SetTitle` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TaskTitleEventInfo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SetTitle {
+pub struct SetTitleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksSetTitle,
     /// The attribute `title`, when the element has it.
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `t:SetTitle` element of the tree a read gives: [`SetTitleWith`] holding nothing in `extra`.
+pub type SetTitle = SetTitleWith<()>;
+
+impl Eq for SetTitleWith<()> {}
+
 /// The `t:Task` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_Task`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Task {
+pub struct TaskWith<X: NodeExtra> {
     /// The child that is `Anchor`, when there is one.
-    pub anchor: Option<Box<Anchor>>,
+    pub anchor: Option<Box<AnchorWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksTask,
     /// The child that is `History`, when there is one.
-    pub history: Option<Box<History>>,
+    pub history: Option<Box<HistoryWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `t:Task` element of the tree a read gives: [`TaskWith`] holding nothing in `extra`.
+pub type Task = TaskWith<()>;
+
+impl Eq for TaskWith<()> {}
 
 /// One child element of a choice: choice in `CT_TaskHistoryEvent`.
 ///
 /// The schema types that hold it: `CT_TaskHistoryEvent`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum TaskHistoryEventContent {
+pub enum TaskHistoryEventContentWith<X: NodeExtra> {
     /// The element `t:Assign`, a `Assign`.
-    Assign(Assign),
+    Assign(AssignWith<X>),
     /// The element `t:Create`, a `Create`.
-    Create(Create),
+    Create(CreateWith<X>),
     /// The element `t:Delete`, a `Delete`.
-    Delete(Delete),
+    Delete(DeleteWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `t:Priority`, a `Priority`.
-    Priority(Priority),
+    Priority(PriorityWith<X>),
     /// The element `t:Progress`, a `Progress`.
-    Progress(Progress),
+    Progress(ProgressWith<X>),
     /// The element `t:Schedule`, a `Schedule`.
-    Schedule(Schedule),
+    Schedule(ScheduleWith<X>),
     /// The element `t:SetTitle`, a `SetTitle`.
-    SetTitle(SetTitle),
+    SetTitle(SetTitleWith<X>),
     /// The element `t:Unassign`, a `Unassign`.
-    Unassign(Unassign),
+    Unassign(UnassignWith<X>),
     /// The element `t:UnassignAll`, a `UnassignAll`.
-    UnassignAll(UnassignAll),
+    UnassignAll(UnassignAllWith<X>),
     /// The element `t:Undelete`, a `Undelete`.
-    Undelete(Undelete),
+    Undelete(UndeleteWith<X>),
     /// The element `t:Undo`, a `Undo`.
-    Undo(Undo),
+    Undo(UndoWith<X>),
 }
+
+/// [`TaskHistoryEventContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type TaskHistoryEventContent = TaskHistoryEventContentWith<()>;
+
+impl Eq for TaskHistoryEventContentWith<()> {}
 
 /// The `t:Tasks` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Tasks`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Tasks {
+pub struct TasksWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksTasks,
     /// The children that are `Task`, in order.
-    pub task: Vec<Task>,
+    pub task: Vec<TaskWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `t:Tasks` element of the tree a read gives: [`TasksWith`] holding nothing in `extra`.
+pub type Tasks = TasksWith<()>;
+
+impl Eq for TasksWith<()> {}
 
 /// The `t:Unassign` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TaskUser`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Unassign {
+pub struct UnassignWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksUnassign,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `t:Unassign` element of the tree a read gives: [`UnassignWith`] holding nothing in `extra`.
+pub type Unassign = UnassignWith<()>;
+
+impl Eq for UnassignWith<()> {}
 
 /// The `t:UnassignAll` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TaskUnassignAll`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct UnassignAll {
+pub struct UnassignAllWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksUnassignAll,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `t:UnassignAll` element of the tree a read gives: [`UnassignAllWith`] holding nothing in
+/// `extra`.
+pub type UnassignAll = UnassignAllWith<()>;
+
+impl Eq for UnassignAllWith<()> {}
 
 /// The `t:Undelete` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TaskUndeleteEventInfo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Undelete {
+pub struct UndeleteWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksUndelete,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `t:Undelete` element of the tree a read gives: [`UndeleteWith`] holding nothing in `extra`.
+pub type Undelete = UndeleteWith<()>;
+
+impl Eq for UndeleteWith<()> {}
+
 /// The `t:Undo` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_TaskUndo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Undo {
+pub struct UndoWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeTasks2019DocumenttasksUndo,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `t:Undo` element of the tree a read gives: [`UndoWith`] holding nothing in `extra`.
+pub type Undo = UndoWith<()>;
+
+impl Eq for UndoWith<()> {}
 
 /// The hooks of a visitor for the `t` namespace.
 ///
@@ -1226,7 +1273,28 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl Anchor {
+impl<X: NodeExtra> AnchorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> AnchorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AnchorWith {
+            comment: officekit_markup_base::into_extra_optional(
+                &mut self.comment,
+                CommentWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1247,7 +1315,20 @@ impl officekit_markup_base::Write for Anchor {
     }
 }
 
-impl Assign {
+impl<X: NodeExtra> AssignWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AssignWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AssignWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1268,7 +1349,20 @@ impl officekit_markup_base::Write for Assign {
     }
 }
 
-impl Attribution {
+impl<X: NodeExtra> AttributionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AttributionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AttributionWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1289,7 +1383,21 @@ impl officekit_markup_base::Write for Attribution {
     }
 }
 
-impl Comment {
+impl<X: NodeExtra> CommentWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CommentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CommentWith {
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1313,7 +1421,20 @@ impl officekit_markup_base::Write for Comment {
     }
 }
 
-impl Create {
+impl<X: NodeExtra> CreateWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CreateWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CreateWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1334,7 +1455,20 @@ impl officekit_markup_base::Write for Create {
     }
 }
 
-impl Delete {
+impl<X: NodeExtra> DeleteWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DeleteWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DeleteWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1355,7 +1489,38 @@ impl officekit_markup_base::Write for Delete {
     }
 }
 
-impl Event {
+impl<X: NodeExtra> EventWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> EventWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EventWith {
+            anchor: officekit_markup_base::into_extra_optional(
+                &mut self.anchor,
+                AnchorWith::into_extra,
+            ),
+            attribution: officekit_markup_base::into_extra_required(
+                *self.attribution,
+                AttributionWith::into_extra,
+            ),
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                TaskHistoryEventContentWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            id: self.id,
+            time: self.time,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1380,7 +1545,24 @@ impl officekit_markup_base::Write for Event {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            ext: officekit_markup_base::into_extra_list(
+                self.ext,
+                super::office_2019_extlst::ExtWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1401,7 +1583,21 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl History {
+impl<X: NodeExtra> HistoryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> HistoryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HistoryWith {
+            event: officekit_markup_base::into_extra_list(self.event, EventWith::into_extra),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1422,7 +1618,21 @@ impl officekit_markup_base::Write for History {
     }
 }
 
-impl Priority {
+impl<X: NodeExtra> PriorityWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PriorityWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PriorityWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1446,7 +1656,21 @@ impl officekit_markup_base::Write for Priority {
     }
 }
 
-impl Progress {
+impl<X: NodeExtra> ProgressWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ProgressWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ProgressWith {
+            extra: Default::default(),
+            percent_complete: self.percent_complete,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1470,7 +1694,22 @@ impl officekit_markup_base::Write for Progress {
     }
 }
 
-impl Schedule {
+impl<X: NodeExtra> ScheduleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ScheduleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ScheduleWith {
+            due_date: self.due_date,
+            extra: Default::default(),
+            start_date: self.start_date,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1495,7 +1734,21 @@ impl officekit_markup_base::Write for Schedule {
     }
 }
 
-impl SetTitle {
+impl<X: NodeExtra> SetTitleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SetTitleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SetTitleWith {
+            extra: Default::default(),
+            title: self.title,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1519,7 +1772,33 @@ impl officekit_markup_base::Write for SetTitle {
     }
 }
 
-impl Task {
+impl<X: NodeExtra> TaskWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TaskWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TaskWith {
+            anchor: officekit_markup_base::into_extra_optional(
+                &mut self.anchor,
+                AnchorWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            history: officekit_markup_base::into_extra_optional(
+                &mut self.history,
+                HistoryWith::into_extra,
+            ),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1540,6 +1819,30 @@ impl officekit_markup_base::Write for Task {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::task(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> TaskHistoryEventContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TaskHistoryEventContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::Assign(node) => TaskHistoryEventContentWith::Assign(node.into_extra()),
+            Self::Create(node) => TaskHistoryEventContentWith::Create(node.into_extra()),
+            Self::Delete(node) => TaskHistoryEventContentWith::Delete(node.into_extra()),
+            Self::Other(node) => TaskHistoryEventContentWith::Other(node),
+            Self::Priority(node) => TaskHistoryEventContentWith::Priority(node.into_extra()),
+            Self::Progress(node) => TaskHistoryEventContentWith::Progress(node.into_extra()),
+            Self::Schedule(node) => TaskHistoryEventContentWith::Schedule(node.into_extra()),
+            Self::SetTitle(node) => TaskHistoryEventContentWith::SetTitle(node.into_extra()),
+            Self::Unassign(node) => TaskHistoryEventContentWith::Unassign(node.into_extra()),
+            Self::UnassignAll(node) => TaskHistoryEventContentWith::UnassignAll(node.into_extra()),
+            Self::Undelete(node) => TaskHistoryEventContentWith::Undelete(node.into_extra()),
+            Self::Undo(node) => TaskHistoryEventContentWith::Undo(node.into_extra()),
+        }
     }
 }
 
@@ -1585,7 +1888,25 @@ impl officekit_markup_base::Write for TaskHistoryEventContent {
     }
 }
 
-impl Tasks {
+impl<X: NodeExtra> TasksWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TasksWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TasksWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            task: officekit_markup_base::into_extra_list(self.task, TaskWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1606,7 +1927,20 @@ impl officekit_markup_base::Write for Tasks {
     }
 }
 
-impl Unassign {
+impl<X: NodeExtra> UnassignWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> UnassignWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UnassignWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1627,7 +1961,20 @@ impl officekit_markup_base::Write for Unassign {
     }
 }
 
-impl UnassignAll {
+impl<X: NodeExtra> UnassignAllWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> UnassignAllWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UnassignAllWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1648,7 +1995,20 @@ impl officekit_markup_base::Write for UnassignAll {
     }
 }
 
-impl Undelete {
+impl<X: NodeExtra> UndeleteWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> UndeleteWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UndeleteWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1669,7 +2029,21 @@ impl officekit_markup_base::Write for Undelete {
     }
 }
 
-impl Undo {
+impl<X: NodeExtra> UndoWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> UndoWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UndoWith {
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

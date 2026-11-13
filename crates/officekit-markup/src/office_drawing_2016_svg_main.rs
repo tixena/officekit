@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -269,21 +272,23 @@ pub trait Context: crate::Context {
 
 /// The `asvg:svgBlip` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_SVGBlip`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SvgBlip {
+pub struct SvgBlipWith<X: NodeExtra> {
     /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2016SvgMainSvgBlip,
     /// The attribute `r:link`, when the element has it.
     pub link: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `asvg:svgBlip` element of the tree a read gives: [`SvgBlipWith`] holding nothing in `extra`.
+pub type SvgBlip = SvgBlipWith<()>;
+
+impl Eq for SvgBlipWith<()> {}
 
 /// The hooks of a visitor for the `asvg` namespace.
 ///
@@ -297,7 +302,22 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl SvgBlip {
+impl<X: NodeExtra> SvgBlipWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SvgBlipWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SvgBlipWith {
+            embed: self.embed,
+            extra: Default::default(),
+            link: self.link,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

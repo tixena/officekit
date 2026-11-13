@@ -223,6 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_markup_core::presentation;
@@ -382,16 +383,13 @@ pub static COMMENT_CONTENT_TAGS: officekit_markup_base::Accept = officekit_marku
 
 /// The `p188:author` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Author`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Author {
+pub struct AuthorWith<X: NodeExtra> {
     /// The child that is `ExtLstExtensionList`, when there is one.
-    pub ext_lst_extension_list: Option<Box<ExtLstExtensionList>>,
+    pub ext_lst_extension_list: Option<Box<ExtLstExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20188MainAuthor,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `initials`, when the element has it.
@@ -406,32 +404,35 @@ pub struct Author {
     pub user_id: Option<String>,
 }
 
+/// The `p188:author` element of the tree a read gives: [`AuthorWith`] holding nothing in `extra`.
+pub type Author = AuthorWith<()>;
+
+impl Eq for AuthorWith<()> {}
+
 /// The `p188:authorLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_AuthorList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AuthorLst {
+pub struct AuthorLstWith<X: NodeExtra> {
     /// The children that are `Author`, in order.
-    pub author: Vec<Author>,
+    pub author: Vec<AuthorWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20188MainAuthorLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `p188:authorLst` element of the tree a read gives: [`AuthorLstWith`] holding nothing in
+/// `extra`.
+pub type AuthorLst = AuthorLstWith<()>;
+
+impl Eq for AuthorLstWith<()> {}
+
 /// The `p188:cm` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Comment`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Cm {
+pub struct CmWith<X: NodeExtra> {
     /// The attribute `assignedTo`, when the element has it.
     pub assigned_to: Option<String>,
     /// The attribute `authorId`, when the element has it.
@@ -439,24 +440,26 @@ pub struct Cm {
     /// The attribute `complete`, when the element has it.
     pub complete: Option<String>,
     /// The children that are an item of `CommentContent`, in order.
-    pub content: Vec<CommentContent>,
+    pub content: Vec<CommentContentWith<X>>,
     /// The attribute `created`, when the element has it.
     pub created: Option<String>,
     /// The attribute `dueDate`, when the element has it.
     pub due_date: Option<String>,
     /// The child that is `ExtLstCommentPropertiesExtensionList`, when there is one.
     pub ext_lst_comment_properties_extension_list:
-        Option<Box<ExtLstCommentPropertiesExtensionList>>,
+        Option<Box<ExtLstCommentPropertiesExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20188MainCm,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `likes`, when the element has it.
     pub likes: Option<String>,
     /// The child that is `Pos`, when there is one.
-    pub pos: Option<Box<Pos>>,
+    pub pos: Option<Box<PosWith<X>>>,
     /// The attribute `priority`, when the element has it.
     pub priority: Option<String>,
     /// The child that is `ReplyLst`, when there is one.
-    pub reply_lst: Option<Box<ReplyLst>>,
+    pub reply_lst: Option<Box<ReplyLstWith<X>>>,
     /// The attribute `startDate`, when the element has it.
     pub start_date: Option<String>,
     /// The attribute `status`, when the element has it.
@@ -466,74 +469,89 @@ pub struct Cm {
     /// The attribute `title`, when the element has it.
     pub title: Option<String>,
     /// The child that is `TxBody`, when there is one.
-    pub tx_body: Option<Box<TxBody>>,
+    pub tx_body: Option<Box<TxBodyWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `p188:cm` element of the tree a read gives: [`CmWith`] holding nothing in `extra`.
+pub type Cm = CmWith<()>;
+
+impl Eq for CmWith<()> {}
+
 /// The `p188:cmLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_CommentList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CmLst {
+pub struct CmLstWith<X: NodeExtra> {
     /// The children that are `Cm`, in order.
-    pub cm: Vec<Cm>,
+    pub cm: Vec<CmWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20188MainCmLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `p188:cmLst` element of the tree a read gives: [`CmLstWith`] holding nothing in `extra`.
+pub type CmLst = CmLstWith<()>;
+
+impl Eq for CmLstWith<()> {}
 
 /// One child element of a choice: choice in `CT_Comment`.
 ///
 /// The schema types that hold it: `CT_Comment`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum CommentContent {
+pub enum CommentContentWith<X: NodeExtra> {
     /// The element `oac:deMkLst`, a `DeMkLst`.
-    DeMkLst(super::office_drawing_2013_main_command::DeMkLst),
+    DeMkLst(super::office_drawing_2013_main_command::DeMkLstWith<X>),
     /// The element `oac:gridColMkLst`, a `GridColMkLst`.
-    GridColMkLst(super::office_drawing_2013_main_command::GridColMkLst),
+    GridColMkLst(super::office_drawing_2013_main_command::GridColMkLstWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `pc:sldLayoutMkLst`, a `SldLayoutMkLst`.
-    SldLayoutMkLst(super::office_powerpoint_2013_main_command::SldLayoutMkLst),
+    SldLayoutMkLst(super::office_powerpoint_2013_main_command::SldLayoutMkLstWith<X>),
     /// The element `pc:sldMasterMkLst`, a `SldMasterMkLst`.
-    SldMasterMkLst(super::office_powerpoint_2013_main_command::SldMasterMkLst),
+    SldMasterMkLst(super::office_powerpoint_2013_main_command::SldMasterMkLstWith<X>),
     /// The element `pc:sldMkLst`, a `SldMkLst`.
-    SldMkLst(super::office_powerpoint_2013_main_command::SldMkLst),
+    SldMkLst(super::office_powerpoint_2013_main_command::SldMkLstWith<X>),
     /// The element `oac:tcMkLst`, a `TcMkLst`.
-    TcMkLst(super::office_drawing_2013_main_command::TcMkLst),
+    TcMkLst(super::office_drawing_2013_main_command::TcMkLstWith<X>),
     /// The element `oac:trMkLst`, a `TrMkLst`.
-    TrMkLst(super::office_drawing_2013_main_command::TrMkLst),
+    TrMkLst(super::office_drawing_2013_main_command::TrMkLstWith<X>),
     /// The element `oac:txBodyMkLst`, a `TxBodyMkLst`.
-    TxBodyMkLst(super::office_drawing_2013_main_command::TxBodyMkLst),
+    TxBodyMkLst(super::office_drawing_2013_main_command::TxBodyMkLstWith<X>),
     /// The element `oac:txMkLst`, a `TxMkLst`.
-    TxMkLst(super::office_drawing_2013_main_command::TxMkLst),
+    TxMkLst(super::office_drawing_2013_main_command::TxMkLstWith<X>),
     /// The element `p188:unknownAnchor`, a `UnknownAnchor`.
-    UnknownAnchor(UnknownAnchor),
+    UnknownAnchor(UnknownAnchorWith<X>),
 }
+
+/// [`CommentContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type CommentContent = CommentContentWith<()>;
+
+impl Eq for CommentContentWith<()> {}
 
 /// The `p188:commentRel` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_CommentRelationship`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentRel {
+pub struct CommentRelWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20188MainCommentRel,
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `p188:commentRel` element of the tree a read gives: [`CommentRelWith`] holding nothing in
+/// `extra`.
+pub type CommentRel = CommentRelWith<()>;
+
+impl Eq for CommentRelWith<()> {}
 
 /// The simple type `ST_CommentStatus`, kept as the text the file carried.
 ///
@@ -834,46 +852,49 @@ pub trait Context: crate::Context {
 
 /// The `p188:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_CommentPropertiesExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstCommentPropertiesExtensionList {
+pub struct ExtLstCommentPropertiesExtensionListWith<X: NodeExtra> {
     /// The children that are `presentation::Extension`, in order.
-    pub extension: Vec<presentation::Extension>,
+    pub extension: Vec<presentation::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20188MainExtLstCommentPropertiesExtensionList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `p188:extLst` element of the tree a read gives: [`ExtLstCommentPropertiesExtensionListWith`]
+/// holding nothing in `extra`.
+pub type ExtLstCommentPropertiesExtensionList = ExtLstCommentPropertiesExtensionListWith<()>;
+
+impl Eq for ExtLstCommentPropertiesExtensionListWith<()> {}
 
 /// The `p188:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstExtensionList {
+pub struct ExtLstExtensionListWith<X: NodeExtra> {
     /// The children that are `presentation::Extension`, in order.
-    pub extension: Vec<presentation::Extension>,
+    pub extension: Vec<presentation::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20188MainExtLstExtensionList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `p188:extLst` element of the tree a read gives: [`ExtLstExtensionListWith`] holding nothing
+/// in `extra`.
+pub type ExtLstExtensionList = ExtLstExtensionListWith<()>;
+
+impl Eq for ExtLstExtensionListWith<()> {}
+
 /// The `p188:pos` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Point2D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Pos {
+pub struct PosWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20188MainPos,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `x`, when the element has it.
@@ -882,23 +903,25 @@ pub struct Pos {
     pub y: Option<drawing::Coordinate>,
 }
 
+/// The `p188:pos` element of the tree a read gives: [`PosWith`] holding nothing in `extra`.
+pub type Pos = PosWith<()>;
+
+impl Eq for PosWith<()> {}
+
 /// The `p188:reply` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_CommentReply`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Reply {
+pub struct ReplyWith<X: NodeExtra> {
     /// The attribute `authorId`, when the element has it.
     pub author_id: Option<String>,
     /// The attribute `created`, when the element has it.
     pub created: Option<String>,
     /// The child that is `ExtLstCommentPropertiesExtensionList`, when there is one.
     pub ext_lst_comment_properties_extension_list:
-        Option<Box<ExtLstCommentPropertiesExtensionList>>,
+        Option<Box<ExtLstCommentPropertiesExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20188MainReply,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `likes`, when the element has it.
@@ -908,60 +931,73 @@ pub struct Reply {
     /// The attribute `tags`, when the element has it.
     pub tags: Option<String>,
     /// The child that is `TxBody`, when there is one.
-    pub tx_body: Option<Box<TxBody>>,
+    pub tx_body: Option<Box<TxBodyWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `p188:reply` element of the tree a read gives: [`ReplyWith`] holding nothing in `extra`.
+pub type Reply = ReplyWith<()>;
+
+impl Eq for ReplyWith<()> {}
 
 /// The `p188:replyLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_CommentReplyList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ReplyLst {
+pub struct ReplyLstWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20188MainReplyLst,
     /// The children that are `Reply`, in order.
-    pub reply: Vec<Reply>,
+    pub reply: Vec<ReplyWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `p188:replyLst` element of the tree a read gives: [`ReplyLstWith`] holding nothing in
+/// `extra`.
+pub type ReplyLst = ReplyLstWith<()>;
+
+impl Eq for ReplyLstWith<()> {}
 
 /// The `p188:txBody` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TextBody`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TxBody {
+pub struct TxBodyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20188MainTxBody,
     /// The child that is `drawing::BodyProperties`, which the schema requires.
-    pub properties: Box<drawing::BodyProperties>,
+    pub properties: Box<drawing::BodyPropertiesWith<X>>,
     /// The child that is `drawing::TextListStyles`, when there is one.
-    pub text_list_styles: Option<Box<drawing::TextListStyles>>,
+    pub text_list_styles: Option<Box<drawing::TextListStylesWith<X>>>,
     /// The children that are `drawing::TextParagraphs`, in order.
-    pub text_paragraphs: Vec<drawing::TextParagraphs>,
+    pub text_paragraphs: Vec<drawing::TextParagraphsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `p188:txBody` element of the tree a read gives: [`TxBodyWith`] holding nothing in `extra`.
+pub type TxBody = TxBodyWith<()>;
+
+impl Eq for TxBodyWith<()> {}
+
 /// The `p188:unknownAnchor` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_CommentUnknownAnchor`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct UnknownAnchor {
+pub struct UnknownAnchorWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20188MainUnknownAnchor,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `p188:unknownAnchor` element of the tree a read gives: [`UnknownAnchorWith`] holding nothing
+/// in `extra`.
+pub type UnknownAnchor = UnknownAnchorWith<()>;
+
+impl Eq for UnknownAnchorWith<()> {}
 
 /// The hooks of a visitor for the `p188` namespace.
 ///
@@ -1047,7 +1083,29 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl Author {
+impl<X: NodeExtra> AuthorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> AuthorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AuthorWith {
+            ext_lst_extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst_extension_list,
+                ExtLstExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            id: self.id,
+            initials: self.initials,
+            name: self.name,
+            provider_id: self.provider_id,
+            unknown: self.unknown,
+            user_id: self.user_id,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1075,7 +1133,21 @@ impl officekit_markup_base::Write for Author {
     }
 }
 
-impl AuthorLst {
+impl<X: NodeExtra> AuthorLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AuthorLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AuthorLstWith {
+            author: officekit_markup_base::into_extra_list(self.author, AuthorWith::into_extra),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1096,7 +1168,49 @@ impl officekit_markup_base::Write for AuthorLst {
     }
 }
 
-impl Cm {
+impl<X: NodeExtra> CmWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> CmWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CmWith {
+            assigned_to: self.assigned_to,
+            author_id: self.author_id,
+            complete: self.complete,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                CommentContentWith::into_extra,
+            ),
+            created: self.created,
+            due_date: self.due_date,
+            ext_lst_comment_properties_extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst_comment_properties_extension_list,
+                ExtLstCommentPropertiesExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            id: self.id,
+            likes: self.likes,
+            pos: officekit_markup_base::into_extra_optional(&mut self.pos, PosWith::into_extra),
+            priority: self.priority,
+            reply_lst: officekit_markup_base::into_extra_optional(
+                &mut self.reply_lst,
+                ReplyLstWith::into_extra,
+            ),
+            start_date: self.start_date,
+            status: self.status,
+            tags: self.tags,
+            title: self.title,
+            tx_body: officekit_markup_base::into_extra_optional(
+                &mut self.tx_body,
+                TxBodyWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1131,7 +1245,21 @@ impl officekit_markup_base::Write for Cm {
     }
 }
 
-impl CmLst {
+impl<X: NodeExtra> CmLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CmLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CmLstWith {
+            cm: officekit_markup_base::into_extra_list(self.cm, CmWith::into_extra),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1149,6 +1277,29 @@ impl officekit_markup_base::Write for CmLst {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::cm_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> CommentContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CommentContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::DeMkLst(node) => CommentContentWith::DeMkLst(node.into_extra()),
+            Self::GridColMkLst(node) => CommentContentWith::GridColMkLst(node.into_extra()),
+            Self::Other(node) => CommentContentWith::Other(node),
+            Self::SldLayoutMkLst(node) => CommentContentWith::SldLayoutMkLst(node.into_extra()),
+            Self::SldMasterMkLst(node) => CommentContentWith::SldMasterMkLst(node.into_extra()),
+            Self::SldMkLst(node) => CommentContentWith::SldMkLst(node.into_extra()),
+            Self::TcMkLst(node) => CommentContentWith::TcMkLst(node.into_extra()),
+            Self::TrMkLst(node) => CommentContentWith::TrMkLst(node.into_extra()),
+            Self::TxBodyMkLst(node) => CommentContentWith::TxBodyMkLst(node.into_extra()),
+            Self::TxMkLst(node) => CommentContentWith::TxMkLst(node.into_extra()),
+            Self::UnknownAnchor(node) => CommentContentWith::UnknownAnchor(node.into_extra()),
+        }
     }
 }
 
@@ -1202,7 +1353,21 @@ impl officekit_markup_base::Write for CommentContent {
     }
 }
 
-impl CommentRel {
+impl<X: NodeExtra> CommentRelWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CommentRelWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CommentRelWith {
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1276,7 +1441,24 @@ impl CommentStatus {
     }
 }
 
-impl ExtLstCommentPropertiesExtensionList {
+impl<X: NodeExtra> ExtLstCommentPropertiesExtensionListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstCommentPropertiesExtensionListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstCommentPropertiesExtensionListWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                presentation::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1297,7 +1479,24 @@ impl officekit_markup_base::Write for ExtLstCommentPropertiesExtensionList {
     }
 }
 
-impl ExtLstExtensionList {
+impl<X: NodeExtra> ExtLstExtensionListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstExtensionListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstExtensionListWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                presentation::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1318,7 +1517,22 @@ impl officekit_markup_base::Write for ExtLstExtensionList {
     }
 }
 
-impl Pos {
+impl<X: NodeExtra> PosWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PosWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PosWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            x: self.x,
+            y: self.y,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1343,7 +1557,34 @@ impl officekit_markup_base::Write for Pos {
     }
 }
 
-impl Reply {
+impl<X: NodeExtra> ReplyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ReplyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ReplyWith {
+            author_id: self.author_id,
+            created: self.created,
+            ext_lst_comment_properties_extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst_comment_properties_extension_list,
+                ExtLstCommentPropertiesExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            id: self.id,
+            likes: self.likes,
+            status: self.status,
+            tags: self.tags,
+            tx_body: officekit_markup_base::into_extra_optional(
+                &mut self.tx_body,
+                TxBodyWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1372,7 +1613,21 @@ impl officekit_markup_base::Write for Reply {
     }
 }
 
-impl ReplyLst {
+impl<X: NodeExtra> ReplyLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ReplyLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ReplyLstWith {
+            extra: Default::default(),
+            reply: officekit_markup_base::into_extra_list(self.reply, ReplyWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1393,7 +1648,32 @@ impl officekit_markup_base::Write for ReplyLst {
     }
 }
 
-impl TxBody {
+impl<X: NodeExtra> TxBodyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TxBodyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TxBodyWith {
+            extra: Default::default(),
+            properties: officekit_markup_base::into_extra_required(
+                *self.properties,
+                drawing::BodyPropertiesWith::into_extra,
+            ),
+            text_list_styles: officekit_markup_base::into_extra_optional(
+                &mut self.text_list_styles,
+                drawing::TextListStylesWith::into_extra,
+            ),
+            text_paragraphs: officekit_markup_base::into_extra_list(
+                self.text_paragraphs,
+                drawing::TextParagraphsWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1414,7 +1694,20 @@ impl officekit_markup_base::Write for TxBody {
     }
 }
 
-impl UnknownAnchor {
+impl<X: NodeExtra> UnknownAnchorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> UnknownAnchorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UnknownAnchorWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

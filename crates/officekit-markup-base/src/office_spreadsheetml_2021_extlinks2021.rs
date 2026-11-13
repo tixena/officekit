@@ -216,9 +216,12 @@
 //! elements. The `read` module has a function that reads an element into each, and the
 //! `write` module one that writes each back to an element.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use crate::NodeExtra;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -250,55 +253,77 @@ pub static ALTERNATE_URLS_SHAPE: crate::Shape = crate::Shape {
 
 /// The `xxl21:absoluteUrl` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_AlternateUrl`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AbsoluteUrl {
+pub struct AbsoluteUrlWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2021Extlinks2021AbsoluteUrl,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `xxl21:absoluteUrl` element of the tree a read gives: [`AbsoluteUrlWith`] holding nothing in
+/// `extra`.
+pub type AbsoluteUrl = AbsoluteUrlWith<()>;
+
+impl Eq for AbsoluteUrlWith<()> {}
 
 /// The `xxl21:alternateUrls` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_ExternalBookAlternateUrls`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AlternateUrls {
+pub struct AlternateUrlsWith<X: NodeExtra> {
     /// The child that is `AbsoluteUrl`, when there is one.
-    pub absolute_url: Option<Box<AbsoluteUrl>>,
+    pub absolute_url: Option<Box<AbsoluteUrlWith<X>>>,
     /// The attribute `driveId`, when the element has it.
     pub drive_id: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2021Extlinks2021AlternateUrls,
     /// The attribute `itemId`, when the element has it.
     pub item_id: Option<String>,
     /// The child that is `RelativeUrl`, when there is one.
-    pub relative_url: Option<Box<RelativeUrl>>,
+    pub relative_url: Option<Box<RelativeUrlWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `xxl21:alternateUrls` element of the tree a read gives: [`AlternateUrlsWith`] holding
+/// nothing in `extra`.
+pub type AlternateUrls = AlternateUrlsWith<()>;
+
+impl Eq for AlternateUrlsWith<()> {}
 
 /// The `xxl21:relativeUrl` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_AlternateUrl`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RelativeUrl {
+pub struct RelativeUrlWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2021Extlinks2021RelativeUrl,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-impl AbsoluteUrl {
+/// The `xxl21:relativeUrl` element of the tree a read gives: [`RelativeUrlWith`] holding nothing in
+/// `extra`.
+pub type RelativeUrl = RelativeUrlWith<()>;
+
+impl Eq for RelativeUrlWith<()> {}
+
+impl<X: NodeExtra> AbsoluteUrlWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AbsoluteUrlWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AbsoluteUrlWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -319,7 +344,30 @@ impl crate::Write for AbsoluteUrl {
     }
 }
 
-impl AlternateUrls {
+impl<X: NodeExtra> AlternateUrlsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> AlternateUrlsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AlternateUrlsWith {
+            absolute_url: crate::into_extra_optional(
+                &mut self.absolute_url,
+                AbsoluteUrlWith::into_extra,
+            ),
+            drive_id: self.drive_id,
+            extra: Default::default(),
+            item_id: self.item_id,
+            relative_url: crate::into_extra_optional(
+                &mut self.relative_url,
+                RelativeUrlWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -344,7 +392,20 @@ impl crate::Write for AlternateUrls {
     }
 }
 
-impl RelativeUrl {
+impl<X: NodeExtra> RelativeUrlWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RelativeUrlWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RelativeUrlWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

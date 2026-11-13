@@ -221,6 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::common_simple_types;
 use officekit_markup_base::vml_presentation_drawing;
 use officekit_markup_base::vml_spreadsheet_drawing;
@@ -228,14 +229,6 @@ use officekit_markup_base::vml_wordprocessing_drawing;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
-#[cfg(feature = "binary-format")]
-use rkyv::de::Pooling;
-#[cfg(feature = "binary-format")]
-use rkyv::rancor::Source;
-#[cfg(feature = "binary-format")]
-use rkyv::ser::{Allocator, Sharing, Writer};
-#[cfg(feature = "binary-format")]
-use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_O: Option<NamespaceId> = Some(60);
 const NS_PVML: Option<NamespaceId> = Some(87);
@@ -1332,17 +1325,9 @@ pub static TEXT_BOX_CONTENT_TAGS: officekit_markup_base::Accept = officekit_mark
 
 /// The `v:arc` element, Arc Segment (ECMA-376 Part 4, section 19.1.2.1). Its schema type is
 /// `CT_Arc`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArcSegment {
+pub struct ArcSegmentWith<X: NodeExtra> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -1378,8 +1363,7 @@ pub struct ArcSegment {
     /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
     /// The children that are an item of `ShapeElementContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<ShapeElementContent>,
+    pub content: Vec<ShapeElementContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
     /// The attribute `coordsize`, when the element has it.
@@ -1394,6 +1378,8 @@ pub struct ArcSegment {
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `endAngle`, when the element has it.
     pub end_angle: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlArcSegment,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -1460,19 +1446,16 @@ pub struct ArcSegment {
     pub wrapcoords: Option<String>,
 }
 
+/// The `v:arc` element of the tree a read gives: [`ArcSegmentWith`] holding nothing in `extra`.
+pub type ArcSegment = ArcSegmentWith<()>;
+
+impl Eq for ArcSegmentWith<()> {}
+
 /// The `v:curve` element, Bezier Curve (ECMA-376 Part 4, section 19.1.2.3). Its schema type is
 /// `CT_Curve`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BezierCurve {
+pub struct BezierCurveWith<X: NodeExtra> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -1508,8 +1491,7 @@ pub struct BezierCurve {
     /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
     /// The children that are an item of `ShapeElementContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<ShapeElementContent>,
+    pub content: Vec<ShapeElementContentWith<X>>,
     /// The attribute `control1`, when the element has it.
     pub control1: Option<String>,
     /// The attribute `control2`, when the element has it.
@@ -1526,6 +1508,8 @@ pub struct BezierCurve {
     pub dgmnodekind: Option<String>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlBezierCurve,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -1594,22 +1578,24 @@ pub struct BezierCurve {
     pub wrapcoords: Option<String>,
 }
 
+/// The `v:curve` element of the tree a read gives: [`BezierCurveWith`] holding nothing in `extra`.
+pub type BezierCurve = BezierCurveWith<()>;
+
+impl Eq for BezierCurveWith<()> {}
+
 /// The `v:background` element, Document Background (ECMA-376 Part 4, section 19.1.2.2). Its schema
 /// type is `CT_Background`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DocumentBackground {
+pub struct DocumentBackgroundWith<X: NodeExtra> {
     /// The attribute `o:bwmode`, when the element has it.
     pub bwmode: Option<super::vml_office_drawing::BlackAndWhiteModes>,
     /// The attribute `o:bwnormal`, when the element has it.
     pub bwnormal: Option<super::vml_office_drawing::BlackAndWhiteModes>,
     /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlDocumentBackground,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -1617,12 +1603,18 @@ pub struct DocumentBackground {
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The child that is `ShapeFillProperties`, when there is one.
-    pub shape_fill_properties: Option<Box<ShapeFillProperties>>,
+    pub shape_fill_properties: Option<Box<ShapeFillPropertiesWith<X>>>,
     /// The attribute `o:targetscreensize`, when the element has it.
     pub targetscreensize: Option<super::vml_office_drawing::ScreenSizesType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `v:background` element of the tree a read gives: [`DocumentBackgroundWith`] holding nothing
+/// in `extra`.
+pub type DocumentBackground = DocumentBackgroundWith<()>;
+
+impl Eq for DocumentBackgroundWith<()> {}
 
 /// Gradient Fill Computation Type, the simple type `ST_FillMethod` (ECMA-376 Part 4, section
 /// 19.1.3.3), kept as the text the file carried.
@@ -1656,14 +1648,9 @@ pub enum GradientFillComputationTypeMember {
 
 /// The `v:imagedata` element, Image Data (ECMA-376 Part 4, section 19.1.2.11). Its schema type is
 /// `CT_ImageData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ImageData {
+pub struct ImageDataWith<X: NodeExtra> {
     /// The attribute `o:althref`, when the element has it.
     pub althref: Option<String>,
     /// The attribute `bilevel`, when the element has it.
@@ -1684,6 +1671,8 @@ pub struct ImageData {
     pub detectmouseclick: Option<common_simple_types::BooleanValue>,
     /// The attribute `embosscolor`, when the element has it.
     pub embosscolor: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlImageData,
     /// The attribute `gain`, when the element has it.
     pub gain: Option<String>,
     /// The attribute `gamma`, when the element has it.
@@ -1716,19 +1705,17 @@ pub struct ImageData {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `v:imagedata` element of the tree a read gives: [`ImageDataWith`] holding nothing in
+/// `extra`.
+pub type ImageData = ImageDataWith<()>;
+
+impl Eq for ImageDataWith<()> {}
+
 /// The `v:image` element, Image File (ECMA-376 Part 4, section 19.1.2.10). Its schema type is
 /// `CT_Image`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ImageFile {
+pub struct ImageFileWith<X: NodeExtra> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -1768,8 +1755,7 @@ pub struct ImageFile {
     /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
     /// The children that are an item of `ShapeElementContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<ShapeElementContent>,
+    pub content: Vec<ShapeElementContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
     /// The attribute `coordsize`, when the element has it.
@@ -1790,6 +1776,8 @@ pub struct ImageFile {
     pub dgmnodekind: Option<String>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlImageFile,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -1862,6 +1850,11 @@ pub struct ImageFile {
     pub wrapcoords: Option<String>,
 }
 
+/// The `v:image` element of the tree a read gives: [`ImageFileWith`] holding nothing in `extra`.
+pub type ImageFile = ImageFileWith<()>;
+
+impl Eq for ImageFileWith<()> {}
+
 /// Image Scaling Behavior, the simple type `ST_ImageAspect` (ECMA-376 Part 4, section 19.1.3.5),
 /// kept as the text the file carried.
 ///
@@ -1889,17 +1882,9 @@ pub enum ImageScalingBehaviorMember {
 }
 
 /// The `v:line` element, Line (ECMA-376 Part 4, section 19.1.2.12). Its schema type is `CT_Line`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Line {
+pub struct LineWith<X: NodeExtra> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -1935,8 +1920,7 @@ pub struct Line {
     /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
     /// The children that are an item of `ShapeElementContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<ShapeElementContent>,
+    pub content: Vec<ShapeElementContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
     /// The attribute `coordsize`, when the element has it.
@@ -1949,6 +1933,8 @@ pub struct Line {
     pub dgmnodekind: Option<String>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlLine,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -2017,6 +2003,11 @@ pub struct Line {
     pub wrapcoords: Option<String>,
 }
 
+/// The `v:line` element of the tree a read gives: [`LineWith`] holding nothing in `extra`.
+pub type Line = LineWith<()>;
+
+impl Eq for LineWith<()> {}
+
 /// Line Join Type, the simple type `ST_StrokeJoinStyle` (ECMA-376 Part 4, section 19.1.3.11), kept
 /// as the text the file carried.
 ///
@@ -2045,14 +2036,9 @@ pub enum LineJoinTypeMember {
 
 /// The `v:stroke` element, Line Stroke Settings (ECMA-376 Part 4, section 19.1.2.21). Its schema
 /// type is `CT_Stroke`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LineStrokeSettings {
+pub struct LineStrokeSettingsWith<X: NodeExtra> {
     /// The attribute `o:althref`, when the element has it.
     pub althref: Option<String>,
     /// The attribute `color`, when the element has it.
@@ -2069,6 +2055,8 @@ pub struct LineStrokeSettings {
     pub endarrowwidth: Option<StrokeArrowheadWidth>,
     /// The attribute `endcap`, when the element has it.
     pub endcap: Option<StrokeEndCapType>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlLineStrokeSettings,
     /// The attribute `filltype`, when the element has it.
     pub filltype: Option<ShapeFillType>,
     /// The attribute `o:forcedash`, when the element has it.
@@ -2108,15 +2096,16 @@ pub struct LineStrokeSettings {
     /// The attribute `startarrowwidth`, when the element has it.
     pub startarrowwidth: Option<StrokeArrowheadWidth>,
     /// The child that is `super::vml_office_drawing::TextBoxBottomStroke`, when there is one.
-    pub text_box_bottom_stroke: Option<Box<super::vml_office_drawing::TextBoxBottomStroke>>,
+    pub text_box_bottom_stroke: Option<Box<super::vml_office_drawing::TextBoxBottomStrokeWith<X>>>,
     /// The child that is `super::vml_office_drawing::TextBoxInteriorStroke`, when there is one.
-    pub text_box_interior_stroke: Option<Box<super::vml_office_drawing::TextBoxInteriorStroke>>,
+    pub text_box_interior_stroke:
+        Option<Box<super::vml_office_drawing::TextBoxInteriorStrokeWith<X>>>,
     /// The child that is `super::vml_office_drawing::TextBoxLeftStroke`, when there is one.
-    pub text_box_left_stroke: Option<Box<super::vml_office_drawing::TextBoxLeftStroke>>,
+    pub text_box_left_stroke: Option<Box<super::vml_office_drawing::TextBoxLeftStrokeWith<X>>>,
     /// The child that is `super::vml_office_drawing::TextBoxRightStroke`, when there is one.
-    pub text_box_right_stroke: Option<Box<super::vml_office_drawing::TextBoxRightStroke>>,
+    pub text_box_right_stroke: Option<Box<super::vml_office_drawing::TextBoxRightStrokeWith<X>>>,
     /// The child that is `super::vml_office_drawing::TextBoxTopStroke`, when there is one.
-    pub text_box_top_stroke: Option<Box<super::vml_office_drawing::TextBoxTopStroke>>,
+    pub text_box_top_stroke: Option<Box<super::vml_office_drawing::TextBoxTopStrokeWith<X>>>,
     /// The attribute `o:title`, when the element has it.
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -2125,19 +2114,17 @@ pub struct LineStrokeSettings {
     pub weight: Option<String>,
 }
 
+/// The `v:stroke` element of the tree a read gives: [`LineStrokeSettingsWith`] holding nothing in
+/// `extra`.
+pub type LineStrokeSettings = LineStrokeSettingsWith<()>;
+
+impl Eq for LineStrokeSettingsWith<()> {}
+
 /// The `v:polyline` element, Multiple Path Line (ECMA-376 Part 4, section 19.1.2.15). Its schema
 /// type is `CT_PolyLine`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MultiplePathLine {
+pub struct MultiplePathLineWith<X: NodeExtra> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -2173,8 +2160,7 @@ pub struct MultiplePathLine {
     /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
     /// The children that are an item of `MultiplePathLineContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<MultiplePathLineContent>,
+    pub content: Vec<MultiplePathLineContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
     /// The attribute `coordsize`, when the element has it.
@@ -2187,6 +2173,8 @@ pub struct MultiplePathLine {
     pub dgmnodekind: Option<String>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlMultiplePathLine,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -2253,77 +2241,81 @@ pub struct MultiplePathLine {
     pub wrapcoords: Option<String>,
 }
 
+/// The `v:polyline` element of the tree a read gives: [`MultiplePathLineWith`] holding nothing in
+/// `extra`.
+pub type MultiplePathLine = MultiplePathLineWith<()>;
+
+impl Eq for MultiplePathLineWith<()> {}
+
 /// One child element of a choice: local choice in `CT_PolyLine`.
 ///
 /// The schema types that hold it: `CT_PolyLine`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
-pub enum MultiplePathLineContent {
+#[derive(Clone, Debug, PartialEq)]
+pub enum MultiplePathLineContentWith<X: NodeExtra> {
     /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
-    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLocked),
+    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>),
     /// The element `xvml:ClientData`, a `AttachedObjectData`.
-    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectData),
+    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectDataWith<X>),
     /// The element `w10:borderbottom`, a `BottomBorder`.
-    BottomBorder(vml_wordprocessing_drawing::BottomBorder),
+    BottomBorder(vml_wordprocessing_drawing::BottomBorderWith<X>),
     /// The element `o:callout`, a `Callout`.
-    Callout(super::vml_office_drawing::Callout),
+    Callout(super::vml_office_drawing::CalloutWith<X>),
     /// The element `o:signatureline`, a `DigitalSignatureLine`.
-    DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLine),
+    DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLineWith<X>),
     /// The element `o:extrusion`, a `Extrusion`.
-    Extrusion(super::vml_office_drawing::Extrusion),
+    Extrusion(super::vml_office_drawing::ExtrusionWith<X>),
     /// The element `v:imagedata`, a `ImageData`.
-    ImageData(ImageData),
+    ImageData(ImageDataWith<X>),
     /// The element `o:ink`, a `Ink`.
-    Ink(super::vml_office_drawing::Ink),
+    Ink(super::vml_office_drawing::InkWith<X>),
     /// The element `w10:borderleft`, a `LeftBorder`.
-    LeftBorder(vml_wordprocessing_drawing::LeftBorder),
+    LeftBorder(vml_wordprocessing_drawing::LeftBorderWith<X>),
     /// The element `v:stroke`, a `LineStrokeSettings`.
-    LineStrokeSettings(LineStrokeSettings),
+    LineStrokeSettings(LineStrokeSettingsWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `w10:borderright`, a `RightBorder`.
-    RightBorder(vml_wordprocessing_drawing::RightBorder),
+    RightBorder(vml_wordprocessing_drawing::RightBorderWith<X>),
     /// The element `v:formulas`, a `SetOfFormulas`.
-    SetOfFormulas(SetOfFormulas),
+    SetOfFormulas(SetOfFormulasWith<X>),
     /// The element `v:handles`, a `SetOfHandles`.
-    SetOfHandles(SetOfHandles),
+    SetOfHandles(SetOfHandlesWith<X>),
     /// The element `v:shadow`, a `ShadowEffect`.
-    ShadowEffect(ShadowEffect),
+    ShadowEffect(ShadowEffectWith<X>),
     /// The element `o:clippath`, a `ShapeClippingPath`.
-    ShapeClippingPath(super::vml_office_drawing::ShapeClippingPath),
+    ShapeClippingPath(super::vml_office_drawing::ShapeClippingPathWith<X>),
     /// The element `v:fill`, a `ShapeFillProperties`.
-    ShapeFillProperties(ShapeFillProperties),
+    ShapeFillProperties(ShapeFillPropertiesWith<X>),
     /// The element `v:path`, a `ShapePath`.
-    ShapePath(ShapePath),
+    ShapePath(ShapePathWith<X>),
     /// The element `o:lock`, a `ShapeProtections`.
-    ShapeProtections(super::vml_office_drawing::ShapeProtections),
+    ShapeProtections(super::vml_office_drawing::ShapeProtectionsWith<X>),
     /// The element `o:skew`, a `SkewTransform`.
-    SkewTransform(super::vml_office_drawing::SkewTransform),
+    SkewTransform(super::vml_office_drawing::SkewTransformWith<X>),
     /// The element `v:textbox`, a `TextBox`.
-    TextBox(TextBox),
+    TextBox(TextBoxWith<X>),
     /// The element `v:textpath`, a `TextLayoutPath`.
-    TextLayoutPath(TextLayoutPath),
+    TextLayoutPath(TextLayoutPathWith<X>),
     /// The element `w10:wrap`, a `TextWrapping`.
-    TextWrapping(vml_wordprocessing_drawing::TextWrapping),
+    TextWrapping(vml_wordprocessing_drawing::TextWrappingWith<X>),
     /// The element `w10:bordertop`, a `TopBorder`.
-    TopBorder(vml_wordprocessing_drawing::TopBorder),
+    TopBorder(vml_wordprocessing_drawing::TopBorderWith<X>),
     /// The element `pvml:textdata`, a `VMLDiagramText`.
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramText),
+    VMLDiagramText(vml_presentation_drawing::VMLDiagramTextWith<X>),
 }
 
+/// [`MultiplePathLineContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type MultiplePathLineContent = MultiplePathLineContentWith<()>;
+
+impl Eq for MultiplePathLineContentWith<()> {}
+
 /// The `v:oval` element, Oval (ECMA-376 Part 4, section 19.1.2.13). Its schema type is `CT_Oval`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Oval {
+pub struct OvalWith<X: NodeExtra> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -2359,8 +2351,7 @@ pub struct Oval {
     /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
     /// The children that are an item of `ShapeElementContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<ShapeElementContent>,
+    pub content: Vec<ShapeElementContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
     /// The attribute `coordsize`, when the element has it.
@@ -2373,6 +2364,8 @@ pub struct Oval {
     pub dgmnodekind: Option<String>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlOval,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -2436,20 +2429,17 @@ pub struct Oval {
     /// The attribute `wrapcoords`, when the element has it.
     pub wrapcoords: Option<String>,
 }
+
+/// The `v:oval` element of the tree a read gives: [`OvalWith`] holding nothing in `extra`.
+pub type Oval = OvalWith<()>;
+
+impl Eq for OvalWith<()> {}
 
 /// The `v:rect` element, Rectangle (ECMA-376 Part 4, section 19.1.2.16). Its schema type is
 /// `CT_Rect`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Rectangle {
+pub struct RectangleWith<X: NodeExtra> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -2485,8 +2475,7 @@ pub struct Rectangle {
     /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
     /// The children that are an item of `ShapeElementContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<ShapeElementContent>,
+    pub content: Vec<ShapeElementContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
     /// The attribute `coordsize`, when the element has it.
@@ -2499,6 +2488,8 @@ pub struct Rectangle {
     pub dgmnodekind: Option<String>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlRectangle,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -2563,19 +2554,16 @@ pub struct Rectangle {
     pub wrapcoords: Option<String>,
 }
 
+/// The `v:rect` element of the tree a read gives: [`RectangleWith`] holding nothing in `extra`.
+pub type Rectangle = RectangleWith<()>;
+
+impl Eq for RectangleWith<()> {}
+
 /// The `v:roundrect` element, Rounded Rectangle (ECMA-376 Part 4, section 19.1.2.17). Its schema
 /// type is `CT_RoundRect`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RoundedRectangle {
+pub struct RoundedRectangleWith<X: NodeExtra> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -2613,8 +2601,7 @@ pub struct RoundedRectangle {
     /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
     /// The children that are an item of `ShapeElementContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<ShapeElementContent>,
+    pub content: Vec<ShapeElementContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
     /// The attribute `coordsize`, when the element has it.
@@ -2627,6 +2614,8 @@ pub struct RoundedRectangle {
     pub dgmnodekind: Option<String>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlRoundedRectangle,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -2691,52 +2680,61 @@ pub struct RoundedRectangle {
     pub wrapcoords: Option<String>,
 }
 
+/// The `v:roundrect` element of the tree a read gives: [`RoundedRectangleWith`] holding nothing in
+/// `extra`.
+pub type RoundedRectangle = RoundedRectangleWith<()>;
+
+impl Eq for RoundedRectangleWith<()> {}
+
 /// The `v:formulas` element, Set of Formulas (ECMA-376 Part 4, section 19.1.2.6). Its schema type
 /// is `CT_Formulas`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SetOfFormulas {
+pub struct SetOfFormulasWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSetOfFormulas,
     /// The children that are `SingleFormula`, in order.
-    pub single_formula: Vec<SingleFormula>,
+    pub single_formula: Vec<SingleFormulaWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `v:formulas` element of the tree a read gives: [`SetOfFormulasWith`] holding nothing in
+/// `extra`.
+pub type SetOfFormulas = SetOfFormulasWith<()>;
+
+impl Eq for SetOfFormulasWith<()> {}
 
 /// The `v:handles` element, Set of Handles (ECMA-376 Part 4, section 19.1.2.9). Its schema type is
 /// `CT_Handles`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SetOfHandles {
+pub struct SetOfHandlesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSetOfHandles,
     /// The children that are `ShapeHandle`, in order.
-    pub shape_handle: Vec<ShapeHandle>,
+    pub shape_handle: Vec<ShapeHandleWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `v:handles` element of the tree a read gives: [`SetOfHandlesWith`] holding nothing in
+/// `extra`.
+pub type SetOfHandles = SetOfHandlesWith<()>;
+
+impl Eq for SetOfHandlesWith<()> {}
+
 /// The `v:shadow` element, Shadow Effect (ECMA-376 Part 4, section 19.1.2.18). Its schema type is
 /// `CT_Shadow`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShadowEffect {
+pub struct ShadowEffectWith<X: NodeExtra> {
     /// The attribute `color`, when the element has it.
     pub color: Option<String>,
     /// The attribute `color2`, when the element has it.
     pub color2: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlShadowEffect,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `matrix`, when the element has it.
@@ -2758,6 +2756,12 @@ pub struct ShadowEffect {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `v:shadow` element of the tree a read gives: [`ShadowEffectWith`] holding nothing in
+/// `extra`.
+pub type ShadowEffect = ShadowEffectWith<()>;
+
+impl Eq for ShadowEffectWith<()> {}
 
 /// Shadow Type, the simple type `ST_ShadowType` (ECMA-376 Part 4, section 19.1.3.6), kept as the
 /// text the file carried.
@@ -2789,17 +2793,9 @@ pub enum ShadowTypeMember {
 
 /// The `v:shape` element, Shape Definition (ECMA-376 Part 4, section 19.1.2.19). Its schema type is
 /// `CT_Shape`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeDefinition {
+pub struct ShapeDefinitionWith<X: NodeExtra> {
     /// The attribute `adj`, when the element has it.
     pub adj: Option<String>,
     /// The attribute `o:allowincell`, when the element has it.
@@ -2837,8 +2833,7 @@ pub struct ShapeDefinition {
     /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
     /// The children that are an item of `ShapeDefinitionContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<ShapeDefinitionContent>,
+    pub content: Vec<ShapeDefinitionContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
     /// The attribute `coordsize`, when the element has it.
@@ -2853,6 +2848,8 @@ pub struct ShapeDefinition {
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `equationxml`, when the element has it.
     pub equationxml: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlShapeDefinition,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -2923,68 +2920,82 @@ pub struct ShapeDefinition {
     pub wrapcoords: Option<String>,
 }
 
+/// The `v:shape` element of the tree a read gives: [`ShapeDefinitionWith`] holding nothing in
+/// `extra`.
+pub type ShapeDefinition = ShapeDefinitionWith<()>;
+
+impl Eq for ShapeDefinitionWith<()> {}
+
 /// One child element of a choice: local choice in `CT_Shape`.
 ///
 /// The schema types that hold it: `CT_Shape`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
-pub enum ShapeDefinitionContent {
+#[derive(Clone, Debug, PartialEq)]
+pub enum ShapeDefinitionContentWith<X: NodeExtra> {
     /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
-    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLocked),
+    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>),
     /// The element `xvml:ClientData`, a `AttachedObjectData`.
-    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectData),
+    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectDataWith<X>),
     /// The element `w10:borderbottom`, a `BottomBorder`.
-    BottomBorder(vml_wordprocessing_drawing::BottomBorder),
+    BottomBorder(vml_wordprocessing_drawing::BottomBorderWith<X>),
     /// The element `o:callout`, a `Callout`.
-    Callout(super::vml_office_drawing::Callout),
+    Callout(super::vml_office_drawing::CalloutWith<X>),
     /// The element `o:signatureline`, a `DigitalSignatureLine`.
-    DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLine),
+    DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLineWith<X>),
     /// The element `o:extrusion`, a `Extrusion`.
-    Extrusion(super::vml_office_drawing::Extrusion),
+    Extrusion(super::vml_office_drawing::ExtrusionWith<X>),
     /// The element `v:imagedata`, a `ImageData`.
-    ImageData(ImageData),
+    ImageData(ImageDataWith<X>),
     /// The element `o:ink`, a `Ink`.
-    Ink(super::vml_office_drawing::Ink),
+    Ink(super::vml_office_drawing::InkWith<X>),
     /// The element `pvml:iscomment`, a `InkAnnotationFlag`.
-    InkAnnotationFlag(vml_presentation_drawing::InkAnnotationFlag),
+    InkAnnotationFlag(vml_presentation_drawing::InkAnnotationFlagWith<X>),
     /// The element `w10:borderleft`, a `LeftBorder`.
-    LeftBorder(vml_wordprocessing_drawing::LeftBorder),
+    LeftBorder(vml_wordprocessing_drawing::LeftBorderWith<X>),
     /// The element `v:stroke`, a `LineStrokeSettings`.
-    LineStrokeSettings(LineStrokeSettings),
+    LineStrokeSettings(LineStrokeSettingsWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `w10:borderright`, a `RightBorder`.
-    RightBorder(vml_wordprocessing_drawing::RightBorder),
+    RightBorder(vml_wordprocessing_drawing::RightBorderWith<X>),
     /// The element `v:formulas`, a `SetOfFormulas`.
-    SetOfFormulas(SetOfFormulas),
+    SetOfFormulas(SetOfFormulasWith<X>),
     /// The element `v:handles`, a `SetOfHandles`.
-    SetOfHandles(SetOfHandles),
+    SetOfHandles(SetOfHandlesWith<X>),
     /// The element `v:shadow`, a `ShadowEffect`.
-    ShadowEffect(ShadowEffect),
+    ShadowEffect(ShadowEffectWith<X>),
     /// The element `o:clippath`, a `ShapeClippingPath`.
-    ShapeClippingPath(super::vml_office_drawing::ShapeClippingPath),
+    ShapeClippingPath(super::vml_office_drawing::ShapeClippingPathWith<X>),
     /// The element `v:fill`, a `ShapeFillProperties`.
-    ShapeFillProperties(ShapeFillProperties),
+    ShapeFillProperties(ShapeFillPropertiesWith<X>),
     /// The element `v:path`, a `ShapePath`.
-    ShapePath(ShapePath),
+    ShapePath(ShapePathWith<X>),
     /// The element `o:lock`, a `ShapeProtections`.
-    ShapeProtections(super::vml_office_drawing::ShapeProtections),
+    ShapeProtections(super::vml_office_drawing::ShapeProtectionsWith<X>),
     /// The element `o:skew`, a `SkewTransform`.
-    SkewTransform(super::vml_office_drawing::SkewTransform),
+    SkewTransform(super::vml_office_drawing::SkewTransformWith<X>),
     /// The element `o:equationxml`, a `StorageForAlternateMathContent`.
-    StorageForAlternateMathContent(super::vml_office_drawing::StorageForAlternateMathContent),
+    StorageForAlternateMathContent(
+        super::vml_office_drawing::StorageForAlternateMathContentWith<X>,
+    ),
     /// The element `v:textbox`, a `TextBox`.
-    TextBox(TextBox),
+    TextBox(TextBoxWith<X>),
     /// The element `v:textpath`, a `TextLayoutPath`.
-    TextLayoutPath(TextLayoutPath),
+    TextLayoutPath(TextLayoutPathWith<X>),
     /// The element `w10:wrap`, a `TextWrapping`.
-    TextWrapping(vml_wordprocessing_drawing::TextWrapping),
+    TextWrapping(vml_wordprocessing_drawing::TextWrappingWith<X>),
     /// The element `w10:bordertop`, a `TopBorder`.
-    TopBorder(vml_wordprocessing_drawing::TopBorder),
+    TopBorder(vml_wordprocessing_drawing::TopBorderWith<X>),
     /// The element `pvml:textdata`, a `VMLDiagramText`.
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramText),
+    VMLDiagramText(vml_presentation_drawing::VMLDiagramTextWith<X>),
 }
+
+/// [`ShapeDefinitionContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type ShapeDefinitionContent = ShapeDefinitionContentWith<()>;
+
+impl Eq for ShapeDefinitionContentWith<()> {}
 
 /// One child element of a choice: `EG_ShapeElements`, local choice in `CT_Oval`, local choice in
 /// `CT_Rect`, local choice in `CT_RoundRect`.
@@ -2993,68 +3004,68 @@ pub enum ShapeDefinitionContent {
 /// `CT_Rect`, `CT_RoundRect`, `CT_Shapetype`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
-pub enum ShapeElementContent {
+#[derive(Clone, Debug, PartialEq)]
+pub enum ShapeElementContentWith<X: NodeExtra> {
     /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
-    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLocked),
+    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>),
     /// The element `xvml:ClientData`, a `AttachedObjectData`.
-    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectData),
+    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectDataWith<X>),
     /// The element `w10:borderbottom`, a `BottomBorder`.
-    BottomBorder(vml_wordprocessing_drawing::BottomBorder),
+    BottomBorder(vml_wordprocessing_drawing::BottomBorderWith<X>),
     /// The element `o:callout`, a `Callout`.
-    Callout(super::vml_office_drawing::Callout),
+    Callout(super::vml_office_drawing::CalloutWith<X>),
     /// The element `o:signatureline`, a `DigitalSignatureLine`.
-    DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLine),
+    DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLineWith<X>),
     /// The element `o:extrusion`, a `Extrusion`.
-    Extrusion(super::vml_office_drawing::Extrusion),
+    Extrusion(super::vml_office_drawing::ExtrusionWith<X>),
     /// The element `v:imagedata`, a `ImageData`.
-    ImageData(ImageData),
+    ImageData(ImageDataWith<X>),
     /// The element `w10:borderleft`, a `LeftBorder`.
-    LeftBorder(vml_wordprocessing_drawing::LeftBorder),
+    LeftBorder(vml_wordprocessing_drawing::LeftBorderWith<X>),
     /// The element `v:stroke`, a `LineStrokeSettings`.
-    LineStrokeSettings(LineStrokeSettings),
+    LineStrokeSettings(LineStrokeSettingsWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `w10:borderright`, a `RightBorder`.
-    RightBorder(vml_wordprocessing_drawing::RightBorder),
+    RightBorder(vml_wordprocessing_drawing::RightBorderWith<X>),
     /// The element `v:formulas`, a `SetOfFormulas`.
-    SetOfFormulas(SetOfFormulas),
+    SetOfFormulas(SetOfFormulasWith<X>),
     /// The element `v:handles`, a `SetOfHandles`.
-    SetOfHandles(SetOfHandles),
+    SetOfHandles(SetOfHandlesWith<X>),
     /// The element `v:shadow`, a `ShadowEffect`.
-    ShadowEffect(ShadowEffect),
+    ShadowEffect(ShadowEffectWith<X>),
     /// The element `o:clippath`, a `ShapeClippingPath`.
-    ShapeClippingPath(super::vml_office_drawing::ShapeClippingPath),
+    ShapeClippingPath(super::vml_office_drawing::ShapeClippingPathWith<X>),
     /// The element `v:fill`, a `ShapeFillProperties`.
-    ShapeFillProperties(ShapeFillProperties),
+    ShapeFillProperties(ShapeFillPropertiesWith<X>),
     /// The element `v:path`, a `ShapePath`.
-    ShapePath(ShapePath),
+    ShapePath(ShapePathWith<X>),
     /// The element `o:lock`, a `ShapeProtections`.
-    ShapeProtections(super::vml_office_drawing::ShapeProtections),
+    ShapeProtections(super::vml_office_drawing::ShapeProtectionsWith<X>),
     /// The element `o:skew`, a `SkewTransform`.
-    SkewTransform(super::vml_office_drawing::SkewTransform),
+    SkewTransform(super::vml_office_drawing::SkewTransformWith<X>),
     /// The element `v:textbox`, a `TextBox`.
-    TextBox(TextBox),
+    TextBox(TextBoxWith<X>),
     /// The element `v:textpath`, a `TextLayoutPath`.
-    TextLayoutPath(TextLayoutPath),
+    TextLayoutPath(TextLayoutPathWith<X>),
     /// The element `w10:wrap`, a `TextWrapping`.
-    TextWrapping(vml_wordprocessing_drawing::TextWrapping),
+    TextWrapping(vml_wordprocessing_drawing::TextWrappingWith<X>),
     /// The element `w10:bordertop`, a `TopBorder`.
-    TopBorder(vml_wordprocessing_drawing::TopBorder),
+    TopBorder(vml_wordprocessing_drawing::TopBorderWith<X>),
     /// The element `pvml:textdata`, a `VMLDiagramText`.
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramText),
+    VMLDiagramText(vml_presentation_drawing::VMLDiagramTextWith<X>),
 }
+
+/// [`ShapeElementContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type ShapeElementContent = ShapeElementContentWith<()>;
+
+impl Eq for ShapeElementContentWith<()> {}
 
 /// The `v:fill` element, Shape Fill Properties (ECMA-376 Part 4, section 19.1.2.5). Its schema type
 /// is `CT_Fill`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeFillProperties {
+pub struct ShapeFillPropertiesWith<X: NodeExtra> {
     /// The attribute `alignshape`, when the element has it.
     pub alignshape: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:althref`, when the element has it.
@@ -3071,6 +3082,8 @@ pub struct ShapeFillProperties {
     pub colors: Option<String>,
     /// The attribute `o:detectmouseclick`, when the element has it.
     pub detectmouseclick: Option<common_simple_types::BooleanValue>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlShapeFillProperties,
     /// The attribute `focus`, when the element has it.
     pub focus: Option<String>,
     /// The attribute `focusposition`, when the element has it.
@@ -3104,7 +3117,7 @@ pub struct ShapeFillProperties {
     /// The child that is `super::vml_office_drawing::ShapeFillExtendedProperties`, when there is
     /// one.
     pub shape_fill_extended_properties:
-        Option<Box<super::vml_office_drawing::ShapeFillExtendedProperties>>,
+        Option<Box<super::vml_office_drawing::ShapeFillExtendedPropertiesWith<X>>>,
     /// The attribute `size`, when the element has it.
     pub size: Option<String>,
     /// The attribute `src`, when the element has it.
@@ -3116,6 +3129,12 @@ pub struct ShapeFillProperties {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `v:fill` element of the tree a read gives: [`ShapeFillPropertiesWith`] holding nothing in
+/// `extra`.
+pub type ShapeFillProperties = ShapeFillPropertiesWith<()>;
+
+impl Eq for ShapeFillPropertiesWith<()> {}
 
 /// Shape Fill Type, the simple type `ST_FillType` (ECMA-376 Part 4, section 19.1.3.4), kept as the
 /// text the file carried.
@@ -3151,17 +3170,9 @@ pub enum ShapeFillTypeMember {
 
 /// The `v:group` element, Shape Group (ECMA-376 Part 4, section 19.1.2.7). Its schema type is
 /// `CT_Group`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeGroup {
+pub struct ShapeGroupWith<X: NodeExtra> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -3183,8 +3194,7 @@ pub struct ShapeGroup {
     /// The attribute `class`, when the element has it.
     pub class: Option<String>,
     /// The children that are an item of `ShapeGroupContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<ShapeGroupContent>,
+    pub content: Vec<ShapeGroupContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
     /// The attribute `coordsize`, when the element has it.
@@ -3199,6 +3209,8 @@ pub struct ShapeGroup {
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `editas`, when the element has it.
     pub editas: Option<ShapeGroupingTypes>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlShapeGroup,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -3247,86 +3259,96 @@ pub struct ShapeGroup {
     pub wrapcoords: Option<String>,
 }
 
+/// The `v:group` element of the tree a read gives: [`ShapeGroupWith`] holding nothing in `extra`.
+pub type ShapeGroup = ShapeGroupWith<()>;
+
+impl Eq for ShapeGroupWith<()> {}
+
 /// One child element of a choice: local choice in `CT_Group`.
 ///
 /// The schema types that hold it: `CT_Group`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
-pub enum ShapeGroupContent {
+#[derive(Clone, Debug, PartialEq)]
+pub enum ShapeGroupContentWith<X: NodeExtra> {
     /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
-    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLocked),
+    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>),
     /// The element `v:arc`, a `ArcSegment`.
-    ArcSegment(ArcSegment),
+    ArcSegment(ArcSegmentWith<X>),
     /// The element `xvml:ClientData`, a `AttachedObjectData`.
-    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectData),
+    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectDataWith<X>),
     /// The element `v:curve`, a `BezierCurve`.
-    BezierCurve(BezierCurve),
+    BezierCurve(BezierCurveWith<X>),
     /// The element `w10:borderbottom`, a `BottomBorder`.
-    BottomBorder(vml_wordprocessing_drawing::BottomBorder),
+    BottomBorder(vml_wordprocessing_drawing::BottomBorderWith<X>),
     /// The element `o:callout`, a `Callout`.
-    Callout(super::vml_office_drawing::Callout),
+    Callout(super::vml_office_drawing::CalloutWith<X>),
     /// The element `o:signatureline`, a `DigitalSignatureLine`.
-    DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLine),
+    DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLineWith<X>),
     /// The element `o:extrusion`, a `Extrusion`.
-    Extrusion(super::vml_office_drawing::Extrusion),
+    Extrusion(super::vml_office_drawing::ExtrusionWith<X>),
     /// The element `v:imagedata`, a `ImageData`.
-    ImageData(ImageData),
+    ImageData(ImageDataWith<X>),
     /// The element `v:image`, a `ImageFile`.
-    ImageFile(ImageFile),
+    ImageFile(ImageFileWith<X>),
     /// The element `w10:borderleft`, a `LeftBorder`.
-    LeftBorder(vml_wordprocessing_drawing::LeftBorder),
+    LeftBorder(vml_wordprocessing_drawing::LeftBorderWith<X>),
     /// The element `v:line`, a `Line`.
-    Line(Line),
+    Line(LineWith<X>),
     /// The element `v:stroke`, a `LineStrokeSettings`.
-    LineStrokeSettings(LineStrokeSettings),
+    LineStrokeSettings(LineStrokeSettingsWith<X>),
     /// The element `v:polyline`, a `MultiplePathLine`.
-    MultiplePathLine(MultiplePathLine),
+    MultiplePathLine(MultiplePathLineWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `v:oval`, a `Oval`.
-    Oval(Oval),
+    Oval(OvalWith<X>),
     /// The element `v:rect`, a `Rectangle`.
-    Rectangle(Rectangle),
+    Rectangle(RectangleWith<X>),
     /// The element `w10:borderright`, a `RightBorder`.
-    RightBorder(vml_wordprocessing_drawing::RightBorder),
+    RightBorder(vml_wordprocessing_drawing::RightBorderWith<X>),
     /// The element `v:roundrect`, a `RoundedRectangle`.
-    RoundedRectangle(RoundedRectangle),
+    RoundedRectangle(RoundedRectangleWith<X>),
     /// The element `v:formulas`, a `SetOfFormulas`.
-    SetOfFormulas(SetOfFormulas),
+    SetOfFormulas(SetOfFormulasWith<X>),
     /// The element `v:handles`, a `SetOfHandles`.
-    SetOfHandles(SetOfHandles),
+    SetOfHandles(SetOfHandlesWith<X>),
     /// The element `v:shadow`, a `ShadowEffect`.
-    ShadowEffect(ShadowEffect),
+    ShadowEffect(ShadowEffectWith<X>),
     /// The element `o:clippath`, a `ShapeClippingPath`.
-    ShapeClippingPath(super::vml_office_drawing::ShapeClippingPath),
+    ShapeClippingPath(super::vml_office_drawing::ShapeClippingPathWith<X>),
     /// The element `v:shape`, a `ShapeDefinition`.
-    ShapeDefinition(ShapeDefinition),
+    ShapeDefinition(ShapeDefinitionWith<X>),
     /// The element `v:fill`, a `ShapeFillProperties`.
-    ShapeFillProperties(ShapeFillProperties),
+    ShapeFillProperties(ShapeFillPropertiesWith<X>),
     /// The element `v:group`, a `ShapeGroup`.
-    ShapeGroup(ShapeGroup),
+    ShapeGroup(ShapeGroupWith<X>),
     /// The element `v:path`, a `ShapePath`.
-    ShapePath(ShapePath),
+    ShapePath(ShapePathWith<X>),
     /// The element `o:lock`, a `ShapeProtections`.
-    ShapeProtections(super::vml_office_drawing::ShapeProtections),
+    ShapeProtections(super::vml_office_drawing::ShapeProtectionsWith<X>),
     /// The element `v:shapetype`, a `ShapeTemplate`.
-    ShapeTemplate(ShapeTemplate),
+    ShapeTemplate(ShapeTemplateWith<X>),
     /// The element `o:skew`, a `SkewTransform`.
-    SkewTransform(super::vml_office_drawing::SkewTransform),
+    SkewTransform(super::vml_office_drawing::SkewTransformWith<X>),
     /// The element `v:textbox`, a `TextBox`.
-    TextBox(TextBox),
+    TextBox(TextBoxWith<X>),
     /// The element `v:textpath`, a `TextLayoutPath`.
-    TextLayoutPath(TextLayoutPath),
+    TextLayoutPath(TextLayoutPathWith<X>),
     /// The element `w10:wrap`, a `TextWrapping`.
-    TextWrapping(vml_wordprocessing_drawing::TextWrapping),
+    TextWrapping(vml_wordprocessing_drawing::TextWrappingWith<X>),
     /// The element `w10:bordertop`, a `TopBorder`.
-    TopBorder(vml_wordprocessing_drawing::TopBorder),
+    TopBorder(vml_wordprocessing_drawing::TopBorderWith<X>),
     /// The element `o:diagram`, a `VMLDiagram`.
-    VMLDiagram(super::vml_office_drawing::VMLDiagram),
+    VMLDiagram(super::vml_office_drawing::VMLDiagramWith<X>),
     /// The element `pvml:textdata`, a `VMLDiagramText`.
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramText),
+    VMLDiagramText(vml_presentation_drawing::VMLDiagramTextWith<X>),
 }
+
+/// [`ShapeGroupContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type ShapeGroupContent = ShapeGroupContentWith<()>;
+
+impl Eq for ShapeGroupContentWith<()> {}
 
 /// Shape Grouping Types, the simple type `ST_EditAs` (ECMA-376 Part 4, section 19.1.3.1), kept as
 /// the text the file carried.
@@ -3363,14 +3385,11 @@ pub enum ShapeGroupingTypesMember {
 }
 
 /// The `v:h` element, Shape Handle (ECMA-376 Part 4, section 19.1.2.8). Its schema type is `CT_H`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeHandle {
+pub struct ShapeHandleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlShapeHandle,
     /// The attribute `invx`, when the element has it.
     pub invx: Option<common_simple_types::BooleanValue>,
     /// The attribute `invy`, when the element has it.
@@ -3393,16 +3412,16 @@ pub struct ShapeHandle {
     pub yrange: Option<String>,
 }
 
+/// The `v:h` element of the tree a read gives: [`ShapeHandleWith`] holding nothing in `extra`.
+pub type ShapeHandle = ShapeHandleWith<()>;
+
+impl Eq for ShapeHandleWith<()> {}
+
 /// The `v:path` element, Shape Path (ECMA-376 Part 4, section 19.1.2.14). Its schema type is
 /// `CT_Path`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapePath {
+pub struct ShapePathWith<X: NodeExtra> {
     /// The attribute `arrowok`, when the element has it.
     pub arrowok: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:connectangles`, when the element has it.
@@ -3411,6 +3430,8 @@ pub struct ShapePath {
     pub connectlocs: Option<String>,
     /// The attribute `o:connecttype`, when the element has it.
     pub connecttype: Option<super::vml_office_drawing::ConnectionLocationsType>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlShapePath,
     /// The attribute `o:extrusionok`, when the element has it.
     pub extrusionok: Option<common_simple_types::BooleanValue>,
     /// The attribute `fillok`, when the element has it.
@@ -3437,19 +3458,16 @@ pub struct ShapePath {
     pub v: Option<String>,
 }
 
+/// The `v:path` element of the tree a read gives: [`ShapePathWith`] holding nothing in `extra`.
+pub type ShapePath = ShapePathWith<()>;
+
+impl Eq for ShapePathWith<()> {}
+
 /// The `v:shapetype` element, Shape Template (ECMA-376 Part 4, section 19.1.2.20). Its schema type
 /// is `CT_Shapetype`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeTemplate {
+pub struct ShapeTemplateWith<X: NodeExtra> {
     /// The attribute `adj`, when the element has it.
     pub adj: Option<String>,
     /// The attribute `o:allowincell`, when the element has it.
@@ -3485,12 +3503,11 @@ pub struct ShapeTemplate {
     /// The attribute `o:cliptowrap`, when the element has it.
     pub cliptowrap: Option<common_simple_types::BooleanValue>,
     /// The child that is `super::vml_office_drawing::Complex`, when there is one.
-    pub complex: Option<Box<super::vml_office_drawing::Complex>>,
+    pub complex: Option<Box<super::vml_office_drawing::ComplexWith<X>>>,
     /// The attribute `o:connectortype`, when the element has it.
     pub connectortype: Option<super::vml_office_drawing::ConnectorType>,
     /// The children that are an item of `ShapeElementContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<ShapeElementContent>,
+    pub content: Vec<ShapeElementContentWith<X>>,
     /// The attribute `coordorigin`, when the element has it.
     pub coordorigin: Option<String>,
     /// The attribute `coordsize`, when the element has it.
@@ -3503,6 +3520,8 @@ pub struct ShapeTemplate {
     pub dgmnodekind: Option<String>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlShapeTemplate,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -3571,21 +3590,29 @@ pub struct ShapeTemplate {
     pub wrapcoords: Option<String>,
 }
 
+/// The `v:shapetype` element of the tree a read gives: [`ShapeTemplateWith`] holding nothing in
+/// `extra`.
+pub type ShapeTemplate = ShapeTemplateWith<()>;
+
+impl Eq for ShapeTemplateWith<()> {}
+
 /// The `v:f` element, Single Formula (ECMA-376 Part 4, section 19.1.2.4). Its schema type is
 /// `CT_F`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SingleFormula {
+pub struct SingleFormulaWith<X: NodeExtra> {
     /// The attribute `eqn`, when the element has it.
     pub eqn: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSingleFormula,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `v:f` element of the tree a read gives: [`SingleFormulaWith`] holding nothing in `extra`.
+pub type SingleFormula = SingleFormulaWith<()>;
+
+impl Eq for SingleFormulaWith<()> {}
 
 /// Stroke Arrowhead Length, the simple type `ST_StrokeArrowLength` (ECMA-376 Part 4, section
 /// 19.1.3.7), kept as the text the file carried.
@@ -3729,20 +3756,13 @@ pub enum StrokeLineStyleMember {
 
 /// The `v:textbox` element, Text Box (ECMA-376 Part 4, section 19.1.2.22). Its schema type is
 /// `CT_Textbox`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextBox {
+pub struct TextBoxWith<X: NodeExtra> {
     /// The child that is an item of `TextBoxContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Option<Box<TextBoxContent>>,
+    pub content: Option<Box<TextBoxContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlTextBox,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `inset`, when the element has it.
@@ -3757,29 +3777,36 @@ pub struct TextBox {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `v:textbox` element of the tree a read gives: [`TextBoxWith`] holding nothing in `extra`.
+pub type TextBox = TextBoxWith<()>;
+
+impl Eq for TextBoxWith<()> {}
+
 /// One child element of a choice: local choice in `CT_Textbox`.
 ///
 /// The schema types that hold it: `CT_Textbox`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
-pub enum TextBoxContent {
+#[derive(Clone, Debug, PartialEq)]
+pub enum TextBoxContentWith<X: NodeExtra> {
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `w:txbxContent`, a `RichTextBoxContentContainer`.
-    RichTextBoxContentContainer(super::wordprocessing::RichTextBoxContentContainer),
+    RichTextBoxContentContainer(super::wordprocessing::RichTextBoxContentContainerWith<X>),
 }
+
+/// [`TextBoxContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type TextBoxContent = TextBoxContentWith<()>;
+
+impl Eq for TextBoxContentWith<()> {}
 
 /// The `v:textpath` element, Text Layout Path (ECMA-376 Part 4, section 19.1.2.23). Its schema type
 /// is `CT_TextPath`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextLayoutPath {
+pub struct TextLayoutPathWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlTextLayoutPath,
     /// The attribute `fitpath`, when the element has it.
     pub fitpath: Option<common_simple_types::BooleanValue>,
     /// The attribute `fitshape`, when the element has it.
@@ -3799,6 +3826,12 @@ pub struct TextLayoutPath {
     /// The attribute `xscale`, when the element has it.
     pub xscale: Option<common_simple_types::BooleanValue>,
 }
+
+/// The `v:textpath` element of the tree a read gives: [`TextLayoutPathWith`] holding nothing in
+/// `extra`.
+pub type TextLayoutPath = TextLayoutPathWith<()>;
+
+impl Eq for TextLayoutPathWith<()> {}
 
 /// VML Extension Handling Behaviors, the simple type `ST_Ext` (ECMA-376 Part 4, section 19.1.3.2),
 /// kept as the text the file carried.
@@ -3826,7 +3859,79 @@ pub enum VMLExtensionHandlingBehaviorsMember {
     View,
 }
 
-impl ArcSegment {
+impl<X: NodeExtra> ArcSegmentWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ArcSegmentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ArcSegmentWith {
+            allowincell: self.allowincell,
+            allowoverlap: self.allowoverlap,
+            alt: self.alt,
+            borderbottomcolor: self.borderbottomcolor,
+            borderleftcolor: self.borderleftcolor,
+            borderrightcolor: self.borderrightcolor,
+            bordertopcolor: self.bordertopcolor,
+            bullet: self.bullet,
+            button: self.button,
+            bwmode: self.bwmode,
+            bwnormal: self.bwnormal,
+            bwpure: self.bwpure,
+            chromakey: self.chromakey,
+            class: self.class,
+            clip: self.clip,
+            cliptowrap: self.cliptowrap,
+            connectortype: self.connectortype,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                ShapeElementContentWith::into_extra,
+            ),
+            coordorigin: self.coordorigin,
+            coordsize: self.coordsize,
+            dgmlayout: self.dgmlayout,
+            dgmlayoutmru: self.dgmlayoutmru,
+            dgmnodekind: self.dgmnodekind,
+            doubleclicknotify: self.doubleclicknotify,
+            end_angle: self.end_angle,
+            extra: Default::default(),
+            fillcolor: self.fillcolor,
+            filled: self.filled,
+            forcedash: self.forcedash,
+            hr: self.hr,
+            hralign: self.hralign,
+            href: self.href,
+            hrnoshade: self.hrnoshade,
+            hrpct: self.hrpct,
+            hrstd: self.hrstd,
+            id: self.id,
+            insetmode: self.insetmode,
+            insetpen: self.insetpen,
+            ole: self.ole,
+            oleicon: self.oleicon,
+            oned: self.oned,
+            opacity: self.opacity,
+            preferrelative: self.preferrelative,
+            print: self.print,
+            regroupid: self.regroupid,
+            spid: self.spid,
+            spt: self.spt,
+            start_angle: self.start_angle,
+            strokecolor: self.strokecolor,
+            stroked: self.stroked,
+            strokeweight: self.strokeweight,
+            style: self.style,
+            target: self.target,
+            title: self.title,
+            unknown: self.unknown,
+            userdrawn: self.userdrawn,
+            userhidden: self.userhidden,
+            wrapcoords: self.wrapcoords,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3904,7 +4009,81 @@ impl officekit_markup_base::Write for ArcSegment {
     }
 }
 
-impl BezierCurve {
+impl<X: NodeExtra> BezierCurveWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BezierCurveWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BezierCurveWith {
+            allowincell: self.allowincell,
+            allowoverlap: self.allowoverlap,
+            alt: self.alt,
+            borderbottomcolor: self.borderbottomcolor,
+            borderleftcolor: self.borderleftcolor,
+            borderrightcolor: self.borderrightcolor,
+            bordertopcolor: self.bordertopcolor,
+            bullet: self.bullet,
+            button: self.button,
+            bwmode: self.bwmode,
+            bwnormal: self.bwnormal,
+            bwpure: self.bwpure,
+            chromakey: self.chromakey,
+            class: self.class,
+            clip: self.clip,
+            cliptowrap: self.cliptowrap,
+            connectortype: self.connectortype,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                ShapeElementContentWith::into_extra,
+            ),
+            control1: self.control1,
+            control2: self.control2,
+            coordorigin: self.coordorigin,
+            coordsize: self.coordsize,
+            dgmlayout: self.dgmlayout,
+            dgmlayoutmru: self.dgmlayoutmru,
+            dgmnodekind: self.dgmnodekind,
+            doubleclicknotify: self.doubleclicknotify,
+            extra: Default::default(),
+            fillcolor: self.fillcolor,
+            filled: self.filled,
+            forcedash: self.forcedash,
+            from: self.from,
+            hr: self.hr,
+            hralign: self.hralign,
+            href: self.href,
+            hrnoshade: self.hrnoshade,
+            hrpct: self.hrpct,
+            hrstd: self.hrstd,
+            id: self.id,
+            insetmode: self.insetmode,
+            insetpen: self.insetpen,
+            ole: self.ole,
+            oleicon: self.oleicon,
+            oned: self.oned,
+            opacity: self.opacity,
+            preferrelative: self.preferrelative,
+            print: self.print,
+            regroupid: self.regroupid,
+            spid: self.spid,
+            spt: self.spt,
+            strokecolor: self.strokecolor,
+            stroked: self.stroked,
+            strokeweight: self.strokeweight,
+            style: self.style,
+            target: self.target,
+            title: self.title,
+            to: self.to,
+            unknown: self.unknown,
+            userdrawn: self.userdrawn,
+            userhidden: self.userhidden,
+            wrapcoords: self.wrapcoords,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3984,7 +4163,31 @@ impl officekit_markup_base::Write for BezierCurve {
     }
 }
 
-impl DocumentBackground {
+impl<X: NodeExtra> DocumentBackgroundWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DocumentBackgroundWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DocumentBackgroundWith {
+            bwmode: self.bwmode,
+            bwnormal: self.bwnormal,
+            bwpure: self.bwpure,
+            extra: Default::default(),
+            fillcolor: self.fillcolor,
+            filled: self.filled,
+            id: self.id,
+            shape_fill_properties: officekit_markup_base::into_extra_optional(
+                &mut self.shape_fill_properties,
+                ShapeFillPropertiesWith::into_extra,
+            ),
+            targetscreensize: self.targetscreensize,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4070,7 +4273,44 @@ impl GradientFillComputationType {
     }
 }
 
-impl ImageData {
+impl<X: NodeExtra> ImageDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ImageDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ImageDataWith {
+            althref: self.althref,
+            bilevel: self.bilevel,
+            blacklevel: self.blacklevel,
+            chromakey: self.chromakey,
+            cropbottom: self.cropbottom,
+            cropleft: self.cropleft,
+            cropright: self.cropright,
+            croptop: self.croptop,
+            detectmouseclick: self.detectmouseclick,
+            embosscolor: self.embosscolor,
+            extra: Default::default(),
+            gain: self.gain,
+            gamma: self.gamma,
+            grayscale: self.grayscale,
+            id: self.id,
+            movie: self.movie,
+            o_href: self.o_href,
+            oleid: self.oleid,
+            pict: self.pict,
+            r_href: self.r_href,
+            r_id: self.r_id,
+            recolortarget: self.recolortarget,
+            relid: self.relid,
+            src: self.src,
+            title: self.title,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4117,7 +4357,87 @@ impl officekit_markup_base::Write for ImageData {
     }
 }
 
-impl ImageFile {
+impl<X: NodeExtra> ImageFileWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ImageFileWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ImageFileWith {
+            allowincell: self.allowincell,
+            allowoverlap: self.allowoverlap,
+            alt: self.alt,
+            bilevel: self.bilevel,
+            blacklevel: self.blacklevel,
+            borderbottomcolor: self.borderbottomcolor,
+            borderleftcolor: self.borderleftcolor,
+            borderrightcolor: self.borderrightcolor,
+            bordertopcolor: self.bordertopcolor,
+            bullet: self.bullet,
+            button: self.button,
+            bwmode: self.bwmode,
+            bwnormal: self.bwnormal,
+            bwpure: self.bwpure,
+            chromakey: self.chromakey,
+            class: self.class,
+            clip: self.clip,
+            cliptowrap: self.cliptowrap,
+            connectortype: self.connectortype,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                ShapeElementContentWith::into_extra,
+            ),
+            coordorigin: self.coordorigin,
+            coordsize: self.coordsize,
+            cropbottom: self.cropbottom,
+            cropleft: self.cropleft,
+            cropright: self.cropright,
+            croptop: self.croptop,
+            dgmlayout: self.dgmlayout,
+            dgmlayoutmru: self.dgmlayoutmru,
+            dgmnodekind: self.dgmnodekind,
+            doubleclicknotify: self.doubleclicknotify,
+            extra: Default::default(),
+            fillcolor: self.fillcolor,
+            filled: self.filled,
+            forcedash: self.forcedash,
+            gain: self.gain,
+            gamma: self.gamma,
+            grayscale: self.grayscale,
+            hr: self.hr,
+            hralign: self.hralign,
+            href: self.href,
+            hrnoshade: self.hrnoshade,
+            hrpct: self.hrpct,
+            hrstd: self.hrstd,
+            id: self.id,
+            insetmode: self.insetmode,
+            insetpen: self.insetpen,
+            ole: self.ole,
+            oleicon: self.oleicon,
+            oned: self.oned,
+            opacity: self.opacity,
+            preferrelative: self.preferrelative,
+            print: self.print,
+            regroupid: self.regroupid,
+            spid: self.spid,
+            spt: self.spt,
+            src: self.src,
+            strokecolor: self.strokecolor,
+            stroked: self.stroked,
+            strokeweight: self.strokeweight,
+            style: self.style,
+            target: self.target,
+            title: self.title,
+            unknown: self.unknown,
+            userdrawn: self.userdrawn,
+            userhidden: self.userhidden,
+            wrapcoords: self.wrapcoords,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4257,7 +4577,79 @@ impl ImageScalingBehavior {
     }
 }
 
-impl Line {
+impl<X: NodeExtra> LineWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LineWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LineWith {
+            allowincell: self.allowincell,
+            allowoverlap: self.allowoverlap,
+            alt: self.alt,
+            borderbottomcolor: self.borderbottomcolor,
+            borderleftcolor: self.borderleftcolor,
+            borderrightcolor: self.borderrightcolor,
+            bordertopcolor: self.bordertopcolor,
+            bullet: self.bullet,
+            button: self.button,
+            bwmode: self.bwmode,
+            bwnormal: self.bwnormal,
+            bwpure: self.bwpure,
+            chromakey: self.chromakey,
+            class: self.class,
+            clip: self.clip,
+            cliptowrap: self.cliptowrap,
+            connectortype: self.connectortype,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                ShapeElementContentWith::into_extra,
+            ),
+            coordorigin: self.coordorigin,
+            coordsize: self.coordsize,
+            dgmlayout: self.dgmlayout,
+            dgmlayoutmru: self.dgmlayoutmru,
+            dgmnodekind: self.dgmnodekind,
+            doubleclicknotify: self.doubleclicknotify,
+            extra: Default::default(),
+            fillcolor: self.fillcolor,
+            filled: self.filled,
+            forcedash: self.forcedash,
+            from: self.from,
+            hr: self.hr,
+            hralign: self.hralign,
+            href: self.href,
+            hrnoshade: self.hrnoshade,
+            hrpct: self.hrpct,
+            hrstd: self.hrstd,
+            id: self.id,
+            insetmode: self.insetmode,
+            insetpen: self.insetpen,
+            ole: self.ole,
+            oleicon: self.oleicon,
+            oned: self.oned,
+            opacity: self.opacity,
+            preferrelative: self.preferrelative,
+            print: self.print,
+            regroupid: self.regroupid,
+            spid: self.spid,
+            spt: self.spt,
+            strokecolor: self.strokecolor,
+            stroked: self.stroked,
+            strokeweight: self.strokeweight,
+            style: self.style,
+            target: self.target,
+            title: self.title,
+            to: self.to,
+            unknown: self.unknown,
+            userdrawn: self.userdrawn,
+            userhidden: self.userhidden,
+            wrapcoords: self.wrapcoords,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4385,7 +4777,69 @@ impl LineJoinType {
     }
 }
 
-impl LineStrokeSettings {
+impl<X: NodeExtra> LineStrokeSettingsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> LineStrokeSettingsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LineStrokeSettingsWith {
+            althref: self.althref,
+            color: self.color,
+            color2: self.color2,
+            dashstyle: self.dashstyle,
+            endarrow: self.endarrow,
+            endarrowlength: self.endarrowlength,
+            endarrowwidth: self.endarrowwidth,
+            endcap: self.endcap,
+            extra: Default::default(),
+            filltype: self.filltype,
+            forcedash: self.forcedash,
+            href: self.href,
+            id: self.id,
+            imagealignshape: self.imagealignshape,
+            imageaspect: self.imageaspect,
+            imagesize: self.imagesize,
+            insetpen: self.insetpen,
+            joinstyle: self.joinstyle,
+            linestyle: self.linestyle,
+            miterlimit: self.miterlimit,
+            on: self.on,
+            opacity: self.opacity,
+            r_id: self.r_id,
+            relid: self.relid,
+            src: self.src,
+            startarrow: self.startarrow,
+            startarrowlength: self.startarrowlength,
+            startarrowwidth: self.startarrowwidth,
+            text_box_bottom_stroke: officekit_markup_base::into_extra_optional(
+                &mut self.text_box_bottom_stroke,
+                super::vml_office_drawing::TextBoxBottomStrokeWith::into_extra,
+            ),
+            text_box_interior_stroke: officekit_markup_base::into_extra_optional(
+                &mut self.text_box_interior_stroke,
+                super::vml_office_drawing::TextBoxInteriorStrokeWith::into_extra,
+            ),
+            text_box_left_stroke: officekit_markup_base::into_extra_optional(
+                &mut self.text_box_left_stroke,
+                super::vml_office_drawing::TextBoxLeftStrokeWith::into_extra,
+            ),
+            text_box_right_stroke: officekit_markup_base::into_extra_optional(
+                &mut self.text_box_right_stroke,
+                super::vml_office_drawing::TextBoxRightStrokeWith::into_extra,
+            ),
+            text_box_top_stroke: officekit_markup_base::into_extra_optional(
+                &mut self.text_box_top_stroke,
+                super::vml_office_drawing::TextBoxTopStrokeWith::into_extra,
+            ),
+            title: self.title,
+            unknown: self.unknown,
+            weight: self.weight,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4437,7 +4891,78 @@ impl officekit_markup_base::Write for LineStrokeSettings {
     }
 }
 
-impl MultiplePathLine {
+impl<X: NodeExtra> MultiplePathLineWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MultiplePathLineWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MultiplePathLineWith {
+            allowincell: self.allowincell,
+            allowoverlap: self.allowoverlap,
+            alt: self.alt,
+            borderbottomcolor: self.borderbottomcolor,
+            borderleftcolor: self.borderleftcolor,
+            borderrightcolor: self.borderrightcolor,
+            bordertopcolor: self.bordertopcolor,
+            bullet: self.bullet,
+            button: self.button,
+            bwmode: self.bwmode,
+            bwnormal: self.bwnormal,
+            bwpure: self.bwpure,
+            chromakey: self.chromakey,
+            class: self.class,
+            clip: self.clip,
+            cliptowrap: self.cliptowrap,
+            connectortype: self.connectortype,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                MultiplePathLineContentWith::into_extra,
+            ),
+            coordorigin: self.coordorigin,
+            coordsize: self.coordsize,
+            dgmlayout: self.dgmlayout,
+            dgmlayoutmru: self.dgmlayoutmru,
+            dgmnodekind: self.dgmnodekind,
+            doubleclicknotify: self.doubleclicknotify,
+            extra: Default::default(),
+            fillcolor: self.fillcolor,
+            filled: self.filled,
+            forcedash: self.forcedash,
+            hr: self.hr,
+            hralign: self.hralign,
+            href: self.href,
+            hrnoshade: self.hrnoshade,
+            hrpct: self.hrpct,
+            hrstd: self.hrstd,
+            id: self.id,
+            insetmode: self.insetmode,
+            insetpen: self.insetpen,
+            ole: self.ole,
+            oleicon: self.oleicon,
+            oned: self.oned,
+            opacity: self.opacity,
+            points: self.points,
+            preferrelative: self.preferrelative,
+            print: self.print,
+            regroupid: self.regroupid,
+            spid: self.spid,
+            spt: self.spt,
+            strokecolor: self.strokecolor,
+            stroked: self.stroked,
+            strokeweight: self.strokeweight,
+            style: self.style,
+            target: self.target,
+            title: self.title,
+            unknown: self.unknown,
+            userdrawn: self.userdrawn,
+            userhidden: self.userhidden,
+            wrapcoords: self.wrapcoords,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4511,6 +5036,73 @@ impl officekit_markup_base::Write for MultiplePathLine {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::multiple_path_line(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> MultiplePathLineContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MultiplePathLineContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::AnchorLocationIsLocked(node) => {
+                MultiplePathLineContentWith::AnchorLocationIsLocked(node.into_extra())
+            }
+            Self::AttachedObjectData(node) => {
+                MultiplePathLineContentWith::AttachedObjectData(node.into_extra())
+            }
+            Self::BottomBorder(node) => {
+                MultiplePathLineContentWith::BottomBorder(node.into_extra())
+            }
+            Self::Callout(node) => MultiplePathLineContentWith::Callout(node.into_extra()),
+            Self::DigitalSignatureLine(node) => {
+                MultiplePathLineContentWith::DigitalSignatureLine(node.into_extra())
+            }
+            Self::Extrusion(node) => MultiplePathLineContentWith::Extrusion(node.into_extra()),
+            Self::ImageData(node) => MultiplePathLineContentWith::ImageData(node.into_extra()),
+            Self::Ink(node) => MultiplePathLineContentWith::Ink(node.into_extra()),
+            Self::LeftBorder(node) => MultiplePathLineContentWith::LeftBorder(node.into_extra()),
+            Self::LineStrokeSettings(node) => {
+                MultiplePathLineContentWith::LineStrokeSettings(node.into_extra())
+            }
+            Self::Other(node) => MultiplePathLineContentWith::Other(node),
+            Self::RightBorder(node) => MultiplePathLineContentWith::RightBorder(node.into_extra()),
+            Self::SetOfFormulas(node) => {
+                MultiplePathLineContentWith::SetOfFormulas(node.into_extra())
+            }
+            Self::SetOfHandles(node) => {
+                MultiplePathLineContentWith::SetOfHandles(node.into_extra())
+            }
+            Self::ShadowEffect(node) => {
+                MultiplePathLineContentWith::ShadowEffect(node.into_extra())
+            }
+            Self::ShapeClippingPath(node) => {
+                MultiplePathLineContentWith::ShapeClippingPath(node.into_extra())
+            }
+            Self::ShapeFillProperties(node) => {
+                MultiplePathLineContentWith::ShapeFillProperties(node.into_extra())
+            }
+            Self::ShapePath(node) => MultiplePathLineContentWith::ShapePath(node.into_extra()),
+            Self::ShapeProtections(node) => {
+                MultiplePathLineContentWith::ShapeProtections(node.into_extra())
+            }
+            Self::SkewTransform(node) => {
+                MultiplePathLineContentWith::SkewTransform(node.into_extra())
+            }
+            Self::TextBox(node) => MultiplePathLineContentWith::TextBox(node.into_extra()),
+            Self::TextLayoutPath(node) => {
+                MultiplePathLineContentWith::TextLayoutPath(node.into_extra())
+            }
+            Self::TextWrapping(node) => {
+                MultiplePathLineContentWith::TextWrapping(node.into_extra())
+            }
+            Self::TopBorder(node) => MultiplePathLineContentWith::TopBorder(node.into_extra()),
+            Self::VMLDiagramText(node) => {
+                MultiplePathLineContentWith::VMLDiagramText(node.into_extra())
+            }
+        }
     }
 }
 
@@ -4667,7 +5259,77 @@ impl TryFrom<MultiplePathLineContent> for ShapeElementContent {
     }
 }
 
-impl Oval {
+impl<X: NodeExtra> OvalWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> OvalWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        OvalWith {
+            allowincell: self.allowincell,
+            allowoverlap: self.allowoverlap,
+            alt: self.alt,
+            borderbottomcolor: self.borderbottomcolor,
+            borderleftcolor: self.borderleftcolor,
+            borderrightcolor: self.borderrightcolor,
+            bordertopcolor: self.bordertopcolor,
+            bullet: self.bullet,
+            button: self.button,
+            bwmode: self.bwmode,
+            bwnormal: self.bwnormal,
+            bwpure: self.bwpure,
+            chromakey: self.chromakey,
+            class: self.class,
+            clip: self.clip,
+            cliptowrap: self.cliptowrap,
+            connectortype: self.connectortype,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                ShapeElementContentWith::into_extra,
+            ),
+            coordorigin: self.coordorigin,
+            coordsize: self.coordsize,
+            dgmlayout: self.dgmlayout,
+            dgmlayoutmru: self.dgmlayoutmru,
+            dgmnodekind: self.dgmnodekind,
+            doubleclicknotify: self.doubleclicknotify,
+            extra: Default::default(),
+            fillcolor: self.fillcolor,
+            filled: self.filled,
+            forcedash: self.forcedash,
+            hr: self.hr,
+            hralign: self.hralign,
+            href: self.href,
+            hrnoshade: self.hrnoshade,
+            hrpct: self.hrpct,
+            hrstd: self.hrstd,
+            id: self.id,
+            insetmode: self.insetmode,
+            insetpen: self.insetpen,
+            ole: self.ole,
+            oleicon: self.oleicon,
+            oned: self.oned,
+            opacity: self.opacity,
+            preferrelative: self.preferrelative,
+            print: self.print,
+            regroupid: self.regroupid,
+            spid: self.spid,
+            spt: self.spt,
+            strokecolor: self.strokecolor,
+            stroked: self.stroked,
+            strokeweight: self.strokeweight,
+            style: self.style,
+            target: self.target,
+            title: self.title,
+            unknown: self.unknown,
+            userdrawn: self.userdrawn,
+            userhidden: self.userhidden,
+            wrapcoords: self.wrapcoords,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4743,7 +5405,77 @@ impl officekit_markup_base::Write for Oval {
     }
 }
 
-impl Rectangle {
+impl<X: NodeExtra> RectangleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RectangleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RectangleWith {
+            allowincell: self.allowincell,
+            allowoverlap: self.allowoverlap,
+            alt: self.alt,
+            borderbottomcolor: self.borderbottomcolor,
+            borderleftcolor: self.borderleftcolor,
+            borderrightcolor: self.borderrightcolor,
+            bordertopcolor: self.bordertopcolor,
+            bullet: self.bullet,
+            button: self.button,
+            bwmode: self.bwmode,
+            bwnormal: self.bwnormal,
+            bwpure: self.bwpure,
+            chromakey: self.chromakey,
+            class: self.class,
+            clip: self.clip,
+            cliptowrap: self.cliptowrap,
+            connectortype: self.connectortype,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                ShapeElementContentWith::into_extra,
+            ),
+            coordorigin: self.coordorigin,
+            coordsize: self.coordsize,
+            dgmlayout: self.dgmlayout,
+            dgmlayoutmru: self.dgmlayoutmru,
+            dgmnodekind: self.dgmnodekind,
+            doubleclicknotify: self.doubleclicknotify,
+            extra: Default::default(),
+            fillcolor: self.fillcolor,
+            filled: self.filled,
+            forcedash: self.forcedash,
+            hr: self.hr,
+            hralign: self.hralign,
+            href: self.href,
+            hrnoshade: self.hrnoshade,
+            hrpct: self.hrpct,
+            hrstd: self.hrstd,
+            id: self.id,
+            insetmode: self.insetmode,
+            insetpen: self.insetpen,
+            ole: self.ole,
+            oleicon: self.oleicon,
+            oned: self.oned,
+            opacity: self.opacity,
+            preferrelative: self.preferrelative,
+            print: self.print,
+            regroupid: self.regroupid,
+            spid: self.spid,
+            spt: self.spt,
+            strokecolor: self.strokecolor,
+            stroked: self.stroked,
+            strokeweight: self.strokeweight,
+            style: self.style,
+            target: self.target,
+            title: self.title,
+            unknown: self.unknown,
+            userdrawn: self.userdrawn,
+            userhidden: self.userhidden,
+            wrapcoords: self.wrapcoords,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4819,7 +5551,78 @@ impl officekit_markup_base::Write for Rectangle {
     }
 }
 
-impl RoundedRectangle {
+impl<X: NodeExtra> RoundedRectangleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RoundedRectangleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RoundedRectangleWith {
+            allowincell: self.allowincell,
+            allowoverlap: self.allowoverlap,
+            alt: self.alt,
+            arcsize: self.arcsize,
+            borderbottomcolor: self.borderbottomcolor,
+            borderleftcolor: self.borderleftcolor,
+            borderrightcolor: self.borderrightcolor,
+            bordertopcolor: self.bordertopcolor,
+            bullet: self.bullet,
+            button: self.button,
+            bwmode: self.bwmode,
+            bwnormal: self.bwnormal,
+            bwpure: self.bwpure,
+            chromakey: self.chromakey,
+            class: self.class,
+            clip: self.clip,
+            cliptowrap: self.cliptowrap,
+            connectortype: self.connectortype,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                ShapeElementContentWith::into_extra,
+            ),
+            coordorigin: self.coordorigin,
+            coordsize: self.coordsize,
+            dgmlayout: self.dgmlayout,
+            dgmlayoutmru: self.dgmlayoutmru,
+            dgmnodekind: self.dgmnodekind,
+            doubleclicknotify: self.doubleclicknotify,
+            extra: Default::default(),
+            fillcolor: self.fillcolor,
+            filled: self.filled,
+            forcedash: self.forcedash,
+            hr: self.hr,
+            hralign: self.hralign,
+            href: self.href,
+            hrnoshade: self.hrnoshade,
+            hrpct: self.hrpct,
+            hrstd: self.hrstd,
+            id: self.id,
+            insetmode: self.insetmode,
+            insetpen: self.insetpen,
+            ole: self.ole,
+            oleicon: self.oleicon,
+            oned: self.oned,
+            opacity: self.opacity,
+            preferrelative: self.preferrelative,
+            print: self.print,
+            regroupid: self.regroupid,
+            spid: self.spid,
+            spt: self.spt,
+            strokecolor: self.strokecolor,
+            stroked: self.stroked,
+            strokeweight: self.strokeweight,
+            style: self.style,
+            target: self.target,
+            title: self.title,
+            unknown: self.unknown,
+            userdrawn: self.userdrawn,
+            userhidden: self.userhidden,
+            wrapcoords: self.wrapcoords,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4896,7 +5699,24 @@ impl officekit_markup_base::Write for RoundedRectangle {
     }
 }
 
-impl SetOfFormulas {
+impl<X: NodeExtra> SetOfFormulasWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SetOfFormulasWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SetOfFormulasWith {
+            extra: Default::default(),
+            single_formula: officekit_markup_base::into_extra_list(
+                self.single_formula,
+                SingleFormulaWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4917,7 +5737,24 @@ impl officekit_markup_base::Write for SetOfFormulas {
     }
 }
 
-impl SetOfHandles {
+impl<X: NodeExtra> SetOfHandlesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SetOfHandlesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SetOfHandlesWith {
+            extra: Default::default(),
+            shape_handle: officekit_markup_base::into_extra_list(
+                self.shape_handle,
+                ShapeHandleWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4938,7 +5775,31 @@ impl officekit_markup_base::Write for SetOfHandles {
     }
 }
 
-impl ShadowEffect {
+impl<X: NodeExtra> ShadowEffectWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShadowEffectWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShadowEffectWith {
+            color: self.color,
+            color2: self.color2,
+            extra: Default::default(),
+            id: self.id,
+            matrix: self.matrix,
+            obscured: self.obscured,
+            offset: self.offset,
+            offset2: self.offset2,
+            on: self.on,
+            opacity: self.opacity,
+            origin: self.origin,
+            r#type: self.r#type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5023,7 +5884,82 @@ impl ShadowType {
     }
 }
 
-impl ShapeDefinition {
+impl<X: NodeExtra> ShapeDefinitionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShapeDefinitionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapeDefinitionWith {
+            adj: self.adj,
+            allowincell: self.allowincell,
+            allowoverlap: self.allowoverlap,
+            alt: self.alt,
+            borderbottomcolor: self.borderbottomcolor,
+            borderleftcolor: self.borderleftcolor,
+            borderrightcolor: self.borderrightcolor,
+            bordertopcolor: self.bordertopcolor,
+            bullet: self.bullet,
+            button: self.button,
+            bwmode: self.bwmode,
+            bwnormal: self.bwnormal,
+            bwpure: self.bwpure,
+            chromakey: self.chromakey,
+            class: self.class,
+            clip: self.clip,
+            cliptowrap: self.cliptowrap,
+            connectortype: self.connectortype,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                ShapeDefinitionContentWith::into_extra,
+            ),
+            coordorigin: self.coordorigin,
+            coordsize: self.coordsize,
+            dgmlayout: self.dgmlayout,
+            dgmlayoutmru: self.dgmlayoutmru,
+            dgmnodekind: self.dgmnodekind,
+            doubleclicknotify: self.doubleclicknotify,
+            equationxml: self.equationxml,
+            extra: Default::default(),
+            fillcolor: self.fillcolor,
+            filled: self.filled,
+            forcedash: self.forcedash,
+            gfxdata: self.gfxdata,
+            hr: self.hr,
+            hralign: self.hralign,
+            href: self.href,
+            hrnoshade: self.hrnoshade,
+            hrpct: self.hrpct,
+            hrstd: self.hrstd,
+            id: self.id,
+            insetmode: self.insetmode,
+            insetpen: self.insetpen,
+            ole: self.ole,
+            oleicon: self.oleicon,
+            oned: self.oned,
+            opacity: self.opacity,
+            path: self.path,
+            preferrelative: self.preferrelative,
+            print: self.print,
+            regroupid: self.regroupid,
+            spid: self.spid,
+            spt: self.spt,
+            strokecolor: self.strokecolor,
+            stroked: self.stroked,
+            strokeweight: self.strokeweight,
+            style: self.style,
+            target: self.target,
+            title: self.title,
+            r#type: self.r#type,
+            unknown: self.unknown,
+            userdrawn: self.userdrawn,
+            userhidden: self.userhidden,
+            wrapcoords: self.wrapcoords,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5101,6 +6037,71 @@ impl officekit_markup_base::Write for ShapeDefinition {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::shape_definition(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> ShapeDefinitionContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShapeDefinitionContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::AnchorLocationIsLocked(node) => {
+                ShapeDefinitionContentWith::AnchorLocationIsLocked(node.into_extra())
+            }
+            Self::AttachedObjectData(node) => {
+                ShapeDefinitionContentWith::AttachedObjectData(node.into_extra())
+            }
+            Self::BottomBorder(node) => ShapeDefinitionContentWith::BottomBorder(node.into_extra()),
+            Self::Callout(node) => ShapeDefinitionContentWith::Callout(node.into_extra()),
+            Self::DigitalSignatureLine(node) => {
+                ShapeDefinitionContentWith::DigitalSignatureLine(node.into_extra())
+            }
+            Self::Extrusion(node) => ShapeDefinitionContentWith::Extrusion(node.into_extra()),
+            Self::ImageData(node) => ShapeDefinitionContentWith::ImageData(node.into_extra()),
+            Self::Ink(node) => ShapeDefinitionContentWith::Ink(node.into_extra()),
+            Self::InkAnnotationFlag(node) => {
+                ShapeDefinitionContentWith::InkAnnotationFlag(node.into_extra())
+            }
+            Self::LeftBorder(node) => ShapeDefinitionContentWith::LeftBorder(node.into_extra()),
+            Self::LineStrokeSettings(node) => {
+                ShapeDefinitionContentWith::LineStrokeSettings(node.into_extra())
+            }
+            Self::Other(node) => ShapeDefinitionContentWith::Other(node),
+            Self::RightBorder(node) => ShapeDefinitionContentWith::RightBorder(node.into_extra()),
+            Self::SetOfFormulas(node) => {
+                ShapeDefinitionContentWith::SetOfFormulas(node.into_extra())
+            }
+            Self::SetOfHandles(node) => ShapeDefinitionContentWith::SetOfHandles(node.into_extra()),
+            Self::ShadowEffect(node) => ShapeDefinitionContentWith::ShadowEffect(node.into_extra()),
+            Self::ShapeClippingPath(node) => {
+                ShapeDefinitionContentWith::ShapeClippingPath(node.into_extra())
+            }
+            Self::ShapeFillProperties(node) => {
+                ShapeDefinitionContentWith::ShapeFillProperties(node.into_extra())
+            }
+            Self::ShapePath(node) => ShapeDefinitionContentWith::ShapePath(node.into_extra()),
+            Self::ShapeProtections(node) => {
+                ShapeDefinitionContentWith::ShapeProtections(node.into_extra())
+            }
+            Self::SkewTransform(node) => {
+                ShapeDefinitionContentWith::SkewTransform(node.into_extra())
+            }
+            Self::StorageForAlternateMathContent(node) => {
+                ShapeDefinitionContentWith::StorageForAlternateMathContent(node.into_extra())
+            }
+            Self::TextBox(node) => ShapeDefinitionContentWith::TextBox(node.into_extra()),
+            Self::TextLayoutPath(node) => {
+                ShapeDefinitionContentWith::TextLayoutPath(node.into_extra())
+            }
+            Self::TextWrapping(node) => ShapeDefinitionContentWith::TextWrapping(node.into_extra()),
+            Self::TopBorder(node) => ShapeDefinitionContentWith::TopBorder(node.into_extra()),
+            Self::VMLDiagramText(node) => {
+                ShapeDefinitionContentWith::VMLDiagramText(node.into_extra())
+            }
+        }
     }
 }
 
@@ -5349,6 +6350,60 @@ impl TryFrom<ShapeDefinitionContent> for MultiplePathLineContent {
     }
 }
 
+impl<X: NodeExtra> ShapeElementContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShapeElementContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::AnchorLocationIsLocked(node) => {
+                ShapeElementContentWith::AnchorLocationIsLocked(node.into_extra())
+            }
+            Self::AttachedObjectData(node) => {
+                ShapeElementContentWith::AttachedObjectData(node.into_extra())
+            }
+            Self::BottomBorder(node) => ShapeElementContentWith::BottomBorder(node.into_extra()),
+            Self::Callout(node) => ShapeElementContentWith::Callout(node.into_extra()),
+            Self::DigitalSignatureLine(node) => {
+                ShapeElementContentWith::DigitalSignatureLine(node.into_extra())
+            }
+            Self::Extrusion(node) => ShapeElementContentWith::Extrusion(node.into_extra()),
+            Self::ImageData(node) => ShapeElementContentWith::ImageData(node.into_extra()),
+            Self::LeftBorder(node) => ShapeElementContentWith::LeftBorder(node.into_extra()),
+            Self::LineStrokeSettings(node) => {
+                ShapeElementContentWith::LineStrokeSettings(node.into_extra())
+            }
+            Self::Other(node) => ShapeElementContentWith::Other(node),
+            Self::RightBorder(node) => ShapeElementContentWith::RightBorder(node.into_extra()),
+            Self::SetOfFormulas(node) => ShapeElementContentWith::SetOfFormulas(node.into_extra()),
+            Self::SetOfHandles(node) => ShapeElementContentWith::SetOfHandles(node.into_extra()),
+            Self::ShadowEffect(node) => ShapeElementContentWith::ShadowEffect(node.into_extra()),
+            Self::ShapeClippingPath(node) => {
+                ShapeElementContentWith::ShapeClippingPath(node.into_extra())
+            }
+            Self::ShapeFillProperties(node) => {
+                ShapeElementContentWith::ShapeFillProperties(node.into_extra())
+            }
+            Self::ShapePath(node) => ShapeElementContentWith::ShapePath(node.into_extra()),
+            Self::ShapeProtections(node) => {
+                ShapeElementContentWith::ShapeProtections(node.into_extra())
+            }
+            Self::SkewTransform(node) => ShapeElementContentWith::SkewTransform(node.into_extra()),
+            Self::TextBox(node) => ShapeElementContentWith::TextBox(node.into_extra()),
+            Self::TextLayoutPath(node) => {
+                ShapeElementContentWith::TextLayoutPath(node.into_extra())
+            }
+            Self::TextWrapping(node) => ShapeElementContentWith::TextWrapping(node.into_extra()),
+            Self::TopBorder(node) => ShapeElementContentWith::TopBorder(node.into_extra()),
+            Self::VMLDiagramText(node) => {
+                ShapeElementContentWith::VMLDiagramText(node.into_extra())
+            }
+        }
+    }
+}
+
 impl officekit_markup_base::Read for ShapeElementContent {
     fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
@@ -5431,7 +6486,51 @@ impl officekit_markup_base::Write for ShapeElementContent {
     }
 }
 
-impl ShapeFillProperties {
+impl<X: NodeExtra> ShapeFillPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ShapeFillPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapeFillPropertiesWith {
+            alignshape: self.alignshape,
+            althref: self.althref,
+            angle: self.angle,
+            aspect: self.aspect,
+            color: self.color,
+            color2: self.color2,
+            colors: self.colors,
+            detectmouseclick: self.detectmouseclick,
+            extra: Default::default(),
+            focus: self.focus,
+            focusposition: self.focusposition,
+            focussize: self.focussize,
+            href: self.href,
+            id: self.id,
+            method: self.method,
+            on: self.on,
+            opacity: self.opacity,
+            opacity2: self.opacity2,
+            origin: self.origin,
+            position: self.position,
+            r_id: self.r_id,
+            recolor: self.recolor,
+            relid: self.relid,
+            rotate: self.rotate,
+            shape_fill_extended_properties: officekit_markup_base::into_extra_optional(
+                &mut self.shape_fill_extended_properties,
+                super::vml_office_drawing::ShapeFillExtendedPropertiesWith::into_extra,
+            ),
+            size: self.size,
+            src: self.src,
+            title: self.title,
+            r#type: self.r#type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5534,7 +6633,63 @@ impl ShapeFillType {
     }
 }
 
-impl ShapeGroup {
+impl<X: NodeExtra> ShapeGroupWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShapeGroupWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapeGroupWith {
+            allowincell: self.allowincell,
+            allowoverlap: self.allowoverlap,
+            alt: self.alt,
+            borderbottomcolor: self.borderbottomcolor,
+            borderleftcolor: self.borderleftcolor,
+            borderrightcolor: self.borderrightcolor,
+            bordertopcolor: self.bordertopcolor,
+            bullet: self.bullet,
+            button: self.button,
+            class: self.class,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                ShapeGroupContentWith::into_extra,
+            ),
+            coordorigin: self.coordorigin,
+            coordsize: self.coordsize,
+            dgmlayout: self.dgmlayout,
+            dgmlayoutmru: self.dgmlayoutmru,
+            dgmnodekind: self.dgmnodekind,
+            doubleclicknotify: self.doubleclicknotify,
+            editas: self.editas,
+            extra: Default::default(),
+            fillcolor: self.fillcolor,
+            filled: self.filled,
+            hr: self.hr,
+            hralign: self.hralign,
+            href: self.href,
+            hrnoshade: self.hrnoshade,
+            hrpct: self.hrpct,
+            hrstd: self.hrstd,
+            id: self.id,
+            insetmode: self.insetmode,
+            oned: self.oned,
+            print: self.print,
+            regroupid: self.regroupid,
+            spid: self.spid,
+            style: self.style,
+            tablelimits: self.tablelimits,
+            tableproperties: self.tableproperties,
+            target: self.target,
+            title: self.title,
+            unknown: self.unknown,
+            userdrawn: self.userdrawn,
+            userhidden: self.userhidden,
+            wrapcoords: self.wrapcoords,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5593,6 +6748,74 @@ impl officekit_markup_base::Write for ShapeGroup {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::shape_group(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> ShapeGroupContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShapeGroupContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::AnchorLocationIsLocked(node) => {
+                ShapeGroupContentWith::AnchorLocationIsLocked(node.into_extra())
+            }
+            Self::ArcSegment(node) => ShapeGroupContentWith::ArcSegment(node.into_extra()),
+            Self::AttachedObjectData(node) => {
+                ShapeGroupContentWith::AttachedObjectData(node.into_extra())
+            }
+            Self::BezierCurve(node) => ShapeGroupContentWith::BezierCurve(node.into_extra()),
+            Self::BottomBorder(node) => ShapeGroupContentWith::BottomBorder(node.into_extra()),
+            Self::Callout(node) => ShapeGroupContentWith::Callout(node.into_extra()),
+            Self::DigitalSignatureLine(node) => {
+                ShapeGroupContentWith::DigitalSignatureLine(node.into_extra())
+            }
+            Self::Extrusion(node) => ShapeGroupContentWith::Extrusion(node.into_extra()),
+            Self::ImageData(node) => ShapeGroupContentWith::ImageData(node.into_extra()),
+            Self::ImageFile(node) => ShapeGroupContentWith::ImageFile(node.into_extra()),
+            Self::LeftBorder(node) => ShapeGroupContentWith::LeftBorder(node.into_extra()),
+            Self::Line(node) => ShapeGroupContentWith::Line(node.into_extra()),
+            Self::LineStrokeSettings(node) => {
+                ShapeGroupContentWith::LineStrokeSettings(node.into_extra())
+            }
+            Self::MultiplePathLine(node) => {
+                ShapeGroupContentWith::MultiplePathLine(node.into_extra())
+            }
+            Self::Other(node) => ShapeGroupContentWith::Other(node),
+            Self::Oval(node) => ShapeGroupContentWith::Oval(node.into_extra()),
+            Self::Rectangle(node) => ShapeGroupContentWith::Rectangle(node.into_extra()),
+            Self::RightBorder(node) => ShapeGroupContentWith::RightBorder(node.into_extra()),
+            Self::RoundedRectangle(node) => {
+                ShapeGroupContentWith::RoundedRectangle(node.into_extra())
+            }
+            Self::SetOfFormulas(node) => ShapeGroupContentWith::SetOfFormulas(node.into_extra()),
+            Self::SetOfHandles(node) => ShapeGroupContentWith::SetOfHandles(node.into_extra()),
+            Self::ShadowEffect(node) => ShapeGroupContentWith::ShadowEffect(node.into_extra()),
+            Self::ShapeClippingPath(node) => {
+                ShapeGroupContentWith::ShapeClippingPath(node.into_extra())
+            }
+            Self::ShapeDefinition(node) => {
+                ShapeGroupContentWith::ShapeDefinition(node.into_extra())
+            }
+            Self::ShapeFillProperties(node) => {
+                ShapeGroupContentWith::ShapeFillProperties(node.into_extra())
+            }
+            Self::ShapeGroup(node) => ShapeGroupContentWith::ShapeGroup(node.into_extra()),
+            Self::ShapePath(node) => ShapeGroupContentWith::ShapePath(node.into_extra()),
+            Self::ShapeProtections(node) => {
+                ShapeGroupContentWith::ShapeProtections(node.into_extra())
+            }
+            Self::ShapeTemplate(node) => ShapeGroupContentWith::ShapeTemplate(node.into_extra()),
+            Self::SkewTransform(node) => ShapeGroupContentWith::SkewTransform(node.into_extra()),
+            Self::TextBox(node) => ShapeGroupContentWith::TextBox(node.into_extra()),
+            Self::TextLayoutPath(node) => ShapeGroupContentWith::TextLayoutPath(node.into_extra()),
+            Self::TextWrapping(node) => ShapeGroupContentWith::TextWrapping(node.into_extra()),
+            Self::TopBorder(node) => ShapeGroupContentWith::TopBorder(node.into_extra()),
+            Self::VMLDiagram(node) => ShapeGroupContentWith::VMLDiagram(node.into_extra()),
+            Self::VMLDiagramText(node) => ShapeGroupContentWith::VMLDiagramText(node.into_extra()),
+        }
     }
 }
 
@@ -5840,7 +7063,29 @@ impl ShapeGroupingTypes {
     }
 }
 
-impl ShapeHandle {
+impl<X: NodeExtra> ShapeHandleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShapeHandleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapeHandleWith {
+            extra: Default::default(),
+            invx: self.invx,
+            invy: self.invy,
+            map: self.map,
+            polar: self.polar,
+            position: self.position,
+            radiusrange: self.radiusrange,
+            switch: self.switch,
+            unknown: self.unknown,
+            xrange: self.xrange,
+            yrange: self.yrange,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5872,7 +7117,35 @@ impl officekit_markup_base::Write for ShapeHandle {
     }
 }
 
-impl ShapePath {
+impl<X: NodeExtra> ShapePathWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShapePathWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapePathWith {
+            arrowok: self.arrowok,
+            connectangles: self.connectangles,
+            connectlocs: self.connectlocs,
+            connecttype: self.connecttype,
+            extra: Default::default(),
+            extrusionok: self.extrusionok,
+            fillok: self.fillok,
+            gradientshapeok: self.gradientshapeok,
+            id: self.id,
+            insetpenok: self.insetpenok,
+            limo: self.limo,
+            shadowok: self.shadowok,
+            strokeok: self.strokeok,
+            textboxrect: self.textboxrect,
+            textpathok: self.textpathok,
+            unknown: self.unknown,
+            v: self.v,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5910,7 +7183,84 @@ impl officekit_markup_base::Write for ShapePath {
     }
 }
 
-impl ShapeTemplate {
+impl<X: NodeExtra> ShapeTemplateWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ShapeTemplateWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapeTemplateWith {
+            adj: self.adj,
+            allowincell: self.allowincell,
+            allowoverlap: self.allowoverlap,
+            alt: self.alt,
+            borderbottomcolor: self.borderbottomcolor,
+            borderleftcolor: self.borderleftcolor,
+            borderrightcolor: self.borderrightcolor,
+            bordertopcolor: self.bordertopcolor,
+            bullet: self.bullet,
+            button: self.button,
+            bwmode: self.bwmode,
+            bwnormal: self.bwnormal,
+            bwpure: self.bwpure,
+            chromakey: self.chromakey,
+            class: self.class,
+            clip: self.clip,
+            cliptowrap: self.cliptowrap,
+            complex: officekit_markup_base::into_extra_optional(
+                &mut self.complex,
+                super::vml_office_drawing::ComplexWith::into_extra,
+            ),
+            connectortype: self.connectortype,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                ShapeElementContentWith::into_extra,
+            ),
+            coordorigin: self.coordorigin,
+            coordsize: self.coordsize,
+            dgmlayout: self.dgmlayout,
+            dgmlayoutmru: self.dgmlayoutmru,
+            dgmnodekind: self.dgmnodekind,
+            doubleclicknotify: self.doubleclicknotify,
+            extra: Default::default(),
+            fillcolor: self.fillcolor,
+            filled: self.filled,
+            forcedash: self.forcedash,
+            hr: self.hr,
+            hralign: self.hralign,
+            href: self.href,
+            hrnoshade: self.hrnoshade,
+            hrpct: self.hrpct,
+            hrstd: self.hrstd,
+            id: self.id,
+            insetmode: self.insetmode,
+            insetpen: self.insetpen,
+            master: self.master,
+            ole: self.ole,
+            oleicon: self.oleicon,
+            oned: self.oned,
+            opacity: self.opacity,
+            path: self.path,
+            preferrelative: self.preferrelative,
+            print: self.print,
+            regroupid: self.regroupid,
+            spid: self.spid,
+            spt: self.spt,
+            strokecolor: self.strokecolor,
+            stroked: self.stroked,
+            strokeweight: self.strokeweight,
+            style: self.style,
+            target: self.target,
+            title: self.title,
+            unknown: self.unknown,
+            userdrawn: self.userdrawn,
+            userhidden: self.userhidden,
+            wrapcoords: self.wrapcoords,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5989,7 +7339,21 @@ impl officekit_markup_base::Write for ShapeTemplate {
     }
 }
 
-impl SingleFormula {
+impl<X: NodeExtra> SingleFormulaWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SingleFormulaWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SingleFormulaWith {
+            eqn: self.eqn,
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6284,7 +7648,29 @@ impl StrokeLineStyle {
     }
 }
 
-impl TextBox {
+impl<X: NodeExtra> TextBoxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TextBoxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TextBoxWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                TextBoxContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            id: self.id,
+            inset: self.inset,
+            insetmode: self.insetmode,
+            singleclick: self.singleclick,
+            style: self.style,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6312,6 +7698,22 @@ impl officekit_markup_base::Write for TextBox {
     }
 }
 
+impl<X: NodeExtra> TextBoxContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TextBoxContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::Other(node) => TextBoxContentWith::Other(node),
+            Self::RichTextBoxContentContainer(node) => {
+                TextBoxContentWith::RichTextBoxContentContainer(node.into_extra())
+            }
+        }
+    }
+}
+
 impl officekit_markup_base::Read for TextBoxContent {
     fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
@@ -6336,7 +7738,28 @@ impl officekit_markup_base::Write for TextBoxContent {
     }
 }
 
-impl TextLayoutPath {
+impl<X: NodeExtra> TextLayoutPathWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TextLayoutPathWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TextLayoutPathWith {
+            extra: Default::default(),
+            fitpath: self.fitpath,
+            fitshape: self.fitshape,
+            id: self.id,
+            on: self.on,
+            string: self.string,
+            style: self.style,
+            trim: self.trim,
+            unknown: self.unknown,
+            xscale: self.xscale,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

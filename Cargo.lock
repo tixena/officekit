@@ -716,6 +716,7 @@ version = "0.1.1"
 dependencies = [
  "officekit-markup-base",
  "officekit-markup-core",
+ "officekit-markup-macros",
  "officekit-xml",
  "rkyv",
 ]
@@ -735,6 +736,15 @@ dependencies = [
  "officekit-markup-base",
  "officekit-xml",
  "rkyv",
+]
+
+[[package]]
+name = "officekit-markup-macros"
+version = "0.1.1"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 3.0.9",
 ]
 
 [[package]]

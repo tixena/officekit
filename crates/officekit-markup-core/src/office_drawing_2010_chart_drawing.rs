@@ -216,19 +216,14 @@
 //! elements. The `read` module has a function that reads an element into each, and the
 //! `write` module one that writes each back to an element.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
-#[cfg(feature = "binary-format")]
-use rkyv::de::Pooling;
-#[cfg(feature = "binary-format")]
-use rkyv::rancor::Source;
-#[cfg(feature = "binary-format")]
-use rkyv::ser::{Allocator, Sharing, Writer};
-#[cfg(feature = "binary-format")]
-use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_A14: Option<NamespaceId> = Some(1);
@@ -311,55 +306,44 @@ pub static NV_CONTENT_PART_PR_SHAPE: officekit_markup_base::Shape = officekit_ma
 
 /// The `cdr14:cNvContentPartPr` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_NonVisualInkContentPartProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvContentPartPr {
+pub struct CNvContentPartPrWith<X: NodeExtra> {
     /// The child that is `super::office_drawing_2010_main::CpLocks`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub cp_locks: Option<Box<super::office_drawing_2010_main::CpLocks>>,
+    pub cp_locks: Option<Box<super::office_drawing_2010_main::CpLocksWith<X>>>,
     /// The child that is `super::office_drawing_2010_main::ExtLst`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub ext_lst: Option<Box<super::office_drawing_2010_main::ExtLst>>,
+    pub ext_lst: Option<Box<super::office_drawing_2010_main::ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2010ChartDrawingCNvContentPartPr,
     /// The attribute `isComment`, when the element has it.
     pub is_comment: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cdr14:cNvContentPartPr` element of the tree a read gives: [`CNvContentPartPrWith`] holding
+/// nothing in `extra`.
+pub type CNvContentPartPr = CNvContentPartPrWith<()>;
+
+impl Eq for CNvContentPartPrWith<()> {}
+
 /// The `cdr14:cNvPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_NonVisualDrawingProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvPr {
+pub struct CNvPrWith<X: NodeExtra> {
     /// The child that is `super::drawing::ClickHyperlink`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
+    pub click_hyperlink: Option<Box<super::drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2010ChartDrawingCNvPr,
     /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
     /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
+    pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHoverWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
     /// The attribute `name`, when the element has it.
@@ -370,90 +354,86 @@ pub struct CNvPr {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cdr14:cNvPr` element of the tree a read gives: [`CNvPrWith`] holding nothing in `extra`.
+pub type CNvPr = CNvPrWith<()>;
+
+impl Eq for CNvPrWith<()> {}
+
 /// The `cdr14:contentPart` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ContentPart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ContentPart {
+pub struct ContentPartWith<X: NodeExtra> {
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
     /// The child that is `ExtLst`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2010ChartDrawingContentPart,
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// The child that is `NvContentPartPr`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub nv_content_part_pr: Option<Box<NvContentPartPr>>,
+    pub nv_content_part_pr: Option<Box<NvContentPartPrWith<X>>>,
     /// The child that is `NvPr`, when there is one.
-    pub nv_pr: Option<Box<NvPr>>,
+    pub nv_pr: Option<Box<NvPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `Xfrm`, when there is one.
-    pub xfrm: Option<Box<Xfrm>>,
+    pub xfrm: Option<Box<XfrmWith<X>>>,
 }
+
+/// The `cdr14:contentPart` element of the tree a read gives: [`ContentPartWith`] holding nothing in
+/// `extra`.
+pub type ContentPart = ContentPartWith<()>;
+
+impl Eq for ContentPartWith<()> {}
 
 /// The `cdr14:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_OfficeArtExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `super::drawing::Extension`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension: Vec<super::drawing::Extension>,
+    pub extension: Vec<super::drawing::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2010ChartDrawingExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cdr14:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
 
 /// The `cdr14:nvContentPartPr` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_ContentPartNonVisual`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NvContentPartPr {
+pub struct NvContentPartPrWith<X: NodeExtra> {
     /// The child that is `CNvContentPartPr`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub c: Option<Box<CNvContentPartPr>>,
+    pub c: Option<Box<CNvContentPartPrWith<X>>>,
     /// The child that is `CNvPr`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub c_nv_pr: Box<CNvPr>,
+    pub c_nv_pr: Box<CNvPrWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2010ChartDrawingNvContentPartPr,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cdr14:nvContentPartPr` element of the tree a read gives: [`NvContentPartPrWith`] holding
+/// nothing in `extra`.
+pub type NvContentPartPr = NvContentPartPrWith<()>;
+
+impl Eq for NvContentPartPrWith<()> {}
+
 /// The `cdr14:nvPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ApplicationNonVisualDrawingProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NvPr {
+pub struct NvPrWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2010ChartDrawingNvPr,
     /// The attribute `fPublished`, when the element has it.
     pub f_published: Option<String>,
     /// The attribute `macro`, when the element has it.
@@ -462,31 +442,60 @@ pub struct NvPr {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cdr14:nvPr` element of the tree a read gives: [`NvPrWith`] holding nothing in `extra`.
+pub type NvPr = NvPrWith<()>;
+
+impl Eq for NvPrWith<()> {}
+
 /// The `cdr14:xfrm` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Transform2D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Xfrm {
+pub struct XfrmWith<X: NodeExtra> {
     /// The child that is `super::drawing::Extents`, when there is one.
-    pub extents: Option<Box<super::drawing::Extents>>,
+    pub extents: Option<Box<super::drawing::ExtentsWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2010ChartDrawingXfrm,
     /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
     /// The attribute `flipV`, when the element has it.
     pub flip_v: Option<String>,
     /// The child that is `super::drawing::Offset`, when there is one.
-    pub offset: Option<Box<super::drawing::Offset>>,
+    pub offset: Option<Box<super::drawing::OffsetWith<X>>>,
     /// The attribute `rot`, when the element has it.
     pub rot: Option<super::drawing::Angle>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-impl CNvContentPartPr {
+/// The `cdr14:xfrm` element of the tree a read gives: [`XfrmWith`] holding nothing in `extra`.
+pub type Xfrm = XfrmWith<()>;
+
+impl Eq for XfrmWith<()> {}
+
+impl<X: NodeExtra> CNvContentPartPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> CNvContentPartPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CNvContentPartPrWith {
+            cp_locks: officekit_markup_base::into_extra_optional(
+                &mut self.cp_locks,
+                super::office_drawing_2010_main::CpLocksWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                super::office_drawing_2010_main::ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            is_comment: self.is_comment,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -510,7 +519,37 @@ impl officekit_markup_base::Write for CNvContentPartPr {
     }
 }
 
-impl CNvPr {
+impl<X: NodeExtra> CNvPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> CNvPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CNvPrWith {
+            click_hyperlink: officekit_markup_base::into_extra_optional(
+                &mut self.click_hyperlink,
+                super::drawing::ClickHyperlinkWith::into_extra,
+            ),
+            descr: self.descr,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            hidden: self.hidden,
+            hyperlink_for_hover: officekit_markup_base::into_extra_optional(
+                &mut self.hyperlink_for_hover,
+                super::drawing::HyperlinkForHoverWith::into_extra,
+            ),
+            id: self.id,
+            name: self.name,
+            title: self.title,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -538,7 +577,35 @@ impl officekit_markup_base::Write for CNvPr {
     }
 }
 
-impl ContentPart {
+impl<X: NodeExtra> ContentPartWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ContentPartWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ContentPartWith {
+            bw_mode: self.bw_mode,
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            id: self.id,
+            nv_content_part_pr: officekit_markup_base::into_extra_optional(
+                &mut self.nv_content_part_pr,
+                NvContentPartPrWith::into_extra,
+            ),
+            nv_pr: officekit_markup_base::into_extra_optional(
+                &mut self.nv_pr,
+                NvPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm: officekit_markup_base::into_extra_optional(&mut self.xfrm, XfrmWith::into_extra),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -563,7 +630,24 @@ impl officekit_markup_base::Write for ContentPart {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                super::drawing::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -584,7 +668,28 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl NvContentPartPr {
+impl<X: NodeExtra> NvContentPartPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NvContentPartPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NvContentPartPrWith {
+            c: officekit_markup_base::into_extra_optional(
+                &mut self.c,
+                CNvContentPartPrWith::into_extra,
+            ),
+            c_nv_pr: officekit_markup_base::into_extra_required(
+                *self.c_nv_pr,
+                CNvPrWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -605,7 +710,22 @@ impl officekit_markup_base::Write for NvContentPartPr {
     }
 }
 
-impl NvPr {
+impl<X: NodeExtra> NvPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NvPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NvPrWith {
+            extra: Default::default(),
+            f_published: self.f_published,
+            r#macro: self.r#macro,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -630,7 +750,31 @@ impl officekit_markup_base::Write for NvPr {
     }
 }
 
-impl Xfrm {
+impl<X: NodeExtra> XfrmWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> XfrmWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        XfrmWith {
+            extents: officekit_markup_base::into_extra_optional(
+                &mut self.extents,
+                super::drawing::ExtentsWith::into_extra,
+            ),
+            extra: Default::default(),
+            flip_h: self.flip_h,
+            flip_v: self.flip_v,
+            offset: officekit_markup_base::into_extra_optional(
+                &mut self.offset,
+                super::drawing::OffsetWith::into_extra,
+            ),
+            rot: self.rot,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

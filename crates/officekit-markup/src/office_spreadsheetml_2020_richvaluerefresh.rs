@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -303,14 +306,11 @@ pub trait Context: crate::Context {
 
 /// The `xlrvr:refreshInterval` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_RichValueRefreshInterval`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RefreshInterval {
+pub struct RefreshIntervalWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2020RichvaluerefreshRefreshInterval,
     /// The attribute `interval`, when the element has it.
     pub interval: Option<String>,
     /// The attribute `resourceIdInt`, when the element has it.
@@ -321,21 +321,30 @@ pub struct RefreshInterval {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrvr:refreshInterval` element of the tree a read gives: [`RefreshIntervalWith`] holding
+/// nothing in `extra`.
+pub type RefreshInterval = RefreshIntervalWith<()>;
+
+impl Eq for RefreshIntervalWith<()> {}
+
 /// The `xlrvr:refreshIntervals` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_RichValueRefreshIntervals`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RefreshIntervals {
+pub struct RefreshIntervalsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2020RichvaluerefreshRefreshIntervals,
     /// The children that are `RefreshInterval`, in order.
-    pub refresh_interval: Vec<RefreshInterval>,
+    pub refresh_interval: Vec<RefreshIntervalWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlrvr:refreshIntervals` element of the tree a read gives: [`RefreshIntervalsWith`] holding
+/// nothing in `extra`.
+pub type RefreshIntervals = RefreshIntervalsWith<()>;
+
+impl Eq for RefreshIntervalsWith<()> {}
 
 /// The hooks of a visitor for the `xlrvr` namespace.
 ///
@@ -356,7 +365,23 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl RefreshInterval {
+impl<X: NodeExtra> RefreshIntervalWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RefreshIntervalWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RefreshIntervalWith {
+            extra: Default::default(),
+            interval: self.interval,
+            resource_id_int: self.resource_id_int,
+            resource_id_str: self.resource_id_str,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -382,7 +407,24 @@ impl officekit_markup_base::Write for RefreshInterval {
     }
 }
 
-impl RefreshIntervals {
+impl<X: NodeExtra> RefreshIntervalsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RefreshIntervalsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RefreshIntervalsWith {
+            extra: Default::default(),
+            refresh_interval: officekit_markup_base::into_extra_list(
+                self.refresh_interval,
+                RefreshIntervalWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

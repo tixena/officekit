@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -357,34 +360,33 @@ pub trait Context: crate::Context {
 
 /// The `wetp:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_OfficeArtExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `drawing::Extension`, in order.
-    pub extension: Vec<drawing::Extension>,
+    pub extension: Vec<drawing::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWebextensionsTaskpanes201011ExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `wetp:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
+
 /// The `wetp:taskpane` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_OsfTaskpane`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Taskpane {
+pub struct TaskpaneWith<X: NodeExtra> {
     /// The attribute `dockstate`, when the element has it.
     pub dockstate: Option<String>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWebextensionsTaskpanes201011Taskpane,
     /// The attribute `locked`, when the element has it.
     pub locked: Option<String>,
     /// The attribute `row`, when the element has it.
@@ -394,26 +396,35 @@ pub struct Taskpane {
     /// The attribute `visibility`, when the element has it.
     pub visibility: Option<String>,
     /// The child that is `Webextensionref`, which the schema requires.
-    pub webextensionref: Box<Webextensionref>,
+    pub webextensionref: Box<WebextensionrefWith<X>>,
     /// The attribute `width`, when the element has it.
     pub width: Option<String>,
 }
 
+/// The `wetp:taskpane` element of the tree a read gives: [`TaskpaneWith`] holding nothing in
+/// `extra`.
+pub type Taskpane = TaskpaneWith<()>;
+
+impl Eq for TaskpaneWith<()> {}
+
 /// The `wetp:taskpanes` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_OsfTaskpanes`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Taskpanes {
+pub struct TaskpanesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWebextensionsTaskpanes201011Taskpanes,
     /// The children that are `Taskpane`, in order.
-    pub taskpane: Vec<Taskpane>,
+    pub taskpane: Vec<TaskpaneWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wetp:taskpanes` element of the tree a read gives: [`TaskpanesWith`] holding nothing in
+/// `extra`.
+pub type Taskpanes = TaskpanesWith<()>;
+
+impl Eq for TaskpanesWith<()> {}
 
 /// The hooks of a visitor for the `wetp` namespace.
 ///
@@ -446,21 +457,41 @@ pub trait Visitor: crate::Visitor {
 
 /// The `wetp:webextensionref` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_WebExtensionPartRef`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Webextensionref {
+pub struct WebextensionrefWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWebextensionsTaskpanes201011Webextensionref,
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-impl ExtLst {
+/// The `wetp:webextensionref` element of the tree a read gives: [`WebextensionrefWith`] holding
+/// nothing in `extra`.
+pub type Webextensionref = WebextensionrefWith<()>;
+
+impl Eq for WebextensionrefWith<()> {}
+
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                drawing::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -481,7 +512,33 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl Taskpane {
+impl<X: NodeExtra> TaskpaneWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TaskpaneWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TaskpaneWith {
+            dockstate: self.dockstate,
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            locked: self.locked,
+            row: self.row,
+            unknown: self.unknown,
+            visibility: self.visibility,
+            webextensionref: officekit_markup_base::into_extra_required(
+                *self.webextensionref,
+                WebextensionrefWith::into_extra,
+            ),
+            width: self.width,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -509,7 +566,24 @@ impl officekit_markup_base::Write for Taskpane {
     }
 }
 
-impl Taskpanes {
+impl<X: NodeExtra> TaskpanesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TaskpanesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TaskpanesWith {
+            extra: Default::default(),
+            taskpane: officekit_markup_base::into_extra_list(
+                self.taskpane,
+                TaskpaneWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -530,7 +604,21 @@ impl officekit_markup_base::Write for Taskpanes {
     }
 }
 
-impl Webextensionref {
+impl<X: NodeExtra> WebextensionrefWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> WebextensionrefWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WebextensionrefWith {
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

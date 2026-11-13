@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -273,21 +276,24 @@ pub static PIVOT_VERSION_INFO_SHAPE: officekit_markup_base::Shape = officekit_ma
 
 /// The `xxpvi:cacheVersionInfo` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_CacheVersionInfo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CacheVersionInfo {
+pub struct CacheVersionInfoWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022PivotVersionInfoCacheVersionInfo,
     /// The children that are `LastRefreshFeature`, in order.
-    pub last_refresh_feature: Vec<LastRefreshFeature>,
+    pub last_refresh_feature: Vec<LastRefreshFeatureWith<X>>,
     /// The children that are `RequiredFeature`, in order.
-    pub required_feature: Vec<RequiredFeature>,
+    pub required_feature: Vec<RequiredFeatureWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xxpvi:cacheVersionInfo` element of the tree a read gives: [`CacheVersionInfoWith`] holding
+/// nothing in `extra`.
+pub type CacheVersionInfo = CacheVersionInfoWith<()>;
+
+impl Eq for CacheVersionInfoWith<()> {}
 
 /// The hooks of a context for the `xxpvi` namespace.
 ///
@@ -402,69 +408,81 @@ pub trait Context: crate::Context {
 
 /// The `xxpvi:lastRefreshFeature` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LastRefreshFeature {
+pub struct LastRefreshFeatureWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022PivotVersionInfoLastRefreshFeature,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xxpvi:lastRefreshFeature` element of the tree a read gives: [`LastRefreshFeatureWith`]
+/// holding nothing in `extra`.
+pub type LastRefreshFeature = LastRefreshFeatureWith<()>;
+
+impl Eq for LastRefreshFeatureWith<()> {}
 
 /// The `xxpvi:lastUpdateFeature` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LastUpdateFeature {
+pub struct LastUpdateFeatureWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022PivotVersionInfoLastUpdateFeature,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xxpvi:lastUpdateFeature` element of the tree a read gives: [`LastUpdateFeatureWith`]
+/// holding nothing in `extra`.
+pub type LastUpdateFeature = LastUpdateFeatureWith<()>;
+
+impl Eq for LastUpdateFeatureWith<()> {}
 
 /// The `xxpvi:pivotVersionInfo` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_PivotVersionInfo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotVersionInfo {
+pub struct PivotVersionInfoWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022PivotVersionInfoPivotVersionInfo,
     /// The children that are `LastUpdateFeature`, in order.
-    pub last_update_feature: Vec<LastUpdateFeature>,
+    pub last_update_feature: Vec<LastUpdateFeatureWith<X>>,
     /// The children that are `RequiredFeature`, in order.
-    pub required_feature: Vec<RequiredFeature>,
+    pub required_feature: Vec<RequiredFeatureWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xxpvi:pivotVersionInfo` element of the tree a read gives: [`PivotVersionInfoWith`] holding
+/// nothing in `extra`.
+pub type PivotVersionInfo = PivotVersionInfoWith<()>;
+
+impl Eq for PivotVersionInfoWith<()> {}
+
 /// The `xxpvi:requiredFeature` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RequiredFeature {
+pub struct RequiredFeatureWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022PivotVersionInfoRequiredFeature,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xxpvi:requiredFeature` element of the tree a read gives: [`RequiredFeatureWith`] holding
+/// nothing in `extra`.
+pub type RequiredFeature = RequiredFeatureWith<()>;
+
+impl Eq for RequiredFeatureWith<()> {}
 
 /// The hooks of a visitor for the `xxpvi` namespace.
 ///
@@ -506,7 +524,28 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl CacheVersionInfo {
+impl<X: NodeExtra> CacheVersionInfoWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CacheVersionInfoWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CacheVersionInfoWith {
+            extra: Default::default(),
+            last_refresh_feature: officekit_markup_base::into_extra_list(
+                self.last_refresh_feature,
+                LastRefreshFeatureWith::into_extra,
+            ),
+            required_feature: officekit_markup_base::into_extra_list(
+                self.required_feature,
+                RequiredFeatureWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -527,7 +566,21 @@ impl officekit_markup_base::Write for CacheVersionInfo {
     }
 }
 
-impl LastRefreshFeature {
+impl<X: NodeExtra> LastRefreshFeatureWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LastRefreshFeatureWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LastRefreshFeatureWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -551,7 +604,21 @@ impl officekit_markup_base::Write for LastRefreshFeature {
     }
 }
 
-impl LastUpdateFeature {
+impl<X: NodeExtra> LastUpdateFeatureWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LastUpdateFeatureWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LastUpdateFeatureWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -575,7 +642,28 @@ impl officekit_markup_base::Write for LastUpdateFeature {
     }
 }
 
-impl PivotVersionInfo {
+impl<X: NodeExtra> PivotVersionInfoWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PivotVersionInfoWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PivotVersionInfoWith {
+            extra: Default::default(),
+            last_update_feature: officekit_markup_base::into_extra_list(
+                self.last_update_feature,
+                LastUpdateFeatureWith::into_extra,
+            ),
+            required_feature: officekit_markup_base::into_extra_list(
+                self.required_feature,
+                RequiredFeatureWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -596,7 +684,21 @@ impl officekit_markup_base::Write for PivotVersionInfo {
     }
 }
 
-impl RequiredFeature {
+impl<X: NodeExtra> RequiredFeatureWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RequiredFeatureWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RequiredFeatureWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

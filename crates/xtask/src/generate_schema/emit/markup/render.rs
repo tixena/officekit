@@ -11,6 +11,7 @@ use alloc::collections::{BTreeMap, BTreeSet};
 use core::cell::RefCell;
 use core::fmt::Write as _;
 use core::iter;
+use core::mem;
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
@@ -20,8 +21,10 @@ use os_shim::System;
 use self::layout::{Expr, MAX_WIDTH, doc, line, statement};
 use super::archive::{self, Cycles};
 use super::names;
-use super::structs::{Body, Catalog, EnumDef, EnumKind, Node, Occurs, Target, Value, Wildcard};
-use super::{Crate, readers, traversal, writers};
+use super::structs::{
+    Body, Catalog, Child, EnumDef, EnumKind, Node, Occurs, Target, Value, Wildcard,
+};
+use super::{Crate, extra, readers, traversal, writers};
 
 /// The lines a generated function body holds before its work is split into
 /// helpers, below clippy's `too_many_lines`.
@@ -54,6 +57,18 @@ pub struct Names<'catalog> {
 }
 
 impl Names<'_> {
+    /// The path from the module's `archive` module to an item of `module`
+    /// named `name`: through `super` in this crate, as `path` from another.
+    #[must_use]
+    pub fn archived(&self, module: usize, name: &str) -> String {
+        let path = self.path(module, name);
+        if self.crosses(module) {
+            path
+        } else {
+            format!("super::{path}")
+        }
+    }
+
     /// Whether `module` is written to another crate than this module.
     #[must_use]
     pub fn crosses(&self, module: usize) -> bool {
@@ -338,8 +353,6 @@ impl Pair<'_> {
 /// module in one `use`.
 #[derive(Default)]
 pub struct Uses {
-    /// The paths only the `binary-format` feature uses.
-    gated: BTreeSet<String>,
     paths: BTreeSet<String>,
 }
 
@@ -347,11 +360,6 @@ impl Uses {
     /// Import `path`.
     pub fn add(&mut self, path: &str) {
         self.paths.insert(path.to_owned());
-    }
-
-    /// Import `path` under the `binary-format` feature.
-    pub fn add_gated(&mut self, path: &str) {
-        self.gated.insert(path.to_owned());
     }
 
     /// The imports of a file whose items are `body`, `runtime` the path to
@@ -367,6 +375,9 @@ impl Uses {
     /// Import the names of `officekit_xml` `items` uses, and the `Write`
     /// trait of `runtime` when `helpers`, free functions, call `write_into`.
     fn scan(&mut self, runtime: &str, items: &str, helpers: &str) {
+        if helpers.contains("mem::take(") {
+            self.add("core::mem");
+        }
         if helpers.contains(".write_into(") {
             self.add(&format!("{runtime}::Write as _"));
         }
@@ -382,12 +393,7 @@ impl Uses {
     pub fn text(&self) -> String {
         // Each line by its path's segments, which rustfmt sorts the lines by.
         let mut lines: Vec<(Vec<&str>, String)> = Vec::new();
-        use_lines(&self.paths, "", &mut lines);
-        use_lines(
-            &self.gated,
-            "#[cfg(feature = \"binary-format\")]\n",
-            &mut lines,
-        );
+        use_lines(&self.paths, &mut lines);
         lines.sort();
         lines.into_iter().map(|(_, line)| line).collect()
     }
@@ -420,15 +426,20 @@ impl ModuleItems {
             if node.module != names.module {
                 continue;
             }
-            parts.items.push((
-                node.name.clone(),
-                struct_text(names, cycles, index, node, uses),
-            ));
+            uses.add(&format!("{}::NodeExtra", names.runtime()));
+            parts
+                .items
+                .push((node.name.clone(), struct_text(names, cycles, index, node)));
             let shape = shape_text(names, index, node, &mut parts.namespaces);
             parts.statics.push_str(&shape);
-            parts
-                .impls
-                .push((node.name.clone(), without_children_text(node)));
+            let mut methods = without_children_text(node);
+            let opening = methods.find("{\n").map_or(0, |at| at + "{\n".len());
+            let converted = into_extra_text(names, cycles, index, node, &mut parts.helpers);
+            methods.insert_str(
+                opening,
+                &format!("{}\n", converted.trim_start_matches('\n')),
+            );
+            parts.impls.push((node.name.clone(), methods));
             parts
                 .impls
                 .push((node.name.clone(), node_impls(names, index, node)));
@@ -437,12 +448,16 @@ impl ModuleItems {
             if found.module != names.module {
                 continue;
             }
+            uses.add(&format!("{}::NodeExtra", names.runtime()));
             parts.items.push((
                 found.name.clone(),
                 enum_text(names, found, opened.contains(&index)),
             ));
             let tags = tags_text(names, found, &mut parts.namespaces);
             parts.statics.push_str(&tags);
+            parts
+                .impls
+                .push((found.name.clone(), enum_into_extra(found, names.runtime())));
             let (text, chunks) = enum_impls(names, index, found, &mut parts.namespaces);
             parts.impls.push((found.name.clone(), text));
             parts.helpers.push_str(&chunks);
@@ -470,6 +485,196 @@ impl ModuleItems {
         parts.impls.sort_by(|left, right| left.0.cmp(&right.0));
         Ok(parts)
     }
+}
+
+/// How a struct's fields are written: in the public generic struct, or in
+/// its `archive` mirror, which names the plain tree.
+#[derive(Clone, Copy, Eq, PartialEq)]
+pub enum Form {
+    Mirror,
+    Public,
+}
+
+/// What `into_extra` does with a field.
+pub enum Conversion {
+    /// The child's occurrence and the path of its generic type: the child converts.
+    Child(Occurs, String),
+    /// The field moves as it is.
+    Move,
+    /// The slot: the new kind's default.
+    Slot,
+}
+
+/// A field of a struct.
+pub struct Field {
+    pub conversion: Conversion,
+    pub doc: String,
+    pub name: String,
+    /// Whether the field closes a cycle of types.
+    pub recursive: bool,
+    pub shown: String,
+}
+
+/// The name of the generic type of a struct or an enum.
+#[must_use]
+pub fn generic_name(name: &str) -> String {
+    format!("{name}With")
+}
+
+/// The type an attribute or simple content holds.
+fn held_value(names: &Names<'_>, value: Value, form: Form) -> String {
+    match value {
+        Value::Simple(index) => {
+            let simple = &names.catalog.simples[index];
+            if form == Form::Mirror {
+                names.archived(simple.module, &simple.name)
+            } else {
+                names.path(simple.module, &simple.name)
+            }
+        }
+        Value::Text => "String".to_owned(),
+    }
+}
+
+/// The type a child field holds, as the doc names it and as the form writes it.
+fn held_child(
+    names: &Names<'_>,
+    index: usize,
+    node: &Node,
+    target: Target,
+    form: Form,
+) -> (String, String) {
+    let mirror = form == Form::Mirror;
+    let (module, base) = match target {
+        Target::Node(child) if child == index => {
+            let held = if mirror {
+                names.archived(node.module, &node.name)
+            } else {
+                "Self".to_owned()
+            };
+            return ("Self".to_owned(), held);
+        }
+        Target::Node(child) => {
+            let found = &names.catalog.nodes[child];
+            (found.module, &found.name)
+        }
+        Target::Enum(found) => {
+            let definition = &names.catalog.enums[found];
+            (definition.module, &definition.name)
+        }
+    };
+    let documented = names.path(module, base);
+    let held = if mirror {
+        names.archived(module, base)
+    } else {
+        format!("{}<X>", names.path(module, &generic_name(base)))
+    };
+    (documented, held)
+}
+
+/// A struct's child field.
+fn child_field(
+    names: &Names<'_>,
+    cycles: &Cycles,
+    index: usize,
+    node: &Node,
+    child: &Child,
+    form: Form,
+) -> Field {
+    let (target, held) = held_child(names, index, node, child.target, form);
+    let shown = match child.occurs {
+        Occurs::List => format!("Vec<{held}>"),
+        Occurs::Optional => format!("Option<Box<{held}>>"),
+        Occurs::Required => format!("Box<{held}>"),
+    };
+    let noun = match child.target {
+        Target::Node(_) => format!("`{target}`"),
+        Target::Enum(_) => format!("an item of `{target}`"),
+    };
+    let doc = match child.occurs {
+        Occurs::List => format!("The children that are {noun}, in order."),
+        Occurs::Optional => format!("The child that is {noun}, when there is one."),
+        Occurs::Required => format!("The child that is {noun}, which the schema requires."),
+    };
+    let generic = match child.target {
+        Target::Node(child_index) => {
+            let found = &names.catalog.nodes[child_index];
+            names.path(found.module, &generic_name(&found.name))
+        }
+        Target::Enum(found) => {
+            let definition = &names.catalog.enums[found];
+            names.path(definition.module, &generic_name(&definition.name))
+        }
+    };
+    Field {
+        conversion: Conversion::Child(child.occurs, generic),
+        doc,
+        name: child.field.clone(),
+        recursive: cycles.child(index, child.target),
+        shown,
+    }
+}
+
+/// A struct's fields in the order they are written, `extra` among them.
+pub fn struct_fields(
+    names: &Names<'_>,
+    cycles: &Cycles,
+    index: usize,
+    node: &Node,
+    form: Form,
+) -> Vec<Field> {
+    let mut fields: Vec<Field> = Vec::new();
+    for attribute in &node.attributes {
+        let written = attribute
+            .namespace
+            .and_then(|id| names.catalog.prefixes.get(usize::from(id)));
+        let tag = written.map_or_else(
+            || attribute.local.clone(),
+            |prefix| format!("{prefix}:{}", attribute.local),
+        );
+        fields.push(Field {
+            conversion: Conversion::Move,
+            doc: format!("The attribute `{tag}`, when the element has it."),
+            name: attribute.field.clone(),
+            recursive: false,
+            shown: format!("Option<{}>", held_value(names, attribute.value, form)),
+        });
+    }
+    match &node.body {
+        Body::Text(text) => fields.push(Field {
+            conversion: Conversion::Move,
+            doc: "The element's text.".to_owned(),
+            name: "value".to_owned(),
+            recursive: false,
+            shown: held_value(names, *text, form),
+        }),
+        Body::Children(children) => {
+            for child in children {
+                fields.push(child_field(names, cycles, index, node, child, form));
+            }
+        }
+    }
+    fields.push(Field {
+        conversion: Conversion::Move,
+        doc: "What a read found that the schemas do not declare, which a write gives back."
+            .to_owned(),
+        name: "unknown".to_owned(),
+        recursive: false,
+        shown: format!("{}::Unknown", names.runtime()),
+    });
+    fields.push(Field {
+        conversion: Conversion::Slot,
+        doc: "What `X` holds for this node. For the tree a read gives, nothing.".to_owned(),
+        name: "extra".to_owned(),
+        recursive: false,
+        shown: if form == Form::Mirror {
+            "()".to_owned()
+        } else {
+            format!("X::{}", extra::name(names.catalog, node))
+        },
+    });
+    fields.sort_by(|left, right| bare(&left.name).cmp(bare(&right.name)));
+    fields
 }
 
 /// Every file of the typed tree, with its path and text: each namespace
@@ -527,6 +732,14 @@ where
             ));
         }
     }
+    files.push((
+        Path::new(Crate::Base.folder()).join("node_extra.rs"),
+        extra::text(header, catalog)?,
+    ));
+    files.push((
+        Path::new(extra::MACROS_FOLDER).join("kinds.rs"),
+        extra::kinds_text(header, catalog)?,
+    ));
     for krate in Crate::ALL {
         let mut modules = String::from(header);
         modules.push_str(
@@ -673,6 +886,7 @@ fn module_text(
         .enums
         .iter()
         .any(|found| found.module == names.module)
+        || catalog.nodes.iter().any(|node| node.module == names.module)
     {
         out.push_str("#[cfg(feature = \"binary-format\")]\nmod archive;\n");
     }
@@ -771,112 +985,288 @@ fn tag(
     Expr::Tuple(vec![Expr::Atom(space), Expr::Atom(layout::string(local))])
 }
 
-/// A struct's definition, with the bounds names of its rkyv attributes in
-/// `uses` when one of its fields closes a cycle.
-fn struct_text(
-    names: &Names<'_>,
-    cycles: &Cycles,
-    index: usize,
-    node: &Node,
-    uses: &mut Uses,
-) -> String {
-    // Each field's name, type, whether it closes a cycle, and doc.
-    let mut fields: Vec<(String, String, bool, String)> = Vec::new();
-    for attribute in &node.attributes {
-        let value = value_type(names, attribute.value);
-        let written = attribute
-            .namespace
-            .and_then(|id| names.catalog.prefixes.get(usize::from(id)));
-        let tag = written.map_or_else(
-            || attribute.local.clone(),
-            |prefix| format!("{prefix}:{}", attribute.local),
-        );
-        fields.push((
-            attribute.field.clone(),
-            format!("Option<{value}>"),
-            false,
-            format!("The attribute `{tag}`, when the element has it."),
-        ));
-    }
-    match &node.body {
-        Body::Text(value) => fields.push((
-            "value".to_owned(),
-            value_type(names, *value),
-            false,
-            "The element's text.".to_owned(),
-        )),
-        Body::Children(children) => {
-            for child in children {
-                let target = match child.target {
-                    Target::Node(child_index) if child_index == index => "Self".to_owned(),
-                    Target::Node(child_index) => {
-                        let child_node = &names.catalog.nodes[child_index];
-                        names.path(child_node.module, &child_node.name)
-                    }
-                    Target::Enum(found) => {
-                        let definition = &names.catalog.enums[found];
-                        names.path(definition.module, &definition.name)
-                    }
-                };
-                let shown = match child.occurs {
-                    Occurs::List => format!("Vec<{target}>"),
-                    Occurs::Optional => format!("Option<Box<{target}>>"),
-                    Occurs::Required => format!("Box<{target}>"),
-                };
-                let held = match child.target {
-                    Target::Node(_) => format!("`{target}`"),
-                    Target::Enum(_) => format!("an item of `{target}`"),
-                };
-                let doc = match child.occurs {
-                    Occurs::List => format!("The children that are {held}, in order."),
-                    Occurs::Optional => format!("The child that is {held}, when there is one."),
-                    Occurs::Required => {
-                        format!("The child that is {held}, which the schema requires.")
-                    }
-                };
-                fields.push((
-                    child.field.clone(),
-                    shown,
-                    cycles.child(index, child.target),
-                    doc,
-                ));
-            }
-        }
-    }
-    fields.push((
-        "unknown".to_owned(),
-        format!("{}::Unknown", names.runtime()),
-        false,
-        "What a read found that the schemas do not declare, which a write gives back.".to_owned(),
-    ));
-    fields.sort_by(|left, right| bare(&left.0).cmp(bare(&right.0)));
-    let bounded = fields.iter().any(|(_, _, recursive, _)| *recursive);
-    if bounded {
-        for name in archive::BOUND_NAMES {
-            uses.add_gated(name);
-        }
-    }
+/// A struct's definition, `NameWith<X>`, with the alias `Name` for the tree a
+/// read gives and its `Eq`.
+fn struct_text(names: &Names<'_>, cycles: &Cycles, index: usize, node: &Node) -> String {
+    let with = generic_name(&node.name);
     let mut out = doc(0, &node.doc);
-    out.push_str(&archive::attributes(
-        "Clone, Debug, Default, Eq, PartialEq",
-        bounded,
-    ));
-    let _ = writeln!(out, "pub struct {} {{", node.name);
-    for (field, shown, recursive, field_doc) in fields {
-        out.push_str(&layout::doc(4, &field_doc));
-        if recursive {
-            let _ = writeln!(out, "    {}", archive::GATED_OMIT_BOUNDS);
-        }
-        let line = format!("    pub {field}: {shown},");
+    out.push_str("#[derive(Clone, Debug, Default, PartialEq)]\n#[non_exhaustive]\n");
+    let _ = writeln!(out, "pub struct {with}<X: NodeExtra> {{");
+    for field in struct_fields(names, cycles, index, node, Form::Public) {
+        let (name, shown) = (field.name, field.shown);
+        out.push_str(&layout::doc(4, &field.doc));
+        let line = format!("    pub {name}: {shown},");
         if line.len() <= MAX_WIDTH {
             out.push_str(&line);
             out.push('\n');
         } else {
-            let _ = writeln!(out, "    pub {field}:\n        {shown},");
+            let _ = writeln!(out, "    pub {name}:\n        {shown},");
         }
     }
-    out.push_str("}\n");
+    out.push_str("}\n\n");
+    let prefix = &names.catalog.modules[node.module].prefix;
+    out.push_str(&layout::doc(
+        0,
+        &format!(
+            "The `{prefix}:{}` element of the tree a read gives: [`{with}`] holding nothing in `extra`.",
+            node.key.tag.local
+        ),
+    ));
+    out.push_str(&alias(&node.name, &with));
     out
+}
+
+/// A struct's `into_extra` method: the node with each `extra`, its own and every
+/// descendant's, at the new kind's default and every other field moved; past
+/// `BODY_LINES` lines, the fields are moved by helpers.
+fn into_extra_text(
+    names: &Names<'_>,
+    cycles: &Cycles,
+    index: usize,
+    node: &Node,
+    helpers: &mut String,
+) -> String {
+    let with = generic_name(&node.name);
+    let runtime = names.runtime();
+    let fields = struct_fields(names, cycles, index, node, Form::Public);
+    let literal = Expr::Struct(
+        with.clone(),
+        fields
+            .iter()
+            .map(|field| (field.name.clone(), moved_value(runtime, field)))
+            .collect(),
+    );
+    let mut body = String::new();
+    line("        ", &literal, "", &mut body);
+    for field in &fields {
+        if matches!(field.conversion, Conversion::Move) {
+            let label = &field.name;
+            body = body.replace(
+                &format!("{label}:\n                self.{label},"),
+                &format!("{label}: self\n                .{label},"),
+            );
+        }
+    }
+    let flat = body.lines().count() + 2 < BODY_LINES;
+    let takes_option = fields
+        .iter()
+        .any(|field| matches!(field.conversion, Conversion::Child(Occurs::Optional, _)));
+    let summary = "This node and every node under it with each `extra` at `Y`'s default; every other \
+                   field moves as it is.";
+    let mut out = String::from("\n");
+    out.push_str(&layout::doc(4, summary));
+    out.push_str("    #[must_use]\n");
+    out.push_str(&layout::signature_where(
+        4,
+        "pub fn into_extra<Y>",
+        &[if flat && !takes_option {
+            "self"
+        } else {
+            "mut self"
+        }
+        .to_owned()],
+        &format!("{with}<Y>"),
+        &["Y: NodeExtra"],
+    ));
+    if flat {
+        out.push_str(&body);
+    } else {
+        let function = names
+            .node_functions
+            .get(&index)
+            .cloned()
+            .unwrap_or_default();
+        let _ = writeln!(out, "        let mut node = {with}::<Y>::default();");
+        let mut chunks: Vec<String> = Vec::new();
+        let mut chunk = String::new();
+        for field in &fields {
+            let mut text = String::new();
+            if let Some(value) = assigned_value(runtime, field) {
+                statement(&format!("    node.{} = ", field.name), &value, &mut text);
+            }
+            if !chunk.is_empty() && chunk.lines().count() + text.lines().count() >= BODY_LINES - 4 {
+                chunks.push(mem::take(&mut chunk));
+            }
+            chunk.push_str(&text);
+        }
+        chunks.push(chunk);
+        for (number, text) in chunks.iter().enumerate() {
+            let helper = format!("into_extra_{function}_{}", number + 1);
+            let _ = writeln!(out, "        {helper}(&mut self, &mut node);");
+            let _ = write!(
+                helpers,
+                "\n{}",
+                layout::signature_where(
+                    0,
+                    &format!("fn {helper}<X, Y>"),
+                    &[
+                        format!("from: &mut {with}<X>"),
+                        format!("node: &mut {with}<Y>")
+                    ],
+                    "",
+                    &["X: NodeExtra", "Y: NodeExtra"],
+                )
+            );
+            helpers.push_str(text);
+            helpers.push_str("}\n");
+        }
+        out.push_str("        node\n");
+    }
+    out.push_str("    }\n");
+    out
+}
+
+/// A field of the struct `into_extra` builds, converted from `self`.
+fn moved_value(runtime: &str, field: &Field) -> Expr {
+    let label = &field.name;
+    match &field.conversion {
+        Conversion::Move => Expr::atom(&format!("self.{label}")),
+        Conversion::Slot => Expr::atom("Default::default()"),
+        Conversion::Child(Occurs::Optional, generic) => converted(
+            runtime,
+            Occurs::Optional,
+            generic,
+            Expr::atom(&format!("&mut self.{label}")),
+        ),
+        Conversion::Child(Occurs::Required, generic) => converted(
+            runtime,
+            Occurs::Required,
+            generic,
+            Expr::atom(&format!("*self.{label}")),
+        ),
+        Conversion::Child(occurs, generic) => converted(
+            runtime,
+            *occurs,
+            generic,
+            Expr::atom(&format!("self.{label}")),
+        ),
+    }
+}
+
+/// A field of the struct `into_extra` builds, converted from `from` by a helper; `None` for the
+/// slot, which `Default` already left at its default.
+fn assigned_value(runtime: &str, field: &Field) -> Option<Expr> {
+    let label = &field.name;
+    let taken = Expr::call("mem::take", vec![Expr::atom(&format!("&mut from.{label}"))]);
+    match &field.conversion {
+        Conversion::Slot => None,
+        Conversion::Move => Some(taken),
+        Conversion::Child(Occurs::Optional, generic) => Some(converted(
+            runtime,
+            Occurs::Optional,
+            generic,
+            Expr::atom(&format!("&mut from.{label}")),
+        )),
+        Conversion::Child(Occurs::Required, generic) => Some(converted(
+            runtime,
+            Occurs::Required,
+            generic,
+            Expr::Atom(format!("*{}", taken.one_line())),
+        )),
+        Conversion::Child(occurs, generic) => Some(converted(runtime, *occurs, generic, taken)),
+    }
+}
+
+/// `value`, the content of a child field, converted through the generic type `generic`.
+fn converted(runtime: &str, occurs: Occurs, generic: &str, value: Expr) -> Expr {
+    let each = Expr::atom(&format!("{generic}::into_extra"));
+    let function = match occurs {
+        Occurs::List => "into_extra_list",
+        Occurs::Optional => "into_extra_optional",
+        Occurs::Required => "into_extra_required",
+    };
+    Expr::call(&format!("{runtime}::{function}"), vec![value, each])
+}
+
+/// An enum's `into_extra`: each arm converted into the new kind's arm, `Other` as it is; past
+/// `BODY_LINES` lines, the runtime's `into_extra_match!` called with every variant, which expands
+/// to the match.
+fn enum_into_extra(found: &EnumDef, runtime: &str) -> String {
+    let with = generic_name(&found.name);
+    let mut arms: Vec<(String, Expr)> = found
+        .arms
+        .iter()
+        .map(|(variant, arm)| {
+            let converted = if found.boxed.contains(arm) {
+                Expr::call(
+                    "Box::new",
+                    vec![Expr::call("(*node).into_extra", Vec::new())],
+                )
+            } else {
+                Expr::call("node.into_extra", Vec::new())
+            };
+            (variant.clone(), converted)
+        })
+        .collect();
+    arms.push(("Other".to_owned(), Expr::atom("node")));
+    arms.sort_by(|left, right| left.0.cmp(&right.0));
+    let summary = "This item and every node under it with each `extra` at `Y`'s default.";
+    let mut out = format!("\nimpl<X: NodeExtra> {with}<X> {{\n");
+    out.push_str(&layout::doc(4, summary));
+    out.push_str("    #[must_use]\n");
+    out.push_str(&layout::signature_where(
+        4,
+        "pub fn into_extra<Y>",
+        &["self".to_owned()],
+        &format!("{with}<Y>"),
+        &["Y: NodeExtra"],
+    ));
+    let mut matched = String::from("        match self {\n");
+    for (variant, converted) in &arms {
+        let body = if variant == "Other" {
+            Expr::call(&format!("{with}::Other"), vec![Expr::atom("node")])
+        } else {
+            Expr::call(&format!("{with}::{variant}"), vec![converted.clone()])
+        };
+        matched.push_str(&layout::arm(
+            12,
+            &Expr::pattern(&format!("Self::{variant}"), "node"),
+            &body,
+            false,
+        ));
+    }
+    matched.push_str("        }\n");
+    if matched.lines().count() + 2 < BODY_LINES {
+        out.push_str(&matched);
+    } else {
+        let _ = writeln!(out, "        {runtime}::into_extra_match!(self, {with};");
+        for (label, boxed) in [("plain", false), ("boxed", true)] {
+            let mut row = String::new();
+            let _ = writeln!(out, "            {label} [");
+            for (variant, arm) in &found.arms {
+                if found.boxed.contains(arm) != boxed {
+                    continue;
+                }
+                let item = format!("{variant},");
+                if !row.is_empty() && 16 + row.len() + 1 + item.len() > MAX_WIDTH {
+                    let _ = writeln!(out, "                {row}");
+                    row.clear();
+                }
+                if !row.is_empty() {
+                    row.push(' ');
+                }
+                row.push_str(&item);
+            }
+            if !row.is_empty() {
+                let _ = writeln!(out, "                {row}");
+            }
+            out.push_str("            ]\n");
+        }
+        out.push_str("        )\n");
+    }
+    out.push_str("    }\n}\n");
+    out
+}
+
+/// The alias `name` of the generic type `with` for the tree a read gives, and its `Eq`.
+fn alias(name: &str, with: &str) -> String {
+    let flat = format!("pub type {name} = {with}<()>;");
+    let declared = if flat.len() <= MAX_WIDTH {
+        flat
+    } else {
+        format!("pub type {name} =\n    {with}<()>;")
+    };
+    format!("{declared}\n\nimpl Eq for {with}<()> {{}}\n")
 }
 
 /// A struct's `without_children`: a struct literal of its attributes and its
@@ -898,9 +1288,9 @@ fn without_children_text(node: &Node) -> String {
     };
     copied.sort_by(|left, right| bare(left).cmp(bare(right)));
     let mut out = format!(
-        "\nimpl {} {{\n    /// {summary}\n    #[must_use]\n    \
+        "\nimpl<X: NodeExtra> {}<X> {{\n    /// {summary}\n    #[must_use]\n    \
          pub fn without_children(&self) -> Self {{\n",
-        node.name
+        generic_name(&node.name)
     );
     if copied.is_empty() {
         out.push_str("        Self::default()\n");
@@ -927,17 +1317,6 @@ fn without_children_text(node: &Node) -> String {
 /// A field's name without `r#`, for ordering.
 fn bare(field: &str) -> &str {
     field.strip_prefix("r#").unwrap_or(field)
-}
-
-/// The Rust type of an attribute's or of simple content's value.
-fn value_type(names: &Names<'_>, value: Value) -> String {
-    match value {
-        Value::Simple(index) => {
-            let simple = &names.catalog.simples[index];
-            names.path(simple.module, &simple.name)
-        }
-        Value::Text => "String".to_owned(),
-    }
 }
 
 /// A struct's shape: its tag, declared attributes, and child positions.
@@ -1084,7 +1463,7 @@ fn enum_text(names: &Names<'_>, found: &EnumDef, open: bool) -> String {
         .iter()
         .map(|(variant, arm)| {
             let node = &names.catalog.nodes[*arm];
-            let path = names.path(node.module, &node.name);
+            let path = format!("{}<X>", names.path(node.module, &generic_name(&node.name)));
             let shown = if found.boxed.contains(arm) {
                 format!("Box<{path}>")
             } else {
@@ -1105,11 +1484,12 @@ fn enum_text(names: &Names<'_>, found: &EnumDef, open: bool) -> String {
     ));
     variants.sort();
     let mut out = doc(0, &found.doc);
-    out.push_str("#[derive(Clone, Debug, Eq, PartialEq)]\n");
+    out.push_str("#[derive(Clone, Debug, PartialEq)]\n");
     if !open {
         out.push_str("#[non_exhaustive]\n");
     }
-    let _ = writeln!(out, "pub enum {} {{", found.name);
+    let with = generic_name(&found.name);
+    let _ = writeln!(out, "pub enum {with}<X: NodeExtra> {{");
     for (variant, shown, item) in variants {
         out.push_str(&layout::doc(4, &item));
         let line = format!("    {variant}({shown}),");
@@ -1120,7 +1500,12 @@ fn enum_text(names: &Names<'_>, found: &EnumDef, open: bool) -> String {
             let _ = writeln!(out, "    {variant}(\n        {shown},\n    ),");
         }
     }
-    out.push_str("}\n");
+    out.push_str("}\n\n");
+    out.push_str(&layout::doc(
+        0,
+        &format!("[`{with}`] of the tree a read gives, where no node holds anything in `extra`."),
+    ));
+    out.push_str(&alias(&found.name, &with));
     out
 }
 
@@ -1202,12 +1587,19 @@ fn enum_default(names: &Names<'_>, found: &EnumDef) -> String {
         let _ = write!(
             out,
             "\n{}    fn default() -> Self {{\n",
-            layout::impl_header("Default", &found.name)
+            layout::generic_impl_header(
+                "<X: NodeExtra>",
+                "Default",
+                &format!("{}<X>", generic_name(&found.name))
+            )
         );
         let value = if found.boxed.contains(arm) {
             "Box::default()".to_owned()
         } else {
-            format!("{}::default()", names.path(node.module, &node.name))
+            format!(
+                "{}::default()",
+                names.path(node.module, &generic_name(&node.name))
+            )
         };
         line(
             "        ",
@@ -1526,30 +1918,23 @@ fn steps_helpers(
     functions
 }
 
-/// The `use` lines of `paths`, each after `attribute`, with their sort keys:
+/// The `use` lines of `paths`, with their sort keys:
 /// the names of one module join in one line.
-fn use_lines<'paths>(
-    paths: &'paths BTreeSet<String>,
-    attribute: &str,
-    lines: &mut Vec<(Vec<&'paths str>, String)>,
-) {
+fn use_lines<'paths>(paths: &'paths BTreeSet<String>, lines: &mut Vec<(Vec<&'paths str>, String)>) {
     let mut grouped: BTreeMap<&str, Vec<&str>> = BTreeMap::new();
     for path in paths {
         match path.rsplit_once("::") {
             Some((parent, name)) if parent.contains("::") && !name.contains(' ') => {
                 grouped.entry(parent).or_default().push(name);
             }
-            _ => lines.push((
-                path.split("::").collect(),
-                format!("{attribute}use {path};\n"),
-            )),
+            _ => lines.push((path.split("::").collect(), format!("use {path};\n"))),
         }
     }
     for (parent, names) in grouped {
         let line = if let [only] = names.as_slice() {
-            format!("{attribute}use {parent}::{only};\n")
+            format!("use {parent}::{only};\n")
         } else {
-            format!("{attribute}use {parent}::{{{}}};\n", names.join(", "))
+            format!("use {parent}::{{{}}};\n", names.join(", "))
         };
         let mut key: Vec<&str> = parent.split("::").collect();
         key.extend(names.first());

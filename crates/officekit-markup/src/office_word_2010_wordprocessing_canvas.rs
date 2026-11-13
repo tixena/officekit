@@ -223,6 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_markup_core::office_word_2010_wordml;
@@ -305,21 +306,23 @@ pub static WORDPROCESSING_CANVAS_CONTENT_TAGS: officekit_markup_base::Accept =
 
 /// The `wpc:bg` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_BackgroundFormatting`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Bg {
+pub struct BgWith<X: NodeExtra> {
     /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
-    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWord2010WordprocessingCanvasBg,
     /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
-    pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<drawing::FillPropertiesContentWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wpc:bg` element of the tree a read gives: [`BgWith`] holding nothing in `extra`.
+pub type Bg = BgWith<()>;
+
+impl Eq for BgWith<()> {}
 
 /// The hooks of a context for the `wpc` namespace.
 ///
@@ -463,46 +466,51 @@ pub trait Context: crate::Context {
 
 /// The `wpc:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_OfficeArtExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `drawing::Extension`, in order.
-    pub extension: Vec<drawing::Extension>,
+    pub extension: Vec<drawing::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWord2010WordprocessingCanvasExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `wpc:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
+
 /// The `wpc:graphicFrame` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_GraphicFrame`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GraphicFrame {
+pub struct GraphicFrameWith<X: NodeExtra> {
     /// The child that is `super::office_word_2010_wordprocessing_group::CNvFrPr`, which the schema
     /// requires.
-    pub c_nv_fr_pr: Box<super::office_word_2010_wordprocessing_group::CNvFrPr>,
+    pub c_nv_fr_pr: Box<super::office_word_2010_wordprocessing_group::CNvFrPrWith<X>>,
     /// The child that is `super::office_word_2010_wordprocessing_group::CNvPr`, which the schema
     /// requires.
-    pub c_nv_pr: Box<super::office_word_2010_wordprocessing_group::CNvPr>,
+    pub c_nv_pr: Box<super::office_word_2010_wordprocessing_group::CNvPrWith<X>>,
     /// The child that is `super::office_word_2010_wordprocessing_group::ExtLst`, when there is one.
-    pub ext_lst: Option<Box<super::office_word_2010_wordprocessing_group::ExtLst>>,
+    pub ext_lst: Option<Box<super::office_word_2010_wordprocessing_group::ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWord2010WordprocessingCanvasGraphicFrame,
     /// The child that is `drawing::GraphicObject`, which the schema requires.
-    pub graphic_object: Box<drawing::GraphicObject>,
+    pub graphic_object: Box<drawing::GraphicObjectWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `super::office_word_2010_wordprocessing_group::Xfrm`, which the schema
     /// requires.
-    pub xfrm: Box<super::office_word_2010_wordprocessing_group::Xfrm>,
+    pub xfrm: Box<super::office_word_2010_wordprocessing_group::XfrmWith<X>>,
 }
+
+/// The `wpc:graphicFrame` element of the tree a read gives: [`GraphicFrameWith`] holding nothing in
+/// `extra`.
+pub type GraphicFrame = GraphicFrameWith<()>;
+
+impl Eq for GraphicFrameWith<()> {}
 
 /// The hooks of a visitor for the `wpc` namespace.
 ///
@@ -548,67 +556,98 @@ pub trait Visitor: crate::Visitor {
 
 /// The `wpc:whole` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_WholeE2oFormatting`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Whole {
+pub struct WholeWith<X: NodeExtra> {
     /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
-    pub content: Option<Box<drawing::EffectPropertiesContent>>,
+    pub content: Option<Box<drawing::EffectPropertiesContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWord2010WordprocessingCanvasWhole,
     /// The child that is `drawing::Outline`, when there is one.
-    pub outline: Option<Box<drawing::Outline>>,
+    pub outline: Option<Box<drawing::OutlineWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wpc:whole` element of the tree a read gives: [`WholeWith`] holding nothing in `extra`.
+pub type Whole = WholeWith<()>;
+
+impl Eq for WholeWith<()> {}
 
 /// One child element of a choice: choice in `CT_WordprocessingCanvas`.
 ///
 /// The schema types that hold it: `CT_WordprocessingCanvas`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum WordprocessingCanvasContent {
+pub enum WordprocessingCanvasContentWith<X: NodeExtra> {
     /// The element `w14:contentPart`, a `ContentPart`.
-    ContentPart(office_word_2010_wordml::ContentPart),
+    ContentPart(office_word_2010_wordml::ContentPartWith<X>),
     /// The element `wpc:graphicFrame`, a `GraphicFrame`.
-    GraphicFrame(GraphicFrame),
+    GraphicFrame(GraphicFrameWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `pic:pic`, a `Picture`.
-    Picture(picture::Picture),
+    Picture(picture::PictureWith<X>),
     /// The element `wpg:wgp`, a `Wgp`.
-    Wgp(super::office_word_2010_wordprocessing_group::Wgp),
+    Wgp(super::office_word_2010_wordprocessing_group::WgpWith<X>),
     /// The element `wps:wsp`, a `Wsp`.
-    Wsp(super::office_word_2010_wordprocessing_shape::Wsp),
+    Wsp(super::office_word_2010_wordprocessing_shape::WspWith<X>),
 }
+
+/// [`WordprocessingCanvasContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type WordprocessingCanvasContent = WordprocessingCanvasContentWith<()>;
+
+impl Eq for WordprocessingCanvasContentWith<()> {}
 
 /// The `wpc:wpc` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_WordprocessingCanvas`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Wpc {
+pub struct WpcWith<X: NodeExtra> {
     /// The child that is `Bg`, when there is one.
-    pub bg: Option<Box<Bg>>,
+    pub bg: Option<Box<BgWith<X>>>,
     /// The children that are an item of `WordprocessingCanvasContent`, in order.
-    pub content: Vec<WordprocessingCanvasContent>,
+    pub content: Vec<WordprocessingCanvasContentWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWord2010WordprocessingCanvasWpc,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `Whole`, when there is one.
-    pub whole: Option<Box<Whole>>,
+    pub whole: Option<Box<WholeWith<X>>>,
 }
 
-impl Bg {
+/// The `wpc:wpc` element of the tree a read gives: [`WpcWith`] holding nothing in `extra`.
+pub type Wpc = WpcWith<()>;
+
+impl Eq for WpcWith<()> {}
+
+impl<X: NodeExtra> BgWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> BgWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BgWith {
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                drawing::FillPropertiesContentWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -629,7 +668,24 @@ impl officekit_markup_base::Write for Bg {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                drawing::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -650,7 +706,40 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl GraphicFrame {
+impl<X: NodeExtra> GraphicFrameWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GraphicFrameWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GraphicFrameWith {
+            c_nv_fr_pr: officekit_markup_base::into_extra_required(
+                *self.c_nv_fr_pr,
+                super::office_word_2010_wordprocessing_group::CNvFrPrWith::into_extra,
+            ),
+            c_nv_pr: officekit_markup_base::into_extra_required(
+                *self.c_nv_pr,
+                super::office_word_2010_wordprocessing_group::CNvPrWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                super::office_word_2010_wordprocessing_group::ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            graphic_object: officekit_markup_base::into_extra_required(
+                *self.graphic_object,
+                drawing::GraphicObjectWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm: officekit_markup_base::into_extra_required(
+                *self.xfrm,
+                super::office_word_2010_wordprocessing_group::XfrmWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -671,7 +760,28 @@ impl officekit_markup_base::Write for GraphicFrame {
     }
 }
 
-impl Whole {
+impl<X: NodeExtra> WholeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> WholeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WholeWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            outline: officekit_markup_base::into_extra_optional(
+                &mut self.outline,
+                drawing::OutlineWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -689,6 +799,28 @@ impl officekit_markup_base::Write for Whole {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::whole(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> WordprocessingCanvasContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> WordprocessingCanvasContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ContentPart(node) => {
+                WordprocessingCanvasContentWith::ContentPart(node.into_extra())
+            }
+            Self::GraphicFrame(node) => {
+                WordprocessingCanvasContentWith::GraphicFrame(node.into_extra())
+            }
+            Self::Other(node) => WordprocessingCanvasContentWith::Other(node),
+            Self::Picture(node) => WordprocessingCanvasContentWith::Picture(node.into_extra()),
+            Self::Wgp(node) => WordprocessingCanvasContentWith::Wgp(node.into_extra()),
+            Self::Wsp(node) => WordprocessingCanvasContentWith::Wsp(node.into_extra()),
+        }
     }
 }
 
@@ -726,7 +858,33 @@ impl officekit_markup_base::Write for WordprocessingCanvasContent {
     }
 }
 
-impl Wpc {
+impl<X: NodeExtra> WpcWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> WpcWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WpcWith {
+            bg: officekit_markup_base::into_extra_optional(&mut self.bg, BgWith::into_extra),
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                WordprocessingCanvasContentWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+            whole: officekit_markup_base::into_extra_optional(
+                &mut self.whole,
+                WholeWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

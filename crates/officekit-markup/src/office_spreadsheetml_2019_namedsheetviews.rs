@@ -223,6 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::office_spreadsheetml_2009_9_main;
 use officekit_markup_core::spreadsheet;
@@ -369,27 +370,30 @@ pub static SORT_RULE_CONTENT_TAGS: officekit_markup_base::Accept = officekit_mar
 
 /// The `xnsv:columnFilter` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ColumnFilter`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColumnFilter {
+pub struct ColumnFilterWith<X: NodeExtra> {
     /// The attribute `colId`, when the element has it.
     pub col_id: Option<String>,
     /// The child that is `Dxf`, when there is one.
-    pub dxf: Option<Box<Dxf>>,
+    pub dxf: Option<Box<DxfWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2019NamedsheetviewsColumnFilter,
     /// The children that are `Filter`, in order.
-    pub filter: Vec<Filter>,
+    pub filter: Vec<FilterWith<X>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xnsv:columnFilter` element of the tree a read gives: [`ColumnFilterWith`] holding nothing
+/// in `extra`.
+pub type ColumnFilter = ColumnFilterWith<()>;
+
+impl Eq for ColumnFilterWith<()> {}
 
 /// The hooks of a context for the `xnsv` namespace.
 ///
@@ -632,62 +636,64 @@ pub trait Context: crate::Context {
 
 /// The `xnsv:dxf` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Dxf`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Dxf {
+pub struct DxfWith<X: NodeExtra> {
     /// The child that is `spreadsheet::Alignment`, when there is one.
-    pub alignment: Option<Box<spreadsheet::Alignment>>,
+    pub alignment: Option<Box<spreadsheet::AlignmentWith<X>>>,
     /// The child that is `spreadsheet::Border`, when there is one.
-    pub border: Option<Box<spreadsheet::Border>>,
+    pub border: Option<Box<spreadsheet::BorderWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2019NamedsheetviewsDxf,
     /// The child that is `spreadsheet::Fill`, when there is one.
-    pub fill: Option<Box<spreadsheet::Fill>>,
+    pub fill: Option<Box<spreadsheet::FillWith<X>>>,
     /// The child that is `spreadsheet::Font`, when there is one.
-    pub font: Option<Box<spreadsheet::Font>>,
+    pub font: Option<Box<spreadsheet::FontWith<X>>>,
     /// The child that is `spreadsheet::FutureFeatureDataStorageArea`, when there is one.
-    pub future_feature_data_storage_area: Option<Box<spreadsheet::FutureFeatureDataStorageArea>>,
+    pub future_feature_data_storage_area:
+        Option<Box<spreadsheet::FutureFeatureDataStorageAreaWith<X>>>,
     /// The child that is `spreadsheet::NumberFormat`, when there is one.
-    pub number_format: Option<Box<spreadsheet::NumberFormat>>,
+    pub number_format: Option<Box<spreadsheet::NumberFormatWith<X>>>,
     /// The child that is `spreadsheet::ProtectionProperties`, when there is one.
-    pub protection_properties: Option<Box<spreadsheet::ProtectionProperties>>,
+    pub protection_properties: Option<Box<spreadsheet::ProtectionPropertiesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xnsv:dxf` element of the tree a read gives: [`DxfWith`] holding nothing in `extra`.
+pub type Dxf = DxfWith<()>;
+
+impl Eq for DxfWith<()> {}
 
 /// The `xnsv:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `spreadsheet::Extension`, in order.
-    pub extension: Vec<spreadsheet::Extension>,
+    pub extension: Vec<spreadsheet::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2019NamedsheetviewsExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xnsv:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
+
 /// The `xnsv:filter` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_FilterColumn`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Filter {
+pub struct FilterWith<X: NodeExtra> {
     /// The attribute `colId`, when the element has it.
     pub col_id: Option<String>,
     /// The child that is an item of `spreadsheet::AutoFilterColumnContent`, when there is one.
-    pub content: Option<Box<spreadsheet::AutoFilterColumnContent>>,
+    pub content: Option<Box<spreadsheet::AutoFilterColumnContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2019NamedsheetviewsFilter,
     /// The attribute `hiddenButton`, when the element has it.
     pub hidden_button: Option<String>,
     /// The attribute `showButton`, when the element has it.
@@ -696,88 +702,99 @@ pub struct Filter {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xnsv:filter` element of the tree a read gives: [`FilterWith`] holding nothing in `extra`.
+pub type Filter = FilterWith<()>;
+
+impl Eq for FilterWith<()> {}
+
 /// The `xnsv:namedSheetView` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_NamedSheetView`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NamedSheetView {
+pub struct NamedSheetViewWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2019NamedsheetviewsNamedSheetView,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// The children that are `NsvFilter`, in order.
-    pub nsv_filter: Vec<NsvFilter>,
+    pub nsv_filter: Vec<NsvFilterWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xnsv:namedSheetView` element of the tree a read gives: [`NamedSheetViewWith`] holding
+/// nothing in `extra`.
+pub type NamedSheetView = NamedSheetViewWith<()>;
+
+impl Eq for NamedSheetViewWith<()> {}
 
 /// The `xnsv:namedSheetViews` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_NamedSheetViews`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NamedSheetViews {
+pub struct NamedSheetViewsWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2019NamedsheetviewsNamedSheetViews,
     /// The children that are `NamedSheetView`, in order.
-    pub named_sheet_view: Vec<NamedSheetView>,
+    pub named_sheet_view: Vec<NamedSheetViewWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xnsv:namedSheetViews` element of the tree a read gives: [`NamedSheetViewsWith`] holding
+/// nothing in `extra`.
+pub type NamedSheetViews = NamedSheetViewsWith<()>;
+
+impl Eq for NamedSheetViewsWith<()> {}
+
 /// The `xnsv:nsvFilter` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_NsvFilter`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NsvFilter {
+pub struct NsvFilterWith<X: NodeExtra> {
     /// The children that are `ColumnFilter`, in order.
-    pub column_filter: Vec<ColumnFilter>,
+    pub column_filter: Vec<ColumnFilterWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2019NamedsheetviewsNsvFilter,
     /// The attribute `filterId`, when the element has it.
     pub filter_id: Option<String>,
     /// The attribute `ref`, when the element has it.
     pub r#ref: Option<String>,
     /// The child that is `SortRules`, when there is one.
-    pub sort_rules: Option<Box<SortRules>>,
+    pub sort_rules: Option<Box<SortRulesWith<X>>>,
     /// The attribute `tableId`, when the element has it.
     pub table_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xnsv:nsvFilter` element of the tree a read gives: [`NsvFilterWith`] holding nothing in
+/// `extra`.
+pub type NsvFilter = NsvFilterWith<()>;
+
+impl Eq for NsvFilterWith<()> {}
+
 /// The `xnsv:richSortCondition` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_RichSortCondition`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RichSortCondition {
+pub struct RichSortConditionWith<X: NodeExtra> {
     /// The attribute `customList`, when the element has it.
     pub custom_list: Option<String>,
     /// The attribute `descending`, when the element has it.
     pub descending: Option<String>,
     /// The attribute `dxfId`, when the element has it.
     pub dxf_id: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2019NamedsheetviewsRichSortCondition,
     /// The attribute `iconId`, when the element has it.
     pub icon_id: Option<String>,
     /// The attribute `iconSet`, when the element has it.
@@ -792,22 +809,25 @@ pub struct RichSortCondition {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xnsv:richSortCondition` element of the tree a read gives: [`RichSortConditionWith`] holding
+/// nothing in `extra`.
+pub type RichSortCondition = RichSortConditionWith<()>;
+
+impl Eq for RichSortConditionWith<()> {}
+
 /// The `xnsv:sortCondition` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_SortCondition`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SortCondition {
+pub struct SortConditionWith<X: NodeExtra> {
     /// The attribute `customList`, when the element has it.
     pub custom_list: Option<String>,
     /// The attribute `descending`, when the element has it.
     pub descending: Option<String>,
     /// The attribute `dxfId`, when the element has it.
     pub dxf_id: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2019NamedsheetviewsSortCondition,
     /// The attribute `iconId`, when the element has it.
     pub icon_id: Option<String>,
     /// The attribute `iconSet`, when the element has it.
@@ -820,65 +840,82 @@ pub struct SortCondition {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xnsv:sortCondition` element of the tree a read gives: [`SortConditionWith`] holding nothing
+/// in `extra`.
+pub type SortCondition = SortConditionWith<()>;
+
+impl Eq for SortConditionWith<()> {}
+
 /// The `xnsv:sortRule` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_SortRule`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SortRule {
+pub struct SortRuleWith<X: NodeExtra> {
     /// The attribute `colId`, when the element has it.
     pub col_id: Option<String>,
     /// The child that is an item of `SortRuleContent`, when there is one.
-    pub content: Option<Box<SortRuleContent>>,
+    pub content: Option<Box<SortRuleContentWith<X>>>,
     /// The child that is `Dxf`, when there is one.
-    pub dxf: Option<Box<Dxf>>,
+    pub dxf: Option<Box<DxfWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2019NamedsheetviewsSortRule,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xnsv:sortRule` element of the tree a read gives: [`SortRuleWith`] holding nothing in
+/// `extra`.
+pub type SortRule = SortRuleWith<()>;
+
+impl Eq for SortRuleWith<()> {}
+
 /// One child element of a choice: choice in `CT_SortRule`.
 ///
 /// The schema types that hold it: `CT_SortRule`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum SortRuleContent {
+pub enum SortRuleContentWith<X: NodeExtra> {
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `xnsv:richSortCondition`, a `RichSortCondition`.
-    RichSortCondition(RichSortCondition),
+    RichSortCondition(RichSortConditionWith<X>),
     /// The element `xnsv:sortCondition`, a `SortCondition`.
-    SortCondition(SortCondition),
+    SortCondition(SortConditionWith<X>),
 }
+
+/// [`SortRuleContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type SortRuleContent = SortRuleContentWith<()>;
+
+impl Eq for SortRuleContentWith<()> {}
 
 /// The `xnsv:sortRules` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_SortRules`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SortRules {
+pub struct SortRulesWith<X: NodeExtra> {
     /// The attribute `caseSensitive`, when the element has it.
     pub case_sensitive: Option<String>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2019NamedsheetviewsSortRules,
     /// The attribute `sortMethod`, when the element has it.
     pub sort_method: Option<spreadsheet::SortMethod>,
     /// The children that are `SortRule`, in order.
-    pub sort_rule: Vec<SortRule>,
+    pub sort_rule: Vec<SortRuleWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xnsv:sortRules` element of the tree a read gives: [`SortRulesWith`] holding nothing in
+/// `extra`.
+pub type SortRules = SortRulesWith<()>;
+
+impl Eq for SortRulesWith<()> {}
 
 /// The hooks of a visitor for the `xnsv` namespace.
 ///
@@ -955,7 +992,28 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl ColumnFilter {
+impl<X: NodeExtra> ColumnFilterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ColumnFilterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ColumnFilterWith {
+            col_id: self.col_id,
+            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            filter: officekit_markup_base::into_extra_list(self.filter, FilterWith::into_extra),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -980,7 +1038,48 @@ impl officekit_markup_base::Write for ColumnFilter {
     }
 }
 
-impl Dxf {
+impl<X: NodeExtra> DxfWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DxfWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DxfWith {
+            alignment: officekit_markup_base::into_extra_optional(
+                &mut self.alignment,
+                spreadsheet::AlignmentWith::into_extra,
+            ),
+            border: officekit_markup_base::into_extra_optional(
+                &mut self.border,
+                spreadsheet::BorderWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill: officekit_markup_base::into_extra_optional(
+                &mut self.fill,
+                spreadsheet::FillWith::into_extra,
+            ),
+            font: officekit_markup_base::into_extra_optional(
+                &mut self.font,
+                spreadsheet::FontWith::into_extra,
+            ),
+            future_feature_data_storage_area: officekit_markup_base::into_extra_optional(
+                &mut self.future_feature_data_storage_area,
+                spreadsheet::FutureFeatureDataStorageAreaWith::into_extra,
+            ),
+            number_format: officekit_markup_base::into_extra_optional(
+                &mut self.number_format,
+                spreadsheet::NumberFormatWith::into_extra,
+            ),
+            protection_properties: officekit_markup_base::into_extra_optional(
+                &mut self.protection_properties,
+                spreadsheet::ProtectionPropertiesWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1001,7 +1100,24 @@ impl officekit_markup_base::Write for Dxf {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                spreadsheet::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1022,7 +1138,27 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl Filter {
+impl<X: NodeExtra> FilterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> FilterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FilterWith {
+            col_id: self.col_id,
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                spreadsheet::AutoFilterColumnContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            hidden_button: self.hidden_button,
+            show_button: self.show_button,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1048,7 +1184,30 @@ impl officekit_markup_base::Write for Filter {
     }
 }
 
-impl NamedSheetView {
+impl<X: NodeExtra> NamedSheetViewWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NamedSheetViewWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NamedSheetViewWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            id: self.id,
+            name: self.name,
+            nsv_filter: officekit_markup_base::into_extra_list(
+                self.nsv_filter,
+                NsvFilterWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1073,7 +1232,28 @@ impl officekit_markup_base::Write for NamedSheetView {
     }
 }
 
-impl NamedSheetViews {
+impl<X: NodeExtra> NamedSheetViewsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NamedSheetViewsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NamedSheetViewsWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            named_sheet_view: officekit_markup_base::into_extra_list(
+                self.named_sheet_view,
+                NamedSheetViewWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1094,7 +1274,35 @@ impl officekit_markup_base::Write for NamedSheetViews {
     }
 }
 
-impl NsvFilter {
+impl<X: NodeExtra> NsvFilterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NsvFilterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NsvFilterWith {
+            column_filter: officekit_markup_base::into_extra_list(
+                self.column_filter,
+                ColumnFilterWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            filter_id: self.filter_id,
+            r#ref: self.r#ref,
+            sort_rules: officekit_markup_base::into_extra_optional(
+                &mut self.sort_rules,
+                SortRulesWith::into_extra,
+            ),
+            table_id: self.table_id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1120,7 +1328,28 @@ impl officekit_markup_base::Write for NsvFilter {
     }
 }
 
-impl RichSortCondition {
+impl<X: NodeExtra> RichSortConditionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RichSortConditionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RichSortConditionWith {
+            custom_list: self.custom_list,
+            descending: self.descending,
+            dxf_id: self.dxf_id,
+            extra: Default::default(),
+            icon_id: self.icon_id,
+            icon_set: self.icon_set,
+            r#ref: self.r#ref,
+            rich_sort_key: self.rich_sort_key,
+            sort_by: self.sort_by,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1151,7 +1380,27 @@ impl officekit_markup_base::Write for RichSortCondition {
     }
 }
 
-impl SortCondition {
+impl<X: NodeExtra> SortConditionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SortConditionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SortConditionWith {
+            custom_list: self.custom_list,
+            descending: self.descending,
+            dxf_id: self.dxf_id,
+            extra: Default::default(),
+            icon_id: self.icon_id,
+            icon_set: self.icon_set,
+            r#ref: self.r#ref,
+            sort_by: self.sort_by,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1181,7 +1430,27 @@ impl officekit_markup_base::Write for SortCondition {
     }
 }
 
-impl SortRule {
+impl<X: NodeExtra> SortRuleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SortRuleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SortRuleWith {
+            col_id: self.col_id,
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                SortRuleContentWith::into_extra,
+            ),
+            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1203,6 +1472,23 @@ impl officekit_markup_base::Write for SortRule {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::sort_rule(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> SortRuleContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SortRuleContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::Other(node) => SortRuleContentWith::Other(node),
+            Self::RichSortCondition(node) => {
+                SortRuleContentWith::RichSortCondition(node.into_extra())
+            }
+            Self::SortCondition(node) => SortRuleContentWith::SortCondition(node.into_extra()),
+        }
     }
 }
 
@@ -1234,7 +1520,30 @@ impl officekit_markup_base::Write for SortRuleContent {
     }
 }
 
-impl SortRules {
+impl<X: NodeExtra> SortRulesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SortRulesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SortRulesWith {
+            case_sensitive: self.case_sensitive,
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            sort_method: self.sort_method,
+            sort_rule: officekit_markup_base::into_extra_list(
+                self.sort_rule,
+                SortRuleWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

@@ -221,17 +221,10 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::values::ValueError;
-#[cfg(feature = "binary-format")]
-use rkyv::de::Pooling;
-#[cfg(feature = "binary-format")]
-use rkyv::rancor::Source;
-#[cfg(feature = "binary-format")]
-use rkyv::ser::{Allocator, Sharing, Writer};
-#[cfg(feature = "binary-format")]
-use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_CDR: Option<NamespaceId> = Some(29);
@@ -600,27 +593,26 @@ static CHART_MARKER_COORDINATE_VALUE_BOUNDS: officekit_markup_base::Bounds =
 
 /// The `cdr:absSizeAnchor` element, Absolute Anchor Shape Size (ECMA-376 Part 1, section 21.3.2.1).
 /// Its schema type is `CT_AbsSizeAnchor`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AbsoluteAnchorShapeSize {
+pub struct AbsoluteAnchorShapeSizeWith<X: NodeExtra> {
     /// The child that is an item of `ObjectContent`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Box<ObjectContent>,
+    pub content: Box<ObjectContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingAbsoluteAnchorShapeSize,
     /// The child that is `ShapeExtent`, which the schema requires.
-    pub shape_extent: Box<ShapeExtent>,
+    pub shape_extent: Box<ShapeExtentWith<X>>,
     /// The child that is `StartingAnchorPoint`, which the schema requires.
-    pub starting_anchor_point: Box<StartingAnchorPoint>,
+    pub starting_anchor_point: Box<StartingAnchorPointWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cdr:absSizeAnchor` element of the tree a read gives: [`AbsoluteAnchorShapeSizeWith`]
+/// holding nothing in `extra`.
+pub type AbsoluteAnchorShapeSize = AbsoluteAnchorShapeSizeWith<()>;
+
+impl Eq for AbsoluteAnchorShapeSizeWith<()> {}
 
 /// Chart Marker Coordinate Value, the simple type `ST_MarkerCoordinate` (ECMA-376 Part 1, section
 /// 21.3.3.1), kept as the text the file carried.
@@ -638,240 +630,222 @@ pub struct ChartMarkerCoordinateValue(pub String);
 
 /// The `cdr:cxnSp` element, Connection Shape (ECMA-376 Part 1, section 21.3.2.9). Its schema type
 /// is `CT_Connector`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ConnectionShape {
+pub struct ConnectionShapeWith<X: NodeExtra> {
     /// The child that is `ConnectorNonVisualProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub connector_non_visual_properties: Box<ConnectorNonVisualProperties>,
+    pub connector_non_visual_properties: Box<ConnectorNonVisualPropertiesWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingConnectionShape,
     /// The attribute `fPublished`, when the element has it.
     pub f_published: Option<String>,
     /// The attribute `macro`, when the element has it.
     pub r#macro: Option<String>,
     /// The child that is `ShapeProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub properties: Box<ShapeProperties>,
+    pub properties: Box<ShapePropertiesWith<X>>,
     /// The child that is `ShapeStyle`, when there is one.
-    pub style: Option<Box<ShapeStyle>>,
+    pub style: Option<Box<ShapeStyleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cdr:cxnSp` element of the tree a read gives: [`ConnectionShapeWith`] holding nothing in
+/// `extra`.
+pub type ConnectionShape = ConnectionShapeWith<()>;
+
+impl Eq for ConnectionShapeWith<()> {}
 
 /// The `cdr:nvCxnSpPr` element, Connector Non Visual Properties (ECMA-376 Part 1, section
 /// 21.3.2.15). Its schema type is `CT_ConnectorNonVisual`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ConnectorNonVisualProperties {
+pub struct ConnectorNonVisualPropertiesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingConnectorNonVisualProperties,
     /// The child that is `NonVisualConnectionShapeDrawingProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_connection_shape_drawing_properties:
-        Box<NonVisualConnectionShapeDrawingProperties>,
+        Box<NonVisualConnectionShapeDrawingPropertiesWith<X>>,
     /// The child that is `NonVisualDrawingProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    pub non_visual_drawing_properties: Box<NonVisualDrawingPropertiesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cdr:nvCxnSpPr` element of the tree a read gives: [`ConnectorNonVisualPropertiesWith`]
+/// holding nothing in `extra`.
+pub type ConnectorNonVisualProperties = ConnectorNonVisualPropertiesWith<()>;
+
+impl Eq for ConnectorNonVisualPropertiesWith<()> {}
 
 /// The `cdr:to` element, Ending Anchor Point (ECMA-376 Part 1, section 21.3.2.25). Its schema type
 /// is `CT_Marker`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EndingAnchorPoint {
+pub struct EndingAnchorPointWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingEndingAnchorPoint,
     /// The child that is `RelativeXCoordinate`, which the schema requires.
-    pub relative_x_coordinate: Box<RelativeXCoordinate>,
+    pub relative_x_coordinate: Box<RelativeXCoordinateWith<X>>,
     /// The child that is `RelativeYCoordinate`, which the schema requires.
-    pub relative_y_coordinate: Box<RelativeYCoordinate>,
+    pub relative_y_coordinate: Box<RelativeYCoordinateWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cdr:to` element of the tree a read gives: [`EndingAnchorPointWith`] holding nothing in
+/// `extra`.
+pub type EndingAnchorPoint = EndingAnchorPointWith<()>;
+
+impl Eq for EndingAnchorPointWith<()> {}
 
 /// The `cdr:graphicFrame` element, Graphic Frame (ECMA-376 Part 1, section 21.3.2.12). Its schema
 /// type is `CT_GraphicFrame`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GraphicFrame {
+pub struct GraphicFrameWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingGraphicFrame,
     /// The attribute `fPublished`, when the element has it.
     pub f_published: Option<String>,
     /// The child that is `super::drawing::GraphicObject`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub graphic_object: Box<super::drawing::GraphicObject>,
+    pub graphic_object: Box<super::drawing::GraphicObjectWith<X>>,
     /// The attribute `macro`, when the element has it.
     pub r#macro: Option<String>,
     /// The child that is `NonVisualGraphicFrameProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_graphic_frame_properties: Box<NonVisualGraphicFrameProperties>,
+    pub non_visual_graphic_frame_properties: Box<NonVisualGraphicFramePropertiesWith<X>>,
     /// The child that is `GraphicFrameTransform`, which the schema requires.
-    pub transform: Box<GraphicFrameTransform>,
+    pub transform: Box<GraphicFrameTransformWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cdr:graphicFrame` element of the tree a read gives: [`GraphicFrameWith`] holding nothing in
+/// `extra`.
+pub type GraphicFrame = GraphicFrameWith<()>;
+
+impl Eq for GraphicFrameWith<()> {}
+
 /// The `cdr:xfrm` element, Graphic Frame Transform (ECMA-376 Part 1, section 21.3.2.28). Its schema
 /// type is `CT_Transform2D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GraphicFrameTransform {
+pub struct GraphicFrameTransformWith<X: NodeExtra> {
     /// The child that is `super::drawing::Extents`, when there is one.
-    pub extents: Option<Box<super::drawing::Extents>>,
+    pub extents: Option<Box<super::drawing::ExtentsWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingGraphicFrameTransform,
     /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
     /// The attribute `flipV`, when the element has it.
     pub flip_v: Option<String>,
     /// The child that is `super::drawing::Offset`, when there is one.
-    pub offset: Option<Box<super::drawing::Offset>>,
+    pub offset: Option<Box<super::drawing::OffsetWith<X>>>,
     /// The attribute `rot`, when the element has it.
     pub rot: Option<super::drawing::Angle>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cdr:xfrm` element of the tree a read gives: [`GraphicFrameTransformWith`] holding nothing
+/// in `extra`.
+pub type GraphicFrameTransform = GraphicFrameTransformWith<()>;
+
+impl Eq for GraphicFrameTransformWith<()> {}
+
 /// The `cdr:grpSp` element, Group Shape (ECMA-376 Part 1, section 21.3.2.13). Its schema type is
 /// `CT_GroupShape`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GroupShape {
+pub struct GroupShapeWith<X: NodeExtra> {
     /// The children that are an item of `ObjectContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<ObjectContent>,
+    pub content: Vec<ObjectContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingGroupShape,
     /// The child that is `NonVisualGroupShapeProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_group_shape_properties: Box<NonVisualGroupShapeProperties>,
+    pub non_visual_group_shape_properties: Box<NonVisualGroupShapePropertiesWith<X>>,
     /// The child that is `GroupShapeProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub properties: Box<GroupShapeProperties>,
+    pub properties: Box<GroupShapePropertiesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cdr:grpSp` element of the tree a read gives: [`GroupShapeWith`] holding nothing in `extra`.
+pub type GroupShape = GroupShapeWith<()>;
+
+impl Eq for GroupShapeWith<()> {}
 
 /// The `cdr:grpSpPr` element, Group Shape Properties (ECMA-376 Part 1, section 21.3.2.14). Its
 /// schema type is `CT_GroupShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GroupShapeProperties {
+pub struct GroupShapePropertiesWith<X: NodeExtra> {
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
     /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingGroupShapeProperties,
     /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContentWith<X>>>,
     /// The child that is `super::drawing::Scene3d`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub scene3d: Option<Box<super::drawing::Scene3d>>,
+    pub scene3d: Option<Box<super::drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `super::drawing::XfrmGroupTransform2D`, when there is one.
-    pub xfrm_group_transform2d: Option<Box<super::drawing::XfrmGroupTransform2D>>,
+    pub xfrm_group_transform2d: Option<Box<super::drawing::XfrmGroupTransform2DWith<X>>>,
 }
+
+/// The `cdr:grpSpPr` element of the tree a read gives: [`GroupShapePropertiesWith`] holding nothing
+/// in `extra`.
+pub type GroupShapeProperties = GroupShapePropertiesWith<()>;
+
+impl Eq for GroupShapePropertiesWith<()> {}
 
 /// The `cdr:cNvCxnSpPr` element, Non-Visual Connection Shape Drawing Properties (ECMA-376 Part 1,
 /// section 21.3.2.3). Its schema type is `CT_NonVisualConnectorProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualConnectionShapeDrawingProperties {
+pub struct NonVisualConnectionShapeDrawingPropertiesWith<X: NodeExtra> {
     /// The child that is `super::drawing::ConnectionEnd`, when there is one.
-    pub connection_end: Option<Box<super::drawing::ConnectionEnd>>,
+    pub connection_end: Option<Box<super::drawing::ConnectionEndWith<X>>>,
     /// The child that is `super::drawing::ConnectionShapeLocks`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub connection_shape_locks: Option<Box<super::drawing::ConnectionShapeLocks>>,
+    pub connection_shape_locks: Option<Box<super::drawing::ConnectionShapeLocksWith<X>>>,
     /// The child that is `super::drawing::ConnectionStart`, when there is one.
-    pub connection_start: Option<Box<super::drawing::ConnectionStart>>,
+    pub connection_start: Option<Box<super::drawing::ConnectionStartWith<X>>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingNonVisualConnectionShapeDrawingProperties,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cdr:cNvCxnSpPr` element of the tree a read gives:
+/// [`NonVisualConnectionShapeDrawingPropertiesWith`] holding nothing in `extra`.
+pub type NonVisualConnectionShapeDrawingProperties =
+    NonVisualConnectionShapeDrawingPropertiesWith<()>;
+
+impl Eq for NonVisualConnectionShapeDrawingPropertiesWith<()> {}
+
 /// The `cdr:cNvPr` element, Non-Visual Drawing Properties (ECMA-376 Part 1, section 21.3.2.7). Its
 /// schema type is `CT_NonVisualDrawingProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualDrawingProperties {
+pub struct NonVisualDrawingPropertiesWith<X: NodeExtra> {
     /// The child that is `super::drawing::ClickHyperlink`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
+    pub click_hyperlink: Option<Box<super::drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingNonVisualDrawingProperties,
     /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
     /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
+    pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHoverWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
     /// The attribute `name`, when the element has it.
@@ -882,193 +856,184 @@ pub struct NonVisualDrawingProperties {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cdr:cNvPr` element of the tree a read gives: [`NonVisualDrawingPropertiesWith`] holding
+/// nothing in `extra`.
+pub type NonVisualDrawingProperties = NonVisualDrawingPropertiesWith<()>;
+
+impl Eq for NonVisualDrawingPropertiesWith<()> {}
+
 /// The `cdr:cNvGraphicFramePr` element, Non-Visual Graphic Frame Drawing Properties (ECMA-376 Part
 /// 1, section 21.3.2.4). Its schema type is `CT_NonVisualGraphicFrameProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualGraphicFrameDrawingProperties {
+pub struct NonVisualGraphicFrameDrawingPropertiesWith<X: NodeExtra> {
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingNonVisualGraphicFrameDrawingProperties,
     /// The child that is `super::drawing::GraphicFrameLocks`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub graphic_frame_locks: Option<Box<super::drawing::GraphicFrameLocks>>,
+    pub graphic_frame_locks: Option<Box<super::drawing::GraphicFrameLocksWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cdr:cNvGraphicFramePr` element of the tree a read gives:
+/// [`NonVisualGraphicFrameDrawingPropertiesWith`] holding nothing in `extra`.
+pub type NonVisualGraphicFrameDrawingProperties = NonVisualGraphicFrameDrawingPropertiesWith<()>;
+
+impl Eq for NonVisualGraphicFrameDrawingPropertiesWith<()> {}
 
 /// The `cdr:nvGraphicFramePr` element, Non-Visual Graphic Frame Properties (ECMA-376 Part 1,
 /// section 21.3.2.16). Its schema type is `CT_GraphicFrameNonVisual`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualGraphicFrameProperties {
+pub struct NonVisualGraphicFramePropertiesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingNonVisualGraphicFrameProperties,
     /// The child that is `NonVisualDrawingProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    pub non_visual_drawing_properties: Box<NonVisualDrawingPropertiesWith<X>>,
     /// The child that is `NonVisualGraphicFrameDrawingProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_graphic_frame_drawing_properties: Box<NonVisualGraphicFrameDrawingProperties>,
+    pub non_visual_graphic_frame_drawing_properties:
+        Box<NonVisualGraphicFrameDrawingPropertiesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cdr:nvGraphicFramePr` element of the tree a read gives:
+/// [`NonVisualGraphicFramePropertiesWith`] holding nothing in `extra`.
+pub type NonVisualGraphicFrameProperties = NonVisualGraphicFramePropertiesWith<()>;
+
+impl Eq for NonVisualGraphicFramePropertiesWith<()> {}
 
 /// The `cdr:cNvGrpSpPr` element, Non-Visual Group Shape Drawing Properties (ECMA-376 Part 1,
 /// section 21.3.2.5). Its schema type is `CT_NonVisualGroupDrawingShapeProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualGroupShapeDrawingProperties {
+pub struct NonVisualGroupShapeDrawingPropertiesWith<X: NodeExtra> {
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingNonVisualGroupShapeDrawingProperties,
     /// The child that is `super::drawing::GroupShapeLocks`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub group_shape_locks: Option<Box<super::drawing::GroupShapeLocks>>,
+    pub group_shape_locks: Option<Box<super::drawing::GroupShapeLocksWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cdr:cNvGrpSpPr` element of the tree a read gives:
+/// [`NonVisualGroupShapeDrawingPropertiesWith`] holding nothing in `extra`.
+pub type NonVisualGroupShapeDrawingProperties = NonVisualGroupShapeDrawingPropertiesWith<()>;
+
+impl Eq for NonVisualGroupShapeDrawingPropertiesWith<()> {}
 
 /// The `cdr:nvGrpSpPr` element, Non-Visual Group Shape Properties (ECMA-376 Part 1, section
 /// 21.3.2.17). Its schema type is `CT_GroupShapeNonVisual`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualGroupShapeProperties {
+pub struct NonVisualGroupShapePropertiesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingNonVisualGroupShapeProperties,
     /// The child that is `NonVisualDrawingProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    pub non_visual_drawing_properties: Box<NonVisualDrawingPropertiesWith<X>>,
     /// The child that is `NonVisualGroupShapeDrawingProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_group_shape_drawing_properties: Box<NonVisualGroupShapeDrawingProperties>,
+    pub non_visual_group_shape_drawing_properties: Box<NonVisualGroupShapeDrawingPropertiesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cdr:nvGrpSpPr` element of the tree a read gives: [`NonVisualGroupShapePropertiesWith`]
+/// holding nothing in `extra`.
+pub type NonVisualGroupShapeProperties = NonVisualGroupShapePropertiesWith<()>;
+
+impl Eq for NonVisualGroupShapePropertiesWith<()> {}
+
 /// The `cdr:cNvPicPr` element, Non-Visual Picture Drawing Properties (ECMA-376 Part 1, section
 /// 21.3.2.6). Its schema type is `CT_NonVisualPictureProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualPictureDrawingProperties {
+pub struct NonVisualPictureDrawingPropertiesWith<X: NodeExtra> {
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingNonVisualPictureDrawingProperties,
     /// The child that is `super::drawing::PictureLocks`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub picture_locks: Option<Box<super::drawing::PictureLocks>>,
+    pub picture_locks: Option<Box<super::drawing::PictureLocksWith<X>>>,
     /// The attribute `preferRelativeResize`, when the element has it.
     pub prefer_relative_resize: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cdr:cNvPicPr` element of the tree a read gives: [`NonVisualPictureDrawingPropertiesWith`]
+/// holding nothing in `extra`.
+pub type NonVisualPictureDrawingProperties = NonVisualPictureDrawingPropertiesWith<()>;
+
+impl Eq for NonVisualPictureDrawingPropertiesWith<()> {}
+
 /// The `cdr:nvPicPr` element, Non-Visual Picture Properties (ECMA-376 Part 1, section 21.3.2.18).
 /// Its schema type is `CT_PictureNonVisual`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualPictureProperties {
+pub struct NonVisualPicturePropertiesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingNonVisualPictureProperties,
     /// The child that is `NonVisualDrawingProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    pub non_visual_drawing_properties: Box<NonVisualDrawingPropertiesWith<X>>,
     /// The child that is `NonVisualPictureDrawingProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_picture_drawing_properties: Box<NonVisualPictureDrawingProperties>,
+    pub non_visual_picture_drawing_properties: Box<NonVisualPictureDrawingPropertiesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cdr:nvPicPr` element of the tree a read gives: [`NonVisualPicturePropertiesWith`] holding
+/// nothing in `extra`.
+pub type NonVisualPictureProperties = NonVisualPicturePropertiesWith<()>;
+
+impl Eq for NonVisualPicturePropertiesWith<()> {}
+
 /// The `cdr:cNvSpPr` element, Non-Visual Shape Drawing Properties (ECMA-376 Part 1, section
 /// 21.3.2.8). Its schema type is `CT_NonVisualDrawingShapeProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualShapeDrawingProperties {
+pub struct NonVisualShapeDrawingPropertiesWith<X: NodeExtra> {
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingNonVisualShapeDrawingProperties,
     /// The child that is `super::drawing::ShapeLocks`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub shape_locks: Option<Box<super::drawing::ShapeLocks>>,
+    pub shape_locks: Option<Box<super::drawing::ShapeLocksWith<X>>>,
     /// The attribute `txBox`, when the element has it.
     pub tx_box: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cdr:cNvSpPr` element of the tree a read gives: [`NonVisualShapeDrawingPropertiesWith`]
+/// holding nothing in `extra`.
+pub type NonVisualShapeDrawingProperties = NonVisualShapeDrawingPropertiesWith<()>;
+
+impl Eq for NonVisualShapeDrawingPropertiesWith<()> {}
+
 /// The `cdr:nvSpPr` element, Non-Visual Shape Properties (ECMA-376 Part 1, section 21.3.2.19). Its
 /// schema type is `CT_ShapeNonVisual`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualShapeProperties {
+pub struct NonVisualShapePropertiesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingNonVisualShapeProperties,
     /// The child that is `NonVisualDrawingProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    pub non_visual_drawing_properties: Box<NonVisualDrawingPropertiesWith<X>>,
     /// The child that is `NonVisualShapeDrawingProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_shape_drawing_properties: Box<NonVisualShapeDrawingProperties>,
+    pub non_visual_shape_drawing_properties: Box<NonVisualShapeDrawingPropertiesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cdr:nvSpPr` element of the tree a read gives: [`NonVisualShapePropertiesWith`] holding
+/// nothing in `extra`.
+pub type NonVisualShapeProperties = NonVisualShapePropertiesWith<()>;
+
+impl Eq for NonVisualShapePropertiesWith<()> {}
 
 /// One child element of a choice: local choice in `CT_GroupShape`, local choice in
 /// `EG_ObjectChoices`.
@@ -1076,153 +1041,152 @@ pub struct NonVisualShapeProperties {
 /// The schema types that hold it: `CT_AbsSizeAnchor`, `CT_GroupShape`, `CT_RelSizeAnchor`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum ObjectContent {
+pub enum ObjectContentWith<X: NodeExtra> {
     /// The element `cdr:cxnSp`, a `ConnectionShape`.
-    ConnectionShape(ConnectionShape),
+    ConnectionShape(ConnectionShapeWith<X>),
     /// The element `cdr14:contentPart`, a `ContentPart`.
-    ContentPart(super::office_drawing_2010_chart_drawing::ContentPart),
+    ContentPart(super::office_drawing_2010_chart_drawing::ContentPartWith<X>),
     /// The element `cdr:graphicFrame`, a `GraphicFrame`.
-    GraphicFrame(GraphicFrame),
+    GraphicFrame(GraphicFrameWith<X>),
     /// The element `cdr:grpSp`, a `GroupShape`.
-    GroupShape(GroupShape),
+    GroupShape(GroupShapeWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `cdr:pic`, a `Picture`.
-    Picture(Picture),
+    Picture(PictureWith<X>),
     /// The element `cdr:sp`, a `Shape`.
-    Shape(Shape),
+    Shape(ShapeWith<X>),
 }
+
+/// [`ObjectContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type ObjectContent = ObjectContentWith<()>;
+
+impl Eq for ObjectContentWith<()> {}
 
 /// The `cdr:pic` element, Picture (ECMA-376 Part 1, section 21.3.2.20). Its schema type is
 /// `CT_Picture`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Picture {
+pub struct PictureWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingPicture,
     /// The attribute `fPublished`, when the element has it.
     pub f_published: Option<String>,
     /// The child that is `PictureFill`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub fill: Box<PictureFill>,
+    pub fill: Box<PictureFillWith<X>>,
     /// The attribute `macro`, when the element has it.
     pub r#macro: Option<String>,
     /// The child that is `NonVisualPictureProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_picture_properties: Box<NonVisualPictureProperties>,
+    pub non_visual_picture_properties: Box<NonVisualPicturePropertiesWith<X>>,
     /// The child that is `ShapeProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub shape_properties: Box<ShapeProperties>,
+    pub shape_properties: Box<ShapePropertiesWith<X>>,
     /// The child that is `ShapeStyle`, when there is one.
-    pub shape_style: Option<Box<ShapeStyle>>,
+    pub shape_style: Option<Box<ShapeStyleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cdr:pic` element of the tree a read gives: [`PictureWith`] holding nothing in `extra`.
+pub type Picture = PictureWith<()>;
+
+impl Eq for PictureWith<()> {}
 
 /// The `cdr:blipFill` element, Picture Fill (ECMA-376 Part 1, section 21.3.2.2). Its schema type is
 /// `CT_BlipFillProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PictureFill {
+pub struct PictureFillWith<X: NodeExtra> {
     /// The child that is `super::drawing::Blip`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub blip: Option<Box<super::drawing::Blip>>,
+    pub blip: Option<Box<super::drawing::BlipWith<X>>>,
     /// The child that is an item of `super::drawing::FillModeContent`, when there is one.
-    pub content: Option<Box<super::drawing::FillModeContent>>,
+    pub content: Option<Box<super::drawing::FillModeContentWith<X>>>,
     /// The attribute `dpi`, when the element has it.
     pub dpi: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingPictureFill,
     /// The attribute `rotWithShape`, when the element has it.
     pub rot_with_shape: Option<String>,
     /// The child that is `super::drawing::SourceRectangle`, when there is one.
-    pub source_rectangle: Option<Box<super::drawing::SourceRectangle>>,
+    pub source_rectangle: Option<Box<super::drawing::SourceRectangleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cdr:blipFill` element of the tree a read gives: [`PictureFillWith`] holding nothing in
+/// `extra`.
+pub type PictureFill = PictureFillWith<()>;
+
+impl Eq for PictureFillWith<()> {}
 
 /// The `cdr:relSizeAnchor` element, Relative Anchor Shape Size (ECMA-376 Part 1, section
 /// 21.3.2.21). Its schema type is `CT_RelSizeAnchor`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RelativeAnchorShapeSize {
+pub struct RelativeAnchorShapeSizeWith<X: NodeExtra> {
     /// The child that is an item of `ObjectContent`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Box<ObjectContent>,
+    pub content: Box<ObjectContentWith<X>>,
     /// The child that is `EndingAnchorPoint`, which the schema requires.
-    pub ending_anchor_point: Box<EndingAnchorPoint>,
+    pub ending_anchor_point: Box<EndingAnchorPointWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingRelativeAnchorShapeSize,
     /// The child that is `StartingAnchorPoint`, which the schema requires.
-    pub starting_anchor_point: Box<StartingAnchorPoint>,
+    pub starting_anchor_point: Box<StartingAnchorPointWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cdr:relSizeAnchor` element of the tree a read gives: [`RelativeAnchorShapeSizeWith`]
+/// holding nothing in `extra`.
+pub type RelativeAnchorShapeSize = RelativeAnchorShapeSizeWith<()>;
+
+impl Eq for RelativeAnchorShapeSizeWith<()> {}
 
 /// The `cdr:x` element, Relative X Coordinate (ECMA-376 Part 1, section 21.3.2.27). Its schema type
 /// is `ST_MarkerCoordinate`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RelativeXCoordinate {
+pub struct RelativeXCoordinateWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingRelativeXCoordinate,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: ChartMarkerCoordinateValue,
 }
+
+/// The `cdr:x` element of the tree a read gives: [`RelativeXCoordinateWith`] holding nothing in
+/// `extra`.
+pub type RelativeXCoordinate = RelativeXCoordinateWith<()>;
+
+impl Eq for RelativeXCoordinateWith<()> {}
 
 /// The `cdr:y` element, Relative Y Coordinate (ECMA-376 Part 1, section 21.3.2.29). Its schema type
 /// is `ST_MarkerCoordinate`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RelativeYCoordinate {
+pub struct RelativeYCoordinateWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingRelativeYCoordinate,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: ChartMarkerCoordinateValue,
 }
 
+/// The `cdr:y` element of the tree a read gives: [`RelativeYCoordinateWith`] holding nothing in
+/// `extra`.
+pub type RelativeYCoordinate = RelativeYCoordinateWith<()>;
+
+impl Eq for RelativeYCoordinateWith<()> {}
+
 /// The `cdr:sp` element, Shape (ECMA-376 Part 1, section 21.3.2.22). Its schema type is `CT_Shape`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Shape {
+pub struct ShapeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingShape,
     /// The attribute `fLocksText`, when the element has it.
     pub f_locks_text: Option<String>,
     /// The attribute `fPublished`, when the element has it.
@@ -1230,164 +1194,194 @@ pub struct Shape {
     /// The attribute `macro`, when the element has it.
     pub r#macro: Option<String>,
     /// The child that is `NonVisualShapeProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_shape_properties: Box<NonVisualShapeProperties>,
+    pub non_visual_shape_properties: Box<NonVisualShapePropertiesWith<X>>,
     /// The child that is `ShapeProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub properties: Box<ShapeProperties>,
+    pub properties: Box<ShapePropertiesWith<X>>,
     /// The child that is `ShapeStyle`, when there is one.
-    pub style: Option<Box<ShapeStyle>>,
+    pub style: Option<Box<ShapeStyleWith<X>>>,
     /// The child that is `ShapeTextBody`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub text_body: Option<Box<ShapeTextBody>>,
+    pub text_body: Option<Box<ShapeTextBodyWith<X>>>,
     /// The attribute `textlink`, when the element has it.
     pub textlink: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cdr:sp` element of the tree a read gives: [`ShapeWith`] holding nothing in `extra`.
+pub type Shape = ShapeWith<()>;
+
+impl Eq for ShapeWith<()> {}
+
 /// The `cdr:ext` element, Shape Extent (ECMA-376 Part 1, section 21.3.2.10). Its schema type is
 /// `CT_PositiveSize2D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeExtent {
+pub struct ShapeExtentWith<X: NodeExtra> {
     /// The attribute `cx`, when the element has it.
     pub cx: Option<super::drawing::PositiveCoordinate>,
     /// The attribute `cy`, when the element has it.
     pub cy: Option<super::drawing::PositiveCoordinate>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingShapeExtent,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cdr:ext` element of the tree a read gives: [`ShapeExtentWith`] holding nothing in `extra`.
+pub type ShapeExtent = ShapeExtentWith<()>;
+
+impl Eq for ShapeExtentWith<()> {}
 
 /// The `cdr:spPr` element, Shape Properties (ECMA-376 Part 1, section 21.3.2.23). Its schema type
 /// is `CT_ShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeProperties {
+pub struct ShapePropertiesWith<X: NodeExtra> {
     /// The child that is `super::drawing::Apply3DShapeProperties`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub apply_3d: Option<Box<super::drawing::Apply3DShapeProperties>>,
+    pub apply_3d: Option<Box<super::drawing::Apply3DShapePropertiesWith<X>>>,
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
     /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingShapeProperties,
     /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContentWith<X>>>,
     /// The child that is an item of `super::drawing::GeometryContent`, when there is one.
-    pub geometry_content: Option<Box<super::drawing::GeometryContent>>,
+    pub geometry_content: Option<Box<super::drawing::GeometryContentWith<X>>>,
     /// The child that is `super::drawing::Outline`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub outline: Option<Box<super::drawing::Outline>>,
+    pub outline: Option<Box<super::drawing::OutlineWith<X>>>,
     /// The child that is `super::drawing::Scene3d`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub scene3d: Option<Box<super::drawing::Scene3d>>,
+    pub scene3d: Option<Box<super::drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `super::drawing::XfrmTransform2D`, when there is one.
-    pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2D>>,
+    pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2DWith<X>>>,
 }
+
+/// The `cdr:spPr` element of the tree a read gives: [`ShapePropertiesWith`] holding nothing in
+/// `extra`.
+pub type ShapeProperties = ShapePropertiesWith<()>;
+
+impl Eq for ShapePropertiesWith<()> {}
 
 /// The `cdr:style` element, Shape Style (ECMA-376 Part 1, section 21.3.2.24). Its schema type is
 /// `CT_ShapeStyle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeStyle {
+pub struct ShapeStyleWith<X: NodeExtra> {
     /// The child that is `super::drawing::EffectReference`, which the schema requires.
-    pub effect_reference: Box<super::drawing::EffectReference>,
+    pub effect_reference: Box<super::drawing::EffectReferenceWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingShapeStyle,
     /// The child that is `super::drawing::FillReference`, which the schema requires.
-    pub fill_reference: Box<super::drawing::FillReference>,
+    pub fill_reference: Box<super::drawing::FillReferenceWith<X>>,
     /// The child that is `super::drawing::FontReference`, which the schema requires.
-    pub font_reference: Box<super::drawing::FontReference>,
+    pub font_reference: Box<super::drawing::FontReferenceWith<X>>,
     /// The child that is `super::drawing::LineReference`, which the schema requires.
-    pub line_reference: Box<super::drawing::LineReference>,
+    pub line_reference: Box<super::drawing::LineReferenceWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cdr:style` element of the tree a read gives: [`ShapeStyleWith`] holding nothing in `extra`.
+pub type ShapeStyle = ShapeStyleWith<()>;
+
+impl Eq for ShapeStyleWith<()> {}
 
 /// The `cdr:txBody` element, Shape Text Body (ECMA-376 Part 1, section 21.3.2.26). Its schema type
 /// is `CT_TextBody`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeTextBody {
+pub struct ShapeTextBodyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingShapeTextBody,
     /// The child that is `super::drawing::BodyProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub properties: Box<super::drawing::BodyProperties>,
+    pub properties: Box<super::drawing::BodyPropertiesWith<X>>,
     /// The child that is `super::drawing::TextListStyles`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub text_list_styles: Option<Box<super::drawing::TextListStyles>>,
+    pub text_list_styles: Option<Box<super::drawing::TextListStylesWith<X>>>,
     /// The children that are `super::drawing::TextParagraphs`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub text_paragraphs: Vec<super::drawing::TextParagraphs>,
+    pub text_paragraphs: Vec<super::drawing::TextParagraphsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cdr:txBody` element of the tree a read gives: [`ShapeTextBodyWith`] holding nothing in
+/// `extra`.
+pub type ShapeTextBody = ShapeTextBodyWith<()>;
+
+impl Eq for ShapeTextBodyWith<()> {}
+
 /// The `cdr:from` element, Starting Anchor Point (ECMA-376 Part 1, section 21.3.2.11). Its schema
 /// type is `CT_Marker`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StartingAnchorPoint {
+pub struct StartingAnchorPointWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::ChartDrawingStartingAnchorPoint,
     /// The child that is `RelativeXCoordinate`, which the schema requires.
-    pub relative_x_coordinate: Box<RelativeXCoordinate>,
+    pub relative_x_coordinate: Box<RelativeXCoordinateWith<X>>,
     /// The child that is `RelativeYCoordinate`, which the schema requires.
-    pub relative_y_coordinate: Box<RelativeYCoordinate>,
+    pub relative_y_coordinate: Box<RelativeYCoordinateWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cdr:from` element of the tree a read gives: [`StartingAnchorPointWith`] holding nothing in
+/// `extra`.
+pub type StartingAnchorPoint = StartingAnchorPointWith<()>;
+
+impl Eq for StartingAnchorPointWith<()> {}
 
 /// One child element of a choice: `EG_Anchor`.
 ///
 /// The schema types that hold it: `CT_Drawing`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum UserShapesContent {
+pub enum UserShapesContentWith<X: NodeExtra> {
     /// The element `cdr:absSizeAnchor`, a `AbsoluteAnchorShapeSize`.
-    AbsoluteAnchorShapeSize(AbsoluteAnchorShapeSize),
+    AbsoluteAnchorShapeSize(AbsoluteAnchorShapeSizeWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `cdr:relSizeAnchor`, a `RelativeAnchorShapeSize`.
-    RelativeAnchorShapeSize(RelativeAnchorShapeSize),
+    RelativeAnchorShapeSize(RelativeAnchorShapeSizeWith<X>),
 }
 
-impl AbsoluteAnchorShapeSize {
+/// [`UserShapesContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type UserShapesContent = UserShapesContentWith<()>;
+
+impl Eq for UserShapesContentWith<()> {}
+
+impl<X: NodeExtra> AbsoluteAnchorShapeSizeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AbsoluteAnchorShapeSizeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AbsoluteAnchorShapeSizeWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                ObjectContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            shape_extent: officekit_markup_base::into_extra_required(
+                *self.shape_extent,
+                ShapeExtentWith::into_extra,
+            ),
+            starting_anchor_point: officekit_markup_base::into_extra_required(
+                *self.starting_anchor_point,
+                StartingAnchorPointWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1435,7 +1429,34 @@ impl ChartMarkerCoordinateValue {
     }
 }
 
-impl ConnectionShape {
+impl<X: NodeExtra> ConnectionShapeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ConnectionShapeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ConnectionShapeWith {
+            connector_non_visual_properties: officekit_markup_base::into_extra_required(
+                *self.connector_non_visual_properties,
+                ConnectorNonVisualPropertiesWith::into_extra,
+            ),
+            extra: Default::default(),
+            f_published: self.f_published,
+            r#macro: self.r#macro,
+            properties: officekit_markup_base::into_extra_required(
+                *self.properties,
+                ShapePropertiesWith::into_extra,
+            ),
+            style: officekit_markup_base::into_extra_optional(
+                &mut self.style,
+                ShapeStyleWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1460,7 +1481,29 @@ impl officekit_markup_base::Write for ConnectionShape {
     }
 }
 
-impl ConnectorNonVisualProperties {
+impl<X: NodeExtra> ConnectorNonVisualPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ConnectorNonVisualPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ConnectorNonVisualPropertiesWith {
+            extra: Default::default(),
+            non_visual_connection_shape_drawing_properties:
+                officekit_markup_base::into_extra_required(
+                    *self.non_visual_connection_shape_drawing_properties,
+                    NonVisualConnectionShapeDrawingPropertiesWith::into_extra,
+                ),
+            non_visual_drawing_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_drawing_properties,
+                NonVisualDrawingPropertiesWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1481,7 +1524,28 @@ impl officekit_markup_base::Write for ConnectorNonVisualProperties {
     }
 }
 
-impl EndingAnchorPoint {
+impl<X: NodeExtra> EndingAnchorPointWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> EndingAnchorPointWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EndingAnchorPointWith {
+            extra: Default::default(),
+            relative_x_coordinate: officekit_markup_base::into_extra_required(
+                *self.relative_x_coordinate,
+                RelativeXCoordinateWith::into_extra,
+            ),
+            relative_y_coordinate: officekit_markup_base::into_extra_required(
+                *self.relative_y_coordinate,
+                RelativeYCoordinateWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1502,7 +1566,34 @@ impl officekit_markup_base::Write for EndingAnchorPoint {
     }
 }
 
-impl GraphicFrame {
+impl<X: NodeExtra> GraphicFrameWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GraphicFrameWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GraphicFrameWith {
+            extra: Default::default(),
+            f_published: self.f_published,
+            graphic_object: officekit_markup_base::into_extra_required(
+                *self.graphic_object,
+                super::drawing::GraphicObjectWith::into_extra,
+            ),
+            r#macro: self.r#macro,
+            non_visual_graphic_frame_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_graphic_frame_properties,
+                NonVisualGraphicFramePropertiesWith::into_extra,
+            ),
+            transform: officekit_markup_base::into_extra_required(
+                *self.transform,
+                GraphicFrameTransformWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1527,7 +1618,31 @@ impl officekit_markup_base::Write for GraphicFrame {
     }
 }
 
-impl GraphicFrameTransform {
+impl<X: NodeExtra> GraphicFrameTransformWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GraphicFrameTransformWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GraphicFrameTransformWith {
+            extents: officekit_markup_base::into_extra_optional(
+                &mut self.extents,
+                super::drawing::ExtentsWith::into_extra,
+            ),
+            extra: Default::default(),
+            flip_h: self.flip_h,
+            flip_v: self.flip_v,
+            offset: officekit_markup_base::into_extra_optional(
+                &mut self.offset,
+                super::drawing::OffsetWith::into_extra,
+            ),
+            rot: self.rot,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1553,7 +1668,32 @@ impl officekit_markup_base::Write for GraphicFrameTransform {
     }
 }
 
-impl GroupShape {
+impl<X: NodeExtra> GroupShapeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GroupShapeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GroupShapeWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                ObjectContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            non_visual_group_shape_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_group_shape_properties,
+                NonVisualGroupShapePropertiesWith::into_extra,
+            ),
+            properties: officekit_markup_base::into_extra_required(
+                *self.properties,
+                GroupShapePropertiesWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1574,7 +1714,41 @@ impl officekit_markup_base::Write for GroupShape {
     }
 }
 
-impl GroupShapeProperties {
+impl<X: NodeExtra> GroupShapePropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GroupShapePropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GroupShapePropertiesWith {
+            bw_mode: self.bw_mode,
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                super::drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                super::drawing::FillPropertiesContentWith::into_extra,
+            ),
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                super::drawing::Scene3dWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm_group_transform2d: officekit_markup_base::into_extra_optional(
+                &mut self.xfrm_group_transform2d,
+                super::drawing::XfrmGroupTransform2DWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1598,7 +1772,36 @@ impl officekit_markup_base::Write for GroupShapeProperties {
     }
 }
 
-impl NonVisualConnectionShapeDrawingProperties {
+impl<X: NodeExtra> NonVisualConnectionShapeDrawingPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NonVisualConnectionShapeDrawingPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonVisualConnectionShapeDrawingPropertiesWith {
+            connection_end: officekit_markup_base::into_extra_optional(
+                &mut self.connection_end,
+                super::drawing::ConnectionEndWith::into_extra,
+            ),
+            connection_shape_locks: officekit_markup_base::into_extra_optional(
+                &mut self.connection_shape_locks,
+                super::drawing::ConnectionShapeLocksWith::into_extra,
+            ),
+            connection_start: officekit_markup_base::into_extra_optional(
+                &mut self.connection_start,
+                super::drawing::ConnectionStartWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1619,7 +1822,37 @@ impl officekit_markup_base::Write for NonVisualConnectionShapeDrawingProperties 
     }
 }
 
-impl NonVisualDrawingProperties {
+impl<X: NodeExtra> NonVisualDrawingPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NonVisualDrawingPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonVisualDrawingPropertiesWith {
+            click_hyperlink: officekit_markup_base::into_extra_optional(
+                &mut self.click_hyperlink,
+                super::drawing::ClickHyperlinkWith::into_extra,
+            ),
+            descr: self.descr,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            hidden: self.hidden,
+            hyperlink_for_hover: officekit_markup_base::into_extra_optional(
+                &mut self.hyperlink_for_hover,
+                super::drawing::HyperlinkForHoverWith::into_extra,
+            ),
+            id: self.id,
+            name: self.name,
+            title: self.title,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1647,7 +1880,28 @@ impl officekit_markup_base::Write for NonVisualDrawingProperties {
     }
 }
 
-impl NonVisualGraphicFrameDrawingProperties {
+impl<X: NodeExtra> NonVisualGraphicFrameDrawingPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NonVisualGraphicFrameDrawingPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonVisualGraphicFrameDrawingPropertiesWith {
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            graphic_frame_locks: officekit_markup_base::into_extra_optional(
+                &mut self.graphic_frame_locks,
+                super::drawing::GraphicFrameLocksWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1668,7 +1922,28 @@ impl officekit_markup_base::Write for NonVisualGraphicFrameDrawingProperties {
     }
 }
 
-impl NonVisualGraphicFrameProperties {
+impl<X: NodeExtra> NonVisualGraphicFramePropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NonVisualGraphicFramePropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonVisualGraphicFramePropertiesWith {
+            extra: Default::default(),
+            non_visual_drawing_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_drawing_properties,
+                NonVisualDrawingPropertiesWith::into_extra,
+            ),
+            non_visual_graphic_frame_drawing_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_graphic_frame_drawing_properties,
+                NonVisualGraphicFrameDrawingPropertiesWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1689,7 +1964,28 @@ impl officekit_markup_base::Write for NonVisualGraphicFrameProperties {
     }
 }
 
-impl NonVisualGroupShapeDrawingProperties {
+impl<X: NodeExtra> NonVisualGroupShapeDrawingPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NonVisualGroupShapeDrawingPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonVisualGroupShapeDrawingPropertiesWith {
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            group_shape_locks: officekit_markup_base::into_extra_optional(
+                &mut self.group_shape_locks,
+                super::drawing::GroupShapeLocksWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1710,7 +2006,28 @@ impl officekit_markup_base::Write for NonVisualGroupShapeDrawingProperties {
     }
 }
 
-impl NonVisualGroupShapeProperties {
+impl<X: NodeExtra> NonVisualGroupShapePropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NonVisualGroupShapePropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonVisualGroupShapePropertiesWith {
+            extra: Default::default(),
+            non_visual_drawing_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_drawing_properties,
+                NonVisualDrawingPropertiesWith::into_extra,
+            ),
+            non_visual_group_shape_drawing_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_group_shape_drawing_properties,
+                NonVisualGroupShapeDrawingPropertiesWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1731,7 +2048,29 @@ impl officekit_markup_base::Write for NonVisualGroupShapeProperties {
     }
 }
 
-impl NonVisualPictureDrawingProperties {
+impl<X: NodeExtra> NonVisualPictureDrawingPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NonVisualPictureDrawingPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonVisualPictureDrawingPropertiesWith {
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            picture_locks: officekit_markup_base::into_extra_optional(
+                &mut self.picture_locks,
+                super::drawing::PictureLocksWith::into_extra,
+            ),
+            prefer_relative_resize: self.prefer_relative_resize,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1755,7 +2094,28 @@ impl officekit_markup_base::Write for NonVisualPictureDrawingProperties {
     }
 }
 
-impl NonVisualPictureProperties {
+impl<X: NodeExtra> NonVisualPicturePropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NonVisualPicturePropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonVisualPicturePropertiesWith {
+            extra: Default::default(),
+            non_visual_drawing_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_drawing_properties,
+                NonVisualDrawingPropertiesWith::into_extra,
+            ),
+            non_visual_picture_drawing_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_picture_drawing_properties,
+                NonVisualPictureDrawingPropertiesWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1776,7 +2136,29 @@ impl officekit_markup_base::Write for NonVisualPictureProperties {
     }
 }
 
-impl NonVisualShapeDrawingProperties {
+impl<X: NodeExtra> NonVisualShapeDrawingPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NonVisualShapeDrawingPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonVisualShapeDrawingPropertiesWith {
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            shape_locks: officekit_markup_base::into_extra_optional(
+                &mut self.shape_locks,
+                super::drawing::ShapeLocksWith::into_extra,
+            ),
+            tx_box: self.tx_box,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1800,7 +2182,28 @@ impl officekit_markup_base::Write for NonVisualShapeDrawingProperties {
     }
 }
 
-impl NonVisualShapeProperties {
+impl<X: NodeExtra> NonVisualShapePropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NonVisualShapePropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonVisualShapePropertiesWith {
+            extra: Default::default(),
+            non_visual_drawing_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_drawing_properties,
+                NonVisualDrawingPropertiesWith::into_extra,
+            ),
+            non_visual_shape_drawing_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_shape_drawing_properties,
+                NonVisualShapeDrawingPropertiesWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1821,9 +2224,28 @@ impl officekit_markup_base::Write for NonVisualShapeProperties {
     }
 }
 
-impl Default for ObjectContent {
+impl<X: NodeExtra> ObjectContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ObjectContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ConnectionShape(node) => ObjectContentWith::ConnectionShape(node.into_extra()),
+            Self::ContentPart(node) => ObjectContentWith::ContentPart(node.into_extra()),
+            Self::GraphicFrame(node) => ObjectContentWith::GraphicFrame(node.into_extra()),
+            Self::GroupShape(node) => ObjectContentWith::GroupShape(node.into_extra()),
+            Self::Other(node) => ObjectContentWith::Other(node),
+            Self::Picture(node) => ObjectContentWith::Picture(node.into_extra()),
+            Self::Shape(node) => ObjectContentWith::Shape(node.into_extra()),
+        }
+    }
+}
+
+impl<X: NodeExtra> Default for ObjectContentWith<X> {
     fn default() -> Self {
-        Self::ConnectionShape(ConnectionShape::default())
+        Self::ConnectionShape(ConnectionShapeWith::default())
     }
 }
 
@@ -1863,7 +2285,38 @@ impl officekit_markup_base::Write for ObjectContent {
     }
 }
 
-impl Picture {
+impl<X: NodeExtra> PictureWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PictureWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PictureWith {
+            extra: Default::default(),
+            f_published: self.f_published,
+            fill: officekit_markup_base::into_extra_required(
+                *self.fill,
+                PictureFillWith::into_extra,
+            ),
+            r#macro: self.r#macro,
+            non_visual_picture_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_picture_properties,
+                NonVisualPicturePropertiesWith::into_extra,
+            ),
+            shape_properties: officekit_markup_base::into_extra_required(
+                *self.shape_properties,
+                ShapePropertiesWith::into_extra,
+            ),
+            shape_style: officekit_markup_base::into_extra_optional(
+                &mut self.shape_style,
+                ShapeStyleWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1888,7 +2341,34 @@ impl officekit_markup_base::Write for Picture {
     }
 }
 
-impl PictureFill {
+impl<X: NodeExtra> PictureFillWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PictureFillWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PictureFillWith {
+            blip: officekit_markup_base::into_extra_optional(
+                &mut self.blip,
+                super::drawing::BlipWith::into_extra,
+            ),
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                super::drawing::FillModeContentWith::into_extra,
+            ),
+            dpi: self.dpi,
+            extra: Default::default(),
+            rot_with_shape: self.rot_with_shape,
+            source_rectangle: officekit_markup_base::into_extra_optional(
+                &mut self.source_rectangle,
+                super::drawing::SourceRectangleWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1913,7 +2393,32 @@ impl officekit_markup_base::Write for PictureFill {
     }
 }
 
-impl RelativeAnchorShapeSize {
+impl<X: NodeExtra> RelativeAnchorShapeSizeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RelativeAnchorShapeSizeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RelativeAnchorShapeSizeWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                ObjectContentWith::into_extra,
+            ),
+            ending_anchor_point: officekit_markup_base::into_extra_required(
+                *self.ending_anchor_point,
+                EndingAnchorPointWith::into_extra,
+            ),
+            extra: Default::default(),
+            starting_anchor_point: officekit_markup_base::into_extra_required(
+                *self.starting_anchor_point,
+                StartingAnchorPointWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1934,7 +2439,21 @@ impl officekit_markup_base::Write for RelativeAnchorShapeSize {
     }
 }
 
-impl RelativeXCoordinate {
+impl<X: NodeExtra> RelativeXCoordinateWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RelativeXCoordinateWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RelativeXCoordinateWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1958,7 +2477,21 @@ impl officekit_markup_base::Write for RelativeXCoordinate {
     }
 }
 
-impl RelativeYCoordinate {
+impl<X: NodeExtra> RelativeYCoordinateWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RelativeYCoordinateWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RelativeYCoordinateWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1982,7 +2515,40 @@ impl officekit_markup_base::Write for RelativeYCoordinate {
     }
 }
 
-impl Shape {
+impl<X: NodeExtra> ShapeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ShapeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapeWith {
+            extra: Default::default(),
+            f_locks_text: self.f_locks_text,
+            f_published: self.f_published,
+            r#macro: self.r#macro,
+            non_visual_shape_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_shape_properties,
+                NonVisualShapePropertiesWith::into_extra,
+            ),
+            properties: officekit_markup_base::into_extra_required(
+                *self.properties,
+                ShapePropertiesWith::into_extra,
+            ),
+            style: officekit_markup_base::into_extra_optional(
+                &mut self.style,
+                ShapeStyleWith::into_extra,
+            ),
+            text_body: officekit_markup_base::into_extra_optional(
+                &mut self.text_body,
+                ShapeTextBodyWith::into_extra,
+            ),
+            textlink: self.textlink,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2009,7 +2575,22 @@ impl officekit_markup_base::Write for Shape {
     }
 }
 
-impl ShapeExtent {
+impl<X: NodeExtra> ShapeExtentWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShapeExtentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapeExtentWith {
+            cx: self.cx,
+            cy: self.cy,
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2034,7 +2615,53 @@ impl officekit_markup_base::Write for ShapeExtent {
     }
 }
 
-impl ShapeProperties {
+impl<X: NodeExtra> ShapePropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ShapePropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapePropertiesWith {
+            apply_3d: officekit_markup_base::into_extra_optional(
+                &mut self.apply_3d,
+                super::drawing::Apply3DShapePropertiesWith::into_extra,
+            ),
+            bw_mode: self.bw_mode,
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                super::drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                super::drawing::FillPropertiesContentWith::into_extra,
+            ),
+            geometry_content: officekit_markup_base::into_extra_optional(
+                &mut self.geometry_content,
+                super::drawing::GeometryContentWith::into_extra,
+            ),
+            outline: officekit_markup_base::into_extra_optional(
+                &mut self.outline,
+                super::drawing::OutlineWith::into_extra,
+            ),
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                super::drawing::Scene3dWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm_transform2d: officekit_markup_base::into_extra_optional(
+                &mut self.xfrm_transform2d,
+                super::drawing::XfrmTransform2DWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2058,7 +2685,36 @@ impl officekit_markup_base::Write for ShapeProperties {
     }
 }
 
-impl ShapeStyle {
+impl<X: NodeExtra> ShapeStyleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShapeStyleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapeStyleWith {
+            effect_reference: officekit_markup_base::into_extra_required(
+                *self.effect_reference,
+                super::drawing::EffectReferenceWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_reference: officekit_markup_base::into_extra_required(
+                *self.fill_reference,
+                super::drawing::FillReferenceWith::into_extra,
+            ),
+            font_reference: officekit_markup_base::into_extra_required(
+                *self.font_reference,
+                super::drawing::FontReferenceWith::into_extra,
+            ),
+            line_reference: officekit_markup_base::into_extra_required(
+                *self.line_reference,
+                super::drawing::LineReferenceWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2079,7 +2735,32 @@ impl officekit_markup_base::Write for ShapeStyle {
     }
 }
 
-impl ShapeTextBody {
+impl<X: NodeExtra> ShapeTextBodyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ShapeTextBodyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapeTextBodyWith {
+            extra: Default::default(),
+            properties: officekit_markup_base::into_extra_required(
+                *self.properties,
+                super::drawing::BodyPropertiesWith::into_extra,
+            ),
+            text_list_styles: officekit_markup_base::into_extra_optional(
+                &mut self.text_list_styles,
+                super::drawing::TextListStylesWith::into_extra,
+            ),
+            text_paragraphs: officekit_markup_base::into_extra_list(
+                self.text_paragraphs,
+                super::drawing::TextParagraphsWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2100,7 +2781,28 @@ impl officekit_markup_base::Write for ShapeTextBody {
     }
 }
 
-impl StartingAnchorPoint {
+impl<X: NodeExtra> StartingAnchorPointWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> StartingAnchorPointWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StartingAnchorPointWith {
+            extra: Default::default(),
+            relative_x_coordinate: officekit_markup_base::into_extra_required(
+                *self.relative_x_coordinate,
+                RelativeXCoordinateWith::into_extra,
+            ),
+            relative_y_coordinate: officekit_markup_base::into_extra_required(
+                *self.relative_y_coordinate,
+                RelativeYCoordinateWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2118,6 +2820,25 @@ impl officekit_markup_base::Write for StartingAnchorPoint {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::starting_anchor_point(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> UserShapesContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> UserShapesContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::AbsoluteAnchorShapeSize(node) => {
+                UserShapesContentWith::AbsoluteAnchorShapeSize(node.into_extra())
+            }
+            Self::Other(node) => UserShapesContentWith::Other(node),
+            Self::RelativeAnchorShapeSize(node) => {
+                UserShapesContentWith::RelativeAnchorShapeSize(node.into_extra())
+            }
+        }
     }
 }
 

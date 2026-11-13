@@ -12,6 +12,7 @@ crates/officekit-markdown      library: a Word file from markdown and markdown f
 crates/officekit-markup        library: the typed tree, officekit_markup::<namespace>: the namespaces outside base and core, the root hook traits, every namespace's hook traits, and base's and core's namespaces re-exported
 crates/officekit-markup-base   library: the runtime and the namespaces the cycle depends on
 crates/officekit-markup-core   library: the namespaces that reference each other in a cycle
+crates/officekit-markup-macros proc-macro: the `#[node_extra]` attribute, re-exported as `officekit_markup::node_extra`
 crates/officekit-strict        library: the Strict class: read and write of every node (feature `strict` of officekit); the typed tree's transforms, visitors and write-through (`traversal`)
 crates/officekit-xml           library: element tree, names, values, part reader and writer; the package, part names, content types, relationships, images (`packaging`)
 crates/officekit-cli           CLI binary
@@ -61,6 +62,7 @@ validation         the validator and its generated tables
   `dates.rs` and the unit tests; `crates/officekit/src/parts.rs` and everything
   under `crates/officekit/src/parts` but `part_root.rs` and the unit tests;
   `crates/officekit/src/validation/generated/` (and `generated.rs`);
+  `crates/officekit-markup-macros/src/kinds.rs`;
   `crates/officekit-xml/src/name/table.rs`; and
   `crates/officekit-xml/src/packaging/relationship_type.rs`. Change the generator
   in `crates/xtask` (its hand-written inputs live in `crates/xtask/data/`) and

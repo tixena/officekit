@@ -376,8 +376,8 @@ use officekit_markup::spreadsheet;
 use officekit_markup::spreadsheet_drawing;
 use officekit_markup::wordprocessing;
 use rkyv::de::Pooling;
-use rkyv::rancor::{Fallible, Source};
-use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::rancor::{Fallible, Source as ErrorSource};
+use rkyv::ser::{Allocator, Sharing, Writer as ArchiveWriter};
 use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -519,22 +519,22 @@ impl rkyv::Archive for super::PartModel {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::PartModel
+impl<__S> rkyv::Serialize<__S> for super::PartModel
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         PartModel::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::PartModel, D> for ArchivedPartModel
+impl<__D> rkyv::Deserialize<super::PartModel, __D> for ArchivedPartModel
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::PartModel, D::Error> {
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::PartModel, __D::Error> {
         PartModel::deserialize_with(self, deserializer)
     }
 }

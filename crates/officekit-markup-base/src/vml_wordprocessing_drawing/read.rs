@@ -223,6 +223,7 @@ use officekit_xml::element::Element;
 pub fn anchor_location_is_locked(element: &Element) -> super::AnchorLocationIsLocked {
     let reader = crate::Reader::new(element, &super::ANCHOR_LOCATION_IS_LOCKED_SHAPE);
     super::AnchorLocationIsLocked {
+        extra: (),
         unknown: reader.finish(),
     }
 }

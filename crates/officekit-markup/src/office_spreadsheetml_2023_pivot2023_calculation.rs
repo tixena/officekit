@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
@@ -297,21 +300,24 @@ pub static PIVOT_FIELD_SUBTOTAL_LINE_ITEMS_SHAPE: officekit_markup_base::Shape =
 
 /// The `xlpcalc:aggregationInfo` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_AggregationInfo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AggregationInfo {
+pub struct AggregationInfoWith<X: NodeExtra> {
     /// The attribute `aggregationType`, when the element has it.
     pub aggregation_type: Option<AggregationType>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2023Pivot2023CalculationAggregationInfo,
     /// The attribute `sourceField`, when the element has it.
     pub source_field: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlpcalc:aggregationInfo` element of the tree a read gives: [`AggregationInfoWith`] holding
+/// nothing in `extra`.
+pub type AggregationInfo = AggregationInfoWith<()>;
+
+impl Eq for AggregationInfoWith<()> {}
 
 /// The simple type `ST_AggregationType`, kept as the text the file carried.
 ///
@@ -530,111 +536,132 @@ pub trait Context: crate::Context {
 
 /// The `xlpcalc:featureSupportInfo` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_FeatureSupport`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FeatureSupportInfo {
+pub struct FeatureSupportInfoWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2023Pivot2023CalculationFeatureSupportInfo,
     /// The attribute `featureName`, when the element has it.
     pub feature_name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlpcalc:featureSupportInfo` element of the tree a read gives: [`FeatureSupportInfoWith`]
+/// holding nothing in `extra`.
+pub type FeatureSupportInfo = FeatureSupportInfoWith<()>;
+
+impl Eq for FeatureSupportInfoWith<()> {}
+
 /// The `xlpcalc:pivotAreaReferenceSubtotals` element, declared by the schema data of the Open XML
 /// SDK, version 3.5.1. Its schema type is `CT_PivotAreaReferenceSubtotals`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotAreaReferenceSubtotals {
+pub struct PivotAreaReferenceSubtotalsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2023Pivot2023CalculationPivotAreaReferenceSubtotals,
     /// The children that are `SubtotalPivotSubtotalType`, in order.
-    pub subtotal_pivot_subtotal_type: Vec<SubtotalPivotSubtotalType>,
+    pub subtotal_pivot_subtotal_type: Vec<SubtotalPivotSubtotalTypeWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlpcalc:pivotAreaReferenceSubtotals` element of the tree a read gives:
+/// [`PivotAreaReferenceSubtotalsWith`] holding nothing in `extra`.
+pub type PivotAreaReferenceSubtotals = PivotAreaReferenceSubtotalsWith<()>;
+
+impl Eq for PivotAreaReferenceSubtotalsWith<()> {}
 
 /// The `xlpcalc:pivotFieldSubtotalLineItems` element, declared by the schema data of the Open XML
 /// SDK, version 3.5.1. Its schema type is `CT_PivotTableSubtotalLineItems`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotFieldSubtotalLineItems {
+pub struct PivotFieldSubtotalLineItemsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2023Pivot2023CalculationPivotFieldSubtotalLineItems,
     /// The children that are `SubtotalLineItem`, in order.
-    pub subtotal_line_item: Vec<SubtotalLineItem>,
+    pub subtotal_line_item: Vec<SubtotalLineItemWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlpcalc:pivotFieldSubtotalLineItems` element of the tree a read gives:
+/// [`PivotFieldSubtotalLineItemsWith`] holding nothing in `extra`.
+pub type PivotFieldSubtotalLineItems = PivotFieldSubtotalLineItemsWith<()>;
+
+impl Eq for PivotFieldSubtotalLineItemsWith<()> {}
 
 /// The `xlpcalc:pivotFieldSubtotals` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_PivotFieldSubtotals`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotFieldSubtotals {
+pub struct PivotFieldSubtotalsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2023Pivot2023CalculationPivotFieldSubtotals,
     /// The children that are `SubtotalPivotItemSubtotal`, in order.
-    pub subtotal_pivot_item_subtotal: Vec<SubtotalPivotItemSubtotal>,
+    pub subtotal_pivot_item_subtotal: Vec<SubtotalPivotItemSubtotalWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlpcalc:pivotFieldSubtotals` element of the tree a read gives: [`PivotFieldSubtotalsWith`]
+/// holding nothing in `extra`.
+pub type PivotFieldSubtotals = PivotFieldSubtotalsWith<()>;
+
+impl Eq for PivotFieldSubtotalsWith<()> {}
 
 /// The `xlpcalc:subtotalLineItem` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_PivotItemSubtotal`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SubtotalLineItem {
+pub struct SubtotalLineItemWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2023Pivot2023CalculationSubtotalLineItem,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlpcalc:subtotalLineItem` element of the tree a read gives: [`SubtotalLineItemWith`]
+/// holding nothing in `extra`.
+pub type SubtotalLineItem = SubtotalLineItemWith<()>;
+
+impl Eq for SubtotalLineItemWith<()> {}
 
 /// The `xlpcalc:subtotal` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_PivotItemSubtotal`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SubtotalPivotItemSubtotal {
+pub struct SubtotalPivotItemSubtotalWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2023Pivot2023CalculationSubtotalPivotItemSubtotal,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlpcalc:subtotal` element of the tree a read gives: [`SubtotalPivotItemSubtotalWith`]
+/// holding nothing in `extra`.
+pub type SubtotalPivotItemSubtotal = SubtotalPivotItemSubtotalWith<()>;
+
+impl Eq for SubtotalPivotItemSubtotalWith<()> {}
+
 /// The `xlpcalc:subtotal` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_PivotSubtotalType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SubtotalPivotSubtotalType {
+pub struct SubtotalPivotSubtotalTypeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2023Pivot2023CalculationSubtotalPivotSubtotalType,
     /// The attribute `subtotalType`, when the element has it.
     pub subtotal_type: Option<AggregationType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlpcalc:subtotal` element of the tree a read gives: [`SubtotalPivotSubtotalTypeWith`]
+/// holding nothing in `extra`.
+pub type SubtotalPivotSubtotalType = SubtotalPivotSubtotalTypeWith<()>;
+
+impl Eq for SubtotalPivotSubtotalTypeWith<()> {}
 
 /// The hooks of a visitor for the `xlpcalc` namespace.
 ///
@@ -709,7 +736,22 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl AggregationInfo {
+impl<X: NodeExtra> AggregationInfoWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AggregationInfoWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AggregationInfoWith {
+            aggregation_type: self.aggregation_type,
+            extra: Default::default(),
+            source_field: self.source_field,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -806,7 +848,21 @@ impl AggregationType {
     }
 }
 
-impl FeatureSupportInfo {
+impl<X: NodeExtra> FeatureSupportInfoWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FeatureSupportInfoWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FeatureSupportInfoWith {
+            extra: Default::default(),
+            feature_name: self.feature_name,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -830,7 +886,24 @@ impl officekit_markup_base::Write for FeatureSupportInfo {
     }
 }
 
-impl PivotAreaReferenceSubtotals {
+impl<X: NodeExtra> PivotAreaReferenceSubtotalsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PivotAreaReferenceSubtotalsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PivotAreaReferenceSubtotalsWith {
+            extra: Default::default(),
+            subtotal_pivot_subtotal_type: officekit_markup_base::into_extra_list(
+                self.subtotal_pivot_subtotal_type,
+                SubtotalPivotSubtotalTypeWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -851,7 +924,24 @@ impl officekit_markup_base::Write for PivotAreaReferenceSubtotals {
     }
 }
 
-impl PivotFieldSubtotalLineItems {
+impl<X: NodeExtra> PivotFieldSubtotalLineItemsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PivotFieldSubtotalLineItemsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PivotFieldSubtotalLineItemsWith {
+            extra: Default::default(),
+            subtotal_line_item: officekit_markup_base::into_extra_list(
+                self.subtotal_line_item,
+                SubtotalLineItemWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -872,7 +962,24 @@ impl officekit_markup_base::Write for PivotFieldSubtotalLineItems {
     }
 }
 
-impl PivotFieldSubtotals {
+impl<X: NodeExtra> PivotFieldSubtotalsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PivotFieldSubtotalsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PivotFieldSubtotalsWith {
+            extra: Default::default(),
+            subtotal_pivot_item_subtotal: officekit_markup_base::into_extra_list(
+                self.subtotal_pivot_item_subtotal,
+                SubtotalPivotItemSubtotalWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -893,7 +1000,20 @@ impl officekit_markup_base::Write for PivotFieldSubtotals {
     }
 }
 
-impl SubtotalLineItem {
+impl<X: NodeExtra> SubtotalLineItemWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SubtotalLineItemWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SubtotalLineItemWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -914,7 +1034,20 @@ impl officekit_markup_base::Write for SubtotalLineItem {
     }
 }
 
-impl SubtotalPivotItemSubtotal {
+impl<X: NodeExtra> SubtotalPivotItemSubtotalWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SubtotalPivotItemSubtotalWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SubtotalPivotItemSubtotalWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -935,7 +1068,21 @@ impl officekit_markup_base::Write for SubtotalPivotItemSubtotal {
     }
 }
 
-impl SubtotalPivotSubtotalType {
+impl<X: NodeExtra> SubtotalPivotSubtotalTypeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SubtotalPivotSubtotalTypeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SubtotalPivotSubtotalTypeWith {
+            extra: Default::default(),
+            subtotal_type: self.subtotal_type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

@@ -1,0 +1,23 @@
+[package]
+name = "officekit-markup-macros"
+description = "The #[node_extra] attribute of officekit's typed tree"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+readme.workspace = true
+include = ["/src/**/*.rs", "/LICENSE"]
+
+[lib]
+proc-macro = true
+
+[lints]
+workspace = true
+
+[dependencies]
+proc-macro2 = { workspace = true, features = ["proc-macro"] }
+quote = { workspace = true, features = ["proc-macro"] }
+# The features officekit-xml's build-dependency turns on, so syn is the same in every cargo line.
+syn = { workspace = true, features = ["clone-impls", "default", "derive", "extra-traits", "full", "parsing", "printing", "proc-macro"] }

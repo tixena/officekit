@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::presentation;
 use officekit_xml::element::Element;
@@ -350,34 +353,34 @@ pub trait Context: crate::Context {
 
 /// The `p202:designPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DesignerDrawingProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DesignPr {
+pub struct DesignPrWith<X: NodeExtra> {
     /// The child that is `DesignTagLst`, when there is one.
-    pub design_tag_lst: Option<Box<DesignTagLst>>,
+    pub design_tag_lst: Option<Box<DesignTagLstWith<X>>>,
     /// The attribute `edtDesignElem`, when the element has it.
     pub edt_design_elem: Option<String>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint202002MainDesignPr,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `p202:designPr` element of the tree a read gives: [`DesignPrWith`] holding nothing in
+/// `extra`.
+pub type DesignPr = DesignPrWith<()>;
+
+impl Eq for DesignPrWith<()> {}
+
 /// The `p202:designTag` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_DesignerTag`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DesignTag {
+pub struct DesignTagWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint202002MainDesignTag,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -386,37 +389,48 @@ pub struct DesignTag {
     pub val: Option<String>,
 }
 
+/// The `p202:designTag` element of the tree a read gives: [`DesignTagWith`] holding nothing in
+/// `extra`.
+pub type DesignTag = DesignTagWith<()>;
+
+impl Eq for DesignTagWith<()> {}
+
 /// The `p202:designTagLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_DesignerTagList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DesignTagLst {
+pub struct DesignTagLstWith<X: NodeExtra> {
     /// The children that are `DesignTag`, in order.
-    pub design_tag: Vec<DesignTag>,
+    pub design_tag: Vec<DesignTagWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint202002MainDesignTagLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `p202:designTagLst` element of the tree a read gives: [`DesignTagLstWith`] holding nothing
+/// in `extra`.
+pub type DesignTagLst = DesignTagLstWith<()>;
+
+impl Eq for DesignTagLstWith<()> {}
+
 /// The `p202:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `presentation::Extension`, in order.
-    pub extension: Vec<presentation::Extension>,
+    pub extension: Vec<presentation::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint202002MainExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `p202:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
 
 /// The hooks of a visitor for the `p202` namespace.
 ///
@@ -447,7 +461,29 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl DesignPr {
+impl<X: NodeExtra> DesignPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DesignPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DesignPrWith {
+            design_tag_lst: officekit_markup_base::into_extra_optional(
+                &mut self.design_tag_lst,
+                DesignTagLstWith::into_extra,
+            ),
+            edt_design_elem: self.edt_design_elem,
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -471,7 +507,22 @@ impl officekit_markup_base::Write for DesignPr {
     }
 }
 
-impl DesignTag {
+impl<X: NodeExtra> DesignTagWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DesignTagWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DesignTagWith {
+            extra: Default::default(),
+            name: self.name,
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -496,7 +547,24 @@ impl officekit_markup_base::Write for DesignTag {
     }
 }
 
-impl DesignTagLst {
+impl<X: NodeExtra> DesignTagLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DesignTagLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DesignTagLstWith {
+            design_tag: officekit_markup_base::into_extra_list(
+                self.design_tag,
+                DesignTagWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -517,7 +585,24 @@ impl officekit_markup_base::Write for DesignTagLst {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                presentation::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

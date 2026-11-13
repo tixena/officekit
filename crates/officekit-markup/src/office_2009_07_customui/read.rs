@@ -1717,6 +1717,7 @@ pub fn image_control(element: &Element) -> super::ImageControl {
 pub fn item_backstage_item(element: &Element) -> super::ItemBackstageItem {
     let reader = officekit_markup_base::Reader::new(element, &super::ITEM_BACKSTAGE_ITEM_SHAPE);
     super::ItemBackstageItem {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2181,6 +2182,7 @@ pub fn quick_access_toolbar_items(element: &Element) -> super::QuickAccessToolba
 pub fn radio_button(element: &Element) -> super::RadioButton {
     let reader = officekit_markup_base::Reader::new(element, &super::RADIO_BUTTON_SHAPE);
     super::RadioButton {
+        extra: (),
         unknown: reader.finish(),
     }
 }

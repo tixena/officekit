@@ -210,24 +210,1014 @@
 //   6833bb8339d1dc179b970db58c13333ff6139e649ef9e044ef10623bed172323  crates/xtask/data/sdk_corrections.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The mirrors rkyv archives the enums of `crate::vml` through: the archived
-//! enums and resolvers it writes stay in this private module.
+//! The mirrors rkyv archives the structs and enums of `crate::vml` through: the archived
+//! types and resolvers it writes stay in this private module.
 
+use officekit_markup_base::common_simple_types;
 use officekit_markup_base::vml_presentation_drawing;
 use officekit_markup_base::vml_spreadsheet_drawing;
 use officekit_markup_base::vml_wordprocessing_drawing;
 use officekit_xml::element::Node;
 use rkyv::de::Pooling;
-use rkyv::rancor::{Fallible, Source};
-use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::rancor::{Fallible, Source as ErrorSource};
+use rkyv::ser::{Allocator, Sharing, Writer as ArchiveWriter};
 use rkyv::validation::{ArchiveContext, SharedContext};
 use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ArcSegment)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ArcSegmentMirror {
+    pub allowincell: Option<common_simple_types::BooleanValue>,
+    pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    pub alt: Option<String>,
+    pub borderbottomcolor: Option<String>,
+    pub borderleftcolor: Option<String>,
+    pub borderrightcolor: Option<String>,
+    pub bordertopcolor: Option<String>,
+    pub bullet: Option<common_simple_types::BooleanValue>,
+    pub button: Option<common_simple_types::BooleanValue>,
+    pub bwmode: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwnormal: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwpure: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub chromakey: Option<String>,
+    pub class: Option<String>,
+    pub clip: Option<common_simple_types::BooleanValue>,
+    pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    pub connectortype: Option<super::super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::ShapeElementContent>,
+    pub coordorigin: Option<String>,
+    pub coordsize: Option<String>,
+    pub dgmlayout: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmnodekind: Option<String>,
+    pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    pub end_angle: Option<String>,
+    pub extra: (),
+    pub fillcolor: Option<String>,
+    pub filled: Option<common_simple_types::BooleanValue>,
+    pub forcedash: Option<common_simple_types::BooleanValue>,
+    pub hr: Option<common_simple_types::BooleanValue>,
+    pub hralign: Option<super::super::vml_office_drawing::StHrAlign>,
+    pub href: Option<String>,
+    pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    pub hrpct: Option<String>,
+    pub hrstd: Option<common_simple_types::BooleanValue>,
+    pub id: Option<String>,
+    pub insetmode: Option<super::super::vml_office_drawing::InsetMarginType>,
+    pub insetpen: Option<common_simple_types::BooleanValue>,
+    pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    pub oleicon: Option<common_simple_types::BooleanValue>,
+    pub oned: Option<common_simple_types::BooleanValue>,
+    pub opacity: Option<String>,
+    pub preferrelative: Option<common_simple_types::BooleanValue>,
+    pub print: Option<common_simple_types::BooleanValue>,
+    pub regroupid: Option<String>,
+    pub spid: Option<String>,
+    pub spt: Option<String>,
+    pub start_angle: Option<String>,
+    pub strokecolor: Option<String>,
+    pub stroked: Option<common_simple_types::BooleanValue>,
+    pub strokeweight: Option<String>,
+    pub style: Option<String>,
+    pub target: Option<String>,
+    pub title: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub userdrawn: Option<common_simple_types::BooleanValue>,
+    pub userhidden: Option<common_simple_types::BooleanValue>,
+    pub wrapcoords: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::BezierCurve)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct BezierCurveMirror {
+    pub allowincell: Option<common_simple_types::BooleanValue>,
+    pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    pub alt: Option<String>,
+    pub borderbottomcolor: Option<String>,
+    pub borderleftcolor: Option<String>,
+    pub borderrightcolor: Option<String>,
+    pub bordertopcolor: Option<String>,
+    pub bullet: Option<common_simple_types::BooleanValue>,
+    pub button: Option<common_simple_types::BooleanValue>,
+    pub bwmode: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwnormal: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwpure: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub chromakey: Option<String>,
+    pub class: Option<String>,
+    pub clip: Option<common_simple_types::BooleanValue>,
+    pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    pub connectortype: Option<super::super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::ShapeElementContent>,
+    pub control1: Option<String>,
+    pub control2: Option<String>,
+    pub coordorigin: Option<String>,
+    pub coordsize: Option<String>,
+    pub dgmlayout: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmnodekind: Option<String>,
+    pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    pub extra: (),
+    pub fillcolor: Option<String>,
+    pub filled: Option<common_simple_types::BooleanValue>,
+    pub forcedash: Option<common_simple_types::BooleanValue>,
+    pub from: Option<String>,
+    pub hr: Option<common_simple_types::BooleanValue>,
+    pub hralign: Option<super::super::vml_office_drawing::StHrAlign>,
+    pub href: Option<String>,
+    pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    pub hrpct: Option<String>,
+    pub hrstd: Option<common_simple_types::BooleanValue>,
+    pub id: Option<String>,
+    pub insetmode: Option<super::super::vml_office_drawing::InsetMarginType>,
+    pub insetpen: Option<common_simple_types::BooleanValue>,
+    pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    pub oleicon: Option<common_simple_types::BooleanValue>,
+    pub oned: Option<common_simple_types::BooleanValue>,
+    pub opacity: Option<String>,
+    pub preferrelative: Option<common_simple_types::BooleanValue>,
+    pub print: Option<common_simple_types::BooleanValue>,
+    pub regroupid: Option<String>,
+    pub spid: Option<String>,
+    pub spt: Option<String>,
+    pub strokecolor: Option<String>,
+    pub stroked: Option<common_simple_types::BooleanValue>,
+    pub strokeweight: Option<String>,
+    pub style: Option<String>,
+    pub target: Option<String>,
+    pub title: Option<String>,
+    pub to: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub userdrawn: Option<common_simple_types::BooleanValue>,
+    pub userhidden: Option<common_simple_types::BooleanValue>,
+    pub wrapcoords: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::DocumentBackground)]
+#[rkyv(attr(non_exhaustive))]
+pub struct DocumentBackgroundMirror {
+    pub bwmode: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwnormal: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwpure: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub extra: (),
+    pub fillcolor: Option<String>,
+    pub filled: Option<common_simple_types::BooleanValue>,
+    pub id: Option<String>,
+    pub shape_fill_properties: Option<Box<super::ShapeFillProperties>>,
+    pub targetscreensize: Option<super::super::vml_office_drawing::ScreenSizesType>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ImageData)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ImageDataMirror {
+    pub althref: Option<String>,
+    pub bilevel: Option<common_simple_types::BooleanValue>,
+    pub blacklevel: Option<String>,
+    pub chromakey: Option<String>,
+    pub cropbottom: Option<String>,
+    pub cropleft: Option<String>,
+    pub cropright: Option<String>,
+    pub croptop: Option<String>,
+    pub detectmouseclick: Option<common_simple_types::BooleanValue>,
+    pub embosscolor: Option<String>,
+    pub extra: (),
+    pub gain: Option<String>,
+    pub gamma: Option<String>,
+    pub grayscale: Option<common_simple_types::BooleanValue>,
+    pub id: Option<String>,
+    pub movie: Option<String>,
+    pub o_href: Option<String>,
+    pub oleid: Option<String>,
+    pub pict: Option<String>,
+    pub r_href: Option<String>,
+    pub r_id: Option<String>,
+    pub recolortarget: Option<String>,
+    pub relid: Option<String>,
+    pub src: Option<String>,
+    pub title: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ImageFile)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ImageFileMirror {
+    pub allowincell: Option<common_simple_types::BooleanValue>,
+    pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    pub alt: Option<String>,
+    pub bilevel: Option<common_simple_types::BooleanValue>,
+    pub blacklevel: Option<String>,
+    pub borderbottomcolor: Option<String>,
+    pub borderleftcolor: Option<String>,
+    pub borderrightcolor: Option<String>,
+    pub bordertopcolor: Option<String>,
+    pub bullet: Option<common_simple_types::BooleanValue>,
+    pub button: Option<common_simple_types::BooleanValue>,
+    pub bwmode: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwnormal: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwpure: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub chromakey: Option<String>,
+    pub class: Option<String>,
+    pub clip: Option<common_simple_types::BooleanValue>,
+    pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    pub connectortype: Option<super::super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::ShapeElementContent>,
+    pub coordorigin: Option<String>,
+    pub coordsize: Option<String>,
+    pub cropbottom: Option<String>,
+    pub cropleft: Option<String>,
+    pub cropright: Option<String>,
+    pub croptop: Option<String>,
+    pub dgmlayout: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmnodekind: Option<String>,
+    pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    pub extra: (),
+    pub fillcolor: Option<String>,
+    pub filled: Option<common_simple_types::BooleanValue>,
+    pub forcedash: Option<common_simple_types::BooleanValue>,
+    pub gain: Option<String>,
+    pub gamma: Option<String>,
+    pub grayscale: Option<common_simple_types::BooleanValue>,
+    pub hr: Option<common_simple_types::BooleanValue>,
+    pub hralign: Option<super::super::vml_office_drawing::StHrAlign>,
+    pub href: Option<String>,
+    pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    pub hrpct: Option<String>,
+    pub hrstd: Option<common_simple_types::BooleanValue>,
+    pub id: Option<String>,
+    pub insetmode: Option<super::super::vml_office_drawing::InsetMarginType>,
+    pub insetpen: Option<common_simple_types::BooleanValue>,
+    pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    pub oleicon: Option<common_simple_types::BooleanValue>,
+    pub oned: Option<common_simple_types::BooleanValue>,
+    pub opacity: Option<String>,
+    pub preferrelative: Option<common_simple_types::BooleanValue>,
+    pub print: Option<common_simple_types::BooleanValue>,
+    pub regroupid: Option<String>,
+    pub spid: Option<String>,
+    pub spt: Option<String>,
+    pub src: Option<String>,
+    pub strokecolor: Option<String>,
+    pub stroked: Option<common_simple_types::BooleanValue>,
+    pub strokeweight: Option<String>,
+    pub style: Option<String>,
+    pub target: Option<String>,
+    pub title: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub userdrawn: Option<common_simple_types::BooleanValue>,
+    pub userhidden: Option<common_simple_types::BooleanValue>,
+    pub wrapcoords: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Line)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct LineMirror {
+    pub allowincell: Option<common_simple_types::BooleanValue>,
+    pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    pub alt: Option<String>,
+    pub borderbottomcolor: Option<String>,
+    pub borderleftcolor: Option<String>,
+    pub borderrightcolor: Option<String>,
+    pub bordertopcolor: Option<String>,
+    pub bullet: Option<common_simple_types::BooleanValue>,
+    pub button: Option<common_simple_types::BooleanValue>,
+    pub bwmode: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwnormal: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwpure: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub chromakey: Option<String>,
+    pub class: Option<String>,
+    pub clip: Option<common_simple_types::BooleanValue>,
+    pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    pub connectortype: Option<super::super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::ShapeElementContent>,
+    pub coordorigin: Option<String>,
+    pub coordsize: Option<String>,
+    pub dgmlayout: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmnodekind: Option<String>,
+    pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    pub extra: (),
+    pub fillcolor: Option<String>,
+    pub filled: Option<common_simple_types::BooleanValue>,
+    pub forcedash: Option<common_simple_types::BooleanValue>,
+    pub from: Option<String>,
+    pub hr: Option<common_simple_types::BooleanValue>,
+    pub hralign: Option<super::super::vml_office_drawing::StHrAlign>,
+    pub href: Option<String>,
+    pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    pub hrpct: Option<String>,
+    pub hrstd: Option<common_simple_types::BooleanValue>,
+    pub id: Option<String>,
+    pub insetmode: Option<super::super::vml_office_drawing::InsetMarginType>,
+    pub insetpen: Option<common_simple_types::BooleanValue>,
+    pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    pub oleicon: Option<common_simple_types::BooleanValue>,
+    pub oned: Option<common_simple_types::BooleanValue>,
+    pub opacity: Option<String>,
+    pub preferrelative: Option<common_simple_types::BooleanValue>,
+    pub print: Option<common_simple_types::BooleanValue>,
+    pub regroupid: Option<String>,
+    pub spid: Option<String>,
+    pub spt: Option<String>,
+    pub strokecolor: Option<String>,
+    pub stroked: Option<common_simple_types::BooleanValue>,
+    pub strokeweight: Option<String>,
+    pub style: Option<String>,
+    pub target: Option<String>,
+    pub title: Option<String>,
+    pub to: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub userdrawn: Option<common_simple_types::BooleanValue>,
+    pub userhidden: Option<common_simple_types::BooleanValue>,
+    pub wrapcoords: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::LineStrokeSettings)]
+#[rkyv(attr(non_exhaustive))]
+pub struct LineStrokeSettingsMirror {
+    pub althref: Option<String>,
+    pub color: Option<String>,
+    pub color2: Option<String>,
+    pub dashstyle: Option<String>,
+    pub endarrow: Option<super::StrokeArrowheadType>,
+    pub endarrowlength: Option<super::StrokeArrowheadLength>,
+    pub endarrowwidth: Option<super::StrokeArrowheadWidth>,
+    pub endcap: Option<super::StrokeEndCapType>,
+    pub extra: (),
+    pub filltype: Option<super::ShapeFillType>,
+    pub forcedash: Option<common_simple_types::BooleanValue>,
+    pub href: Option<String>,
+    pub id: Option<String>,
+    pub imagealignshape: Option<common_simple_types::BooleanValue>,
+    pub imageaspect: Option<super::ImageScalingBehavior>,
+    pub imagesize: Option<String>,
+    pub insetpen: Option<common_simple_types::BooleanValue>,
+    pub joinstyle: Option<super::LineJoinType>,
+    pub linestyle: Option<super::StrokeLineStyle>,
+    pub miterlimit: Option<String>,
+    pub on: Option<common_simple_types::BooleanValue>,
+    pub opacity: Option<String>,
+    pub r_id: Option<String>,
+    pub relid: Option<String>,
+    pub src: Option<String>,
+    pub startarrow: Option<super::StrokeArrowheadType>,
+    pub startarrowlength: Option<super::StrokeArrowheadLength>,
+    pub startarrowwidth: Option<super::StrokeArrowheadWidth>,
+    pub text_box_bottom_stroke: Option<Box<super::super::vml_office_drawing::TextBoxBottomStroke>>,
+    pub text_box_interior_stroke:
+        Option<Box<super::super::vml_office_drawing::TextBoxInteriorStroke>>,
+    pub text_box_left_stroke: Option<Box<super::super::vml_office_drawing::TextBoxLeftStroke>>,
+    pub text_box_right_stroke: Option<Box<super::super::vml_office_drawing::TextBoxRightStroke>>,
+    pub text_box_top_stroke: Option<Box<super::super::vml_office_drawing::TextBoxTopStroke>>,
+    pub title: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub weight: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::MultiplePathLine)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct MultiplePathLineMirror {
+    pub allowincell: Option<common_simple_types::BooleanValue>,
+    pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    pub alt: Option<String>,
+    pub borderbottomcolor: Option<String>,
+    pub borderleftcolor: Option<String>,
+    pub borderrightcolor: Option<String>,
+    pub bordertopcolor: Option<String>,
+    pub bullet: Option<common_simple_types::BooleanValue>,
+    pub button: Option<common_simple_types::BooleanValue>,
+    pub bwmode: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwnormal: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwpure: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub chromakey: Option<String>,
+    pub class: Option<String>,
+    pub clip: Option<common_simple_types::BooleanValue>,
+    pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    pub connectortype: Option<super::super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::MultiplePathLineContent>,
+    pub coordorigin: Option<String>,
+    pub coordsize: Option<String>,
+    pub dgmlayout: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmnodekind: Option<String>,
+    pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    pub extra: (),
+    pub fillcolor: Option<String>,
+    pub filled: Option<common_simple_types::BooleanValue>,
+    pub forcedash: Option<common_simple_types::BooleanValue>,
+    pub hr: Option<common_simple_types::BooleanValue>,
+    pub hralign: Option<super::super::vml_office_drawing::StHrAlign>,
+    pub href: Option<String>,
+    pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    pub hrpct: Option<String>,
+    pub hrstd: Option<common_simple_types::BooleanValue>,
+    pub id: Option<String>,
+    pub insetmode: Option<super::super::vml_office_drawing::InsetMarginType>,
+    pub insetpen: Option<common_simple_types::BooleanValue>,
+    pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    pub oleicon: Option<common_simple_types::BooleanValue>,
+    pub oned: Option<common_simple_types::BooleanValue>,
+    pub opacity: Option<String>,
+    pub points: Option<String>,
+    pub preferrelative: Option<common_simple_types::BooleanValue>,
+    pub print: Option<common_simple_types::BooleanValue>,
+    pub regroupid: Option<String>,
+    pub spid: Option<String>,
+    pub spt: Option<String>,
+    pub strokecolor: Option<String>,
+    pub stroked: Option<common_simple_types::BooleanValue>,
+    pub strokeweight: Option<String>,
+    pub style: Option<String>,
+    pub target: Option<String>,
+    pub title: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub userdrawn: Option<common_simple_types::BooleanValue>,
+    pub userhidden: Option<common_simple_types::BooleanValue>,
+    pub wrapcoords: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Oval)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct OvalMirror {
+    pub allowincell: Option<common_simple_types::BooleanValue>,
+    pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    pub alt: Option<String>,
+    pub borderbottomcolor: Option<String>,
+    pub borderleftcolor: Option<String>,
+    pub borderrightcolor: Option<String>,
+    pub bordertopcolor: Option<String>,
+    pub bullet: Option<common_simple_types::BooleanValue>,
+    pub button: Option<common_simple_types::BooleanValue>,
+    pub bwmode: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwnormal: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwpure: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub chromakey: Option<String>,
+    pub class: Option<String>,
+    pub clip: Option<common_simple_types::BooleanValue>,
+    pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    pub connectortype: Option<super::super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::ShapeElementContent>,
+    pub coordorigin: Option<String>,
+    pub coordsize: Option<String>,
+    pub dgmlayout: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmnodekind: Option<String>,
+    pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    pub extra: (),
+    pub fillcolor: Option<String>,
+    pub filled: Option<common_simple_types::BooleanValue>,
+    pub forcedash: Option<common_simple_types::BooleanValue>,
+    pub hr: Option<common_simple_types::BooleanValue>,
+    pub hralign: Option<super::super::vml_office_drawing::StHrAlign>,
+    pub href: Option<String>,
+    pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    pub hrpct: Option<String>,
+    pub hrstd: Option<common_simple_types::BooleanValue>,
+    pub id: Option<String>,
+    pub insetmode: Option<super::super::vml_office_drawing::InsetMarginType>,
+    pub insetpen: Option<common_simple_types::BooleanValue>,
+    pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    pub oleicon: Option<common_simple_types::BooleanValue>,
+    pub oned: Option<common_simple_types::BooleanValue>,
+    pub opacity: Option<String>,
+    pub preferrelative: Option<common_simple_types::BooleanValue>,
+    pub print: Option<common_simple_types::BooleanValue>,
+    pub regroupid: Option<String>,
+    pub spid: Option<String>,
+    pub spt: Option<String>,
+    pub strokecolor: Option<String>,
+    pub stroked: Option<common_simple_types::BooleanValue>,
+    pub strokeweight: Option<String>,
+    pub style: Option<String>,
+    pub target: Option<String>,
+    pub title: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub userdrawn: Option<common_simple_types::BooleanValue>,
+    pub userhidden: Option<common_simple_types::BooleanValue>,
+    pub wrapcoords: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Rectangle)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct RectangleMirror {
+    pub allowincell: Option<common_simple_types::BooleanValue>,
+    pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    pub alt: Option<String>,
+    pub borderbottomcolor: Option<String>,
+    pub borderleftcolor: Option<String>,
+    pub borderrightcolor: Option<String>,
+    pub bordertopcolor: Option<String>,
+    pub bullet: Option<common_simple_types::BooleanValue>,
+    pub button: Option<common_simple_types::BooleanValue>,
+    pub bwmode: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwnormal: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwpure: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub chromakey: Option<String>,
+    pub class: Option<String>,
+    pub clip: Option<common_simple_types::BooleanValue>,
+    pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    pub connectortype: Option<super::super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::ShapeElementContent>,
+    pub coordorigin: Option<String>,
+    pub coordsize: Option<String>,
+    pub dgmlayout: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmnodekind: Option<String>,
+    pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    pub extra: (),
+    pub fillcolor: Option<String>,
+    pub filled: Option<common_simple_types::BooleanValue>,
+    pub forcedash: Option<common_simple_types::BooleanValue>,
+    pub hr: Option<common_simple_types::BooleanValue>,
+    pub hralign: Option<super::super::vml_office_drawing::StHrAlign>,
+    pub href: Option<String>,
+    pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    pub hrpct: Option<String>,
+    pub hrstd: Option<common_simple_types::BooleanValue>,
+    pub id: Option<String>,
+    pub insetmode: Option<super::super::vml_office_drawing::InsetMarginType>,
+    pub insetpen: Option<common_simple_types::BooleanValue>,
+    pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    pub oleicon: Option<common_simple_types::BooleanValue>,
+    pub oned: Option<common_simple_types::BooleanValue>,
+    pub opacity: Option<String>,
+    pub preferrelative: Option<common_simple_types::BooleanValue>,
+    pub print: Option<common_simple_types::BooleanValue>,
+    pub regroupid: Option<String>,
+    pub spid: Option<String>,
+    pub spt: Option<String>,
+    pub strokecolor: Option<String>,
+    pub stroked: Option<common_simple_types::BooleanValue>,
+    pub strokeweight: Option<String>,
+    pub style: Option<String>,
+    pub target: Option<String>,
+    pub title: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub userdrawn: Option<common_simple_types::BooleanValue>,
+    pub userhidden: Option<common_simple_types::BooleanValue>,
+    pub wrapcoords: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::RoundedRectangle)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct RoundedRectangleMirror {
+    pub allowincell: Option<common_simple_types::BooleanValue>,
+    pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    pub alt: Option<String>,
+    pub arcsize: Option<String>,
+    pub borderbottomcolor: Option<String>,
+    pub borderleftcolor: Option<String>,
+    pub borderrightcolor: Option<String>,
+    pub bordertopcolor: Option<String>,
+    pub bullet: Option<common_simple_types::BooleanValue>,
+    pub button: Option<common_simple_types::BooleanValue>,
+    pub bwmode: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwnormal: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwpure: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub chromakey: Option<String>,
+    pub class: Option<String>,
+    pub clip: Option<common_simple_types::BooleanValue>,
+    pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    pub connectortype: Option<super::super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::ShapeElementContent>,
+    pub coordorigin: Option<String>,
+    pub coordsize: Option<String>,
+    pub dgmlayout: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmnodekind: Option<String>,
+    pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    pub extra: (),
+    pub fillcolor: Option<String>,
+    pub filled: Option<common_simple_types::BooleanValue>,
+    pub forcedash: Option<common_simple_types::BooleanValue>,
+    pub hr: Option<common_simple_types::BooleanValue>,
+    pub hralign: Option<super::super::vml_office_drawing::StHrAlign>,
+    pub href: Option<String>,
+    pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    pub hrpct: Option<String>,
+    pub hrstd: Option<common_simple_types::BooleanValue>,
+    pub id: Option<String>,
+    pub insetmode: Option<super::super::vml_office_drawing::InsetMarginType>,
+    pub insetpen: Option<common_simple_types::BooleanValue>,
+    pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    pub oleicon: Option<common_simple_types::BooleanValue>,
+    pub oned: Option<common_simple_types::BooleanValue>,
+    pub opacity: Option<String>,
+    pub preferrelative: Option<common_simple_types::BooleanValue>,
+    pub print: Option<common_simple_types::BooleanValue>,
+    pub regroupid: Option<String>,
+    pub spid: Option<String>,
+    pub spt: Option<String>,
+    pub strokecolor: Option<String>,
+    pub stroked: Option<common_simple_types::BooleanValue>,
+    pub strokeweight: Option<String>,
+    pub style: Option<String>,
+    pub target: Option<String>,
+    pub title: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub userdrawn: Option<common_simple_types::BooleanValue>,
+    pub userhidden: Option<common_simple_types::BooleanValue>,
+    pub wrapcoords: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::SetOfFormulas)]
+#[rkyv(attr(non_exhaustive))]
+pub struct SetOfFormulasMirror {
+    pub extra: (),
+    pub single_formula: Vec<super::SingleFormula>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::SetOfHandles)]
+#[rkyv(attr(non_exhaustive))]
+pub struct SetOfHandlesMirror {
+    pub extra: (),
+    pub shape_handle: Vec<super::ShapeHandle>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShadowEffect)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShadowEffectMirror {
+    pub color: Option<String>,
+    pub color2: Option<String>,
+    pub extra: (),
+    pub id: Option<String>,
+    pub matrix: Option<String>,
+    pub obscured: Option<common_simple_types::BooleanValue>,
+    pub offset: Option<String>,
+    pub offset2: Option<String>,
+    pub on: Option<common_simple_types::BooleanValue>,
+    pub opacity: Option<String>,
+    pub origin: Option<String>,
+    pub r#type: Option<super::ShadowType>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShapeDefinition)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapeDefinitionMirror {
+    pub adj: Option<String>,
+    pub allowincell: Option<common_simple_types::BooleanValue>,
+    pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    pub alt: Option<String>,
+    pub borderbottomcolor: Option<String>,
+    pub borderleftcolor: Option<String>,
+    pub borderrightcolor: Option<String>,
+    pub bordertopcolor: Option<String>,
+    pub bullet: Option<common_simple_types::BooleanValue>,
+    pub button: Option<common_simple_types::BooleanValue>,
+    pub bwmode: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwnormal: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwpure: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub chromakey: Option<String>,
+    pub class: Option<String>,
+    pub clip: Option<common_simple_types::BooleanValue>,
+    pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    pub connectortype: Option<super::super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::ShapeDefinitionContent>,
+    pub coordorigin: Option<String>,
+    pub coordsize: Option<String>,
+    pub dgmlayout: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmnodekind: Option<String>,
+    pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    pub equationxml: Option<String>,
+    pub extra: (),
+    pub fillcolor: Option<String>,
+    pub filled: Option<common_simple_types::BooleanValue>,
+    pub forcedash: Option<common_simple_types::BooleanValue>,
+    pub gfxdata: Option<String>,
+    pub hr: Option<common_simple_types::BooleanValue>,
+    pub hralign: Option<super::super::vml_office_drawing::StHrAlign>,
+    pub href: Option<String>,
+    pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    pub hrpct: Option<String>,
+    pub hrstd: Option<common_simple_types::BooleanValue>,
+    pub id: Option<String>,
+    pub insetmode: Option<super::super::vml_office_drawing::InsetMarginType>,
+    pub insetpen: Option<common_simple_types::BooleanValue>,
+    pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    pub oleicon: Option<common_simple_types::BooleanValue>,
+    pub oned: Option<common_simple_types::BooleanValue>,
+    pub opacity: Option<String>,
+    pub path: Option<String>,
+    pub preferrelative: Option<common_simple_types::BooleanValue>,
+    pub print: Option<common_simple_types::BooleanValue>,
+    pub regroupid: Option<String>,
+    pub spid: Option<String>,
+    pub spt: Option<String>,
+    pub strokecolor: Option<String>,
+    pub stroked: Option<common_simple_types::BooleanValue>,
+    pub strokeweight: Option<String>,
+    pub style: Option<String>,
+    pub target: Option<String>,
+    pub title: Option<String>,
+    pub r#type: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub userdrawn: Option<common_simple_types::BooleanValue>,
+    pub userhidden: Option<common_simple_types::BooleanValue>,
+    pub wrapcoords: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShapeFillProperties)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapeFillPropertiesMirror {
+    pub alignshape: Option<common_simple_types::BooleanValue>,
+    pub althref: Option<String>,
+    pub angle: Option<String>,
+    pub aspect: Option<super::ImageScalingBehavior>,
+    pub color: Option<String>,
+    pub color2: Option<String>,
+    pub colors: Option<String>,
+    pub detectmouseclick: Option<common_simple_types::BooleanValue>,
+    pub extra: (),
+    pub focus: Option<String>,
+    pub focusposition: Option<String>,
+    pub focussize: Option<String>,
+    pub href: Option<String>,
+    pub id: Option<String>,
+    pub method: Option<super::GradientFillComputationType>,
+    pub on: Option<common_simple_types::BooleanValue>,
+    pub opacity: Option<String>,
+    pub opacity2: Option<String>,
+    pub origin: Option<String>,
+    pub position: Option<String>,
+    pub r_id: Option<String>,
+    pub recolor: Option<common_simple_types::BooleanValue>,
+    pub relid: Option<String>,
+    pub rotate: Option<common_simple_types::BooleanValue>,
+    pub shape_fill_extended_properties:
+        Option<Box<super::super::vml_office_drawing::ShapeFillExtendedProperties>>,
+    pub size: Option<String>,
+    pub src: Option<String>,
+    pub title: Option<String>,
+    pub r#type: Option<super::ShapeFillType>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShapeGroup)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapeGroupMirror {
+    pub allowincell: Option<common_simple_types::BooleanValue>,
+    pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    pub alt: Option<String>,
+    pub borderbottomcolor: Option<String>,
+    pub borderleftcolor: Option<String>,
+    pub borderrightcolor: Option<String>,
+    pub bordertopcolor: Option<String>,
+    pub bullet: Option<common_simple_types::BooleanValue>,
+    pub button: Option<common_simple_types::BooleanValue>,
+    pub class: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::ShapeGroupContent>,
+    pub coordorigin: Option<String>,
+    pub coordsize: Option<String>,
+    pub dgmlayout: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmnodekind: Option<String>,
+    pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    pub editas: Option<super::ShapeGroupingTypes>,
+    pub extra: (),
+    pub fillcolor: Option<String>,
+    pub filled: Option<common_simple_types::BooleanValue>,
+    pub hr: Option<common_simple_types::BooleanValue>,
+    pub hralign: Option<super::super::vml_office_drawing::StHrAlign>,
+    pub href: Option<String>,
+    pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    pub hrpct: Option<String>,
+    pub hrstd: Option<common_simple_types::BooleanValue>,
+    pub id: Option<String>,
+    pub insetmode: Option<super::super::vml_office_drawing::InsetMarginType>,
+    pub oned: Option<common_simple_types::BooleanValue>,
+    pub print: Option<common_simple_types::BooleanValue>,
+    pub regroupid: Option<String>,
+    pub spid: Option<String>,
+    pub style: Option<String>,
+    pub tablelimits: Option<String>,
+    pub tableproperties: Option<String>,
+    pub target: Option<String>,
+    pub title: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub userdrawn: Option<common_simple_types::BooleanValue>,
+    pub userhidden: Option<common_simple_types::BooleanValue>,
+    pub wrapcoords: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShapeHandle)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapeHandleMirror {
+    pub extra: (),
+    pub invx: Option<common_simple_types::BooleanValue>,
+    pub invy: Option<common_simple_types::BooleanValue>,
+    pub map: Option<String>,
+    pub polar: Option<String>,
+    pub position: Option<String>,
+    pub radiusrange: Option<String>,
+    pub switch: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub xrange: Option<String>,
+    pub yrange: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShapePath)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapePathMirror {
+    pub arrowok: Option<common_simple_types::BooleanValue>,
+    pub connectangles: Option<String>,
+    pub connectlocs: Option<String>,
+    pub connecttype: Option<super::super::vml_office_drawing::ConnectionLocationsType>,
+    pub extra: (),
+    pub extrusionok: Option<common_simple_types::BooleanValue>,
+    pub fillok: Option<common_simple_types::BooleanValue>,
+    pub gradientshapeok: Option<common_simple_types::BooleanValue>,
+    pub id: Option<String>,
+    pub insetpenok: Option<common_simple_types::BooleanValue>,
+    pub limo: Option<String>,
+    pub shadowok: Option<common_simple_types::BooleanValue>,
+    pub strokeok: Option<common_simple_types::BooleanValue>,
+    pub textboxrect: Option<String>,
+    pub textpathok: Option<common_simple_types::BooleanValue>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub v: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShapeTemplate)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapeTemplateMirror {
+    pub adj: Option<String>,
+    pub allowincell: Option<common_simple_types::BooleanValue>,
+    pub allowoverlap: Option<common_simple_types::BooleanValue>,
+    pub alt: Option<String>,
+    pub borderbottomcolor: Option<String>,
+    pub borderleftcolor: Option<String>,
+    pub borderrightcolor: Option<String>,
+    pub bordertopcolor: Option<String>,
+    pub bullet: Option<common_simple_types::BooleanValue>,
+    pub button: Option<common_simple_types::BooleanValue>,
+    pub bwmode: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwnormal: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub bwpure: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
+    pub chromakey: Option<String>,
+    pub class: Option<String>,
+    pub clip: Option<common_simple_types::BooleanValue>,
+    pub cliptowrap: Option<common_simple_types::BooleanValue>,
+    pub complex: Option<Box<super::super::vml_office_drawing::Complex>>,
+    pub connectortype: Option<super::super::vml_office_drawing::ConnectorType>,
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::ShapeElementContent>,
+    pub coordorigin: Option<String>,
+    pub coordsize: Option<String>,
+    pub dgmlayout: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
+    pub dgmnodekind: Option<String>,
+    pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
+    pub extra: (),
+    pub fillcolor: Option<String>,
+    pub filled: Option<common_simple_types::BooleanValue>,
+    pub forcedash: Option<common_simple_types::BooleanValue>,
+    pub hr: Option<common_simple_types::BooleanValue>,
+    pub hralign: Option<super::super::vml_office_drawing::StHrAlign>,
+    pub href: Option<String>,
+    pub hrnoshade: Option<common_simple_types::BooleanValue>,
+    pub hrpct: Option<String>,
+    pub hrstd: Option<common_simple_types::BooleanValue>,
+    pub id: Option<String>,
+    pub insetmode: Option<super::super::vml_office_drawing::InsetMarginType>,
+    pub insetpen: Option<common_simple_types::BooleanValue>,
+    pub master: Option<String>,
+    pub ole: Option<common_simple_types::BooleanValueWithBlankFalseState>,
+    pub oleicon: Option<common_simple_types::BooleanValue>,
+    pub oned: Option<common_simple_types::BooleanValue>,
+    pub opacity: Option<String>,
+    pub path: Option<String>,
+    pub preferrelative: Option<common_simple_types::BooleanValue>,
+    pub print: Option<common_simple_types::BooleanValue>,
+    pub regroupid: Option<String>,
+    pub spid: Option<String>,
+    pub spt: Option<String>,
+    pub strokecolor: Option<String>,
+    pub stroked: Option<common_simple_types::BooleanValue>,
+    pub strokeweight: Option<String>,
+    pub style: Option<String>,
+    pub target: Option<String>,
+    pub title: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub userdrawn: Option<common_simple_types::BooleanValue>,
+    pub userhidden: Option<common_simple_types::BooleanValue>,
+    pub wrapcoords: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::SingleFormula)]
+#[rkyv(attr(non_exhaustive))]
+pub struct SingleFormulaMirror {
+    pub eqn: Option<String>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TextBox)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct TextBoxMirror {
+    #[rkyv(omit_bounds)]
+    pub content: Option<Box<super::TextBoxContent>>,
+    pub extra: (),
+    pub id: Option<String>,
+    pub inset: Option<String>,
+    pub insetmode: Option<super::super::vml_office_drawing::InsetMarginType>,
+    pub singleclick: Option<common_simple_types::BooleanValue>,
+    pub style: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TextLayoutPath)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TextLayoutPathMirror {
+    pub extra: (),
+    pub fitpath: Option<common_simple_types::BooleanValue>,
+    pub fitshape: Option<common_simple_types::BooleanValue>,
+    pub id: Option<String>,
+    pub on: Option<common_simple_types::BooleanValue>,
+    pub string: Option<String>,
+    pub style: Option<String>,
+    pub trim: Option<common_simple_types::BooleanValue>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub xscale: Option<common_simple_types::BooleanValue>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::MultiplePathLineContent)]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum MultiplePathLineContent {
     AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLocked),
@@ -259,9 +1249,9 @@ pub enum MultiplePathLineContent {
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ShapeDefinitionContent)]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum ShapeDefinitionContent {
     AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLocked),
@@ -297,9 +1287,9 @@ pub enum ShapeDefinitionContent {
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ShapeElementContent)]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum ShapeElementContent {
     AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLocked),
@@ -330,9 +1320,9 @@ pub enum ShapeElementContent {
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ShapeGroupContent)]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum ShapeGroupContent {
     AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLocked),
@@ -375,15 +1365,1647 @@ pub enum ShapeGroupContent {
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextBoxContent)]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum TextBoxContent {
     Other(Node),
     RichTextBoxContentContainer(
         #[rkyv(omit_bounds)] super::super::wordprocessing::RichTextBoxContentContainer,
     ),
+}
+
+impl From<ArcSegmentMirror> for super::ArcSegment {
+    fn from(item: ArcSegmentMirror) -> Self {
+        Self {
+            allowincell: item.allowincell,
+            allowoverlap: item.allowoverlap,
+            alt: item.alt,
+            borderbottomcolor: item.borderbottomcolor,
+            borderleftcolor: item.borderleftcolor,
+            borderrightcolor: item.borderrightcolor,
+            bordertopcolor: item.bordertopcolor,
+            bullet: item.bullet,
+            button: item.button,
+            bwmode: item.bwmode,
+            bwnormal: item.bwnormal,
+            bwpure: item.bwpure,
+            chromakey: item.chromakey,
+            class: item.class,
+            clip: item.clip,
+            cliptowrap: item.cliptowrap,
+            connectortype: item.connectortype,
+            content: item.content,
+            coordorigin: item.coordorigin,
+            coordsize: item.coordsize,
+            dgmlayout: item.dgmlayout,
+            dgmlayoutmru: item.dgmlayoutmru,
+            dgmnodekind: item.dgmnodekind,
+            doubleclicknotify: item.doubleclicknotify,
+            end_angle: item.end_angle,
+            extra: item.extra,
+            fillcolor: item.fillcolor,
+            filled: item.filled,
+            forcedash: item.forcedash,
+            hr: item.hr,
+            hralign: item.hralign,
+            href: item.href,
+            hrnoshade: item.hrnoshade,
+            hrpct: item.hrpct,
+            hrstd: item.hrstd,
+            id: item.id,
+            insetmode: item.insetmode,
+            insetpen: item.insetpen,
+            ole: item.ole,
+            oleicon: item.oleicon,
+            oned: item.oned,
+            opacity: item.opacity,
+            preferrelative: item.preferrelative,
+            print: item.print,
+            regroupid: item.regroupid,
+            spid: item.spid,
+            spt: item.spt,
+            start_angle: item.start_angle,
+            strokecolor: item.strokecolor,
+            stroked: item.stroked,
+            strokeweight: item.strokeweight,
+            style: item.style,
+            target: item.target,
+            title: item.title,
+            unknown: item.unknown,
+            userdrawn: item.userdrawn,
+            userhidden: item.userhidden,
+            wrapcoords: item.wrapcoords,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ArcSegment {
+    type Archived = ArchivedArcSegmentMirror;
+    type Resolver = ArcSegmentMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ArcSegmentMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ArcSegment
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ArcSegmentMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ArcSegment, __D> for ArchivedArcSegmentMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ArcSegment, __D::Error> {
+        ArcSegmentMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<BezierCurveMirror> for super::BezierCurve {
+    fn from(item: BezierCurveMirror) -> Self {
+        Self {
+            allowincell: item.allowincell,
+            allowoverlap: item.allowoverlap,
+            alt: item.alt,
+            borderbottomcolor: item.borderbottomcolor,
+            borderleftcolor: item.borderleftcolor,
+            borderrightcolor: item.borderrightcolor,
+            bordertopcolor: item.bordertopcolor,
+            bullet: item.bullet,
+            button: item.button,
+            bwmode: item.bwmode,
+            bwnormal: item.bwnormal,
+            bwpure: item.bwpure,
+            chromakey: item.chromakey,
+            class: item.class,
+            clip: item.clip,
+            cliptowrap: item.cliptowrap,
+            connectortype: item.connectortype,
+            content: item.content,
+            control1: item.control1,
+            control2: item.control2,
+            coordorigin: item.coordorigin,
+            coordsize: item.coordsize,
+            dgmlayout: item.dgmlayout,
+            dgmlayoutmru: item.dgmlayoutmru,
+            dgmnodekind: item.dgmnodekind,
+            doubleclicknotify: item.doubleclicknotify,
+            extra: item.extra,
+            fillcolor: item.fillcolor,
+            filled: item.filled,
+            forcedash: item.forcedash,
+            from: item.from,
+            hr: item.hr,
+            hralign: item.hralign,
+            href: item.href,
+            hrnoshade: item.hrnoshade,
+            hrpct: item.hrpct,
+            hrstd: item.hrstd,
+            id: item.id,
+            insetmode: item.insetmode,
+            insetpen: item.insetpen,
+            ole: item.ole,
+            oleicon: item.oleicon,
+            oned: item.oned,
+            opacity: item.opacity,
+            preferrelative: item.preferrelative,
+            print: item.print,
+            regroupid: item.regroupid,
+            spid: item.spid,
+            spt: item.spt,
+            strokecolor: item.strokecolor,
+            stroked: item.stroked,
+            strokeweight: item.strokeweight,
+            style: item.style,
+            target: item.target,
+            title: item.title,
+            to: item.to,
+            unknown: item.unknown,
+            userdrawn: item.userdrawn,
+            userhidden: item.userhidden,
+            wrapcoords: item.wrapcoords,
+        }
+    }
+}
+
+impl rkyv::Archive for super::BezierCurve {
+    type Archived = ArchivedBezierCurveMirror;
+    type Resolver = BezierCurveMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        BezierCurveMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::BezierCurve
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        BezierCurveMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::BezierCurve, __D> for ArchivedBezierCurveMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::BezierCurve, __D::Error> {
+        BezierCurveMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<DocumentBackgroundMirror> for super::DocumentBackground {
+    fn from(item: DocumentBackgroundMirror) -> Self {
+        Self {
+            bwmode: item.bwmode,
+            bwnormal: item.bwnormal,
+            bwpure: item.bwpure,
+            extra: item.extra,
+            fillcolor: item.fillcolor,
+            filled: item.filled,
+            id: item.id,
+            shape_fill_properties: item.shape_fill_properties,
+            targetscreensize: item.targetscreensize,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::DocumentBackground {
+    type Archived = ArchivedDocumentBackgroundMirror;
+    type Resolver = DocumentBackgroundMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        DocumentBackgroundMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::DocumentBackground
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        DocumentBackgroundMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::DocumentBackground, __D> for ArchivedDocumentBackgroundMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::DocumentBackground, __D::Error> {
+        DocumentBackgroundMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ImageDataMirror> for super::ImageData {
+    fn from(item: ImageDataMirror) -> Self {
+        Self {
+            althref: item.althref,
+            bilevel: item.bilevel,
+            blacklevel: item.blacklevel,
+            chromakey: item.chromakey,
+            cropbottom: item.cropbottom,
+            cropleft: item.cropleft,
+            cropright: item.cropright,
+            croptop: item.croptop,
+            detectmouseclick: item.detectmouseclick,
+            embosscolor: item.embosscolor,
+            extra: item.extra,
+            gain: item.gain,
+            gamma: item.gamma,
+            grayscale: item.grayscale,
+            id: item.id,
+            movie: item.movie,
+            o_href: item.o_href,
+            oleid: item.oleid,
+            pict: item.pict,
+            r_href: item.r_href,
+            r_id: item.r_id,
+            recolortarget: item.recolortarget,
+            relid: item.relid,
+            src: item.src,
+            title: item.title,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ImageData {
+    type Archived = ArchivedImageDataMirror;
+    type Resolver = ImageDataMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ImageDataMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ImageData
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ImageDataMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ImageData, __D> for ArchivedImageDataMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ImageData, __D::Error> {
+        ImageDataMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ImageFileMirror> for super::ImageFile {
+    fn from(item: ImageFileMirror) -> Self {
+        Self {
+            allowincell: item.allowincell,
+            allowoverlap: item.allowoverlap,
+            alt: item.alt,
+            bilevel: item.bilevel,
+            blacklevel: item.blacklevel,
+            borderbottomcolor: item.borderbottomcolor,
+            borderleftcolor: item.borderleftcolor,
+            borderrightcolor: item.borderrightcolor,
+            bordertopcolor: item.bordertopcolor,
+            bullet: item.bullet,
+            button: item.button,
+            bwmode: item.bwmode,
+            bwnormal: item.bwnormal,
+            bwpure: item.bwpure,
+            chromakey: item.chromakey,
+            class: item.class,
+            clip: item.clip,
+            cliptowrap: item.cliptowrap,
+            connectortype: item.connectortype,
+            content: item.content,
+            coordorigin: item.coordorigin,
+            coordsize: item.coordsize,
+            cropbottom: item.cropbottom,
+            cropleft: item.cropleft,
+            cropright: item.cropright,
+            croptop: item.croptop,
+            dgmlayout: item.dgmlayout,
+            dgmlayoutmru: item.dgmlayoutmru,
+            dgmnodekind: item.dgmnodekind,
+            doubleclicknotify: item.doubleclicknotify,
+            extra: item.extra,
+            fillcolor: item.fillcolor,
+            filled: item.filled,
+            forcedash: item.forcedash,
+            gain: item.gain,
+            gamma: item.gamma,
+            grayscale: item.grayscale,
+            hr: item.hr,
+            hralign: item.hralign,
+            href: item.href,
+            hrnoshade: item.hrnoshade,
+            hrpct: item.hrpct,
+            hrstd: item.hrstd,
+            id: item.id,
+            insetmode: item.insetmode,
+            insetpen: item.insetpen,
+            ole: item.ole,
+            oleicon: item.oleicon,
+            oned: item.oned,
+            opacity: item.opacity,
+            preferrelative: item.preferrelative,
+            print: item.print,
+            regroupid: item.regroupid,
+            spid: item.spid,
+            spt: item.spt,
+            src: item.src,
+            strokecolor: item.strokecolor,
+            stroked: item.stroked,
+            strokeweight: item.strokeweight,
+            style: item.style,
+            target: item.target,
+            title: item.title,
+            unknown: item.unknown,
+            userdrawn: item.userdrawn,
+            userhidden: item.userhidden,
+            wrapcoords: item.wrapcoords,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ImageFile {
+    type Archived = ArchivedImageFileMirror;
+    type Resolver = ImageFileMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ImageFileMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ImageFile
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ImageFileMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ImageFile, __D> for ArchivedImageFileMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ImageFile, __D::Error> {
+        ImageFileMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<LineMirror> for super::Line {
+    fn from(item: LineMirror) -> Self {
+        Self {
+            allowincell: item.allowincell,
+            allowoverlap: item.allowoverlap,
+            alt: item.alt,
+            borderbottomcolor: item.borderbottomcolor,
+            borderleftcolor: item.borderleftcolor,
+            borderrightcolor: item.borderrightcolor,
+            bordertopcolor: item.bordertopcolor,
+            bullet: item.bullet,
+            button: item.button,
+            bwmode: item.bwmode,
+            bwnormal: item.bwnormal,
+            bwpure: item.bwpure,
+            chromakey: item.chromakey,
+            class: item.class,
+            clip: item.clip,
+            cliptowrap: item.cliptowrap,
+            connectortype: item.connectortype,
+            content: item.content,
+            coordorigin: item.coordorigin,
+            coordsize: item.coordsize,
+            dgmlayout: item.dgmlayout,
+            dgmlayoutmru: item.dgmlayoutmru,
+            dgmnodekind: item.dgmnodekind,
+            doubleclicknotify: item.doubleclicknotify,
+            extra: item.extra,
+            fillcolor: item.fillcolor,
+            filled: item.filled,
+            forcedash: item.forcedash,
+            from: item.from,
+            hr: item.hr,
+            hralign: item.hralign,
+            href: item.href,
+            hrnoshade: item.hrnoshade,
+            hrpct: item.hrpct,
+            hrstd: item.hrstd,
+            id: item.id,
+            insetmode: item.insetmode,
+            insetpen: item.insetpen,
+            ole: item.ole,
+            oleicon: item.oleicon,
+            oned: item.oned,
+            opacity: item.opacity,
+            preferrelative: item.preferrelative,
+            print: item.print,
+            regroupid: item.regroupid,
+            spid: item.spid,
+            spt: item.spt,
+            strokecolor: item.strokecolor,
+            stroked: item.stroked,
+            strokeweight: item.strokeweight,
+            style: item.style,
+            target: item.target,
+            title: item.title,
+            to: item.to,
+            unknown: item.unknown,
+            userdrawn: item.userdrawn,
+            userhidden: item.userhidden,
+            wrapcoords: item.wrapcoords,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Line {
+    type Archived = ArchivedLineMirror;
+    type Resolver = LineMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        LineMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Line
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        LineMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Line, __D> for ArchivedLineMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Line, __D::Error> {
+        LineMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<LineStrokeSettingsMirror> for super::LineStrokeSettings {
+    fn from(item: LineStrokeSettingsMirror) -> Self {
+        Self {
+            althref: item.althref,
+            color: item.color,
+            color2: item.color2,
+            dashstyle: item.dashstyle,
+            endarrow: item.endarrow,
+            endarrowlength: item.endarrowlength,
+            endarrowwidth: item.endarrowwidth,
+            endcap: item.endcap,
+            extra: item.extra,
+            filltype: item.filltype,
+            forcedash: item.forcedash,
+            href: item.href,
+            id: item.id,
+            imagealignshape: item.imagealignshape,
+            imageaspect: item.imageaspect,
+            imagesize: item.imagesize,
+            insetpen: item.insetpen,
+            joinstyle: item.joinstyle,
+            linestyle: item.linestyle,
+            miterlimit: item.miterlimit,
+            on: item.on,
+            opacity: item.opacity,
+            r_id: item.r_id,
+            relid: item.relid,
+            src: item.src,
+            startarrow: item.startarrow,
+            startarrowlength: item.startarrowlength,
+            startarrowwidth: item.startarrowwidth,
+            text_box_bottom_stroke: item.text_box_bottom_stroke,
+            text_box_interior_stroke: item.text_box_interior_stroke,
+            text_box_left_stroke: item.text_box_left_stroke,
+            text_box_right_stroke: item.text_box_right_stroke,
+            text_box_top_stroke: item.text_box_top_stroke,
+            title: item.title,
+            unknown: item.unknown,
+            weight: item.weight,
+        }
+    }
+}
+
+impl rkyv::Archive for super::LineStrokeSettings {
+    type Archived = ArchivedLineStrokeSettingsMirror;
+    type Resolver = LineStrokeSettingsMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        LineStrokeSettingsMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::LineStrokeSettings
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        LineStrokeSettingsMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::LineStrokeSettings, __D> for ArchivedLineStrokeSettingsMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::LineStrokeSettings, __D::Error> {
+        LineStrokeSettingsMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<MultiplePathLineMirror> for super::MultiplePathLine {
+    fn from(item: MultiplePathLineMirror) -> Self {
+        Self {
+            allowincell: item.allowincell,
+            allowoverlap: item.allowoverlap,
+            alt: item.alt,
+            borderbottomcolor: item.borderbottomcolor,
+            borderleftcolor: item.borderleftcolor,
+            borderrightcolor: item.borderrightcolor,
+            bordertopcolor: item.bordertopcolor,
+            bullet: item.bullet,
+            button: item.button,
+            bwmode: item.bwmode,
+            bwnormal: item.bwnormal,
+            bwpure: item.bwpure,
+            chromakey: item.chromakey,
+            class: item.class,
+            clip: item.clip,
+            cliptowrap: item.cliptowrap,
+            connectortype: item.connectortype,
+            content: item.content,
+            coordorigin: item.coordorigin,
+            coordsize: item.coordsize,
+            dgmlayout: item.dgmlayout,
+            dgmlayoutmru: item.dgmlayoutmru,
+            dgmnodekind: item.dgmnodekind,
+            doubleclicknotify: item.doubleclicknotify,
+            extra: item.extra,
+            fillcolor: item.fillcolor,
+            filled: item.filled,
+            forcedash: item.forcedash,
+            hr: item.hr,
+            hralign: item.hralign,
+            href: item.href,
+            hrnoshade: item.hrnoshade,
+            hrpct: item.hrpct,
+            hrstd: item.hrstd,
+            id: item.id,
+            insetmode: item.insetmode,
+            insetpen: item.insetpen,
+            ole: item.ole,
+            oleicon: item.oleicon,
+            oned: item.oned,
+            opacity: item.opacity,
+            points: item.points,
+            preferrelative: item.preferrelative,
+            print: item.print,
+            regroupid: item.regroupid,
+            spid: item.spid,
+            spt: item.spt,
+            strokecolor: item.strokecolor,
+            stroked: item.stroked,
+            strokeweight: item.strokeweight,
+            style: item.style,
+            target: item.target,
+            title: item.title,
+            unknown: item.unknown,
+            userdrawn: item.userdrawn,
+            userhidden: item.userhidden,
+            wrapcoords: item.wrapcoords,
+        }
+    }
+}
+
+impl rkyv::Archive for super::MultiplePathLine {
+    type Archived = ArchivedMultiplePathLineMirror;
+    type Resolver = MultiplePathLineMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        MultiplePathLineMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::MultiplePathLine
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        MultiplePathLineMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::MultiplePathLine, __D> for ArchivedMultiplePathLineMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::MultiplePathLine, __D::Error> {
+        MultiplePathLineMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<OvalMirror> for super::Oval {
+    fn from(item: OvalMirror) -> Self {
+        Self {
+            allowincell: item.allowincell,
+            allowoverlap: item.allowoverlap,
+            alt: item.alt,
+            borderbottomcolor: item.borderbottomcolor,
+            borderleftcolor: item.borderleftcolor,
+            borderrightcolor: item.borderrightcolor,
+            bordertopcolor: item.bordertopcolor,
+            bullet: item.bullet,
+            button: item.button,
+            bwmode: item.bwmode,
+            bwnormal: item.bwnormal,
+            bwpure: item.bwpure,
+            chromakey: item.chromakey,
+            class: item.class,
+            clip: item.clip,
+            cliptowrap: item.cliptowrap,
+            connectortype: item.connectortype,
+            content: item.content,
+            coordorigin: item.coordorigin,
+            coordsize: item.coordsize,
+            dgmlayout: item.dgmlayout,
+            dgmlayoutmru: item.dgmlayoutmru,
+            dgmnodekind: item.dgmnodekind,
+            doubleclicknotify: item.doubleclicknotify,
+            extra: item.extra,
+            fillcolor: item.fillcolor,
+            filled: item.filled,
+            forcedash: item.forcedash,
+            hr: item.hr,
+            hralign: item.hralign,
+            href: item.href,
+            hrnoshade: item.hrnoshade,
+            hrpct: item.hrpct,
+            hrstd: item.hrstd,
+            id: item.id,
+            insetmode: item.insetmode,
+            insetpen: item.insetpen,
+            ole: item.ole,
+            oleicon: item.oleicon,
+            oned: item.oned,
+            opacity: item.opacity,
+            preferrelative: item.preferrelative,
+            print: item.print,
+            regroupid: item.regroupid,
+            spid: item.spid,
+            spt: item.spt,
+            strokecolor: item.strokecolor,
+            stroked: item.stroked,
+            strokeweight: item.strokeweight,
+            style: item.style,
+            target: item.target,
+            title: item.title,
+            unknown: item.unknown,
+            userdrawn: item.userdrawn,
+            userhidden: item.userhidden,
+            wrapcoords: item.wrapcoords,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Oval {
+    type Archived = ArchivedOvalMirror;
+    type Resolver = OvalMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        OvalMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Oval
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        OvalMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Oval, __D> for ArchivedOvalMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Oval, __D::Error> {
+        OvalMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<RectangleMirror> for super::Rectangle {
+    fn from(item: RectangleMirror) -> Self {
+        Self {
+            allowincell: item.allowincell,
+            allowoverlap: item.allowoverlap,
+            alt: item.alt,
+            borderbottomcolor: item.borderbottomcolor,
+            borderleftcolor: item.borderleftcolor,
+            borderrightcolor: item.borderrightcolor,
+            bordertopcolor: item.bordertopcolor,
+            bullet: item.bullet,
+            button: item.button,
+            bwmode: item.bwmode,
+            bwnormal: item.bwnormal,
+            bwpure: item.bwpure,
+            chromakey: item.chromakey,
+            class: item.class,
+            clip: item.clip,
+            cliptowrap: item.cliptowrap,
+            connectortype: item.connectortype,
+            content: item.content,
+            coordorigin: item.coordorigin,
+            coordsize: item.coordsize,
+            dgmlayout: item.dgmlayout,
+            dgmlayoutmru: item.dgmlayoutmru,
+            dgmnodekind: item.dgmnodekind,
+            doubleclicknotify: item.doubleclicknotify,
+            extra: item.extra,
+            fillcolor: item.fillcolor,
+            filled: item.filled,
+            forcedash: item.forcedash,
+            hr: item.hr,
+            hralign: item.hralign,
+            href: item.href,
+            hrnoshade: item.hrnoshade,
+            hrpct: item.hrpct,
+            hrstd: item.hrstd,
+            id: item.id,
+            insetmode: item.insetmode,
+            insetpen: item.insetpen,
+            ole: item.ole,
+            oleicon: item.oleicon,
+            oned: item.oned,
+            opacity: item.opacity,
+            preferrelative: item.preferrelative,
+            print: item.print,
+            regroupid: item.regroupid,
+            spid: item.spid,
+            spt: item.spt,
+            strokecolor: item.strokecolor,
+            stroked: item.stroked,
+            strokeweight: item.strokeweight,
+            style: item.style,
+            target: item.target,
+            title: item.title,
+            unknown: item.unknown,
+            userdrawn: item.userdrawn,
+            userhidden: item.userhidden,
+            wrapcoords: item.wrapcoords,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Rectangle {
+    type Archived = ArchivedRectangleMirror;
+    type Resolver = RectangleMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        RectangleMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Rectangle
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        RectangleMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Rectangle, __D> for ArchivedRectangleMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Rectangle, __D::Error> {
+        RectangleMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<RoundedRectangleMirror> for super::RoundedRectangle {
+    fn from(item: RoundedRectangleMirror) -> Self {
+        Self {
+            allowincell: item.allowincell,
+            allowoverlap: item.allowoverlap,
+            alt: item.alt,
+            arcsize: item.arcsize,
+            borderbottomcolor: item.borderbottomcolor,
+            borderleftcolor: item.borderleftcolor,
+            borderrightcolor: item.borderrightcolor,
+            bordertopcolor: item.bordertopcolor,
+            bullet: item.bullet,
+            button: item.button,
+            bwmode: item.bwmode,
+            bwnormal: item.bwnormal,
+            bwpure: item.bwpure,
+            chromakey: item.chromakey,
+            class: item.class,
+            clip: item.clip,
+            cliptowrap: item.cliptowrap,
+            connectortype: item.connectortype,
+            content: item.content,
+            coordorigin: item.coordorigin,
+            coordsize: item.coordsize,
+            dgmlayout: item.dgmlayout,
+            dgmlayoutmru: item.dgmlayoutmru,
+            dgmnodekind: item.dgmnodekind,
+            doubleclicknotify: item.doubleclicknotify,
+            extra: item.extra,
+            fillcolor: item.fillcolor,
+            filled: item.filled,
+            forcedash: item.forcedash,
+            hr: item.hr,
+            hralign: item.hralign,
+            href: item.href,
+            hrnoshade: item.hrnoshade,
+            hrpct: item.hrpct,
+            hrstd: item.hrstd,
+            id: item.id,
+            insetmode: item.insetmode,
+            insetpen: item.insetpen,
+            ole: item.ole,
+            oleicon: item.oleicon,
+            oned: item.oned,
+            opacity: item.opacity,
+            preferrelative: item.preferrelative,
+            print: item.print,
+            regroupid: item.regroupid,
+            spid: item.spid,
+            spt: item.spt,
+            strokecolor: item.strokecolor,
+            stroked: item.stroked,
+            strokeweight: item.strokeweight,
+            style: item.style,
+            target: item.target,
+            title: item.title,
+            unknown: item.unknown,
+            userdrawn: item.userdrawn,
+            userhidden: item.userhidden,
+            wrapcoords: item.wrapcoords,
+        }
+    }
+}
+
+impl rkyv::Archive for super::RoundedRectangle {
+    type Archived = ArchivedRoundedRectangleMirror;
+    type Resolver = RoundedRectangleMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        RoundedRectangleMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::RoundedRectangle
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        RoundedRectangleMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::RoundedRectangle, __D> for ArchivedRoundedRectangleMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::RoundedRectangle, __D::Error> {
+        RoundedRectangleMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<SetOfFormulasMirror> for super::SetOfFormulas {
+    fn from(item: SetOfFormulasMirror) -> Self {
+        Self {
+            extra: item.extra,
+            single_formula: item.single_formula,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::SetOfFormulas {
+    type Archived = ArchivedSetOfFormulasMirror;
+    type Resolver = SetOfFormulasMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        SetOfFormulasMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::SetOfFormulas
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        SetOfFormulasMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::SetOfFormulas, __D> for ArchivedSetOfFormulasMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::SetOfFormulas, __D::Error> {
+        SetOfFormulasMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<SetOfHandlesMirror> for super::SetOfHandles {
+    fn from(item: SetOfHandlesMirror) -> Self {
+        Self {
+            extra: item.extra,
+            shape_handle: item.shape_handle,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::SetOfHandles {
+    type Archived = ArchivedSetOfHandlesMirror;
+    type Resolver = SetOfHandlesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        SetOfHandlesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::SetOfHandles
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        SetOfHandlesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::SetOfHandles, __D> for ArchivedSetOfHandlesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::SetOfHandles, __D::Error> {
+        SetOfHandlesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShadowEffectMirror> for super::ShadowEffect {
+    fn from(item: ShadowEffectMirror) -> Self {
+        Self {
+            color: item.color,
+            color2: item.color2,
+            extra: item.extra,
+            id: item.id,
+            matrix: item.matrix,
+            obscured: item.obscured,
+            offset: item.offset,
+            offset2: item.offset2,
+            on: item.on,
+            opacity: item.opacity,
+            origin: item.origin,
+            r#type: item.r#type,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShadowEffect {
+    type Archived = ArchivedShadowEffectMirror;
+    type Resolver = ShadowEffectMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShadowEffectMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShadowEffect
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShadowEffectMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShadowEffect, __D> for ArchivedShadowEffectMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShadowEffect, __D::Error> {
+        ShadowEffectMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapeDefinitionMirror> for super::ShapeDefinition {
+    fn from(item: ShapeDefinitionMirror) -> Self {
+        Self {
+            adj: item.adj,
+            allowincell: item.allowincell,
+            allowoverlap: item.allowoverlap,
+            alt: item.alt,
+            borderbottomcolor: item.borderbottomcolor,
+            borderleftcolor: item.borderleftcolor,
+            borderrightcolor: item.borderrightcolor,
+            bordertopcolor: item.bordertopcolor,
+            bullet: item.bullet,
+            button: item.button,
+            bwmode: item.bwmode,
+            bwnormal: item.bwnormal,
+            bwpure: item.bwpure,
+            chromakey: item.chromakey,
+            class: item.class,
+            clip: item.clip,
+            cliptowrap: item.cliptowrap,
+            connectortype: item.connectortype,
+            content: item.content,
+            coordorigin: item.coordorigin,
+            coordsize: item.coordsize,
+            dgmlayout: item.dgmlayout,
+            dgmlayoutmru: item.dgmlayoutmru,
+            dgmnodekind: item.dgmnodekind,
+            doubleclicknotify: item.doubleclicknotify,
+            equationxml: item.equationxml,
+            extra: item.extra,
+            fillcolor: item.fillcolor,
+            filled: item.filled,
+            forcedash: item.forcedash,
+            gfxdata: item.gfxdata,
+            hr: item.hr,
+            hralign: item.hralign,
+            href: item.href,
+            hrnoshade: item.hrnoshade,
+            hrpct: item.hrpct,
+            hrstd: item.hrstd,
+            id: item.id,
+            insetmode: item.insetmode,
+            insetpen: item.insetpen,
+            ole: item.ole,
+            oleicon: item.oleicon,
+            oned: item.oned,
+            opacity: item.opacity,
+            path: item.path,
+            preferrelative: item.preferrelative,
+            print: item.print,
+            regroupid: item.regroupid,
+            spid: item.spid,
+            spt: item.spt,
+            strokecolor: item.strokecolor,
+            stroked: item.stroked,
+            strokeweight: item.strokeweight,
+            style: item.style,
+            target: item.target,
+            title: item.title,
+            r#type: item.r#type,
+            unknown: item.unknown,
+            userdrawn: item.userdrawn,
+            userhidden: item.userhidden,
+            wrapcoords: item.wrapcoords,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShapeDefinition {
+    type Archived = ArchivedShapeDefinitionMirror;
+    type Resolver = ShapeDefinitionMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapeDefinitionMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShapeDefinition
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapeDefinitionMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShapeDefinition, __D> for ArchivedShapeDefinitionMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShapeDefinition, __D::Error> {
+        ShapeDefinitionMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapeFillPropertiesMirror> for super::ShapeFillProperties {
+    fn from(item: ShapeFillPropertiesMirror) -> Self {
+        Self {
+            alignshape: item.alignshape,
+            althref: item.althref,
+            angle: item.angle,
+            aspect: item.aspect,
+            color: item.color,
+            color2: item.color2,
+            colors: item.colors,
+            detectmouseclick: item.detectmouseclick,
+            extra: item.extra,
+            focus: item.focus,
+            focusposition: item.focusposition,
+            focussize: item.focussize,
+            href: item.href,
+            id: item.id,
+            method: item.method,
+            on: item.on,
+            opacity: item.opacity,
+            opacity2: item.opacity2,
+            origin: item.origin,
+            position: item.position,
+            r_id: item.r_id,
+            recolor: item.recolor,
+            relid: item.relid,
+            rotate: item.rotate,
+            shape_fill_extended_properties: item.shape_fill_extended_properties,
+            size: item.size,
+            src: item.src,
+            title: item.title,
+            r#type: item.r#type,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShapeFillProperties {
+    type Archived = ArchivedShapeFillPropertiesMirror;
+    type Resolver = ShapeFillPropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapeFillPropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShapeFillProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapeFillPropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShapeFillProperties, __D> for ArchivedShapeFillPropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ShapeFillProperties, __D::Error> {
+        ShapeFillPropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapeGroupMirror> for super::ShapeGroup {
+    fn from(item: ShapeGroupMirror) -> Self {
+        Self {
+            allowincell: item.allowincell,
+            allowoverlap: item.allowoverlap,
+            alt: item.alt,
+            borderbottomcolor: item.borderbottomcolor,
+            borderleftcolor: item.borderleftcolor,
+            borderrightcolor: item.borderrightcolor,
+            bordertopcolor: item.bordertopcolor,
+            bullet: item.bullet,
+            button: item.button,
+            class: item.class,
+            content: item.content,
+            coordorigin: item.coordorigin,
+            coordsize: item.coordsize,
+            dgmlayout: item.dgmlayout,
+            dgmlayoutmru: item.dgmlayoutmru,
+            dgmnodekind: item.dgmnodekind,
+            doubleclicknotify: item.doubleclicknotify,
+            editas: item.editas,
+            extra: item.extra,
+            fillcolor: item.fillcolor,
+            filled: item.filled,
+            hr: item.hr,
+            hralign: item.hralign,
+            href: item.href,
+            hrnoshade: item.hrnoshade,
+            hrpct: item.hrpct,
+            hrstd: item.hrstd,
+            id: item.id,
+            insetmode: item.insetmode,
+            oned: item.oned,
+            print: item.print,
+            regroupid: item.regroupid,
+            spid: item.spid,
+            style: item.style,
+            tablelimits: item.tablelimits,
+            tableproperties: item.tableproperties,
+            target: item.target,
+            title: item.title,
+            unknown: item.unknown,
+            userdrawn: item.userdrawn,
+            userhidden: item.userhidden,
+            wrapcoords: item.wrapcoords,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShapeGroup {
+    type Archived = ArchivedShapeGroupMirror;
+    type Resolver = ShapeGroupMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapeGroupMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShapeGroup
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapeGroupMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShapeGroup, __D> for ArchivedShapeGroupMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShapeGroup, __D::Error> {
+        ShapeGroupMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapeHandleMirror> for super::ShapeHandle {
+    fn from(item: ShapeHandleMirror) -> Self {
+        Self {
+            extra: item.extra,
+            invx: item.invx,
+            invy: item.invy,
+            map: item.map,
+            polar: item.polar,
+            position: item.position,
+            radiusrange: item.radiusrange,
+            switch: item.switch,
+            unknown: item.unknown,
+            xrange: item.xrange,
+            yrange: item.yrange,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShapeHandle {
+    type Archived = ArchivedShapeHandleMirror;
+    type Resolver = ShapeHandleMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapeHandleMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShapeHandle
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapeHandleMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShapeHandle, __D> for ArchivedShapeHandleMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShapeHandle, __D::Error> {
+        ShapeHandleMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapePathMirror> for super::ShapePath {
+    fn from(item: ShapePathMirror) -> Self {
+        Self {
+            arrowok: item.arrowok,
+            connectangles: item.connectangles,
+            connectlocs: item.connectlocs,
+            connecttype: item.connecttype,
+            extra: item.extra,
+            extrusionok: item.extrusionok,
+            fillok: item.fillok,
+            gradientshapeok: item.gradientshapeok,
+            id: item.id,
+            insetpenok: item.insetpenok,
+            limo: item.limo,
+            shadowok: item.shadowok,
+            strokeok: item.strokeok,
+            textboxrect: item.textboxrect,
+            textpathok: item.textpathok,
+            unknown: item.unknown,
+            v: item.v,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShapePath {
+    type Archived = ArchivedShapePathMirror;
+    type Resolver = ShapePathMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapePathMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShapePath
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapePathMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShapePath, __D> for ArchivedShapePathMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShapePath, __D::Error> {
+        ShapePathMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapeTemplateMirror> for super::ShapeTemplate {
+    fn from(item: ShapeTemplateMirror) -> Self {
+        Self {
+            adj: item.adj,
+            allowincell: item.allowincell,
+            allowoverlap: item.allowoverlap,
+            alt: item.alt,
+            borderbottomcolor: item.borderbottomcolor,
+            borderleftcolor: item.borderleftcolor,
+            borderrightcolor: item.borderrightcolor,
+            bordertopcolor: item.bordertopcolor,
+            bullet: item.bullet,
+            button: item.button,
+            bwmode: item.bwmode,
+            bwnormal: item.bwnormal,
+            bwpure: item.bwpure,
+            chromakey: item.chromakey,
+            class: item.class,
+            clip: item.clip,
+            cliptowrap: item.cliptowrap,
+            complex: item.complex,
+            connectortype: item.connectortype,
+            content: item.content,
+            coordorigin: item.coordorigin,
+            coordsize: item.coordsize,
+            dgmlayout: item.dgmlayout,
+            dgmlayoutmru: item.dgmlayoutmru,
+            dgmnodekind: item.dgmnodekind,
+            doubleclicknotify: item.doubleclicknotify,
+            extra: item.extra,
+            fillcolor: item.fillcolor,
+            filled: item.filled,
+            forcedash: item.forcedash,
+            hr: item.hr,
+            hralign: item.hralign,
+            href: item.href,
+            hrnoshade: item.hrnoshade,
+            hrpct: item.hrpct,
+            hrstd: item.hrstd,
+            id: item.id,
+            insetmode: item.insetmode,
+            insetpen: item.insetpen,
+            master: item.master,
+            ole: item.ole,
+            oleicon: item.oleicon,
+            oned: item.oned,
+            opacity: item.opacity,
+            path: item.path,
+            preferrelative: item.preferrelative,
+            print: item.print,
+            regroupid: item.regroupid,
+            spid: item.spid,
+            spt: item.spt,
+            strokecolor: item.strokecolor,
+            stroked: item.stroked,
+            strokeweight: item.strokeweight,
+            style: item.style,
+            target: item.target,
+            title: item.title,
+            unknown: item.unknown,
+            userdrawn: item.userdrawn,
+            userhidden: item.userhidden,
+            wrapcoords: item.wrapcoords,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShapeTemplate {
+    type Archived = ArchivedShapeTemplateMirror;
+    type Resolver = ShapeTemplateMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapeTemplateMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShapeTemplate
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapeTemplateMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShapeTemplate, __D> for ArchivedShapeTemplateMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShapeTemplate, __D::Error> {
+        ShapeTemplateMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<SingleFormulaMirror> for super::SingleFormula {
+    fn from(item: SingleFormulaMirror) -> Self {
+        Self {
+            eqn: item.eqn,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::SingleFormula {
+    type Archived = ArchivedSingleFormulaMirror;
+    type Resolver = SingleFormulaMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        SingleFormulaMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::SingleFormula
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        SingleFormulaMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::SingleFormula, __D> for ArchivedSingleFormulaMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::SingleFormula, __D::Error> {
+        SingleFormulaMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TextBoxMirror> for super::TextBox {
+    fn from(item: TextBoxMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            id: item.id,
+            inset: item.inset,
+            insetmode: item.insetmode,
+            singleclick: item.singleclick,
+            style: item.style,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TextBox {
+    type Archived = ArchivedTextBoxMirror;
+    type Resolver = TextBoxMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TextBoxMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TextBox
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TextBoxMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TextBox, __D> for ArchivedTextBoxMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::TextBox, __D::Error> {
+        TextBoxMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TextLayoutPathMirror> for super::TextLayoutPath {
+    fn from(item: TextLayoutPathMirror) -> Self {
+        Self {
+            extra: item.extra,
+            fitpath: item.fitpath,
+            fitshape: item.fitshape,
+            id: item.id,
+            on: item.on,
+            string: item.string,
+            style: item.style,
+            trim: item.trim,
+            unknown: item.unknown,
+            xscale: item.xscale,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TextLayoutPath {
+    type Archived = ArchivedTextLayoutPathMirror;
+    type Resolver = TextLayoutPathMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TextLayoutPathMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TextLayoutPath
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TextLayoutPathMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TextLayoutPath, __D> for ArchivedTextLayoutPathMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::TextLayoutPath, __D::Error> {
+        TextLayoutPathMirror::deserialize_with(self, deserializer)
+    }
 }
 
 impl From<MultiplePathLineContent> for super::MultiplePathLineContent {
@@ -429,25 +3051,25 @@ impl rkyv::Archive for super::MultiplePathLineContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::MultiplePathLineContent
+impl<__S> rkyv::Serialize<__S> for super::MultiplePathLineContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         MultiplePathLineContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::MultiplePathLineContent, D> for ArchivedMultiplePathLineContent
+impl<__D> rkyv::Deserialize<super::MultiplePathLineContent, __D> for ArchivedMultiplePathLineContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
     fn deserialize(
         &self,
-        deserializer: &mut D,
-    ) -> Result<super::MultiplePathLineContent, D::Error> {
+        deserializer: &mut __D,
+    ) -> Result<super::MultiplePathLineContent, __D::Error> {
         MultiplePathLineContent::deserialize_with(self, deserializer)
     }
 }
@@ -499,22 +3121,25 @@ impl rkyv::Archive for super::ShapeDefinitionContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::ShapeDefinitionContent
+impl<__S> rkyv::Serialize<__S> for super::ShapeDefinitionContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         ShapeDefinitionContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::ShapeDefinitionContent, D> for ArchivedShapeDefinitionContent
+impl<__D> rkyv::Deserialize<super::ShapeDefinitionContent, __D> for ArchivedShapeDefinitionContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::ShapeDefinitionContent, D::Error> {
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ShapeDefinitionContent, __D::Error> {
         ShapeDefinitionContent::deserialize_with(self, deserializer)
     }
 }
@@ -559,22 +3184,25 @@ impl rkyv::Archive for super::ShapeElementContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::ShapeElementContent
+impl<__S> rkyv::Serialize<__S> for super::ShapeElementContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         ShapeElementContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::ShapeElementContent, D> for ArchivedShapeElementContent
+impl<__D> rkyv::Deserialize<super::ShapeElementContent, __D> for ArchivedShapeElementContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::ShapeElementContent, D::Error> {
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ShapeElementContent, __D::Error> {
         ShapeElementContent::deserialize_with(self, deserializer)
     }
 }
@@ -631,22 +3259,22 @@ impl rkyv::Archive for super::ShapeGroupContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::ShapeGroupContent
+impl<__S> rkyv::Serialize<__S> for super::ShapeGroupContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         ShapeGroupContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::ShapeGroupContent, D> for ArchivedShapeGroupContent
+impl<__D> rkyv::Deserialize<super::ShapeGroupContent, __D> for ArchivedShapeGroupContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::ShapeGroupContent, D::Error> {
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShapeGroupContent, __D::Error> {
         ShapeGroupContent::deserialize_with(self, deserializer)
     }
 }
@@ -671,22 +3299,22 @@ impl rkyv::Archive for super::TextBoxContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::TextBoxContent
+impl<__S> rkyv::Serialize<__S> for super::TextBoxContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         TextBoxContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::TextBoxContent, D> for ArchivedTextBoxContent
+impl<__D> rkyv::Deserialize<super::TextBoxContent, __D> for ArchivedTextBoxContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::TextBoxContent, D::Error> {
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::TextBoxContent, __D::Error> {
         TextBoxContent::deserialize_with(self, deserializer)
     }
 }

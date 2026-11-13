@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
@@ -239,19 +242,22 @@ pub static CLASSIFICATION_SHAPE: officekit_markup_base::Shape = officekit_markup
 
 /// The `aclsh:classification` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_ClassificationOutcome`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Classification {
+pub struct ClassificationWith<X: NodeExtra> {
     /// The attribute `classificationOutcomeType`, when the element has it.
     pub classification_outcome_type: Option<ClassificationOutcomeType>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2020ClassificationShapeClassification,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `aclsh:classification` element of the tree a read gives: [`ClassificationWith`] holding
+/// nothing in `extra`.
+pub type Classification = ClassificationWith<()>;
+
+impl Eq for ClassificationWith<()> {}
 
 /// The simple type `ST_ClassificationOutcomeType`, kept as the text the file carried.
 ///
@@ -324,7 +330,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl Classification {
+impl<X: NodeExtra> ClassificationWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ClassificationWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ClassificationWith {
+            classification_outcome_type: self.classification_outcome_type,
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

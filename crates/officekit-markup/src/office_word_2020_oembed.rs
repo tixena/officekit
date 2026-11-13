@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -268,14 +271,11 @@ pub trait Context: crate::Context {
 
 /// The `woe:oembed` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_OEmbed`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Oembed {
+pub struct OembedWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWord2020OembedOembed,
     /// The attribute `mediaType`, when the element has it.
     pub media_type: Option<String>,
     /// The attribute `oEmbedUrl`, when the element has it.
@@ -285,6 +285,11 @@ pub struct Oembed {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `woe:oembed` element of the tree a read gives: [`OembedWith`] holding nothing in `extra`.
+pub type Oembed = OembedWith<()>;
+
+impl Eq for OembedWith<()> {}
 
 /// The hooks of a visitor for the `woe` namespace.
 ///
@@ -298,7 +303,23 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl Oembed {
+impl<X: NodeExtra> OembedWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> OembedWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        OembedWith {
+            extra: Default::default(),
+            media_type: self.media_type,
+            o_embed_url: self.o_embed_url,
+            pic_locks_auto_for_o_embed: self.pic_locks_auto_for_o_embed,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

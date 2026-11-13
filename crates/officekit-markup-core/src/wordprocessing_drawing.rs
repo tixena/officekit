@@ -221,17 +221,10 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
-#[cfg(feature = "binary-format")]
-use rkyv::de::Pooling;
-#[cfg(feature = "binary-format")]
-use rkyv::rancor::Source;
-#[cfg(feature = "binary-format")]
-use rkyv::ser::{Allocator, Sharing, Writer};
-#[cfg(feature = "binary-format")]
-use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_PIC: Option<NamespaceId> = Some(84);
@@ -841,19 +834,22 @@ pub static SHAPE_TEXT_CONTENT_TAGS: officekit_markup_base::Accept = officekit_ma
 
 /// The `wp:posOffset` element, Absolute Position Offset (ECMA-376 Part 1, section 20.4.2.12). Its
 /// schema type is `ST_PositionOffset`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AbsolutePositionOffset {
+pub struct AbsolutePositionOffsetWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingAbsolutePositionOffset,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: AbsolutePositionOffsetValue,
 }
+
+/// The `wp:posOffset` element of the tree a read gives: [`AbsolutePositionOffsetWith`] holding
+/// nothing in `extra`.
+pub type AbsolutePositionOffset = AbsolutePositionOffsetWith<()>;
+
+impl Eq for AbsolutePositionOffsetWith<()> {}
 
 /// Absolute Position Offset Value, the simple type `ST_PositionOffset` (ECMA-376 Part 1, section
 /// 20.4.3.3), kept as the text the file carried.
@@ -874,36 +870,33 @@ pub struct AbsolutePositionOffsetValue(pub String);
 /// The schema types that hold it: `CT_Anchor`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum AnchorContent {
+pub enum AnchorContentWith<X: NodeExtra> {
     /// The element `wp:wrapNone`, a `NoTextWrapping`.
-    NoTextWrapping(NoTextWrapping),
+    NoTextWrapping(NoTextWrappingWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `wp:wrapSquare`, a `SquareWrapping`.
-    SquareWrapping(SquareWrapping),
+    SquareWrapping(SquareWrappingWith<X>),
     /// The element `wp:wrapThrough`, a `ThroughWrapping`.
-    ThroughWrapping(ThroughWrapping),
+    ThroughWrapping(ThroughWrappingWith<X>),
     /// The element `wp:wrapTight`, a `TightWrapping`.
-    TightWrapping(TightWrapping),
+    TightWrapping(TightWrappingWith<X>),
     /// The element `wp:wrapTopAndBottom`, a `TopAndBottomWrapping`.
-    TopAndBottomWrapping(TopAndBottomWrapping),
+    TopAndBottomWrapping(TopAndBottomWrappingWith<X>),
 }
+
+/// [`AnchorContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type AnchorContent = AnchorContentWith<()>;
+
+impl Eq for AnchorContentWith<()> {}
 
 /// The `wp:anchor` element, Anchor for Floating `DrawingML` Object (ECMA-376 Part 1, section
 /// 20.4.2.3). Its schema type is `CT_Anchor`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AnchorForFloatingDrawingMLObject {
+pub struct AnchorForFloatingDrawingMLObjectWith<X: NodeExtra> {
     /// The attribute `allowOverlap`, when the element has it.
     pub allow_overlap: Option<String>,
     /// The attribute `wp14:anchorId`, when the element has it.
@@ -911,10 +904,10 @@ pub struct AnchorForFloatingDrawingMLObject {
     /// The attribute `behindDoc`, when the element has it.
     pub behind_doc: Option<String>,
     /// The child that is `CommonDrawingMLNonVisualProperties`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub common_drawingml_non_visual_properties: Option<Box<CommonDrawingMLNonVisualProperties>>,
+    pub common_drawingml_non_visual_properties:
+        Option<Box<CommonDrawingMLNonVisualPropertiesWith<X>>>,
     /// The child that is an item of `AnchorContent`, which the schema requires.
-    pub content: Box<AnchorContent>,
+    pub content: Box<AnchorContentWith<X>>,
     /// The attribute `distB`, when the element has it.
     pub dist_b: Option<DistanceFromText>,
     /// The attribute `distL`, when the element has it.
@@ -924,21 +917,21 @@ pub struct AnchorForFloatingDrawingMLObject {
     /// The attribute `distT`, when the element has it.
     pub dist_t: Option<DistanceFromText>,
     /// The child that is `DrawingObjectNonVisualProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub drawing_object_non_visual_properties: Box<DrawingObjectNonVisualProperties>,
+    pub drawing_object_non_visual_properties: Box<DrawingObjectNonVisualPropertiesWith<X>>,
     /// The child that is `DrawingObjectSize`, which the schema requires.
-    pub drawing_object_size: Box<DrawingObjectSize>,
+    pub drawing_object_size: Box<DrawingObjectSizeWith<X>>,
     /// The attribute `wp14:editId`, when the element has it.
     pub edit_id: Option<String>,
     /// The child that is `ObjectExtentsIncludingEffects`, when there is one.
-    pub extents_including_effects: Option<Box<ObjectExtentsIncludingEffects>>,
+    pub extents_including_effects: Option<Box<ObjectExtentsIncludingEffectsWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingAnchorForFloatingDrawingMLObject,
     /// The child that is `super::drawing::GraphicObject`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub graphic_object: Box<super::drawing::GraphicObject>,
+    pub graphic_object: Box<super::drawing::GraphicObjectWith<X>>,
     /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
     /// The child that is `HorizontalPositioning`, which the schema requires.
-    pub horizontal_positioning: Box<HorizontalPositioning>,
+    pub horizontal_positioning: Box<HorizontalPositioningWith<X>>,
     /// The attribute `layoutInCell`, when the element has it.
     pub layout_in_cell: Option<String>,
     /// The attribute `locked`, when the element has it.
@@ -948,55 +941,51 @@ pub struct AnchorForFloatingDrawingMLObject {
     /// The attribute `simplePos`, when the element has it.
     pub simple_pos: Option<String>,
     /// The child that is `SimplePositioningCoordinates`, which the schema requires.
-    pub simple_positioning_coordinates: Box<SimplePositioningCoordinates>,
+    pub simple_positioning_coordinates: Box<SimplePositioningCoordinatesWith<X>>,
     /// The child that is `super::office_word_2010_wordprocessing_drawing::SizeRelH`, when there is
     /// one.
-    pub size_rel_h: Option<Box<super::office_word_2010_wordprocessing_drawing::SizeRelH>>,
+    pub size_rel_h: Option<Box<super::office_word_2010_wordprocessing_drawing::SizeRelHWith<X>>>,
     /// The child that is `super::office_word_2010_wordprocessing_drawing::SizeRelV`, when there is
     /// one.
-    pub size_rel_v: Option<Box<super::office_word_2010_wordprocessing_drawing::SizeRelV>>,
+    pub size_rel_v: Option<Box<super::office_word_2010_wordprocessing_drawing::SizeRelVWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `VerticalPositioning`, which the schema requires.
-    pub vertical_positioning: Box<VerticalPositioning>,
+    pub vertical_positioning: Box<VerticalPositioningWith<X>>,
 }
+
+/// The `wp:anchor` element of the tree a read gives: [`AnchorForFloatingDrawingMLObjectWith`]
+/// holding nothing in `extra`.
+pub type AnchorForFloatingDrawingMLObject = AnchorForFloatingDrawingMLObjectWith<()>;
+
+impl Eq for AnchorForFloatingDrawingMLObjectWith<()> {}
 
 /// The `wp:bg` element, Background Formatting (ECMA-376 Part 1, section 20.4.2.21). Its schema type
 /// is `CT_BackgroundFormatting`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BackgroundFormatting {
+pub struct BackgroundFormattingWith<X: NodeExtra> {
     /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingBackgroundFormatting,
     /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContentWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `wp:bg` element of the tree a read gives: [`BackgroundFormattingWith`] holding nothing in
+/// `extra`.
+pub type BackgroundFormatting = BackgroundFormattingWith<()>;
+
+impl Eq for BackgroundFormattingWith<()> {}
+
 /// The `wp:bodyPr` element, Body Properties (ECMA-376 Part 1, section 20.4.2.22). Its schema type
 /// is `CT_TextBodyProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BodyProperties {
+pub struct BodyPropertiesWith<X: NodeExtra> {
     /// The attribute `anchor`, when the element has it.
     pub anchor: Option<super::drawing::TextAnchoringTypes>,
     /// The attribute `anchorCtr`, when the element has it.
@@ -1006,8 +995,9 @@ pub struct BodyProperties {
     /// The attribute `compatLnSpc`, when the element has it.
     pub compat_ln_spc: Option<String>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingBodyProperties,
     /// The attribute `forceAA`, when the element has it.
     pub force_aa: Option<String>,
     /// The attribute `fromWordArt`, when the element has it.
@@ -1019,7 +1009,7 @@ pub struct BodyProperties {
     /// The attribute `numCol`, when the element has it.
     pub num_col: Option<super::drawing::TextColumnCount>,
     /// The child that is `super::drawing::PresetTextWarp`, when there is one.
-    pub preset_text_warp: Option<Box<super::drawing::PresetTextWarp>>,
+    pub preset_text_warp: Option<Box<super::drawing::PresetTextWarpWith<X>>>,
     /// The attribute `rIns`, when the element has it.
     pub r_ins: Option<super::drawing::StCoordinate32>,
     /// The attribute `rot`, when the element has it.
@@ -1027,8 +1017,7 @@ pub struct BodyProperties {
     /// The attribute `rtlCol`, when the element has it.
     pub rtl_col: Option<String>,
     /// The child that is `super::drawing::Scene3d`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub scene3d: Option<Box<super::drawing::Scene3d>>,
+    pub scene3d: Option<Box<super::drawing::Scene3dWith<X>>>,
     /// The attribute `spcCol`, when the element has it.
     pub spc_col: Option<super::drawing::PositiveCoordinatePoint>,
     /// The attribute `spcFirstLastPara`, when the element has it.
@@ -1036,10 +1025,9 @@ pub struct BodyProperties {
     /// The attribute `tIns`, when the element has it.
     pub t_ins: Option<super::drawing::StCoordinate32>,
     /// The child that is an item of `super::drawing::Text3DContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub text3d_content: Option<Box<super::drawing::Text3DContent>>,
+    pub text3d_content: Option<Box<super::drawing::Text3DContentWith<X>>>,
     /// The child that is an item of `super::drawing::TextAutofitContent`, when there is one.
-    pub text_autofit_content: Option<Box<super::drawing::TextAutofitContent>>,
+    pub text_autofit_content: Option<Box<super::drawing::TextAutofitContentWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `upright`, when the element has it.
@@ -1052,57 +1040,59 @@ pub struct BodyProperties {
     pub wrap: Option<super::drawing::TextWrappingTypes>,
 }
 
+/// The `wp:bodyPr` element of the tree a read gives: [`BodyPropertiesWith`] holding nothing in
+/// `extra`.
+pub type BodyProperties = BodyPropertiesWith<()>;
+
+impl Eq for BodyPropertiesWith<()> {}
+
 /// The `wp:cNvGraphicFramePr` element, Common `DrawingML` Non-Visual Properties (ECMA-376 Part 1,
 /// section 20.4.2.4). Its schema type is `CT_NonVisualGraphicFrameProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommonDrawingMLNonVisualProperties {
+pub struct CommonDrawingMLNonVisualPropertiesWith<X: NodeExtra> {
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingCommonDrawingMLNonVisualProperties,
     /// The child that is `super::drawing::GraphicFrameLocks`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub graphic_frame_locks: Option<Box<super::drawing::GraphicFrameLocks>>,
+    pub graphic_frame_locks: Option<Box<super::drawing::GraphicFrameLocksWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `wp:cNvGraphicFramePr` element of the tree a read gives:
+/// [`CommonDrawingMLNonVisualPropertiesWith`] holding nothing in `extra`.
+pub type CommonDrawingMLNonVisualProperties = CommonDrawingMLNonVisualPropertiesWith<()>;
+
+impl Eq for CommonDrawingMLNonVisualPropertiesWith<()> {}
+
 /// The `wp:contentPart` element, Content Part (ECMA-376 Part 1, section 20.4.2.29). Its schema type
 /// is `CT_WordprocessingContentPart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ContentPart {
+pub struct ContentPartWith<X: NodeExtra> {
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingContentPart,
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// The child that is `NvContentPartPr`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub nv_content_part_pr: Option<Box<NvContentPartPr>>,
+    pub nv_content_part_pr: Option<Box<NvContentPartPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `Xfrm`, when there is one.
-    pub xfrm: Option<Box<Xfrm>>,
+    pub xfrm: Option<Box<XfrmWith<X>>>,
 }
+
+/// The `wp:contentPart` element of the tree a read gives: [`ContentPartWith`] holding nothing in
+/// `extra`.
+pub type ContentPart = ContentPartWith<()>;
+
+impl Eq for ContentPartWith<()> {}
 
 /// Distance from Text, the simple type `ST_WrapDistance` (ECMA-376 Part 1, section 20.4.3.6), kept
 /// as the text the file carried.
@@ -1123,49 +1113,45 @@ pub struct DistanceFromText(pub String);
 /// The schema types that hold it: `CT_WordprocessingCanvas`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum DrawingCanvasContent {
+pub enum DrawingCanvasContentWith<X: NodeExtra> {
     /// The element `wp:contentPart`, a `ContentPart`.
-    ContentPart(ContentPart),
+    ContentPart(ContentPartWith<X>),
     /// The element `wp:graphicFrame`, a `GraphicalObjectContainer`.
-    GraphicalObjectContainer(GraphicalObjectContainer),
+    GraphicalObjectContainer(GraphicalObjectContainerWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `pic:pic`, a `Picture`.
-    Picture(super::picture::Picture),
+    Picture(super::picture::PictureWith<X>),
     /// The element `wp:wsp`, a `WordprocessingMLShape`.
-    WordprocessingMLShape(WordprocessingMLShape),
+    WordprocessingMLShape(WordprocessingMLShapeWith<X>),
     /// The element `wp:wgp`, a `WordprocessingMLShapeGroup`.
-    WordprocessingMLShapeGroup(WordprocessingMLShapeGroup),
+    WordprocessingMLShapeGroup(WordprocessingMLShapeGroupWith<X>),
 }
+
+/// [`DrawingCanvasContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type DrawingCanvasContent = DrawingCanvasContentWith<()>;
+
+impl Eq for DrawingCanvasContentWith<()> {}
 
 /// The `wp:docPr` element, Drawing Object Non-Visual Properties (ECMA-376 Part 1, section
 /// 20.4.2.5). Its schema type is `CT_NonVisualDrawingProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DrawingObjectNonVisualProperties {
+pub struct DrawingObjectNonVisualPropertiesWith<X: NodeExtra> {
     /// The child that is `super::drawing::ClickHyperlink`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
+    pub click_hyperlink: Option<Box<super::drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingDrawingObjectNonVisualProperties,
     /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
     /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
+    pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHoverWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
     /// The attribute `name`, when the element has it.
@@ -1176,197 +1162,206 @@ pub struct DrawingObjectNonVisualProperties {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `wp:docPr` element of the tree a read gives: [`DrawingObjectNonVisualPropertiesWith`]
+/// holding nothing in `extra`.
+pub type DrawingObjectNonVisualProperties = DrawingObjectNonVisualPropertiesWith<()>;
+
+impl Eq for DrawingObjectNonVisualPropertiesWith<()> {}
+
 /// The `wp:extent` element, Drawing Object Size (ECMA-376 Part 1, section 20.4.2.7). Its schema
 /// type is `CT_PositiveSize2D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DrawingObjectSize {
+pub struct DrawingObjectSizeWith<X: NodeExtra> {
     /// The attribute `cx`, when the element has it.
     pub cx: Option<super::drawing::PositiveCoordinate>,
     /// The attribute `cy`, when the element has it.
     pub cy: Option<super::drawing::PositiveCoordinate>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingDrawingObjectSize,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wp:extent` element of the tree a read gives: [`DrawingObjectSizeWith`] holding nothing in
+/// `extra`.
+pub type DrawingObjectSize = DrawingObjectSizeWith<()>;
+
+impl Eq for DrawingObjectSizeWith<()> {}
 
 /// The `wp:extLst` element, Extension List (ECMA-376 Part 1, section 20.4.2.30). Its schema type is
 /// `CT_OfficeArtExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtensionList {
+pub struct ExtensionListWith<X: NodeExtra> {
     /// The children that are `super::drawing::Extension`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension: Vec<super::drawing::Extension>,
+    pub extension: Vec<super::drawing::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingExtensionList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wp:extLst` element of the tree a read gives: [`ExtensionListWith`] holding nothing in
+/// `extra`.
+pub type ExtensionList = ExtensionListWith<()>;
+
+impl Eq for ExtensionListWith<()> {}
 
 /// The `wp:graphicFrame` element, Graphical object container (ECMA-376 Part 1, section 20.4.2.31).
 /// Its schema type is `CT_GraphicFrame`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GraphicalObjectContainer {
+pub struct GraphicalObjectContainerWith<X: NodeExtra> {
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingGraphicalObjectContainer,
     /// The child that is `super::drawing::GraphicObject`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub graphic_object: Box<super::drawing::GraphicObject>,
+    pub graphic_object: Box<super::drawing::GraphicObjectWith<X>>,
     /// The child that is `NonVisualDrawingProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_drawing_properties: Box<NonVisualDrawingProperties>,
+    pub non_visual_drawing_properties: Box<NonVisualDrawingPropertiesWith<X>>,
     /// The child that is `NonVisualGraphicFrameDrawingProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_graphic_frame_drawing_properties: Box<NonVisualGraphicFrameDrawingProperties>,
+    pub non_visual_graphic_frame_drawing_properties:
+        Box<NonVisualGraphicFrameDrawingPropertiesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `Xfrm`, which the schema requires.
-    pub xfrm: Box<Xfrm>,
+    pub xfrm: Box<XfrmWith<X>>,
 }
+
+/// The `wp:graphicFrame` element of the tree a read gives: [`GraphicalObjectContainerWith`] holding
+/// nothing in `extra`.
+pub type GraphicalObjectContainer = GraphicalObjectContainerWith<()>;
+
+impl Eq for GraphicalObjectContainerWith<()> {}
 
 /// The `wp:grpSp` element, Group Shape (ECMA-376 Part 1, section 20.4.2.32). Its schema type is
 /// `CT_WordprocessingGroup`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GroupShape {
+pub struct GroupShapeWith<X: NodeExtra> {
     /// The children that are an item of `GroupShapeContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<GroupShapeContent>,
+    pub content: Vec<GroupShapeContentWith<X>>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingGroupShape,
     /// The child that is `NonVisualDrawingProperties`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_drawing_properties: Option<Box<NonVisualDrawingProperties>>,
+    pub non_visual_drawing_properties: Option<Box<NonVisualDrawingPropertiesWith<X>>>,
     /// The child that is `NonVisualGroupShapeDrawingProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_group_shape_drawing_properties: Box<NonVisualGroupShapeDrawingProperties>,
+    pub non_visual_group_shape_drawing_properties: Box<NonVisualGroupShapeDrawingPropertiesWith<X>>,
     /// The child that is `GroupShapeProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub properties: Box<GroupShapeProperties>,
+    pub properties: Box<GroupShapePropertiesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wp:grpSp` element of the tree a read gives: [`GroupShapeWith`] holding nothing in `extra`.
+pub type GroupShape = GroupShapeWith<()>;
+
+impl Eq for GroupShapeWith<()> {}
 
 /// One child element of a choice: local choice in `CT_WordprocessingGroup`.
 ///
 /// The schema types that hold it: `CT_WordprocessingGroup`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum GroupShapeContent {
+pub enum GroupShapeContentWith<X: NodeExtra> {
     /// The element `wp:contentPart`, a `ContentPart`.
-    ContentPart(ContentPart),
+    ContentPart(ContentPartWith<X>),
     /// The element `wp:graphicFrame`, a `GraphicalObjectContainer`.
-    GraphicalObjectContainer(GraphicalObjectContainer),
+    GraphicalObjectContainer(GraphicalObjectContainerWith<X>),
     /// The element `wp:grpSp`, a `GroupShape`.
-    GroupShape(GroupShape),
+    GroupShape(GroupShapeWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `pic:pic`, a `Picture`.
-    Picture(super::picture::Picture),
+    Picture(super::picture::PictureWith<X>),
     /// The element `wp:wsp`, a `WordprocessingMLShape`.
-    WordprocessingMLShape(WordprocessingMLShape),
+    WordprocessingMLShape(WordprocessingMLShapeWith<X>),
 }
+
+/// [`GroupShapeContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type GroupShapeContent = GroupShapeContentWith<()>;
+
+impl Eq for GroupShapeContentWith<()> {}
 
 /// The `wp:grpSpPr` element, Group Shape Properties (ECMA-376 Part 1, section 20.4.2.33). Its
 /// schema type is `CT_GroupShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GroupShapeProperties {
+pub struct GroupShapePropertiesWith<X: NodeExtra> {
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
     /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingGroupShapeProperties,
     /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContentWith<X>>>,
     /// The child that is `super::drawing::Scene3d`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub scene3d: Option<Box<super::drawing::Scene3d>>,
+    pub scene3d: Option<Box<super::drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `super::drawing::XfrmGroupTransform2D`, when there is one.
-    pub xfrm_group_transform2d: Option<Box<super::drawing::XfrmGroupTransform2D>>,
+    pub xfrm_group_transform2d: Option<Box<super::drawing::XfrmGroupTransform2DWith<X>>>,
 }
+
+/// The `wp:grpSpPr` element of the tree a read gives: [`GroupShapePropertiesWith`] holding nothing
+/// in `extra`.
+pub type GroupShapeProperties = GroupShapePropertiesWith<()>;
+
+impl Eq for GroupShapePropertiesWith<()> {}
 
 /// The `wp:positionH` element, Horizontal Positioning (ECMA-376 Part 1, section 20.4.2.10). Its
 /// schema type is `CT_PosH`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HorizontalPositioning {
+pub struct HorizontalPositioningWith<X: NodeExtra> {
     /// The child that is an item of `HorizontalPositioningContent`, which the schema requires.
-    pub content: Box<HorizontalPositioningContent>,
+    pub content: Box<HorizontalPositioningContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingHorizontalPositioning,
     /// The attribute `relativeFrom`, when the element has it.
     pub relative_from: Option<HorizontalRelativePositioning>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `wp:positionH` element of the tree a read gives: [`HorizontalPositioningWith`] holding
+/// nothing in `extra`.
+pub type HorizontalPositioning = HorizontalPositioningWith<()>;
+
+impl Eq for HorizontalPositioningWith<()> {}
+
 /// One child element of a choice: local choice in `CT_PosH`.
 ///
 /// The schema types that hold it: `CT_PosH`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum HorizontalPositioningContent {
+pub enum HorizontalPositioningContentWith<X: NodeExtra> {
     /// The element `wp:posOffset`, a `AbsolutePositionOffset`.
-    AbsolutePositionOffset(AbsolutePositionOffset),
+    AbsolutePositionOffset(AbsolutePositionOffsetWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `wp14:pctPosHOffset`, a `PctPosHOffset`.
-    PctPosHOffset(super::office_word_2010_wordprocessing_drawing::PctPosHOffset),
+    PctPosHOffset(super::office_word_2010_wordprocessing_drawing::PctPosHOffsetWith<X>),
     /// The element `wp:align`, a `RelativeHorizontalAlignment`.
-    RelativeHorizontalAlignment(RelativeHorizontalAlignment),
+    RelativeHorizontalAlignment(RelativeHorizontalAlignmentWith<X>),
 }
+
+/// [`HorizontalPositioningContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type HorizontalPositioningContent = HorizontalPositioningContentWith<()>;
+
+impl Eq for HorizontalPositioningContentWith<()> {}
 
 /// Horizontal Relative Positioning, the simple type `ST_RelFromH` (ECMA-376 Part 1, section
 /// 20.4.3.4), kept as the text the file carried.
@@ -1406,22 +1401,14 @@ pub enum HorizontalRelativePositioningMember {
 
 /// The `wp:inline` element, Inline `DrawingML` Object (ECMA-376 Part 1, section 20.4.2.8). Its
 /// schema type is `CT_Inline`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InlineDrawingMLObject {
+pub struct InlineDrawingMLObjectWith<X: NodeExtra> {
     /// The attribute `wp14:anchorId`, when the element has it.
     pub anchor_id: Option<String>,
     /// The child that is `CommonDrawingMLNonVisualProperties`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub common_drawingml_non_visual_properties: Option<Box<CommonDrawingMLNonVisualProperties>>,
+    pub common_drawingml_non_visual_properties:
+        Option<Box<CommonDrawingMLNonVisualPropertiesWith<X>>>,
     /// The attribute `distB`, when the element has it.
     pub dist_b: Option<DistanceFromText>,
     /// The attribute `distL`, when the element has it.
@@ -1431,113 +1418,110 @@ pub struct InlineDrawingMLObject {
     /// The attribute `distT`, when the element has it.
     pub dist_t: Option<DistanceFromText>,
     /// The child that is `DrawingObjectNonVisualProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub drawing_object_non_visual_properties: Box<DrawingObjectNonVisualProperties>,
+    pub drawing_object_non_visual_properties: Box<DrawingObjectNonVisualPropertiesWith<X>>,
     /// The child that is `DrawingObjectSize`, which the schema requires.
-    pub drawing_object_size: Box<DrawingObjectSize>,
+    pub drawing_object_size: Box<DrawingObjectSizeWith<X>>,
     /// The attribute `wp14:editId`, when the element has it.
     pub edit_id: Option<String>,
     /// The child that is `ObjectExtentsIncludingEffects`, when there is one.
-    pub extents_including_effects: Option<Box<ObjectExtentsIncludingEffects>>,
+    pub extents_including_effects: Option<Box<ObjectExtentsIncludingEffectsWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingInlineDrawingMLObject,
     /// The child that is `super::drawing::GraphicObject`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub graphic_object: Box<super::drawing::GraphicObject>,
+    pub graphic_object: Box<super::drawing::GraphicObjectWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wp:inline` element of the tree a read gives: [`InlineDrawingMLObjectWith`] holding nothing
+/// in `extra`.
+pub type InlineDrawingMLObject = InlineDrawingMLObjectWith<()>;
+
+impl Eq for InlineDrawingMLObjectWith<()> {}
 
 /// The `wp:wrapNone` element, No Text Wrapping (ECMA-376 Part 1, section 20.4.2.15). Its schema
 /// type is `CT_WrapNone`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NoTextWrapping {
+pub struct NoTextWrappingWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingNoTextWrapping,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wp:wrapNone` element of the tree a read gives: [`NoTextWrappingWith`] holding nothing in
+/// `extra`.
+pub type NoTextWrapping = NoTextWrappingWith<()>;
+
+impl Eq for NoTextWrappingWith<()> {}
 
 /// The `wp:cNvCnPr` element, Non-Visual Connector Shape Drawing Properties (ECMA-376 Part 1,
 /// section 20.4.2.23). Its schema type is `CT_NonVisualConnectorProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualConnectorShapeDrawingProperties {
+pub struct NonVisualConnectorShapeDrawingPropertiesWith<X: NodeExtra> {
     /// The child that is `super::drawing::ConnectionEnd`, when there is one.
-    pub connection_end: Option<Box<super::drawing::ConnectionEnd>>,
+    pub connection_end: Option<Box<super::drawing::ConnectionEndWith<X>>>,
     /// The child that is `super::drawing::ConnectionShapeLocks`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub connection_shape_locks: Option<Box<super::drawing::ConnectionShapeLocks>>,
+    pub connection_shape_locks: Option<Box<super::drawing::ConnectionShapeLocksWith<X>>>,
     /// The child that is `super::drawing::ConnectionStart`, when there is one.
-    pub connection_start: Option<Box<super::drawing::ConnectionStart>>,
+    pub connection_start: Option<Box<super::drawing::ConnectionStartWith<X>>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingNonVisualConnectorShapeDrawingProperties,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `wp:cNvCnPr` element of the tree a read gives:
+/// [`NonVisualConnectorShapeDrawingPropertiesWith`] holding nothing in `extra`.
+pub type NonVisualConnectorShapeDrawingProperties =
+    NonVisualConnectorShapeDrawingPropertiesWith<()>;
+
+impl Eq for NonVisualConnectorShapeDrawingPropertiesWith<()> {}
+
 /// The `wp:cNvContentPartPr` element, Non-Visual Content Part Drawing Properties (ECMA-376 Part 1,
 /// section 20.4.2.24). Its schema type is `CT_NonVisualContentPartProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualContentPartDrawingProperties {
+pub struct NonVisualContentPartDrawingPropertiesWith<X: NodeExtra> {
     /// The child that is `super::drawing::ContentPartLocks`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content_part_locks: Option<Box<super::drawing::ContentPartLocks>>,
+    pub content_part_locks: Option<Box<super::drawing::ContentPartLocksWith<X>>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingNonVisualContentPartDrawingProperties,
     /// The attribute `isComment`, when the element has it.
     pub is_comment: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `wp:cNvContentPartPr` element of the tree a read gives:
+/// [`NonVisualContentPartDrawingPropertiesWith`] holding nothing in `extra`.
+pub type NonVisualContentPartDrawingProperties = NonVisualContentPartDrawingPropertiesWith<()>;
+
+impl Eq for NonVisualContentPartDrawingPropertiesWith<()> {}
+
 /// The `wp:cNvPr` element, Non-Visual Drawing Properties (ECMA-376 Part 1, section 20.4.2.27). Its
 /// schema type is `CT_NonVisualDrawingProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualDrawingProperties {
+pub struct NonVisualDrawingPropertiesWith<X: NodeExtra> {
     /// The child that is `super::drawing::ClickHyperlink`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub click_hyperlink: Option<Box<super::drawing::ClickHyperlink>>,
+    pub click_hyperlink: Option<Box<super::drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingNonVisualDrawingProperties,
     /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
     /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHover>>,
+    pub hyperlink_for_hover: Option<Box<super::drawing::HyperlinkForHoverWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<super::drawing::DrawingElementID>,
     /// The attribute `name`, when the element has it.
@@ -1548,112 +1532,107 @@ pub struct NonVisualDrawingProperties {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `wp:cNvPr` element of the tree a read gives: [`NonVisualDrawingPropertiesWith`] holding
+/// nothing in `extra`.
+pub type NonVisualDrawingProperties = NonVisualDrawingPropertiesWith<()>;
+
+impl Eq for NonVisualDrawingPropertiesWith<()> {}
+
 /// The `wp:cNvSpPr` element, Non-Visual Drawing Properties for a Shape (ECMA-376 Part 1, section
 /// 20.4.2.28). Its schema type is `CT_NonVisualDrawingShapeProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualDrawingPropertiesForAShape {
+pub struct NonVisualDrawingPropertiesForAShapeWith<X: NodeExtra> {
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingNonVisualDrawingPropertiesForAShape,
     /// The child that is `super::drawing::ShapeLocks`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub locks: Option<Box<super::drawing::ShapeLocks>>,
+    pub locks: Option<Box<super::drawing::ShapeLocksWith<X>>>,
     /// The attribute `txBox`, when the element has it.
     pub tx_box: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `wp:cNvSpPr` element of the tree a read gives: [`NonVisualDrawingPropertiesForAShapeWith`]
+/// holding nothing in `extra`.
+pub type NonVisualDrawingPropertiesForAShape = NonVisualDrawingPropertiesForAShapeWith<()>;
+
+impl Eq for NonVisualDrawingPropertiesForAShapeWith<()> {}
+
 /// The `wp:cNvFrPr` element, Non-Visual Graphic Frame Drawing Properties (ECMA-376 Part 1, section
 /// 20.4.2.25). Its schema type is `CT_NonVisualGraphicFrameProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualGraphicFrameDrawingProperties {
+pub struct NonVisualGraphicFrameDrawingPropertiesWith<X: NodeExtra> {
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingNonVisualGraphicFrameDrawingProperties,
     /// The child that is `super::drawing::GraphicFrameLocks`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub graphic_frame_locks: Option<Box<super::drawing::GraphicFrameLocks>>,
+    pub graphic_frame_locks: Option<Box<super::drawing::GraphicFrameLocksWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wp:cNvFrPr` element of the tree a read gives:
+/// [`NonVisualGraphicFrameDrawingPropertiesWith`] holding nothing in `extra`.
+pub type NonVisualGraphicFrameDrawingProperties = NonVisualGraphicFrameDrawingPropertiesWith<()>;
+
+impl Eq for NonVisualGraphicFrameDrawingPropertiesWith<()> {}
 
 /// The `wp:cNvGrpSpPr` element, Non-Visual Group Shape Drawing Properties (ECMA-376 Part 1, section
 /// 20.4.2.26). Its schema type is `CT_NonVisualGroupDrawingShapeProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualGroupShapeDrawingProperties {
+pub struct NonVisualGroupShapeDrawingPropertiesWith<X: NodeExtra> {
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingNonVisualGroupShapeDrawingProperties,
     /// The child that is `super::drawing::GroupShapeLocks`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub group_shape_locks: Option<Box<super::drawing::GroupShapeLocks>>,
+    pub group_shape_locks: Option<Box<super::drawing::GroupShapeLocksWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `wp:cNvGrpSpPr` element of the tree a read gives:
+/// [`NonVisualGroupShapeDrawingPropertiesWith`] holding nothing in `extra`.
+pub type NonVisualGroupShapeDrawingProperties = NonVisualGroupShapeDrawingPropertiesWith<()>;
+
+impl Eq for NonVisualGroupShapeDrawingPropertiesWith<()> {}
+
 /// The `wp:nvContentPartPr` element. Its schema type is `CT_WordprocessingContentPartNonVisual`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NvContentPartPr {
+pub struct NvContentPartPrWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingNvContentPartPr,
     /// The child that is `NonVisualContentPartDrawingProperties`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_content_part_drawing_properties:
-        Option<Box<NonVisualContentPartDrawingProperties>>,
+        Option<Box<NonVisualContentPartDrawingPropertiesWith<X>>>,
     /// The child that is `NonVisualDrawingProperties`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_drawing_properties: Option<Box<NonVisualDrawingProperties>>,
+    pub non_visual_drawing_properties: Option<Box<NonVisualDrawingPropertiesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wp:nvContentPartPr` element of the tree a read gives: [`NvContentPartPrWith`] holding
+/// nothing in `extra`.
+pub type NvContentPartPr = NvContentPartPrWith<()>;
+
+impl Eq for NvContentPartPrWith<()> {}
 
 /// The `wp:effectExtent` element, Object Extents Including Effects (ECMA-376 Part 1, section
 /// 20.4.2.6). Its schema type is `CT_EffectExtent`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ObjectExtentsIncludingEffects {
+pub struct ObjectExtentsIncludingEffectsWith<X: NodeExtra> {
     /// The attribute `b`, when the element has it.
     pub b: Option<super::drawing::Coordinate>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingObjectExtentsIncludingEffects,
     /// The attribute `l`, when the element has it.
     pub l: Option<super::drawing::Coordinate>,
     /// The attribute `r`, when the element has it.
@@ -1664,21 +1643,30 @@ pub struct ObjectExtentsIncludingEffects {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `wp:effectExtent` element of the tree a read gives: [`ObjectExtentsIncludingEffectsWith`]
+/// holding nothing in `extra`.
+pub type ObjectExtentsIncludingEffects = ObjectExtentsIncludingEffectsWith<()>;
+
+impl Eq for ObjectExtentsIncludingEffectsWith<()> {}
+
 /// The `wp:align` element, Relative Horizontal Alignment (ECMA-376 Part 1, section 20.4.2.1). Its
 /// schema type is `ST_AlignH`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RelativeHorizontalAlignment {
+pub struct RelativeHorizontalAlignmentWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingRelativeHorizontalAlignment,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: RelativeHorizontalAlignmentPositions,
 }
+
+/// The `wp:align` element of the tree a read gives: [`RelativeHorizontalAlignmentWith`] holding
+/// nothing in `extra`.
+pub type RelativeHorizontalAlignment = RelativeHorizontalAlignmentWith<()>;
+
+impl Eq for RelativeHorizontalAlignmentWith<()> {}
 
 /// Relative Horizontal Alignment Positions, the simple type `ST_AlignH` (ECMA-376 Part 1, section
 /// 20.4.3.1), kept as the text the file carried.
@@ -1712,145 +1700,151 @@ pub enum RelativeHorizontalAlignmentPositionsMember {
 
 /// The `wp:align` element, Relative Vertical Alignment (ECMA-376 Part 1, section 20.4.2.2). Its
 /// schema type is `ST_AlignV`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RelativeVerticalAlignment {
+pub struct RelativeVerticalAlignmentWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingRelativeVerticalAlignment,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: VerticalAlignmentDefinition,
 }
 
+/// The `wp:align` element of the tree a read gives: [`RelativeVerticalAlignmentWith`] holding
+/// nothing in `extra`.
+pub type RelativeVerticalAlignment = RelativeVerticalAlignmentWith<()>;
+
+impl Eq for RelativeVerticalAlignmentWith<()> {}
+
 /// The `wp:txbxContent` element, Rich Text Box Content Container (ECMA-376 Part 1, section
 /// 20.4.2.38). Its schema type is `CT_TxbxContent`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RichTextBoxContentContainer {
+pub struct RichTextBoxContentContainerWith<X: NodeExtra> {
     /// The children that are an item of `super::wordprocessing::BlockContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<super::wordprocessing::BlockContent>,
+    pub content: Vec<super::wordprocessing::BlockContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingRichTextBoxContentContainer,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wp:txbxContent` element of the tree a read gives: [`RichTextBoxContentContainerWith`]
+/// holding nothing in `extra`.
+pub type RichTextBoxContentContainer = RichTextBoxContentContainerWith<()>;
+
+impl Eq for RichTextBoxContentContainerWith<()> {}
 
 /// One child element of a choice: local choice in `CT_WordprocessingShape`.
 ///
 /// The schema types that hold it: `CT_WordprocessingShape`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum ShapeNonVisualPropertiesContent {
+pub enum ShapeNonVisualPropertiesContentWith<X: NodeExtra> {
     /// The element `wp:cNvCnPr`, a `NonVisualConnectorShapeDrawingProperties`.
-    NonVisualConnectorShapeDrawingProperties(NonVisualConnectorShapeDrawingProperties),
+    NonVisualConnectorShapeDrawingProperties(NonVisualConnectorShapeDrawingPropertiesWith<X>),
     /// The element `wp:cNvSpPr`, a `NonVisualDrawingPropertiesForAShape`.
-    NonVisualDrawingPropertiesForAShape(NonVisualDrawingPropertiesForAShape),
+    NonVisualDrawingPropertiesForAShape(NonVisualDrawingPropertiesForAShapeWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
+
+/// [`ShapeNonVisualPropertiesContentWith`] of the tree a read gives, where no node holds anything
+/// in `extra`.
+pub type ShapeNonVisualPropertiesContent = ShapeNonVisualPropertiesContentWith<()>;
+
+impl Eq for ShapeNonVisualPropertiesContentWith<()> {}
 
 /// The `wp:spPr` element, Shape Properties (ECMA-376 Part 1, section 20.4.2.35). Its schema type is
 /// `CT_ShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeProperties {
+pub struct ShapePropertiesWith<X: NodeExtra> {
     /// The child that is `super::drawing::Apply3DShapeProperties`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub apply_3d: Option<Box<super::drawing::Apply3DShapeProperties>>,
+    pub apply_3d: Option<Box<super::drawing::Apply3DShapePropertiesWith<X>>>,
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
     /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingShapeProperties,
     /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContentWith<X>>>,
     /// The child that is an item of `super::drawing::GeometryContent`, when there is one.
-    pub geometry_content: Option<Box<super::drawing::GeometryContent>>,
+    pub geometry_content: Option<Box<super::drawing::GeometryContentWith<X>>>,
     /// The child that is `super::drawing::Outline`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub outline: Option<Box<super::drawing::Outline>>,
+    pub outline: Option<Box<super::drawing::OutlineWith<X>>>,
     /// The child that is `super::drawing::Scene3d`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub scene3d: Option<Box<super::drawing::Scene3d>>,
+    pub scene3d: Option<Box<super::drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `super::drawing::XfrmTransform2D`, when there is one.
-    pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2D>>,
+    pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2DWith<X>>>,
 }
+
+/// The `wp:spPr` element of the tree a read gives: [`ShapePropertiesWith`] holding nothing in
+/// `extra`.
+pub type ShapeProperties = ShapePropertiesWith<()>;
+
+impl Eq for ShapePropertiesWith<()> {}
 
 /// The `wp:style` element, Shape Style (ECMA-376 Part 1, section 20.4.2.36). Its schema type is
 /// `CT_ShapeStyle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeStyle {
+pub struct ShapeStyleWith<X: NodeExtra> {
     /// The child that is `super::drawing::EffectReference`, which the schema requires.
-    pub effect_reference: Box<super::drawing::EffectReference>,
+    pub effect_reference: Box<super::drawing::EffectReferenceWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingShapeStyle,
     /// The child that is `super::drawing::FillReference`, which the schema requires.
-    pub fill_reference: Box<super::drawing::FillReference>,
+    pub fill_reference: Box<super::drawing::FillReferenceWith<X>>,
     /// The child that is `super::drawing::FontReference`, which the schema requires.
-    pub font_reference: Box<super::drawing::FontReference>,
+    pub font_reference: Box<super::drawing::FontReferenceWith<X>>,
     /// The child that is `super::drawing::LineReference`, which the schema requires.
-    pub line_reference: Box<super::drawing::LineReference>,
+    pub line_reference: Box<super::drawing::LineReferenceWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wp:style` element of the tree a read gives: [`ShapeStyleWith`] holding nothing in `extra`.
+pub type ShapeStyle = ShapeStyleWith<()>;
+
+impl Eq for ShapeStyleWith<()> {}
 
 /// One child element of a choice: local choice in `CT_WordprocessingShape`.
 ///
 /// The schema types that hold it: `CT_WordprocessingShape`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum ShapeTextContent {
+pub enum ShapeTextContentWith<X: NodeExtra> {
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `wp:linkedTxbx`, a `TextualContentsOfShapeLinkedTxbx`.
-    TextualContentsOfShapeLinkedTxbx(TextualContentsOfShapeLinkedTxbx),
+    TextualContentsOfShapeLinkedTxbx(TextualContentsOfShapeLinkedTxbxWith<X>),
     /// The element `wp:txbx`, a `TextualContentsOfShapeTxbx`.
-    TextualContentsOfShapeTxbx(TextualContentsOfShapeTxbx),
+    TextualContentsOfShapeTxbx(TextualContentsOfShapeTxbxWith<X>),
 }
+
+/// [`ShapeTextContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type ShapeTextContent = ShapeTextContentWith<()>;
+
+impl Eq for ShapeTextContentWith<()> {}
 
 /// The `wp:simplePos` element, Simple Positioning Coordinates (ECMA-376 Part 1, section 20.4.2.13).
 /// Its schema type is `CT_Point2D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SimplePositioningCoordinates {
+pub struct SimplePositioningCoordinatesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingSimplePositioningCoordinates,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `x`, when the element has it.
@@ -1859,16 +1853,17 @@ pub struct SimplePositioningCoordinates {
     pub y: Option<super::drawing::Coordinate>,
 }
 
+/// The `wp:simplePos` element of the tree a read gives: [`SimplePositioningCoordinatesWith`]
+/// holding nothing in `extra`.
+pub type SimplePositioningCoordinates = SimplePositioningCoordinatesWith<()>;
+
+impl Eq for SimplePositioningCoordinatesWith<()> {}
+
 /// The `wp:wrapSquare` element, Square Wrapping (ECMA-376 Part 1, section 20.4.2.17). Its schema
 /// type is `CT_WrapSquare`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SquareWrapping {
+pub struct SquareWrappingWith<X: NodeExtra> {
     /// The attribute `distB`, when the element has it.
     pub dist_b: Option<DistanceFromText>,
     /// The attribute `distL`, when the element has it.
@@ -1877,13 +1872,21 @@ pub struct SquareWrapping {
     pub dist_r: Option<DistanceFromText>,
     /// The attribute `distT`, when the element has it.
     pub dist_t: Option<DistanceFromText>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingSquareWrapping,
     /// The child that is `ObjectExtentsIncludingEffects`, when there is one.
-    pub object_extents_including_effects: Option<Box<ObjectExtentsIncludingEffects>>,
+    pub object_extents_including_effects: Option<Box<ObjectExtentsIncludingEffectsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `wrapText`, when the element has it.
     pub wrap_text: Option<TextWrappingLocation>,
 }
+
+/// The `wp:wrapSquare` element of the tree a read gives: [`SquareWrappingWith`] holding nothing in
+/// `extra`.
+pub type SquareWrapping = SquareWrappingWith<()>;
+
+impl Eq for SquareWrappingWith<()> {}
 
 /// Text Wrapping Location, the simple type `ST_WrapText` (ECMA-376 Part 1, section 20.4.3.7), kept
 /// as the text the file carried.
@@ -1915,20 +1918,13 @@ pub enum TextWrappingLocationMember {
 
 /// The `wp:linkedTxbx` element, Textual contents of shape (ECMA-376 Part 1, section 20.4.2.34). Its
 /// schema type is `CT_LinkedTextboxInformation`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextualContentsOfShapeLinkedTxbx {
+pub struct TextualContentsOfShapeLinkedTxbxWith<X: NodeExtra> {
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingTextualContentsOfShapeLinkedTxbx,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `seq`, when the element has it.
@@ -1937,94 +1933,107 @@ pub struct TextualContentsOfShapeLinkedTxbx {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `wp:linkedTxbx` element of the tree a read gives: [`TextualContentsOfShapeLinkedTxbxWith`]
+/// holding nothing in `extra`.
+pub type TextualContentsOfShapeLinkedTxbx = TextualContentsOfShapeLinkedTxbxWith<()>;
+
+impl Eq for TextualContentsOfShapeLinkedTxbxWith<()> {}
+
 /// The `wp:txbx` element, Textual contents of shape (ECMA-376 Part 1, section 20.4.2.37). Its
 /// schema type is `CT_TextboxInfo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextualContentsOfShapeTxbx {
+pub struct TextualContentsOfShapeTxbxWith<X: NodeExtra> {
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingTextualContentsOfShapeTxbx,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The child that is `RichTextBoxContentContainer`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub rich_text_box_content_container: Box<RichTextBoxContentContainer>,
+    pub rich_text_box_content_container: Box<RichTextBoxContentContainerWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wp:txbx` element of the tree a read gives: [`TextualContentsOfShapeTxbxWith`] holding
+/// nothing in `extra`.
+pub type TextualContentsOfShapeTxbx = TextualContentsOfShapeTxbxWith<()>;
+
+impl Eq for TextualContentsOfShapeTxbxWith<()> {}
 
 /// The `wp:wrapThrough` element, Through Wrapping (ECMA-376 Part 1, section 20.4.2.18). Its schema
 /// type is `CT_WrapThrough`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ThroughWrapping {
+pub struct ThroughWrappingWith<X: NodeExtra> {
     /// The attribute `distL`, when the element has it.
     pub dist_l: Option<DistanceFromText>,
     /// The attribute `distR`, when the element has it.
     pub dist_r: Option<DistanceFromText>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingThroughWrapping,
     /// The child that is `WrappingPolygon`, which the schema requires.
-    pub polygon: Box<WrappingPolygon>,
+    pub polygon: Box<WrappingPolygonWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `wrapText`, when the element has it.
     pub wrap_text: Option<TextWrappingLocation>,
 }
+
+/// The `wp:wrapThrough` element of the tree a read gives: [`ThroughWrappingWith`] holding nothing
+/// in `extra`.
+pub type ThroughWrapping = ThroughWrappingWith<()>;
+
+impl Eq for ThroughWrappingWith<()> {}
 
 /// The `wp:wrapTight` element, Tight Wrapping (ECMA-376 Part 1, section 20.4.2.19). Its schema type
 /// is `CT_WrapTight`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TightWrapping {
+pub struct TightWrappingWith<X: NodeExtra> {
     /// The attribute `distL`, when the element has it.
     pub dist_l: Option<DistanceFromText>,
     /// The attribute `distR`, when the element has it.
     pub dist_r: Option<DistanceFromText>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingTightWrapping,
     /// The child that is `WrappingPolygon`, which the schema requires.
-    pub polygon: Box<WrappingPolygon>,
+    pub polygon: Box<WrappingPolygonWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `wrapText`, when the element has it.
     pub wrap_text: Option<TextWrappingLocation>,
 }
 
+/// The `wp:wrapTight` element of the tree a read gives: [`TightWrappingWith`] holding nothing in
+/// `extra`.
+pub type TightWrapping = TightWrappingWith<()>;
+
+impl Eq for TightWrappingWith<()> {}
+
 /// The `wp:wrapTopAndBottom` element, Top and Bottom Wrapping (ECMA-376 Part 1, section 20.4.2.20).
 /// Its schema type is `CT_WrapTopBottom`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TopAndBottomWrapping {
+pub struct TopAndBottomWrappingWith<X: NodeExtra> {
     /// The attribute `distB`, when the element has it.
     pub dist_b: Option<DistanceFromText>,
     /// The attribute `distT`, when the element has it.
     pub dist_t: Option<DistanceFromText>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingTopAndBottomWrapping,
     /// The child that is `ObjectExtentsIncludingEffects`, when there is one.
-    pub object_extents_including_effects: Option<Box<ObjectExtentsIncludingEffects>>,
+    pub object_extents_including_effects: Option<Box<ObjectExtentsIncludingEffectsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wp:wrapTopAndBottom` element of the tree a read gives: [`TopAndBottomWrappingWith`] holding
+/// nothing in `extra`.
+pub type TopAndBottomWrapping = TopAndBottomWrappingWith<()>;
+
+impl Eq for TopAndBottomWrappingWith<()> {}
 
 /// Vertical Alignment Definition, the simple type `ST_AlignV` (ECMA-376 Part 1, section 20.4.3.2),
 /// kept as the text the file carried.
@@ -2058,39 +2067,48 @@ pub enum VerticalAlignmentDefinitionMember {
 
 /// The `wp:positionV` element, Vertical Positioning (ECMA-376 Part 1, section 20.4.2.11). Its
 /// schema type is `CT_PosV`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VerticalPositioning {
+pub struct VerticalPositioningWith<X: NodeExtra> {
     /// The child that is an item of `VerticalPositioningContent`, which the schema requires.
-    pub content: Box<VerticalPositioningContent>,
+    pub content: Box<VerticalPositioningContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingVerticalPositioning,
     /// The attribute `relativeFrom`, when the element has it.
     pub relative_from: Option<VerticalRelativePositioning>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `wp:positionV` element of the tree a read gives: [`VerticalPositioningWith`] holding nothing
+/// in `extra`.
+pub type VerticalPositioning = VerticalPositioningWith<()>;
+
+impl Eq for VerticalPositioningWith<()> {}
+
 /// One child element of a choice: local choice in `CT_PosV`.
 ///
 /// The schema types that hold it: `CT_PosV`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum VerticalPositioningContent {
+pub enum VerticalPositioningContentWith<X: NodeExtra> {
     /// The element `wp:posOffset`, a `AbsolutePositionOffset`.
-    AbsolutePositionOffset(AbsolutePositionOffset),
+    AbsolutePositionOffset(AbsolutePositionOffsetWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `wp14:pctPosVOffset`, a `PctPosVOffset`.
-    PctPosVOffset(super::office_word_2010_wordprocessing_drawing::PctPosVOffset),
+    PctPosVOffset(super::office_word_2010_wordprocessing_drawing::PctPosVOffsetWith<X>),
     /// The element `wp:align`, a `RelativeVerticalAlignment`.
-    RelativeVerticalAlignment(RelativeVerticalAlignment),
+    RelativeVerticalAlignment(RelativeVerticalAlignmentWith<X>),
 }
+
+/// [`VerticalPositioningContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type VerticalPositioningContent = VerticalPositioningContentWith<()>;
+
+impl Eq for VerticalPositioningContentWith<()> {}
 
 /// Vertical Relative Positioning, the simple type `ST_RelFromV` (ECMA-376 Part 1, section
 /// 20.4.3.5), kept as the text the file carried.
@@ -2130,157 +2148,140 @@ pub enum VerticalRelativePositioningMember {
 
 /// The `wp:whole` element, Whole E2O Formatting (ECMA-376 Part 1, section 20.4.2.40). Its schema
 /// type is `CT_WholeE2oFormatting`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WholeE2OFormatting {
+pub struct WholeE2OFormattingWith<X: NodeExtra> {
     /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    pub content: Option<Box<super::drawing::EffectPropertiesContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingWholeE2OFormatting,
     /// The child that is `super::drawing::Outline`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub outline: Option<Box<super::drawing::Outline>>,
+    pub outline: Option<Box<super::drawing::OutlineWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wp:whole` element of the tree a read gives: [`WholeE2OFormattingWith`] holding nothing in
+/// `extra`.
+pub type WholeE2OFormatting = WholeE2OFormattingWith<()>;
+
+impl Eq for WholeE2OFormattingWith<()> {}
 
 /// The `wp:wpc` element, `WordprocessingML` Drawing Canvas (ECMA-376 Part 1, section 20.4.2.41).
 /// Its schema type is `CT_WordprocessingCanvas`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WordprocessingMLDrawingCanvas {
+pub struct WordprocessingMLDrawingCanvasWith<X: NodeExtra> {
     /// The child that is `BackgroundFormatting`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub background_formatting: Option<Box<BackgroundFormatting>>,
+    pub background_formatting: Option<Box<BackgroundFormattingWith<X>>>,
     /// The children that are an item of `DrawingCanvasContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<DrawingCanvasContent>,
+    pub content: Vec<DrawingCanvasContentWith<X>>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingWordprocessingMLDrawingCanvas,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `WholeE2OFormatting`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub whole_e2o_formatting: Option<Box<WholeE2OFormatting>>,
+    pub whole_e2o_formatting: Option<Box<WholeE2OFormattingWith<X>>>,
 }
+
+/// The `wp:wpc` element of the tree a read gives: [`WordprocessingMLDrawingCanvasWith`] holding
+/// nothing in `extra`.
+pub type WordprocessingMLDrawingCanvas = WordprocessingMLDrawingCanvasWith<()>;
+
+impl Eq for WordprocessingMLDrawingCanvasWith<()> {}
 
 /// The `wp:wsp` element, `WordprocessingML` Shape (ECMA-376 Part 1, section 20.4.2.42). Its schema
 /// type is `CT_WordprocessingShape`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WordprocessingMLShape {
+pub struct WordprocessingMLShapeWith<X: NodeExtra> {
     /// The child that is `BodyProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub body_properties: Box<BodyProperties>,
+    pub body_properties: Box<BodyPropertiesWith<X>>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingWordprocessingMLShape,
     /// The child that is `NonVisualDrawingProperties`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_drawing_properties: Option<Box<NonVisualDrawingProperties>>,
+    pub non_visual_drawing_properties: Option<Box<NonVisualDrawingPropertiesWith<X>>>,
     /// The child that is an item of `ShapeNonVisualPropertiesContent`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_properties_content: Box<ShapeNonVisualPropertiesContent>,
+    pub non_visual_properties_content: Box<ShapeNonVisualPropertiesContentWith<X>>,
     /// The attribute `normalEastAsianFlow`, when the element has it.
     pub normal_east_asian_flow: Option<String>,
     /// The child that is `ShapeProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub properties: Box<ShapeProperties>,
+    pub properties: Box<ShapePropertiesWith<X>>,
     /// The child that is `ShapeStyle`, when there is one.
-    pub style: Option<Box<ShapeStyle>>,
+    pub style: Option<Box<ShapeStyleWith<X>>>,
     /// The child that is an item of `ShapeTextContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub text_content: Option<Box<ShapeTextContent>>,
+    pub text_content: Option<Box<ShapeTextContentWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wp:wsp` element of the tree a read gives: [`WordprocessingMLShapeWith`] holding nothing in
+/// `extra`.
+pub type WordprocessingMLShape = WordprocessingMLShapeWith<()>;
+
+impl Eq for WordprocessingMLShapeWith<()> {}
 
 /// The `wp:wgp` element, `WordprocessingML` Shape Group (ECMA-376 Part 1, section 20.4.2.39). Its
 /// schema type is `CT_WordprocessingGroup`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WordprocessingMLShapeGroup {
+pub struct WordprocessingMLShapeGroupWith<X: NodeExtra> {
     /// The children that are an item of `GroupShapeContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<GroupShapeContent>,
+    pub content: Vec<GroupShapeContentWith<X>>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingWordprocessingMLShapeGroup,
     /// The child that is `NonVisualDrawingProperties`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_drawing_properties: Option<Box<NonVisualDrawingProperties>>,
+    pub non_visual_drawing_properties: Option<Box<NonVisualDrawingPropertiesWith<X>>>,
     /// The child that is `NonVisualGroupShapeDrawingProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub non_visual_group_shape_drawing_properties: Box<NonVisualGroupShapeDrawingProperties>,
+    pub non_visual_group_shape_drawing_properties: Box<NonVisualGroupShapeDrawingPropertiesWith<X>>,
     /// The child that is `GroupShapeProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub shape_properties: Box<GroupShapeProperties>,
+    pub shape_properties: Box<GroupShapePropertiesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wp:wgp` element of the tree a read gives: [`WordprocessingMLShapeGroupWith`] holding
+/// nothing in `extra`.
+pub type WordprocessingMLShapeGroup = WordprocessingMLShapeGroupWith<()>;
+
+impl Eq for WordprocessingMLShapeGroupWith<()> {}
 
 /// The `wp:wrapPolygon` element, Wrapping Polygon (ECMA-376 Part 1, section 20.4.2.16). Its schema
 /// type is `CT_WrapPath`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WrappingPolygon {
+pub struct WrappingPolygonWith<X: NodeExtra> {
     /// The attribute `edited`, when the element has it.
     pub edited: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingWrappingPolygon,
     /// The children that are `WrappingPolygonLineEndPosition`, in order.
-    pub line_end_position: Vec<WrappingPolygonLineEndPosition>,
+    pub line_end_position: Vec<WrappingPolygonLineEndPositionWith<X>>,
     /// The child that is `WrappingPolygonStart`, which the schema requires.
-    pub start: Box<WrappingPolygonStart>,
+    pub start: Box<WrappingPolygonStartWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `wp:wrapPolygon` element of the tree a read gives: [`WrappingPolygonWith`] holding nothing
+/// in `extra`.
+pub type WrappingPolygon = WrappingPolygonWith<()>;
+
+impl Eq for WrappingPolygonWith<()> {}
 
 /// The `wp:lineTo` element, Wrapping Polygon Line End Position (ECMA-376 Part 1, section 20.4.2.9).
 /// Its schema type is `CT_Point2D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WrappingPolygonLineEndPosition {
+pub struct WrappingPolygonLineEndPositionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingWrappingPolygonLineEndPosition,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `x`, when the element has it.
@@ -2288,17 +2289,20 @@ pub struct WrappingPolygonLineEndPosition {
     /// The attribute `y`, when the element has it.
     pub y: Option<super::drawing::Coordinate>,
 }
+
+/// The `wp:lineTo` element of the tree a read gives: [`WrappingPolygonLineEndPositionWith`] holding
+/// nothing in `extra`.
+pub type WrappingPolygonLineEndPosition = WrappingPolygonLineEndPositionWith<()>;
+
+impl Eq for WrappingPolygonLineEndPositionWith<()> {}
 
 /// The `wp:start` element, Wrapping Polygon Start (ECMA-376 Part 1, section 20.4.2.14). Its schema
 /// type is `CT_Point2D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WrappingPolygonStart {
+pub struct WrappingPolygonStartWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingWrappingPolygonStart,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `x`, when the element has it.
@@ -2307,30 +2311,52 @@ pub struct WrappingPolygonStart {
     pub y: Option<super::drawing::Coordinate>,
 }
 
+/// The `wp:start` element of the tree a read gives: [`WrappingPolygonStartWith`] holding nothing in
+/// `extra`.
+pub type WrappingPolygonStart = WrappingPolygonStartWith<()>;
+
+impl Eq for WrappingPolygonStartWith<()> {}
+
 /// The `wp:xfrm` element. Its schema type is `CT_Transform2D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Xfrm {
+pub struct XfrmWith<X: NodeExtra> {
     /// The child that is `super::drawing::Extents`, when there is one.
-    pub extents: Option<Box<super::drawing::Extents>>,
+    pub extents: Option<Box<super::drawing::ExtentsWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::WordprocessingDrawingXfrm,
     /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
     /// The attribute `flipV`, when the element has it.
     pub flip_v: Option<String>,
     /// The child that is `super::drawing::Offset`, when there is one.
-    pub offset: Option<Box<super::drawing::Offset>>,
+    pub offset: Option<Box<super::drawing::OffsetWith<X>>>,
     /// The attribute `rot`, when the element has it.
     pub rot: Option<super::drawing::Angle>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-impl AbsolutePositionOffset {
+/// The `wp:xfrm` element of the tree a read gives: [`XfrmWith`] holding nothing in `extra`.
+pub type Xfrm = XfrmWith<()>;
+
+impl Eq for XfrmWith<()> {}
+
+impl<X: NodeExtra> AbsolutePositionOffsetWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AbsolutePositionOffsetWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AbsolutePositionOffsetWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2377,9 +2403,29 @@ impl AbsolutePositionOffsetValue {
     }
 }
 
-impl Default for AnchorContent {
+impl<X: NodeExtra> AnchorContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AnchorContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::NoTextWrapping(node) => AnchorContentWith::NoTextWrapping(node.into_extra()),
+            Self::Other(node) => AnchorContentWith::Other(node),
+            Self::SquareWrapping(node) => AnchorContentWith::SquareWrapping(node.into_extra()),
+            Self::ThroughWrapping(node) => AnchorContentWith::ThroughWrapping(node.into_extra()),
+            Self::TightWrapping(node) => AnchorContentWith::TightWrapping(node.into_extra()),
+            Self::TopAndBottomWrapping(node) => {
+                AnchorContentWith::TopAndBottomWrapping(node.into_extra())
+            }
+        }
+    }
+}
+
+impl<X: NodeExtra> Default for AnchorContentWith<X> {
     fn default() -> Self {
-        Self::NoTextWrapping(NoTextWrapping::default())
+        Self::NoTextWrapping(NoTextWrappingWith::default())
     }
 }
 
@@ -2419,7 +2465,77 @@ impl officekit_markup_base::Write for AnchorContent {
     }
 }
 
-impl AnchorForFloatingDrawingMLObject {
+impl<X: NodeExtra> AnchorForFloatingDrawingMLObjectWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> AnchorForFloatingDrawingMLObjectWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AnchorForFloatingDrawingMLObjectWith {
+            allow_overlap: self.allow_overlap,
+            anchor_id: self.anchor_id,
+            behind_doc: self.behind_doc,
+            common_drawingml_non_visual_properties: officekit_markup_base::into_extra_optional(
+                &mut self.common_drawingml_non_visual_properties,
+                CommonDrawingMLNonVisualPropertiesWith::into_extra,
+            ),
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                AnchorContentWith::into_extra,
+            ),
+            dist_b: self.dist_b,
+            dist_l: self.dist_l,
+            dist_r: self.dist_r,
+            dist_t: self.dist_t,
+            drawing_object_non_visual_properties: officekit_markup_base::into_extra_required(
+                *self.drawing_object_non_visual_properties,
+                DrawingObjectNonVisualPropertiesWith::into_extra,
+            ),
+            drawing_object_size: officekit_markup_base::into_extra_required(
+                *self.drawing_object_size,
+                DrawingObjectSizeWith::into_extra,
+            ),
+            edit_id: self.edit_id,
+            extents_including_effects: officekit_markup_base::into_extra_optional(
+                &mut self.extents_including_effects,
+                ObjectExtentsIncludingEffectsWith::into_extra,
+            ),
+            extra: Default::default(),
+            graphic_object: officekit_markup_base::into_extra_required(
+                *self.graphic_object,
+                super::drawing::GraphicObjectWith::into_extra,
+            ),
+            hidden: self.hidden,
+            horizontal_positioning: officekit_markup_base::into_extra_required(
+                *self.horizontal_positioning,
+                HorizontalPositioningWith::into_extra,
+            ),
+            layout_in_cell: self.layout_in_cell,
+            locked: self.locked,
+            relative_height: self.relative_height,
+            simple_pos: self.simple_pos,
+            simple_positioning_coordinates: officekit_markup_base::into_extra_required(
+                *self.simple_positioning_coordinates,
+                SimplePositioningCoordinatesWith::into_extra,
+            ),
+            size_rel_h: officekit_markup_base::into_extra_optional(
+                &mut self.size_rel_h,
+                super::office_word_2010_wordprocessing_drawing::SizeRelHWith::into_extra,
+            ),
+            size_rel_v: officekit_markup_base::into_extra_optional(
+                &mut self.size_rel_v,
+                super::office_word_2010_wordprocessing_drawing::SizeRelVWith::into_extra,
+            ),
+            unknown: self.unknown,
+            vertical_positioning: officekit_markup_base::into_extra_required(
+                *self.vertical_positioning,
+                VerticalPositioningWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2455,7 +2571,28 @@ impl officekit_markup_base::Write for AnchorForFloatingDrawingMLObject {
     }
 }
 
-impl BackgroundFormatting {
+impl<X: NodeExtra> BackgroundFormattingWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> BackgroundFormattingWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BackgroundFormattingWith {
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                super::drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                super::drawing::FillPropertiesContentWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2476,7 +2613,59 @@ impl officekit_markup_base::Write for BackgroundFormatting {
     }
 }
 
-impl BodyProperties {
+impl<X: NodeExtra> BodyPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> BodyPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BodyPropertiesWith {
+            anchor: self.anchor,
+            anchor_ctr: self.anchor_ctr,
+            b_ins: self.b_ins,
+            compat_ln_spc: self.compat_ln_spc,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            force_aa: self.force_aa,
+            from_word_art: self.from_word_art,
+            horz_overflow: self.horz_overflow,
+            l_ins: self.l_ins,
+            num_col: self.num_col,
+            preset_text_warp: officekit_markup_base::into_extra_optional(
+                &mut self.preset_text_warp,
+                super::drawing::PresetTextWarpWith::into_extra,
+            ),
+            r_ins: self.r_ins,
+            rot: self.rot,
+            rtl_col: self.rtl_col,
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                super::drawing::Scene3dWith::into_extra,
+            ),
+            spc_col: self.spc_col,
+            spc_first_last_para: self.spc_first_last_para,
+            t_ins: self.t_ins,
+            text3d_content: officekit_markup_base::into_extra_optional(
+                &mut self.text3d_content,
+                super::drawing::Text3DContentWith::into_extra,
+            ),
+            text_autofit_content: officekit_markup_base::into_extra_optional(
+                &mut self.text_autofit_content,
+                super::drawing::TextAutofitContentWith::into_extra,
+            ),
+            unknown: self.unknown,
+            upright: self.upright,
+            vert: self.vert,
+            vert_overflow: self.vert_overflow,
+            wrap: self.wrap,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2518,7 +2707,28 @@ impl officekit_markup_base::Write for BodyProperties {
     }
 }
 
-impl CommonDrawingMLNonVisualProperties {
+impl<X: NodeExtra> CommonDrawingMLNonVisualPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> CommonDrawingMLNonVisualPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CommonDrawingMLNonVisualPropertiesWith {
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            graphic_frame_locks: officekit_markup_base::into_extra_optional(
+                &mut self.graphic_frame_locks,
+                super::drawing::GraphicFrameLocksWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2539,7 +2749,31 @@ impl officekit_markup_base::Write for CommonDrawingMLNonVisualProperties {
     }
 }
 
-impl ContentPart {
+impl<X: NodeExtra> ContentPartWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ContentPartWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ContentPartWith {
+            bw_mode: self.bw_mode,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            id: self.id,
+            nv_content_part_pr: officekit_markup_base::into_extra_optional(
+                &mut self.nv_content_part_pr,
+                NvContentPartPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm: officekit_markup_base::into_extra_optional(&mut self.xfrm, XfrmWith::into_extra),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2587,6 +2821,30 @@ impl DistanceFromText {
     }
 }
 
+impl<X: NodeExtra> DrawingCanvasContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DrawingCanvasContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ContentPart(node) => DrawingCanvasContentWith::ContentPart(node.into_extra()),
+            Self::GraphicalObjectContainer(node) => {
+                DrawingCanvasContentWith::GraphicalObjectContainer(node.into_extra())
+            }
+            Self::Other(node) => DrawingCanvasContentWith::Other(node),
+            Self::Picture(node) => DrawingCanvasContentWith::Picture(node.into_extra()),
+            Self::WordprocessingMLShape(node) => {
+                DrawingCanvasContentWith::WordprocessingMLShape(node.into_extra())
+            }
+            Self::WordprocessingMLShapeGroup(node) => {
+                DrawingCanvasContentWith::WordprocessingMLShapeGroup(node.into_extra())
+            }
+        }
+    }
+}
+
 impl officekit_markup_base::Read for DrawingCanvasContent {
     fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
@@ -2623,7 +2881,37 @@ impl officekit_markup_base::Write for DrawingCanvasContent {
     }
 }
 
-impl DrawingObjectNonVisualProperties {
+impl<X: NodeExtra> DrawingObjectNonVisualPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DrawingObjectNonVisualPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DrawingObjectNonVisualPropertiesWith {
+            click_hyperlink: officekit_markup_base::into_extra_optional(
+                &mut self.click_hyperlink,
+                super::drawing::ClickHyperlinkWith::into_extra,
+            ),
+            descr: self.descr,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            hidden: self.hidden,
+            hyperlink_for_hover: officekit_markup_base::into_extra_optional(
+                &mut self.hyperlink_for_hover,
+                super::drawing::HyperlinkForHoverWith::into_extra,
+            ),
+            id: self.id,
+            name: self.name,
+            title: self.title,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2651,7 +2939,22 @@ impl officekit_markup_base::Write for DrawingObjectNonVisualProperties {
     }
 }
 
-impl DrawingObjectSize {
+impl<X: NodeExtra> DrawingObjectSizeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DrawingObjectSizeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DrawingObjectSizeWith {
+            cx: self.cx,
+            cy: self.cy,
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2676,7 +2979,24 @@ impl officekit_markup_base::Write for DrawingObjectSize {
     }
 }
 
-impl ExtensionList {
+impl<X: NodeExtra> ExtensionListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtensionListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtensionListWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                super::drawing::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2697,7 +3017,37 @@ impl officekit_markup_base::Write for ExtensionList {
     }
 }
 
-impl GraphicalObjectContainer {
+impl<X: NodeExtra> GraphicalObjectContainerWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GraphicalObjectContainerWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GraphicalObjectContainerWith {
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            graphic_object: officekit_markup_base::into_extra_required(
+                *self.graphic_object,
+                super::drawing::GraphicObjectWith::into_extra,
+            ),
+            non_visual_drawing_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_drawing_properties,
+                NonVisualDrawingPropertiesWith::into_extra,
+            ),
+            non_visual_graphic_frame_drawing_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_graphic_frame_drawing_properties,
+                NonVisualGraphicFrameDrawingPropertiesWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm: officekit_markup_base::into_extra_required(*self.xfrm, XfrmWith::into_extra),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2718,7 +3068,40 @@ impl officekit_markup_base::Write for GraphicalObjectContainer {
     }
 }
 
-impl GroupShape {
+impl<X: NodeExtra> GroupShapeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GroupShapeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GroupShapeWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                GroupShapeContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            non_visual_drawing_properties: officekit_markup_base::into_extra_optional(
+                &mut self.non_visual_drawing_properties,
+                NonVisualDrawingPropertiesWith::into_extra,
+            ),
+            non_visual_group_shape_drawing_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_group_shape_drawing_properties,
+                NonVisualGroupShapeDrawingPropertiesWith::into_extra,
+            ),
+            properties: officekit_markup_base::into_extra_required(
+                *self.properties,
+                GroupShapePropertiesWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2736,6 +3119,28 @@ impl officekit_markup_base::Write for GroupShape {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::group_shape(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> GroupShapeContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GroupShapeContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ContentPart(node) => GroupShapeContentWith::ContentPart(node.into_extra()),
+            Self::GraphicalObjectContainer(node) => {
+                GroupShapeContentWith::GraphicalObjectContainer(node.into_extra())
+            }
+            Self::GroupShape(node) => GroupShapeContentWith::GroupShape(node.into_extra()),
+            Self::Other(node) => GroupShapeContentWith::Other(node),
+            Self::Picture(node) => GroupShapeContentWith::Picture(node.into_extra()),
+            Self::WordprocessingMLShape(node) => {
+                GroupShapeContentWith::WordprocessingMLShape(node.into_extra())
+            }
+        }
     }
 }
 
@@ -2773,7 +3178,41 @@ impl officekit_markup_base::Write for GroupShapeContent {
     }
 }
 
-impl GroupShapeProperties {
+impl<X: NodeExtra> GroupShapePropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GroupShapePropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GroupShapePropertiesWith {
+            bw_mode: self.bw_mode,
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                super::drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                super::drawing::FillPropertiesContentWith::into_extra,
+            ),
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                super::drawing::Scene3dWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm_group_transform2d: officekit_markup_base::into_extra_optional(
+                &mut self.xfrm_group_transform2d,
+                super::drawing::XfrmGroupTransform2DWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2797,7 +3236,25 @@ impl officekit_markup_base::Write for GroupShapeProperties {
     }
 }
 
-impl HorizontalPositioning {
+impl<X: NodeExtra> HorizontalPositioningWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> HorizontalPositioningWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HorizontalPositioningWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                HorizontalPositioningContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            relative_from: self.relative_from,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2821,9 +3278,31 @@ impl officekit_markup_base::Write for HorizontalPositioning {
     }
 }
 
-impl Default for HorizontalPositioningContent {
+impl<X: NodeExtra> HorizontalPositioningContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> HorizontalPositioningContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::AbsolutePositionOffset(node) => {
+                HorizontalPositioningContentWith::AbsolutePositionOffset(node.into_extra())
+            }
+            Self::Other(node) => HorizontalPositioningContentWith::Other(node),
+            Self::PctPosHOffset(node) => {
+                HorizontalPositioningContentWith::PctPosHOffset(node.into_extra())
+            }
+            Self::RelativeHorizontalAlignment(node) => {
+                HorizontalPositioningContentWith::RelativeHorizontalAlignment(node.into_extra())
+            }
+        }
+    }
+}
+
+impl<X: NodeExtra> Default for HorizontalPositioningContentWith<X> {
     fn default() -> Self {
-        Self::AbsolutePositionOffset(AbsolutePositionOffset::default())
+        Self::AbsolutePositionOffset(AbsolutePositionOffsetWith::default())
     }
 }
 
@@ -2918,7 +3397,46 @@ impl HorizontalRelativePositioning {
     }
 }
 
-impl InlineDrawingMLObject {
+impl<X: NodeExtra> InlineDrawingMLObjectWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> InlineDrawingMLObjectWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        InlineDrawingMLObjectWith {
+            anchor_id: self.anchor_id,
+            common_drawingml_non_visual_properties: officekit_markup_base::into_extra_optional(
+                &mut self.common_drawingml_non_visual_properties,
+                CommonDrawingMLNonVisualPropertiesWith::into_extra,
+            ),
+            dist_b: self.dist_b,
+            dist_l: self.dist_l,
+            dist_r: self.dist_r,
+            dist_t: self.dist_t,
+            drawing_object_non_visual_properties: officekit_markup_base::into_extra_required(
+                *self.drawing_object_non_visual_properties,
+                DrawingObjectNonVisualPropertiesWith::into_extra,
+            ),
+            drawing_object_size: officekit_markup_base::into_extra_required(
+                *self.drawing_object_size,
+                DrawingObjectSizeWith::into_extra,
+            ),
+            edit_id: self.edit_id,
+            extents_including_effects: officekit_markup_base::into_extra_optional(
+                &mut self.extents_including_effects,
+                ObjectExtentsIncludingEffectsWith::into_extra,
+            ),
+            extra: Default::default(),
+            graphic_object: officekit_markup_base::into_extra_required(
+                *self.graphic_object,
+                super::drawing::GraphicObjectWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2947,7 +3465,20 @@ impl officekit_markup_base::Write for InlineDrawingMLObject {
     }
 }
 
-impl NoTextWrapping {
+impl<X: NodeExtra> NoTextWrappingWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NoTextWrappingWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NoTextWrappingWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2968,7 +3499,36 @@ impl officekit_markup_base::Write for NoTextWrapping {
     }
 }
 
-impl NonVisualConnectorShapeDrawingProperties {
+impl<X: NodeExtra> NonVisualConnectorShapeDrawingPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NonVisualConnectorShapeDrawingPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonVisualConnectorShapeDrawingPropertiesWith {
+            connection_end: officekit_markup_base::into_extra_optional(
+                &mut self.connection_end,
+                super::drawing::ConnectionEndWith::into_extra,
+            ),
+            connection_shape_locks: officekit_markup_base::into_extra_optional(
+                &mut self.connection_shape_locks,
+                super::drawing::ConnectionShapeLocksWith::into_extra,
+            ),
+            connection_start: officekit_markup_base::into_extra_optional(
+                &mut self.connection_start,
+                super::drawing::ConnectionStartWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2989,7 +3549,29 @@ impl officekit_markup_base::Write for NonVisualConnectorShapeDrawingProperties {
     }
 }
 
-impl NonVisualContentPartDrawingProperties {
+impl<X: NodeExtra> NonVisualContentPartDrawingPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NonVisualContentPartDrawingPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonVisualContentPartDrawingPropertiesWith {
+            content_part_locks: officekit_markup_base::into_extra_optional(
+                &mut self.content_part_locks,
+                super::drawing::ContentPartLocksWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            is_comment: self.is_comment,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3013,7 +3595,37 @@ impl officekit_markup_base::Write for NonVisualContentPartDrawingProperties {
     }
 }
 
-impl NonVisualDrawingProperties {
+impl<X: NodeExtra> NonVisualDrawingPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NonVisualDrawingPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonVisualDrawingPropertiesWith {
+            click_hyperlink: officekit_markup_base::into_extra_optional(
+                &mut self.click_hyperlink,
+                super::drawing::ClickHyperlinkWith::into_extra,
+            ),
+            descr: self.descr,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            hidden: self.hidden,
+            hyperlink_for_hover: officekit_markup_base::into_extra_optional(
+                &mut self.hyperlink_for_hover,
+                super::drawing::HyperlinkForHoverWith::into_extra,
+            ),
+            id: self.id,
+            name: self.name,
+            title: self.title,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3041,7 +3653,29 @@ impl officekit_markup_base::Write for NonVisualDrawingProperties {
     }
 }
 
-impl NonVisualDrawingPropertiesForAShape {
+impl<X: NodeExtra> NonVisualDrawingPropertiesForAShapeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NonVisualDrawingPropertiesForAShapeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonVisualDrawingPropertiesForAShapeWith {
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            locks: officekit_markup_base::into_extra_optional(
+                &mut self.locks,
+                super::drawing::ShapeLocksWith::into_extra,
+            ),
+            tx_box: self.tx_box,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3065,7 +3699,28 @@ impl officekit_markup_base::Write for NonVisualDrawingPropertiesForAShape {
     }
 }
 
-impl NonVisualGraphicFrameDrawingProperties {
+impl<X: NodeExtra> NonVisualGraphicFrameDrawingPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NonVisualGraphicFrameDrawingPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonVisualGraphicFrameDrawingPropertiesWith {
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            graphic_frame_locks: officekit_markup_base::into_extra_optional(
+                &mut self.graphic_frame_locks,
+                super::drawing::GraphicFrameLocksWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3086,7 +3741,28 @@ impl officekit_markup_base::Write for NonVisualGraphicFrameDrawingProperties {
     }
 }
 
-impl NonVisualGroupShapeDrawingProperties {
+impl<X: NodeExtra> NonVisualGroupShapeDrawingPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NonVisualGroupShapeDrawingPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonVisualGroupShapeDrawingPropertiesWith {
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            group_shape_locks: officekit_markup_base::into_extra_optional(
+                &mut self.group_shape_locks,
+                super::drawing::GroupShapeLocksWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3107,7 +3783,28 @@ impl officekit_markup_base::Write for NonVisualGroupShapeDrawingProperties {
     }
 }
 
-impl NvContentPartPr {
+impl<X: NodeExtra> NvContentPartPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NvContentPartPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NvContentPartPrWith {
+            extra: Default::default(),
+            non_visual_content_part_drawing_properties: officekit_markup_base::into_extra_optional(
+                &mut self.non_visual_content_part_drawing_properties,
+                NonVisualContentPartDrawingPropertiesWith::into_extra,
+            ),
+            non_visual_drawing_properties: officekit_markup_base::into_extra_optional(
+                &mut self.non_visual_drawing_properties,
+                NonVisualDrawingPropertiesWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3128,7 +3825,24 @@ impl officekit_markup_base::Write for NvContentPartPr {
     }
 }
 
-impl ObjectExtentsIncludingEffects {
+impl<X: NodeExtra> ObjectExtentsIncludingEffectsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ObjectExtentsIncludingEffectsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ObjectExtentsIncludingEffectsWith {
+            b: self.b,
+            extra: Default::default(),
+            l: self.l,
+            r: self.r,
+            t: self.t,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3155,7 +3869,21 @@ impl officekit_markup_base::Write for ObjectExtentsIncludingEffects {
     }
 }
 
-impl RelativeHorizontalAlignment {
+impl<X: NodeExtra> RelativeHorizontalAlignmentWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RelativeHorizontalAlignmentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RelativeHorizontalAlignmentWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3235,7 +3963,21 @@ impl RelativeHorizontalAlignmentPositions {
     }
 }
 
-impl RelativeVerticalAlignment {
+impl<X: NodeExtra> RelativeVerticalAlignmentWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RelativeVerticalAlignmentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RelativeVerticalAlignmentWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3259,7 +4001,24 @@ impl officekit_markup_base::Write for RelativeVerticalAlignment {
     }
 }
 
-impl RichTextBoxContentContainer {
+impl<X: NodeExtra> RichTextBoxContentContainerWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RichTextBoxContentContainerWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RichTextBoxContentContainerWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                super::wordprocessing::BlockContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3280,10 +4039,33 @@ impl officekit_markup_base::Write for RichTextBoxContentContainer {
     }
 }
 
-impl Default for ShapeNonVisualPropertiesContent {
+impl<X: NodeExtra> ShapeNonVisualPropertiesContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShapeNonVisualPropertiesContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::NonVisualConnectorShapeDrawingProperties(node) => {
+                ShapeNonVisualPropertiesContentWith::NonVisualConnectorShapeDrawingProperties(
+                    node.into_extra(),
+                )
+            }
+            Self::NonVisualDrawingPropertiesForAShape(node) => {
+                ShapeNonVisualPropertiesContentWith::NonVisualDrawingPropertiesForAShape(
+                    node.into_extra(),
+                )
+            }
+            Self::Other(node) => ShapeNonVisualPropertiesContentWith::Other(node),
+        }
+    }
+}
+
+impl<X: NodeExtra> Default for ShapeNonVisualPropertiesContentWith<X> {
     fn default() -> Self {
         Self::NonVisualConnectorShapeDrawingProperties(
-            NonVisualConnectorShapeDrawingProperties::default(),
+            NonVisualConnectorShapeDrawingPropertiesWith::default(),
         )
     }
 }
@@ -3316,7 +4098,53 @@ impl officekit_markup_base::Write for ShapeNonVisualPropertiesContent {
     }
 }
 
-impl ShapeProperties {
+impl<X: NodeExtra> ShapePropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ShapePropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapePropertiesWith {
+            apply_3d: officekit_markup_base::into_extra_optional(
+                &mut self.apply_3d,
+                super::drawing::Apply3DShapePropertiesWith::into_extra,
+            ),
+            bw_mode: self.bw_mode,
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                super::drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                super::drawing::FillPropertiesContentWith::into_extra,
+            ),
+            geometry_content: officekit_markup_base::into_extra_optional(
+                &mut self.geometry_content,
+                super::drawing::GeometryContentWith::into_extra,
+            ),
+            outline: officekit_markup_base::into_extra_optional(
+                &mut self.outline,
+                super::drawing::OutlineWith::into_extra,
+            ),
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                super::drawing::Scene3dWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm_transform2d: officekit_markup_base::into_extra_optional(
+                &mut self.xfrm_transform2d,
+                super::drawing::XfrmTransform2DWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3340,7 +4168,36 @@ impl officekit_markup_base::Write for ShapeProperties {
     }
 }
 
-impl ShapeStyle {
+impl<X: NodeExtra> ShapeStyleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShapeStyleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapeStyleWith {
+            effect_reference: officekit_markup_base::into_extra_required(
+                *self.effect_reference,
+                super::drawing::EffectReferenceWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_reference: officekit_markup_base::into_extra_required(
+                *self.fill_reference,
+                super::drawing::FillReferenceWith::into_extra,
+            ),
+            font_reference: officekit_markup_base::into_extra_required(
+                *self.font_reference,
+                super::drawing::FontReferenceWith::into_extra,
+            ),
+            line_reference: officekit_markup_base::into_extra_required(
+                *self.line_reference,
+                super::drawing::LineReferenceWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3358,6 +4215,25 @@ impl officekit_markup_base::Write for ShapeStyle {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::shape_style(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> ShapeTextContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShapeTextContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::Other(node) => ShapeTextContentWith::Other(node),
+            Self::TextualContentsOfShapeLinkedTxbx(node) => {
+                ShapeTextContentWith::TextualContentsOfShapeLinkedTxbx(node.into_extra())
+            }
+            Self::TextualContentsOfShapeTxbx(node) => {
+                ShapeTextContentWith::TextualContentsOfShapeTxbx(node.into_extra())
+            }
+        }
     }
 }
 
@@ -3389,7 +4265,22 @@ impl officekit_markup_base::Write for ShapeTextContent {
     }
 }
 
-impl SimplePositioningCoordinates {
+impl<X: NodeExtra> SimplePositioningCoordinatesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SimplePositioningCoordinatesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SimplePositioningCoordinatesWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            x: self.x,
+            y: self.y,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3414,7 +4305,29 @@ impl officekit_markup_base::Write for SimplePositioningCoordinates {
     }
 }
 
-impl SquareWrapping {
+impl<X: NodeExtra> SquareWrappingWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SquareWrappingWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SquareWrappingWith {
+            dist_b: self.dist_b,
+            dist_l: self.dist_l,
+            dist_r: self.dist_r,
+            dist_t: self.dist_t,
+            extra: Default::default(),
+            object_extents_including_effects: officekit_markup_base::into_extra_optional(
+                &mut self.object_extents_including_effects,
+                ObjectExtentsIncludingEffectsWith::into_extra,
+            ),
+            unknown: self.unknown,
+            wrap_text: self.wrap_text,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3493,7 +4406,26 @@ impl TextWrappingLocation {
     }
 }
 
-impl TextualContentsOfShapeLinkedTxbx {
+impl<X: NodeExtra> TextualContentsOfShapeLinkedTxbxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TextualContentsOfShapeLinkedTxbxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TextualContentsOfShapeLinkedTxbxWith {
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            id: self.id,
+            seq: self.seq,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3518,7 +4450,29 @@ impl officekit_markup_base::Write for TextualContentsOfShapeLinkedTxbx {
     }
 }
 
-impl TextualContentsOfShapeTxbx {
+impl<X: NodeExtra> TextualContentsOfShapeTxbxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TextualContentsOfShapeTxbxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TextualContentsOfShapeTxbxWith {
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            id: self.id,
+            rich_text_box_content_container: officekit_markup_base::into_extra_required(
+                *self.rich_text_box_content_container,
+                RichTextBoxContentContainerWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3542,7 +4496,27 @@ impl officekit_markup_base::Write for TextualContentsOfShapeTxbx {
     }
 }
 
-impl ThroughWrapping {
+impl<X: NodeExtra> ThroughWrappingWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ThroughWrappingWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ThroughWrappingWith {
+            dist_l: self.dist_l,
+            dist_r: self.dist_r,
+            extra: Default::default(),
+            polygon: officekit_markup_base::into_extra_required(
+                *self.polygon,
+                WrappingPolygonWith::into_extra,
+            ),
+            unknown: self.unknown,
+            wrap_text: self.wrap_text,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3568,7 +4542,27 @@ impl officekit_markup_base::Write for ThroughWrapping {
     }
 }
 
-impl TightWrapping {
+impl<X: NodeExtra> TightWrappingWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TightWrappingWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TightWrappingWith {
+            dist_l: self.dist_l,
+            dist_r: self.dist_r,
+            extra: Default::default(),
+            polygon: officekit_markup_base::into_extra_required(
+                *self.polygon,
+                WrappingPolygonWith::into_extra,
+            ),
+            unknown: self.unknown,
+            wrap_text: self.wrap_text,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3594,7 +4588,26 @@ impl officekit_markup_base::Write for TightWrapping {
     }
 }
 
-impl TopAndBottomWrapping {
+impl<X: NodeExtra> TopAndBottomWrappingWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TopAndBottomWrappingWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TopAndBottomWrappingWith {
+            dist_b: self.dist_b,
+            dist_t: self.dist_t,
+            extra: Default::default(),
+            object_extents_including_effects: officekit_markup_base::into_extra_optional(
+                &mut self.object_extents_including_effects,
+                ObjectExtentsIncludingEffectsWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3675,7 +4688,25 @@ impl VerticalAlignmentDefinition {
     }
 }
 
-impl VerticalPositioning {
+impl<X: NodeExtra> VerticalPositioningWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VerticalPositioningWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VerticalPositioningWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                VerticalPositioningContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            relative_from: self.relative_from,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3699,9 +4730,31 @@ impl officekit_markup_base::Write for VerticalPositioning {
     }
 }
 
-impl Default for VerticalPositioningContent {
+impl<X: NodeExtra> VerticalPositioningContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VerticalPositioningContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::AbsolutePositionOffset(node) => {
+                VerticalPositioningContentWith::AbsolutePositionOffset(node.into_extra())
+            }
+            Self::Other(node) => VerticalPositioningContentWith::Other(node),
+            Self::PctPosVOffset(node) => {
+                VerticalPositioningContentWith::PctPosVOffset(node.into_extra())
+            }
+            Self::RelativeVerticalAlignment(node) => {
+                VerticalPositioningContentWith::RelativeVerticalAlignment(node.into_extra())
+            }
+        }
+    }
+}
+
+impl<X: NodeExtra> Default for VerticalPositioningContentWith<X> {
     fn default() -> Self {
-        Self::AbsolutePositionOffset(AbsolutePositionOffset::default())
+        Self::AbsolutePositionOffset(AbsolutePositionOffsetWith::default())
     }
 }
 
@@ -3796,7 +4849,28 @@ impl VerticalRelativePositioning {
     }
 }
 
-impl WholeE2OFormatting {
+impl<X: NodeExtra> WholeE2OFormattingWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> WholeE2OFormattingWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WholeE2OFormattingWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                super::drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            outline: officekit_markup_base::into_extra_optional(
+                &mut self.outline,
+                super::drawing::OutlineWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3817,7 +4891,36 @@ impl officekit_markup_base::Write for WholeE2OFormatting {
     }
 }
 
-impl WordprocessingMLDrawingCanvas {
+impl<X: NodeExtra> WordprocessingMLDrawingCanvasWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> WordprocessingMLDrawingCanvasWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WordprocessingMLDrawingCanvasWith {
+            background_formatting: officekit_markup_base::into_extra_optional(
+                &mut self.background_formatting,
+                BackgroundFormattingWith::into_extra,
+            ),
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                DrawingCanvasContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+            whole_e2o_formatting: officekit_markup_base::into_extra_optional(
+                &mut self.whole_e2o_formatting,
+                WholeE2OFormattingWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3838,7 +4941,49 @@ impl officekit_markup_base::Write for WordprocessingMLDrawingCanvas {
     }
 }
 
-impl WordprocessingMLShape {
+impl<X: NodeExtra> WordprocessingMLShapeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> WordprocessingMLShapeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WordprocessingMLShapeWith {
+            body_properties: officekit_markup_base::into_extra_required(
+                *self.body_properties,
+                BodyPropertiesWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            non_visual_drawing_properties: officekit_markup_base::into_extra_optional(
+                &mut self.non_visual_drawing_properties,
+                NonVisualDrawingPropertiesWith::into_extra,
+            ),
+            non_visual_properties_content: officekit_markup_base::into_extra_required(
+                *self.non_visual_properties_content,
+                ShapeNonVisualPropertiesContentWith::into_extra,
+            ),
+            normal_east_asian_flow: self.normal_east_asian_flow,
+            properties: officekit_markup_base::into_extra_required(
+                *self.properties,
+                ShapePropertiesWith::into_extra,
+            ),
+            style: officekit_markup_base::into_extra_optional(
+                &mut self.style,
+                ShapeStyleWith::into_extra,
+            ),
+            text_content: officekit_markup_base::into_extra_optional(
+                &mut self.text_content,
+                ShapeTextContentWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3862,7 +5007,40 @@ impl officekit_markup_base::Write for WordprocessingMLShape {
     }
 }
 
-impl WordprocessingMLShapeGroup {
+impl<X: NodeExtra> WordprocessingMLShapeGroupWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> WordprocessingMLShapeGroupWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WordprocessingMLShapeGroupWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                GroupShapeContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            non_visual_drawing_properties: officekit_markup_base::into_extra_optional(
+                &mut self.non_visual_drawing_properties,
+                NonVisualDrawingPropertiesWith::into_extra,
+            ),
+            non_visual_group_shape_drawing_properties: officekit_markup_base::into_extra_required(
+                *self.non_visual_group_shape_drawing_properties,
+                NonVisualGroupShapeDrawingPropertiesWith::into_extra,
+            ),
+            shape_properties: officekit_markup_base::into_extra_required(
+                *self.shape_properties,
+                GroupShapePropertiesWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3883,7 +5061,29 @@ impl officekit_markup_base::Write for WordprocessingMLShapeGroup {
     }
 }
 
-impl WrappingPolygon {
+impl<X: NodeExtra> WrappingPolygonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> WrappingPolygonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WrappingPolygonWith {
+            edited: self.edited,
+            extra: Default::default(),
+            line_end_position: officekit_markup_base::into_extra_list(
+                self.line_end_position,
+                WrappingPolygonLineEndPositionWith::into_extra,
+            ),
+            start: officekit_markup_base::into_extra_required(
+                *self.start,
+                WrappingPolygonStartWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3907,7 +5107,22 @@ impl officekit_markup_base::Write for WrappingPolygon {
     }
 }
 
-impl WrappingPolygonLineEndPosition {
+impl<X: NodeExtra> WrappingPolygonLineEndPositionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> WrappingPolygonLineEndPositionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WrappingPolygonLineEndPositionWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            x: self.x,
+            y: self.y,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3932,7 +5147,22 @@ impl officekit_markup_base::Write for WrappingPolygonLineEndPosition {
     }
 }
 
-impl WrappingPolygonStart {
+impl<X: NodeExtra> WrappingPolygonStartWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> WrappingPolygonStartWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WrappingPolygonStartWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            x: self.x,
+            y: self.y,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3957,7 +5187,31 @@ impl officekit_markup_base::Write for WrappingPolygonStart {
     }
 }
 
-impl Xfrm {
+impl<X: NodeExtra> XfrmWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> XfrmWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        XfrmWith {
+            extents: officekit_markup_base::into_extra_optional(
+                &mut self.extents,
+                super::drawing::ExtentsWith::into_extra,
+            ),
+            extra: Default::default(),
+            flip_h: self.flip_h,
+            flip_v: self.flip_v,
+            offset: officekit_markup_base::into_extra_optional(
+                &mut self.offset,
+                super::drawing::OffsetWith::into_extra,
+            ),
+            rot: self.rot,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

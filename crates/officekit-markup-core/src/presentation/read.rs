@@ -239,6 +239,7 @@ pub fn a_guide(element: &Element) -> super::AGuide {
 pub fn all_slides(element: &Element) -> super::AllSlides {
     let reader = officekit_markup_base::Reader::new(element, &super::ALL_SLIDES_SHAPE);
     super::AllSlides {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -430,6 +431,7 @@ pub fn audio(element: &Element) -> super::Audio {
 pub fn background(element: &Element) -> super::Background {
     let reader = officekit_markup_base::Reader::new(element, &super::BACKGROUND_SHAPE);
     super::Background {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -548,6 +550,7 @@ pub fn browse_slide_show_mode(element: &Element) -> super::BrowseSlideShowMode {
 pub fn build_as_one(element: &Element) -> super::BuildAsOne {
     let reader = officekit_markup_base::Reader::new(element, &super::BUILD_AS_ONE_SHAPE);
     super::BuildAsOne {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -753,6 +756,7 @@ pub fn children_time_node_list(element: &Element) -> super::ChildrenTimeNodeList
 pub fn circle_slide_transition(element: &Element) -> super::CircleSlideTransition {
     let reader = officekit_markup_base::Reader::new(element, &super::CIRCLE_SLIDE_TRANSITION_SHAPE);
     super::CircleSlideTransition {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -1255,6 +1259,7 @@ pub fn diamond_slide_transition(element: &Element) -> super::DiamondSlideTransit
     let reader =
         officekit_markup_base::Reader::new(element, &super::DIAMOND_SLIDE_TRANSITION_SHAPE);
     super::DiamondSlideTransition {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -1265,6 +1270,7 @@ pub fn dissolve_slide_transition(element: &Element) -> super::DissolveSlideTrans
     let reader =
         officekit_markup_base::Reader::new(element, &super::DISSOLVE_SLIDE_TRANSITION_SHAPE);
     super::DissolveSlideTransition {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2069,6 +2075,7 @@ pub fn newsflash_slide_transition(element: &Element) -> super::NewsflashSlideTra
     let reader =
         officekit_markup_base::Reader::new(element, &super::NEWSFLASH_SLIDE_TRANSITION_SHAPE);
     super::NewsflashSlideTransition {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2696,6 +2703,7 @@ pub fn placeholder_shape(element: &Element) -> super::PlaceholderShape {
 pub fn plus_slide_transition(element: &Element) -> super::PlusSlideTransition {
     let reader = officekit_markup_base::Reader::new(element, &super::PLUS_SLIDE_TRANSITION_SHAPE);
     super::PlusSlideTransition {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2926,6 +2934,7 @@ pub fn presenter_slide_show_mode(element: &Element) -> super::PresenterSlideShow
     let reader =
         officekit_markup_base::Reader::new(element, &super::PRESENTER_SLIDE_SHOW_MODE_SHAPE);
     super::PresenterSlideShowMode {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -3061,6 +3070,7 @@ pub fn random_bar_slide_transition(element: &Element) -> super::RandomBarSlideTr
 pub fn random_slide_transition(element: &Element) -> super::RandomSlideTransition {
     let reader = officekit_markup_base::Reader::new(element, &super::RANDOM_SLIDE_TRANSITION_SHAPE);
     super::RandomSlideTransition {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -3574,6 +3584,7 @@ pub fn slide_synchronization_properties(
 pub fn slide_target(element: &Element) -> super::SlideTarget {
     let reader = officekit_markup_base::Reader::new(element, &super::SLIDE_TARGET_SHAPE);
     super::SlideTarget {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -3764,6 +3775,7 @@ pub fn start_sound_action(element: &Element) -> super::StartSoundAction {
 pub fn stop_sound_action(element: &Element) -> super::StopSoundAction {
     let reader = officekit_markup_base::Reader::new(element, &super::STOP_SOUND_ACTION_SHAPE);
     super::StopSoundAction {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -4132,6 +4144,7 @@ pub fn web_properties(element: &Element) -> super::WebProperties {
 pub fn wedge_slide_transition(element: &Element) -> super::WedgeSlideTransition {
     let reader = officekit_markup_base::Reader::new(element, &super::WEDGE_SLIDE_TRANSITION_SHAPE);
     super::WedgeSlideTransition {
+        extra: (),
         unknown: reader.finish(),
     }
 }

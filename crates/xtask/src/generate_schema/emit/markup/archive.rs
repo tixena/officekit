@@ -1,53 +1,32 @@
 //! What rkyv archives the typed tree through, under the `binary-format`
-//! feature: the derives of each struct and newtype, the bounds a type that
-//! holds itself through its fields takes, and each namespace's private
-//! `archive` module, in the namespace's own crate, whose mirrors archive its
-//! enums.
+//! feature: the derives of each newtype, the bounds a type that holds itself
+//! through its fields takes, and each namespace's private `archive` module, in
+//! the namespace's own crate, whose mirrors archive its structs and enums.
 //!
-//! An enum does not derive rkyv's traits itself: the resolver enum the derive
-//! writes beside it would be public and exhaustive. Its mirror, a remote derive
-//! in the private module, holds the archived enum and the resolver, and the
-//! enum's `Archive`, `Serialize` and `Deserialize` hand the work to it.
+//! A struct or an enum does not derive rkyv's traits itself: the struct is
+//! generic over `NodeExtra`, and the resolver enum the derive writes beside an
+//! enum would be public and exhaustive. Its mirror, a remote derive in the
+//! private module, holds the archived type and the resolver, and the type's
+//! `Archive`, `Serialize` and `Deserialize` hand the work to it.
 //! `officekit::parts`' `PartModel` archives through a mirror written the same way.
 
 use core::fmt::Write as _;
 
 use super::render::layout::{self, Expr, MAX_WIDTH};
-use super::render::{BODY_LINES, Names, Uses};
-use super::structs::{Body, Catalog, EnumDef, Target};
+use super::render::{self, BODY_LINES, Field, Form, Names, Uses};
+use super::structs::{Body, Catalog, EnumDef, Node, Target};
 
 /// The bounds of a type that holds itself through its fields: they stand in
 /// for the field bounds `omit_bounds` drops, whose proof would never end.
-const BOUNDS: &str = "#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]\n\
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]\n\
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]\n";
+const BOUNDS: &str = "#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]\n\
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]\n\
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]\n";
 
 /// The widest derive attribute rustfmt keeps on one line.
 const DERIVE_WIDTH: usize = 96;
 
-/// The names `BOUNDS` uses, for a module's imports.
-pub const BOUND_NAMES: [&str; 7] = [
-    "rkyv::de::Pooling",
-    "rkyv::rancor::Source",
-    "rkyv::ser::Allocator",
-    "rkyv::ser::Sharing",
-    "rkyv::ser::Writer",
-    "rkyv::validation::ArchiveContext",
-    "rkyv::validation::SharedContext",
-];
-
 /// The field attribute of a field that closes a cycle of types.
 pub const OMIT_BOUNDS: &str = "#[rkyv(omit_bounds)]";
-
-/// `BOUNDS` on a type outside the `archive` module, each line under the
-/// `binary-format` feature.
-const GATED_BOUNDS: &str = "#[cfg_attr(feature = \"binary-format\", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]\n\
-#[cfg_attr(feature = \"binary-format\", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]\n\
-#[cfg_attr(feature = \"binary-format\", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]\n";
-
-/// `OMIT_BOUNDS` on a field outside the `archive` module, under the
-/// `binary-format` feature.
-pub const GATED_OMIT_BOUNDS: &str = "#[cfg_attr(feature = \"binary-format\", rkyv(omit_bounds))]";
 
 /// The strongly connected components of the typed tree's types: a struct
 /// leads to the types of its child fields, an enum to its arms' structs. A
@@ -100,11 +79,10 @@ pub struct MirrorArm {
     pub variant: String,
 }
 
-/// The derive and rkyv attributes of a struct or newtype deriving `own`, the
-/// rkyv ones under the `binary-format` feature, with `GATED_BOUNDS` when one
-/// of its fields closes a cycle.
+/// The derive and rkyv attributes of a newtype deriving `own`, the rkyv ones
+/// under the `binary-format` feature.
 #[must_use]
-pub fn attributes(own: &str, bounded: bool) -> String {
+pub fn attributes(own: &str) -> String {
     let mut out = if own.len() + "#[derive()]".len() <= DERIVE_WIDTH {
         format!("#[derive({own})]\n")
     } else {
@@ -113,18 +91,15 @@ pub fn attributes(own: &str, bounded: bool) -> String {
     out.push_str(
         "#[cfg_attr(\n    feature = \"binary-format\",\n    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)\n)]\n",
     );
-    if bounded {
-        out.push_str(GATED_BOUNDS);
-    }
     out.push_str(
         "#[cfg_attr(feature = \"binary-format\", rkyv(attr(non_exhaustive)))]\n#[non_exhaustive]\n",
     );
     out
 }
 
-/// The text of a namespace's `archive.rs`, `None` when it has no enum.
-/// `names` has given no path yet: the modules of other crates its mirrors
-/// name are the file's imports.
+/// The text of a namespace's `archive.rs`, `None` when it has no struct and
+/// no enum. `names` has given no path yet: the modules of other crates its
+/// mirrors name are the file's imports.
 #[must_use]
 pub fn text(header: &str, names: &Names<'_>, cycles: &Cycles) -> Option<String> {
     let catalog = names.catalog;
@@ -134,13 +109,30 @@ pub fn text(header: &str, names: &Names<'_>, cycles: &Cycles) -> Option<String> 
         .enumerate()
         .filter(|(_, found)| found.module == names.module)
         .collect();
-    if enums.is_empty() {
+    let mut structs: Vec<(usize, &Node)> = catalog
+        .nodes
+        .iter()
+        .enumerate()
+        .filter(|(_, node)| node.module == names.module)
+        .collect();
+    if enums.is_empty() && structs.is_empty() {
         return None;
     }
     enums.sort_by(|left, right| left.1.name.cmp(&right.1.name));
+    structs.sort_by(|left, right| left.1.name.cmp(&right.1.name));
+    let holds_enums = !enums.is_empty();
     let mut mirrors = String::new();
     let mut impls = String::new();
     let mut bounded = false;
+    for (index, node) in structs {
+        let fields = render::struct_fields(names, cycles, index, node, Form::Mirror);
+        let recursive = fields.iter().any(|field| field.recursive);
+        bounded |= recursive;
+        mirrors.push('\n');
+        mirrors.push_str(&struct_mirror(&node.name, &fields, recursive));
+        impls.push_str(&struct_from(names.runtime(), &node.name, &fields));
+        impls.push_str(&handoffs(&node.name, &mirror_name(&node.name)));
+    }
     for (index, found) in enums {
         let arms = mirror_arms(names, cycles, index, found);
         let recursive = arms.iter().any(|arm| arm.recursive);
@@ -148,21 +140,24 @@ pub fn text(header: &str, names: &Names<'_>, cycles: &Cycles) -> Option<String> 
         mirrors.push('\n');
         mirrors.push_str(&mirror(&found.name, &arms, recursive));
         impls.push_str(&from(names.runtime(), &found.name, &arms));
-        impls.push_str(&handoffs(&found.name));
+        impls.push_str(&handoffs(&found.name, &found.name));
     }
     let mut out = String::from(header);
     let _ = writeln!(
         out,
-        "//! The mirrors rkyv archives the enums of `crate::{}` through: the archived\n\
-         //! enums and resolvers it writes stay in this private module.\n",
+        "//! The mirrors rkyv archives the structs and enums of `crate::{}` through: the archived\n\
+         //! types and resolvers it writes stay in this private module.\n",
         catalog.modules[names.module].name
     );
     let mut uses = Uses::default();
     names.imports(&mut uses);
     out.push_str(&uses.text());
-    out.push_str("use officekit_xml::element::Node;\nuse rkyv::de::Pooling;\n");
-    out.push_str("use rkyv::rancor::{Fallible, Source};\n");
-    out.push_str("use rkyv::ser::{Allocator, Sharing, Writer};\n");
+    if holds_enums {
+        out.push_str("use officekit_xml::element::Node;\n");
+    }
+    out.push_str("use rkyv::de::Pooling;\n");
+    out.push_str("use rkyv::rancor::{Fallible, Source as ErrorSource};\n");
+    out.push_str("use rkyv::ser::{Allocator, Sharing, Writer as ArchiveWriter};\n");
     if bounded {
         out.push_str("use rkyv::validation::{ArchiveContext, SharedContext};\n");
     }
@@ -170,6 +165,85 @@ pub fn text(header: &str, names: &Names<'_>, cycles: &Cycles) -> Option<String> 
     out.push_str(&mirrors);
     out.push_str(&impls);
     Some(out)
+}
+
+/// The name of the mirror of the struct `name`.
+fn mirror_name(name: &str) -> String {
+    format!("{name}Mirror")
+}
+
+/// The mirror struct of the struct `name`: the fields of the plain tree's
+/// struct, `extra` as `()`.
+fn struct_mirror(name: &str, fields: &[Field], recursive: bool) -> String {
+    let mut out = String::from("#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]\n");
+    let _ = writeln!(out, "#[rkyv(remote = super::{name})]");
+    if recursive {
+        out.push_str(BOUNDS);
+    }
+    out.push_str("#[rkyv(attr(non_exhaustive))]\n");
+    let _ = writeln!(out, "pub struct {} {{", mirror_name(name));
+    for field in fields {
+        if field.recursive {
+            let _ = writeln!(out, "    {OMIT_BOUNDS}");
+        }
+        let (label, shown) = (&field.name, &field.shown);
+        let line = format!("    pub {label}: {shown},");
+        if line.len() <= MAX_WIDTH {
+            let _ = writeln!(out, "{line}");
+        } else {
+            let _ = writeln!(out, "    pub {label}:\n        {shown},");
+        }
+    }
+    out.push_str("}\n");
+    out
+}
+
+/// `From` the mirror for the struct `name`, which rkyv's remote `Deserialize`
+/// calls; a struct of `BODY_LINES` fields or more is the runtime's
+/// `mirror_fields!` called with every field, which expands to the literal.
+fn struct_from(runtime: &str, name: &str, fields: &[Field]) -> String {
+    let mirror = mirror_name(name);
+    let mut out = String::from("\n");
+    out.push_str(&layout::impl_header(
+        &format!("From<{mirror}>"),
+        &format!("super::{name}"),
+    ));
+    out.push_str(&layout::signature(
+        4,
+        "fn from",
+        &[format!("item: {mirror}")],
+        "Self",
+    ));
+    if fields.len() < BODY_LINES {
+        out.push_str("        Self {\n");
+        for field in fields {
+            let label = &field.name;
+            let line = format!("            {label}: item.{label},");
+            if line.len() <= MAX_WIDTH {
+                let _ = writeln!(out, "{line}");
+            } else {
+                let _ = writeln!(out, "            {label}: item\n                .{label},");
+            }
+        }
+        out.push_str("        }\n");
+    } else {
+        let _ = writeln!(out, "        {runtime}::mirror_fields!(item;");
+        let mut row = String::new();
+        for field in fields {
+            let label = format!("{},", field.name);
+            if !row.is_empty() && 12 + row.len() + 1 + label.len() > MAX_WIDTH {
+                let _ = writeln!(out, "            {row}");
+                row.clear();
+            }
+            if !row.is_empty() {
+                row.push(' ');
+            }
+            row.push_str(&label);
+        }
+        let _ = writeln!(out, "            {row}\n        )");
+    }
+    out.push_str("    }\n}\n");
+    out
 }
 
 /// A mirror's arms, `Other` among them, in the enum's order. An arm's type of
@@ -307,10 +381,10 @@ fn from_arm(name: &str, arm: &MirrorArm) -> String {
     )
 }
 
-/// The enum's `Archive`, `Serialize` and `Deserialize`, each handing the work
-/// to its mirror.
+/// The `Archive`, `Serialize` and `Deserialize` of the type `name`, each
+/// handing the work to its mirror `mirror`.
 #[must_use]
-pub fn handoffs(name: &str) -> String {
+pub fn handoffs(name: &str, mirror: &str) -> String {
     let mut out = String::from("\n");
     out.push_str(&layout::impl_header(
         "rkyv::Archive",
@@ -318,13 +392,13 @@ pub fn handoffs(name: &str) -> String {
     ));
     let _ = write!(
         out,
-        "    type Archived = Archived{name};\n    type Resolver = {name}Resolver;\n\n    \
+        "    type Archived = Archived{mirror};\n    type Resolver = {mirror}Resolver;\n\n    \
          fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {{\n"
     );
     layout::line(
         "        ",
         &Expr::call(
-            &format!("{name}::resolve_with"),
+            &format!("{mirror}::resolve_with"),
             vec![
                 Expr::atom("self"),
                 Expr::atom("resolver"),
@@ -336,22 +410,22 @@ pub fn handoffs(name: &str) -> String {
     );
     out.push_str("    }\n}\n\n");
     out.push_str(&where_header(
-        "impl<S> rkyv::Serialize<S>",
+        "impl<__S> rkyv::Serialize<__S>",
         &format!("super::{name}"),
     ));
     out.push_str(
-        "    S: Fallible + Allocator + Sharing + Writer + ?Sized,\n    S::Error: Source,\n{\n",
+        "    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,\n    __S::Error: ErrorSource,\n{\n",
     );
     out.push_str(&layout::signature(
         4,
         "fn serialize",
-        &["&self".to_owned(), "serializer: &mut S".to_owned()],
-        "Result<Self::Resolver, S::Error>",
+        &["&self".to_owned(), "serializer: &mut __S".to_owned()],
+        "Result<Self::Resolver, __S::Error>",
     ));
     layout::line(
         "        ",
         &Expr::call(
-            &format!("{name}::serialize_with"),
+            &format!("{mirror}::serialize_with"),
             vec![Expr::atom("self"), Expr::atom("serializer")],
         ),
         "",
@@ -359,20 +433,20 @@ pub fn handoffs(name: &str) -> String {
     );
     out.push_str("    }\n}\n\n");
     out.push_str(&where_header(
-        &format!("impl<D> rkyv::Deserialize<super::{name}, D>"),
-        &format!("Archived{name}"),
+        &format!("impl<__D> rkyv::Deserialize<super::{name}, __D>"),
+        &format!("Archived{mirror}"),
     ));
-    out.push_str("    D: Fallible + Pooling + ?Sized,\n    D::Error: Source,\n{\n");
+    out.push_str("    __D: Fallible + Pooling + ?Sized,\n    __D::Error: ErrorSource,\n{\n");
     out.push_str(&layout::signature(
         4,
         "fn deserialize",
-        &["&self".to_owned(), "deserializer: &mut D".to_owned()],
-        &format!("Result<super::{name}, D::Error>"),
+        &["&self".to_owned(), "deserializer: &mut __D".to_owned()],
+        &format!("Result<super::{name}, __D::Error>"),
     ));
     layout::line(
         "        ",
         &Expr::call(
-            &format!("{name}::deserialize_with"),
+            &format!("{mirror}::deserialize_with"),
             vec![Expr::atom("self"), Expr::atom("deserializer")],
         ),
         "",

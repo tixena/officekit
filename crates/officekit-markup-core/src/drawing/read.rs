@@ -336,6 +336,7 @@ pub fn alpha_bi_level_effect(element: &Element) -> super::AlphaBiLevelEffect {
 pub fn alpha_ceiling_effect(element: &Element) -> super::AlphaCeilingEffect {
     let reader = officekit_markup_base::Reader::new(element, &super::ALPHA_CEILING_EFFECT_SHAPE);
     super::AlphaCeilingEffect {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -345,6 +346,7 @@ pub fn alpha_ceiling_effect(element: &Element) -> super::AlphaCeilingEffect {
 pub fn alpha_floor_effect(element: &Element) -> super::AlphaFloorEffect {
     let reader = officekit_markup_base::Reader::new(element, &super::ALPHA_FLOOR_EFFECT_SHAPE);
     super::AlphaFloorEffect {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -1006,6 +1008,7 @@ pub fn bullet_size_follows_text(element: &Element) -> super::BulletSizeFollowsTe
     let reader =
         officekit_markup_base::Reader::new(element, &super::BULLET_SIZE_FOLLOWS_TEXT_SHAPE);
     super::BulletSizeFollowsText {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -1195,6 +1198,7 @@ pub fn click_hyperlink(element: &Element) -> super::ClickHyperlink {
 pub fn close_shape_path(element: &Element) -> super::CloseShapePath {
     let reader = officekit_markup_base::Reader::new(element, &super::CLOSE_SHAPE_PATH_SHAPE);
     super::CloseShapePath {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -1309,6 +1313,7 @@ pub fn color_transform(element: &Element) -> super::ColorTransformContent {
 pub fn complement(element: &Element) -> super::Complement {
     let reader = officekit_markup_base::Reader::new(element, &super::COMPLEMENT_SHAPE);
     super::Complement {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2193,6 +2198,7 @@ pub fn first_row(element: &Element) -> super::FirstRow {
 pub fn follow_text_bu_clr_tx(element: &Element) -> super::FollowTextBuClrTx {
     let reader = officekit_markup_base::Reader::new(element, &super::FOLLOW_TEXT_BU_CLR_TX_SHAPE);
     super::FollowTextBuClrTx {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2202,6 +2208,7 @@ pub fn follow_text_bu_clr_tx(element: &Element) -> super::FollowTextBuClrTx {
 pub fn follow_text_bu_font_tx(element: &Element) -> super::FollowTextBuFontTx {
     let reader = officekit_markup_base::Reader::new(element, &super::FOLLOW_TEXT_BU_FONT_TX_SHAPE);
     super::FollowTextBuFontTx {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2328,6 +2335,7 @@ pub fn format_scheme(element: &Element) -> super::FormatScheme {
 pub fn gamma(element: &Element) -> super::Gamma {
     let reader = officekit_markup_base::Reader::new(element, &super::GAMMA_SHAPE);
     super::Gamma {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2489,6 +2497,7 @@ pub fn graphic_object_data(element: &Element) -> super::GraphicObjectData {
 pub fn gray(element: &Element) -> super::Gray {
     let reader = officekit_markup_base::Reader::new(element, &super::GRAY_SHAPE);
     super::Gray {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2498,6 +2507,7 @@ pub fn gray(element: &Element) -> super::Gray {
 pub fn gray_scale_effect(element: &Element) -> super::GrayScaleEffect {
     let reader = officekit_markup_base::Reader::new(element, &super::GRAY_SCALE_EFFECT_SHAPE);
     super::GrayScaleEffect {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2549,6 +2559,7 @@ pub fn green_offset(element: &Element) -> super::GreenOffset {
 pub fn group_fill(element: &Element) -> super::GroupFill {
     let reader = officekit_markup_base::Reader::new(element, &super::GROUP_FILL_SHAPE);
     super::GroupFill {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2853,6 +2864,7 @@ pub fn inside_vertical_border(element: &Element) -> super::InsideVerticalBorder 
 pub fn inverse(element: &Element) -> super::Inverse {
     let reader = officekit_markup_base::Reader::new(element, &super::INVERSE_SHAPE);
     super::Inverse {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2862,6 +2874,7 @@ pub fn inverse(element: &Element) -> super::Inverse {
 pub fn inverse_gamma(element: &Element) -> super::InverseGamma {
     let reader = officekit_markup_base::Reader::new(element, &super::INVERSE_GAMMA_SHAPE);
     super::InverseGamma {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -3059,6 +3072,7 @@ pub fn line_join(element: &Element) -> super::LineJoinContent {
 pub fn line_join_bevel(element: &Element) -> super::LineJoinBevel {
     let reader = officekit_markup_base::Reader::new(element, &super::LINE_JOIN_BEVEL_SHAPE);
     super::LineJoinBevel {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -3605,6 +3619,7 @@ pub fn major_font(element: &Element) -> super::MajorFont {
 pub fn master_color_mapping(element: &Element) -> super::MasterColorMapping {
     let reader = officekit_markup_base::Reader::new(element, &super::MASTER_COLOR_MAPPING_SHAPE);
     super::MasterColorMapping {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -3686,6 +3701,7 @@ pub fn move_path_to(element: &Element) -> super::MovePathTo {
 pub fn no_auto_fit(element: &Element) -> super::NoAutoFit {
     let reader = officekit_markup_base::Reader::new(element, &super::NO_AUTO_FIT_SHAPE);
     super::NoAutoFit {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -3695,6 +3711,7 @@ pub fn no_auto_fit(element: &Element) -> super::NoAutoFit {
 pub fn no_bullet(element: &Element) -> super::NoBullet {
     let reader = officekit_markup_base::Reader::new(element, &super::NO_BULLET_SHAPE);
     super::NoBullet {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -3704,6 +3721,7 @@ pub fn no_bullet(element: &Element) -> super::NoBullet {
 pub fn no_fill(element: &Element) -> super::NoFill {
     let reader = officekit_markup_base::Reader::new(element, &super::NO_FILL_SHAPE);
     super::NoFill {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -4564,6 +4582,7 @@ pub fn rotation(element: &Element) -> super::Rotation {
 pub fn round_line_join(element: &Element) -> super::RoundLineJoin {
     let reader = officekit_markup_base::Reader::new(element, &super::ROUND_LINE_JOIN_SHAPE);
     super::RoundLineJoin {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -4689,6 +4708,7 @@ pub fn shape_adjust_handles(element: &Element) -> super::ShapeAdjustHandlesConte
 pub fn shape_auto_fit(element: &Element) -> super::ShapeAutoFit {
     let reader = officekit_markup_base::Reader::new(element, &super::SHAPE_AUTO_FIT_SHAPE);
     super::ShapeAutoFit {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -5837,6 +5857,7 @@ pub fn theme_elements(element: &Element) -> super::ThemeElements {
 pub fn theme_manager(element: &Element) -> super::ThemeManager {
     let reader = officekit_markup_base::Reader::new(element, &super::THEME_MANAGER_SHAPE);
     super::ThemeManager {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -6097,6 +6118,7 @@ pub fn underline_fill_properties_follow_text(
         &super::UNDERLINE_FILL_PROPERTIES_FOLLOW_TEXT_SHAPE,
     );
     super::UnderlineFillPropertiesFollowText {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -6106,6 +6128,7 @@ pub fn underline_fill_properties_follow_text(
 pub fn underline_follows_text(element: &Element) -> super::UnderlineFollowsText {
     let reader = officekit_markup_base::Reader::new(element, &super::UNDERLINE_FOLLOWS_TEXT_SHAPE);
     super::UnderlineFollowsText {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -6157,6 +6180,7 @@ pub fn use_shape_text_rectangle(element: &Element) -> super::UseShapeTextRectang
     let reader =
         officekit_markup_base::Reader::new(element, &super::USE_SHAPE_TEXT_RECTANGLE_SHAPE);
     super::UseShapeTextRectangle {
+        extra: (),
         unknown: reader.finish(),
     }
 }

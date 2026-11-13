@@ -216,9 +216,12 @@
 //! elements. The `read` module has a function that reads an element into each, and the
 //! `write` module one that writes each back to an element.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use crate::NodeExtra;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
@@ -274,17 +277,20 @@ pub static TEXT_WRAPPING_SHAPE: crate::Shape = crate::Shape {
 
 /// The `w10:anchorlock` element, Anchor Location Is Locked (ECMA-376 Part 4, section 19.3.2.1). Its
 /// schema type is `CT_AnchorLock`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AnchorLocationIsLocked {
+pub struct AnchorLocationIsLockedWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlWordprocessingDrawingAnchorLocationIsLocked,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `w10:anchorlock` element of the tree a read gives: [`AnchorLocationIsLockedWith`] holding
+/// nothing in `extra`.
+pub type AnchorLocationIsLocked = AnchorLocationIsLockedWith<()>;
+
+impl Eq for AnchorLocationIsLockedWith<()> {}
 
 /// Border Shadow Type, the simple type `ST_BorderShadow` (ECMA-376 Part 4, section 19.3.3.1), kept
 /// as the text the file carried.
@@ -390,14 +396,11 @@ pub enum BorderTypeMember {
 
 /// The `w10:borderbottom` element, Bottom Border (ECMA-376 Part 4, section 19.3.2.2). Its schema
 /// type is `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BottomBorder {
+pub struct BottomBorderWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlWordprocessingDrawingBottomBorder,
     /// The attribute `shadow`, when the element has it.
     pub shadow: Option<BorderShadowType>,
     /// The attribute `type`, when the element has it.
@@ -407,6 +410,12 @@ pub struct BottomBorder {
     /// The attribute `width`, when the element has it.
     pub width: Option<String>,
 }
+
+/// The `w10:borderbottom` element of the tree a read gives: [`BottomBorderWith`] holding nothing in
+/// `extra`.
+pub type BottomBorder = BottomBorderWith<()>;
+
+impl Eq for BottomBorderWith<()> {}
 
 /// Horizontal Anchor Type, the simple type `ST_HorizontalAnchor` (ECMA-376 Part 4, section
 /// 19.3.3.3), kept as the text the file carried.
@@ -438,14 +447,11 @@ pub enum HorizontalAnchorTypeMember {
 
 /// The `w10:borderleft` element, Left Border (ECMA-376 Part 4, section 19.3.2.3). Its schema type
 /// is `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LeftBorder {
+pub struct LeftBorderWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlWordprocessingDrawingLeftBorder,
     /// The attribute `shadow`, when the element has it.
     pub shadow: Option<BorderShadowType>,
     /// The attribute `type`, when the element has it.
@@ -455,17 +461,20 @@ pub struct LeftBorder {
     /// The attribute `width`, when the element has it.
     pub width: Option<String>,
 }
+
+/// The `w10:borderleft` element of the tree a read gives: [`LeftBorderWith`] holding nothing in
+/// `extra`.
+pub type LeftBorder = LeftBorderWith<()>;
+
+impl Eq for LeftBorderWith<()> {}
 
 /// The `w10:borderright` element, Right Border (ECMA-376 Part 4, section 19.3.2.4). Its schema type
 /// is `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RightBorder {
+pub struct RightBorderWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlWordprocessingDrawingRightBorder,
     /// The attribute `shadow`, when the element has it.
     pub shadow: Option<BorderShadowType>,
     /// The attribute `type`, when the element has it.
@@ -476,20 +485,23 @@ pub struct RightBorder {
     pub width: Option<String>,
 }
 
+/// The `w10:borderright` element of the tree a read gives: [`RightBorderWith`] holding nothing in
+/// `extra`.
+pub type RightBorder = RightBorderWith<()>;
+
+impl Eq for RightBorderWith<()> {}
+
 /// The `w10:wrap` element, Text Wrapping (ECMA-376 Part 4, section 19.3.2.6). Its schema type is
 /// `CT_Wrap`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextWrapping {
+pub struct TextWrappingWith<X: NodeExtra> {
     /// The attribute `anchorx`, when the element has it.
     pub anchorx: Option<HorizontalAnchorType>,
     /// The attribute `anchory`, when the element has it.
     pub anchory: Option<VerticalAnchorType>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlWordprocessingDrawingTextWrapping,
     /// The attribute `side`, when the element has it.
     pub side: Option<TextWrappingSide>,
     /// The attribute `type`, when the element has it.
@@ -497,6 +509,12 @@ pub struct TextWrapping {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `w10:wrap` element of the tree a read gives: [`TextWrappingWith`] holding nothing in
+/// `extra`.
+pub type TextWrapping = TextWrappingWith<()>;
+
+impl Eq for TextWrappingWith<()> {}
 
 /// Text Wrapping Side, the simple type `ST_WrapSide` (ECMA-376 Part 4, section 19.3.3.5), kept as
 /// the text the file carried.
@@ -558,14 +576,11 @@ pub enum TextWrappingTypeMember {
 
 /// The `w10:bordertop` element, Top Border (ECMA-376 Part 4, section 19.3.2.5). Its schema type is
 /// `CT_Border`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TopBorder {
+pub struct TopBorderWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlWordprocessingDrawingTopBorder,
     /// The attribute `shadow`, when the element has it.
     pub shadow: Option<BorderShadowType>,
     /// The attribute `type`, when the element has it.
@@ -575,6 +590,12 @@ pub struct TopBorder {
     /// The attribute `width`, when the element has it.
     pub width: Option<String>,
 }
+
+/// The `w10:bordertop` element of the tree a read gives: [`TopBorderWith`] holding nothing in
+/// `extra`.
+pub type TopBorder = TopBorderWith<()>;
+
+impl Eq for TopBorderWith<()> {}
 
 /// Vertical Anchor Type, the simple type `ST_VerticalAnchor` (ECMA-376 Part 4, section 19.3.3.4),
 /// kept as the text the file carried.
@@ -604,7 +625,20 @@ pub enum VerticalAnchorTypeMember {
     Text,
 }
 
-impl AnchorLocationIsLocked {
+impl<X: NodeExtra> AnchorLocationIsLockedWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AnchorLocationIsLockedWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AnchorLocationIsLockedWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -750,7 +784,23 @@ impl BorderType {
     }
 }
 
-impl BottomBorder {
+impl<X: NodeExtra> BottomBorderWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BottomBorderWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BottomBorderWith {
+            extra: Default::default(),
+            shadow: self.shadow,
+            r#type: self.r#type,
+            unknown: self.unknown,
+            width: self.width,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -831,7 +881,23 @@ impl HorizontalAnchorType {
     }
 }
 
-impl LeftBorder {
+impl<X: NodeExtra> LeftBorderWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LeftBorderWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LeftBorderWith {
+            extra: Default::default(),
+            shadow: self.shadow,
+            r#type: self.r#type,
+            unknown: self.unknown,
+            width: self.width,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -857,7 +923,23 @@ impl crate::Write for LeftBorder {
     }
 }
 
-impl RightBorder {
+impl<X: NodeExtra> RightBorderWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RightBorderWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RightBorderWith {
+            extra: Default::default(),
+            shadow: self.shadow,
+            r#type: self.r#type,
+            unknown: self.unknown,
+            width: self.width,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -883,7 +965,24 @@ impl crate::Write for RightBorder {
     }
 }
 
-impl TextWrapping {
+impl<X: NodeExtra> TextWrappingWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TextWrappingWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TextWrappingWith {
+            anchorx: self.anchorx,
+            anchory: self.anchory,
+            extra: Default::default(),
+            side: self.side,
+            r#type: self.r#type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1013,7 +1112,23 @@ impl TextWrappingType {
     }
 }
 
-impl TopBorder {
+impl<X: NodeExtra> TopBorderWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TopBorderWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TopBorderWith {
+            extra: Default::default(),
+            shadow: self.shadow,
+            r#type: self.r#type,
+            unknown: self.unknown,
+            width: self.width,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

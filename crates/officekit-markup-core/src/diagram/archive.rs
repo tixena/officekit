@@ -210,21 +210,1106 @@
 //   6833bb8339d1dc179b970db58c13333ff6139e649ef9e044ef10623bed172323  crates/xtask/data/sdk_corrections.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The mirrors rkyv archives the enums of `crate::diagram` through: the archived
-//! enums and resolvers it writes stay in this private module.
+//! The mirrors rkyv archives the structs and enums of `crate::diagram` through: the archived
+//! types and resolvers it writes stay in this private module.
 
 use officekit_xml::element::Node;
 use rkyv::de::Pooling;
-use rkyv::rancor::{Fallible, Source};
-use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::rancor::{Fallible, Source as ErrorSource};
+use rkyv::ser::{Allocator, Sharing, Writer as ArchiveWriter};
 use rkyv::validation::{ArchiveContext, SharedContext};
 use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Algorithm)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct AlgorithmMirror {
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::ExtensionList>>,
+    pub extra: (),
+    pub parameter: Vec<super::Parameter>,
+    pub rev: Option<String>,
+    pub r#type: Option<super::AlgorithmTypes>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::BackgroundFormatting)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct BackgroundFormattingMirror {
+    #[rkyv(omit_bounds)]
+    pub effect_properties_content: Option<Box<super::super::drawing::EffectPropertiesContent>>,
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub fill_properties_content: Option<Box<super::super::drawing::FillPropertiesContent>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Category)]
+#[rkyv(attr(non_exhaustive))]
+pub struct CategoryMirror {
+    pub extra: (),
+    pub pri: Option<String>,
+    pub r#type: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::CategoryList)]
+#[rkyv(attr(non_exhaustive))]
+pub struct CategoryListMirror {
+    pub category: Vec<super::Category>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::CategoryListSDCategories)]
+#[rkyv(attr(non_exhaustive))]
+pub struct CategoryListSDCategoriesMirror {
+    pub category_sd_category: Vec<super::CategorySDCategory>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::CategorySDCategory)]
+#[rkyv(attr(non_exhaustive))]
+pub struct CategorySDCategoryMirror {
+    pub extra: (),
+    pub pri: Option<String>,
+    pub r#type: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ChooseElement)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ChooseElementMirror {
+    #[rkyv(omit_bounds)]
+    pub r#else: Option<Box<super::Else>>,
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub r#if: Vec<super::If>,
+    pub name: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ColorTransformCategory)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ColorTransformCategoryMirror {
+    pub extra: (),
+    pub pri: Option<String>,
+    pub r#type: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ColorTransformCategoryList)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ColorTransformCategoryListMirror {
+    pub color_transform_category: Vec<super::ColorTransformCategory>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ColorTransformDefinitionHeader)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ColorTransformDefinitionHeaderMirror {
+    pub color_transform_category_list: Option<Box<super::ColorTransformCategoryList>>,
+    pub description_ct_description: Vec<super::DescriptionCTDescription>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::ExtensionList>>,
+    pub extra: (),
+    pub min_ver: Option<String>,
+    pub res_id: Option<String>,
+    pub title_ct_name: Vec<super::TitleCTName>,
+    pub unique_id: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ColorTransformDefinitions)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ColorTransformDefinitionsMirror {
+    pub color_transform_category_list: Option<Box<super::ColorTransformCategoryList>>,
+    pub description_ct_description: Vec<super::DescriptionCTDescription>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::ExtensionList>>,
+    pub extra: (),
+    pub min_ver: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub style_label: Vec<super::StyleLabel>,
+    pub title_ct_name: Vec<super::TitleCTName>,
+    pub unique_id: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ColorTransformHeaderList)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ColorTransformHeaderListMirror {
+    #[rkyv(omit_bounds)]
+    pub color_transform_definition_header: Vec<super::ColorTransformDefinitionHeader>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ColorTransformSampleData)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ColorTransformSampleDataMirror {
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub model: Option<Box<super::DataModel>>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub use_def: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Connection)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ConnectionMirror {
+    pub dest_id: Option<super::ModelIdentifier>,
+    pub dest_ord: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::ExtensionList>>,
+    pub extra: (),
+    pub model_id: Option<super::ModelIdentifier>,
+    pub par_trans_id: Option<super::ModelIdentifier>,
+    pub pres_id: Option<String>,
+    pub sib_trans_id: Option<super::ModelIdentifier>,
+    pub src_id: Option<super::ModelIdentifier>,
+    pub src_ord: Option<String>,
+    pub r#type: Option<super::ConnectionType>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ConnectionList)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ConnectionListMirror {
+    #[rkyv(omit_bounds)]
+    pub connection: Vec<super::Connection>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Constraint)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ConstraintMirror {
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::ExtensionList>>,
+    pub extra: (),
+    pub fact: Option<String>,
+    pub r#for: Option<super::ConstraintRelationship>,
+    pub for_name: Option<String>,
+    pub op: Option<super::BooleanConstraint>,
+    pub pt_type: Option<super::DataPointType>,
+    pub ref_for: Option<super::ConstraintRelationship>,
+    pub ref_for_name: Option<String>,
+    pub ref_pt_type: Option<super::DataPointType>,
+    pub ref_type: Option<super::ConstraintType>,
+    pub r#type: Option<super::ConstraintType>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ConstraintList)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ConstraintListMirror {
+    #[rkyv(omit_bounds)]
+    pub constraint: Vec<super::Constraint>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::DataModel)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct DataModelMirror {
+    #[rkyv(omit_bounds)]
+    pub background_formatting: Option<Box<super::BackgroundFormatting>>,
+    #[rkyv(omit_bounds)]
+    pub connection_list: Option<Box<super::ConnectionList>>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::ExtensionList>>,
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub point_list: Box<super::PointList>,
+    pub unknown: officekit_markup_base::Unknown,
+    #[rkyv(omit_bounds)]
+    pub whole_e2o_formatting: Option<Box<super::WholeE2OFormatting>>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Description)]
+#[rkyv(attr(non_exhaustive))]
+pub struct DescriptionMirror {
+    pub extra: (),
+    pub lang: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::DescriptionCTDescription)]
+#[rkyv(attr(non_exhaustive))]
+pub struct DescriptionCTDescriptionMirror {
+    pub extra: (),
+    pub lang: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::DiagramDirection)]
+#[rkyv(attr(non_exhaustive))]
+pub struct DiagramDirectionMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<super::DiagramDirectionDefinition>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::DiagramLayoutHeaderList)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct DiagramLayoutHeaderListMirror {
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub layout_definition_header: Vec<super::LayoutDefinitionHeader>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::EffectColorList)]
+#[rkyv(attr(non_exhaustive))]
+pub struct EffectColorListMirror {
+    pub content: Vec<super::super::drawing::ColorContent>,
+    pub extra: (),
+    pub hue_dir: Option<super::HueDirection>,
+    pub meth: Option<super::ColorApplicationMethodType>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Else)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ElseMirror {
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::LayoutElementContent>,
+    pub extra: (),
+    pub name: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ExplicitRelationshipsToDiagramParts)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ExplicitRelationshipsToDiagramPartsMirror {
+    pub cs: Option<String>,
+    pub dm: Option<String>,
+    pub extra: (),
+    pub lo: Option<String>,
+    pub qs: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ExtensionList)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ExtensionListMirror {
+    #[rkyv(omit_bounds)]
+    pub extension: Vec<super::super::drawing::Extension>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::FillColorList)]
+#[rkyv(attr(non_exhaustive))]
+pub struct FillColorListMirror {
+    pub content: Vec<super::super::drawing::ColorContent>,
+    pub extra: (),
+    pub hue_dir: Option<super::HueDirection>,
+    pub meth: Option<super::ColorApplicationMethodType>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ForEach)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ForEachMirror {
+    pub axis: Option<super::AxisTypeList>,
+    pub cnt: Option<super::UnsignedIntegerList>,
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::LayoutElementContent>,
+    pub extra: (),
+    pub hide_last_trans: Option<super::BooleanList>,
+    pub name: Option<String>,
+    pub pt_type: Option<super::DiagreamLayoutNodeTypeList>,
+    pub r#ref: Option<String>,
+    pub st: Option<super::IntegerList>,
+    pub step: Option<super::IntegerList>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::If)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct IfMirror {
+    pub arg: Option<super::FunctionArgument>,
+    pub axis: Option<super::AxisTypeList>,
+    pub cnt: Option<super::UnsignedIntegerList>,
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::LayoutElementContent>,
+    pub extra: (),
+    pub func: Option<super::FunctionType>,
+    pub hide_last_trans: Option<super::BooleanList>,
+    pub name: Option<String>,
+    pub op: Option<super::FunctionOperator>,
+    pub pt_type: Option<super::DiagreamLayoutNodeTypeList>,
+    pub st: Option<super::IntegerList>,
+    pub step: Option<super::IntegerList>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<super::FunctionValue>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::LayoutDefinition)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct LayoutDefinitionMirror {
+    pub category_list: Option<Box<super::CategoryList>>,
+    #[rkyv(omit_bounds)]
+    pub color_transform_sample_data: Option<Box<super::ColorTransformSampleData>>,
+    pub def_style: Option<String>,
+    pub description: Vec<super::Description>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::ExtensionList>>,
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub layout_node: Box<super::LayoutNode>,
+    pub min_ver: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub sample_data: Option<Box<super::SampleData>>,
+    #[rkyv(omit_bounds)]
+    pub style_data: Option<Box<super::StyleData>>,
+    pub title: Vec<super::Title>,
+    pub unique_id: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::LayoutDefinitionHeader)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct LayoutDefinitionHeaderMirror {
+    pub category_list: Option<Box<super::CategoryList>>,
+    pub def_style: Option<String>,
+    pub description: Vec<super::Description>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::ExtensionList>>,
+    pub extra: (),
+    pub min_ver: Option<String>,
+    pub res_id: Option<String>,
+    pub title: Vec<super::Title>,
+    pub unique_id: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::LayoutNode)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct LayoutNodeMirror {
+    pub ch_order: Option<super::ChildOrder>,
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::LayoutNodeContent>,
+    pub extra: (),
+    pub move_with: Option<String>,
+    pub name: Option<String>,
+    pub style_lbl: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::LevelAnimation)]
+#[rkyv(attr(non_exhaustive))]
+pub struct LevelAnimationMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<super::AnimationLevelStringDefinition>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::LineColorList)]
+#[rkyv(attr(non_exhaustive))]
+pub struct LineColorListMirror {
+    pub content: Vec<super::super::drawing::ColorContent>,
+    pub extra: (),
+    pub hue_dir: Option<super::HueDirection>,
+    pub meth: Option<super::ColorApplicationMethodType>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ListOfStyleDefinitionHeaders)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ListOfStyleDefinitionHeadersMirror {
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub style_definition_header: Vec<super::StyleDefinitionHeader>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::MaximumChildren)]
+#[rkyv(attr(non_exhaustive))]
+pub struct MaximumChildrenMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<super::NumberOfNodesDefinition>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::OneByOneAnimationString)]
+#[rkyv(attr(non_exhaustive))]
+pub struct OneByOneAnimationStringMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<super::OneByOneAnimationValueDefinition>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::OrganizationChartBranchStyle)]
+#[rkyv(attr(non_exhaustive))]
+pub struct OrganizationChartBranchStyleMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<super::HierarchyBranchStyleDefinition>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Parameter)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ParameterMirror {
+    pub extra: (),
+    pub r#type: Option<super::ParameterIdentifier>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<super::ParameterValues>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Point)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct PointMirror {
+    pub cxn_id: Option<super::ModelIdentifier>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::ExtensionList>>,
+    pub extra: (),
+    pub model_id: Option<super::ModelIdentifier>,
+    pub property_set: Option<Box<super::PropertySet>>,
+    #[rkyv(omit_bounds)]
+    pub shape_properties: Option<Box<super::ShapeProperties>>,
+    #[rkyv(omit_bounds)]
+    pub text_body: Option<Box<super::TextBody>>,
+    pub r#type: Option<super::PointType>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::PointList)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct PointListMirror {
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub point: Vec<super::Point>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::PreferredNumberOfChildren)]
+#[rkyv(attr(non_exhaustive))]
+pub struct PreferredNumberOfChildrenMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<super::NumberOfNodesDefinition>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::PresentationLayoutVariables)]
+#[rkyv(attr(non_exhaustive))]
+pub struct PresentationLayoutVariablesMirror {
+    pub diagram_direction: Option<Box<super::DiagramDirection>>,
+    pub extra: (),
+    pub level_animation: Option<Box<super::LevelAnimation>>,
+    pub maximum_children: Option<Box<super::MaximumChildren>>,
+    pub one_by_one_animation_string: Option<Box<super::OneByOneAnimationString>>,
+    pub organization_chart_branch_style: Option<Box<super::OrganizationChartBranchStyle>>,
+    pub preferred_number_of_children: Option<Box<super::PreferredNumberOfChildren>>,
+    pub shape_resize_style: Option<Box<super::ShapeResizeStyle>>,
+    pub show_insert_node: Option<Box<super::ShowInsertNode>>,
+    pub show_organization_chart_user_interface:
+        Option<Box<super::ShowOrganizationChartUserInterface>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::PresentationOf)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct PresentationOfMirror {
+    pub axis: Option<super::AxisTypeList>,
+    pub cnt: Option<super::UnsignedIntegerList>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::ExtensionList>>,
+    pub extra: (),
+    pub hide_last_trans: Option<super::BooleanList>,
+    pub pt_type: Option<super::DiagreamLayoutNodeTypeList>,
+    pub st: Option<super::IntegerList>,
+    pub step: Option<super::IntegerList>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::PropertySet)]
+#[rkyv(attr(non_exhaustive))]
+pub struct PropertySetMirror {
+    pub coherent3_d_off: Option<String>,
+    pub cs_cat_id: Option<String>,
+    pub cs_type_id: Option<String>,
+    pub cust_ang: Option<String>,
+    pub cust_flip_hor: Option<String>,
+    pub cust_flip_vert: Option<String>,
+    pub cust_lin_fact_neighbor_x: Option<super::PropertySetCustomizedValue>,
+    pub cust_lin_fact_neighbor_y: Option<super::PropertySetCustomizedValue>,
+    pub cust_lin_fact_x: Option<super::PropertySetCustomizedValue>,
+    pub cust_lin_fact_y: Option<super::PropertySetCustomizedValue>,
+    pub cust_rad_scale_inc: Option<super::PropertySetCustomizedValue>,
+    pub cust_rad_scale_rad: Option<super::PropertySetCustomizedValue>,
+    pub cust_scale_x: Option<super::PropertySetCustomizedValue>,
+    pub cust_scale_y: Option<super::PropertySetCustomizedValue>,
+    pub cust_sz_x: Option<String>,
+    pub cust_sz_y: Option<String>,
+    pub cust_t: Option<String>,
+    pub extra: (),
+    pub lo_cat_id: Option<String>,
+    pub lo_type_id: Option<String>,
+    pub phldr: Option<String>,
+    pub phldr_t: Option<String>,
+    pub pres_assoc_id: Option<super::ModelIdentifier>,
+    pub pres_name: Option<String>,
+    pub pres_style_cnt: Option<String>,
+    pub pres_style_idx: Option<String>,
+    pub pres_style_lbl: Option<String>,
+    pub presentation_layout_variables: Option<Box<super::PresentationLayoutVariables>>,
+    pub qs_cat_id: Option<String>,
+    pub qs_type_id: Option<String>,
+    pub shape_style: Option<Box<super::ShapeStyle>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Rule)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct RuleMirror {
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::ExtensionList>>,
+    pub extra: (),
+    pub fact: Option<String>,
+    pub r#for: Option<super::ConstraintRelationship>,
+    pub for_name: Option<String>,
+    pub max: Option<String>,
+    pub pt_type: Option<super::DataPointType>,
+    pub r#type: Option<super::ConstraintType>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::RuleList)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct RuleListMirror {
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub rule: Vec<super::Rule>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::SampleData)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct SampleDataMirror {
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub model: Option<Box<super::DataModel>>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub use_def: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Scene3d)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct Scene3dMirror {
+    #[rkyv(omit_bounds)]
+    pub backdrop_plane: Option<Box<super::super::drawing::BackdropPlane>>,
+    pub camera: Box<super::super::drawing::Camera>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
+    pub extra: (),
+    pub light_rig: Box<super::super::drawing::LightRig>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Shape)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapeMirror {
+    pub adjust_list: Option<Box<super::ShapeAdjustList>>,
+    pub blip: Option<String>,
+    pub blip_phldr: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::ExtensionList>>,
+    pub extra: (),
+    pub hide_geom: Option<String>,
+    pub lk_tx_entry: Option<String>,
+    pub rot: Option<String>,
+    pub r#type: Option<super::LayoutShapeType>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub z_order_off: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShapeAdjust)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapeAdjustMirror {
+    pub extra: (),
+    pub idx: Option<super::Index1>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShapeAdjustList)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapeAdjustListMirror {
+    pub extra: (),
+    pub shape_adjust: Vec<super::ShapeAdjust>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShapeProperties)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapePropertiesMirror {
+    #[rkyv(omit_bounds)]
+    pub apply_3d: Option<Box<super::super::drawing::Apply3DShapeProperties>>,
+    pub bw_mode: Option<super::super::drawing::BlackAndWhiteMode>,
+    #[rkyv(omit_bounds)]
+    pub effect_properties_content: Option<Box<super::super::drawing::EffectPropertiesContent>>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub fill_properties_content: Option<Box<super::super::drawing::FillPropertiesContent>>,
+    pub geometry_content: Option<Box<super::super::drawing::GeometryContent>>,
+    #[rkyv(omit_bounds)]
+    pub outline: Option<Box<super::super::drawing::Outline>>,
+    #[rkyv(omit_bounds)]
+    pub scene3d: Option<Box<super::super::drawing::Scene3d>>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub xfrm_transform2d: Option<Box<super::super::drawing::XfrmTransform2D>>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShapeResizeStyle)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapeResizeStyleMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<super::ResizeHandle>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShapeStyle)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapeStyleMirror {
+    pub effect_reference: Box<super::super::drawing::EffectReference>,
+    pub extra: (),
+    pub fill_reference: Box<super::super::drawing::FillReference>,
+    pub font_reference: Box<super::super::drawing::FontReference>,
+    pub line_reference: Box<super::super::drawing::LineReference>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShowInsertNode)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShowInsertNodeMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShowOrganizationChartUserInterface)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShowOrganizationChartUserInterfaceMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Sp3d)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct Sp3dMirror {
+    pub bottom_bevel: Option<Box<super::super::drawing::BottomBevel>>,
+    pub contour_color: Option<Box<super::super::drawing::ContourColor>>,
+    pub contour_w: Option<super::super::drawing::PositiveCoordinate>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
+    pub extra: (),
+    pub extrusion_color: Option<Box<super::super::drawing::ExtrusionColor>>,
+    pub extrusion_h: Option<super::super::drawing::PositiveCoordinate>,
+    pub prst_material: Option<super::super::drawing::PresetMaterialType>,
+    pub top_bevel: Option<Box<super::super::drawing::TopBevel>>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub z: Option<super::super::drawing::Coordinate>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::StyleData)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct StyleDataMirror {
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub model: Option<Box<super::DataModel>>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub use_def: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::StyleDefinition)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct StyleDefinitionMirror {
+    pub category_list_sd_categories: Option<Box<super::CategoryListSDCategories>>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::ExtensionList>>,
+    pub extra: (),
+    pub min_ver: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub scene3d: Option<Box<super::Scene3d>>,
+    pub style_label_description: Vec<super::StyleLabelDescription>,
+    #[rkyv(omit_bounds)]
+    pub style_label_style_label: Vec<super::StyleLabelStyleLabel>,
+    pub title_sd_name: Vec<super::TitleSDName>,
+    pub unique_id: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::StyleDefinitionHeader)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct StyleDefinitionHeaderMirror {
+    pub category_list_sd_categories: Option<Box<super::CategoryListSDCategories>>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::ExtensionList>>,
+    pub extra: (),
+    pub min_ver: Option<String>,
+    pub res_id: Option<String>,
+    pub style_label_description: Vec<super::StyleLabelDescription>,
+    pub title_sd_name: Vec<super::TitleSDName>,
+    pub unique_id: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::StyleLabel)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct StyleLabelMirror {
+    pub effect_color_list: Option<Box<super::EffectColorList>>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::ExtensionList>>,
+    pub extra: (),
+    pub fill_color_list: Option<Box<super::FillColorList>>,
+    pub line_color_list: Option<Box<super::LineColorList>>,
+    pub name: Option<String>,
+    pub text_effect_color_list: Option<Box<super::TextEffectColorList>>,
+    pub text_fill_color_list: Option<Box<super::TextFillColorList>>,
+    pub text_line_color_list: Option<Box<super::TextLineColorList>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::StyleLabelDescription)]
+#[rkyv(attr(non_exhaustive))]
+pub struct StyleLabelDescriptionMirror {
+    pub extra: (),
+    pub lang: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::StyleLabelStyleLabel)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct StyleLabelStyleLabelMirror {
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::ExtensionList>>,
+    pub extra: (),
+    pub name: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub scene3d: Option<Box<super::Scene3d>>,
+    pub shape_style: Option<Box<super::ShapeStyle>>,
+    #[rkyv(omit_bounds)]
+    pub sp3d: Option<Box<super::Sp3d>>,
+    #[rkyv(omit_bounds)]
+    pub text_properties: Option<Box<super::TextProperties>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TextBody)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct TextBodyMirror {
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub properties: Box<super::super::drawing::BodyProperties>,
+    #[rkyv(omit_bounds)]
+    pub text_list_styles: Option<Box<super::super::drawing::TextListStyles>>,
+    #[rkyv(omit_bounds)]
+    pub text_paragraphs: Vec<super::super::drawing::TextParagraphs>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TextEffectColorList)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TextEffectColorListMirror {
+    pub content: Vec<super::super::drawing::ColorContent>,
+    pub extra: (),
+    pub hue_dir: Option<super::HueDirection>,
+    pub meth: Option<super::ColorApplicationMethodType>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TextFillColorList)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TextFillColorListMirror {
+    pub content: Vec<super::super::drawing::ColorContent>,
+    pub extra: (),
+    pub hue_dir: Option<super::HueDirection>,
+    pub meth: Option<super::ColorApplicationMethodType>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TextLineColorList)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TextLineColorListMirror {
+    pub content: Vec<super::super::drawing::ColorContent>,
+    pub extra: (),
+    pub hue_dir: Option<super::HueDirection>,
+    pub meth: Option<super::ColorApplicationMethodType>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TextProperties)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct TextPropertiesMirror {
+    #[rkyv(omit_bounds)]
+    pub content: Option<Box<super::super::drawing::Text3DContent>>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Title)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TitleMirror {
+    pub extra: (),
+    pub lang: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TitleCTName)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TitleCTNameMirror {
+    pub extra: (),
+    pub lang: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TitleSDName)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TitleSDNameMirror {
+    pub extra: (),
+    pub lang: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub val: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::VariableList)]
+#[rkyv(attr(non_exhaustive))]
+pub struct VariableListMirror {
+    pub diagram_direction: Option<Box<super::DiagramDirection>>,
+    pub extra: (),
+    pub level_animation: Option<Box<super::LevelAnimation>>,
+    pub maximum_children: Option<Box<super::MaximumChildren>>,
+    pub one_by_one_animation_string: Option<Box<super::OneByOneAnimationString>>,
+    pub organization_chart_branch_style: Option<Box<super::OrganizationChartBranchStyle>>,
+    pub preferred_number_of_children: Option<Box<super::PreferredNumberOfChildren>>,
+    pub shape_resize_style: Option<Box<super::ShapeResizeStyle>>,
+    pub show_insert_node: Option<Box<super::ShowInsertNode>>,
+    pub show_organization_chart_user_interface:
+        Option<Box<super::ShowOrganizationChartUserInterface>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::WholeE2OFormatting)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct WholeE2OFormattingMirror {
+    #[rkyv(omit_bounds)]
+    pub content: Option<Box<super::super::drawing::EffectPropertiesContent>>,
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub outline: Option<Box<super::super::drawing::Outline>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LayoutElementContent)]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum LayoutElementContent {
     Algorithm(#[rkyv(omit_bounds)] super::Algorithm),
@@ -241,9 +1326,9 @@ pub enum LayoutElementContent {
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LayoutNodeContent)]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum LayoutNodeContent {
     Algorithm(#[rkyv(omit_bounds)] super::Algorithm),
@@ -257,6 +1342,3213 @@ pub enum LayoutNodeContent {
     RuleList(#[rkyv(omit_bounds)] super::RuleList),
     Shape(#[rkyv(omit_bounds)] super::Shape),
     VariableList(super::VariableList),
+}
+
+impl From<AlgorithmMirror> for super::Algorithm {
+    fn from(item: AlgorithmMirror) -> Self {
+        Self {
+            extension_list: item.extension_list,
+            extra: item.extra,
+            parameter: item.parameter,
+            rev: item.rev,
+            r#type: item.r#type,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Algorithm {
+    type Archived = ArchivedAlgorithmMirror;
+    type Resolver = AlgorithmMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        AlgorithmMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Algorithm
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        AlgorithmMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Algorithm, __D> for ArchivedAlgorithmMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Algorithm, __D::Error> {
+        AlgorithmMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<BackgroundFormattingMirror> for super::BackgroundFormatting {
+    fn from(item: BackgroundFormattingMirror) -> Self {
+        Self {
+            effect_properties_content: item.effect_properties_content,
+            extra: item.extra,
+            fill_properties_content: item.fill_properties_content,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::BackgroundFormatting {
+    type Archived = ArchivedBackgroundFormattingMirror;
+    type Resolver = BackgroundFormattingMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        BackgroundFormattingMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::BackgroundFormatting
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        BackgroundFormattingMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::BackgroundFormatting, __D> for ArchivedBackgroundFormattingMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::BackgroundFormatting, __D::Error> {
+        BackgroundFormattingMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<CategoryMirror> for super::Category {
+    fn from(item: CategoryMirror) -> Self {
+        Self {
+            extra: item.extra,
+            pri: item.pri,
+            r#type: item.r#type,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Category {
+    type Archived = ArchivedCategoryMirror;
+    type Resolver = CategoryMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        CategoryMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Category
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        CategoryMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Category, __D> for ArchivedCategoryMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Category, __D::Error> {
+        CategoryMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<CategoryListMirror> for super::CategoryList {
+    fn from(item: CategoryListMirror) -> Self {
+        Self {
+            category: item.category,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::CategoryList {
+    type Archived = ArchivedCategoryListMirror;
+    type Resolver = CategoryListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        CategoryListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::CategoryList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        CategoryListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::CategoryList, __D> for ArchivedCategoryListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::CategoryList, __D::Error> {
+        CategoryListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<CategoryListSDCategoriesMirror> for super::CategoryListSDCategories {
+    fn from(item: CategoryListSDCategoriesMirror) -> Self {
+        Self {
+            category_sd_category: item.category_sd_category,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::CategoryListSDCategories {
+    type Archived = ArchivedCategoryListSDCategoriesMirror;
+    type Resolver = CategoryListSDCategoriesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        CategoryListSDCategoriesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::CategoryListSDCategories
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        CategoryListSDCategoriesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::CategoryListSDCategories, __D>
+    for ArchivedCategoryListSDCategoriesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::CategoryListSDCategories, __D::Error> {
+        CategoryListSDCategoriesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<CategorySDCategoryMirror> for super::CategorySDCategory {
+    fn from(item: CategorySDCategoryMirror) -> Self {
+        Self {
+            extra: item.extra,
+            pri: item.pri,
+            r#type: item.r#type,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::CategorySDCategory {
+    type Archived = ArchivedCategorySDCategoryMirror;
+    type Resolver = CategorySDCategoryMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        CategorySDCategoryMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::CategorySDCategory
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        CategorySDCategoryMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::CategorySDCategory, __D> for ArchivedCategorySDCategoryMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::CategorySDCategory, __D::Error> {
+        CategorySDCategoryMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ChooseElementMirror> for super::ChooseElement {
+    fn from(item: ChooseElementMirror) -> Self {
+        Self {
+            r#else: item.r#else,
+            extra: item.extra,
+            r#if: item.r#if,
+            name: item.name,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ChooseElement {
+    type Archived = ArchivedChooseElementMirror;
+    type Resolver = ChooseElementMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ChooseElementMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ChooseElement
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ChooseElementMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ChooseElement, __D> for ArchivedChooseElementMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ChooseElement, __D::Error> {
+        ChooseElementMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ColorTransformCategoryMirror> for super::ColorTransformCategory {
+    fn from(item: ColorTransformCategoryMirror) -> Self {
+        Self {
+            extra: item.extra,
+            pri: item.pri,
+            r#type: item.r#type,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ColorTransformCategory {
+    type Archived = ArchivedColorTransformCategoryMirror;
+    type Resolver = ColorTransformCategoryMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ColorTransformCategoryMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ColorTransformCategory
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ColorTransformCategoryMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ColorTransformCategory, __D>
+    for ArchivedColorTransformCategoryMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ColorTransformCategory, __D::Error> {
+        ColorTransformCategoryMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ColorTransformCategoryListMirror> for super::ColorTransformCategoryList {
+    fn from(item: ColorTransformCategoryListMirror) -> Self {
+        Self {
+            color_transform_category: item.color_transform_category,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ColorTransformCategoryList {
+    type Archived = ArchivedColorTransformCategoryListMirror;
+    type Resolver = ColorTransformCategoryListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ColorTransformCategoryListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ColorTransformCategoryList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ColorTransformCategoryListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ColorTransformCategoryList, __D>
+    for ArchivedColorTransformCategoryListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ColorTransformCategoryList, __D::Error> {
+        ColorTransformCategoryListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ColorTransformDefinitionHeaderMirror> for super::ColorTransformDefinitionHeader {
+    fn from(item: ColorTransformDefinitionHeaderMirror) -> Self {
+        Self {
+            color_transform_category_list: item.color_transform_category_list,
+            description_ct_description: item.description_ct_description,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            min_ver: item.min_ver,
+            res_id: item.res_id,
+            title_ct_name: item.title_ct_name,
+            unique_id: item.unique_id,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ColorTransformDefinitionHeader {
+    type Archived = ArchivedColorTransformDefinitionHeaderMirror;
+    type Resolver = ColorTransformDefinitionHeaderMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ColorTransformDefinitionHeaderMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ColorTransformDefinitionHeader
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ColorTransformDefinitionHeaderMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ColorTransformDefinitionHeader, __D>
+    for ArchivedColorTransformDefinitionHeaderMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ColorTransformDefinitionHeader, __D::Error> {
+        ColorTransformDefinitionHeaderMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ColorTransformDefinitionsMirror> for super::ColorTransformDefinitions {
+    fn from(item: ColorTransformDefinitionsMirror) -> Self {
+        Self {
+            color_transform_category_list: item.color_transform_category_list,
+            description_ct_description: item.description_ct_description,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            min_ver: item.min_ver,
+            style_label: item.style_label,
+            title_ct_name: item.title_ct_name,
+            unique_id: item.unique_id,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ColorTransformDefinitions {
+    type Archived = ArchivedColorTransformDefinitionsMirror;
+    type Resolver = ColorTransformDefinitionsMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ColorTransformDefinitionsMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ColorTransformDefinitions
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ColorTransformDefinitionsMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ColorTransformDefinitions, __D>
+    for ArchivedColorTransformDefinitionsMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ColorTransformDefinitions, __D::Error> {
+        ColorTransformDefinitionsMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ColorTransformHeaderListMirror> for super::ColorTransformHeaderList {
+    fn from(item: ColorTransformHeaderListMirror) -> Self {
+        Self {
+            color_transform_definition_header: item.color_transform_definition_header,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ColorTransformHeaderList {
+    type Archived = ArchivedColorTransformHeaderListMirror;
+    type Resolver = ColorTransformHeaderListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ColorTransformHeaderListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ColorTransformHeaderList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ColorTransformHeaderListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ColorTransformHeaderList, __D>
+    for ArchivedColorTransformHeaderListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ColorTransformHeaderList, __D::Error> {
+        ColorTransformHeaderListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ColorTransformSampleDataMirror> for super::ColorTransformSampleData {
+    fn from(item: ColorTransformSampleDataMirror) -> Self {
+        Self {
+            extra: item.extra,
+            model: item.model,
+            unknown: item.unknown,
+            use_def: item.use_def,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ColorTransformSampleData {
+    type Archived = ArchivedColorTransformSampleDataMirror;
+    type Resolver = ColorTransformSampleDataMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ColorTransformSampleDataMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ColorTransformSampleData
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ColorTransformSampleDataMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ColorTransformSampleData, __D>
+    for ArchivedColorTransformSampleDataMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ColorTransformSampleData, __D::Error> {
+        ColorTransformSampleDataMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ConnectionMirror> for super::Connection {
+    fn from(item: ConnectionMirror) -> Self {
+        Self {
+            dest_id: item.dest_id,
+            dest_ord: item.dest_ord,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            model_id: item.model_id,
+            par_trans_id: item.par_trans_id,
+            pres_id: item.pres_id,
+            sib_trans_id: item.sib_trans_id,
+            src_id: item.src_id,
+            src_ord: item.src_ord,
+            r#type: item.r#type,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Connection {
+    type Archived = ArchivedConnectionMirror;
+    type Resolver = ConnectionMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ConnectionMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Connection
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ConnectionMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Connection, __D> for ArchivedConnectionMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Connection, __D::Error> {
+        ConnectionMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ConnectionListMirror> for super::ConnectionList {
+    fn from(item: ConnectionListMirror) -> Self {
+        Self {
+            connection: item.connection,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ConnectionList {
+    type Archived = ArchivedConnectionListMirror;
+    type Resolver = ConnectionListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ConnectionListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ConnectionList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ConnectionListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ConnectionList, __D> for ArchivedConnectionListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ConnectionList, __D::Error> {
+        ConnectionListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ConstraintMirror> for super::Constraint {
+    fn from(item: ConstraintMirror) -> Self {
+        Self {
+            extension_list: item.extension_list,
+            extra: item.extra,
+            fact: item.fact,
+            r#for: item.r#for,
+            for_name: item.for_name,
+            op: item.op,
+            pt_type: item.pt_type,
+            ref_for: item.ref_for,
+            ref_for_name: item.ref_for_name,
+            ref_pt_type: item.ref_pt_type,
+            ref_type: item.ref_type,
+            r#type: item.r#type,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Constraint {
+    type Archived = ArchivedConstraintMirror;
+    type Resolver = ConstraintMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ConstraintMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Constraint
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ConstraintMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Constraint, __D> for ArchivedConstraintMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Constraint, __D::Error> {
+        ConstraintMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ConstraintListMirror> for super::ConstraintList {
+    fn from(item: ConstraintListMirror) -> Self {
+        Self {
+            constraint: item.constraint,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ConstraintList {
+    type Archived = ArchivedConstraintListMirror;
+    type Resolver = ConstraintListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ConstraintListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ConstraintList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ConstraintListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ConstraintList, __D> for ArchivedConstraintListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ConstraintList, __D::Error> {
+        ConstraintListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<DataModelMirror> for super::DataModel {
+    fn from(item: DataModelMirror) -> Self {
+        Self {
+            background_formatting: item.background_formatting,
+            connection_list: item.connection_list,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            point_list: item.point_list,
+            unknown: item.unknown,
+            whole_e2o_formatting: item.whole_e2o_formatting,
+        }
+    }
+}
+
+impl rkyv::Archive for super::DataModel {
+    type Archived = ArchivedDataModelMirror;
+    type Resolver = DataModelMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        DataModelMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::DataModel
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        DataModelMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::DataModel, __D> for ArchivedDataModelMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::DataModel, __D::Error> {
+        DataModelMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<DescriptionMirror> for super::Description {
+    fn from(item: DescriptionMirror) -> Self {
+        Self {
+            extra: item.extra,
+            lang: item.lang,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Description {
+    type Archived = ArchivedDescriptionMirror;
+    type Resolver = DescriptionMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        DescriptionMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Description
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        DescriptionMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Description, __D> for ArchivedDescriptionMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Description, __D::Error> {
+        DescriptionMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<DescriptionCTDescriptionMirror> for super::DescriptionCTDescription {
+    fn from(item: DescriptionCTDescriptionMirror) -> Self {
+        Self {
+            extra: item.extra,
+            lang: item.lang,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::DescriptionCTDescription {
+    type Archived = ArchivedDescriptionCTDescriptionMirror;
+    type Resolver = DescriptionCTDescriptionMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        DescriptionCTDescriptionMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::DescriptionCTDescription
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        DescriptionCTDescriptionMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::DescriptionCTDescription, __D>
+    for ArchivedDescriptionCTDescriptionMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::DescriptionCTDescription, __D::Error> {
+        DescriptionCTDescriptionMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<DiagramDirectionMirror> for super::DiagramDirection {
+    fn from(item: DiagramDirectionMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::DiagramDirection {
+    type Archived = ArchivedDiagramDirectionMirror;
+    type Resolver = DiagramDirectionMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        DiagramDirectionMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::DiagramDirection
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        DiagramDirectionMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::DiagramDirection, __D> for ArchivedDiagramDirectionMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::DiagramDirection, __D::Error> {
+        DiagramDirectionMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<DiagramLayoutHeaderListMirror> for super::DiagramLayoutHeaderList {
+    fn from(item: DiagramLayoutHeaderListMirror) -> Self {
+        Self {
+            extra: item.extra,
+            layout_definition_header: item.layout_definition_header,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::DiagramLayoutHeaderList {
+    type Archived = ArchivedDiagramLayoutHeaderListMirror;
+    type Resolver = DiagramLayoutHeaderListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        DiagramLayoutHeaderListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::DiagramLayoutHeaderList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        DiagramLayoutHeaderListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::DiagramLayoutHeaderList, __D>
+    for ArchivedDiagramLayoutHeaderListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::DiagramLayoutHeaderList, __D::Error> {
+        DiagramLayoutHeaderListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<EffectColorListMirror> for super::EffectColorList {
+    fn from(item: EffectColorListMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            hue_dir: item.hue_dir,
+            meth: item.meth,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::EffectColorList {
+    type Archived = ArchivedEffectColorListMirror;
+    type Resolver = EffectColorListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        EffectColorListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::EffectColorList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        EffectColorListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::EffectColorList, __D> for ArchivedEffectColorListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::EffectColorList, __D::Error> {
+        EffectColorListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ElseMirror> for super::Else {
+    fn from(item: ElseMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            name: item.name,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Else {
+    type Archived = ArchivedElseMirror;
+    type Resolver = ElseMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ElseMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Else
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ElseMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Else, __D> for ArchivedElseMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Else, __D::Error> {
+        ElseMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ExplicitRelationshipsToDiagramPartsMirror>
+    for super::ExplicitRelationshipsToDiagramParts
+{
+    fn from(item: ExplicitRelationshipsToDiagramPartsMirror) -> Self {
+        Self {
+            cs: item.cs,
+            dm: item.dm,
+            extra: item.extra,
+            lo: item.lo,
+            qs: item.qs,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ExplicitRelationshipsToDiagramParts {
+    type Archived = ArchivedExplicitRelationshipsToDiagramPartsMirror;
+    type Resolver = ExplicitRelationshipsToDiagramPartsMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ExplicitRelationshipsToDiagramPartsMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ExplicitRelationshipsToDiagramParts
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ExplicitRelationshipsToDiagramPartsMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ExplicitRelationshipsToDiagramParts, __D>
+    for ArchivedExplicitRelationshipsToDiagramPartsMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ExplicitRelationshipsToDiagramParts, __D::Error> {
+        ExplicitRelationshipsToDiagramPartsMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ExtensionListMirror> for super::ExtensionList {
+    fn from(item: ExtensionListMirror) -> Self {
+        Self {
+            extension: item.extension,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ExtensionList {
+    type Archived = ArchivedExtensionListMirror;
+    type Resolver = ExtensionListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ExtensionListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ExtensionList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ExtensionListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ExtensionList, __D> for ArchivedExtensionListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ExtensionList, __D::Error> {
+        ExtensionListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<FillColorListMirror> for super::FillColorList {
+    fn from(item: FillColorListMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            hue_dir: item.hue_dir,
+            meth: item.meth,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::FillColorList {
+    type Archived = ArchivedFillColorListMirror;
+    type Resolver = FillColorListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        FillColorListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::FillColorList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        FillColorListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::FillColorList, __D> for ArchivedFillColorListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::FillColorList, __D::Error> {
+        FillColorListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ForEachMirror> for super::ForEach {
+    fn from(item: ForEachMirror) -> Self {
+        Self {
+            axis: item.axis,
+            cnt: item.cnt,
+            content: item.content,
+            extra: item.extra,
+            hide_last_trans: item.hide_last_trans,
+            name: item.name,
+            pt_type: item.pt_type,
+            r#ref: item.r#ref,
+            st: item.st,
+            step: item.step,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ForEach {
+    type Archived = ArchivedForEachMirror;
+    type Resolver = ForEachMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ForEachMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ForEach
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ForEachMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ForEach, __D> for ArchivedForEachMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ForEach, __D::Error> {
+        ForEachMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<IfMirror> for super::If {
+    fn from(item: IfMirror) -> Self {
+        Self {
+            arg: item.arg,
+            axis: item.axis,
+            cnt: item.cnt,
+            content: item.content,
+            extra: item.extra,
+            func: item.func,
+            hide_last_trans: item.hide_last_trans,
+            name: item.name,
+            op: item.op,
+            pt_type: item.pt_type,
+            st: item.st,
+            step: item.step,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::If {
+    type Archived = ArchivedIfMirror;
+    type Resolver = IfMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        IfMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::If
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        IfMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::If, __D> for ArchivedIfMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::If, __D::Error> {
+        IfMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<LayoutDefinitionMirror> for super::LayoutDefinition {
+    fn from(item: LayoutDefinitionMirror) -> Self {
+        Self {
+            category_list: item.category_list,
+            color_transform_sample_data: item.color_transform_sample_data,
+            def_style: item.def_style,
+            description: item.description,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            layout_node: item.layout_node,
+            min_ver: item.min_ver,
+            sample_data: item.sample_data,
+            style_data: item.style_data,
+            title: item.title,
+            unique_id: item.unique_id,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::LayoutDefinition {
+    type Archived = ArchivedLayoutDefinitionMirror;
+    type Resolver = LayoutDefinitionMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        LayoutDefinitionMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::LayoutDefinition
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        LayoutDefinitionMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::LayoutDefinition, __D> for ArchivedLayoutDefinitionMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::LayoutDefinition, __D::Error> {
+        LayoutDefinitionMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<LayoutDefinitionHeaderMirror> for super::LayoutDefinitionHeader {
+    fn from(item: LayoutDefinitionHeaderMirror) -> Self {
+        Self {
+            category_list: item.category_list,
+            def_style: item.def_style,
+            description: item.description,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            min_ver: item.min_ver,
+            res_id: item.res_id,
+            title: item.title,
+            unique_id: item.unique_id,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::LayoutDefinitionHeader {
+    type Archived = ArchivedLayoutDefinitionHeaderMirror;
+    type Resolver = LayoutDefinitionHeaderMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        LayoutDefinitionHeaderMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::LayoutDefinitionHeader
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        LayoutDefinitionHeaderMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::LayoutDefinitionHeader, __D>
+    for ArchivedLayoutDefinitionHeaderMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::LayoutDefinitionHeader, __D::Error> {
+        LayoutDefinitionHeaderMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<LayoutNodeMirror> for super::LayoutNode {
+    fn from(item: LayoutNodeMirror) -> Self {
+        Self {
+            ch_order: item.ch_order,
+            content: item.content,
+            extra: item.extra,
+            move_with: item.move_with,
+            name: item.name,
+            style_lbl: item.style_lbl,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::LayoutNode {
+    type Archived = ArchivedLayoutNodeMirror;
+    type Resolver = LayoutNodeMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        LayoutNodeMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::LayoutNode
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        LayoutNodeMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::LayoutNode, __D> for ArchivedLayoutNodeMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::LayoutNode, __D::Error> {
+        LayoutNodeMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<LevelAnimationMirror> for super::LevelAnimation {
+    fn from(item: LevelAnimationMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::LevelAnimation {
+    type Archived = ArchivedLevelAnimationMirror;
+    type Resolver = LevelAnimationMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        LevelAnimationMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::LevelAnimation
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        LevelAnimationMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::LevelAnimation, __D> for ArchivedLevelAnimationMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::LevelAnimation, __D::Error> {
+        LevelAnimationMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<LineColorListMirror> for super::LineColorList {
+    fn from(item: LineColorListMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            hue_dir: item.hue_dir,
+            meth: item.meth,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::LineColorList {
+    type Archived = ArchivedLineColorListMirror;
+    type Resolver = LineColorListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        LineColorListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::LineColorList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        LineColorListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::LineColorList, __D> for ArchivedLineColorListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::LineColorList, __D::Error> {
+        LineColorListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ListOfStyleDefinitionHeadersMirror> for super::ListOfStyleDefinitionHeaders {
+    fn from(item: ListOfStyleDefinitionHeadersMirror) -> Self {
+        Self {
+            extra: item.extra,
+            style_definition_header: item.style_definition_header,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ListOfStyleDefinitionHeaders {
+    type Archived = ArchivedListOfStyleDefinitionHeadersMirror;
+    type Resolver = ListOfStyleDefinitionHeadersMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ListOfStyleDefinitionHeadersMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ListOfStyleDefinitionHeaders
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ListOfStyleDefinitionHeadersMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ListOfStyleDefinitionHeaders, __D>
+    for ArchivedListOfStyleDefinitionHeadersMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ListOfStyleDefinitionHeaders, __D::Error> {
+        ListOfStyleDefinitionHeadersMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<MaximumChildrenMirror> for super::MaximumChildren {
+    fn from(item: MaximumChildrenMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::MaximumChildren {
+    type Archived = ArchivedMaximumChildrenMirror;
+    type Resolver = MaximumChildrenMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        MaximumChildrenMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::MaximumChildren
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        MaximumChildrenMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::MaximumChildren, __D> for ArchivedMaximumChildrenMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::MaximumChildren, __D::Error> {
+        MaximumChildrenMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<OneByOneAnimationStringMirror> for super::OneByOneAnimationString {
+    fn from(item: OneByOneAnimationStringMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::OneByOneAnimationString {
+    type Archived = ArchivedOneByOneAnimationStringMirror;
+    type Resolver = OneByOneAnimationStringMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        OneByOneAnimationStringMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::OneByOneAnimationString
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        OneByOneAnimationStringMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::OneByOneAnimationString, __D>
+    for ArchivedOneByOneAnimationStringMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::OneByOneAnimationString, __D::Error> {
+        OneByOneAnimationStringMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<OrganizationChartBranchStyleMirror> for super::OrganizationChartBranchStyle {
+    fn from(item: OrganizationChartBranchStyleMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::OrganizationChartBranchStyle {
+    type Archived = ArchivedOrganizationChartBranchStyleMirror;
+    type Resolver = OrganizationChartBranchStyleMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        OrganizationChartBranchStyleMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::OrganizationChartBranchStyle
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        OrganizationChartBranchStyleMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::OrganizationChartBranchStyle, __D>
+    for ArchivedOrganizationChartBranchStyleMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::OrganizationChartBranchStyle, __D::Error> {
+        OrganizationChartBranchStyleMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ParameterMirror> for super::Parameter {
+    fn from(item: ParameterMirror) -> Self {
+        Self {
+            extra: item.extra,
+            r#type: item.r#type,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Parameter {
+    type Archived = ArchivedParameterMirror;
+    type Resolver = ParameterMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ParameterMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Parameter
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ParameterMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Parameter, __D> for ArchivedParameterMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Parameter, __D::Error> {
+        ParameterMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<PointMirror> for super::Point {
+    fn from(item: PointMirror) -> Self {
+        Self {
+            cxn_id: item.cxn_id,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            model_id: item.model_id,
+            property_set: item.property_set,
+            shape_properties: item.shape_properties,
+            text_body: item.text_body,
+            r#type: item.r#type,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Point {
+    type Archived = ArchivedPointMirror;
+    type Resolver = PointMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        PointMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Point
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        PointMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Point, __D> for ArchivedPointMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Point, __D::Error> {
+        PointMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<PointListMirror> for super::PointList {
+    fn from(item: PointListMirror) -> Self {
+        Self {
+            extra: item.extra,
+            point: item.point,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::PointList {
+    type Archived = ArchivedPointListMirror;
+    type Resolver = PointListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        PointListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::PointList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        PointListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::PointList, __D> for ArchivedPointListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::PointList, __D::Error> {
+        PointListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<PreferredNumberOfChildrenMirror> for super::PreferredNumberOfChildren {
+    fn from(item: PreferredNumberOfChildrenMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::PreferredNumberOfChildren {
+    type Archived = ArchivedPreferredNumberOfChildrenMirror;
+    type Resolver = PreferredNumberOfChildrenMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        PreferredNumberOfChildrenMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::PreferredNumberOfChildren
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        PreferredNumberOfChildrenMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::PreferredNumberOfChildren, __D>
+    for ArchivedPreferredNumberOfChildrenMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::PreferredNumberOfChildren, __D::Error> {
+        PreferredNumberOfChildrenMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<PresentationLayoutVariablesMirror> for super::PresentationLayoutVariables {
+    fn from(item: PresentationLayoutVariablesMirror) -> Self {
+        Self {
+            diagram_direction: item.diagram_direction,
+            extra: item.extra,
+            level_animation: item.level_animation,
+            maximum_children: item.maximum_children,
+            one_by_one_animation_string: item.one_by_one_animation_string,
+            organization_chart_branch_style: item.organization_chart_branch_style,
+            preferred_number_of_children: item.preferred_number_of_children,
+            shape_resize_style: item.shape_resize_style,
+            show_insert_node: item.show_insert_node,
+            show_organization_chart_user_interface: item.show_organization_chart_user_interface,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::PresentationLayoutVariables {
+    type Archived = ArchivedPresentationLayoutVariablesMirror;
+    type Resolver = PresentationLayoutVariablesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        PresentationLayoutVariablesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::PresentationLayoutVariables
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        PresentationLayoutVariablesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::PresentationLayoutVariables, __D>
+    for ArchivedPresentationLayoutVariablesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::PresentationLayoutVariables, __D::Error> {
+        PresentationLayoutVariablesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<PresentationOfMirror> for super::PresentationOf {
+    fn from(item: PresentationOfMirror) -> Self {
+        Self {
+            axis: item.axis,
+            cnt: item.cnt,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            hide_last_trans: item.hide_last_trans,
+            pt_type: item.pt_type,
+            st: item.st,
+            step: item.step,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::PresentationOf {
+    type Archived = ArchivedPresentationOfMirror;
+    type Resolver = PresentationOfMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        PresentationOfMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::PresentationOf
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        PresentationOfMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::PresentationOf, __D> for ArchivedPresentationOfMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::PresentationOf, __D::Error> {
+        PresentationOfMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<PropertySetMirror> for super::PropertySet {
+    fn from(item: PropertySetMirror) -> Self {
+        Self {
+            coherent3_d_off: item.coherent3_d_off,
+            cs_cat_id: item.cs_cat_id,
+            cs_type_id: item.cs_type_id,
+            cust_ang: item.cust_ang,
+            cust_flip_hor: item.cust_flip_hor,
+            cust_flip_vert: item.cust_flip_vert,
+            cust_lin_fact_neighbor_x: item.cust_lin_fact_neighbor_x,
+            cust_lin_fact_neighbor_y: item.cust_lin_fact_neighbor_y,
+            cust_lin_fact_x: item.cust_lin_fact_x,
+            cust_lin_fact_y: item.cust_lin_fact_y,
+            cust_rad_scale_inc: item.cust_rad_scale_inc,
+            cust_rad_scale_rad: item.cust_rad_scale_rad,
+            cust_scale_x: item.cust_scale_x,
+            cust_scale_y: item.cust_scale_y,
+            cust_sz_x: item.cust_sz_x,
+            cust_sz_y: item.cust_sz_y,
+            cust_t: item.cust_t,
+            extra: item.extra,
+            lo_cat_id: item.lo_cat_id,
+            lo_type_id: item.lo_type_id,
+            phldr: item.phldr,
+            phldr_t: item.phldr_t,
+            pres_assoc_id: item.pres_assoc_id,
+            pres_name: item.pres_name,
+            pres_style_cnt: item.pres_style_cnt,
+            pres_style_idx: item.pres_style_idx,
+            pres_style_lbl: item.pres_style_lbl,
+            presentation_layout_variables: item.presentation_layout_variables,
+            qs_cat_id: item.qs_cat_id,
+            qs_type_id: item.qs_type_id,
+            shape_style: item.shape_style,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::PropertySet {
+    type Archived = ArchivedPropertySetMirror;
+    type Resolver = PropertySetMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        PropertySetMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::PropertySet
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        PropertySetMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::PropertySet, __D> for ArchivedPropertySetMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::PropertySet, __D::Error> {
+        PropertySetMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<RuleMirror> for super::Rule {
+    fn from(item: RuleMirror) -> Self {
+        Self {
+            extension_list: item.extension_list,
+            extra: item.extra,
+            fact: item.fact,
+            r#for: item.r#for,
+            for_name: item.for_name,
+            max: item.max,
+            pt_type: item.pt_type,
+            r#type: item.r#type,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Rule {
+    type Archived = ArchivedRuleMirror;
+    type Resolver = RuleMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        RuleMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Rule
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        RuleMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Rule, __D> for ArchivedRuleMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Rule, __D::Error> {
+        RuleMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<RuleListMirror> for super::RuleList {
+    fn from(item: RuleListMirror) -> Self {
+        Self {
+            extra: item.extra,
+            rule: item.rule,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::RuleList {
+    type Archived = ArchivedRuleListMirror;
+    type Resolver = RuleListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        RuleListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::RuleList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        RuleListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::RuleList, __D> for ArchivedRuleListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::RuleList, __D::Error> {
+        RuleListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<SampleDataMirror> for super::SampleData {
+    fn from(item: SampleDataMirror) -> Self {
+        Self {
+            extra: item.extra,
+            model: item.model,
+            unknown: item.unknown,
+            use_def: item.use_def,
+        }
+    }
+}
+
+impl rkyv::Archive for super::SampleData {
+    type Archived = ArchivedSampleDataMirror;
+    type Resolver = SampleDataMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        SampleDataMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::SampleData
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        SampleDataMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::SampleData, __D> for ArchivedSampleDataMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::SampleData, __D::Error> {
+        SampleDataMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<Scene3dMirror> for super::Scene3d {
+    fn from(item: Scene3dMirror) -> Self {
+        Self {
+            backdrop_plane: item.backdrop_plane,
+            camera: item.camera,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            light_rig: item.light_rig,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Scene3d {
+    type Archived = ArchivedScene3dMirror;
+    type Resolver = Scene3dMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        Scene3dMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Scene3d
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        Scene3dMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Scene3d, __D> for ArchivedScene3dMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Scene3d, __D::Error> {
+        Scene3dMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapeMirror> for super::Shape {
+    fn from(item: ShapeMirror) -> Self {
+        Self {
+            adjust_list: item.adjust_list,
+            blip: item.blip,
+            blip_phldr: item.blip_phldr,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            hide_geom: item.hide_geom,
+            lk_tx_entry: item.lk_tx_entry,
+            rot: item.rot,
+            r#type: item.r#type,
+            unknown: item.unknown,
+            z_order_off: item.z_order_off,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Shape {
+    type Archived = ArchivedShapeMirror;
+    type Resolver = ShapeMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapeMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Shape
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapeMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Shape, __D> for ArchivedShapeMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Shape, __D::Error> {
+        ShapeMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapeAdjustMirror> for super::ShapeAdjust {
+    fn from(item: ShapeAdjustMirror) -> Self {
+        Self {
+            extra: item.extra,
+            idx: item.idx,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShapeAdjust {
+    type Archived = ArchivedShapeAdjustMirror;
+    type Resolver = ShapeAdjustMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapeAdjustMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShapeAdjust
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapeAdjustMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShapeAdjust, __D> for ArchivedShapeAdjustMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShapeAdjust, __D::Error> {
+        ShapeAdjustMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapeAdjustListMirror> for super::ShapeAdjustList {
+    fn from(item: ShapeAdjustListMirror) -> Self {
+        Self {
+            extra: item.extra,
+            shape_adjust: item.shape_adjust,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShapeAdjustList {
+    type Archived = ArchivedShapeAdjustListMirror;
+    type Resolver = ShapeAdjustListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapeAdjustListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShapeAdjustList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapeAdjustListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShapeAdjustList, __D> for ArchivedShapeAdjustListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShapeAdjustList, __D::Error> {
+        ShapeAdjustListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapePropertiesMirror> for super::ShapeProperties {
+    fn from(item: ShapePropertiesMirror) -> Self {
+        Self {
+            apply_3d: item.apply_3d,
+            bw_mode: item.bw_mode,
+            effect_properties_content: item.effect_properties_content,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            fill_properties_content: item.fill_properties_content,
+            geometry_content: item.geometry_content,
+            outline: item.outline,
+            scene3d: item.scene3d,
+            unknown: item.unknown,
+            xfrm_transform2d: item.xfrm_transform2d,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShapeProperties {
+    type Archived = ArchivedShapePropertiesMirror;
+    type Resolver = ShapePropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapePropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShapeProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapePropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShapeProperties, __D> for ArchivedShapePropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShapeProperties, __D::Error> {
+        ShapePropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapeResizeStyleMirror> for super::ShapeResizeStyle {
+    fn from(item: ShapeResizeStyleMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShapeResizeStyle {
+    type Archived = ArchivedShapeResizeStyleMirror;
+    type Resolver = ShapeResizeStyleMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapeResizeStyleMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShapeResizeStyle
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapeResizeStyleMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShapeResizeStyle, __D> for ArchivedShapeResizeStyleMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShapeResizeStyle, __D::Error> {
+        ShapeResizeStyleMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapeStyleMirror> for super::ShapeStyle {
+    fn from(item: ShapeStyleMirror) -> Self {
+        Self {
+            effect_reference: item.effect_reference,
+            extra: item.extra,
+            fill_reference: item.fill_reference,
+            font_reference: item.font_reference,
+            line_reference: item.line_reference,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShapeStyle {
+    type Archived = ArchivedShapeStyleMirror;
+    type Resolver = ShapeStyleMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapeStyleMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShapeStyle
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapeStyleMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShapeStyle, __D> for ArchivedShapeStyleMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShapeStyle, __D::Error> {
+        ShapeStyleMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShowInsertNodeMirror> for super::ShowInsertNode {
+    fn from(item: ShowInsertNodeMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShowInsertNode {
+    type Archived = ArchivedShowInsertNodeMirror;
+    type Resolver = ShowInsertNodeMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShowInsertNodeMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShowInsertNode
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShowInsertNodeMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShowInsertNode, __D> for ArchivedShowInsertNodeMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShowInsertNode, __D::Error> {
+        ShowInsertNodeMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShowOrganizationChartUserInterfaceMirror> for super::ShowOrganizationChartUserInterface {
+    fn from(item: ShowOrganizationChartUserInterfaceMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShowOrganizationChartUserInterface {
+    type Archived = ArchivedShowOrganizationChartUserInterfaceMirror;
+    type Resolver = ShowOrganizationChartUserInterfaceMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShowOrganizationChartUserInterfaceMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShowOrganizationChartUserInterface
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShowOrganizationChartUserInterfaceMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShowOrganizationChartUserInterface, __D>
+    for ArchivedShowOrganizationChartUserInterfaceMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ShowOrganizationChartUserInterface, __D::Error> {
+        ShowOrganizationChartUserInterfaceMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<Sp3dMirror> for super::Sp3d {
+    fn from(item: Sp3dMirror) -> Self {
+        Self {
+            bottom_bevel: item.bottom_bevel,
+            contour_color: item.contour_color,
+            contour_w: item.contour_w,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            extrusion_color: item.extrusion_color,
+            extrusion_h: item.extrusion_h,
+            prst_material: item.prst_material,
+            top_bevel: item.top_bevel,
+            unknown: item.unknown,
+            z: item.z,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Sp3d {
+    type Archived = ArchivedSp3dMirror;
+    type Resolver = Sp3dMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        Sp3dMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Sp3d
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        Sp3dMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Sp3d, __D> for ArchivedSp3dMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Sp3d, __D::Error> {
+        Sp3dMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<StyleDataMirror> for super::StyleData {
+    fn from(item: StyleDataMirror) -> Self {
+        Self {
+            extra: item.extra,
+            model: item.model,
+            unknown: item.unknown,
+            use_def: item.use_def,
+        }
+    }
+}
+
+impl rkyv::Archive for super::StyleData {
+    type Archived = ArchivedStyleDataMirror;
+    type Resolver = StyleDataMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        StyleDataMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::StyleData
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        StyleDataMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::StyleData, __D> for ArchivedStyleDataMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::StyleData, __D::Error> {
+        StyleDataMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<StyleDefinitionMirror> for super::StyleDefinition {
+    fn from(item: StyleDefinitionMirror) -> Self {
+        Self {
+            category_list_sd_categories: item.category_list_sd_categories,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            min_ver: item.min_ver,
+            scene3d: item.scene3d,
+            style_label_description: item.style_label_description,
+            style_label_style_label: item.style_label_style_label,
+            title_sd_name: item.title_sd_name,
+            unique_id: item.unique_id,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::StyleDefinition {
+    type Archived = ArchivedStyleDefinitionMirror;
+    type Resolver = StyleDefinitionMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        StyleDefinitionMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::StyleDefinition
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        StyleDefinitionMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::StyleDefinition, __D> for ArchivedStyleDefinitionMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::StyleDefinition, __D::Error> {
+        StyleDefinitionMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<StyleDefinitionHeaderMirror> for super::StyleDefinitionHeader {
+    fn from(item: StyleDefinitionHeaderMirror) -> Self {
+        Self {
+            category_list_sd_categories: item.category_list_sd_categories,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            min_ver: item.min_ver,
+            res_id: item.res_id,
+            style_label_description: item.style_label_description,
+            title_sd_name: item.title_sd_name,
+            unique_id: item.unique_id,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::StyleDefinitionHeader {
+    type Archived = ArchivedStyleDefinitionHeaderMirror;
+    type Resolver = StyleDefinitionHeaderMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        StyleDefinitionHeaderMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::StyleDefinitionHeader
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        StyleDefinitionHeaderMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::StyleDefinitionHeader, __D>
+    for ArchivedStyleDefinitionHeaderMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::StyleDefinitionHeader, __D::Error> {
+        StyleDefinitionHeaderMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<StyleLabelMirror> for super::StyleLabel {
+    fn from(item: StyleLabelMirror) -> Self {
+        Self {
+            effect_color_list: item.effect_color_list,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            fill_color_list: item.fill_color_list,
+            line_color_list: item.line_color_list,
+            name: item.name,
+            text_effect_color_list: item.text_effect_color_list,
+            text_fill_color_list: item.text_fill_color_list,
+            text_line_color_list: item.text_line_color_list,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::StyleLabel {
+    type Archived = ArchivedStyleLabelMirror;
+    type Resolver = StyleLabelMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        StyleLabelMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::StyleLabel
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        StyleLabelMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::StyleLabel, __D> for ArchivedStyleLabelMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::StyleLabel, __D::Error> {
+        StyleLabelMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<StyleLabelDescriptionMirror> for super::StyleLabelDescription {
+    fn from(item: StyleLabelDescriptionMirror) -> Self {
+        Self {
+            extra: item.extra,
+            lang: item.lang,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::StyleLabelDescription {
+    type Archived = ArchivedStyleLabelDescriptionMirror;
+    type Resolver = StyleLabelDescriptionMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        StyleLabelDescriptionMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::StyleLabelDescription
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        StyleLabelDescriptionMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::StyleLabelDescription, __D>
+    for ArchivedStyleLabelDescriptionMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::StyleLabelDescription, __D::Error> {
+        StyleLabelDescriptionMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<StyleLabelStyleLabelMirror> for super::StyleLabelStyleLabel {
+    fn from(item: StyleLabelStyleLabelMirror) -> Self {
+        Self {
+            extension_list: item.extension_list,
+            extra: item.extra,
+            name: item.name,
+            scene3d: item.scene3d,
+            shape_style: item.shape_style,
+            sp3d: item.sp3d,
+            text_properties: item.text_properties,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::StyleLabelStyleLabel {
+    type Archived = ArchivedStyleLabelStyleLabelMirror;
+    type Resolver = StyleLabelStyleLabelMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        StyleLabelStyleLabelMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::StyleLabelStyleLabel
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        StyleLabelStyleLabelMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::StyleLabelStyleLabel, __D> for ArchivedStyleLabelStyleLabelMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::StyleLabelStyleLabel, __D::Error> {
+        StyleLabelStyleLabelMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TextBodyMirror> for super::TextBody {
+    fn from(item: TextBodyMirror) -> Self {
+        Self {
+            extra: item.extra,
+            properties: item.properties,
+            text_list_styles: item.text_list_styles,
+            text_paragraphs: item.text_paragraphs,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TextBody {
+    type Archived = ArchivedTextBodyMirror;
+    type Resolver = TextBodyMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TextBodyMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TextBody
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TextBodyMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TextBody, __D> for ArchivedTextBodyMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::TextBody, __D::Error> {
+        TextBodyMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TextEffectColorListMirror> for super::TextEffectColorList {
+    fn from(item: TextEffectColorListMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            hue_dir: item.hue_dir,
+            meth: item.meth,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TextEffectColorList {
+    type Archived = ArchivedTextEffectColorListMirror;
+    type Resolver = TextEffectColorListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TextEffectColorListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TextEffectColorList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TextEffectColorListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TextEffectColorList, __D> for ArchivedTextEffectColorListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::TextEffectColorList, __D::Error> {
+        TextEffectColorListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TextFillColorListMirror> for super::TextFillColorList {
+    fn from(item: TextFillColorListMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            hue_dir: item.hue_dir,
+            meth: item.meth,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TextFillColorList {
+    type Archived = ArchivedTextFillColorListMirror;
+    type Resolver = TextFillColorListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TextFillColorListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TextFillColorList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TextFillColorListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TextFillColorList, __D> for ArchivedTextFillColorListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::TextFillColorList, __D::Error> {
+        TextFillColorListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TextLineColorListMirror> for super::TextLineColorList {
+    fn from(item: TextLineColorListMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            hue_dir: item.hue_dir,
+            meth: item.meth,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TextLineColorList {
+    type Archived = ArchivedTextLineColorListMirror;
+    type Resolver = TextLineColorListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TextLineColorListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TextLineColorList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TextLineColorListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TextLineColorList, __D> for ArchivedTextLineColorListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::TextLineColorList, __D::Error> {
+        TextLineColorListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TextPropertiesMirror> for super::TextProperties {
+    fn from(item: TextPropertiesMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TextProperties {
+    type Archived = ArchivedTextPropertiesMirror;
+    type Resolver = TextPropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TextPropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TextProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TextPropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TextProperties, __D> for ArchivedTextPropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::TextProperties, __D::Error> {
+        TextPropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TitleMirror> for super::Title {
+    fn from(item: TitleMirror) -> Self {
+        Self {
+            extra: item.extra,
+            lang: item.lang,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Title {
+    type Archived = ArchivedTitleMirror;
+    type Resolver = TitleMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TitleMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Title
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TitleMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Title, __D> for ArchivedTitleMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Title, __D::Error> {
+        TitleMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TitleCTNameMirror> for super::TitleCTName {
+    fn from(item: TitleCTNameMirror) -> Self {
+        Self {
+            extra: item.extra,
+            lang: item.lang,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TitleCTName {
+    type Archived = ArchivedTitleCTNameMirror;
+    type Resolver = TitleCTNameMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TitleCTNameMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TitleCTName
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TitleCTNameMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TitleCTName, __D> for ArchivedTitleCTNameMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::TitleCTName, __D::Error> {
+        TitleCTNameMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TitleSDNameMirror> for super::TitleSDName {
+    fn from(item: TitleSDNameMirror) -> Self {
+        Self {
+            extra: item.extra,
+            lang: item.lang,
+            unknown: item.unknown,
+            val: item.val,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TitleSDName {
+    type Archived = ArchivedTitleSDNameMirror;
+    type Resolver = TitleSDNameMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TitleSDNameMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TitleSDName
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TitleSDNameMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TitleSDName, __D> for ArchivedTitleSDNameMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::TitleSDName, __D::Error> {
+        TitleSDNameMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<VariableListMirror> for super::VariableList {
+    fn from(item: VariableListMirror) -> Self {
+        Self {
+            diagram_direction: item.diagram_direction,
+            extra: item.extra,
+            level_animation: item.level_animation,
+            maximum_children: item.maximum_children,
+            one_by_one_animation_string: item.one_by_one_animation_string,
+            organization_chart_branch_style: item.organization_chart_branch_style,
+            preferred_number_of_children: item.preferred_number_of_children,
+            shape_resize_style: item.shape_resize_style,
+            show_insert_node: item.show_insert_node,
+            show_organization_chart_user_interface: item.show_organization_chart_user_interface,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::VariableList {
+    type Archived = ArchivedVariableListMirror;
+    type Resolver = VariableListMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        VariableListMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::VariableList
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        VariableListMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::VariableList, __D> for ArchivedVariableListMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::VariableList, __D::Error> {
+        VariableListMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<WholeE2OFormattingMirror> for super::WholeE2OFormatting {
+    fn from(item: WholeE2OFormattingMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            outline: item.outline,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::WholeE2OFormatting {
+    type Archived = ArchivedWholeE2OFormattingMirror;
+    type Resolver = WholeE2OFormattingMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        WholeE2OFormattingMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::WholeE2OFormatting
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        WholeE2OFormattingMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::WholeE2OFormatting, __D> for ArchivedWholeE2OFormattingMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::WholeE2OFormatting, __D::Error> {
+        WholeE2OFormattingMirror::deserialize_with(self, deserializer)
+    }
 }
 
 impl From<LayoutElementContent> for super::LayoutElementContent {
@@ -285,22 +4577,25 @@ impl rkyv::Archive for super::LayoutElementContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::LayoutElementContent
+impl<__S> rkyv::Serialize<__S> for super::LayoutElementContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         LayoutElementContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::LayoutElementContent, D> for ArchivedLayoutElementContent
+impl<__D> rkyv::Deserialize<super::LayoutElementContent, __D> for ArchivedLayoutElementContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::LayoutElementContent, D::Error> {
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::LayoutElementContent, __D::Error> {
         LayoutElementContent::deserialize_with(self, deserializer)
     }
 }
@@ -332,22 +4627,22 @@ impl rkyv::Archive for super::LayoutNodeContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::LayoutNodeContent
+impl<__S> rkyv::Serialize<__S> for super::LayoutNodeContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         LayoutNodeContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::LayoutNodeContent, D> for ArchivedLayoutNodeContent
+impl<__D> rkyv::Deserialize<super::LayoutNodeContent, __D> for ArchivedLayoutNodeContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::LayoutNodeContent, D::Error> {
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::LayoutNodeContent, __D::Error> {
         LayoutNodeContent::deserialize_with(self, deserializer)
     }
 }

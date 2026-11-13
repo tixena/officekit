@@ -1004,6 +1004,7 @@ pub fn bibliography_structured_document_tag(
         &super::BIBLIOGRAPHY_STRUCTURED_DOCUMENT_TAG_SHAPE,
     );
     super::BibliographyStructuredDocumentTag {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -1326,6 +1327,7 @@ pub fn caption_settings(element: &Element) -> super::CaptionSettings {
 pub fn carriage_return(element: &Element) -> super::CarriageReturn {
     let reader = officekit_markup_base::Reader::new(element, &super::CARRIAGE_RETURN_SHAPE);
     super::CarriageReturn {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -1570,6 +1572,7 @@ pub fn citation_structured_document_tag(element: &Element) -> super::CitationStr
     let reader =
         officekit_markup_base::Reader::new(element, &super::CITATION_STRUCTURED_DOCUMENT_TAG_SHAPE);
     super::CitationStructuredDocumentTag {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -1750,6 +1753,7 @@ pub fn comment_information_block(element: &Element) -> super::CommentInformation
     let reader =
         officekit_markup_base::Reader::new(element, &super::COMMENT_INFORMATION_BLOCK_SHAPE);
     super::CommentInformationBlock {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2022,6 +2026,7 @@ pub fn continuation_separator_mark(element: &Element) -> super::ContinuationSepa
     let reader =
         officekit_markup_base::Reader::new(element, &super::CONTINUATION_SEPARATOR_MARK_SHAPE);
     super::ContinuationSeparatorMark {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2445,6 +2450,7 @@ pub fn date_block_long_day_format(element: &Element) -> super::DateBlockLongDayF
     let reader =
         officekit_markup_base::Reader::new(element, &super::DATE_BLOCK_LONG_DAY_FORMAT_SHAPE);
     super::DateBlockLongDayFormat {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2455,6 +2461,7 @@ pub fn date_block_long_month_format(element: &Element) -> super::DateBlockLongMo
     let reader =
         officekit_markup_base::Reader::new(element, &super::DATE_BLOCK_LONG_MONTH_FORMAT_SHAPE);
     super::DateBlockLongMonthFormat {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2465,6 +2472,7 @@ pub fn date_block_long_year_format(element: &Element) -> super::DateBlockLongYea
     let reader =
         officekit_markup_base::Reader::new(element, &super::DATE_BLOCK_LONG_YEAR_FORMAT_SHAPE);
     super::DateBlockLongYearFormat {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2475,6 +2483,7 @@ pub fn date_block_short_day_format(element: &Element) -> super::DateBlockShortDa
     let reader =
         officekit_markup_base::Reader::new(element, &super::DATE_BLOCK_SHORT_DAY_FORMAT_SHAPE);
     super::DateBlockShortDayFormat {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2485,6 +2494,7 @@ pub fn date_block_short_month_format(element: &Element) -> super::DateBlockShort
     let reader =
         officekit_markup_base::Reader::new(element, &super::DATE_BLOCK_SHORT_MONTH_FORMAT_SHAPE);
     super::DateBlockShortMonthFormat {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -2495,6 +2505,7 @@ pub fn date_block_short_year_format(element: &Element) -> super::DateBlockShortY
     let reader =
         officekit_markup_base::Reader::new(element, &super::DATE_BLOCK_SHORT_YEAR_FORMAT_SHAPE);
     super::DateBlockShortYearFormat {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -4629,6 +4640,7 @@ pub fn endnote_reference(element: &Element) -> super::EndnoteReference {
 pub fn endnote_reference_mark(element: &Element) -> super::EndnoteReferenceMark {
     let reader = officekit_markup_base::Reader::new(element, &super::ENDNOTE_REFERENCE_MARK_SHAPE);
     super::EndnoteReferenceMark {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -4746,6 +4758,7 @@ pub fn equation_structured_document_tag(element: &Element) -> super::EquationStr
     let reader =
         officekit_markup_base::Reader::new(element, &super::EQUATION_STRUCTURED_DOCUMENT_TAG_SHAPE);
     super::EquationStructuredDocumentTag {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -5092,6 +5105,7 @@ pub fn footnote_endnote_separator_mark(element: &Element) -> super::FootnoteEndn
     let reader =
         officekit_markup_base::Reader::new(element, &super::FOOTNOTE_ENDNOTE_SEPARATOR_MARK_SHAPE);
     super::FootnoteEndnoteSeparatorMark {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -5131,6 +5145,7 @@ pub fn footnote_reference(element: &Element) -> super::FootnoteReference {
 pub fn footnote_reference_mark(element: &Element) -> super::FootnoteReferenceMark {
     let reader = officekit_markup_base::Reader::new(element, &super::FOOTNOTE_REFERENCE_MARK_SHAPE);
     super::FootnoteReferenceMark {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -5543,6 +5558,7 @@ pub fn group_structured_document_tag(element: &Element) -> super::GroupStructure
     let reader =
         officekit_markup_base::Reader::new(element, &super::GROUP_STRUCTURED_DOCUMENT_TAG_SHAPE);
     super::GroupStructuredDocumentTag {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -7039,6 +7055,7 @@ pub fn non_breaking_hyphen_character(element: &Element) -> super::NonBreakingHyp
     let reader =
         officekit_markup_base::Reader::new(element, &super::NON_BREAKING_HYPHEN_CHARACTER_SHAPE);
     super::NonBreakingHyphenCharacter {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -7524,6 +7541,7 @@ pub fn optional_hyphen_character(element: &Element) -> super::OptionalHyphenChar
     let reader =
         officekit_markup_base::Reader::new(element, &super::OPTIONAL_HYPHEN_CHARACTER_SHAPE);
     super::OptionalHyphenCharacter {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -7657,6 +7675,7 @@ pub fn page_margins(element: &Element) -> super::PageMargins {
 pub fn page_number_block(element: &Element) -> super::PageNumberBlock {
     let reader = officekit_markup_base::Reader::new(element, &super::PAGE_NUMBER_BLOCK_SHAPE);
     super::PageNumberBlock {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -8396,6 +8415,7 @@ pub fn picture_structured_document_tag(element: &Element) -> super::PictureStruc
     let reader =
         officekit_markup_base::Reader::new(element, &super::PICTURE_STRUCTURED_DOCUMENT_TAG_SHAPE);
     super::PictureStructuredDocumentTag {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -8482,6 +8502,7 @@ pub fn position_of_last_calculated_page_break(
         &super::POSITION_OF_LAST_CALCULATED_PAGE_BREAK_SHAPE,
     );
     super::PositionOfLastCalculatedPageBreak {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -9714,6 +9735,7 @@ pub fn rich_text_structured_document_tag(
         &super::RICH_TEXT_STRUCTURED_DOCUMENT_TAG_SHAPE,
     );
     super::RichTextStructuredDocumentTag {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -11032,6 +11054,7 @@ pub fn symbol_character(element: &Element) -> super::SymbolCharacter {
 pub fn tab_character(element: &Element) -> super::TabCharacter {
     let reader = officekit_markup_base::Reader::new(element, &super::TAB_CHARACTER_SHAPE);
     super::TabCharacter {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -12184,6 +12207,7 @@ pub fn upgrade_document_on_open(element: &Element) -> super::UpgradeDocumentOnOp
     let reader =
         officekit_markup_base::Reader::new(element, &super::UPGRADE_DOCUMENT_ON_OPEN_SHAPE);
     super::UpgradeDocumentOnOpen {
+        extra: (),
         unknown: reader.finish(),
     }
 }

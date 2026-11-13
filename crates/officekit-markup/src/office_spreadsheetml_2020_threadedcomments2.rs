@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::spreadsheet;
 use officekit_xml::element::Element;
@@ -254,19 +257,22 @@ pub static CHECKSUM_SHAPE: officekit_markup_base::Shape = officekit_markup_base:
 
 /// The `xltc2:checksum` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `unsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Checksum {
+pub struct ChecksumWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2020Threadedcomments2Checksum,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xltc2:checksum` element of the tree a read gives: [`ChecksumWith`] holding nothing in
+/// `extra`.
+pub type Checksum = ChecksumWith<()>;
+
+impl Eq for ChecksumWith<()> {}
 
 /// The hooks of a context for the `xltc2` namespace.
 ///
@@ -337,32 +343,31 @@ pub trait Context: crate::Context {
 
 /// The `xltc2:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `spreadsheet::Extension`, in order.
-    pub extension: Vec<spreadsheet::Extension>,
+    pub extension: Vec<spreadsheet::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2020Threadedcomments2ExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xltc2:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
+
 /// The `xltc2:hyperlink` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_CommentHyperlink`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Hyperlink {
+pub struct HyperlinkWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2020Threadedcomments2Hyperlink,
     /// The attribute `length`, when the element has it.
     pub length: Option<String>,
     /// The attribute `startIndex`, when the element has it.
@@ -372,6 +377,12 @@ pub struct Hyperlink {
     /// The attribute `url`, when the element has it.
     pub url: Option<String>,
 }
+
+/// The `xltc2:hyperlink` element of the tree a read gives: [`HyperlinkWith`] holding nothing in
+/// `extra`.
+pub type Hyperlink = HyperlinkWith<()>;
+
+impl Eq for HyperlinkWith<()> {}
 
 /// The hooks of a visitor for the `xltc2` namespace.
 ///
@@ -396,7 +407,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl Checksum {
+impl<X: NodeExtra> ChecksumWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ChecksumWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ChecksumWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -420,7 +445,24 @@ impl officekit_markup_base::Write for Checksum {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                spreadsheet::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -441,7 +483,27 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl Hyperlink {
+impl<X: NodeExtra> HyperlinkWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> HyperlinkWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HyperlinkWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            length: self.length,
+            start_index: self.start_index,
+            unknown: self.unknown,
+            url: self.url,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

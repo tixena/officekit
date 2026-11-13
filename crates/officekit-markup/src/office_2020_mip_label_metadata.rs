@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -353,54 +356,55 @@ pub trait Context: crate::Context {
 
 /// The `clbl:ext` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ClassificationExtension`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Ext {
+pub struct ExtWith<X: NodeExtra> {
     /// The child that is an item of `drawing::AnyElementContent`, which the schema requires.
-    pub content: Box<drawing::AnyElementContent>,
+    pub content: Box<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office2020MipLabelMetadataExt,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `uri`, when the element has it.
     pub uri: Option<String>,
 }
 
+/// The `clbl:ext` element of the tree a read gives: [`ExtWith`] holding nothing in `extra`.
+pub type Ext = ExtWith<()>;
+
+impl Eq for ExtWith<()> {}
+
 /// The `clbl:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ClassificationExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `Ext`, in order.
-    pub ext: Vec<Ext>,
+    pub ext: Vec<ExtWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office2020MipLabelMetadataExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `clbl:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
+
 /// The `clbl:label` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ClassificationLabel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Label {
+pub struct LabelWith<X: NodeExtra> {
     /// The attribute `actionId`, when the element has it.
     pub action_id: Option<String>,
     /// The attribute `contentBits`, when the element has it.
     pub content_bits: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office2020MipLabelMetadataLabel,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `method`, when the element has it.
@@ -417,23 +421,31 @@ pub struct Label {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `clbl:label` element of the tree a read gives: [`LabelWith`] holding nothing in `extra`.
+pub type Label = LabelWith<()>;
+
+impl Eq for LabelWith<()> {}
+
 /// The `clbl:labelList` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ClassificationLabelList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LabelList {
+pub struct LabelListWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office2020MipLabelMetadataLabelList,
     /// The children that are `Label`, in order.
-    pub label: Vec<Label>,
+    pub label: Vec<LabelWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `clbl:labelList` element of the tree a read gives: [`LabelListWith`] holding nothing in
+/// `extra`.
+pub type LabelList = LabelListWith<()>;
+
+impl Eq for LabelListWith<()> {}
 
 /// The hooks of a visitor for the `clbl` namespace.
 ///
@@ -463,7 +475,25 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl Ext {
+impl<X: NodeExtra> ExtWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+            uri: self.uri,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -487,7 +517,21 @@ impl officekit_markup_base::Write for Ext {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            ext: officekit_markup_base::into_extra_list(self.ext, ExtWith::into_extra),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -508,7 +552,29 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl Label {
+impl<X: NodeExtra> LabelWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LabelWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LabelWith {
+            action_id: self.action_id,
+            content_bits: self.content_bits,
+            enabled: self.enabled,
+            extra: Default::default(),
+            id: self.id,
+            method: self.method,
+            name: self.name,
+            removed: self.removed,
+            set_date: self.set_date,
+            site_id: self.site_id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -540,7 +606,25 @@ impl officekit_markup_base::Write for Label {
     }
 }
 
-impl LabelList {
+impl<X: NodeExtra> LabelListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> LabelListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LabelListWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            label: officekit_markup_base::into_extra_list(self.label, LabelWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

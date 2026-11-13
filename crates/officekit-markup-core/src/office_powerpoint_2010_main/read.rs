@@ -323,6 +323,7 @@ pub fn c_nv_pr(element: &Element) -> super::CNvPr {
 pub fn conveyor(element: &Element) -> super::Conveyor {
     let reader = officekit_markup_base::Reader::new(element, &super::CONVEYOR_SHAPE);
     super::Conveyor {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -332,6 +333,7 @@ pub fn conveyor(element: &Element) -> super::Conveyor {
 pub fn creation_id(element: &Element) -> super::CreationId {
     let reader = officekit_markup_base::Reader::new(element, &super::CREATION_ID_SHAPE);
     super::CreationId {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -432,6 +434,7 @@ pub fn fade(element: &Element) -> super::Fade {
 pub fn ferris(element: &Element) -> super::Ferris {
     let reader = officekit_markup_base::Reader::new(element, &super::FERRIS_SHAPE);
     super::Ferris {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -441,6 +444,7 @@ pub fn ferris(element: &Element) -> super::Ferris {
 pub fn flash(element: &Element) -> super::Flash {
     let reader = officekit_markup_base::Reader::new(element, &super::FLASH_SHAPE);
     super::Flash {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -450,6 +454,7 @@ pub fn flash(element: &Element) -> super::Flash {
 pub fn flip(element: &Element) -> super::Flip {
     let reader = officekit_markup_base::Reader::new(element, &super::FLIP_SHAPE);
     super::Flip {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -475,6 +480,7 @@ pub fn flythrough(element: &Element) -> super::Flythrough {
 pub fn gallery(element: &Element) -> super::Gallery {
     let reader = officekit_markup_base::Reader::new(element, &super::GALLERY_SHAPE);
     super::Gallery {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -500,6 +506,7 @@ pub fn glitter(element: &Element) -> super::Glitter {
 pub fn honeycomb(element: &Element) -> super::Honeycomb {
     let reader = officekit_markup_base::Reader::new(element, &super::HONEYCOMB_SHAPE);
     super::Honeycomb {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -557,6 +564,7 @@ pub fn media(element: &Element) -> super::Media {
 pub fn mod_id(element: &Element) -> super::ModId {
     let reader = officekit_markup_base::Reader::new(element, &super::MOD_ID_SHAPE);
     super::ModId {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -633,6 +641,7 @@ pub fn pan(element: &Element) -> super::Pan {
 pub fn pause_evt(element: &Element) -> super::PauseEvt {
     let reader = officekit_markup_base::Reader::new(element, &super::PAUSE_EVT_SHAPE);
     super::PauseEvt {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -642,6 +651,7 @@ pub fn pause_evt(element: &Element) -> super::PauseEvt {
 pub fn play_evt(element: &Element) -> super::PlayEvt {
     let reader = officekit_markup_base::Reader::new(element, &super::PLAY_EVT_SHAPE);
     super::PlayEvt {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -668,6 +678,7 @@ pub fn prism(element: &Element) -> super::Prism {
 pub fn resume_evt(element: &Element) -> super::ResumeEvt {
     let reader = officekit_markup_base::Reader::new(element, &super::RESUME_EVT_SHAPE);
     super::ResumeEvt {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -866,6 +877,7 @@ pub fn sld_id_lst(element: &Element) -> super::SldIdLst {
 pub fn stop_evt(element: &Element) -> super::StopEvt {
     let reader = officekit_markup_base::Reader::new(element, &super::STOP_EVT_SHAPE);
     super::StopEvt {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -875,6 +887,7 @@ pub fn stop_evt(element: &Element) -> super::StopEvt {
 pub fn switch(element: &Element) -> super::Switch {
     let reader = officekit_markup_base::Reader::new(element, &super::SWITCH_SHAPE);
     super::Switch {
+        extra: (),
         unknown: reader.finish(),
     }
 }

@@ -223,6 +223,7 @@ use officekit_xml::element::Element;
 pub fn drop_zone_categories(element: &Element) -> super::DropZoneCategories {
     let reader = officekit_markup_base::Reader::new(element, &super::DROP_ZONE_CATEGORIES_SHAPE);
     super::DropZoneCategories {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -232,6 +233,7 @@ pub fn drop_zone_categories(element: &Element) -> super::DropZoneCategories {
 pub fn drop_zone_data(element: &Element) -> super::DropZoneData {
     let reader = officekit_markup_base::Reader::new(element, &super::DROP_ZONE_DATA_SHAPE);
     super::DropZoneData {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -241,6 +243,7 @@ pub fn drop_zone_data(element: &Element) -> super::DropZoneData {
 pub fn drop_zone_filter(element: &Element) -> super::DropZoneFilter {
     let reader = officekit_markup_base::Reader::new(element, &super::DROP_ZONE_FILTER_SHAPE);
     super::DropZoneFilter {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -250,6 +253,7 @@ pub fn drop_zone_filter(element: &Element) -> super::DropZoneFilter {
 pub fn drop_zone_series(element: &Element) -> super::DropZoneSeries {
     let reader = officekit_markup_base::Reader::new(element, &super::DROP_ZONE_SERIES_SHAPE);
     super::DropZoneSeries {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -259,6 +263,7 @@ pub fn drop_zone_series(element: &Element) -> super::DropZoneSeries {
 pub fn drop_zones_visible(element: &Element) -> super::DropZonesVisible {
     let reader = officekit_markup_base::Reader::new(element, &super::DROP_ZONES_VISIBLE_SHAPE);
     super::DropZonesVisible {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -268,6 +273,7 @@ pub fn drop_zones_visible(element: &Element) -> super::DropZonesVisible {
 pub fn in_sketch_mode(element: &Element) -> super::InSketchMode {
     let reader = officekit_markup_base::Reader::new(element, &super::IN_SKETCH_MODE_SHAPE);
     super::InSketchMode {
+        extra: (),
         unknown: reader.finish(),
     }
 }

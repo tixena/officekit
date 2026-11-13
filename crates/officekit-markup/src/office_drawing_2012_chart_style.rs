@@ -218,9 +218,13 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use core::mem;
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -1079,46 +1083,44 @@ pub static LINE_WIDTH_SCALE_SHAPE: officekit_markup_base::Shape = officekit_mark
 
 /// The `cs:axisTitle` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AxisTitle {
+pub struct AxisTitleWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleAxisTitle,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cs:axisTitle` element of the tree a read gives: [`AxisTitleWith`] holding nothing in
+/// `extra`.
+pub type AxisTitle = AxisTitleWith<()>;
+
+impl Eq for AxisTitleWith<()> {}
+
 /// The `cs:bodyPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TextBodyProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BodyPr {
+pub struct BodyPrWith<X: NodeExtra> {
     /// The attribute `anchor`, when the element has it.
     pub anchor: Option<drawing::TextAnchoringTypes>,
     /// The attribute `anchorCtr`, when the element has it.
@@ -1128,7 +1130,9 @@ pub struct BodyPr {
     /// The attribute `compatLnSpc`, when the element has it.
     pub compat_ln_spc: Option<String>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleBodyPr,
     /// The attribute `forceAA`, when the element has it.
     pub force_aa: Option<String>,
     /// The attribute `fromWordArt`, when the element has it.
@@ -1140,7 +1144,7 @@ pub struct BodyPr {
     /// The attribute `numCol`, when the element has it.
     pub num_col: Option<drawing::TextColumnCount>,
     /// The child that is `drawing::PresetTextWarp`, when there is one.
-    pub preset_text_warp: Option<Box<drawing::PresetTextWarp>>,
+    pub preset_text_warp: Option<Box<drawing::PresetTextWarpWith<X>>>,
     /// The attribute `rIns`, when the element has it.
     pub r_ins: Option<drawing::StCoordinate32>,
     /// The attribute `rot`, when the element has it.
@@ -1148,7 +1152,7 @@ pub struct BodyPr {
     /// The attribute `rtlCol`, when the element has it.
     pub rtl_col: Option<String>,
     /// The child that is `drawing::Scene3d`, when there is one.
-    pub scene3d: Option<Box<drawing::Scene3d>>,
+    pub scene3d: Option<Box<drawing::Scene3dWith<X>>>,
     /// The attribute `spcCol`, when the element has it.
     pub spc_col: Option<drawing::PositiveCoordinatePoint>,
     /// The attribute `spcFirstLastPara`, when the element has it.
@@ -1156,9 +1160,9 @@ pub struct BodyPr {
     /// The attribute `tIns`, when the element has it.
     pub t_ins: Option<drawing::StCoordinate32>,
     /// The child that is an item of `drawing::Text3DContent`, when there is one.
-    pub text3d_content: Option<Box<drawing::Text3DContent>>,
+    pub text3d_content: Option<Box<drawing::Text3DContentWith<X>>>,
     /// The child that is an item of `drawing::TextAutofitContent`, when there is one.
-    pub text_autofit_content: Option<Box<drawing::TextAutofitContent>>,
+    pub text_autofit_content: Option<Box<drawing::TextAutofitContentWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `upright`, when the element has it.
@@ -1170,6 +1174,11 @@ pub struct BodyPr {
     /// The attribute `wrap`, when the element has it.
     pub wrap: Option<drawing::TextWrappingTypes>,
 }
+
+/// The `cs:bodyPr` element of the tree a read gives: [`BodyPrWith`] holding nothing in `extra`.
+pub type BodyPr = BodyPrWith<()>;
+
+impl Eq for BodyPrWith<()> {}
 
 /// The simple type `ST_Boolean`, kept as the text the file carried.
 ///
@@ -1198,176 +1207,185 @@ pub enum BooleanMember {
 
 /// The `cs:categoryAxis` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_AxisProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CategoryAxisAxisProps {
+pub struct CategoryAxisAxisPropsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleCategoryAxisAxisProps,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:categoryAxis` element of the tree a read gives: [`CategoryAxisAxisPropsWith`] holding
+/// nothing in `extra`.
+pub type CategoryAxisAxisProps = CategoryAxisAxisPropsWith<()>;
+
+impl Eq for CategoryAxisAxisPropsWith<()> {}
 
 /// The `cs:categoryAxis` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CategoryAxisStyleEntry {
+pub struct CategoryAxisStyleEntryWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleCategoryAxisStyleEntry,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:categoryAxis` element of the tree a read gives: [`CategoryAxisStyleEntryWith`] holding
+/// nothing in `extra`.
+pub type CategoryAxisStyleEntry = CategoryAxisStyleEntryWith<()>;
+
+impl Eq for CategoryAxisStyleEntryWith<()> {}
 
 /// The `cs:chartArea` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ChartArea {
+pub struct ChartAreaWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleChartArea,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:chartArea` element of the tree a read gives: [`ChartAreaWith`] holding nothing in
+/// `extra`.
+pub type ChartArea = ChartAreaWith<()>;
+
+impl Eq for ChartAreaWith<()> {}
 
 /// The `cs:chartStyle` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ChartStyle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ChartStyle {
+pub struct ChartStyleWith<X: NodeExtra> {
     /// The child that is `AxisTitle`, which the schema requires.
-    pub axis_title: Box<AxisTitle>,
+    pub axis_title: Box<AxisTitleWith<X>>,
     /// The child that is `CategoryAxisStyleEntry`, which the schema requires.
-    pub category_axis_style_entry: Box<CategoryAxisStyleEntry>,
+    pub category_axis_style_entry: Box<CategoryAxisStyleEntryWith<X>>,
     /// The child that is `ChartArea`, which the schema requires.
-    pub chart_area: Box<ChartArea>,
+    pub chart_area: Box<ChartAreaWith<X>>,
     /// The child that is `DataLabel`, which the schema requires.
-    pub data_label: Box<DataLabel>,
+    pub data_label: Box<DataLabelWith<X>>,
     /// The child that is `DataLabelCallout`, when there is one.
-    pub data_label_callout: Option<Box<DataLabelCallout>>,
+    pub data_label_callout: Option<Box<DataLabelCalloutWith<X>>>,
     /// The child that is `DataPoint`, which the schema requires.
-    pub data_point: Box<DataPoint>,
+    pub data_point: Box<DataPointWith<X>>,
     /// The child that is `DataPoint3D`, which the schema requires.
-    pub data_point3d: Box<DataPoint3D>,
+    pub data_point3d: Box<DataPoint3DWith<X>>,
     /// The child that is `DataPointLine`, which the schema requires.
-    pub data_point_line: Box<DataPointLine>,
+    pub data_point_line: Box<DataPointLineWith<X>>,
     /// The child that is `DataPointMarker`, which the schema requires.
-    pub data_point_marker: Box<DataPointMarker>,
+    pub data_point_marker: Box<DataPointMarkerWith<X>>,
     /// The child that is `DataPointMarkerLayout`, when there is one.
-    pub data_point_marker_layout: Option<Box<DataPointMarkerLayout>>,
+    pub data_point_marker_layout: Option<Box<DataPointMarkerLayoutWith<X>>>,
     /// The child that is `DataPointWireframe`, which the schema requires.
-    pub data_point_wireframe: Box<DataPointWireframe>,
+    pub data_point_wireframe: Box<DataPointWireframeWith<X>>,
     /// The child that is `DataTableStyleEntry`, which the schema requires.
-    pub data_table_style_entry: Box<DataTableStyleEntry>,
+    pub data_table_style_entry: Box<DataTableStyleEntryWith<X>>,
     /// The child that is `DownBar`, which the schema requires.
-    pub down_bar: Box<DownBar>,
+    pub down_bar: Box<DownBarWith<X>>,
     /// The child that is `DropLine`, which the schema requires.
-    pub drop_line: Box<DropLine>,
+    pub drop_line: Box<DropLineWith<X>>,
     /// The child that is `ErrorBar`, which the schema requires.
-    pub error_bar: Box<ErrorBar>,
+    pub error_bar: Box<ErrorBarWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleChartStyle,
     /// The child that is `Floor`, which the schema requires.
-    pub floor: Box<Floor>,
+    pub floor: Box<FloorWith<X>>,
     /// The child that is `GridlineMajor`, which the schema requires.
-    pub gridline_major: Box<GridlineMajor>,
+    pub gridline_major: Box<GridlineMajorWith<X>>,
     /// The child that is `GridlineMinor`, which the schema requires.
-    pub gridline_minor: Box<GridlineMinor>,
+    pub gridline_minor: Box<GridlineMinorWith<X>>,
     /// The child that is `HiLoLine`, which the schema requires.
-    pub hi_lo_line: Box<HiLoLine>,
+    pub hi_lo_line: Box<HiLoLineWith<X>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The child that is `LeaderLine`, which the schema requires.
-    pub leader_line: Box<LeaderLine>,
+    pub leader_line: Box<LeaderLineWith<X>>,
     /// The child that is `LegendStyleEntry`, which the schema requires.
-    pub legend_style_entry: Box<LegendStyleEntry>,
+    pub legend_style_entry: Box<LegendStyleEntryWith<X>>,
     /// The child that is `PlotArea`, which the schema requires.
-    pub plot_area: Box<PlotArea>,
+    pub plot_area: Box<PlotAreaWith<X>>,
     /// The child that is `PlotArea3D`, which the schema requires.
-    pub plot_area3d: Box<PlotArea3D>,
+    pub plot_area3d: Box<PlotArea3DWith<X>>,
     /// The child that is `SeriesAxisStyleEntry`, which the schema requires.
-    pub series_axis_style_entry: Box<SeriesAxisStyleEntry>,
+    pub series_axis_style_entry: Box<SeriesAxisStyleEntryWith<X>>,
     /// The child that is `SeriesLine`, which the schema requires.
-    pub series_line: Box<SeriesLine>,
+    pub series_line: Box<SeriesLineWith<X>>,
     /// The child that is `TitleStyleEntry`, which the schema requires.
-    pub title_style_entry: Box<TitleStyleEntry>,
+    pub title_style_entry: Box<TitleStyleEntryWith<X>>,
     /// The child that is `TrendlineLabel`, which the schema requires.
-    pub trendline_label: Box<TrendlineLabel>,
+    pub trendline_label: Box<TrendlineLabelWith<X>>,
     /// The child that is `TrendlineStyleEntry`, which the schema requires.
-    pub trendline_style_entry: Box<TrendlineStyleEntry>,
+    pub trendline_style_entry: Box<TrendlineStyleEntryWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `UpBar`, which the schema requires.
-    pub up_bar: Box<UpBar>,
+    pub up_bar: Box<UpBarWith<X>>,
     /// The child that is `ValueAxisStyleEntry`, which the schema requires.
-    pub value_axis_style_entry: Box<ValueAxisStyleEntry>,
+    pub value_axis_style_entry: Box<ValueAxisStyleEntryWith<X>>,
     /// The child that is `Wall`, which the schema requires.
-    pub wall: Box<Wall>,
+    pub wall: Box<WallWith<X>>,
 }
+
+/// The `cs:chartStyle` element of the tree a read gives: [`ChartStyleWith`] holding nothing in
+/// `extra`.
+pub type ChartStyle = ChartStyleWith<()>;
+
+impl Eq for ChartStyleWith<()> {}
 
 /// The `cs:colorStyle` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ColorStyle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorStyle {
+pub struct ColorStyleWith<X: NodeExtra> {
     /// The children that are an item of `drawing::ColorContent`, in order.
-    pub content: Vec<drawing::ColorContent>,
+    pub content: Vec<drawing::ColorContentWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleColorStyle,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `meth`, when the element has it.
@@ -1375,8 +1393,14 @@ pub struct ColorStyle {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The children that are `Variation`, in order.
-    pub variation: Vec<Variation>,
+    pub variation: Vec<VariationWith<X>>,
 }
+
+/// The `cs:colorStyle` element of the tree a read gives: [`ColorStyleWith`] holding nothing in
+/// `extra`.
+pub type ColorStyle = ColorStyleWith<()>;
+
+impl Eq for ColorStyleWith<()> {}
 
 /// The hooks of a context for the `cs` namespace.
 ///
@@ -2464,80 +2488,83 @@ pub trait Context: crate::Context {
 
 /// The `cs:dataLabel` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataLabel {
+pub struct DataLabelWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleDataLabel,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:dataLabel` element of the tree a read gives: [`DataLabelWith`] holding nothing in
+/// `extra`.
+pub type DataLabel = DataLabelWith<()>;
+
+impl Eq for DataLabelWith<()> {}
 
 /// The `cs:dataLabelCallout` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataLabelCallout {
+pub struct DataLabelCalloutWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleDataLabelCallout,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cs:dataLabelCallout` element of the tree a read gives: [`DataLabelCalloutWith`] holding
+/// nothing in `extra`.
+pub type DataLabelCallout = DataLabelCalloutWith<()>;
+
+impl Eq for DataLabelCalloutWith<()> {}
+
 /// The `cs:dataLabels` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DataLabelsProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataLabels {
+pub struct DataLabelsWith<X: NodeExtra> {
     /// The attribute `categoryName`, when the element has it.
     pub category_name: Option<Boolean>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleDataLabels,
     /// The attribute `legendKey`, when the element has it.
     pub legend_key: Option<Boolean>,
     /// The attribute `percentage`, when the element has it.
@@ -2551,6 +2578,12 @@ pub struct DataLabels {
     /// The attribute `value`, when the element has it.
     pub value: Option<Boolean>,
 }
+
+/// The `cs:dataLabels` element of the tree a read gives: [`DataLabelsWith`] holding nothing in
+/// `extra`.
+pub type DataLabels = DataLabelsWith<()>;
+
+impl Eq for DataLabelsWith<()> {}
 
 /// The simple type `ST_DataLabelsPosition`, kept as the text the file carried.
 ///
@@ -2583,142 +2616,151 @@ pub enum DataLabelsPositionMember {
 
 /// The `cs:dataPoint` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataPoint {
+pub struct DataPointWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleDataPoint,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:dataPoint` element of the tree a read gives: [`DataPointWith`] holding nothing in
+/// `extra`.
+pub type DataPoint = DataPointWith<()>;
+
+impl Eq for DataPointWith<()> {}
 
 /// The `cs:dataPoint3D` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataPoint3D {
+pub struct DataPoint3DWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleDataPoint3D,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:dataPoint3D` element of the tree a read gives: [`DataPoint3DWith`] holding nothing in
+/// `extra`.
+pub type DataPoint3D = DataPoint3DWith<()>;
+
+impl Eq for DataPoint3DWith<()> {}
 
 /// The `cs:dataPointLine` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataPointLine {
+pub struct DataPointLineWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleDataPointLine,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `LineWidthScale`, when there is one.
-    pub width_scale: Option<Box<LineWidthScale>>,
+    pub width_scale: Option<Box<LineWidthScaleWith<X>>>,
 }
+
+/// The `cs:dataPointLine` element of the tree a read gives: [`DataPointLineWith`] holding nothing
+/// in `extra`.
+pub type DataPointLine = DataPointLineWith<()>;
+
+impl Eq for DataPointLineWith<()> {}
 
 /// The `cs:dataPointMarker` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataPointMarker {
+pub struct DataPointMarkerWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleDataPointMarker,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cs:dataPointMarker` element of the tree a read gives: [`DataPointMarkerWith`] holding
+/// nothing in `extra`.
+pub type DataPointMarker = DataPointMarkerWith<()>;
+
+impl Eq for DataPointMarkerWith<()> {}
+
 /// The `cs:dataPointMarkerLayout` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_MarkerLayout`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataPointMarkerLayout {
+pub struct DataPointMarkerLayoutWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleDataPointMarkerLayout,
     /// The attribute `size`, when the element has it.
     pub size: Option<String>,
     /// The attribute `symbol`, when the element has it.
@@ -2727,52 +2769,58 @@ pub struct DataPointMarkerLayout {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cs:dataPointMarkerLayout` element of the tree a read gives: [`DataPointMarkerLayoutWith`]
+/// holding nothing in `extra`.
+pub type DataPointMarkerLayout = DataPointMarkerLayoutWith<()>;
+
+impl Eq for DataPointMarkerLayoutWith<()> {}
+
 /// The `cs:dataPointWireframe` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataPointWireframe {
+pub struct DataPointWireframeWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleDataPointWireframe,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cs:dataPointWireframe` element of the tree a read gives: [`DataPointWireframeWith`] holding
+/// nothing in `extra`.
+pub type DataPointWireframe = DataPointWireframeWith<()>;
+
+impl Eq for DataPointWireframeWith<()> {}
+
 /// The `cs:dataSeries` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DataSeriesProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataSeries {
+pub struct DataSeriesWith<X: NodeExtra> {
     /// The attribute `doughnutHoleSize`, when the element has it.
     pub doughnut_hole_size: Option<String>,
     /// The attribute `dropLines`, when the element has it.
     pub drop_lines: Option<Boolean>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleDataSeries,
     /// The attribute `gapDepth`, when the element has it.
     pub gap_depth: Option<String>,
     /// The attribute `gapWidth`, when the element has it.
@@ -2789,16 +2837,19 @@ pub struct DataSeries {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cs:dataSeries` element of the tree a read gives: [`DataSeriesWith`] holding nothing in
+/// `extra`.
+pub type DataSeries = DataSeriesWith<()>;
+
+impl Eq for DataSeriesWith<()> {}
+
 /// The `cs:dataTable` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DataTableProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataTableDataTableProps {
+pub struct DataTableDataTablePropsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleDataTableDataTableProps,
     /// The attribute `horizontalBorder`, when the element has it.
     pub horizontal_border: Option<Boolean>,
     /// The attribute `legendKeys`, when the element has it.
@@ -2811,48 +2862,52 @@ pub struct DataTableDataTableProps {
     pub vertical_border: Option<Boolean>,
 }
 
+/// The `cs:dataTable` element of the tree a read gives: [`DataTableDataTablePropsWith`] holding
+/// nothing in `extra`.
+pub type DataTableDataTableProps = DataTableDataTablePropsWith<()>;
+
+impl Eq for DataTableDataTablePropsWith<()> {}
+
 /// The `cs:dataTable` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataTableStyleEntry {
+pub struct DataTableStyleEntryWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleDataTableStyleEntry,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cs:dataTable` element of the tree a read gives: [`DataTableStyleEntryWith`] holding nothing
+/// in `extra`.
+pub type DataTableStyleEntry = DataTableStyleEntryWith<()>;
+
+impl Eq for DataTableStyleEntryWith<()> {}
+
 /// The `cs:defRPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TextCharacterProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DefRPr {
+pub struct DefRPrWith<X: NodeExtra> {
     /// The attribute `altLang`, when the element has it.
     pub alt_lang: Option<String>,
     /// The attribute `b`, when the element has it.
@@ -2864,23 +2919,25 @@ pub struct DefRPr {
     /// The attribute `cap`, when the element has it.
     pub cap: Option<drawing::TextCapTypes>,
     /// The child that is `drawing::ClickHyperlink`, when there is one.
-    pub click_hyperlink: Option<Box<drawing::ClickHyperlink>>,
+    pub click_hyperlink: Option<Box<drawing::ClickHyperlinkWith<X>>>,
     /// The child that is `drawing::ComplexScriptFont`, when there is one.
-    pub complex_script_font: Option<Box<drawing::ComplexScriptFont>>,
+    pub complex_script_font: Option<Box<drawing::ComplexScriptFontWith<X>>>,
     /// The attribute `dirty`, when the element has it.
     pub dirty: Option<String>,
     /// The child that is `drawing::EastAsianFont`, when there is one.
-    pub east_asian_font: Option<Box<drawing::EastAsianFont>>,
+    pub east_asian_font: Option<Box<drawing::EastAsianFontWith<X>>>,
     /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
-    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContentWith<X>>>,
     /// The attribute `err`, when the element has it.
     pub err: Option<String>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleDefRPr,
     /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
-    pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<drawing::FillPropertiesContentWith<X>>>,
     /// The child that is `drawing::HighlightColor`, when there is one.
-    pub highlight_color: Option<Box<drawing::HighlightColor>>,
+    pub highlight_color: Option<Box<drawing::HighlightColorWith<X>>>,
     /// The attribute `i`, when the element has it.
     pub i: Option<String>,
     /// The attribute `kern`, when the element has it.
@@ -2890,17 +2947,17 @@ pub struct DefRPr {
     /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
     /// The child that is `drawing::LatinFont`, when there is one.
-    pub latin_font: Option<Box<drawing::LatinFont>>,
+    pub latin_font: Option<Box<drawing::LatinFontWith<X>>>,
     /// The child that is `drawing::MouseOverHyperlink`, when there is one.
-    pub mouse_over_hyperlink: Option<Box<drawing::MouseOverHyperlink>>,
+    pub mouse_over_hyperlink: Option<Box<drawing::MouseOverHyperlinkWith<X>>>,
     /// The attribute `noProof`, when the element has it.
     pub no_proof: Option<String>,
     /// The attribute `normalizeH`, when the element has it.
     pub normalize_h: Option<String>,
     /// The child that is `drawing::Outline`, when there is one.
-    pub outline: Option<Box<drawing::Outline>>,
+    pub outline: Option<Box<drawing::OutlineWith<X>>>,
     /// The child that is `drawing::RightToLeftRun`, when there is one.
-    pub right_to_left_run: Option<Box<drawing::RightToLeftRun>>,
+    pub right_to_left_run: Option<Box<drawing::RightToLeftRunWith<X>>>,
     /// The attribute `smtClean`, when the element has it.
     pub smt_clean: Option<String>,
     /// The attribute `smtId`, when the element has it.
@@ -2910,359 +2967,389 @@ pub struct DefRPr {
     /// The attribute `strike`, when the element has it.
     pub strike: Option<drawing::TextStrikeType>,
     /// The child that is `drawing::SymbolFont`, when there is one.
-    pub symbol_font: Option<Box<drawing::SymbolFont>>,
+    pub symbol_font: Option<Box<drawing::SymbolFontWith<X>>>,
     /// The attribute `sz`, when the element has it.
     pub sz: Option<drawing::TextFontSize>,
     /// The child that is an item of `drawing::TextUnderlineFillContent`, when there is one.
-    pub text_underline_fill_content: Option<Box<drawing::TextUnderlineFillContent>>,
+    pub text_underline_fill_content: Option<Box<drawing::TextUnderlineFillContentWith<X>>>,
     /// The child that is an item of `drawing::TextUnderlineLineContent`, when there is one.
-    pub text_underline_line_content: Option<Box<drawing::TextUnderlineLineContent>>,
+    pub text_underline_line_content: Option<Box<drawing::TextUnderlineLineContentWith<X>>>,
     /// The attribute `u`, when the element has it.
     pub u: Option<drawing::TextUnderlineTypes>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cs:defRPr` element of the tree a read gives: [`DefRPrWith`] holding nothing in `extra`.
+pub type DefRPr = DefRPrWith<()>;
+
+impl Eq for DefRPrWith<()> {}
+
 /// The `cs:downBar` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DownBar {
+pub struct DownBarWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleDownBar,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:downBar` element of the tree a read gives: [`DownBarWith`] holding nothing in `extra`.
+pub type DownBar = DownBarWith<()>;
+
+impl Eq for DownBarWith<()> {}
 
 /// The `cs:dropLine` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropLine {
+pub struct DropLineWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleDropLine,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `LineWidthScale`, when there is one.
-    pub width_scale: Option<Box<LineWidthScale>>,
+    pub width_scale: Option<Box<LineWidthScaleWith<X>>>,
 }
+
+/// The `cs:dropLine` element of the tree a read gives: [`DropLineWith`] holding nothing in `extra`.
+pub type DropLine = DropLineWith<()>;
+
+impl Eq for DropLineWith<()> {}
 
 /// The `cs:effectRef` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleReference`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EffectRef {
+pub struct EffectRefWith<X: NodeExtra> {
     /// The child that is an item of `drawing::ColorContent`, when there is one.
-    pub content: Option<Box<drawing::ColorContent>>,
+    pub content: Option<Box<drawing::ColorContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleEffectRef,
     /// The child that is `StyleClr`, when there is one.
-    pub style_clr: Option<Box<StyleClr>>,
+    pub style_clr: Option<Box<StyleClrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:effectRef` element of the tree a read gives: [`EffectRefWith`] holding nothing in
+/// `extra`.
+pub type EffectRef = EffectRefWith<()>;
+
+impl Eq for EffectRefWith<()> {}
 
 /// The `cs:errorBar` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ErrorBar {
+pub struct ErrorBarWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleErrorBar,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:errorBar` element of the tree a read gives: [`ErrorBarWith`] holding nothing in `extra`.
+pub type ErrorBar = ErrorBarWith<()>;
+
+impl Eq for ErrorBarWith<()> {}
 
 /// The `cs:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_OfficeArtExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `drawing::Extension`, in order.
-    pub extension: Vec<drawing::Extension>,
+    pub extension: Vec<drawing::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
 
 /// The `cs:fillRef` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleReference`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FillRef {
+pub struct FillRefWith<X: NodeExtra> {
     /// The child that is an item of `drawing::ColorContent`, when there is one.
-    pub content: Option<Box<drawing::ColorContent>>,
+    pub content: Option<Box<drawing::ColorContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleFillRef,
     /// The child that is `StyleClr`, when there is one.
-    pub style_clr: Option<Box<StyleClr>>,
+    pub style_clr: Option<Box<StyleClrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:fillRef` element of the tree a read gives: [`FillRefWith`] holding nothing in `extra`.
+pub type FillRef = FillRefWith<()>;
+
+impl Eq for FillRefWith<()> {}
 
 /// The `cs:floor` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Floor {
+pub struct FloorWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleFloor,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cs:floor` element of the tree a read gives: [`FloorWith`] holding nothing in `extra`.
+pub type Floor = FloorWith<()>;
+
+impl Eq for FloorWith<()> {}
+
 /// The `cs:fontRef` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_FontReference`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FontRef {
+pub struct FontRefWith<X: NodeExtra> {
     /// The child that is an item of `drawing::ColorContent`, when there is one.
-    pub content: Option<Box<drawing::ColorContent>>,
+    pub content: Option<Box<drawing::ColorContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleFontRef,
     /// The attribute `idx`, when the element has it.
     pub idx: Option<drawing::FontCollectionIndex>,
     /// The attribute `mods`, when the element has it.
     pub mods: Option<String>,
     /// The child that is `StyleClr`, when there is one.
-    pub style_clr: Option<Box<StyleClr>>,
+    pub style_clr: Option<Box<StyleClrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:fontRef` element of the tree a read gives: [`FontRefWith`] holding nothing in `extra`.
+pub type FontRef = FontRefWith<()>;
+
+impl Eq for FontRefWith<()> {}
 
 /// The `cs:gridlineMajor` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GridlineMajor {
+pub struct GridlineMajorWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleGridlineMajor,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:gridlineMajor` element of the tree a read gives: [`GridlineMajorWith`] holding nothing
+/// in `extra`.
+pub type GridlineMajor = GridlineMajorWith<()>;
+
+impl Eq for GridlineMajorWith<()> {}
 
 /// The `cs:gridlineMinor` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GridlineMinor {
+pub struct GridlineMinorWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleGridlineMinor,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:gridlineMinor` element of the tree a read gives: [`GridlineMinorWith`] holding nothing
+/// in `extra`.
+pub type GridlineMinor = GridlineMinorWith<()>;
+
+impl Eq for GridlineMinorWith<()> {}
 
 /// The `cs:hiLoLine` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HiLoLine {
+pub struct HiLoLineWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleHiLoLine,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `LineWidthScale`, when there is one.
-    pub width_scale: Option<Box<LineWidthScale>>,
+    pub width_scale: Option<Box<LineWidthScaleWith<X>>>,
 }
+
+/// The `cs:hiLoLine` element of the tree a read gives: [`HiLoLineWith`] holding nothing in `extra`.
+pub type HiLoLine = HiLoLineWith<()>;
+
+impl Eq for HiLoLineWith<()> {}
 
 /// The `cs:leaderLine` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LeaderLine {
+pub struct LeaderLineWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleLeaderLine,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `LineWidthScale`, when there is one.
-    pub width_scale: Option<Box<LineWidthScale>>,
+    pub width_scale: Option<Box<LineWidthScaleWith<X>>>,
 }
+
+/// The `cs:leaderLine` element of the tree a read gives: [`LeaderLineWith`] holding nothing in
+/// `extra`.
+pub type LeaderLine = LeaderLineWith<()>;
+
+impl Eq for LeaderLineWith<()> {}
 
 /// The `cs:legend` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_LegendProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LegendLegendProps {
+pub struct LegendLegendPropsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleLegendLegendProps,
     /// The attribute `includeInLayout`, when the element has it.
     pub include_in_layout: Option<Boolean>,
     /// The attribute `position`, when the element has it.
@@ -3272,6 +3359,12 @@ pub struct LegendLegendProps {
     /// The attribute `visible`, when the element has it.
     pub visible: Option<Boolean>,
 }
+
+/// The `cs:legend` element of the tree a read gives: [`LegendLegendPropsWith`] holding nothing in
+/// `extra`.
+pub type LegendLegendProps = LegendLegendPropsWith<()>;
+
+impl Eq for LegendLegendPropsWith<()> {}
 
 /// The simple type `ST_LegendPosition`, kept as the text the file carried.
 ///
@@ -3304,69 +3397,77 @@ pub enum LegendPositionMember {
 
 /// The `cs:legend` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LegendStyleEntry {
+pub struct LegendStyleEntryWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleLegendStyleEntry,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cs:legend` element of the tree a read gives: [`LegendStyleEntryWith`] holding nothing in
+/// `extra`.
+pub type LegendStyleEntry = LegendStyleEntryWith<()>;
+
+impl Eq for LegendStyleEntryWith<()> {}
+
 /// The `cs:lineWidthScale` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LineWidthScale {
+pub struct LineWidthScaleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleLineWidthScale,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `cs:lineWidthScale` element of the tree a read gives: [`LineWidthScaleWith`] holding nothing
+/// in `extra`.
+pub type LineWidthScale = LineWidthScaleWith<()>;
+
+impl Eq for LineWidthScaleWith<()> {}
+
 /// The `cs:lnRef` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleReference`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LnRef {
+pub struct LnRefWith<X: NodeExtra> {
     /// The child that is an item of `drawing::ColorContent`, when there is one.
-    pub content: Option<Box<drawing::ColorContent>>,
+    pub content: Option<Box<drawing::ColorContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleLnRef,
     /// The child that is `StyleClr`, when there is one.
-    pub style_clr: Option<Box<StyleClr>>,
+    pub style_clr: Option<Box<StyleClrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:lnRef` element of the tree a read gives: [`LnRefWith`] holding nothing in `extra`.
+pub type LnRef = LnRefWith<()>;
+
+impl Eq for LnRefWith<()> {}
 
 /// The simple type `ST_MarkerStyle`, kept as the text the file carried.
 ///
@@ -3407,195 +3508,213 @@ pub enum MarkerStyleMember {
 
 /// The `cs:plotArea` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PlotArea {
+pub struct PlotAreaWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStylePlotArea,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:plotArea` element of the tree a read gives: [`PlotAreaWith`] holding nothing in `extra`.
+pub type PlotArea = PlotAreaWith<()>;
+
+impl Eq for PlotAreaWith<()> {}
 
 /// The `cs:plotArea3D` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PlotArea3D {
+pub struct PlotArea3DWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStylePlotArea3D,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:plotArea3D` element of the tree a read gives: [`PlotArea3DWith`] holding nothing in
+/// `extra`.
+pub type PlotArea3D = PlotArea3DWith<()>;
+
+impl Eq for PlotArea3DWith<()> {}
 
 /// The `cs:seriesAxis` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_AxisProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SeriesAxisAxisProps {
+pub struct SeriesAxisAxisPropsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleSeriesAxisAxisProps,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:seriesAxis` element of the tree a read gives: [`SeriesAxisAxisPropsWith`] holding
+/// nothing in `extra`.
+pub type SeriesAxisAxisProps = SeriesAxisAxisPropsWith<()>;
+
+impl Eq for SeriesAxisAxisPropsWith<()> {}
 
 /// The `cs:seriesAxis` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SeriesAxisStyleEntry {
+pub struct SeriesAxisStyleEntryWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleSeriesAxisStyleEntry,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:seriesAxis` element of the tree a read gives: [`SeriesAxisStyleEntryWith`] holding
+/// nothing in `extra`.
+pub type SeriesAxisStyleEntry = SeriesAxisStyleEntryWith<()>;
+
+impl Eq for SeriesAxisStyleEntryWith<()> {}
 
 /// The `cs:seriesLine` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SeriesLine {
+pub struct SeriesLineWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleSeriesLine,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `LineWidthScale`, when there is one.
-    pub width_scale: Option<Box<LineWidthScale>>,
+    pub width_scale: Option<Box<LineWidthScaleWith<X>>>,
 }
+
+/// The `cs:seriesLine` element of the tree a read gives: [`SeriesLineWith`] holding nothing in
+/// `extra`.
+pub type SeriesLine = SeriesLineWith<()>;
+
+impl Eq for SeriesLineWith<()> {}
 
 /// The `cs:spPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpPr {
+pub struct SpPrWith<X: NodeExtra> {
     /// The child that is `drawing::Apply3DShapeProperties`, when there is one.
-    pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,
+    pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapePropertiesWith<X>>>,
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
     /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
-    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleSpPr,
     /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
-    pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<drawing::FillPropertiesContentWith<X>>>,
     /// The child that is an item of `drawing::GeometryContent`, when there is one.
-    pub geometry_content: Option<Box<drawing::GeometryContent>>,
+    pub geometry_content: Option<Box<drawing::GeometryContentWith<X>>>,
     /// The child that is `drawing::Outline`, when there is one.
-    pub outline: Option<Box<drawing::Outline>>,
+    pub outline: Option<Box<drawing::OutlineWith<X>>>,
     /// The child that is `drawing::Scene3d`, when there is one.
-    pub scene3d: Option<Box<drawing::Scene3d>>,
+    pub scene3d: Option<Box<drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `drawing::XfrmTransform2D`, when there is one.
-    pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
+    pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2DWith<X>>>,
 }
+
+/// The `cs:spPr` element of the tree a read gives: [`SpPrWith`] holding nothing in `extra`.
+pub type SpPr = SpPrWith<()>;
+
+impl Eq for SpPrWith<()> {}
 
 /// The `cs:styleClr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleColor`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StyleClr {
+pub struct StyleClrWith<X: NodeExtra> {
     /// The children that are an item of `drawing::ColorTransformContent`, in order.
-    pub content: Vec<drawing::ColorTransformContent>,
+    pub content: Vec<drawing::ColorTransformContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleStyleClr,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
+
+/// The `cs:styleClr` element of the tree a read gives: [`StyleClrWith`] holding nothing in `extra`.
+pub type StyleClr = StyleClrWith<()>;
+
+impl Eq for StyleClrWith<()> {}
 
 /// The simple type `ST_TitlePosition`, kept as the text the file carried.
 ///
@@ -3626,242 +3745,265 @@ pub enum TitlePositionMember {
 
 /// The `cs:title` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TitleStyleEntry {
+pub struct TitleStyleEntryWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleTitleStyleEntry,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cs:title` element of the tree a read gives: [`TitleStyleEntryWith`] holding nothing in
+/// `extra`.
+pub type TitleStyleEntry = TitleStyleEntryWith<()>;
+
+impl Eq for TitleStyleEntryWith<()> {}
+
 /// The `cs:title` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TitleProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TitleTitleProps {
+pub struct TitleTitlePropsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleTitleTitleProps,
     /// The attribute `position`, when the element has it.
     pub position: Option<TitlePosition>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cs:title` element of the tree a read gives: [`TitleTitlePropsWith`] holding nothing in
+/// `extra`.
+pub type TitleTitleProps = TitleTitlePropsWith<()>;
+
+impl Eq for TitleTitlePropsWith<()> {}
+
 /// The `cs:trendlineLabel` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TrendlineLabel {
+pub struct TrendlineLabelWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleTrendlineLabel,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:trendlineLabel` element of the tree a read gives: [`TrendlineLabelWith`] holding nothing
+/// in `extra`.
+pub type TrendlineLabel = TrendlineLabelWith<()>;
+
+impl Eq for TrendlineLabelWith<()> {}
 
 /// The `cs:trendline` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TrendlineStyleEntry {
+pub struct TrendlineStyleEntryWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleTrendlineStyleEntry,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cs:trendline` element of the tree a read gives: [`TrendlineStyleEntryWith`] holding nothing
+/// in `extra`.
+pub type TrendlineStyleEntry = TrendlineStyleEntryWith<()>;
+
+impl Eq for TrendlineStyleEntryWith<()> {}
+
 /// The `cs:trendline` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TrendlineProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TrendlineTrendlineProps {
+pub struct TrendlineTrendlinePropsWith<X: NodeExtra> {
     /// The attribute `add`, when the element has it.
     pub add: Option<Boolean>,
     /// The attribute `equation`, when the element has it.
     pub equation: Option<Boolean>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleTrendlineTrendlineProps,
     /// The attribute `rsquared`, when the element has it.
     pub rsquared: Option<Boolean>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cs:trendline` element of the tree a read gives: [`TrendlineTrendlinePropsWith`] holding
+/// nothing in `extra`.
+pub type TrendlineTrendlineProps = TrendlineTrendlinePropsWith<()>;
+
+impl Eq for TrendlineTrendlinePropsWith<()> {}
+
 /// The `cs:upBar` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct UpBar {
+pub struct UpBarWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleUpBar,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:upBar` element of the tree a read gives: [`UpBarWith`] holding nothing in `extra`.
+pub type UpBar = UpBarWith<()>;
+
+impl Eq for UpBarWith<()> {}
 
 /// The `cs:valueAxis` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_AxisProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ValueAxisAxisProps {
+pub struct ValueAxisAxisPropsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleValueAxisAxisProps,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:valueAxis` element of the tree a read gives: [`ValueAxisAxisPropsWith`] holding nothing
+/// in `extra`.
+pub type ValueAxisAxisProps = ValueAxisAxisPropsWith<()>;
+
+impl Eq for ValueAxisAxisPropsWith<()> {}
 
 /// The `cs:valueAxis` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ValueAxisStyleEntry {
+pub struct ValueAxisStyleEntryWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleValueAxisStyleEntry,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:valueAxis` element of the tree a read gives: [`ValueAxisStyleEntryWith`] holding nothing
+/// in `extra`.
+pub type ValueAxisStyleEntry = ValueAxisStyleEntryWith<()>;
+
+impl Eq for ValueAxisStyleEntryWith<()> {}
 
 /// The `cs:variation` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ColorStyleVariation`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Variation {
+pub struct VariationWith<X: NodeExtra> {
     /// The children that are an item of `drawing::ColorTransformContent`, in order.
-    pub content: Vec<drawing::ColorTransformContent>,
+    pub content: Vec<drawing::ColorTransformContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleVariation,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cs:variation` element of the tree a read gives: [`VariationWith`] holding nothing in
+/// `extra`.
+pub type Variation = VariationWith<()>;
+
+impl Eq for VariationWith<()> {}
+
 /// The `cs:view3D` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_View3DProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct View3D {
+pub struct View3DWith<X: NodeExtra> {
     /// The attribute `depthPercent`, when the element has it.
     pub depth_percent: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleView3D,
     /// The attribute `heightPercent`, when the element has it.
     pub height_percent: Option<String>,
     /// The attribute `perspective`, when the element has it.
@@ -3875,6 +4017,11 @@ pub struct View3D {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cs:view3D` element of the tree a read gives: [`View3DWith`] holding nothing in `extra`.
+pub type View3D = View3DWith<()>;
+
+impl Eq for View3DWith<()> {}
 
 /// The hooks of a visitor for the `cs` namespace.
 ///
@@ -4228,37 +4375,85 @@ pub trait Visitor: crate::Visitor {
 
 /// The `cs:wall` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleEntry`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Wall {
+pub struct WallWith<X: NodeExtra> {
     /// The child that is `BodyPr`, when there is one.
-    pub body_pr: Option<Box<BodyPr>>,
+    pub body_pr: Option<Box<BodyPrWith<X>>>,
     /// The child that is `DefRPr`, when there is one.
-    pub def_r_pr: Option<Box<DefRPr>>,
+    pub def_r_pr: Option<Box<DefRPrWith<X>>>,
     /// The child that is `EffectRef`, which the schema requires.
-    pub effect_ref: Box<EffectRef>,
+    pub effect_ref: Box<EffectRefWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2012ChartStyleWall,
     /// The child that is `FillRef`, which the schema requires.
-    pub fill_ref: Box<FillRef>,
+    pub fill_ref: Box<FillRefWith<X>>,
     /// The child that is `FontRef`, which the schema requires.
-    pub font_ref: Box<FontRef>,
+    pub font_ref: Box<FontRefWith<X>>,
     /// The child that is `LineWidthScale`, when there is one.
-    pub line_width_scale: Option<Box<LineWidthScale>>,
+    pub line_width_scale: Option<Box<LineWidthScaleWith<X>>>,
     /// The child that is `LnRef`, which the schema requires.
-    pub ln_ref: Box<LnRef>,
+    pub ln_ref: Box<LnRefWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-impl AxisTitle {
+/// The `cs:wall` element of the tree a read gives: [`WallWith`] holding nothing in `extra`.
+pub type Wall = WallWith<()>;
+
+impl Eq for WallWith<()> {}
+
+impl<X: NodeExtra> AxisTitleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> AxisTitleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AxisTitleWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4279,7 +4474,59 @@ impl officekit_markup_base::Write for AxisTitle {
     }
 }
 
-impl BodyPr {
+impl<X: NodeExtra> BodyPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> BodyPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BodyPrWith {
+            anchor: self.anchor,
+            anchor_ctr: self.anchor_ctr,
+            b_ins: self.b_ins,
+            compat_ln_spc: self.compat_ln_spc,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            force_aa: self.force_aa,
+            from_word_art: self.from_word_art,
+            horz_overflow: self.horz_overflow,
+            l_ins: self.l_ins,
+            num_col: self.num_col,
+            preset_text_warp: officekit_markup_base::into_extra_optional(
+                &mut self.preset_text_warp,
+                drawing::PresetTextWarpWith::into_extra,
+            ),
+            r_ins: self.r_ins,
+            rot: self.rot,
+            rtl_col: self.rtl_col,
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                drawing::Scene3dWith::into_extra,
+            ),
+            spc_col: self.spc_col,
+            spc_first_last_para: self.spc_first_last_para,
+            t_ins: self.t_ins,
+            text3d_content: officekit_markup_base::into_extra_optional(
+                &mut self.text3d_content,
+                drawing::Text3DContentWith::into_extra,
+            ),
+            text_autofit_content: officekit_markup_base::into_extra_optional(
+                &mut self.text_autofit_content,
+                drawing::TextAutofitContentWith::into_extra,
+            ),
+            unknown: self.unknown,
+            upright: self.upright,
+            vert: self.vert,
+            vert_overflow: self.vert_overflow,
+            wrap: self.wrap,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4371,7 +4618,20 @@ impl Boolean {
     }
 }
 
-impl CategoryAxisAxisProps {
+impl<X: NodeExtra> CategoryAxisAxisPropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CategoryAxisAxisPropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CategoryAxisAxisPropsWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4392,7 +4652,53 @@ impl officekit_markup_base::Write for CategoryAxisAxisProps {
     }
 }
 
-impl CategoryAxisStyleEntry {
+impl<X: NodeExtra> CategoryAxisStyleEntryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> CategoryAxisStyleEntryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CategoryAxisStyleEntryWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4413,7 +4719,53 @@ impl officekit_markup_base::Write for CategoryAxisStyleEntry {
     }
 }
 
-impl ChartArea {
+impl<X: NodeExtra> ChartAreaWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ChartAreaWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ChartAreaWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4434,7 +4786,20 @@ impl officekit_markup_base::Write for ChartArea {
     }
 }
 
-impl ChartStyle {
+impl<X: NodeExtra> ChartStyleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ChartStyleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        let mut node = ChartStyleWith::<Y>::default();
+        into_extra_chart_style_1(&mut self, &mut node);
+        into_extra_chart_style_2(&mut self, &mut node);
+        node
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4458,7 +4823,34 @@ impl officekit_markup_base::Write for ChartStyle {
     }
 }
 
-impl ColorStyle {
+impl<X: NodeExtra> ColorStyleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ColorStyleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ColorStyleWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::ColorContentWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            id: self.id,
+            meth: self.meth,
+            unknown: self.unknown,
+            variation: officekit_markup_base::into_extra_list(
+                self.variation,
+                VariationWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4483,7 +4875,53 @@ impl officekit_markup_base::Write for ColorStyle {
     }
 }
 
-impl DataLabel {
+impl<X: NodeExtra> DataLabelWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DataLabelWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataLabelWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4504,7 +4942,53 @@ impl officekit_markup_base::Write for DataLabel {
     }
 }
 
-impl DataLabelCallout {
+impl<X: NodeExtra> DataLabelCalloutWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DataLabelCalloutWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataLabelCalloutWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4525,7 +5009,26 @@ impl officekit_markup_base::Write for DataLabelCallout {
     }
 }
 
-impl DataLabels {
+impl<X: NodeExtra> DataLabelsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DataLabelsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataLabelsWith {
+            category_name: self.category_name,
+            extra: Default::default(),
+            legend_key: self.legend_key,
+            percentage: self.percentage,
+            position: self.position,
+            series_name: self.series_name,
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4622,7 +5125,53 @@ impl DataLabelsPosition {
     }
 }
 
-impl DataPoint {
+impl<X: NodeExtra> DataPointWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DataPointWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataPointWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4643,7 +5192,53 @@ impl officekit_markup_base::Write for DataPoint {
     }
 }
 
-impl DataPoint3D {
+impl<X: NodeExtra> DataPoint3DWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DataPoint3DWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataPoint3DWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4664,7 +5259,53 @@ impl officekit_markup_base::Write for DataPoint3D {
     }
 }
 
-impl DataPointLine {
+impl<X: NodeExtra> DataPointLineWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DataPointLineWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataPointLineWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+            width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4685,7 +5326,53 @@ impl officekit_markup_base::Write for DataPointLine {
     }
 }
 
-impl DataPointMarker {
+impl<X: NodeExtra> DataPointMarkerWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DataPointMarkerWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataPointMarkerWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4706,7 +5393,22 @@ impl officekit_markup_base::Write for DataPointMarker {
     }
 }
 
-impl DataPointMarkerLayout {
+impl<X: NodeExtra> DataPointMarkerLayoutWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DataPointMarkerLayoutWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataPointMarkerLayoutWith {
+            extra: Default::default(),
+            size: self.size,
+            symbol: self.symbol,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4731,7 +5433,53 @@ impl officekit_markup_base::Write for DataPointMarkerLayout {
     }
 }
 
-impl DataPointWireframe {
+impl<X: NodeExtra> DataPointWireframeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DataPointWireframeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataPointWireframeWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4752,7 +5500,28 @@ impl officekit_markup_base::Write for DataPointWireframe {
     }
 }
 
-impl DataSeries {
+impl<X: NodeExtra> DataSeriesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DataSeriesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataSeriesWith {
+            doughnut_hole_size: self.doughnut_hole_size,
+            drop_lines: self.drop_lines,
+            extra: Default::default(),
+            gap_depth: self.gap_depth,
+            gap_width: self.gap_width,
+            hilo_lines: self.hilo_lines,
+            marker_visible: self.marker_visible,
+            overlap: self.overlap,
+            series_lines: self.series_lines,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4783,7 +5552,24 @@ impl officekit_markup_base::Write for DataSeries {
     }
 }
 
-impl DataTableDataTableProps {
+impl<X: NodeExtra> DataTableDataTablePropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DataTableDataTablePropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataTableDataTablePropsWith {
+            extra: Default::default(),
+            horizontal_border: self.horizontal_border,
+            legend_keys: self.legend_keys,
+            outline_border: self.outline_border,
+            unknown: self.unknown,
+            vertical_border: self.vertical_border,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4810,7 +5596,53 @@ impl officekit_markup_base::Write for DataTableDataTableProps {
     }
 }
 
-impl DataTableStyleEntry {
+impl<X: NodeExtra> DataTableStyleEntryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DataTableStyleEntryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataTableStyleEntryWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4831,7 +5663,95 @@ impl officekit_markup_base::Write for DataTableStyleEntry {
     }
 }
 
-impl DefRPr {
+impl<X: NodeExtra> DefRPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DefRPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DefRPrWith {
+            alt_lang: self.alt_lang,
+            b: self.b,
+            baseline: self.baseline,
+            bmk: self.bmk,
+            cap: self.cap,
+            click_hyperlink: officekit_markup_base::into_extra_optional(
+                &mut self.click_hyperlink,
+                drawing::ClickHyperlinkWith::into_extra,
+            ),
+            complex_script_font: officekit_markup_base::into_extra_optional(
+                &mut self.complex_script_font,
+                drawing::ComplexScriptFontWith::into_extra,
+            ),
+            dirty: self.dirty,
+            east_asian_font: officekit_markup_base::into_extra_optional(
+                &mut self.east_asian_font,
+                drawing::EastAsianFontWith::into_extra,
+            ),
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            err: self.err,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                drawing::FillPropertiesContentWith::into_extra,
+            ),
+            highlight_color: officekit_markup_base::into_extra_optional(
+                &mut self.highlight_color,
+                drawing::HighlightColorWith::into_extra,
+            ),
+            i: self.i,
+            kern: self.kern,
+            kumimoji: self.kumimoji,
+            lang: self.lang,
+            latin_font: officekit_markup_base::into_extra_optional(
+                &mut self.latin_font,
+                drawing::LatinFontWith::into_extra,
+            ),
+            mouse_over_hyperlink: officekit_markup_base::into_extra_optional(
+                &mut self.mouse_over_hyperlink,
+                drawing::MouseOverHyperlinkWith::into_extra,
+            ),
+            no_proof: self.no_proof,
+            normalize_h: self.normalize_h,
+            outline: officekit_markup_base::into_extra_optional(
+                &mut self.outline,
+                drawing::OutlineWith::into_extra,
+            ),
+            right_to_left_run: officekit_markup_base::into_extra_optional(
+                &mut self.right_to_left_run,
+                drawing::RightToLeftRunWith::into_extra,
+            ),
+            smt_clean: self.smt_clean,
+            smt_id: self.smt_id,
+            spc: self.spc,
+            strike: self.strike,
+            symbol_font: officekit_markup_base::into_extra_optional(
+                &mut self.symbol_font,
+                drawing::SymbolFontWith::into_extra,
+            ),
+            sz: self.sz,
+            text_underline_fill_content: officekit_markup_base::into_extra_optional(
+                &mut self.text_underline_fill_content,
+                drawing::TextUnderlineFillContentWith::into_extra,
+            ),
+            text_underline_line_content: officekit_markup_base::into_extra_optional(
+                &mut self.text_underline_line_content,
+                drawing::TextUnderlineLineContentWith::into_extra,
+            ),
+            u: self.u,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4873,7 +5793,53 @@ impl officekit_markup_base::Write for DefRPr {
     }
 }
 
-impl DownBar {
+impl<X: NodeExtra> DownBarWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DownBarWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DownBarWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4894,7 +5860,53 @@ impl officekit_markup_base::Write for DownBar {
     }
 }
 
-impl DropLine {
+impl<X: NodeExtra> DropLineWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DropLineWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DropLineWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+            width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4915,7 +5927,28 @@ impl officekit_markup_base::Write for DropLine {
     }
 }
 
-impl EffectRef {
+impl<X: NodeExtra> EffectRefWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> EffectRefWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EffectRefWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            style_clr: officekit_markup_base::into_extra_optional(
+                &mut self.style_clr,
+                StyleClrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4936,7 +5969,53 @@ impl officekit_markup_base::Write for EffectRef {
     }
 }
 
-impl ErrorBar {
+impl<X: NodeExtra> ErrorBarWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ErrorBarWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ErrorBarWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4957,7 +6036,24 @@ impl officekit_markup_base::Write for ErrorBar {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                drawing::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4978,7 +6074,28 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl FillRef {
+impl<X: NodeExtra> FillRefWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> FillRefWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FillRefWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            style_clr: officekit_markup_base::into_extra_optional(
+                &mut self.style_clr,
+                StyleClrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4999,7 +6116,53 @@ impl officekit_markup_base::Write for FillRef {
     }
 }
 
-impl Floor {
+impl<X: NodeExtra> FloorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> FloorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FloorWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5020,7 +6183,30 @@ impl officekit_markup_base::Write for Floor {
     }
 }
 
-impl FontRef {
+impl<X: NodeExtra> FontRefWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> FontRefWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FontRefWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            idx: self.idx,
+            mods: self.mods,
+            style_clr: officekit_markup_base::into_extra_optional(
+                &mut self.style_clr,
+                StyleClrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5045,7 +6231,53 @@ impl officekit_markup_base::Write for FontRef {
     }
 }
 
-impl GridlineMajor {
+impl<X: NodeExtra> GridlineMajorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GridlineMajorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GridlineMajorWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5066,7 +6298,53 @@ impl officekit_markup_base::Write for GridlineMajor {
     }
 }
 
-impl GridlineMinor {
+impl<X: NodeExtra> GridlineMinorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GridlineMinorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GridlineMinorWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5087,7 +6365,53 @@ impl officekit_markup_base::Write for GridlineMinor {
     }
 }
 
-impl HiLoLine {
+impl<X: NodeExtra> HiLoLineWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> HiLoLineWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HiLoLineWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+            width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5108,7 +6432,53 @@ impl officekit_markup_base::Write for HiLoLine {
     }
 }
 
-impl LeaderLine {
+impl<X: NodeExtra> LeaderLineWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> LeaderLineWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LeaderLineWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+            width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5129,7 +6499,23 @@ impl officekit_markup_base::Write for LeaderLine {
     }
 }
 
-impl LegendLegendProps {
+impl<X: NodeExtra> LegendLegendPropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LegendLegendPropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LegendLegendPropsWith {
+            extra: Default::default(),
+            include_in_layout: self.include_in_layout,
+            position: self.position,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5207,7 +6593,53 @@ impl LegendPosition {
     }
 }
 
-impl LegendStyleEntry {
+impl<X: NodeExtra> LegendStyleEntryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> LegendStyleEntryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LegendStyleEntryWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5228,7 +6660,21 @@ impl officekit_markup_base::Write for LegendStyleEntry {
     }
 }
 
-impl LineWidthScale {
+impl<X: NodeExtra> LineWidthScaleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LineWidthScaleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LineWidthScaleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5252,7 +6698,28 @@ impl officekit_markup_base::Write for LineWidthScale {
     }
 }
 
-impl LnRef {
+impl<X: NodeExtra> LnRefWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> LnRefWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LnRefWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            style_clr: officekit_markup_base::into_extra_optional(
+                &mut self.style_clr,
+                StyleClrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5329,7 +6796,53 @@ impl MarkerStyle {
     }
 }
 
-impl PlotArea {
+impl<X: NodeExtra> PlotAreaWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PlotAreaWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PlotAreaWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5350,7 +6863,53 @@ impl officekit_markup_base::Write for PlotArea {
     }
 }
 
-impl PlotArea3D {
+impl<X: NodeExtra> PlotArea3DWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PlotArea3DWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PlotArea3DWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5371,7 +6930,20 @@ impl officekit_markup_base::Write for PlotArea3D {
     }
 }
 
-impl SeriesAxisAxisProps {
+impl<X: NodeExtra> SeriesAxisAxisPropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SeriesAxisAxisPropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SeriesAxisAxisPropsWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5392,7 +6964,53 @@ impl officekit_markup_base::Write for SeriesAxisAxisProps {
     }
 }
 
-impl SeriesAxisStyleEntry {
+impl<X: NodeExtra> SeriesAxisStyleEntryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SeriesAxisStyleEntryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SeriesAxisStyleEntryWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5413,7 +7031,53 @@ impl officekit_markup_base::Write for SeriesAxisStyleEntry {
     }
 }
 
-impl SeriesLine {
+impl<X: NodeExtra> SeriesLineWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SeriesLineWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SeriesLineWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+            width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5434,7 +7098,53 @@ impl officekit_markup_base::Write for SeriesLine {
     }
 }
 
-impl SpPr {
+impl<X: NodeExtra> SpPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SpPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SpPrWith {
+            apply_3d_shape_properties: officekit_markup_base::into_extra_optional(
+                &mut self.apply_3d_shape_properties,
+                drawing::Apply3DShapePropertiesWith::into_extra,
+            ),
+            bw_mode: self.bw_mode,
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                drawing::FillPropertiesContentWith::into_extra,
+            ),
+            geometry_content: officekit_markup_base::into_extra_optional(
+                &mut self.geometry_content,
+                drawing::GeometryContentWith::into_extra,
+            ),
+            outline: officekit_markup_base::into_extra_optional(
+                &mut self.outline,
+                drawing::OutlineWith::into_extra,
+            ),
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                drawing::Scene3dWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm_transform2d: officekit_markup_base::into_extra_optional(
+                &mut self.xfrm_transform2d,
+                drawing::XfrmTransform2DWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5458,7 +7168,25 @@ impl officekit_markup_base::Write for SpPr {
     }
 }
 
-impl StyleClr {
+impl<X: NodeExtra> StyleClrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> StyleClrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StyleClrWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::ColorTransformContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5533,7 +7261,53 @@ impl TitlePosition {
     }
 }
 
-impl TitleStyleEntry {
+impl<X: NodeExtra> TitleStyleEntryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TitleStyleEntryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TitleStyleEntryWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5554,7 +7328,21 @@ impl officekit_markup_base::Write for TitleStyleEntry {
     }
 }
 
-impl TitleTitleProps {
+impl<X: NodeExtra> TitleTitlePropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TitleTitlePropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TitleTitlePropsWith {
+            extra: Default::default(),
+            position: self.position,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5578,7 +7366,53 @@ impl officekit_markup_base::Write for TitleTitleProps {
     }
 }
 
-impl TrendlineLabel {
+impl<X: NodeExtra> TrendlineLabelWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TrendlineLabelWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TrendlineLabelWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5599,7 +7433,53 @@ impl officekit_markup_base::Write for TrendlineLabel {
     }
 }
 
-impl TrendlineStyleEntry {
+impl<X: NodeExtra> TrendlineStyleEntryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TrendlineStyleEntryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TrendlineStyleEntryWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5620,7 +7500,23 @@ impl officekit_markup_base::Write for TrendlineStyleEntry {
     }
 }
 
-impl TrendlineTrendlineProps {
+impl<X: NodeExtra> TrendlineTrendlinePropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TrendlineTrendlinePropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TrendlineTrendlinePropsWith {
+            add: self.add,
+            equation: self.equation,
+            extra: Default::default(),
+            rsquared: self.rsquared,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5646,7 +7542,53 @@ impl officekit_markup_base::Write for TrendlineTrendlineProps {
     }
 }
 
-impl UpBar {
+impl<X: NodeExtra> UpBarWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> UpBarWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UpBarWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5667,7 +7609,20 @@ impl officekit_markup_base::Write for UpBar {
     }
 }
 
-impl ValueAxisAxisProps {
+impl<X: NodeExtra> ValueAxisAxisPropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ValueAxisAxisPropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ValueAxisAxisPropsWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5688,7 +7643,53 @@ impl officekit_markup_base::Write for ValueAxisAxisProps {
     }
 }
 
-impl ValueAxisStyleEntry {
+impl<X: NodeExtra> ValueAxisStyleEntryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ValueAxisStyleEntryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ValueAxisStyleEntryWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5709,7 +7710,24 @@ impl officekit_markup_base::Write for ValueAxisStyleEntry {
     }
 }
 
-impl Variation {
+impl<X: NodeExtra> VariationWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VariationWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VariationWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::ColorTransformContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5730,7 +7748,26 @@ impl officekit_markup_base::Write for Variation {
     }
 }
 
-impl View3D {
+impl<X: NodeExtra> View3DWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> View3DWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        View3DWith {
+            depth_percent: self.depth_percent,
+            extra: Default::default(),
+            height_percent: self.height_percent,
+            perspective: self.perspective,
+            r_ang_ax: self.r_ang_ax,
+            rot_x: self.rot_x,
+            rot_y: self.rot_y,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5759,7 +7796,53 @@ impl officekit_markup_base::Write for View3D {
     }
 }
 
-impl Wall {
+impl<X: NodeExtra> WallWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> WallWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WallWith {
+            body_pr: officekit_markup_base::into_extra_optional(
+                &mut self.body_pr,
+                BodyPrWith::into_extra,
+            ),
+            def_r_pr: officekit_markup_base::into_extra_optional(
+                &mut self.def_r_pr,
+                DefRPrWith::into_extra,
+            ),
+            effect_ref: officekit_markup_base::into_extra_required(
+                *self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_required(
+                *self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_required(
+                *self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            line_width_scale: officekit_markup_base::into_extra_optional(
+                &mut self.line_width_scale,
+                LineWidthScaleWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_required(*self.ln_ref, LnRefWith::into_extra),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5778,4 +7861,146 @@ impl officekit_markup_base::Write for Wall {
         let element = write::wall(self, writer.scope());
         writer.known(element);
     }
+}
+
+fn into_extra_chart_style_1<X, Y>(from: &mut ChartStyleWith<X>, node: &mut ChartStyleWith<Y>)
+where
+    X: NodeExtra,
+    Y: NodeExtra,
+{
+    node.axis_title = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.axis_title),
+        AxisTitleWith::into_extra,
+    );
+    node.category_axis_style_entry = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.category_axis_style_entry),
+        CategoryAxisStyleEntryWith::into_extra,
+    );
+    node.chart_area = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.chart_area),
+        ChartAreaWith::into_extra,
+    );
+    node.data_label = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.data_label),
+        DataLabelWith::into_extra,
+    );
+    node.data_label_callout = officekit_markup_base::into_extra_optional(
+        &mut from.data_label_callout,
+        DataLabelCalloutWith::into_extra,
+    );
+    node.data_point = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.data_point),
+        DataPointWith::into_extra,
+    );
+    node.data_point3d = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.data_point3d),
+        DataPoint3DWith::into_extra,
+    );
+    node.data_point_line = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.data_point_line),
+        DataPointLineWith::into_extra,
+    );
+    node.data_point_marker = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.data_point_marker),
+        DataPointMarkerWith::into_extra,
+    );
+    node.data_point_marker_layout = officekit_markup_base::into_extra_optional(
+        &mut from.data_point_marker_layout,
+        DataPointMarkerLayoutWith::into_extra,
+    );
+    node.data_point_wireframe = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.data_point_wireframe),
+        DataPointWireframeWith::into_extra,
+    );
+    node.data_table_style_entry = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.data_table_style_entry),
+        DataTableStyleEntryWith::into_extra,
+    );
+    node.down_bar = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.down_bar),
+        DownBarWith::into_extra,
+    );
+    node.drop_line = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.drop_line),
+        DropLineWith::into_extra,
+    );
+    node.error_bar = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.error_bar),
+        ErrorBarWith::into_extra,
+    );
+    node.ext_lst =
+        officekit_markup_base::into_extra_optional(&mut from.ext_lst, ExtLstWith::into_extra);
+    node.floor = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.floor),
+        FloorWith::into_extra,
+    );
+    node.gridline_major = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.gridline_major),
+        GridlineMajorWith::into_extra,
+    );
+    node.gridline_minor = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.gridline_minor),
+        GridlineMinorWith::into_extra,
+    );
+    node.hi_lo_line = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.hi_lo_line),
+        HiLoLineWith::into_extra,
+    );
+    node.id = mem::take(&mut from.id);
+    node.leader_line = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.leader_line),
+        LeaderLineWith::into_extra,
+    );
+}
+
+fn into_extra_chart_style_2<X, Y>(from: &mut ChartStyleWith<X>, node: &mut ChartStyleWith<Y>)
+where
+    X: NodeExtra,
+    Y: NodeExtra,
+{
+    node.legend_style_entry = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.legend_style_entry),
+        LegendStyleEntryWith::into_extra,
+    );
+    node.plot_area = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.plot_area),
+        PlotAreaWith::into_extra,
+    );
+    node.plot_area3d = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.plot_area3d),
+        PlotArea3DWith::into_extra,
+    );
+    node.series_axis_style_entry = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.series_axis_style_entry),
+        SeriesAxisStyleEntryWith::into_extra,
+    );
+    node.series_line = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.series_line),
+        SeriesLineWith::into_extra,
+    );
+    node.title_style_entry = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.title_style_entry),
+        TitleStyleEntryWith::into_extra,
+    );
+    node.trendline_label = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.trendline_label),
+        TrendlineLabelWith::into_extra,
+    );
+    node.trendline_style_entry = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.trendline_style_entry),
+        TrendlineStyleEntryWith::into_extra,
+    );
+    node.unknown = mem::take(&mut from.unknown);
+    node.up_bar = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.up_bar),
+        UpBarWith::into_extra,
+    );
+    node.value_axis_style_entry = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.value_axis_style_entry),
+        ValueAxisStyleEntryWith::into_extra,
+    );
+    node.wall = officekit_markup_base::into_extra_required(
+        *mem::take(&mut from.wall),
+        WallWith::into_extra,
+    );
 }

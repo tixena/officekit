@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::spreadsheet;
 use officekit_xml::element::Element;
@@ -320,53 +323,61 @@ pub trait Context: crate::Context {
 
 /// The `xlrvrel:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `spreadsheet::Extension`, in order.
-    pub extension: Vec<spreadsheet::Extension>,
+    pub extension: Vec<spreadsheet::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022RichvaluerelExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrvrel:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
+
 /// The `xlrvrel:rel` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RichValueRelRelationship`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Rel {
+pub struct RelWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022RichvaluerelRel,
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrvrel:rel` element of the tree a read gives: [`RelWith`] holding nothing in `extra`.
+pub type Rel = RelWith<()>;
+
+impl Eq for RelWith<()> {}
+
 /// The `xlrvrel:richValueRels` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_RichValueRels`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RichValueRels {
+pub struct RichValueRelsWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022RichvaluerelRichValueRels,
     /// The children that are `Rel`, in order.
-    pub rel: Vec<Rel>,
+    pub rel: Vec<RelWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlrvrel:richValueRels` element of the tree a read gives: [`RichValueRelsWith`] holding
+/// nothing in `extra`.
+pub type RichValueRels = RichValueRelsWith<()>;
+
+impl Eq for RichValueRelsWith<()> {}
 
 /// The hooks of a visitor for the `xlrvrel` namespace.
 ///
@@ -391,7 +402,24 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                spreadsheet::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -412,7 +440,21 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl Rel {
+impl<X: NodeExtra> RelWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RelWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RelWith {
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -436,7 +478,25 @@ impl officekit_markup_base::Write for Rel {
     }
 }
 
-impl RichValueRels {
+impl<X: NodeExtra> RichValueRelsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> RichValueRelsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RichValueRelsWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            rel: officekit_markup_base::into_extra_list(self.rel, RelWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

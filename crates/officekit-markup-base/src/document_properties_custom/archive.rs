@@ -210,14 +210,36 @@
 //   6833bb8339d1dc179b970db58c13333ff6139e649ef9e044ef10623bed172323  crates/xtask/data/sdk_corrections.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The mirrors rkyv archives the enums of `crate::document_properties_custom` through: the archived
-//! enums and resolvers it writes stay in this private module.
+//! The mirrors rkyv archives the structs and enums of `crate::document_properties_custom` through: the archived
+//! types and resolvers it writes stay in this private module.
 
 use officekit_xml::element::Node;
 use rkyv::de::Pooling;
-use rkyv::rancor::{Fallible, Source};
-use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::rancor::{Fallible, Source as ErrorSource};
+use rkyv::ser::{Allocator, Sharing, Writer as ArchiveWriter};
 use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::CustomFileProperties)]
+#[rkyv(attr(non_exhaustive))]
+pub struct CustomFilePropertiesMirror {
+    pub custom_file_property: Vec<super::CustomFileProperty>,
+    pub extra: (),
+    pub unknown: crate::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::CustomFileProperty)]
+#[rkyv(attr(non_exhaustive))]
+pub struct CustomFilePropertyMirror {
+    pub content: Box<super::CustomFilePropertyContent>,
+    pub extra: (),
+    pub fmtid: Option<super::super::common_simple_types::Guid>,
+    pub link_target: Option<String>,
+    pub name: Option<String>,
+    pub pid: Option<String>,
+    pub unknown: crate::Unknown,
+}
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CustomFilePropertyContent)]
@@ -257,6 +279,91 @@ pub enum CustomFilePropertyContent {
     Ui8(super::super::document_properties_variant_types::Ui8),
     UnsignedInteger(super::super::document_properties_variant_types::UnsignedInteger),
     Vector(super::super::document_properties_variant_types::Vector),
+}
+
+impl From<CustomFilePropertiesMirror> for super::CustomFileProperties {
+    fn from(item: CustomFilePropertiesMirror) -> Self {
+        Self {
+            custom_file_property: item.custom_file_property,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::CustomFileProperties {
+    type Archived = ArchivedCustomFilePropertiesMirror;
+    type Resolver = CustomFilePropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        CustomFilePropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::CustomFileProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        CustomFilePropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::CustomFileProperties, __D> for ArchivedCustomFilePropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::CustomFileProperties, __D::Error> {
+        CustomFilePropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<CustomFilePropertyMirror> for super::CustomFileProperty {
+    fn from(item: CustomFilePropertyMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            fmtid: item.fmtid,
+            link_target: item.link_target,
+            name: item.name,
+            pid: item.pid,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::CustomFileProperty {
+    type Archived = ArchivedCustomFilePropertyMirror;
+    type Resolver = CustomFilePropertyMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        CustomFilePropertyMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::CustomFileProperty
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        CustomFilePropertyMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::CustomFileProperty, __D> for ArchivedCustomFilePropertyMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::CustomFileProperty, __D::Error> {
+        CustomFilePropertyMirror::deserialize_with(self, deserializer)
+    }
 }
 
 impl From<CustomFilePropertyContent> for super::CustomFilePropertyContent {
@@ -311,25 +418,26 @@ impl rkyv::Archive for super::CustomFilePropertyContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::CustomFilePropertyContent
+impl<__S> rkyv::Serialize<__S> for super::CustomFilePropertyContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         CustomFilePropertyContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::CustomFilePropertyContent, D> for ArchivedCustomFilePropertyContent
+impl<__D> rkyv::Deserialize<super::CustomFilePropertyContent, __D>
+    for ArchivedCustomFilePropertyContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
     fn deserialize(
         &self,
-        deserializer: &mut D,
-    ) -> Result<super::CustomFilePropertyContent, D::Error> {
+        deserializer: &mut __D,
+    ) -> Result<super::CustomFilePropertyContent, __D::Error> {
         CustomFilePropertyContent::deserialize_with(self, deserializer)
     }
 }

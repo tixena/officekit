@@ -216,9 +216,12 @@
 //! elements. The `read` module has a function that reads an element into each, and the
 //! `write` module one that writes each back to an element.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use crate::NodeExtra;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
@@ -276,30 +279,30 @@ pub enum CharacteristicRelationshipTypesMember {
 
 /// The `ac:additionalCharacteristics` element, Set of Additional Characteristics (ECMA-376 Part 1,
 /// section 22.7.2.1). Its schema type is `CT_AdditionalCharacteristics`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SetOfAdditionalCharacteristics {
+pub struct SetOfAdditionalCharacteristicsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::AdditionalCharacteristicsSetOfAdditionalCharacteristics,
     /// The children that are `SingleCharacteristic`, in order.
-    pub single_characteristic: Vec<SingleCharacteristic>,
+    pub single_characteristic: Vec<SingleCharacteristicWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
+/// The `ac:additionalCharacteristics` element of the tree a read gives:
+/// [`SetOfAdditionalCharacteristicsWith`] holding nothing in `extra`.
+pub type SetOfAdditionalCharacteristics = SetOfAdditionalCharacteristicsWith<()>;
+
+impl Eq for SetOfAdditionalCharacteristicsWith<()> {}
+
 /// The `ac:characteristic` element, Single Characteristic (ECMA-376 Part 1, section 22.7.2.2). Its
 /// schema type is `CT_Characteristic`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SingleCharacteristic {
+pub struct SingleCharacteristicWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::AdditionalCharacteristicsSingleCharacteristic,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// The attribute `relation`, when the element has it.
@@ -311,6 +314,12 @@ pub struct SingleCharacteristic {
     /// The attribute `vocabulary`, when the element has it.
     pub vocabulary: Option<String>,
 }
+
+/// The `ac:characteristic` element of the tree a read gives: [`SingleCharacteristicWith`] holding
+/// nothing in `extra`.
+pub type SingleCharacteristic = SingleCharacteristicWith<()>;
+
+impl Eq for SingleCharacteristicWith<()> {}
 
 impl AsRef<str> for CharacteristicRelationshipTypes {
     fn as_ref(&self) -> &str {
@@ -368,7 +377,24 @@ impl CharacteristicRelationshipTypes {
     }
 }
 
-impl SetOfAdditionalCharacteristics {
+impl<X: NodeExtra> SetOfAdditionalCharacteristicsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SetOfAdditionalCharacteristicsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SetOfAdditionalCharacteristicsWith {
+            extra: Default::default(),
+            single_characteristic: crate::into_extra_list(
+                self.single_characteristic,
+                SingleCharacteristicWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -389,7 +415,24 @@ impl crate::Write for SetOfAdditionalCharacteristics {
     }
 }
 
-impl SingleCharacteristic {
+impl<X: NodeExtra> SingleCharacteristicWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SingleCharacteristicWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SingleCharacteristicWith {
+            extra: Default::default(),
+            name: self.name,
+            relation: self.relation,
+            unknown: self.unknown,
+            val: self.val,
+            vocabulary: self.vocabulary,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

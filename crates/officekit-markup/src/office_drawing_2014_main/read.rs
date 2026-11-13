@@ -223,6 +223,7 @@ use officekit_xml::element::Element;
 pub fn col_id(element: &Element) -> super::ColId {
     let reader = officekit_markup_base::Reader::new(element, &super::COL_ID_SHAPE);
     super::ColId {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -276,6 +277,7 @@ pub fn pred_de_ref(element: &Element) -> super::PredDERef {
 pub fn row_id(element: &Element) -> super::RowId {
     let reader = officekit_markup_base::Reader::new(element, &super::ROW_ID_SHAPE);
     super::RowId {
+        extra: (),
         unknown: reader.finish(),
     }
 }

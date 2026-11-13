@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -260,16 +263,13 @@ pub static AUTO_BU_NODE_INFO_LST_SHAPE: officekit_markup_base::Shape =
 
 /// The `dgm1611:autoBuNodeInfo` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_NumberDiagramInfo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AutoBuNodeInfo {
+pub struct AutoBuNodeInfoWith<X: NodeExtra> {
     /// The child that is `BuPr`, which the schema requires.
-    pub bu_pr: Box<BuPr>,
+    pub bu_pr: Box<BuPrWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing201611DiagramAutoBuNodeInfo,
     /// The attribute `lvl`, when the element has it.
     pub lvl: Option<String>,
     /// The attribute `ptType`, when the element has it.
@@ -278,34 +278,40 @@ pub struct AutoBuNodeInfo {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm1611:autoBuNodeInfo` element of the tree a read gives: [`AutoBuNodeInfoWith`] holding
+/// nothing in `extra`.
+pub type AutoBuNodeInfo = AutoBuNodeInfoWith<()>;
+
+impl Eq for AutoBuNodeInfoWith<()> {}
+
 /// The `dgm1611:autoBuNodeInfoLst` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_NumberDiagramInfoList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AutoBuNodeInfoLst {
+pub struct AutoBuNodeInfoLstWith<X: NodeExtra> {
     /// The children that are `AutoBuNodeInfo`, in order.
-    pub auto_bu_node_info: Vec<AutoBuNodeInfo>,
+    pub auto_bu_node_info: Vec<AutoBuNodeInfoWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing201611DiagramAutoBuNodeInfoLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm1611:autoBuNodeInfoLst` element of the tree a read gives: [`AutoBuNodeInfoLstWith`]
+/// holding nothing in `extra`.
+pub type AutoBuNodeInfoLst = AutoBuNodeInfoLstWith<()>;
+
+impl Eq for AutoBuNodeInfoLstWith<()> {}
+
 /// The `dgm1611:buPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DiagramAutoBullet`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BuPr {
+pub struct BuPrWith<X: NodeExtra> {
     /// The child that is an item of `drawing::TextBulletContent`, which the schema requires.
-    pub content: Box<drawing::TextBulletContent>,
+    pub content: Box<drawing::TextBulletContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing201611DiagramBuPr,
     /// The attribute `leadZeros`, when the element has it.
     pub lead_zeros: Option<String>,
     /// The attribute `prefix`, when the element has it.
@@ -313,6 +319,11 @@ pub struct BuPr {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm1611:buPr` element of the tree a read gives: [`BuPrWith`] holding nothing in `extra`.
+pub type BuPr = BuPrWith<()>;
+
+impl Eq for BuPrWith<()> {}
 
 /// The hooks of a context for the `dgm1611` namespace.
 ///
@@ -430,7 +441,23 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl AutoBuNodeInfo {
+impl<X: NodeExtra> AutoBuNodeInfoWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AutoBuNodeInfoWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AutoBuNodeInfoWith {
+            bu_pr: officekit_markup_base::into_extra_required(*self.bu_pr, BuPrWith::into_extra),
+            extra: Default::default(),
+            lvl: self.lvl,
+            pt_type: self.pt_type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -455,7 +482,24 @@ impl officekit_markup_base::Write for AutoBuNodeInfo {
     }
 }
 
-impl AutoBuNodeInfoLst {
+impl<X: NodeExtra> AutoBuNodeInfoLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AutoBuNodeInfoLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AutoBuNodeInfoLstWith {
+            auto_bu_node_info: officekit_markup_base::into_extra_list(
+                self.auto_bu_node_info,
+                AutoBuNodeInfoWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -476,7 +520,26 @@ impl officekit_markup_base::Write for AutoBuNodeInfoLst {
     }
 }
 
-impl BuPr {
+impl<X: NodeExtra> BuPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BuPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BuPrWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                drawing::TextBulletContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            lead_zeros: self.lead_zeros,
+            prefix: self.prefix,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

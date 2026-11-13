@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::chart;
 use officekit_xml::element::Element;
@@ -274,23 +277,26 @@ pub trait Context: crate::Context {
 
 /// The `c16ac:multiLvlStrLit` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_MultiLvlStrData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MultiLvlStrLit {
+pub struct MultiLvlStrLitWith<X: NodeExtra> {
     /// The child that is `chart::ChartExtensibility`, when there is one.
-    pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
+    pub chart_extensibility: Option<Box<chart::ChartExtensibilityWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartAcMultiLvlStrLit,
     /// The children that are `chart::Level`, in order.
-    pub level: Vec<chart::Level>,
+    pub level: Vec<chart::LevelWith<X>>,
     /// The child that is `chart::PointCount`, when there is one.
-    pub point_count: Option<Box<chart::PointCount>>,
+    pub point_count: Option<Box<chart::PointCountWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c16ac:multiLvlStrLit` element of the tree a read gives: [`MultiLvlStrLitWith`] holding
+/// nothing in `extra`.
+pub type MultiLvlStrLit = MultiLvlStrLitWith<()>;
+
+impl Eq for MultiLvlStrLitWith<()> {}
 
 /// The hooks of a visitor for the `c16ac` namespace.
 ///
@@ -305,7 +311,29 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl MultiLvlStrLit {
+impl<X: NodeExtra> MultiLvlStrLitWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> MultiLvlStrLitWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MultiLvlStrLitWith {
+            chart_extensibility: officekit_markup_base::into_extra_optional(
+                &mut self.chart_extensibility,
+                chart::ChartExtensibilityWith::into_extra,
+            ),
+            extra: Default::default(),
+            level: officekit_markup_base::into_extra_list(self.level, chart::LevelWith::into_extra),
+            point_count: officekit_markup_base::into_extra_optional(
+                &mut self.point_count,
+                chart::PointCountWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

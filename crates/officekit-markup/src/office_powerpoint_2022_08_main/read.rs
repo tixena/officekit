@@ -223,6 +223,7 @@ use officekit_xml::element::Element;
 pub fn add(element: &Element) -> super::Add {
     let reader = officekit_markup_base::Reader::new(element, &super::ADD_SHAPE);
     super::Add {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -248,6 +249,7 @@ pub fn anchr(element: &Element) -> super::Anchr {
 pub fn asgn(element: &Element) -> super::Asgn {
     let reader = officekit_markup_base::Reader::new(element, &super::ASGN_SHAPE);
     super::Asgn {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -257,6 +259,7 @@ pub fn asgn(element: &Element) -> super::Asgn {
 pub fn atrbtn(element: &Element) -> super::Atrbtn {
     let reader = officekit_markup_base::Reader::new(element, &super::ATRBTN_SHAPE);
     super::Atrbtn {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -396,6 +399,7 @@ pub fn title(element: &Element) -> super::Title {
 pub fn unasgn_all(element: &Element) -> super::UnasgnAll {
     let reader = officekit_markup_base::Reader::new(element, &super::UNASGN_ALL_SHAPE);
     super::UnasgnAll {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -419,6 +423,7 @@ pub fn undo(element: &Element) -> super::Undo {
 pub fn unknown(element: &Element) -> super::Unknown {
     let reader = officekit_markup_base::Reader::new(element, &super::UNKNOWN_SHAPE);
     super::Unknown {
+        extra: (),
         unknown: reader.finish(),
     }
 }

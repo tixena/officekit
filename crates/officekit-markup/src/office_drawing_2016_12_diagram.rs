@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -314,71 +317,76 @@ pub trait Context: crate::Context {
 
 /// The `dgm1612:lstStyle` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_TextListStyle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LstStyle {
+pub struct LstStyleWith<X: NodeExtra> {
     /// The child that is `drawing::DefaultParagraphStyle`, when there is one.
-    pub default_paragraph_style: Option<Box<drawing::DefaultParagraphStyle>>,
+    pub default_paragraph_style: Option<Box<drawing::DefaultParagraphStyleWith<X>>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing201612DiagramLstStyle,
     /// The child that is `drawing::ListLevel1TextStyle`, when there is one.
-    pub list_level_1_text_style: Option<Box<drawing::ListLevel1TextStyle>>,
+    pub list_level_1_text_style: Option<Box<drawing::ListLevel1TextStyleWith<X>>>,
     /// The child that is `drawing::ListLevel2TextStyle`, when there is one.
-    pub list_level_2_text_style: Option<Box<drawing::ListLevel2TextStyle>>,
+    pub list_level_2_text_style: Option<Box<drawing::ListLevel2TextStyleWith<X>>>,
     /// The child that is `drawing::ListLevel3TextStyle`, when there is one.
-    pub list_level_3_text_style: Option<Box<drawing::ListLevel3TextStyle>>,
+    pub list_level_3_text_style: Option<Box<drawing::ListLevel3TextStyleWith<X>>>,
     /// The child that is `drawing::ListLevel4TextStyle`, when there is one.
-    pub list_level_4_text_style: Option<Box<drawing::ListLevel4TextStyle>>,
+    pub list_level_4_text_style: Option<Box<drawing::ListLevel4TextStyleWith<X>>>,
     /// The child that is `drawing::ListLevel5TextStyle`, when there is one.
-    pub list_level_5_text_style: Option<Box<drawing::ListLevel5TextStyle>>,
+    pub list_level_5_text_style: Option<Box<drawing::ListLevel5TextStyleWith<X>>>,
     /// The child that is `drawing::ListLevel6TextStyle`, when there is one.
-    pub list_level_6_text_style: Option<Box<drawing::ListLevel6TextStyle>>,
+    pub list_level_6_text_style: Option<Box<drawing::ListLevel6TextStyleWith<X>>>,
     /// The child that is `drawing::ListLevel7TextStyle`, when there is one.
-    pub list_level_7_text_style: Option<Box<drawing::ListLevel7TextStyle>>,
+    pub list_level_7_text_style: Option<Box<drawing::ListLevel7TextStyleWith<X>>>,
     /// The child that is `drawing::ListLevel8TextStyle`, when there is one.
-    pub list_level_8_text_style: Option<Box<drawing::ListLevel8TextStyle>>,
+    pub list_level_8_text_style: Option<Box<drawing::ListLevel8TextStyleWith<X>>>,
     /// The child that is `drawing::ListLevel9TextStyle`, when there is one.
-    pub list_level_9_text_style: Option<Box<drawing::ListLevel9TextStyle>>,
+    pub list_level_9_text_style: Option<Box<drawing::ListLevel9TextStyleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm1612:lstStyle` element of the tree a read gives: [`LstStyleWith`] holding nothing in
+/// `extra`.
+pub type LstStyle = LstStyleWith<()>;
+
+impl Eq for LstStyleWith<()> {}
+
 /// The `dgm1612:spPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpPr {
+pub struct SpPrWith<X: NodeExtra> {
     /// The child that is `drawing::Apply3DShapeProperties`, when there is one.
-    pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,
+    pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapePropertiesWith<X>>>,
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
     /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
-    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing201612DiagramSpPr,
     /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
-    pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<drawing::FillPropertiesContentWith<X>>>,
     /// The child that is an item of `drawing::GeometryContent`, when there is one.
-    pub geometry_content: Option<Box<drawing::GeometryContent>>,
+    pub geometry_content: Option<Box<drawing::GeometryContentWith<X>>>,
     /// The child that is `drawing::Outline`, when there is one.
-    pub outline: Option<Box<drawing::Outline>>,
+    pub outline: Option<Box<drawing::OutlineWith<X>>>,
     /// The child that is `drawing::Scene3d`, when there is one.
-    pub scene3d: Option<Box<drawing::Scene3d>>,
+    pub scene3d: Option<Box<drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `drawing::XfrmTransform2D`, when there is one.
-    pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
+    pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2DWith<X>>>,
 }
+
+/// The `dgm1612:spPr` element of the tree a read gives: [`SpPrWith`] holding nothing in `extra`.
+pub type SpPr = SpPrWith<()>;
+
+impl Eq for SpPrWith<()> {}
 
 /// The hooks of a visitor for the `dgm1612` namespace.
 ///
@@ -397,7 +405,64 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl LstStyle {
+impl<X: NodeExtra> LstStyleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> LstStyleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LstStyleWith {
+            default_paragraph_style: officekit_markup_base::into_extra_optional(
+                &mut self.default_paragraph_style,
+                drawing::DefaultParagraphStyleWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            list_level_1_text_style: officekit_markup_base::into_extra_optional(
+                &mut self.list_level_1_text_style,
+                drawing::ListLevel1TextStyleWith::into_extra,
+            ),
+            list_level_2_text_style: officekit_markup_base::into_extra_optional(
+                &mut self.list_level_2_text_style,
+                drawing::ListLevel2TextStyleWith::into_extra,
+            ),
+            list_level_3_text_style: officekit_markup_base::into_extra_optional(
+                &mut self.list_level_3_text_style,
+                drawing::ListLevel3TextStyleWith::into_extra,
+            ),
+            list_level_4_text_style: officekit_markup_base::into_extra_optional(
+                &mut self.list_level_4_text_style,
+                drawing::ListLevel4TextStyleWith::into_extra,
+            ),
+            list_level_5_text_style: officekit_markup_base::into_extra_optional(
+                &mut self.list_level_5_text_style,
+                drawing::ListLevel5TextStyleWith::into_extra,
+            ),
+            list_level_6_text_style: officekit_markup_base::into_extra_optional(
+                &mut self.list_level_6_text_style,
+                drawing::ListLevel6TextStyleWith::into_extra,
+            ),
+            list_level_7_text_style: officekit_markup_base::into_extra_optional(
+                &mut self.list_level_7_text_style,
+                drawing::ListLevel7TextStyleWith::into_extra,
+            ),
+            list_level_8_text_style: officekit_markup_base::into_extra_optional(
+                &mut self.list_level_8_text_style,
+                drawing::ListLevel8TextStyleWith::into_extra,
+            ),
+            list_level_9_text_style: officekit_markup_base::into_extra_optional(
+                &mut self.list_level_9_text_style,
+                drawing::ListLevel9TextStyleWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -418,7 +483,53 @@ impl officekit_markup_base::Write for LstStyle {
     }
 }
 
-impl SpPr {
+impl<X: NodeExtra> SpPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SpPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SpPrWith {
+            apply_3d_shape_properties: officekit_markup_base::into_extra_optional(
+                &mut self.apply_3d_shape_properties,
+                drawing::Apply3DShapePropertiesWith::into_extra,
+            ),
+            bw_mode: self.bw_mode,
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                drawing::FillPropertiesContentWith::into_extra,
+            ),
+            geometry_content: officekit_markup_base::into_extra_optional(
+                &mut self.geometry_content,
+                drawing::GeometryContentWith::into_extra,
+            ),
+            outline: officekit_markup_base::into_extra_optional(
+                &mut self.outline,
+                drawing::OutlineWith::into_extra,
+            ),
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                drawing::Scene3dWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm_transform2d: officekit_markup_base::into_extra_optional(
+                &mut self.xfrm_transform2d,
+                drawing::XfrmTransform2DWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

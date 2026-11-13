@@ -223,6 +223,7 @@ use officekit_xml::element::Element;
 pub fn alpha(element: &Element) -> super::Alpha {
     let reader = officekit_markup_base::Reader::new(element, &super::ALPHA_SHAPE);
     super::Alpha {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -232,6 +233,7 @@ pub fn alpha(element: &Element) -> super::Alpha {
 pub fn bevel(element: &Element) -> super::Bevel {
     let reader = officekit_markup_base::Reader::new(element, &super::BEVEL_SHAPE);
     super::Bevel {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -241,6 +243,7 @@ pub fn bevel(element: &Element) -> super::Bevel {
 pub fn bevel_b(element: &Element) -> super::BevelB {
     let reader = officekit_markup_base::Reader::new(element, &super::BEVEL_B_SHAPE);
     super::BevelB {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -250,6 +253,7 @@ pub fn bevel_b(element: &Element) -> super::BevelB {
 pub fn bevel_t(element: &Element) -> super::BevelT {
     let reader = officekit_markup_base::Reader::new(element, &super::BEVEL_T_SHAPE);
     super::BevelT {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -330,6 +334,7 @@ pub fn checkbox(element: &Element) -> super::Checkbox {
 pub fn checked(element: &Element) -> super::Checked {
     let reader = officekit_markup_base::Reader::new(element, &super::CHECKED_SHAPE);
     super::Checked {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -339,6 +344,7 @@ pub fn checked(element: &Element) -> super::Checked {
 pub fn checked_state(element: &Element) -> super::CheckedState {
     let reader = officekit_markup_base::Reader::new(element, &super::CHECKED_STATE_SHAPE);
     super::CheckedState {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -348,6 +354,7 @@ pub fn checked_state(element: &Element) -> super::CheckedState {
 pub fn cntxt_alts(element: &Element) -> super::CntxtAlts {
     let reader = officekit_markup_base::Reader::new(element, &super::CNTXT_ALTS_SHAPE);
     super::CntxtAlts {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -443,6 +450,7 @@ pub fn conflict_ins_track_change(element: &Element) -> super::ConflictInsTrackCh
 pub fn conflict_mode(element: &Element) -> super::ConflictMode {
     let reader = officekit_markup_base::Reader::new(element, &super::CONFLICT_MODE_SHAPE);
     super::ConflictMode {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -578,6 +586,7 @@ pub fn discard_image_editing_data(element: &Element) -> super::DiscardImageEditi
     let reader =
         officekit_markup_base::Reader::new(element, &super::DISCARD_IMAGE_EDITING_DATA_SHAPE);
     super::DiscardImageEditingData {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -601,6 +610,7 @@ pub fn doc_id(element: &Element) -> super::DocId {
 pub fn entity_picker(element: &Element) -> super::EntityPicker {
     let reader = officekit_markup_base::Reader::new(element, &super::ENTITY_PICKER_SHAPE);
     super::EntityPicker {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -798,6 +808,7 @@ pub fn line_join(element: &Element) -> super::LineJoinContent {
 pub fn lum(element: &Element) -> super::Lum {
     let reader = officekit_markup_base::Reader::new(element, &super::LUM_SHAPE);
     super::Lum {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -807,6 +818,7 @@ pub fn lum(element: &Element) -> super::Lum {
 pub fn lum_mod(element: &Element) -> super::LumMod {
     let reader = officekit_markup_base::Reader::new(element, &super::LUM_MOD_SHAPE);
     super::LumMod {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -816,6 +828,7 @@ pub fn lum_mod(element: &Element) -> super::LumMod {
 pub fn lum_off(element: &Element) -> super::LumOff {
     let reader = officekit_markup_base::Reader::new(element, &super::LUM_OFF_SHAPE);
     super::LumOff {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -839,6 +852,7 @@ pub fn miter(element: &Element) -> super::Miter {
 pub fn no_fill(element: &Element) -> super::NoFill {
     let reader = officekit_markup_base::Reader::new(element, &super::NO_FILL_SHAPE);
     super::NoFill {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -987,6 +1001,7 @@ pub fn rot(element: &Element) -> super::Rot {
 pub fn round(element: &Element) -> super::Round {
     let reader = officekit_markup_base::Reader::new(element, &super::ROUND_SHAPE);
     super::Round {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -996,6 +1011,7 @@ pub fn round(element: &Element) -> super::Round {
 pub fn sat(element: &Element) -> super::Sat {
     let reader = officekit_markup_base::Reader::new(element, &super::SAT_SHAPE);
     super::Sat {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -1005,6 +1021,7 @@ pub fn sat(element: &Element) -> super::Sat {
 pub fn sat_mod(element: &Element) -> super::SatMod {
     let reader = officekit_markup_base::Reader::new(element, &super::SAT_MOD_SHAPE);
     super::SatMod {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -1014,6 +1031,7 @@ pub fn sat_mod(element: &Element) -> super::SatMod {
 pub fn sat_off(element: &Element) -> super::SatOff {
     let reader = officekit_markup_base::Reader::new(element, &super::SAT_OFF_SHAPE);
     super::SatOff {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -1055,6 +1073,7 @@ pub fn scheme_clr(element: &Element) -> super::SchemeClr {
 pub fn shade(element: &Element) -> super::Shade {
     let reader = officekit_markup_base::Reader::new(element, &super::SHADE_SHAPE);
     super::Shade {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -1182,6 +1201,7 @@ pub fn text_outline(element: &Element) -> super::TextOutline {
 pub fn tint(element: &Element) -> super::Tint {
     let reader = officekit_markup_base::Reader::new(element, &super::TINT_SHAPE);
     super::Tint {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -1191,6 +1211,7 @@ pub fn tint(element: &Element) -> super::Tint {
 pub fn unchecked_state(element: &Element) -> super::UncheckedState {
     let reader = officekit_markup_base::Reader::new(element, &super::UNCHECKED_STATE_SHAPE);
     super::UncheckedState {
+        extra: (),
         unknown: reader.finish(),
     }
 }

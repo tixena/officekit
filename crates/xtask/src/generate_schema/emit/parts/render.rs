@@ -1136,12 +1136,12 @@ fn archive_text(header: &str, typed: &[(&PartType, &RootText)]) -> String {
         let _ = writeln!(out, "use officekit_markup::{namespace};");
     }
     out.push_str(
-        "use rkyv::de::Pooling;\nuse rkyv::rancor::{Fallible, Source};\nuse rkyv::ser::{Allocator, Sharing, Writer};\nuse rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};\n\n",
+        "use rkyv::de::Pooling;\nuse rkyv::rancor::{Fallible, Source as ErrorSource};\nuse rkyv::ser::{Allocator, Sharing, Writer as ArchiveWriter};\nuse rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};\n\n",
     );
     let arms = model_arms(typed, str::to_owned);
     out.push_str(&archive::mirror("PartModel", &arms, false));
     out.push_str(&archive::from("officekit_markup", "PartModel", &arms));
-    out.push_str(&archive::handoffs("PartModel"));
+    out.push_str(&archive::handoffs("PartModel", "PartModel"));
     out
 }
 

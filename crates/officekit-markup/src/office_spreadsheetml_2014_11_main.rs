@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
@@ -270,25 +273,28 @@ pub static MODEL_TIME_GROUPINGS_SHAPE: officekit_markup_base::Shape =
 
 /// The `x16:calculatedTimeColumn` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_CalculatedTimeColumn`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CalculatedTimeColumn {
+pub struct CalculatedTimeColumnWith<X: NodeExtra> {
     /// The attribute `columnId`, when the element has it.
     pub column_id: Option<String>,
     /// The attribute `columnName`, when the element has it.
     pub column_name: Option<String>,
     /// The attribute `contentType`, when the element has it.
     pub content_type: Option<ModelTimeGroupingContentType>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml201411MainCalculatedTimeColumn,
     /// The attribute `isSelected`, when the element has it.
     pub is_selected: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `x16:calculatedTimeColumn` element of the tree a read gives: [`CalculatedTimeColumnWith`]
+/// holding nothing in `extra`.
+pub type CalculatedTimeColumn = CalculatedTimeColumnWith<()>;
+
+impl Eq for CalculatedTimeColumnWith<()> {}
 
 /// The hooks of a context for the `x16` namespace.
 ///
@@ -365,25 +371,28 @@ pub trait Context: crate::Context {
 
 /// The `x16:modelTimeGrouping` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_ModelTimeGrouping`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ModelTimeGrouping {
+pub struct ModelTimeGroupingWith<X: NodeExtra> {
     /// The children that are `CalculatedTimeColumn`, in order.
-    pub calculated_time_column: Vec<CalculatedTimeColumn>,
+    pub calculated_time_column: Vec<CalculatedTimeColumnWith<X>>,
     /// The attribute `columnId`, when the element has it.
     pub column_id: Option<String>,
     /// The attribute `columnName`, when the element has it.
     pub column_name: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml201411MainModelTimeGrouping,
     /// The attribute `tableName`, when the element has it.
     pub table_name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `x16:modelTimeGrouping` element of the tree a read gives: [`ModelTimeGroupingWith`] holding
+/// nothing in `extra`.
+pub type ModelTimeGrouping = ModelTimeGroupingWith<()>;
+
+impl Eq for ModelTimeGroupingWith<()> {}
 
 /// The simple type `ST_ModelTimeGroupingContentType`, kept as the text the file carried.
 ///
@@ -424,19 +433,22 @@ pub enum ModelTimeGroupingContentTypeMember {
 
 /// The `x16:modelTimeGroupings` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_ModelTimeGroupings`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ModelTimeGroupings {
+pub struct ModelTimeGroupingsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml201411MainModelTimeGroupings,
     /// The children that are `ModelTimeGrouping`, in order.
-    pub model_time_grouping: Vec<ModelTimeGrouping>,
+    pub model_time_grouping: Vec<ModelTimeGroupingWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `x16:modelTimeGroupings` element of the tree a read gives: [`ModelTimeGroupingsWith`]
+/// holding nothing in `extra`.
+pub type ModelTimeGroupings = ModelTimeGroupingsWith<()>;
+
+impl Eq for ModelTimeGroupingsWith<()> {}
 
 /// The hooks of a visitor for the `x16` namespace.
 ///
@@ -469,7 +481,24 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl CalculatedTimeColumn {
+impl<X: NodeExtra> CalculatedTimeColumnWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CalculatedTimeColumnWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CalculatedTimeColumnWith {
+            column_id: self.column_id,
+            column_name: self.column_name,
+            content_type: self.content_type,
+            extra: Default::default(),
+            is_selected: self.is_selected,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -496,7 +525,27 @@ impl officekit_markup_base::Write for CalculatedTimeColumn {
     }
 }
 
-impl ModelTimeGrouping {
+impl<X: NodeExtra> ModelTimeGroupingWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ModelTimeGroupingWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ModelTimeGroupingWith {
+            calculated_time_column: officekit_markup_base::into_extra_list(
+                self.calculated_time_column,
+                CalculatedTimeColumnWith::into_extra,
+            ),
+            column_id: self.column_id,
+            column_name: self.column_name,
+            extra: Default::default(),
+            table_name: self.table_name,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -590,7 +639,24 @@ impl ModelTimeGroupingContentType {
     }
 }
 
-impl ModelTimeGroupings {
+impl<X: NodeExtra> ModelTimeGroupingsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ModelTimeGroupingsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ModelTimeGroupingsWith {
+            extra: Default::default(),
+            model_time_grouping: officekit_markup_base::into_extra_list(
+                self.model_time_grouping,
+                ModelTimeGroupingWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

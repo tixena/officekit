@@ -285,6 +285,7 @@ pub fn category_axis_axis_props(element: &Element) -> super::CategoryAxisAxisPro
     let reader =
         officekit_markup_base::Reader::new(element, &super::CATEGORY_AXIS_AXIS_PROPS_SHAPE);
     super::CategoryAxisAxisProps {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -1082,6 +1083,7 @@ pub fn plot_area3d(element: &Element) -> super::PlotArea3D {
 pub fn series_axis_axis_props(element: &Element) -> super::SeriesAxisAxisProps {
     let reader = officekit_markup_base::Reader::new(element, &super::SERIES_AXIS_AXIS_PROPS_SHAPE);
     super::SeriesAxisAxisProps {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -1302,6 +1304,7 @@ pub fn up_bar(element: &Element) -> super::UpBar {
 pub fn value_axis_axis_props(element: &Element) -> super::ValueAxisAxisProps {
     let reader = officekit_markup_base::Reader::new(element, &super::VALUE_AXIS_AXIS_PROPS_SHAPE);
     super::ValueAxisAxisProps {
+        extra: (),
         unknown: reader.finish(),
     }
 }

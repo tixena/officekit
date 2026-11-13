@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -268,19 +271,22 @@ pub trait Context: crate::Context {
 
 /// The `aif:imageFormula` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ImageFormula`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ImageFormula {
+pub struct ImageFormulaWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2022ImageformulaImageFormula,
     /// The attribute `formula`, when the element has it.
     pub formula: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `aif:imageFormula` element of the tree a read gives: [`ImageFormulaWith`] holding nothing in
+/// `extra`.
+pub type ImageFormula = ImageFormulaWith<()>;
+
+impl Eq for ImageFormulaWith<()> {}
 
 /// The hooks of a visitor for the `aif` namespace.
 ///
@@ -295,7 +301,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl ImageFormula {
+impl<X: NodeExtra> ImageFormulaWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ImageFormulaWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ImageFormulaWith {
+            extra: Default::default(),
+            formula: self.formula,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

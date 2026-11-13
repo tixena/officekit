@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -266,72 +269,82 @@ pub static CM_MK_LST_SHAPE: officekit_markup_base::Shape = officekit_markup_base
 
 /// The `pc2:cmMK` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_CommentV2Moniker`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CmMK {
+pub struct CmMKWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20199MainCommandCmMK,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `pc2:cmMK` element of the tree a read gives: [`CmMKWith`] holding nothing in `extra`.
+pub type CmMK = CmMKWith<()>;
+
+impl Eq for CmMKWith<()> {}
 
 /// The `pc2:cmMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_CommentV2MonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CmMkLst {
+pub struct CmMkLstWith<X: NodeExtra> {
     /// The child that is `CmMK`, which the schema requires.
-    pub cm_mk: Box<CmMK>,
+    pub cm_mk: Box<CmMKWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20199MainCommandCmMkLst,
     /// The child that is `super::office_powerpoint_2013_main_command::SldMkLst`, which the schema
     /// requires.
-    pub sld_mk_lst: Box<super::office_powerpoint_2013_main_command::SldMkLst>,
+    pub sld_mk_lst: Box<super::office_powerpoint_2013_main_command::SldMkLstWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `pc2:cmMkLst` element of the tree a read gives: [`CmMkLstWith`] holding nothing in `extra`.
+pub type CmMkLst = CmMkLstWith<()>;
+
+impl Eq for CmMkLstWith<()> {}
+
 /// The `pc2:cmRplyMk` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_CommentReplyV2Moniker`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CmRplyMk {
+pub struct CmRplyMkWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20199MainCommandCmRplyMk,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `pc2:cmRplyMk` element of the tree a read gives: [`CmRplyMkWith`] holding nothing in
+/// `extra`.
+pub type CmRplyMk = CmRplyMkWith<()>;
+
+impl Eq for CmRplyMkWith<()> {}
+
 /// The `pc2:cmRplyMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_CommentReplyV2MonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CmRplyMkLst {
+pub struct CmRplyMkLstWith<X: NodeExtra> {
     /// The child that is `CmMkLst`, which the schema requires.
-    pub cm_mk_lst: Box<CmMkLst>,
+    pub cm_mk_lst: Box<CmMkLstWith<X>>,
     /// The child that is `CmRplyMk`, which the schema requires.
-    pub cm_rply_mk: Box<CmRplyMk>,
+    pub cm_rply_mk: Box<CmRplyMkWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20199MainCommandCmRplyMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `pc2:cmRplyMkLst` element of the tree a read gives: [`CmRplyMkLstWith`] holding nothing in
+/// `extra`.
+pub type CmRplyMkLst = CmRplyMkLstWith<()>;
+
+impl Eq for CmRplyMkLstWith<()> {}
 
 /// The hooks of a context for the `pc2` namespace.
 ///
@@ -447,7 +460,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl CmMK {
+impl<X: NodeExtra> CmMKWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CmMKWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CmMKWith {
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -471,7 +498,25 @@ impl officekit_markup_base::Write for CmMK {
     }
 }
 
-impl CmMkLst {
+impl<X: NodeExtra> CmMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CmMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CmMkLstWith {
+            cm_mk: officekit_markup_base::into_extra_required(*self.cm_mk, CmMKWith::into_extra),
+            extra: Default::default(),
+            sld_mk_lst: officekit_markup_base::into_extra_required(
+                *self.sld_mk_lst,
+                super::office_powerpoint_2013_main_command::SldMkLstWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -492,7 +537,21 @@ impl officekit_markup_base::Write for CmMkLst {
     }
 }
 
-impl CmRplyMk {
+impl<X: NodeExtra> CmRplyMkWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CmRplyMkWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CmRplyMkWith {
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -516,7 +575,28 @@ impl officekit_markup_base::Write for CmRplyMk {
     }
 }
 
-impl CmRplyMkLst {
+impl<X: NodeExtra> CmRplyMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CmRplyMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CmRplyMkLstWith {
+            cm_mk_lst: officekit_markup_base::into_extra_required(
+                *self.cm_mk_lst,
+                CmMkLstWith::into_extra,
+            ),
+            cm_rply_mk: officekit_markup_base::into_extra_required(
+                *self.cm_rply_mk,
+                CmRplyMkWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

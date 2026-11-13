@@ -237,6 +237,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 pub fn line_sketch_curved(element: &Element) -> super::LineSketchCurved {
     let reader = officekit_markup_base::Reader::new(element, &super::LINE_SKETCH_CURVED_SHAPE);
     super::LineSketchCurved {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -246,6 +247,7 @@ pub fn line_sketch_curved(element: &Element) -> super::LineSketchCurved {
 pub fn line_sketch_freehand(element: &Element) -> super::LineSketchFreehand {
     let reader = officekit_markup_base::Reader::new(element, &super::LINE_SKETCH_FREEHAND_SHAPE);
     super::LineSketchFreehand {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -255,6 +257,7 @@ pub fn line_sketch_freehand(element: &Element) -> super::LineSketchFreehand {
 pub fn line_sketch_none(element: &Element) -> super::LineSketchNone {
     let reader = officekit_markup_base::Reader::new(element, &super::LINE_SKETCH_NONE_SHAPE);
     super::LineSketchNone {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -264,6 +267,7 @@ pub fn line_sketch_none(element: &Element) -> super::LineSketchNone {
 pub fn line_sketch_scribble(element: &Element) -> super::LineSketchScribble {
     let reader = officekit_markup_base::Reader::new(element, &super::LINE_SKETCH_SCRIBBLE_SHAPE);
     super::LineSketchScribble {
+        extra: (),
         unknown: reader.finish(),
     }
 }

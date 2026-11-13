@@ -34,6 +34,67 @@
 //! this crate's hooks match. Build a struct with `Default` and assign its fields, and give a
 //! `match` on an enum a wildcard arm.
 //!
+//! # `NodeExtra` slots
+//!
+//! Each struct also has a field `extra`, the slot a program fills with what it learned about a
+//! node, such as where a layout engine drew it. The type of the slot comes from a type parameter
+//! `X` that is a [`NodeExtra`]: the struct `wordprocessing::ParagraphWith<X>` holds an
+//! `X::WordprocessingParagraph` in `extra`, and each enum has a form of the same kind,
+//! `wordprocessing::ParagraphContentWith<X>`.
+//!
+//! A read gives the plain names, `wordprocessing::Paragraph`, which stand for
+//! `ParagraphWith<()>`. The slot of `()` holds nothing and takes no space, so a program that never
+//! names `X` sees the tree as it was. Only the types are generic: reading, writing, conversions
+//! between enums, hooks and traversals name the plain tree.
+//!
+//! `NodeExtra` has one associated type for each kind of node, and stable Rust has no default for
+//! an associated type. `#[node_extra]` on an `impl` of `NodeExtra` writes `type <Kind> = ();` for
+//! every kind the `impl` does not name:
+//!
+//! ```text
+//! use officekit_markup::wordprocessing::ParagraphWith;
+//! use officekit_markup::{NodeExtra, node_extra};
+//!
+//! #[derive(Clone, Debug, Default, PartialEq)]
+//! struct Marks;
+//!
+//! #[node_extra]
+//! impl NodeExtra for Marks {
+//!     type WordprocessingParagraph = Vec<u32>;
+//! }
+//!
+//! let mut paragraph = ParagraphWith::<Marks>::default();
+//! paragraph.extra.push(3);
+//! ```
+//!
+//! `into_extra::<Y>()` on a struct or an enum moves the node and every node under it into the tree
+//! of `Y`, each `extra` at its default, and `into_extra::<()>()` brings a tree back to the plain
+//! one. Nothing is cloned. A program that lays a document out gives the slots their content by
+//! walking the converted tree, as it walks the tree for the layout itself:
+//!
+//! ```text
+//! use officekit::docx::Docx;
+//! use officekit_markup::wordprocessing::{BlockContentWith, Document, DocumentWith};
+//!
+//! let mut docx = Docx::new(WordprocessingKind::Document)?;
+//! let document: Document = docx.main_document()?;
+//!
+//! let mut laid_out: DocumentWith<Placement> = document.into_extra();
+//! if let Some(body) = laid_out.body.as_deref_mut() {
+//!     for item in &mut body.content {
+//!         if let BlockContentWith::Paragraph(paragraph) = item {
+//!             paragraph.extra.push(PageBox { page: 1, x: 72.0, y: 72.0, width: 468.0, height: 14.0 });
+//!         }
+//!     }
+//! }
+//!
+//! let back: Document = laid_out.into_extra();
+//! docx.set_main_document(&back)?;
+//! ```
+//!
+//! The writers, like the readers, take the plain tree, so a tree with slots goes back through
+//! `into_extra::<()>()` to be written.
+//!
 //! # Hooks
 //!
 //! A hook is a method with a default body that does nothing. A program implements the ones it
@@ -70,7 +131,7 @@
 //!
 //! # Features
 //!
-//! - `binary-format`: every type also derives the `rkyv` archive traits, for officekit's
+//! - `binary-format`: every type also has the `rkyv` archive traits, for officekit's
 //!   binary form.
 //!
 //! This crate builds no doctest. The runnable example of reading and writing a node is on the
@@ -82,8 +143,14 @@
 // go before the imports, and `include!` places them where it stands.
 include!("modules.rs");
 
+#[cfg(test)]
+mod tests;
+
 #[doc(no_inline)]
 pub use officekit_markup_base::*;
+
+#[doc(inline)]
+pub use officekit_markup_macros::node_extra;
 
 use std::io;
 

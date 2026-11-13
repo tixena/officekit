@@ -221,6 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use crate::NodeExtra;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 
@@ -460,522 +461,626 @@ pub static APPLICATION_SPECIFIC_FILE_PROPERTIES_CONTENT_TAGS: crate::Accept = cr
 
 /// The `ap:Application` element, Application Name (ECMA-376 Part 1, section 22.2.2.1). Its schema
 /// type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ApplicationName {
+pub struct ApplicationNameWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedApplicationName,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `ap:Application` element of the tree a read gives: [`ApplicationNameWith`] holding nothing
+/// in `extra`.
+pub type ApplicationName = ApplicationNameWith<()>;
+
+impl Eq for ApplicationNameWith<()> {}
+
 /// The `ap:Properties` element, Application Specific File Properties (ECMA-376 Part 1, section
 /// 22.2.2.21). Its schema type is `CT_Properties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ApplicationSpecificFileProperties {
+pub struct ApplicationSpecificFilePropertiesWith<X: NodeExtra> {
     /// The children that are an item of `ApplicationSpecificFilePropertiesContent`, in order.
-    pub content: Vec<ApplicationSpecificFilePropertiesContent>,
+    pub content: Vec<ApplicationSpecificFilePropertiesContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedApplicationSpecificFileProperties,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `ap:Properties` element of the tree a read gives: [`ApplicationSpecificFilePropertiesWith`]
+/// holding nothing in `extra`.
+pub type ApplicationSpecificFileProperties = ApplicationSpecificFilePropertiesWith<()>;
+
+impl Eq for ApplicationSpecificFilePropertiesWith<()> {}
 
 /// One child element of a choice: xsd:all in `CT_Properties`.
 ///
 /// The schema types that hold it: `CT_Properties`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum ApplicationSpecificFilePropertiesContent {
+pub enum ApplicationSpecificFilePropertiesContentWith<X: NodeExtra> {
     /// The element `ap:Application`, a `ApplicationName`.
-    ApplicationName(ApplicationName),
+    ApplicationName(ApplicationNameWith<X>),
     /// The element `ap:AppVersion`, a `ApplicationVersion`.
-    ApplicationVersion(ApplicationVersion),
+    ApplicationVersion(ApplicationVersionWith<X>),
     /// The element `ap:CharactersWithSpaces`, a `CharactersWithSpaces`.
-    CharactersWithSpaces(CharactersWithSpaces),
+    CharactersWithSpaces(CharactersWithSpacesWith<X>),
     /// The element `ap:DigSig`, a `DigitalSignature`.
-    DigitalSignature(DigitalSignature),
+    DigitalSignature(DigitalSignatureWith<X>),
     /// The element `ap:DocSecurity`, a `DocumentSecurity`.
-    DocumentSecurity(DocumentSecurity),
+    DocumentSecurity(DocumentSecurityWith<X>),
     /// The element `ap:HeadingPairs`, a `HeadingPairs`.
-    HeadingPairs(HeadingPairs),
+    HeadingPairs(HeadingPairsWith<X>),
     /// The element `ap:HLinks`, a `HyperlinkList`.
-    HyperlinkList(HyperlinkList),
+    HyperlinkList(HyperlinkListWith<X>),
     /// The element `ap:HyperlinksChanged`, a `HyperlinksChanged`.
-    HyperlinksChanged(HyperlinksChanged),
+    HyperlinksChanged(HyperlinksChangedWith<X>),
     /// The element `ap:PresentationFormat`, a `IntendedFormatOfPresentation`.
-    IntendedFormatOfPresentation(IntendedFormatOfPresentation),
+    IntendedFormatOfPresentation(IntendedFormatOfPresentationWith<X>),
     /// The element `ap:LinksUpToDate`, a `LinksUpToDate`.
-    LinksUpToDate(LinksUpToDate),
+    LinksUpToDate(LinksUpToDateWith<X>),
     /// The element `ap:Company`, a `NameOfCompany`.
-    NameOfCompany(NameOfCompany),
+    NameOfCompany(NameOfCompanyWith<X>),
     /// The element `ap:Template`, a `NameOfDocumentTemplate`.
-    NameOfDocumentTemplate(NameOfDocumentTemplate),
+    NameOfDocumentTemplate(NameOfDocumentTemplateWith<X>),
     /// The element `ap:Manager`, a `NameOfManager`.
-    NameOfManager(NameOfManager),
+    NameOfManager(NameOfManagerWith<X>),
     /// The element `ap:HiddenSlides`, a `NumberOfHiddenSlides`.
-    NumberOfHiddenSlides(NumberOfHiddenSlides),
+    NumberOfHiddenSlides(NumberOfHiddenSlidesWith<X>),
     /// The element `ap:Lines`, a `NumberOfLines`.
-    NumberOfLines(NumberOfLines),
+    NumberOfLines(NumberOfLinesWith<X>),
     /// The element `ap:Notes`, a `NumberOfSlidesContainingNotes`.
-    NumberOfSlidesContainingNotes(NumberOfSlidesContainingNotes),
+    NumberOfSlidesContainingNotes(NumberOfSlidesContainingNotesWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `ap:TitlesOfParts`, a `PartTitles`.
-    PartTitles(PartTitles),
+    PartTitles(PartTitlesWith<X>),
     /// The element `ap:HyperlinkBase`, a `RelativeHyperlinkBase`.
-    RelativeHyperlinkBase(RelativeHyperlinkBase),
+    RelativeHyperlinkBase(RelativeHyperlinkBaseWith<X>),
     /// The element `ap:SharedDoc`, a `SharedDocument`.
-    SharedDocument(SharedDocument),
+    SharedDocument(SharedDocumentWith<X>),
     /// The element `ap:Slides`, a `SlidesMetadataElement`.
-    SlidesMetadataElement(SlidesMetadataElement),
+    SlidesMetadataElement(SlidesMetadataElementWith<X>),
     /// The element `ap:ScaleCrop`, a `ThumbnailDisplayMode`.
-    ThumbnailDisplayMode(ThumbnailDisplayMode),
+    ThumbnailDisplayMode(ThumbnailDisplayModeWith<X>),
     /// The element `ap:TotalTime`, a `TotalEditTimeMetadataElement`.
-    TotalEditTimeMetadataElement(TotalEditTimeMetadataElement),
+    TotalEditTimeMetadataElement(TotalEditTimeMetadataElementWith<X>),
     /// The element `ap:Characters`, a `TotalNumberOfCharacters`.
-    TotalNumberOfCharacters(TotalNumberOfCharacters),
+    TotalNumberOfCharacters(TotalNumberOfCharactersWith<X>),
     /// The element `ap:MMClips`, a `TotalNumberOfMultimediaClips`.
-    TotalNumberOfMultimediaClips(TotalNumberOfMultimediaClips),
+    TotalNumberOfMultimediaClips(TotalNumberOfMultimediaClipsWith<X>),
     /// The element `ap:Pages`, a `TotalNumberOfPages`.
-    TotalNumberOfPages(TotalNumberOfPages),
+    TotalNumberOfPages(TotalNumberOfPagesWith<X>),
     /// The element `ap:Paragraphs`, a `TotalNumberOfParagraphs`.
-    TotalNumberOfParagraphs(TotalNumberOfParagraphs),
+    TotalNumberOfParagraphs(TotalNumberOfParagraphsWith<X>),
     /// The element `ap:Words`, a `WordCount`.
-    WordCount(WordCount),
+    WordCount(WordCountWith<X>),
 }
+
+/// [`ApplicationSpecificFilePropertiesContentWith`] of the tree a read gives, where no node holds
+/// anything in `extra`.
+pub type ApplicationSpecificFilePropertiesContent =
+    ApplicationSpecificFilePropertiesContentWith<()>;
+
+impl Eq for ApplicationSpecificFilePropertiesContentWith<()> {}
 
 /// The `ap:AppVersion` element, Application Version (ECMA-376 Part 1, section 22.2.2.2). Its schema
 /// type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ApplicationVersion {
+pub struct ApplicationVersionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedApplicationVersion,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `ap:AppVersion` element of the tree a read gives: [`ApplicationVersionWith`] holding nothing
+/// in `extra`.
+pub type ApplicationVersion = ApplicationVersionWith<()>;
+
+impl Eq for ApplicationVersionWith<()> {}
+
 /// The `ap:CharactersWithSpaces` element. Its schema type is `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CharactersWithSpaces {
+pub struct CharactersWithSpacesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedCharactersWithSpaces,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:CharactersWithSpaces` element of the tree a read gives: [`CharactersWithSpacesWith`]
+/// holding nothing in `extra`.
+pub type CharactersWithSpaces = CharactersWithSpacesWith<()>;
+
+impl Eq for CharactersWithSpacesWith<()> {}
 
 /// The `ap:DigSig` element, Digital Signature (ECMA-376 Part 1, section 22.2.2.6). Its schema type
 /// is `CT_DigSigBlob`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DigitalSignature {
+pub struct DigitalSignatureWith<X: NodeExtra> {
     /// The child that is `super::document_properties_variant_types::BinaryBlob`, which the schema
     /// requires.
-    pub binary_blob: Box<super::document_properties_variant_types::BinaryBlob>,
+    pub binary_blob: Box<super::document_properties_variant_types::BinaryBlobWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedDigitalSignature,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `ap:DigSig` element of the tree a read gives: [`DigitalSignatureWith`] holding nothing in
+/// `extra`.
+pub type DigitalSignature = DigitalSignatureWith<()>;
+
+impl Eq for DigitalSignatureWith<()> {}
 
 /// The `ap:DocSecurity` element, Document Security (ECMA-376 Part 1, section 22.2.2.7). Its schema
 /// type is `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DocumentSecurity {
+pub struct DocumentSecurityWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedDocumentSecurity,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:DocSecurity` element of the tree a read gives: [`DocumentSecurityWith`] holding nothing
+/// in `extra`.
+pub type DocumentSecurity = DocumentSecurityWith<()>;
+
+impl Eq for DocumentSecurityWith<()> {}
 
 /// The `ap:HeadingPairs` element, Heading Pairs (ECMA-376 Part 1, section 22.2.2.8). Its schema
 /// type is `CT_VectorVariant`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HeadingPairs {
+pub struct HeadingPairsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedHeadingPairs,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The child that is `super::document_properties_variant_types::Vector`, which the schema
     /// requires.
-    pub vector: Box<super::document_properties_variant_types::Vector>,
+    pub vector: Box<super::document_properties_variant_types::VectorWith<X>>,
 }
+
+/// The `ap:HeadingPairs` element of the tree a read gives: [`HeadingPairsWith`] holding nothing in
+/// `extra`.
+pub type HeadingPairs = HeadingPairsWith<()>;
+
+impl Eq for HeadingPairsWith<()> {}
 
 /// The `ap:HLinks` element, Hyperlink List (ECMA-376 Part 1, section 22.2.2.10). Its schema type is
 /// `CT_VectorVariant`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HyperlinkList {
+pub struct HyperlinkListWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedHyperlinkList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The child that is `super::document_properties_variant_types::Vector`, which the schema
     /// requires.
-    pub vector: Box<super::document_properties_variant_types::Vector>,
+    pub vector: Box<super::document_properties_variant_types::VectorWith<X>>,
 }
+
+/// The `ap:HLinks` element of the tree a read gives: [`HyperlinkListWith`] holding nothing in
+/// `extra`.
+pub type HyperlinkList = HyperlinkListWith<()>;
+
+impl Eq for HyperlinkListWith<()> {}
 
 /// The `ap:HyperlinksChanged` element, Hyperlinks Changed (ECMA-376 Part 1, section 22.2.2.12). Its
 /// schema type is `boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HyperlinksChanged {
+pub struct HyperlinksChangedWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedHyperlinksChanged,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:HyperlinksChanged` element of the tree a read gives: [`HyperlinksChangedWith`] holding
+/// nothing in `extra`.
+pub type HyperlinksChanged = HyperlinksChangedWith<()>;
+
+impl Eq for HyperlinksChangedWith<()> {}
 
 /// The `ap:PresentationFormat` element, Intended Format of Presentation (ECMA-376 Part 1, section
 /// 22.2.2.20). Its schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IntendedFormatOfPresentation {
+pub struct IntendedFormatOfPresentationWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedIntendedFormatOfPresentation,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:PresentationFormat` element of the tree a read gives:
+/// [`IntendedFormatOfPresentationWith`] holding nothing in `extra`.
+pub type IntendedFormatOfPresentation = IntendedFormatOfPresentationWith<()>;
+
+impl Eq for IntendedFormatOfPresentationWith<()> {}
 
 /// The `ap:LinksUpToDate` element, Links Up-to-Date (ECMA-376 Part 1, section 22.2.2.14). Its
 /// schema type is `boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LinksUpToDate {
+pub struct LinksUpToDateWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedLinksUpToDate,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:LinksUpToDate` element of the tree a read gives: [`LinksUpToDateWith`] holding nothing
+/// in `extra`.
+pub type LinksUpToDate = LinksUpToDateWith<()>;
+
+impl Eq for LinksUpToDateWith<()> {}
 
 /// The `ap:Company` element, Name of Company (ECMA-376 Part 1, section 22.2.2.5). Its schema type
 /// is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NameOfCompany {
+pub struct NameOfCompanyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedNameOfCompany,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:Company` element of the tree a read gives: [`NameOfCompanyWith`] holding nothing in
+/// `extra`.
+pub type NameOfCompany = NameOfCompanyWith<()>;
+
+impl Eq for NameOfCompanyWith<()> {}
 
 /// The `ap:Template` element, Name of Document Template (ECMA-376 Part 1, section 22.2.2.25). Its
 /// schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NameOfDocumentTemplate {
+pub struct NameOfDocumentTemplateWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedNameOfDocumentTemplate,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:Template` element of the tree a read gives: [`NameOfDocumentTemplateWith`] holding
+/// nothing in `extra`.
+pub type NameOfDocumentTemplate = NameOfDocumentTemplateWith<()>;
+
+impl Eq for NameOfDocumentTemplateWith<()> {}
 
 /// The `ap:Manager` element, Name of Manager (ECMA-376 Part 1, section 22.2.2.15). Its schema type
 /// is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NameOfManager {
+pub struct NameOfManagerWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedNameOfManager,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:Manager` element of the tree a read gives: [`NameOfManagerWith`] holding nothing in
+/// `extra`.
+pub type NameOfManager = NameOfManagerWith<()>;
+
+impl Eq for NameOfManagerWith<()> {}
 
 /// The `ap:HiddenSlides` element, Number of Hidden Slides (ECMA-376 Part 1, section 22.2.2.9). Its
 /// schema type is `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NumberOfHiddenSlides {
+pub struct NumberOfHiddenSlidesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedNumberOfHiddenSlides,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:HiddenSlides` element of the tree a read gives: [`NumberOfHiddenSlidesWith`] holding
+/// nothing in `extra`.
+pub type NumberOfHiddenSlides = NumberOfHiddenSlidesWith<()>;
+
+impl Eq for NumberOfHiddenSlidesWith<()> {}
 
 /// The `ap:Lines` element, Number of Lines (ECMA-376 Part 1, section 22.2.2.13). Its schema type is
 /// `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NumberOfLines {
+pub struct NumberOfLinesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedNumberOfLines,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:Lines` element of the tree a read gives: [`NumberOfLinesWith`] holding nothing in
+/// `extra`.
+pub type NumberOfLines = NumberOfLinesWith<()>;
+
+impl Eq for NumberOfLinesWith<()> {}
 
 /// The `ap:Notes` element, Number of Slides Containing Notes (ECMA-376 Part 1, section 22.2.2.17).
 /// Its schema type is `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NumberOfSlidesContainingNotes {
+pub struct NumberOfSlidesContainingNotesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedNumberOfSlidesContainingNotes,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `ap:Notes` element of the tree a read gives: [`NumberOfSlidesContainingNotesWith`] holding
+/// nothing in `extra`.
+pub type NumberOfSlidesContainingNotes = NumberOfSlidesContainingNotesWith<()>;
+
+impl Eq for NumberOfSlidesContainingNotesWith<()> {}
+
 /// The `ap:TitlesOfParts` element, Part Titles (ECMA-376 Part 1, section 22.2.2.26). Its schema
 /// type is `CT_VectorLpstr`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PartTitles {
+pub struct PartTitlesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedPartTitles,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The child that is `super::document_properties_variant_types::Vector`, which the schema
     /// requires.
-    pub vector: Box<super::document_properties_variant_types::Vector>,
+    pub vector: Box<super::document_properties_variant_types::VectorWith<X>>,
 }
+
+/// The `ap:TitlesOfParts` element of the tree a read gives: [`PartTitlesWith`] holding nothing in
+/// `extra`.
+pub type PartTitles = PartTitlesWith<()>;
+
+impl Eq for PartTitlesWith<()> {}
 
 /// The `ap:HyperlinkBase` element, Relative Hyperlink Base (ECMA-376 Part 1, section 22.2.2.11).
 /// Its schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RelativeHyperlinkBase {
+pub struct RelativeHyperlinkBaseWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedRelativeHyperlinkBase,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:HyperlinkBase` element of the tree a read gives: [`RelativeHyperlinkBaseWith`] holding
+/// nothing in `extra`.
+pub type RelativeHyperlinkBase = RelativeHyperlinkBaseWith<()>;
+
+impl Eq for RelativeHyperlinkBaseWith<()> {}
 
 /// The `ap:SharedDoc` element, Shared Document (ECMA-376 Part 1, section 22.2.2.23). Its schema
 /// type is `boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SharedDocument {
+pub struct SharedDocumentWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedSharedDocument,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:SharedDoc` element of the tree a read gives: [`SharedDocumentWith`] holding nothing in
+/// `extra`.
+pub type SharedDocument = SharedDocumentWith<()>;
+
+impl Eq for SharedDocumentWith<()> {}
 
 /// The `ap:Slides` element, Slides Metadata Element (ECMA-376 Part 1, section 22.2.2.24). Its
 /// schema type is `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SlidesMetadataElement {
+pub struct SlidesMetadataElementWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedSlidesMetadataElement,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:Slides` element of the tree a read gives: [`SlidesMetadataElementWith`] holding nothing
+/// in `extra`.
+pub type SlidesMetadataElement = SlidesMetadataElementWith<()>;
+
+impl Eq for SlidesMetadataElementWith<()> {}
 
 /// The `ap:ScaleCrop` element, Thumbnail Display Mode (ECMA-376 Part 1, section 22.2.2.22). Its
 /// schema type is `boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ThumbnailDisplayMode {
+pub struct ThumbnailDisplayModeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedThumbnailDisplayMode,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:ScaleCrop` element of the tree a read gives: [`ThumbnailDisplayModeWith`] holding
+/// nothing in `extra`.
+pub type ThumbnailDisplayMode = ThumbnailDisplayModeWith<()>;
+
+impl Eq for ThumbnailDisplayModeWith<()> {}
 
 /// The `ap:TotalTime` element, Total Edit Time Metadata Element (ECMA-376 Part 1, section
 /// 22.2.2.27). Its schema type is `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TotalEditTimeMetadataElement {
+pub struct TotalEditTimeMetadataElementWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedTotalEditTimeMetadataElement,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:TotalTime` element of the tree a read gives: [`TotalEditTimeMetadataElementWith`]
+/// holding nothing in `extra`.
+pub type TotalEditTimeMetadataElement = TotalEditTimeMetadataElementWith<()>;
+
+impl Eq for TotalEditTimeMetadataElementWith<()> {}
 
 /// The `ap:Characters` element, Total Number of Characters (ECMA-376 Part 1, section 22.2.2.3). Its
 /// schema type is `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TotalNumberOfCharacters {
+pub struct TotalNumberOfCharactersWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedTotalNumberOfCharacters,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:Characters` element of the tree a read gives: [`TotalNumberOfCharactersWith`] holding
+/// nothing in `extra`.
+pub type TotalNumberOfCharacters = TotalNumberOfCharactersWith<()>;
+
+impl Eq for TotalNumberOfCharactersWith<()> {}
 
 /// The `ap:MMClips` element, Total Number of Multimedia Clips (ECMA-376 Part 1, section 22.2.2.16).
 /// Its schema type is `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TotalNumberOfMultimediaClips {
+pub struct TotalNumberOfMultimediaClipsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedTotalNumberOfMultimediaClips,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:MMClips` element of the tree a read gives: [`TotalNumberOfMultimediaClipsWith`] holding
+/// nothing in `extra`.
+pub type TotalNumberOfMultimediaClips = TotalNumberOfMultimediaClipsWith<()>;
+
+impl Eq for TotalNumberOfMultimediaClipsWith<()> {}
 
 /// The `ap:Pages` element, Total Number of Pages (ECMA-376 Part 1, section 22.2.2.18). Its schema
 /// type is `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TotalNumberOfPages {
+pub struct TotalNumberOfPagesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedTotalNumberOfPages,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:Pages` element of the tree a read gives: [`TotalNumberOfPagesWith`] holding nothing in
+/// `extra`.
+pub type TotalNumberOfPages = TotalNumberOfPagesWith<()>;
+
+impl Eq for TotalNumberOfPagesWith<()> {}
 
 /// The `ap:Paragraphs` element, Total Number of Paragraphs (ECMA-376 Part 1, section 22.2.2.19).
 /// Its schema type is `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TotalNumberOfParagraphs {
+pub struct TotalNumberOfParagraphsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedTotalNumberOfParagraphs,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `ap:Paragraphs` element of the tree a read gives: [`TotalNumberOfParagraphsWith`] holding
+/// nothing in `extra`.
+pub type TotalNumberOfParagraphs = TotalNumberOfParagraphsWith<()>;
+
+impl Eq for TotalNumberOfParagraphsWith<()> {}
 
 /// The `ap:Words` element, Word Count (ECMA-376 Part 1, section 22.2.2.28). Its schema type is
 /// `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WordCount {
+pub struct WordCountWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesExtendedWordCount,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
-impl ApplicationName {
+/// The `ap:Words` element of the tree a read gives: [`WordCountWith`] holding nothing in `extra`.
+pub type WordCount = WordCountWith<()>;
+
+impl Eq for WordCountWith<()> {}
+
+impl<X: NodeExtra> ApplicationNameWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ApplicationNameWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ApplicationNameWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -999,7 +1104,24 @@ impl crate::Write for ApplicationName {
     }
 }
 
-impl ApplicationSpecificFileProperties {
+impl<X: NodeExtra> ApplicationSpecificFilePropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ApplicationSpecificFilePropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ApplicationSpecificFilePropertiesWith {
+            content: crate::into_extra_list(
+                self.content,
+                ApplicationSpecificFilePropertiesContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1017,6 +1139,30 @@ impl crate::Write for ApplicationSpecificFileProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::application_specific_file_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> ApplicationSpecificFilePropertiesContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ApplicationSpecificFilePropertiesContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        crate::into_extra_match!(self, ApplicationSpecificFilePropertiesContentWith;
+            plain [
+                ApplicationName, ApplicationVersion, CharactersWithSpaces, DigitalSignature,
+                DocumentSecurity, HeadingPairs, HyperlinkList, HyperlinksChanged,
+                IntendedFormatOfPresentation, LinksUpToDate, NameOfCompany, NameOfDocumentTemplate,
+                NameOfManager, NumberOfHiddenSlides, NumberOfLines, NumberOfSlidesContainingNotes,
+                PartTitles, RelativeHyperlinkBase, SharedDocument, SlidesMetadataElement,
+                ThumbnailDisplayMode, TotalEditTimeMetadataElement, TotalNumberOfCharacters,
+                TotalNumberOfMultimediaClips, TotalNumberOfPages, TotalNumberOfParagraphs,
+                WordCount,
+            ]
+            boxed [
+            ]
+        )
     }
 }
 
@@ -1098,7 +1244,21 @@ impl crate::Write for ApplicationSpecificFilePropertiesContent {
     }
 }
 
-impl ApplicationVersion {
+impl<X: NodeExtra> ApplicationVersionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ApplicationVersionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ApplicationVersionWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1122,7 +1282,21 @@ impl crate::Write for ApplicationVersion {
     }
 }
 
-impl CharactersWithSpaces {
+impl<X: NodeExtra> CharactersWithSpacesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CharactersWithSpacesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CharactersWithSpacesWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1146,7 +1320,24 @@ impl crate::Write for CharactersWithSpaces {
     }
 }
 
-impl DigitalSignature {
+impl<X: NodeExtra> DigitalSignatureWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DigitalSignatureWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DigitalSignatureWith {
+            binary_blob: crate::into_extra_required(
+                *self.binary_blob,
+                super::document_properties_variant_types::BinaryBlobWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1167,7 +1358,21 @@ impl crate::Write for DigitalSignature {
     }
 }
 
-impl DocumentSecurity {
+impl<X: NodeExtra> DocumentSecurityWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DocumentSecurityWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DocumentSecurityWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1191,7 +1396,24 @@ impl crate::Write for DocumentSecurity {
     }
 }
 
-impl HeadingPairs {
+impl<X: NodeExtra> HeadingPairsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> HeadingPairsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HeadingPairsWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            vector: crate::into_extra_required(
+                *self.vector,
+                super::document_properties_variant_types::VectorWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1212,7 +1434,24 @@ impl crate::Write for HeadingPairs {
     }
 }
 
-impl HyperlinkList {
+impl<X: NodeExtra> HyperlinkListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> HyperlinkListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HyperlinkListWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            vector: crate::into_extra_required(
+                *self.vector,
+                super::document_properties_variant_types::VectorWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1233,7 +1472,21 @@ impl crate::Write for HyperlinkList {
     }
 }
 
-impl HyperlinksChanged {
+impl<X: NodeExtra> HyperlinksChangedWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> HyperlinksChangedWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HyperlinksChangedWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1257,7 +1510,21 @@ impl crate::Write for HyperlinksChanged {
     }
 }
 
-impl IntendedFormatOfPresentation {
+impl<X: NodeExtra> IntendedFormatOfPresentationWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> IntendedFormatOfPresentationWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        IntendedFormatOfPresentationWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1281,7 +1548,21 @@ impl crate::Write for IntendedFormatOfPresentation {
     }
 }
 
-impl LinksUpToDate {
+impl<X: NodeExtra> LinksUpToDateWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LinksUpToDateWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LinksUpToDateWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1305,7 +1586,21 @@ impl crate::Write for LinksUpToDate {
     }
 }
 
-impl NameOfCompany {
+impl<X: NodeExtra> NameOfCompanyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NameOfCompanyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NameOfCompanyWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1329,7 +1624,21 @@ impl crate::Write for NameOfCompany {
     }
 }
 
-impl NameOfDocumentTemplate {
+impl<X: NodeExtra> NameOfDocumentTemplateWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NameOfDocumentTemplateWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NameOfDocumentTemplateWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1353,7 +1662,21 @@ impl crate::Write for NameOfDocumentTemplate {
     }
 }
 
-impl NameOfManager {
+impl<X: NodeExtra> NameOfManagerWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NameOfManagerWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NameOfManagerWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1377,7 +1700,21 @@ impl crate::Write for NameOfManager {
     }
 }
 
-impl NumberOfHiddenSlides {
+impl<X: NodeExtra> NumberOfHiddenSlidesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NumberOfHiddenSlidesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NumberOfHiddenSlidesWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1401,7 +1738,21 @@ impl crate::Write for NumberOfHiddenSlides {
     }
 }
 
-impl NumberOfLines {
+impl<X: NodeExtra> NumberOfLinesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NumberOfLinesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NumberOfLinesWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1425,7 +1776,21 @@ impl crate::Write for NumberOfLines {
     }
 }
 
-impl NumberOfSlidesContainingNotes {
+impl<X: NodeExtra> NumberOfSlidesContainingNotesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NumberOfSlidesContainingNotesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NumberOfSlidesContainingNotesWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1449,7 +1814,24 @@ impl crate::Write for NumberOfSlidesContainingNotes {
     }
 }
 
-impl PartTitles {
+impl<X: NodeExtra> PartTitlesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PartTitlesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PartTitlesWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            vector: crate::into_extra_required(
+                *self.vector,
+                super::document_properties_variant_types::VectorWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1470,7 +1852,21 @@ impl crate::Write for PartTitles {
     }
 }
 
-impl RelativeHyperlinkBase {
+impl<X: NodeExtra> RelativeHyperlinkBaseWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RelativeHyperlinkBaseWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RelativeHyperlinkBaseWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1494,7 +1890,21 @@ impl crate::Write for RelativeHyperlinkBase {
     }
 }
 
-impl SharedDocument {
+impl<X: NodeExtra> SharedDocumentWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SharedDocumentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SharedDocumentWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1518,7 +1928,21 @@ impl crate::Write for SharedDocument {
     }
 }
 
-impl SlidesMetadataElement {
+impl<X: NodeExtra> SlidesMetadataElementWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SlidesMetadataElementWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SlidesMetadataElementWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1542,7 +1966,21 @@ impl crate::Write for SlidesMetadataElement {
     }
 }
 
-impl ThumbnailDisplayMode {
+impl<X: NodeExtra> ThumbnailDisplayModeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ThumbnailDisplayModeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ThumbnailDisplayModeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1566,7 +2004,21 @@ impl crate::Write for ThumbnailDisplayMode {
     }
 }
 
-impl TotalEditTimeMetadataElement {
+impl<X: NodeExtra> TotalEditTimeMetadataElementWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TotalEditTimeMetadataElementWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TotalEditTimeMetadataElementWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1590,7 +2042,21 @@ impl crate::Write for TotalEditTimeMetadataElement {
     }
 }
 
-impl TotalNumberOfCharacters {
+impl<X: NodeExtra> TotalNumberOfCharactersWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TotalNumberOfCharactersWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TotalNumberOfCharactersWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1614,7 +2080,21 @@ impl crate::Write for TotalNumberOfCharacters {
     }
 }
 
-impl TotalNumberOfMultimediaClips {
+impl<X: NodeExtra> TotalNumberOfMultimediaClipsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TotalNumberOfMultimediaClipsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TotalNumberOfMultimediaClipsWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1638,7 +2118,21 @@ impl crate::Write for TotalNumberOfMultimediaClips {
     }
 }
 
-impl TotalNumberOfPages {
+impl<X: NodeExtra> TotalNumberOfPagesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TotalNumberOfPagesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TotalNumberOfPagesWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1662,7 +2156,21 @@ impl crate::Write for TotalNumberOfPages {
     }
 }
 
-impl TotalNumberOfParagraphs {
+impl<X: NodeExtra> TotalNumberOfParagraphsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TotalNumberOfParagraphsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TotalNumberOfParagraphsWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1686,7 +2194,21 @@ impl crate::Write for TotalNumberOfParagraphs {
     }
 }
 
-impl WordCount {
+impl<X: NodeExtra> WordCountWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> WordCountWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WordCountWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

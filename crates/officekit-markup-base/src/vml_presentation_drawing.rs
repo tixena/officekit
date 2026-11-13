@@ -216,9 +216,12 @@
 //! elements. The `read` module has a function that reads an element into each, and the
 //! `write` module one that writes each back to an element.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use crate::NodeExtra;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -240,35 +243,54 @@ pub static VML_DIAGRAM_TEXT_SHAPE: crate::Shape = crate::Shape {
 
 /// The `pvml:iscomment` element, Ink Annotation Flag (ECMA-376 Part 4, section 19.5.2.1). Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InkAnnotationFlag {
+pub struct InkAnnotationFlagWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlPresentationDrawingInkAnnotationFlag,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
+/// The `pvml:iscomment` element of the tree a read gives: [`InkAnnotationFlagWith`] holding nothing
+/// in `extra`.
+pub type InkAnnotationFlag = InkAnnotationFlagWith<()>;
+
+impl Eq for InkAnnotationFlagWith<()> {}
+
 /// The `pvml:textdata` element, VML Diagram Text (ECMA-376 Part 4, section 19.5.2.2). Its schema
 /// type is `CT_Rel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VMLDiagramText {
+pub struct VMLDiagramTextWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlPresentationDrawingVMLDiagramText,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-impl InkAnnotationFlag {
+/// The `pvml:textdata` element of the tree a read gives: [`VMLDiagramTextWith`] holding nothing in
+/// `extra`.
+pub type VMLDiagramText = VMLDiagramTextWith<()>;
+
+impl Eq for VMLDiagramTextWith<()> {}
+
+impl<X: NodeExtra> InkAnnotationFlagWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> InkAnnotationFlagWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        InkAnnotationFlagWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -289,7 +311,21 @@ impl crate::Write for InkAnnotationFlag {
     }
 }
 
-impl VMLDiagramText {
+impl<X: NodeExtra> VMLDiagramTextWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VMLDiagramTextWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VMLDiagramTextWith {
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

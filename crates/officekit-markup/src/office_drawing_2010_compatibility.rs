@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -238,19 +241,22 @@ pub static COMPAT_SP_SHAPE: officekit_markup_base::Shape = officekit_markup_base
 
 /// The `com14:compatSp` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_CompatShape`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CompatSp {
+pub struct CompatSpWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2010CompatibilityCompatSp,
     /// The attribute `spid`, when the element has it.
     pub spid: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `com14:compatSp` element of the tree a read gives: [`CompatSpWith`] holding nothing in
+/// `extra`.
+pub type CompatSp = CompatSpWith<()>;
+
+impl Eq for CompatSpWith<()> {}
 
 /// The hooks of a context for the `com14` namespace.
 ///
@@ -294,7 +300,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl CompatSp {
+impl<X: NodeExtra> CompatSpWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CompatSpWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CompatSpWith {
+            extra: Default::default(),
+            spid: self.spid,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

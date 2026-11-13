@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -277,16 +280,13 @@ pub trait Context: crate::Context {
 
 /// The `xpdl:pivotTableDefinition16` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_PivotTableDefinition16`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotTableDefinition16 {
+pub struct PivotTableDefinition16With<X: NodeExtra> {
     /// The attribute `EnabledSubtotalsDefault`, when the element has it.
     pub enabled_subtotals_default: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2016PivotdefaultlayoutPivotTableDefinition16,
     /// The attribute `InsertBlankRowDefault`, when the element has it.
     pub insert_blank_row_default: Option<String>,
     /// The attribute `SubtotalsOnTopDefault`, when the element has it.
@@ -294,6 +294,12 @@ pub struct PivotTableDefinition16 {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xpdl:pivotTableDefinition16` element of the tree a read gives:
+/// [`PivotTableDefinition16With`] holding nothing in `extra`.
+pub type PivotTableDefinition16 = PivotTableDefinition16With<()>;
+
+impl Eq for PivotTableDefinition16With<()> {}
 
 /// The hooks of a visitor for the `xpdl` namespace.
 ///
@@ -311,7 +317,23 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl PivotTableDefinition16 {
+impl<X: NodeExtra> PivotTableDefinition16With<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PivotTableDefinition16With<Y>
+    where
+        Y: NodeExtra,
+    {
+        PivotTableDefinition16With {
+            enabled_subtotals_default: self.enabled_subtotals_default,
+            extra: Default::default(),
+            insert_blank_row_default: self.insert_blank_row_default,
+            subtotals_on_top_default: self.subtotals_on_top_default,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

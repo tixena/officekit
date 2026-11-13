@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -269,19 +272,22 @@ pub trait Context: crate::Context {
 
 /// The `a1611:picAttrSrcUrl` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_PictureAttributionSourceURL`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PicAttrSrcUrl {
+pub struct PicAttrSrcUrlWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing201611MainPicAttrSrcUrl,
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `a1611:picAttrSrcUrl` element of the tree a read gives: [`PicAttrSrcUrlWith`] holding
+/// nothing in `extra`.
+pub type PicAttrSrcUrl = PicAttrSrcUrlWith<()>;
+
+impl Eq for PicAttrSrcUrlWith<()> {}
 
 /// The hooks of a visitor for the `a1611` namespace.
 ///
@@ -296,7 +302,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl PicAttrSrcUrl {
+impl<X: NodeExtra> PicAttrSrcUrlWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PicAttrSrcUrlWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PicAttrSrcUrlWith {
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

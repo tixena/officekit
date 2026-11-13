@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::spreadsheet;
 use officekit_xml::element::Element;
@@ -282,31 +285,36 @@ pub static WEB_IMAGES_SRD_SHAPE: officekit_markup_base::Shape = officekit_markup
 
 /// The `xlrdwi:address` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_WebImageSupportingRichDataRelationship`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Address {
+pub struct AddressWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2020RichdatawebimageAddress,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrdwi:address` element of the tree a read gives: [`AddressWith`] holding nothing in
+/// `extra`.
+pub type Address = AddressWith<()>;
+
+impl Eq for AddressWith<()> {}
+
 /// The `xlrdwi:blip` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_WebImageSupportingRichDataRelationship`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Blip {
+pub struct BlipWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2020RichdatawebimageBlip,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlrdwi:blip` element of the tree a read gives: [`BlipWith`] holding nothing in `extra`.
+pub type Blip = BlipWith<()>;
+
+impl Eq for BlipWith<()> {}
 
 /// The hooks of a context for the `xlrdwi` namespace.
 ///
@@ -429,33 +437,38 @@ pub trait Context: crate::Context {
 
 /// The `xlrdwi:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `spreadsheet::Extension`, in order.
-    pub extension: Vec<spreadsheet::Extension>,
+    pub extension: Vec<spreadsheet::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2020RichdatawebimageExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrdwi:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
+
 /// The `xlrdwi:moreImagesAddress` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_WebImageSupportingRichDataRelationship`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MoreImagesAddress {
+pub struct MoreImagesAddressWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2020RichdatawebimageMoreImagesAddress,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlrdwi:moreImagesAddress` element of the tree a read gives: [`MoreImagesAddressWith`]
+/// holding nothing in `extra`.
+pub type MoreImagesAddress = MoreImagesAddressWith<()>;
+
+impl Eq for MoreImagesAddressWith<()> {}
 
 /// The hooks of a visitor for the `xlrdwi` namespace.
 ///
@@ -499,43 +512,62 @@ pub trait Visitor: crate::Visitor {
 
 /// The `xlrdwi:webImageSrd` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_WebImageSupportingRichData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WebImageSrd {
+pub struct WebImageSrdWith<X: NodeExtra> {
     /// The child that is `Address`, which the schema requires.
-    pub address: Box<Address>,
+    pub address: Box<AddressWith<X>>,
     /// The child that is `Blip`, when there is one.
-    pub blip: Option<Box<Blip>>,
+    pub blip: Option<Box<BlipWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2020RichdatawebimageWebImageSrd,
     /// The child that is `MoreImagesAddress`, when there is one.
-    pub more_images_address: Option<Box<MoreImagesAddress>>,
+    pub more_images_address: Option<Box<MoreImagesAddressWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlrdwi:webImageSrd` element of the tree a read gives: [`WebImageSrdWith`] holding nothing
+/// in `extra`.
+pub type WebImageSrd = WebImageSrdWith<()>;
+
+impl Eq for WebImageSrdWith<()> {}
 
 /// The `xlrdwi:webImagesSrd` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_WebImagesSupportingRichData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WebImagesSrd {
+pub struct WebImagesSrdWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2020RichdatawebimageWebImagesSrd,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The children that are `WebImageSrd`, in order.
-    pub web_image_srd: Vec<WebImageSrd>,
+    pub web_image_srd: Vec<WebImageSrdWith<X>>,
 }
 
-impl Address {
+/// The `xlrdwi:webImagesSrd` element of the tree a read gives: [`WebImagesSrdWith`] holding nothing
+/// in `extra`.
+pub type WebImagesSrd = WebImagesSrdWith<()>;
+
+impl Eq for WebImagesSrdWith<()> {}
+
+impl<X: NodeExtra> AddressWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AddressWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AddressWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -556,7 +588,20 @@ impl officekit_markup_base::Write for Address {
     }
 }
 
-impl Blip {
+impl<X: NodeExtra> BlipWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BlipWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BlipWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -577,7 +622,24 @@ impl officekit_markup_base::Write for Blip {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                spreadsheet::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -598,7 +660,20 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl MoreImagesAddress {
+impl<X: NodeExtra> MoreImagesAddressWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MoreImagesAddressWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MoreImagesAddressWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -619,7 +694,29 @@ impl officekit_markup_base::Write for MoreImagesAddress {
     }
 }
 
-impl WebImageSrd {
+impl<X: NodeExtra> WebImageSrdWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> WebImageSrdWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WebImageSrdWith {
+            address: officekit_markup_base::into_extra_required(
+                *self.address,
+                AddressWith::into_extra,
+            ),
+            blip: officekit_markup_base::into_extra_optional(&mut self.blip, BlipWith::into_extra),
+            extra: Default::default(),
+            more_images_address: officekit_markup_base::into_extra_optional(
+                &mut self.more_images_address,
+                MoreImagesAddressWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -640,7 +737,28 @@ impl officekit_markup_base::Write for WebImageSrd {
     }
 }
 
-impl WebImagesSrd {
+impl<X: NodeExtra> WebImagesSrdWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> WebImagesSrdWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WebImagesSrdWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+            web_image_srd: officekit_markup_base::into_extra_list(
+                self.web_image_srd,
+                WebImageSrdWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

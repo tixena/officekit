@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -355,71 +358,83 @@ pub trait Context: crate::Context {
 
 /// The `xxdsv:lastEditFeature` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LastEditFeature {
+pub struct LastEditFeatureWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2023DataSourceVersioningLastEditFeature,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xxdsv:lastEditFeature` element of the tree a read gives: [`LastEditFeatureWith`] holding
+/// nothing in `extra`.
+pub type LastEditFeature = LastEditFeatureWith<()>;
+
+impl Eq for LastEditFeatureWith<()> {}
 
 /// The `xxdsv:lastRefreshFeature` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LastRefreshFeature {
+pub struct LastRefreshFeatureWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2023DataSourceVersioningLastRefreshFeature,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xxdsv:lastRefreshFeature` element of the tree a read gives: [`LastRefreshFeatureWith`]
+/// holding nothing in `extra`.
+pub type LastRefreshFeature = LastRefreshFeatureWith<()>;
+
+impl Eq for LastRefreshFeatureWith<()> {}
 
 /// The `xxdsv:requiredFeature` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RequiredFeature {
+pub struct RequiredFeatureWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2023DataSourceVersioningRequiredFeature,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `xxdsv:requiredFeature` element of the tree a read gives: [`RequiredFeatureWith`] holding
+/// nothing in `extra`.
+pub type RequiredFeature = RequiredFeatureWith<()>;
+
+impl Eq for RequiredFeatureWith<()> {}
+
 /// The `xxdsv:versionInfo` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_VersionInfo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VersionInfo {
+pub struct VersionInfoWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2023DataSourceVersioningVersionInfo,
     /// The children that are `LastEditFeature`, in order.
-    pub last_edit_feature: Vec<LastEditFeature>,
+    pub last_edit_feature: Vec<LastEditFeatureWith<X>>,
     /// The children that are `LastRefreshFeature`, in order.
-    pub last_refresh_feature: Vec<LastRefreshFeature>,
+    pub last_refresh_feature: Vec<LastRefreshFeatureWith<X>>,
     /// The children that are `RequiredFeature`, in order.
-    pub required_feature: Vec<RequiredFeature>,
+    pub required_feature: Vec<RequiredFeatureWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xxdsv:versionInfo` element of the tree a read gives: [`VersionInfoWith`] holding nothing in
+/// `extra`.
+pub type VersionInfo = VersionInfoWith<()>;
+
+impl Eq for VersionInfoWith<()> {}
 
 /// The hooks of a visitor for the `xxdsv` namespace.
 ///
@@ -455,7 +470,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl LastEditFeature {
+impl<X: NodeExtra> LastEditFeatureWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LastEditFeatureWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LastEditFeatureWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -479,7 +508,21 @@ impl officekit_markup_base::Write for LastEditFeature {
     }
 }
 
-impl LastRefreshFeature {
+impl<X: NodeExtra> LastRefreshFeatureWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LastRefreshFeatureWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LastRefreshFeatureWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -503,7 +546,21 @@ impl officekit_markup_base::Write for LastRefreshFeature {
     }
 }
 
-impl RequiredFeature {
+impl<X: NodeExtra> RequiredFeatureWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RequiredFeatureWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RequiredFeatureWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -527,7 +584,32 @@ impl officekit_markup_base::Write for RequiredFeature {
     }
 }
 
-impl VersionInfo {
+impl<X: NodeExtra> VersionInfoWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VersionInfoWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VersionInfoWith {
+            extra: Default::default(),
+            last_edit_feature: officekit_markup_base::into_extra_list(
+                self.last_edit_feature,
+                LastEditFeatureWith::into_extra,
+            ),
+            last_refresh_feature: officekit_markup_base::into_extra_list(
+                self.last_refresh_feature,
+                LastRefreshFeatureWith::into_extra,
+            ),
+            required_feature: officekit_markup_base::into_extra_list(
+                self.required_feature,
+                RequiredFeatureWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

@@ -223,6 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::{Element, Node};
@@ -301,37 +302,42 @@ pub static LIVE_FEED_BACKGROUND_PROPERTIES_CONTENT_TAGS: officekit_markup_base::
 
 /// The `alf:backgroundProps` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_LiveFeedBackgroundProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BackgroundProps {
+pub struct BackgroundPropsWith<X: NodeExtra> {
     /// The child that is an item of `LiveFeedBackgroundPropertiesContent`, when there is one.
-    pub content: Option<Box<LiveFeedBackgroundPropertiesContent>>,
+    pub content: Option<Box<LiveFeedBackgroundPropertiesContentWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2021LivefeedBackgroundProps,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `alf:backgroundProps` element of the tree a read gives: [`BackgroundPropsWith`] holding
+/// nothing in `extra`.
+pub type BackgroundProps = BackgroundPropsWith<()>;
+
+impl Eq for BackgroundPropsWith<()> {}
+
 /// The `alf:Blur` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BackgroundBlurProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Blur {
+pub struct BlurWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2021LivefeedBlur,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `alf:Blur` element of the tree a read gives: [`BlurWith`] holding nothing in `extra`.
+pub type Blur = BlurWith<()>;
+
+impl Eq for BlurWith<()> {}
 
 /// The hooks of a context for the `alf` namespace.
 ///
@@ -488,105 +494,122 @@ pub trait Context: crate::Context {
 
 /// The `alf:Custom` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BackgroundCustomProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Custom {
+pub struct CustomWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2021LivefeedCustom,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `alf:Custom` element of the tree a read gives: [`CustomWith`] holding nothing in `extra`.
+pub type Custom = CustomWith<()>;
+
+impl Eq for CustomWith<()> {}
+
 /// The `alf:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_OfficeArtExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `drawing::Extension`, in order.
-    pub extension: Vec<drawing::Extension>,
+    pub extension: Vec<drawing::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2021LivefeedExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `alf:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
 
 /// One child element of a choice: choice in `CT_LiveFeedBackgroundProperties`.
 ///
 /// The schema types that hold it: `CT_LiveFeedBackgroundProperties`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum LiveFeedBackgroundPropertiesContent {
+pub enum LiveFeedBackgroundPropertiesContentWith<X: NodeExtra> {
     /// The element `alf:Blur`, a `Blur`.
-    Blur(Blur),
+    Blur(BlurWith<X>),
     /// The element `alf:Custom`, a `Custom`.
-    Custom(Custom),
+    Custom(CustomWith<X>),
     /// The element `alf:Normal`, a `Normal`.
-    Normal(Normal),
+    Normal(NormalWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `alf:Removed`, a `Removed`.
-    Removed(Removed),
+    Removed(RemovedWith<X>),
 }
+
+/// [`LiveFeedBackgroundPropertiesContentWith`] of the tree a read gives, where no node holds
+/// anything in `extra`.
+pub type LiveFeedBackgroundPropertiesContent = LiveFeedBackgroundPropertiesContentWith<()>;
+
+impl Eq for LiveFeedBackgroundPropertiesContentWith<()> {}
 
 /// The `alf:liveFeedProps` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_LiveFeedProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LiveFeedProps {
+pub struct LiveFeedPropsWith<X: NodeExtra> {
     /// The child that is `BackgroundProps`, when there is one.
-    pub background_props: Option<Box<BackgroundProps>>,
+    pub background_props: Option<Box<BackgroundPropsWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2021LivefeedLiveFeedProps,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `alf:liveFeedProps` element of the tree a read gives: [`LiveFeedPropsWith`] holding nothing
+/// in `extra`.
+pub type LiveFeedProps = LiveFeedPropsWith<()>;
+
+impl Eq for LiveFeedPropsWith<()> {}
 
 /// The `alf:Normal` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BackgroundNormalProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Normal {
+pub struct NormalWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2021LivefeedNormal,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `alf:Normal` element of the tree a read gives: [`NormalWith`] holding nothing in `extra`.
+pub type Normal = NormalWith<()>;
+
+impl Eq for NormalWith<()> {}
+
 /// The `alf:Removed` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BackgroundRemovedProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Removed {
+pub struct RemovedWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2021LivefeedRemoved,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `alf:Removed` element of the tree a read gives: [`RemovedWith`] holding nothing in `extra`.
+pub type Removed = RemovedWith<()>;
+
+impl Eq for RemovedWith<()> {}
 
 /// The hooks of a visitor for the `alf` namespace.
 ///
@@ -641,7 +664,28 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl BackgroundProps {
+impl<X: NodeExtra> BackgroundPropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> BackgroundPropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BackgroundPropsWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                LiveFeedBackgroundPropertiesContentWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -662,7 +706,24 @@ impl officekit_markup_base::Write for BackgroundProps {
     }
 }
 
-impl Blur {
+impl<X: NodeExtra> BlurWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> BlurWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BlurWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -683,7 +744,24 @@ impl officekit_markup_base::Write for Blur {
     }
 }
 
-impl Custom {
+impl<X: NodeExtra> CustomWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> CustomWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CustomWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -704,7 +782,24 @@ impl officekit_markup_base::Write for Custom {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                drawing::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -722,6 +817,29 @@ impl officekit_markup_base::Write for ExtLst {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::ext_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> LiveFeedBackgroundPropertiesContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LiveFeedBackgroundPropertiesContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::Blur(node) => LiveFeedBackgroundPropertiesContentWith::Blur(node.into_extra()),
+            Self::Custom(node) => {
+                LiveFeedBackgroundPropertiesContentWith::Custom(node.into_extra())
+            }
+            Self::Normal(node) => {
+                LiveFeedBackgroundPropertiesContentWith::Normal(node.into_extra())
+            }
+            Self::Other(node) => LiveFeedBackgroundPropertiesContentWith::Other(node),
+            Self::Removed(node) => {
+                LiveFeedBackgroundPropertiesContentWith::Removed(node.into_extra())
+            }
+        }
     }
 }
 
@@ -753,7 +871,28 @@ impl officekit_markup_base::Write for LiveFeedBackgroundPropertiesContent {
     }
 }
 
-impl LiveFeedProps {
+impl<X: NodeExtra> LiveFeedPropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> LiveFeedPropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LiveFeedPropsWith {
+            background_props: officekit_markup_base::into_extra_optional(
+                &mut self.background_props,
+                BackgroundPropsWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -774,7 +913,24 @@ impl officekit_markup_base::Write for LiveFeedProps {
     }
 }
 
-impl Normal {
+impl<X: NodeExtra> NormalWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> NormalWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NormalWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -795,7 +951,24 @@ impl officekit_markup_base::Write for Normal {
     }
 }
 
-impl Removed {
+impl<X: NodeExtra> RemovedWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> RemovedWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RemovedWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

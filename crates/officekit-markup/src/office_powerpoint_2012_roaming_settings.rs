@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -313,53 +316,59 @@ pub trait Context: crate::Context {
 
 /// The `pRoam:key` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Key {
+pub struct KeyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint2012RoamingSettingsKey,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `pRoam:key` element of the tree a read gives: [`KeyWith`] holding nothing in `extra`.
+pub type Key = KeyWith<()>;
+
+impl Eq for KeyWith<()> {}
 
 /// The `pRoam:props` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RoamingProperty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Props {
+pub struct PropsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint2012RoamingSettingsProps,
     /// The child that is `Key`, which the schema requires.
-    pub key: Box<Key>,
+    pub key: Box<KeyWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `Value`, which the schema requires.
-    pub value: Box<Value>,
+    pub value: Box<ValueWith<X>>,
 }
+
+/// The `pRoam:props` element of the tree a read gives: [`PropsWith`] holding nothing in `extra`.
+pub type Props = PropsWith<()>;
+
+impl Eq for PropsWith<()> {}
 
 /// The `pRoam:value` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Value {
+pub struct ValueWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint2012RoamingSettingsValue,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `pRoam:value` element of the tree a read gives: [`ValueWith`] holding nothing in `extra`.
+pub type Value = ValueWith<()>;
+
+impl Eq for ValueWith<()> {}
 
 /// The hooks of a visitor for the `pRoam` namespace.
 ///
@@ -383,7 +392,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl Key {
+impl<X: NodeExtra> KeyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> KeyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        KeyWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -407,7 +430,22 @@ impl officekit_markup_base::Write for Key {
     }
 }
 
-impl Props {
+impl<X: NodeExtra> PropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PropsWith {
+            extra: Default::default(),
+            key: officekit_markup_base::into_extra_required(*self.key, KeyWith::into_extra),
+            unknown: self.unknown,
+            value: officekit_markup_base::into_extra_required(*self.value, ValueWith::into_extra),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -428,7 +466,21 @@ impl officekit_markup_base::Write for Props {
     }
 }
 
-impl Value {
+impl<X: NodeExtra> ValueWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ValueWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ValueWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

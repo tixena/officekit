@@ -210,15 +210,2041 @@
 //   6833bb8339d1dc179b970db58c13333ff6139e649ef9e044ef10623bed172323  crates/xtask/data/sdk_corrections.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The mirrors rkyv archives the enums of `crate::office_2009_07_customui` through: the archived
-//! enums and resolvers it writes stay in this private module.
+//! The mirrors rkyv archives the structs and enums of `crate::office_2009_07_customui` through: the archived
+//! types and resolvers it writes stay in this private module.
 
 use officekit_xml::element::Node;
 use rkyv::de::Pooling;
-use rkyv::rancor::{Fallible, Source};
-use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::rancor::{Fallible, Source as ErrorSource};
+use rkyv::ser::{Allocator, Sharing, Writer as ArchiveWriter};
 use rkyv::validation::{ArchiveContext, SharedContext};
 use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Backstage)]
+#[rkyv(attr(non_exhaustive))]
+pub struct BackstageMirror {
+    pub content: Vec<super::BackstageContent>,
+    pub extra: (),
+    pub on_hide: Option<String>,
+    pub on_show: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::BottomItems)]
+#[rkyv(attr(non_exhaustive))]
+pub struct BottomItemsMirror {
+    pub content: Vec<super::GroupControlsContent>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::BoxBox)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct BoxBoxMirror {
+    pub box_style: Option<super::BoxStyle>,
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::BoxContent>,
+    pub extra: (),
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ButtonBackstageFastCommandButton)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ButtonBackstageFastCommandButtonMirror {
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub is_definitive: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ButtonBackstageGroupButton)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ButtonBackstageGroupButtonMirror {
+    pub enabled: Option<String>,
+    pub expand: Option<super::Expand>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub is_definitive: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub screentip: Option<String>,
+    pub style: Option<super::Style2>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ButtonBackstageMenuButton)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ButtonBackstageMenuButtonMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub is_definitive: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ButtonBackstageRegularButton)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ButtonBackstageRegularButtonMirror {
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub is_definitive: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub screentip: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ButtonButton)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ButtonButtonMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_size: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_label: Option<String>,
+    pub size: Option<super::Size>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ButtonButtonRegular)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ButtonButtonRegularMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_label: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ButtonGroup)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ButtonGroupMirror {
+    pub content: Vec<super::ButtonGroupContent>,
+    pub extra: (),
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ButtonVisibleButton)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ButtonVisibleButtonMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_supertip: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_label: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::CategoryTaskFormGroupCategory)]
+#[rkyv(attr(non_exhaustive))]
+pub struct CategoryTaskFormGroupCategoryMirror {
+    pub extra: (),
+    pub get_label: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub label: Option<String>,
+    pub tag: Option<String>,
+    pub task_task_form_group_task: Vec<super::TaskTaskFormGroupTask>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::CategoryTaskGroupCategory)]
+#[rkyv(attr(non_exhaustive))]
+pub struct CategoryTaskGroupCategoryMirror {
+    pub extra: (),
+    pub get_label: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub label: Option<String>,
+    pub tag: Option<String>,
+    pub task_task_group_task: Vec<super::TaskTaskGroupTask>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::CheckBoxBackstageCheckBox)]
+#[rkyv(attr(non_exhaustive))]
+pub struct CheckBoxBackstageCheckBoxMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub expand: Option<super::Expand>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_pressed: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub screentip: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::CheckBoxBackstageMenuCheckBox)]
+#[rkyv(attr(non_exhaustive))]
+pub struct CheckBoxBackstageMenuCheckBoxMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_pressed: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::CheckBoxCheckBox)]
+#[rkyv(attr(non_exhaustive))]
+pub struct CheckBoxCheckBoxMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_pressed: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub screentip: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ComboBoxBackstageComboBox)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ComboBoxBackstageComboBoxMirror {
+    pub align_label: Option<super::Expand>,
+    pub enabled: Option<String>,
+    pub expand: Option<super::Expand>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_item_count: Option<String>,
+    pub get_item_id: Option<String>,
+    pub get_item_label: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_text: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub item_backstage_item: Vec<super::ItemBackstageItem>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_change: Option<String>,
+    pub size_string: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ComboBoxComboBox)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ComboBoxComboBoxMirror {
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_item_count: Option<String>,
+    pub get_item_id: Option<String>,
+    pub get_item_image: Option<String>,
+    pub get_item_label: Option<String>,
+    pub get_item_screentip: Option<String>,
+    pub get_item_supertip: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_text: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub invalidate_content_on_drop: Option<String>,
+    pub item_item: Vec<super::ItemItem>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub max_length: Option<String>,
+    pub on_change: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_item_image: Option<String>,
+    pub show_label: Option<String>,
+    pub size_string: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Command)]
+#[rkyv(attr(non_exhaustive))]
+pub struct CommandMirror {
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub id_mso: Option<String>,
+    pub on_action: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Commands)]
+#[rkyv(attr(non_exhaustive))]
+pub struct CommandsMirror {
+    pub command: Vec<super::Command>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ContextMenu)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ContextMenuMirror {
+    pub content: Vec<super::ContextMenuContent>,
+    pub extra: (),
+    pub id_mso: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ContextMenus)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ContextMenusMirror {
+    pub context_menu: Vec<super::ContextMenu>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ContextualTabs)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ContextualTabsMirror {
+    pub extra: (),
+    pub tab_set: Vec<super::TabSet>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ControlControlClone)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ControlControlCloneMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_size: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_label: Option<String>,
+    pub size: Option<super::Size>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ControlControlCloneQat)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ControlControlCloneQatMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_size: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_label: Option<String>,
+    pub size: Option<super::Size>,
+    pub supertip: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ControlControlCloneRegular)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ControlControlCloneRegularMirror {
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_label: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::CustomUI)]
+#[rkyv(attr(non_exhaustive))]
+pub struct CustomUIMirror {
+    pub backstage: Option<Box<super::Backstage>>,
+    pub commands: Option<Box<super::Commands>>,
+    pub context_menus: Option<Box<super::ContextMenus>>,
+    pub extra: (),
+    pub load_image: Option<String>,
+    pub on_load: Option<String>,
+    pub ribbon: Option<Box<super::Ribbon>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::DialogBoxLauncher)]
+#[rkyv(attr(non_exhaustive))]
+pub struct DialogBoxLauncherMirror {
+    pub button_button_regular: Box<super::ButtonButtonRegular>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::DocumentControls)]
+#[rkyv(attr(non_exhaustive))]
+pub struct DocumentControlsMirror {
+    pub content: Vec<super::QuickAccessToolbarItemsContent>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::DropDownBackstageDropDown)]
+#[rkyv(attr(non_exhaustive))]
+pub struct DropDownBackstageDropDownMirror {
+    pub align_label: Option<super::Expand>,
+    pub enabled: Option<String>,
+    pub expand: Option<super::Expand>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_item_count: Option<String>,
+    pub get_item_id: Option<String>,
+    pub get_item_label: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_selected_item_index: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub item_backstage_item: Vec<super::ItemBackstageItem>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub screentip: Option<String>,
+    pub size_string: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::DropDownDropDownRegular)]
+#[rkyv(attr(non_exhaustive))]
+pub struct DropDownDropDownRegularMirror {
+    pub button_button_regular: Vec<super::ButtonButtonRegular>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_item_count: Option<String>,
+    pub get_item_id: Option<String>,
+    pub get_item_image: Option<String>,
+    pub get_item_label: Option<String>,
+    pub get_item_screentip: Option<String>,
+    pub get_item_supertip: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_selected_item_id: Option<String>,
+    pub get_selected_item_index: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub item_item: Vec<super::ItemItem>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_item_image: Option<String>,
+    pub show_item_label: Option<String>,
+    pub show_label: Option<String>,
+    pub size_string: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::DynamicMenuDynamicMenu)]
+#[rkyv(attr(non_exhaustive))]
+pub struct DynamicMenuDynamicMenuMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_content: Option<String>,
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_size: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub invalidate_content_on_drop: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_label: Option<String>,
+    pub size: Option<super::Size>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::DynamicMenuDynamicMenuRegular)]
+#[rkyv(attr(non_exhaustive))]
+pub struct DynamicMenuDynamicMenuRegularMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_content: Option<String>,
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub invalidate_content_on_drop: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_label: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::EditBoxBackstageEditBox)]
+#[rkyv(attr(non_exhaustive))]
+pub struct EditBoxBackstageEditBoxMirror {
+    pub align_label: Option<super::Expand>,
+    pub enabled: Option<String>,
+    pub expand: Option<super::Expand>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_text: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub max_length: Option<String>,
+    pub on_change: Option<String>,
+    pub size_string: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::EditBoxEditBox)]
+#[rkyv(attr(non_exhaustive))]
+pub struct EditBoxEditBoxMirror {
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_text: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub max_length: Option<String>,
+    pub on_change: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_label: Option<String>,
+    pub size_string: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::FirstColumn)]
+#[rkyv(attr(non_exhaustive))]
+pub struct FirstColumnMirror {
+    pub content: Vec<super::BackstageGroupsContent>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::GalleryGallery)]
+#[rkyv(attr(non_exhaustive))]
+pub struct GalleryGalleryMirror {
+    pub button_button_regular: Vec<super::ButtonButtonRegular>,
+    pub columns: Option<String>,
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_item_count: Option<String>,
+    pub get_item_height: Option<String>,
+    pub get_item_id: Option<String>,
+    pub get_item_image: Option<String>,
+    pub get_item_label: Option<String>,
+    pub get_item_screentip: Option<String>,
+    pub get_item_supertip: Option<String>,
+    pub get_item_width: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_selected_item_id: Option<String>,
+    pub get_selected_item_index: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_size: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub invalidate_content_on_drop: Option<String>,
+    pub item_height: Option<String>,
+    pub item_item: Vec<super::ItemItem>,
+    pub item_width: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub rows: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_in_ribbon: Option<super::GalleryShowInRibbon>,
+    pub show_item_image: Option<String>,
+    pub show_item_label: Option<String>,
+    pub show_label: Option<String>,
+    pub size: Option<super::Size>,
+    pub size_string: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::GalleryGalleryRegular)]
+#[rkyv(attr(non_exhaustive))]
+pub struct GalleryGalleryRegularMirror {
+    pub button_button_regular: Vec<super::ButtonButtonRegular>,
+    pub columns: Option<String>,
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_item_count: Option<String>,
+    pub get_item_height: Option<String>,
+    pub get_item_id: Option<String>,
+    pub get_item_image: Option<String>,
+    pub get_item_label: Option<String>,
+    pub get_item_screentip: Option<String>,
+    pub get_item_supertip: Option<String>,
+    pub get_item_width: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_selected_item_id: Option<String>,
+    pub get_selected_item_index: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub invalidate_content_on_drop: Option<String>,
+    pub item_height: Option<String>,
+    pub item_item: Vec<super::ItemItem>,
+    pub item_width: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub rows: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_in_ribbon: Option<super::GalleryShowInRibbon>,
+    pub show_item_image: Option<String>,
+    pub show_item_label: Option<String>,
+    pub show_label: Option<String>,
+    pub size_string: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::GroupBackstageGroup)]
+#[rkyv(attr(non_exhaustive))]
+pub struct GroupBackstageGroupMirror {
+    pub bottom_items: Option<Box<super::BottomItems>>,
+    pub extra: (),
+    pub get_helper_text: Option<String>,
+    pub get_label: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_style: Option<String>,
+    pub get_visible: Option<String>,
+    pub helper_text: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub label: Option<String>,
+    pub primary_item: Option<Box<super::PrimaryItem>>,
+    pub show_label: Option<String>,
+    pub style: Option<super::Style>,
+    pub tag: Option<String>,
+    pub top_items: Option<Box<super::TopItems>>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::GroupBox)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct GroupBoxMirror {
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::GroupControlsContent>,
+    pub expand: Option<super::Expand>,
+    pub extra: (),
+    pub get_label: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub label: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::GroupGroup)]
+#[rkyv(attr(non_exhaustive))]
+pub struct GroupGroupMirror {
+    pub auto_scale: Option<String>,
+    pub center_vertically: Option<String>,
+    pub content: Vec<super::GroupContent>,
+    pub dialog_box_launcher: Option<Box<super::DialogBoxLauncher>>,
+    pub extra: (),
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub screentip: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Hyperlink)]
+#[rkyv(attr(non_exhaustive))]
+pub struct HyperlinkMirror {
+    pub align_label: Option<super::Expand>,
+    pub enabled: Option<String>,
+    pub expand: Option<super::Expand>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_target: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub screentip: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub target: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ImageControl)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ImageControlMirror {
+    pub alt_text: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_alt_text: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ItemBackstageItem)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ItemBackstageItemMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ItemItem)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ItemItemMirror {
+    pub extra: (),
+    pub id: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub label: Option<String>,
+    pub screentip: Option<String>,
+    pub supertip: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::LabelControlBackstageLabelControl)]
+#[rkyv(attr(non_exhaustive))]
+pub struct LabelControlBackstageLabelControlMirror {
+    pub align_label: Option<super::Expand>,
+    pub enabled: Option<String>,
+    pub expand: Option<super::Expand>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_label: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub label: Option<String>,
+    pub no_wrap: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::LabelControlLabelControl)]
+#[rkyv(attr(non_exhaustive))]
+pub struct LabelControlLabelControlMirror {
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub label: Option<String>,
+    pub screentip: Option<String>,
+    pub show_label: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::LayoutContainer)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct LayoutContainerMirror {
+    pub align: Option<super::Expand>,
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::GroupControlsContent>,
+    pub expand: Option<super::Expand>,
+    pub extra: (),
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub layout_children: Option<super::LayoutChildren>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::MenuBackstagePrimaryMenu)]
+#[rkyv(attr(non_exhaustive))]
+pub struct MenuBackstagePrimaryMenuMirror {
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub group: Vec<super::MenuGroup>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub screentip: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::MenuBackstageSubMenu)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct MenuBackstageSubMenuMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_visible: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub group: Vec<super::MenuGroup>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::MenuGroup)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct MenuGroupMirror {
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::BackstageMenuGroupContent>,
+    pub extra: (),
+    pub get_label: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub item_size: Option<super::ItemSize>,
+    pub label: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::MenuMenu)]
+#[rkyv(attr(non_exhaustive))]
+pub struct MenuMenuMirror {
+    pub content: Vec<super::MenuContent>,
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_size: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub item_size: Option<super::ItemSize>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_label: Option<String>,
+    pub size: Option<super::Size>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::MenuMenuRegular)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct MenuMenuRegularMirror {
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::MenuContent>,
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub item_size: Option<super::ItemSize>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_label: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::MenuMenuRoot)]
+#[rkyv(attr(non_exhaustive))]
+pub struct MenuMenuRootMirror {
+    pub content: Vec<super::MenuContent>,
+    pub extra: (),
+    pub get_title: Option<String>,
+    pub item_size: Option<super::ItemSize>,
+    pub title: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::MenuMenuWithTitle)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct MenuMenuWithTitleMirror {
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::MenuWithTitleContent>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_title: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub item_size: Option<super::ItemSize>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_label: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub title: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::MenuSeparatorMenuSeparator)]
+#[rkyv(attr(non_exhaustive))]
+pub struct MenuSeparatorMenuSeparatorMirror {
+    pub extra: (),
+    pub get_title: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub tag: Option<String>,
+    pub title: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::MenuSeparatorMenuSeparatorNoTitle)]
+#[rkyv(attr(non_exhaustive))]
+pub struct MenuSeparatorMenuSeparatorNoTitleMirror {
+    pub extra: (),
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::PrimaryItem)]
+#[rkyv(attr(non_exhaustive))]
+pub struct PrimaryItemMirror {
+    pub content: Box<super::PrimaryItemContent>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Qat)]
+#[rkyv(attr(non_exhaustive))]
+pub struct QatMirror {
+    pub document_controls: Option<Box<super::DocumentControls>>,
+    pub extra: (),
+    pub shared_controls: Option<Box<super::SharedControls>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::RadioButton)]
+#[rkyv(attr(non_exhaustive))]
+pub struct RadioButtonMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::RadioGroup)]
+#[rkyv(attr(non_exhaustive))]
+pub struct RadioGroupMirror {
+    pub align_label: Option<super::Expand>,
+    pub enabled: Option<String>,
+    pub expand: Option<super::Expand>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_item_count: Option<String>,
+    pub get_item_id: Option<String>,
+    pub get_item_label: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_selected_item_index: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub radio_button: Vec<super::RadioButton>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Ribbon)]
+#[rkyv(attr(non_exhaustive))]
+pub struct RibbonMirror {
+    pub content: Vec<super::RibbonContent>,
+    pub extra: (),
+    pub start_from_scratch: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::SecondColumn)]
+#[rkyv(attr(non_exhaustive))]
+pub struct SecondColumnMirror {
+    pub content: Vec<super::SimpleGroupsContent>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Separator)]
+#[rkyv(attr(non_exhaustive))]
+pub struct SeparatorMirror {
+    pub extra: (),
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::SharedControls)]
+#[rkyv(attr(non_exhaustive))]
+pub struct SharedControlsMirror {
+    pub content: Vec<super::QuickAccessToolbarItemsContent>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::SplitButtonSplitButton)]
+#[rkyv(attr(non_exhaustive))]
+pub struct SplitButtonSplitButtonMirror {
+    pub content: Option<Box<super::SplitButtonContent>>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_size: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    pub menu_menu_regular: Option<Box<super::MenuMenuRegular>>,
+    pub show_label: Option<String>,
+    pub size: Option<super::Size>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::SplitButtonSplitButtonRegular)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct SplitButtonSplitButtonRegularMirror {
+    pub content: Option<Box<super::SplitButtonContent>>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub menu_menu_regular: Option<Box<super::MenuMenuRegular>>,
+    pub show_label: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::SplitButtonSplitButtonWithTitle)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct SplitButtonSplitButtonWithTitleMirror {
+    pub content: Option<Box<super::SplitButtonContent>>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_enabled: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub menu_menu_with_title: Option<Box<super::MenuMenuWithTitle>>,
+    pub show_label: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TabBackstageTab)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TabBackstageTabMirror {
+    pub column_width_percent: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub first_column: Option<Box<super::FirstColumn>>,
+    pub first_column_max_width: Option<String>,
+    pub first_column_min_width: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_title: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub second_column: Option<Box<super::SecondColumn>>,
+    pub second_column_max_width: Option<String>,
+    pub second_column_min_width: Option<String>,
+    pub tag: Option<String>,
+    pub title: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TabSet)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TabSetMirror {
+    pub extra: (),
+    pub get_visible: Option<String>,
+    pub id_mso: Option<String>,
+    pub tab_tab: Vec<super::TabTab>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TabTab)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TabTabMirror {
+    pub extra: (),
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_visible: Option<String>,
+    pub group_group: Vec<super::GroupGroup>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Tabs)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TabsMirror {
+    pub extra: (),
+    pub tab_tab: Vec<super::TabTab>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TaskFormGroup)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TaskFormGroupMirror {
+    pub allowed_task_sizes: Option<super::TaskSizes>,
+    pub category_task_form_group_category: Vec<super::CategoryTaskFormGroupCategory>,
+    pub extra: (),
+    pub get_helper_text: Option<String>,
+    pub get_label: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_visible: Option<String>,
+    pub helper_text: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub label: Option<String>,
+    pub show_label: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TaskGroup)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TaskGroupMirror {
+    pub allowed_task_sizes: Option<super::TaskSizes>,
+    pub category_task_group_category: Vec<super::CategoryTaskGroupCategory>,
+    pub extra: (),
+    pub get_helper_text: Option<String>,
+    pub get_label: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_visible: Option<String>,
+    pub helper_text: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub label: Option<String>,
+    pub show_label: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TaskTaskFormGroupTask)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TaskTaskFormGroupTaskMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_visible: Option<String>,
+    pub group_backstage_group: Vec<super::GroupBackstageGroup>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TaskTaskGroupTask)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TaskTaskGroupTaskMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub is_definitive: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ToggleButtonBackstageMenuToggleButton)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ToggleButtonBackstageMenuToggleButtonMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_pressed: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ToggleButtonToggleButton)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ToggleButtonToggleButtonMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_pressed: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_size: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_label: Option<String>,
+    pub size: Option<super::Size>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ToggleButtonToggleButtonRegular)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ToggleButtonToggleButtonRegularMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_pressed: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_supertip: Option<String>,
+    pub get_visible: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_label: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub visible: Option<String>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ToggleButtonVisibleToggleButton)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ToggleButtonVisibleToggleButtonMirror {
+    pub description: Option<String>,
+    pub enabled: Option<String>,
+    pub extra: (),
+    pub get_description: Option<String>,
+    pub get_enabled: Option<String>,
+    pub get_image: Option<String>,
+    pub get_keytip: Option<String>,
+    pub get_label: Option<String>,
+    pub get_pressed: Option<String>,
+    pub get_screentip: Option<String>,
+    pub get_show_image: Option<String>,
+    pub get_show_label: Option<String>,
+    pub get_supertip: Option<String>,
+    pub id: Option<String>,
+    pub id_mso: Option<String>,
+    pub id_q: Option<String>,
+    pub image: Option<String>,
+    pub image_mso: Option<String>,
+    pub insert_after_mso: Option<String>,
+    pub insert_after_q: Option<String>,
+    pub insert_before_mso: Option<String>,
+    pub insert_before_q: Option<String>,
+    pub keytip: Option<String>,
+    pub label: Option<String>,
+    pub on_action: Option<String>,
+    pub screentip: Option<String>,
+    pub show_image: Option<String>,
+    pub show_label: Option<String>,
+    pub supertip: Option<String>,
+    pub tag: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::TopItems)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TopItemsMirror {
+    pub content: Vec<super::GroupControlsContent>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BackstageContent)]
@@ -241,9 +2267,9 @@ pub enum BackstageGroupsContent {
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BackstageMenuGroupContent)]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum BackstageMenuGroupContent {
     ButtonBackstageMenuButton(super::ButtonBackstageMenuButton),
@@ -255,9 +2281,9 @@ pub enum BackstageMenuGroupContent {
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BoxContent)]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum BoxContent {
     BoxBox(#[rkyv(omit_bounds)] super::BoxBox),
@@ -332,9 +2358,9 @@ pub enum GroupContent {
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::GroupControlsContent)]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum GroupControlsContent {
     ButtonBackstageGroupButton(super::ButtonBackstageGroupButton),
@@ -353,9 +2379,9 @@ pub enum GroupControlsContent {
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::MenuContent)]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum MenuContent {
     ButtonButtonRegular(super::ButtonButtonRegular),
@@ -372,9 +2398,9 @@ pub enum MenuContent {
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::MenuWithTitleContent)]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum MenuWithTitleContent {
     ButtonButtonRegular(super::ButtonButtonRegular),
@@ -436,6 +2462,4563 @@ pub enum SplitButtonContent {
     ToggleButtonVisibleToggleButton(super::ToggleButtonVisibleToggleButton),
 }
 
+impl From<BackstageMirror> for super::Backstage {
+    fn from(item: BackstageMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            on_hide: item.on_hide,
+            on_show: item.on_show,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Backstage {
+    type Archived = ArchivedBackstageMirror;
+    type Resolver = BackstageMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        BackstageMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Backstage
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        BackstageMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Backstage, __D> for ArchivedBackstageMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Backstage, __D::Error> {
+        BackstageMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<BottomItemsMirror> for super::BottomItems {
+    fn from(item: BottomItemsMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::BottomItems {
+    type Archived = ArchivedBottomItemsMirror;
+    type Resolver = BottomItemsMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        BottomItemsMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::BottomItems
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        BottomItemsMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::BottomItems, __D> for ArchivedBottomItemsMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::BottomItems, __D::Error> {
+        BottomItemsMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<BoxBoxMirror> for super::BoxBox {
+    fn from(item: BoxBoxMirror) -> Self {
+        Self {
+            box_style: item.box_style,
+            content: item.content,
+            extra: item.extra,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_q: item.id_q,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::BoxBox {
+    type Archived = ArchivedBoxBoxMirror;
+    type Resolver = BoxBoxMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        BoxBoxMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::BoxBox
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        BoxBoxMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::BoxBox, __D> for ArchivedBoxBoxMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::BoxBox, __D::Error> {
+        BoxBoxMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ButtonBackstageFastCommandButtonMirror> for super::ButtonBackstageFastCommandButton {
+    fn from(item: ButtonBackstageFastCommandButtonMirror) -> Self {
+        Self {
+            enabled: item.enabled,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            is_definitive: item.is_definitive,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ButtonBackstageFastCommandButton {
+    type Archived = ArchivedButtonBackstageFastCommandButtonMirror;
+    type Resolver = ButtonBackstageFastCommandButtonMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ButtonBackstageFastCommandButtonMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ButtonBackstageFastCommandButton
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ButtonBackstageFastCommandButtonMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ButtonBackstageFastCommandButton, __D>
+    for ArchivedButtonBackstageFastCommandButtonMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ButtonBackstageFastCommandButton, __D::Error> {
+        ButtonBackstageFastCommandButtonMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ButtonBackstageGroupButtonMirror> for super::ButtonBackstageGroupButton {
+    fn from(item: ButtonBackstageGroupButtonMirror) -> Self {
+        Self {
+            enabled: item.enabled,
+            expand: item.expand,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            is_definitive: item.is_definitive,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            screentip: item.screentip,
+            style: item.style,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ButtonBackstageGroupButton {
+    type Archived = ArchivedButtonBackstageGroupButtonMirror;
+    type Resolver = ButtonBackstageGroupButtonMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ButtonBackstageGroupButtonMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ButtonBackstageGroupButton
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ButtonBackstageGroupButtonMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ButtonBackstageGroupButton, __D>
+    for ArchivedButtonBackstageGroupButtonMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ButtonBackstageGroupButton, __D::Error> {
+        ButtonBackstageGroupButtonMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ButtonBackstageMenuButtonMirror> for super::ButtonBackstageMenuButton {
+    fn from(item: ButtonBackstageMenuButtonMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            is_definitive: item.is_definitive,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ButtonBackstageMenuButton {
+    type Archived = ArchivedButtonBackstageMenuButtonMirror;
+    type Resolver = ButtonBackstageMenuButtonMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ButtonBackstageMenuButtonMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ButtonBackstageMenuButton
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ButtonBackstageMenuButtonMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ButtonBackstageMenuButton, __D>
+    for ArchivedButtonBackstageMenuButtonMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ButtonBackstageMenuButton, __D::Error> {
+        ButtonBackstageMenuButtonMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ButtonBackstageRegularButtonMirror> for super::ButtonBackstageRegularButton {
+    fn from(item: ButtonBackstageRegularButtonMirror) -> Self {
+        Self {
+            enabled: item.enabled,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            is_definitive: item.is_definitive,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            screentip: item.screentip,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ButtonBackstageRegularButton {
+    type Archived = ArchivedButtonBackstageRegularButtonMirror;
+    type Resolver = ButtonBackstageRegularButtonMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ButtonBackstageRegularButtonMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ButtonBackstageRegularButton
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ButtonBackstageRegularButtonMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ButtonBackstageRegularButton, __D>
+    for ArchivedButtonBackstageRegularButtonMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ButtonBackstageRegularButton, __D::Error> {
+        ButtonBackstageRegularButtonMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ButtonButtonMirror> for super::ButtonButton {
+    fn from(item: ButtonButtonMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_size: item.get_size,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_label: item.show_label,
+            size: item.size,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ButtonButton {
+    type Archived = ArchivedButtonButtonMirror;
+    type Resolver = ButtonButtonMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ButtonButtonMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ButtonButton
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ButtonButtonMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ButtonButton, __D> for ArchivedButtonButtonMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ButtonButton, __D::Error> {
+        ButtonButtonMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ButtonButtonRegularMirror> for super::ButtonButtonRegular {
+    fn from(item: ButtonButtonRegularMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_label: item.show_label,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ButtonButtonRegular {
+    type Archived = ArchivedButtonButtonRegularMirror;
+    type Resolver = ButtonButtonRegularMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ButtonButtonRegularMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ButtonButtonRegular
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ButtonButtonRegularMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ButtonButtonRegular, __D> for ArchivedButtonButtonRegularMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ButtonButtonRegular, __D::Error> {
+        ButtonButtonRegularMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ButtonGroupMirror> for super::ButtonGroup {
+    fn from(item: ButtonGroupMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_q: item.id_q,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ButtonGroup {
+    type Archived = ArchivedButtonGroupMirror;
+    type Resolver = ButtonGroupMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ButtonGroupMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ButtonGroup
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ButtonGroupMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ButtonGroup, __D> for ArchivedButtonGroupMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ButtonGroup, __D::Error> {
+        ButtonGroupMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ButtonVisibleButtonMirror> for super::ButtonVisibleButton {
+    fn from(item: ButtonVisibleButtonMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_supertip: item.get_supertip,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_label: item.show_label,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ButtonVisibleButton {
+    type Archived = ArchivedButtonVisibleButtonMirror;
+    type Resolver = ButtonVisibleButtonMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ButtonVisibleButtonMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ButtonVisibleButton
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ButtonVisibleButtonMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ButtonVisibleButton, __D> for ArchivedButtonVisibleButtonMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ButtonVisibleButton, __D::Error> {
+        ButtonVisibleButtonMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<CategoryTaskFormGroupCategoryMirror> for super::CategoryTaskFormGroupCategory {
+    fn from(item: CategoryTaskFormGroupCategoryMirror) -> Self {
+        Self {
+            extra: item.extra,
+            get_label: item.get_label,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            label: item.label,
+            tag: item.tag,
+            task_task_form_group_task: item.task_task_form_group_task,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::CategoryTaskFormGroupCategory {
+    type Archived = ArchivedCategoryTaskFormGroupCategoryMirror;
+    type Resolver = CategoryTaskFormGroupCategoryMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        CategoryTaskFormGroupCategoryMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::CategoryTaskFormGroupCategory
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        CategoryTaskFormGroupCategoryMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::CategoryTaskFormGroupCategory, __D>
+    for ArchivedCategoryTaskFormGroupCategoryMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::CategoryTaskFormGroupCategory, __D::Error> {
+        CategoryTaskFormGroupCategoryMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<CategoryTaskGroupCategoryMirror> for super::CategoryTaskGroupCategory {
+    fn from(item: CategoryTaskGroupCategoryMirror) -> Self {
+        Self {
+            extra: item.extra,
+            get_label: item.get_label,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            label: item.label,
+            tag: item.tag,
+            task_task_group_task: item.task_task_group_task,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::CategoryTaskGroupCategory {
+    type Archived = ArchivedCategoryTaskGroupCategoryMirror;
+    type Resolver = CategoryTaskGroupCategoryMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        CategoryTaskGroupCategoryMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::CategoryTaskGroupCategory
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        CategoryTaskGroupCategoryMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::CategoryTaskGroupCategory, __D>
+    for ArchivedCategoryTaskGroupCategoryMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::CategoryTaskGroupCategory, __D::Error> {
+        CategoryTaskGroupCategoryMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<CheckBoxBackstageCheckBoxMirror> for super::CheckBoxBackstageCheckBox {
+    fn from(item: CheckBoxBackstageCheckBoxMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            expand: item.expand,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_pressed: item.get_pressed,
+            get_screentip: item.get_screentip,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_q: item.id_q,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            screentip: item.screentip,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::CheckBoxBackstageCheckBox {
+    type Archived = ArchivedCheckBoxBackstageCheckBoxMirror;
+    type Resolver = CheckBoxBackstageCheckBoxMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        CheckBoxBackstageCheckBoxMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::CheckBoxBackstageCheckBox
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        CheckBoxBackstageCheckBoxMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::CheckBoxBackstageCheckBox, __D>
+    for ArchivedCheckBoxBackstageCheckBoxMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::CheckBoxBackstageCheckBox, __D::Error> {
+        CheckBoxBackstageCheckBoxMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<CheckBoxBackstageMenuCheckBoxMirror> for super::CheckBoxBackstageMenuCheckBox {
+    fn from(item: CheckBoxBackstageMenuCheckBoxMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_pressed: item.get_pressed,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_q: item.id_q,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::CheckBoxBackstageMenuCheckBox {
+    type Archived = ArchivedCheckBoxBackstageMenuCheckBoxMirror;
+    type Resolver = CheckBoxBackstageMenuCheckBoxMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        CheckBoxBackstageMenuCheckBoxMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::CheckBoxBackstageMenuCheckBox
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        CheckBoxBackstageMenuCheckBoxMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::CheckBoxBackstageMenuCheckBox, __D>
+    for ArchivedCheckBoxBackstageMenuCheckBoxMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::CheckBoxBackstageMenuCheckBox, __D::Error> {
+        CheckBoxBackstageMenuCheckBoxMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<CheckBoxCheckBoxMirror> for super::CheckBoxCheckBox {
+    fn from(item: CheckBoxCheckBoxMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_pressed: item.get_pressed,
+            get_screentip: item.get_screentip,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            screentip: item.screentip,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::CheckBoxCheckBox {
+    type Archived = ArchivedCheckBoxCheckBoxMirror;
+    type Resolver = CheckBoxCheckBoxMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        CheckBoxCheckBoxMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::CheckBoxCheckBox
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        CheckBoxCheckBoxMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::CheckBoxCheckBox, __D> for ArchivedCheckBoxCheckBoxMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::CheckBoxCheckBox, __D::Error> {
+        CheckBoxCheckBoxMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ComboBoxBackstageComboBoxMirror> for super::ComboBoxBackstageComboBox {
+    fn from(item: ComboBoxBackstageComboBoxMirror) -> Self {
+        Self {
+            align_label: item.align_label,
+            enabled: item.enabled,
+            expand: item.expand,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_item_count: item.get_item_count,
+            get_item_id: item.get_item_id,
+            get_item_label: item.get_item_label,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_text: item.get_text,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_q: item.id_q,
+            item_backstage_item: item.item_backstage_item,
+            keytip: item.keytip,
+            label: item.label,
+            on_change: item.on_change,
+            size_string: item.size_string,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ComboBoxBackstageComboBox {
+    type Archived = ArchivedComboBoxBackstageComboBoxMirror;
+    type Resolver = ComboBoxBackstageComboBoxMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ComboBoxBackstageComboBoxMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ComboBoxBackstageComboBox
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ComboBoxBackstageComboBoxMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ComboBoxBackstageComboBox, __D>
+    for ArchivedComboBoxBackstageComboBoxMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ComboBoxBackstageComboBox, __D::Error> {
+        ComboBoxBackstageComboBoxMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ComboBoxComboBoxMirror> for super::ComboBoxComboBox {
+    fn from(item: ComboBoxComboBoxMirror) -> Self {
+        Self {
+            enabled: item.enabled,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_item_count: item.get_item_count,
+            get_item_id: item.get_item_id,
+            get_item_image: item.get_item_image,
+            get_item_label: item.get_item_label,
+            get_item_screentip: item.get_item_screentip,
+            get_item_supertip: item.get_item_supertip,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_supertip: item.get_supertip,
+            get_text: item.get_text,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            invalidate_content_on_drop: item.invalidate_content_on_drop,
+            item_item: item.item_item,
+            keytip: item.keytip,
+            label: item.label,
+            max_length: item.max_length,
+            on_change: item.on_change,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_item_image: item.show_item_image,
+            show_label: item.show_label,
+            size_string: item.size_string,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ComboBoxComboBox {
+    type Archived = ArchivedComboBoxComboBoxMirror;
+    type Resolver = ComboBoxComboBoxMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ComboBoxComboBoxMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ComboBoxComboBox
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ComboBoxComboBoxMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ComboBoxComboBox, __D> for ArchivedComboBoxComboBoxMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ComboBoxComboBox, __D::Error> {
+        ComboBoxComboBoxMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<CommandMirror> for super::Command {
+    fn from(item: CommandMirror) -> Self {
+        Self {
+            enabled: item.enabled,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            id_mso: item.id_mso,
+            on_action: item.on_action,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Command {
+    type Archived = ArchivedCommandMirror;
+    type Resolver = CommandMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        CommandMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Command
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        CommandMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Command, __D> for ArchivedCommandMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Command, __D::Error> {
+        CommandMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<CommandsMirror> for super::Commands {
+    fn from(item: CommandsMirror) -> Self {
+        Self {
+            command: item.command,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Commands {
+    type Archived = ArchivedCommandsMirror;
+    type Resolver = CommandsMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        CommandsMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Commands
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        CommandsMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Commands, __D> for ArchivedCommandsMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Commands, __D::Error> {
+        CommandsMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ContextMenuMirror> for super::ContextMenu {
+    fn from(item: ContextMenuMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            id_mso: item.id_mso,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ContextMenu {
+    type Archived = ArchivedContextMenuMirror;
+    type Resolver = ContextMenuMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ContextMenuMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ContextMenu
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ContextMenuMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ContextMenu, __D> for ArchivedContextMenuMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ContextMenu, __D::Error> {
+        ContextMenuMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ContextMenusMirror> for super::ContextMenus {
+    fn from(item: ContextMenusMirror) -> Self {
+        Self {
+            context_menu: item.context_menu,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ContextMenus {
+    type Archived = ArchivedContextMenusMirror;
+    type Resolver = ContextMenusMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ContextMenusMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ContextMenus
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ContextMenusMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ContextMenus, __D> for ArchivedContextMenusMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ContextMenus, __D::Error> {
+        ContextMenusMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ContextualTabsMirror> for super::ContextualTabs {
+    fn from(item: ContextualTabsMirror) -> Self {
+        Self {
+            extra: item.extra,
+            tab_set: item.tab_set,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ContextualTabs {
+    type Archived = ArchivedContextualTabsMirror;
+    type Resolver = ContextualTabsMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ContextualTabsMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ContextualTabs
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ContextualTabsMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ContextualTabs, __D> for ArchivedContextualTabsMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ContextualTabs, __D::Error> {
+        ContextualTabsMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ControlControlCloneMirror> for super::ControlControlClone {
+    fn from(item: ControlControlCloneMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_size: item.get_size,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            label: item.label,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_label: item.show_label,
+            size: item.size,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ControlControlClone {
+    type Archived = ArchivedControlControlCloneMirror;
+    type Resolver = ControlControlCloneMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ControlControlCloneMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ControlControlClone
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ControlControlCloneMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ControlControlClone, __D> for ArchivedControlControlCloneMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ControlControlClone, __D::Error> {
+        ControlControlCloneMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ControlControlCloneQatMirror> for super::ControlControlCloneQat {
+    fn from(item: ControlControlCloneQatMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_size: item.get_size,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            label: item.label,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_label: item.show_label,
+            size: item.size,
+            supertip: item.supertip,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ControlControlCloneQat {
+    type Archived = ArchivedControlControlCloneQatMirror;
+    type Resolver = ControlControlCloneQatMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ControlControlCloneQatMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ControlControlCloneQat
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ControlControlCloneQatMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ControlControlCloneQat, __D>
+    for ArchivedControlControlCloneQatMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ControlControlCloneQat, __D::Error> {
+        ControlControlCloneQatMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ControlControlCloneRegularMirror> for super::ControlControlCloneRegular {
+    fn from(item: ControlControlCloneRegularMirror) -> Self {
+        Self {
+            enabled: item.enabled,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            label: item.label,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_label: item.show_label,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ControlControlCloneRegular {
+    type Archived = ArchivedControlControlCloneRegularMirror;
+    type Resolver = ControlControlCloneRegularMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ControlControlCloneRegularMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ControlControlCloneRegular
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ControlControlCloneRegularMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ControlControlCloneRegular, __D>
+    for ArchivedControlControlCloneRegularMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ControlControlCloneRegular, __D::Error> {
+        ControlControlCloneRegularMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<CustomUIMirror> for super::CustomUI {
+    fn from(item: CustomUIMirror) -> Self {
+        Self {
+            backstage: item.backstage,
+            commands: item.commands,
+            context_menus: item.context_menus,
+            extra: item.extra,
+            load_image: item.load_image,
+            on_load: item.on_load,
+            ribbon: item.ribbon,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::CustomUI {
+    type Archived = ArchivedCustomUIMirror;
+    type Resolver = CustomUIMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        CustomUIMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::CustomUI
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        CustomUIMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::CustomUI, __D> for ArchivedCustomUIMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::CustomUI, __D::Error> {
+        CustomUIMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<DialogBoxLauncherMirror> for super::DialogBoxLauncher {
+    fn from(item: DialogBoxLauncherMirror) -> Self {
+        Self {
+            button_button_regular: item.button_button_regular,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::DialogBoxLauncher {
+    type Archived = ArchivedDialogBoxLauncherMirror;
+    type Resolver = DialogBoxLauncherMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        DialogBoxLauncherMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::DialogBoxLauncher
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        DialogBoxLauncherMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::DialogBoxLauncher, __D> for ArchivedDialogBoxLauncherMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::DialogBoxLauncher, __D::Error> {
+        DialogBoxLauncherMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<DocumentControlsMirror> for super::DocumentControls {
+    fn from(item: DocumentControlsMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::DocumentControls {
+    type Archived = ArchivedDocumentControlsMirror;
+    type Resolver = DocumentControlsMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        DocumentControlsMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::DocumentControls
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        DocumentControlsMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::DocumentControls, __D> for ArchivedDocumentControlsMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::DocumentControls, __D::Error> {
+        DocumentControlsMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<DropDownBackstageDropDownMirror> for super::DropDownBackstageDropDown {
+    fn from(item: DropDownBackstageDropDownMirror) -> Self {
+        Self {
+            align_label: item.align_label,
+            enabled: item.enabled,
+            expand: item.expand,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_item_count: item.get_item_count,
+            get_item_id: item.get_item_id,
+            get_item_label: item.get_item_label,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_selected_item_index: item.get_selected_item_index,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_q: item.id_q,
+            item_backstage_item: item.item_backstage_item,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            screentip: item.screentip,
+            size_string: item.size_string,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::DropDownBackstageDropDown {
+    type Archived = ArchivedDropDownBackstageDropDownMirror;
+    type Resolver = DropDownBackstageDropDownMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        DropDownBackstageDropDownMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::DropDownBackstageDropDown
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        DropDownBackstageDropDownMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::DropDownBackstageDropDown, __D>
+    for ArchivedDropDownBackstageDropDownMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::DropDownBackstageDropDown, __D::Error> {
+        DropDownBackstageDropDownMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<DropDownDropDownRegularMirror> for super::DropDownDropDownRegular {
+    fn from(item: DropDownDropDownRegularMirror) -> Self {
+        Self {
+            button_button_regular: item.button_button_regular,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_item_count: item.get_item_count,
+            get_item_id: item.get_item_id,
+            get_item_image: item.get_item_image,
+            get_item_label: item.get_item_label,
+            get_item_screentip: item.get_item_screentip,
+            get_item_supertip: item.get_item_supertip,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_selected_item_id: item.get_selected_item_id,
+            get_selected_item_index: item.get_selected_item_index,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            item_item: item.item_item,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_item_image: item.show_item_image,
+            show_item_label: item.show_item_label,
+            show_label: item.show_label,
+            size_string: item.size_string,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::DropDownDropDownRegular {
+    type Archived = ArchivedDropDownDropDownRegularMirror;
+    type Resolver = DropDownDropDownRegularMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        DropDownDropDownRegularMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::DropDownDropDownRegular
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        DropDownDropDownRegularMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::DropDownDropDownRegular, __D>
+    for ArchivedDropDownDropDownRegularMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::DropDownDropDownRegular, __D::Error> {
+        DropDownDropDownRegularMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<DynamicMenuDynamicMenuMirror> for super::DynamicMenuDynamicMenu {
+    fn from(item: DynamicMenuDynamicMenuMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_content: item.get_content,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_size: item.get_size,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            invalidate_content_on_drop: item.invalidate_content_on_drop,
+            keytip: item.keytip,
+            label: item.label,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_label: item.show_label,
+            size: item.size,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::DynamicMenuDynamicMenu {
+    type Archived = ArchivedDynamicMenuDynamicMenuMirror;
+    type Resolver = DynamicMenuDynamicMenuMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        DynamicMenuDynamicMenuMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::DynamicMenuDynamicMenu
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        DynamicMenuDynamicMenuMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::DynamicMenuDynamicMenu, __D>
+    for ArchivedDynamicMenuDynamicMenuMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::DynamicMenuDynamicMenu, __D::Error> {
+        DynamicMenuDynamicMenuMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<DynamicMenuDynamicMenuRegularMirror> for super::DynamicMenuDynamicMenuRegular {
+    fn from(item: DynamicMenuDynamicMenuRegularMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_content: item.get_content,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            invalidate_content_on_drop: item.invalidate_content_on_drop,
+            keytip: item.keytip,
+            label: item.label,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_label: item.show_label,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::DynamicMenuDynamicMenuRegular {
+    type Archived = ArchivedDynamicMenuDynamicMenuRegularMirror;
+    type Resolver = DynamicMenuDynamicMenuRegularMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        DynamicMenuDynamicMenuRegularMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::DynamicMenuDynamicMenuRegular
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        DynamicMenuDynamicMenuRegularMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::DynamicMenuDynamicMenuRegular, __D>
+    for ArchivedDynamicMenuDynamicMenuRegularMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::DynamicMenuDynamicMenuRegular, __D::Error> {
+        DynamicMenuDynamicMenuRegularMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<EditBoxBackstageEditBoxMirror> for super::EditBoxBackstageEditBox {
+    fn from(item: EditBoxBackstageEditBoxMirror) -> Self {
+        Self {
+            align_label: item.align_label,
+            enabled: item.enabled,
+            expand: item.expand,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_text: item.get_text,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_q: item.id_q,
+            keytip: item.keytip,
+            label: item.label,
+            max_length: item.max_length,
+            on_change: item.on_change,
+            size_string: item.size_string,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::EditBoxBackstageEditBox {
+    type Archived = ArchivedEditBoxBackstageEditBoxMirror;
+    type Resolver = EditBoxBackstageEditBoxMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        EditBoxBackstageEditBoxMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::EditBoxBackstageEditBox
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        EditBoxBackstageEditBoxMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::EditBoxBackstageEditBox, __D>
+    for ArchivedEditBoxBackstageEditBoxMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::EditBoxBackstageEditBox, __D::Error> {
+        EditBoxBackstageEditBoxMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<EditBoxEditBoxMirror> for super::EditBoxEditBox {
+    fn from(item: EditBoxEditBoxMirror) -> Self {
+        Self {
+            enabled: item.enabled,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_supertip: item.get_supertip,
+            get_text: item.get_text,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            label: item.label,
+            max_length: item.max_length,
+            on_change: item.on_change,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_label: item.show_label,
+            size_string: item.size_string,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::EditBoxEditBox {
+    type Archived = ArchivedEditBoxEditBoxMirror;
+    type Resolver = EditBoxEditBoxMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        EditBoxEditBoxMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::EditBoxEditBox
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        EditBoxEditBoxMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::EditBoxEditBox, __D> for ArchivedEditBoxEditBoxMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::EditBoxEditBox, __D::Error> {
+        EditBoxEditBoxMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<FirstColumnMirror> for super::FirstColumn {
+    fn from(item: FirstColumnMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::FirstColumn {
+    type Archived = ArchivedFirstColumnMirror;
+    type Resolver = FirstColumnMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        FirstColumnMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::FirstColumn
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        FirstColumnMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::FirstColumn, __D> for ArchivedFirstColumnMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::FirstColumn, __D::Error> {
+        FirstColumnMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<GalleryGalleryMirror> for super::GalleryGallery {
+    fn from(item: GalleryGalleryMirror) -> Self {
+        Self {
+            button_button_regular: item.button_button_regular,
+            columns: item.columns,
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_item_count: item.get_item_count,
+            get_item_height: item.get_item_height,
+            get_item_id: item.get_item_id,
+            get_item_image: item.get_item_image,
+            get_item_label: item.get_item_label,
+            get_item_screentip: item.get_item_screentip,
+            get_item_supertip: item.get_item_supertip,
+            get_item_width: item.get_item_width,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_selected_item_id: item.get_selected_item_id,
+            get_selected_item_index: item.get_selected_item_index,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_size: item.get_size,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            invalidate_content_on_drop: item.invalidate_content_on_drop,
+            item_height: item.item_height,
+            item_item: item.item_item,
+            item_width: item.item_width,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            rows: item.rows,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_in_ribbon: item.show_in_ribbon,
+            show_item_image: item.show_item_image,
+            show_item_label: item.show_item_label,
+            show_label: item.show_label,
+            size: item.size,
+            size_string: item.size_string,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::GalleryGallery {
+    type Archived = ArchivedGalleryGalleryMirror;
+    type Resolver = GalleryGalleryMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        GalleryGalleryMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::GalleryGallery
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        GalleryGalleryMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::GalleryGallery, __D> for ArchivedGalleryGalleryMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::GalleryGallery, __D::Error> {
+        GalleryGalleryMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<GalleryGalleryRegularMirror> for super::GalleryGalleryRegular {
+    fn from(item: GalleryGalleryRegularMirror) -> Self {
+        Self {
+            button_button_regular: item.button_button_regular,
+            columns: item.columns,
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_item_count: item.get_item_count,
+            get_item_height: item.get_item_height,
+            get_item_id: item.get_item_id,
+            get_item_image: item.get_item_image,
+            get_item_label: item.get_item_label,
+            get_item_screentip: item.get_item_screentip,
+            get_item_supertip: item.get_item_supertip,
+            get_item_width: item.get_item_width,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_selected_item_id: item.get_selected_item_id,
+            get_selected_item_index: item.get_selected_item_index,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            invalidate_content_on_drop: item.invalidate_content_on_drop,
+            item_height: item.item_height,
+            item_item: item.item_item,
+            item_width: item.item_width,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            rows: item.rows,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_in_ribbon: item.show_in_ribbon,
+            show_item_image: item.show_item_image,
+            show_item_label: item.show_item_label,
+            show_label: item.show_label,
+            size_string: item.size_string,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::GalleryGalleryRegular {
+    type Archived = ArchivedGalleryGalleryRegularMirror;
+    type Resolver = GalleryGalleryRegularMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        GalleryGalleryRegularMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::GalleryGalleryRegular
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        GalleryGalleryRegularMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::GalleryGalleryRegular, __D>
+    for ArchivedGalleryGalleryRegularMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::GalleryGalleryRegular, __D::Error> {
+        GalleryGalleryRegularMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<GroupBackstageGroupMirror> for super::GroupBackstageGroup {
+    fn from(item: GroupBackstageGroupMirror) -> Self {
+        Self {
+            bottom_items: item.bottom_items,
+            extra: item.extra,
+            get_helper_text: item.get_helper_text,
+            get_label: item.get_label,
+            get_show_label: item.get_show_label,
+            get_style: item.get_style,
+            get_visible: item.get_visible,
+            helper_text: item.helper_text,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            label: item.label,
+            primary_item: item.primary_item,
+            show_label: item.show_label,
+            style: item.style,
+            tag: item.tag,
+            top_items: item.top_items,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::GroupBackstageGroup {
+    type Archived = ArchivedGroupBackstageGroupMirror;
+    type Resolver = GroupBackstageGroupMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        GroupBackstageGroupMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::GroupBackstageGroup
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        GroupBackstageGroupMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::GroupBackstageGroup, __D> for ArchivedGroupBackstageGroupMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::GroupBackstageGroup, __D::Error> {
+        GroupBackstageGroupMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<GroupBoxMirror> for super::GroupBox {
+    fn from(item: GroupBoxMirror) -> Self {
+        Self {
+            content: item.content,
+            expand: item.expand,
+            extra: item.extra,
+            get_label: item.get_label,
+            id: item.id,
+            id_q: item.id_q,
+            label: item.label,
+            tag: item.tag,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::GroupBox {
+    type Archived = ArchivedGroupBoxMirror;
+    type Resolver = GroupBoxMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        GroupBoxMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::GroupBox
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        GroupBoxMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::GroupBox, __D> for ArchivedGroupBoxMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::GroupBox, __D::Error> {
+        GroupBoxMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<GroupGroupMirror> for super::GroupGroup {
+    fn from(item: GroupGroupMirror) -> Self {
+        Self {
+            auto_scale: item.auto_scale,
+            center_vertically: item.center_vertically,
+            content: item.content,
+            dialog_box_launcher: item.dialog_box_launcher,
+            extra: item.extra,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            label: item.label,
+            screentip: item.screentip,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::GroupGroup {
+    type Archived = ArchivedGroupGroupMirror;
+    type Resolver = GroupGroupMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        GroupGroupMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::GroupGroup
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        GroupGroupMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::GroupGroup, __D> for ArchivedGroupGroupMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::GroupGroup, __D::Error> {
+        GroupGroupMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<HyperlinkMirror> for super::Hyperlink {
+    fn from(item: HyperlinkMirror) -> Self {
+        Self {
+            align_label: item.align_label,
+            enabled: item.enabled,
+            expand: item.expand,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_supertip: item.get_supertip,
+            get_target: item.get_target,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            screentip: item.screentip,
+            supertip: item.supertip,
+            tag: item.tag,
+            target: item.target,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Hyperlink {
+    type Archived = ArchivedHyperlinkMirror;
+    type Resolver = HyperlinkMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        HyperlinkMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Hyperlink
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        HyperlinkMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Hyperlink, __D> for ArchivedHyperlinkMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Hyperlink, __D::Error> {
+        HyperlinkMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ImageControlMirror> for super::ImageControl {
+    fn from(item: ImageControlMirror) -> Self {
+        Self {
+            alt_text: item.alt_text,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_alt_text: item.get_alt_text,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ImageControl {
+    type Archived = ArchivedImageControlMirror;
+    type Resolver = ImageControlMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ImageControlMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ImageControl
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ImageControlMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ImageControl, __D> for ArchivedImageControlMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ImageControl, __D::Error> {
+        ImageControlMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ItemBackstageItemMirror> for super::ItemBackstageItem {
+    fn from(item: ItemBackstageItemMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ItemBackstageItem {
+    type Archived = ArchivedItemBackstageItemMirror;
+    type Resolver = ItemBackstageItemMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ItemBackstageItemMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ItemBackstageItem
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ItemBackstageItemMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ItemBackstageItem, __D> for ArchivedItemBackstageItemMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ItemBackstageItem, __D::Error> {
+        ItemBackstageItemMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ItemItemMirror> for super::ItemItem {
+    fn from(item: ItemItemMirror) -> Self {
+        Self {
+            extra: item.extra,
+            id: item.id,
+            image: item.image,
+            image_mso: item.image_mso,
+            label: item.label,
+            screentip: item.screentip,
+            supertip: item.supertip,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ItemItem {
+    type Archived = ArchivedItemItemMirror;
+    type Resolver = ItemItemMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ItemItemMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ItemItem
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ItemItemMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ItemItem, __D> for ArchivedItemItemMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ItemItem, __D::Error> {
+        ItemItemMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<LabelControlBackstageLabelControlMirror> for super::LabelControlBackstageLabelControl {
+    fn from(item: LabelControlBackstageLabelControlMirror) -> Self {
+        Self {
+            align_label: item.align_label,
+            enabled: item.enabled,
+            expand: item.expand,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_label: item.get_label,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_q: item.id_q,
+            label: item.label,
+            no_wrap: item.no_wrap,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::LabelControlBackstageLabelControl {
+    type Archived = ArchivedLabelControlBackstageLabelControlMirror;
+    type Resolver = LabelControlBackstageLabelControlMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        LabelControlBackstageLabelControlMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::LabelControlBackstageLabelControl
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        LabelControlBackstageLabelControlMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::LabelControlBackstageLabelControl, __D>
+    for ArchivedLabelControlBackstageLabelControlMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::LabelControlBackstageLabelControl, __D::Error> {
+        LabelControlBackstageLabelControlMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<LabelControlLabelControlMirror> for super::LabelControlLabelControl {
+    fn from(item: LabelControlLabelControlMirror) -> Self {
+        Self {
+            enabled: item.enabled,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_show_label: item.get_show_label,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            label: item.label,
+            screentip: item.screentip,
+            show_label: item.show_label,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::LabelControlLabelControl {
+    type Archived = ArchivedLabelControlLabelControlMirror;
+    type Resolver = LabelControlLabelControlMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        LabelControlLabelControlMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::LabelControlLabelControl
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        LabelControlLabelControlMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::LabelControlLabelControl, __D>
+    for ArchivedLabelControlLabelControlMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::LabelControlLabelControl, __D::Error> {
+        LabelControlLabelControlMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<LayoutContainerMirror> for super::LayoutContainer {
+    fn from(item: LayoutContainerMirror) -> Self {
+        Self {
+            align: item.align,
+            content: item.content,
+            expand: item.expand,
+            extra: item.extra,
+            id: item.id,
+            id_q: item.id_q,
+            layout_children: item.layout_children,
+            tag: item.tag,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::LayoutContainer {
+    type Archived = ArchivedLayoutContainerMirror;
+    type Resolver = LayoutContainerMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        LayoutContainerMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::LayoutContainer
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        LayoutContainerMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::LayoutContainer, __D> for ArchivedLayoutContainerMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::LayoutContainer, __D::Error> {
+        LayoutContainerMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<MenuBackstagePrimaryMenuMirror> for super::MenuBackstagePrimaryMenu {
+    fn from(item: MenuBackstagePrimaryMenuMirror) -> Self {
+        Self {
+            enabled: item.enabled,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            group: item.group,
+            id: item.id,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            keytip: item.keytip,
+            label: item.label,
+            screentip: item.screentip,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::MenuBackstagePrimaryMenu {
+    type Archived = ArchivedMenuBackstagePrimaryMenuMirror;
+    type Resolver = MenuBackstagePrimaryMenuMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        MenuBackstagePrimaryMenuMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::MenuBackstagePrimaryMenu
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        MenuBackstagePrimaryMenuMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::MenuBackstagePrimaryMenu, __D>
+    for ArchivedMenuBackstagePrimaryMenuMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::MenuBackstagePrimaryMenu, __D::Error> {
+        MenuBackstagePrimaryMenuMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<MenuBackstageSubMenuMirror> for super::MenuBackstageSubMenu {
+    fn from(item: MenuBackstageSubMenuMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_visible: item.get_visible,
+            group: item.group,
+            id: item.id,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            keytip: item.keytip,
+            label: item.label,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::MenuBackstageSubMenu {
+    type Archived = ArchivedMenuBackstageSubMenuMirror;
+    type Resolver = MenuBackstageSubMenuMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        MenuBackstageSubMenuMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::MenuBackstageSubMenu
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        MenuBackstageSubMenuMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::MenuBackstageSubMenu, __D> for ArchivedMenuBackstageSubMenuMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::MenuBackstageSubMenu, __D::Error> {
+        MenuBackstageSubMenuMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<MenuGroupMirror> for super::MenuGroup {
+    fn from(item: MenuGroupMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            get_label: item.get_label,
+            id: item.id,
+            id_q: item.id_q,
+            item_size: item.item_size,
+            label: item.label,
+            tag: item.tag,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::MenuGroup {
+    type Archived = ArchivedMenuGroupMirror;
+    type Resolver = MenuGroupMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        MenuGroupMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::MenuGroup
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        MenuGroupMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::MenuGroup, __D> for ArchivedMenuGroupMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::MenuGroup, __D::Error> {
+        MenuGroupMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<MenuMenuMirror> for super::MenuMenu {
+    fn from(item: MenuMenuMirror) -> Self {
+        Self {
+            content: item.content,
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_size: item.get_size,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            item_size: item.item_size,
+            keytip: item.keytip,
+            label: item.label,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_label: item.show_label,
+            size: item.size,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::MenuMenu {
+    type Archived = ArchivedMenuMenuMirror;
+    type Resolver = MenuMenuMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        MenuMenuMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::MenuMenu
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        MenuMenuMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::MenuMenu, __D> for ArchivedMenuMenuMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::MenuMenu, __D::Error> {
+        MenuMenuMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<MenuMenuRegularMirror> for super::MenuMenuRegular {
+    fn from(item: MenuMenuRegularMirror) -> Self {
+        Self {
+            content: item.content,
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            item_size: item.item_size,
+            keytip: item.keytip,
+            label: item.label,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_label: item.show_label,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::MenuMenuRegular {
+    type Archived = ArchivedMenuMenuRegularMirror;
+    type Resolver = MenuMenuRegularMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        MenuMenuRegularMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::MenuMenuRegular
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        MenuMenuRegularMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::MenuMenuRegular, __D> for ArchivedMenuMenuRegularMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::MenuMenuRegular, __D::Error> {
+        MenuMenuRegularMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<MenuMenuRootMirror> for super::MenuMenuRoot {
+    fn from(item: MenuMenuRootMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            get_title: item.get_title,
+            item_size: item.item_size,
+            title: item.title,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::MenuMenuRoot {
+    type Archived = ArchivedMenuMenuRootMirror;
+    type Resolver = MenuMenuRootMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        MenuMenuRootMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::MenuMenuRoot
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        MenuMenuRootMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::MenuMenuRoot, __D> for ArchivedMenuMenuRootMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::MenuMenuRoot, __D::Error> {
+        MenuMenuRootMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<MenuMenuWithTitleMirror> for super::MenuMenuWithTitle {
+    fn from(item: MenuMenuWithTitleMirror) -> Self {
+        Self {
+            content: item.content,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_screentip: item.get_screentip,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_supertip: item.get_supertip,
+            get_title: item.get_title,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            item_size: item.item_size,
+            keytip: item.keytip,
+            label: item.label,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_label: item.show_label,
+            supertip: item.supertip,
+            tag: item.tag,
+            title: item.title,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::MenuMenuWithTitle {
+    type Archived = ArchivedMenuMenuWithTitleMirror;
+    type Resolver = MenuMenuWithTitleMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        MenuMenuWithTitleMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::MenuMenuWithTitle
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        MenuMenuWithTitleMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::MenuMenuWithTitle, __D> for ArchivedMenuMenuWithTitleMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::MenuMenuWithTitle, __D::Error> {
+        MenuMenuWithTitleMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<MenuSeparatorMenuSeparatorMirror> for super::MenuSeparatorMenuSeparator {
+    fn from(item: MenuSeparatorMenuSeparatorMirror) -> Self {
+        Self {
+            extra: item.extra,
+            get_title: item.get_title,
+            id: item.id,
+            id_q: item.id_q,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            tag: item.tag,
+            title: item.title,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::MenuSeparatorMenuSeparator {
+    type Archived = ArchivedMenuSeparatorMenuSeparatorMirror;
+    type Resolver = MenuSeparatorMenuSeparatorMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        MenuSeparatorMenuSeparatorMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::MenuSeparatorMenuSeparator
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        MenuSeparatorMenuSeparatorMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::MenuSeparatorMenuSeparator, __D>
+    for ArchivedMenuSeparatorMenuSeparatorMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::MenuSeparatorMenuSeparator, __D::Error> {
+        MenuSeparatorMenuSeparatorMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<MenuSeparatorMenuSeparatorNoTitleMirror> for super::MenuSeparatorMenuSeparatorNoTitle {
+    fn from(item: MenuSeparatorMenuSeparatorNoTitleMirror) -> Self {
+        Self {
+            extra: item.extra,
+            id: item.id,
+            id_q: item.id_q,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            tag: item.tag,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::MenuSeparatorMenuSeparatorNoTitle {
+    type Archived = ArchivedMenuSeparatorMenuSeparatorNoTitleMirror;
+    type Resolver = MenuSeparatorMenuSeparatorNoTitleMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        MenuSeparatorMenuSeparatorNoTitleMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::MenuSeparatorMenuSeparatorNoTitle
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        MenuSeparatorMenuSeparatorNoTitleMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::MenuSeparatorMenuSeparatorNoTitle, __D>
+    for ArchivedMenuSeparatorMenuSeparatorNoTitleMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::MenuSeparatorMenuSeparatorNoTitle, __D::Error> {
+        MenuSeparatorMenuSeparatorNoTitleMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<PrimaryItemMirror> for super::PrimaryItem {
+    fn from(item: PrimaryItemMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::PrimaryItem {
+    type Archived = ArchivedPrimaryItemMirror;
+    type Resolver = PrimaryItemMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        PrimaryItemMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::PrimaryItem
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        PrimaryItemMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::PrimaryItem, __D> for ArchivedPrimaryItemMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::PrimaryItem, __D::Error> {
+        PrimaryItemMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<QatMirror> for super::Qat {
+    fn from(item: QatMirror) -> Self {
+        Self {
+            document_controls: item.document_controls,
+            extra: item.extra,
+            shared_controls: item.shared_controls,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Qat {
+    type Archived = ArchivedQatMirror;
+    type Resolver = QatMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        QatMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Qat
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        QatMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Qat, __D> for ArchivedQatMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Qat, __D::Error> {
+        QatMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<RadioButtonMirror> for super::RadioButton {
+    fn from(item: RadioButtonMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::RadioButton {
+    type Archived = ArchivedRadioButtonMirror;
+    type Resolver = RadioButtonMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        RadioButtonMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::RadioButton
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        RadioButtonMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::RadioButton, __D> for ArchivedRadioButtonMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::RadioButton, __D::Error> {
+        RadioButtonMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<RadioGroupMirror> for super::RadioGroup {
+    fn from(item: RadioGroupMirror) -> Self {
+        Self {
+            align_label: item.align_label,
+            enabled: item.enabled,
+            expand: item.expand,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_item_count: item.get_item_count,
+            get_item_id: item.get_item_id,
+            get_item_label: item.get_item_label,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_selected_item_index: item.get_selected_item_index,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_q: item.id_q,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            radio_button: item.radio_button,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::RadioGroup {
+    type Archived = ArchivedRadioGroupMirror;
+    type Resolver = RadioGroupMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        RadioGroupMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::RadioGroup
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        RadioGroupMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::RadioGroup, __D> for ArchivedRadioGroupMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::RadioGroup, __D::Error> {
+        RadioGroupMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<RibbonMirror> for super::Ribbon {
+    fn from(item: RibbonMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            start_from_scratch: item.start_from_scratch,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Ribbon {
+    type Archived = ArchivedRibbonMirror;
+    type Resolver = RibbonMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        RibbonMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Ribbon
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        RibbonMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Ribbon, __D> for ArchivedRibbonMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Ribbon, __D::Error> {
+        RibbonMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<SecondColumnMirror> for super::SecondColumn {
+    fn from(item: SecondColumnMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::SecondColumn {
+    type Archived = ArchivedSecondColumnMirror;
+    type Resolver = SecondColumnMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        SecondColumnMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::SecondColumn
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        SecondColumnMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::SecondColumn, __D> for ArchivedSecondColumnMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::SecondColumn, __D::Error> {
+        SecondColumnMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<SeparatorMirror> for super::Separator {
+    fn from(item: SeparatorMirror) -> Self {
+        Self {
+            extra: item.extra,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_q: item.id_q,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Separator {
+    type Archived = ArchivedSeparatorMirror;
+    type Resolver = SeparatorMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        SeparatorMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Separator
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        SeparatorMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Separator, __D> for ArchivedSeparatorMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Separator, __D::Error> {
+        SeparatorMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<SharedControlsMirror> for super::SharedControls {
+    fn from(item: SharedControlsMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::SharedControls {
+    type Archived = ArchivedSharedControlsMirror;
+    type Resolver = SharedControlsMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        SharedControlsMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::SharedControls
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        SharedControlsMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::SharedControls, __D> for ArchivedSharedControlsMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::SharedControls, __D::Error> {
+        SharedControlsMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<SplitButtonSplitButtonMirror> for super::SplitButtonSplitButton {
+    fn from(item: SplitButtonSplitButtonMirror) -> Self {
+        Self {
+            content: item.content,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_keytip: item.get_keytip,
+            get_show_label: item.get_show_label,
+            get_size: item.get_size,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            menu_menu_regular: item.menu_menu_regular,
+            show_label: item.show_label,
+            size: item.size,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::SplitButtonSplitButton {
+    type Archived = ArchivedSplitButtonSplitButtonMirror;
+    type Resolver = SplitButtonSplitButtonMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        SplitButtonSplitButtonMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::SplitButtonSplitButton
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        SplitButtonSplitButtonMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::SplitButtonSplitButton, __D>
+    for ArchivedSplitButtonSplitButtonMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::SplitButtonSplitButton, __D::Error> {
+        SplitButtonSplitButtonMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<SplitButtonSplitButtonRegularMirror> for super::SplitButtonSplitButtonRegular {
+    fn from(item: SplitButtonSplitButtonRegularMirror) -> Self {
+        Self {
+            content: item.content,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_keytip: item.get_keytip,
+            get_show_label: item.get_show_label,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            menu_menu_regular: item.menu_menu_regular,
+            show_label: item.show_label,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::SplitButtonSplitButtonRegular {
+    type Archived = ArchivedSplitButtonSplitButtonRegularMirror;
+    type Resolver = SplitButtonSplitButtonRegularMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        SplitButtonSplitButtonRegularMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::SplitButtonSplitButtonRegular
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        SplitButtonSplitButtonRegularMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::SplitButtonSplitButtonRegular, __D>
+    for ArchivedSplitButtonSplitButtonRegularMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::SplitButtonSplitButtonRegular, __D::Error> {
+        SplitButtonSplitButtonRegularMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<SplitButtonSplitButtonWithTitleMirror> for super::SplitButtonSplitButtonWithTitle {
+    fn from(item: SplitButtonSplitButtonWithTitleMirror) -> Self {
+        Self {
+            content: item.content,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_enabled: item.get_enabled,
+            get_keytip: item.get_keytip,
+            get_show_label: item.get_show_label,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            menu_menu_with_title: item.menu_menu_with_title,
+            show_label: item.show_label,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::SplitButtonSplitButtonWithTitle {
+    type Archived = ArchivedSplitButtonSplitButtonWithTitleMirror;
+    type Resolver = SplitButtonSplitButtonWithTitleMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        SplitButtonSplitButtonWithTitleMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::SplitButtonSplitButtonWithTitle
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        SplitButtonSplitButtonWithTitleMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::SplitButtonSplitButtonWithTitle, __D>
+    for ArchivedSplitButtonSplitButtonWithTitleMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::SplitButtonSplitButtonWithTitle, __D::Error> {
+        SplitButtonSplitButtonWithTitleMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TabBackstageTabMirror> for super::TabBackstageTab {
+    fn from(item: TabBackstageTabMirror) -> Self {
+        Self {
+            column_width_percent: item.column_width_percent,
+            enabled: item.enabled,
+            extra: item.extra,
+            first_column: item.first_column,
+            first_column_max_width: item.first_column_max_width,
+            first_column_min_width: item.first_column_min_width,
+            get_enabled: item.get_enabled,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_title: item.get_title,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            label: item.label,
+            second_column: item.second_column,
+            second_column_max_width: item.second_column_max_width,
+            second_column_min_width: item.second_column_min_width,
+            tag: item.tag,
+            title: item.title,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TabBackstageTab {
+    type Archived = ArchivedTabBackstageTabMirror;
+    type Resolver = TabBackstageTabMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TabBackstageTabMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TabBackstageTab
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TabBackstageTabMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TabBackstageTab, __D> for ArchivedTabBackstageTabMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::TabBackstageTab, __D::Error> {
+        TabBackstageTabMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TabSetMirror> for super::TabSet {
+    fn from(item: TabSetMirror) -> Self {
+        Self {
+            extra: item.extra,
+            get_visible: item.get_visible,
+            id_mso: item.id_mso,
+            tab_tab: item.tab_tab,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TabSet {
+    type Archived = ArchivedTabSetMirror;
+    type Resolver = TabSetMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TabSetMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TabSet
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TabSetMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TabSet, __D> for ArchivedTabSetMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::TabSet, __D::Error> {
+        TabSetMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TabTabMirror> for super::TabTab {
+    fn from(item: TabTabMirror) -> Self {
+        Self {
+            extra: item.extra,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_visible: item.get_visible,
+            group_group: item.group_group,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            label: item.label,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TabTab {
+    type Archived = ArchivedTabTabMirror;
+    type Resolver = TabTabMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TabTabMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TabTab
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TabTabMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TabTab, __D> for ArchivedTabTabMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::TabTab, __D::Error> {
+        TabTabMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TabsMirror> for super::Tabs {
+    fn from(item: TabsMirror) -> Self {
+        Self {
+            extra: item.extra,
+            tab_tab: item.tab_tab,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Tabs {
+    type Archived = ArchivedTabsMirror;
+    type Resolver = TabsMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TabsMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Tabs
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TabsMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Tabs, __D> for ArchivedTabsMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Tabs, __D::Error> {
+        TabsMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TaskFormGroupMirror> for super::TaskFormGroup {
+    fn from(item: TaskFormGroupMirror) -> Self {
+        Self {
+            allowed_task_sizes: item.allowed_task_sizes,
+            category_task_form_group_category: item.category_task_form_group_category,
+            extra: item.extra,
+            get_helper_text: item.get_helper_text,
+            get_label: item.get_label,
+            get_show_label: item.get_show_label,
+            get_visible: item.get_visible,
+            helper_text: item.helper_text,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            label: item.label,
+            show_label: item.show_label,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TaskFormGroup {
+    type Archived = ArchivedTaskFormGroupMirror;
+    type Resolver = TaskFormGroupMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TaskFormGroupMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TaskFormGroup
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TaskFormGroupMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TaskFormGroup, __D> for ArchivedTaskFormGroupMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::TaskFormGroup, __D::Error> {
+        TaskFormGroupMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TaskGroupMirror> for super::TaskGroup {
+    fn from(item: TaskGroupMirror) -> Self {
+        Self {
+            allowed_task_sizes: item.allowed_task_sizes,
+            category_task_group_category: item.category_task_group_category,
+            extra: item.extra,
+            get_helper_text: item.get_helper_text,
+            get_label: item.get_label,
+            get_show_label: item.get_show_label,
+            get_visible: item.get_visible,
+            helper_text: item.helper_text,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            label: item.label,
+            show_label: item.show_label,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TaskGroup {
+    type Archived = ArchivedTaskGroupMirror;
+    type Resolver = TaskGroupMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TaskGroupMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TaskGroup
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TaskGroupMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TaskGroup, __D> for ArchivedTaskGroupMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::TaskGroup, __D::Error> {
+        TaskGroupMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TaskTaskFormGroupTaskMirror> for super::TaskTaskFormGroupTask {
+    fn from(item: TaskTaskFormGroupTaskMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_visible: item.get_visible,
+            group_backstage_group: item.group_backstage_group,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            label: item.label,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TaskTaskFormGroupTask {
+    type Archived = ArchivedTaskTaskFormGroupTaskMirror;
+    type Resolver = TaskTaskFormGroupTaskMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TaskTaskFormGroupTaskMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TaskTaskFormGroupTask
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TaskTaskFormGroupTaskMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TaskTaskFormGroupTask, __D>
+    for ArchivedTaskTaskFormGroupTaskMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::TaskTaskFormGroupTask, __D::Error> {
+        TaskTaskFormGroupTaskMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TaskTaskGroupTaskMirror> for super::TaskTaskGroupTask {
+    fn from(item: TaskTaskGroupTaskMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            is_definitive: item.is_definitive,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TaskTaskGroupTask {
+    type Archived = ArchivedTaskTaskGroupTaskMirror;
+    type Resolver = TaskTaskGroupTaskMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TaskTaskGroupTaskMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TaskTaskGroupTask
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TaskTaskGroupTaskMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TaskTaskGroupTask, __D> for ArchivedTaskTaskGroupTaskMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::TaskTaskGroupTask, __D::Error> {
+        TaskTaskGroupTaskMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ToggleButtonBackstageMenuToggleButtonMirror>
+    for super::ToggleButtonBackstageMenuToggleButton
+{
+    fn from(item: ToggleButtonBackstageMenuToggleButtonMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_pressed: item.get_pressed,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ToggleButtonBackstageMenuToggleButton {
+    type Archived = ArchivedToggleButtonBackstageMenuToggleButtonMirror;
+    type Resolver = ToggleButtonBackstageMenuToggleButtonMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ToggleButtonBackstageMenuToggleButtonMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ToggleButtonBackstageMenuToggleButton
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ToggleButtonBackstageMenuToggleButtonMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ToggleButtonBackstageMenuToggleButton, __D>
+    for ArchivedToggleButtonBackstageMenuToggleButtonMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ToggleButtonBackstageMenuToggleButton, __D::Error> {
+        ToggleButtonBackstageMenuToggleButtonMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ToggleButtonToggleButtonMirror> for super::ToggleButtonToggleButton {
+    fn from(item: ToggleButtonToggleButtonMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_pressed: item.get_pressed,
+            get_screentip: item.get_screentip,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_size: item.get_size,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_label: item.show_label,
+            size: item.size,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ToggleButtonToggleButton {
+    type Archived = ArchivedToggleButtonToggleButtonMirror;
+    type Resolver = ToggleButtonToggleButtonMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ToggleButtonToggleButtonMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ToggleButtonToggleButton
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ToggleButtonToggleButtonMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ToggleButtonToggleButton, __D>
+    for ArchivedToggleButtonToggleButtonMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ToggleButtonToggleButton, __D::Error> {
+        ToggleButtonToggleButtonMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ToggleButtonToggleButtonRegularMirror> for super::ToggleButtonToggleButtonRegular {
+    fn from(item: ToggleButtonToggleButtonRegularMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_pressed: item.get_pressed,
+            get_screentip: item.get_screentip,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_supertip: item.get_supertip,
+            get_visible: item.get_visible,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_label: item.show_label,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+            visible: item.visible,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ToggleButtonToggleButtonRegular {
+    type Archived = ArchivedToggleButtonToggleButtonRegularMirror;
+    type Resolver = ToggleButtonToggleButtonRegularMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ToggleButtonToggleButtonRegularMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ToggleButtonToggleButtonRegular
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ToggleButtonToggleButtonRegularMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ToggleButtonToggleButtonRegular, __D>
+    for ArchivedToggleButtonToggleButtonRegularMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ToggleButtonToggleButtonRegular, __D::Error> {
+        ToggleButtonToggleButtonRegularMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ToggleButtonVisibleToggleButtonMirror> for super::ToggleButtonVisibleToggleButton {
+    fn from(item: ToggleButtonVisibleToggleButtonMirror) -> Self {
+        Self {
+            description: item.description,
+            enabled: item.enabled,
+            extra: item.extra,
+            get_description: item.get_description,
+            get_enabled: item.get_enabled,
+            get_image: item.get_image,
+            get_keytip: item.get_keytip,
+            get_label: item.get_label,
+            get_pressed: item.get_pressed,
+            get_screentip: item.get_screentip,
+            get_show_image: item.get_show_image,
+            get_show_label: item.get_show_label,
+            get_supertip: item.get_supertip,
+            id: item.id,
+            id_mso: item.id_mso,
+            id_q: item.id_q,
+            image: item.image,
+            image_mso: item.image_mso,
+            insert_after_mso: item.insert_after_mso,
+            insert_after_q: item.insert_after_q,
+            insert_before_mso: item.insert_before_mso,
+            insert_before_q: item.insert_before_q,
+            keytip: item.keytip,
+            label: item.label,
+            on_action: item.on_action,
+            screentip: item.screentip,
+            show_image: item.show_image,
+            show_label: item.show_label,
+            supertip: item.supertip,
+            tag: item.tag,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ToggleButtonVisibleToggleButton {
+    type Archived = ArchivedToggleButtonVisibleToggleButtonMirror;
+    type Resolver = ToggleButtonVisibleToggleButtonMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ToggleButtonVisibleToggleButtonMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ToggleButtonVisibleToggleButton
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ToggleButtonVisibleToggleButtonMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ToggleButtonVisibleToggleButton, __D>
+    for ArchivedToggleButtonVisibleToggleButtonMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ToggleButtonVisibleToggleButton, __D::Error> {
+        ToggleButtonVisibleToggleButtonMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TopItemsMirror> for super::TopItems {
+    fn from(item: TopItemsMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::TopItems {
+    type Archived = ArchivedTopItemsMirror;
+    type Resolver = TopItemsMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TopItemsMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::TopItems
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TopItemsMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::TopItems, __D> for ArchivedTopItemsMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::TopItems, __D::Error> {
+        TopItemsMirror::deserialize_with(self, deserializer)
+    }
+}
+
 impl From<BackstageContent> for super::BackstageContent {
     fn from(item: BackstageContent) -> Self {
         match item {
@@ -457,22 +7040,22 @@ impl rkyv::Archive for super::BackstageContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::BackstageContent
+impl<__S> rkyv::Serialize<__S> for super::BackstageContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         BackstageContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::BackstageContent, D> for ArchivedBackstageContent
+impl<__D> rkyv::Deserialize<super::BackstageContent, __D> for ArchivedBackstageContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::BackstageContent, D::Error> {
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::BackstageContent, __D::Error> {
         BackstageContent::deserialize_with(self, deserializer)
     }
 }
@@ -497,22 +7080,25 @@ impl rkyv::Archive for super::BackstageGroupsContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::BackstageGroupsContent
+impl<__S> rkyv::Serialize<__S> for super::BackstageGroupsContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         BackstageGroupsContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::BackstageGroupsContent, D> for ArchivedBackstageGroupsContent
+impl<__D> rkyv::Deserialize<super::BackstageGroupsContent, __D> for ArchivedBackstageGroupsContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::BackstageGroupsContent, D::Error> {
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::BackstageGroupsContent, __D::Error> {
         BackstageGroupsContent::deserialize_with(self, deserializer)
     }
 }
@@ -544,25 +7130,26 @@ impl rkyv::Archive for super::BackstageMenuGroupContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::BackstageMenuGroupContent
+impl<__S> rkyv::Serialize<__S> for super::BackstageMenuGroupContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         BackstageMenuGroupContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::BackstageMenuGroupContent, D> for ArchivedBackstageMenuGroupContent
+impl<__D> rkyv::Deserialize<super::BackstageMenuGroupContent, __D>
+    for ArchivedBackstageMenuGroupContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
     fn deserialize(
         &self,
-        deserializer: &mut D,
-    ) -> Result<super::BackstageMenuGroupContent, D::Error> {
+        deserializer: &mut __D,
+    ) -> Result<super::BackstageMenuGroupContent, __D::Error> {
         BackstageMenuGroupContent::deserialize_with(self, deserializer)
     }
 }
@@ -598,22 +7185,22 @@ impl rkyv::Archive for super::BoxContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::BoxContent
+impl<__S> rkyv::Serialize<__S> for super::BoxContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         BoxContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::BoxContent, D> for ArchivedBoxContent
+impl<__D> rkyv::Deserialize<super::BoxContent, __D> for ArchivedBoxContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::BoxContent, D::Error> {
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::BoxContent, __D::Error> {
         BoxContent::deserialize_with(self, deserializer)
     }
 }
@@ -651,22 +7238,22 @@ impl rkyv::Archive for super::ButtonGroupContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::ButtonGroupContent
+impl<__S> rkyv::Serialize<__S> for super::ButtonGroupContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         ButtonGroupContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::ButtonGroupContent, D> for ArchivedButtonGroupContent
+impl<__D> rkyv::Deserialize<super::ButtonGroupContent, __D> for ArchivedButtonGroupContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::ButtonGroupContent, D::Error> {
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ButtonGroupContent, __D::Error> {
         ButtonGroupContent::deserialize_with(self, deserializer)
     }
 }
@@ -707,22 +7294,22 @@ impl rkyv::Archive for super::ContextMenuContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::ContextMenuContent
+impl<__S> rkyv::Serialize<__S> for super::ContextMenuContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         ContextMenuContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::ContextMenuContent, D> for ArchivedContextMenuContent
+impl<__D> rkyv::Deserialize<super::ContextMenuContent, __D> for ArchivedContextMenuContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::ContextMenuContent, D::Error> {
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ContextMenuContent, __D::Error> {
         ContextMenuContent::deserialize_with(self, deserializer)
     }
 }
@@ -759,22 +7346,22 @@ impl rkyv::Archive for super::GroupContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::GroupContent
+impl<__S> rkyv::Serialize<__S> for super::GroupContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         GroupContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::GroupContent, D> for ArchivedGroupContent
+impl<__D> rkyv::Deserialize<super::GroupContent, __D> for ArchivedGroupContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::GroupContent, D::Error> {
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::GroupContent, __D::Error> {
         GroupContent::deserialize_with(self, deserializer)
     }
 }
@@ -819,22 +7406,25 @@ impl rkyv::Archive for super::GroupControlsContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::GroupControlsContent
+impl<__S> rkyv::Serialize<__S> for super::GroupControlsContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         GroupControlsContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::GroupControlsContent, D> for ArchivedGroupControlsContent
+impl<__D> rkyv::Deserialize<super::GroupControlsContent, __D> for ArchivedGroupControlsContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::GroupControlsContent, D::Error> {
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::GroupControlsContent, __D::Error> {
         GroupControlsContent::deserialize_with(self, deserializer)
     }
 }
@@ -871,22 +7461,22 @@ impl rkyv::Archive for super::MenuContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::MenuContent
+impl<__S> rkyv::Serialize<__S> for super::MenuContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         MenuContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::MenuContent, D> for ArchivedMenuContent
+impl<__D> rkyv::Deserialize<super::MenuContent, __D> for ArchivedMenuContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::MenuContent, D::Error> {
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::MenuContent, __D::Error> {
         MenuContent::deserialize_with(self, deserializer)
     }
 }
@@ -927,22 +7517,25 @@ impl rkyv::Archive for super::MenuWithTitleContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::MenuWithTitleContent
+impl<__S> rkyv::Serialize<__S> for super::MenuWithTitleContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         MenuWithTitleContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::MenuWithTitleContent, D> for ArchivedMenuWithTitleContent
+impl<__D> rkyv::Deserialize<super::MenuWithTitleContent, __D> for ArchivedMenuWithTitleContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::MenuWithTitleContent, D::Error> {
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::MenuWithTitleContent, __D::Error> {
         MenuWithTitleContent::deserialize_with(self, deserializer)
     }
 }
@@ -970,22 +7563,22 @@ impl rkyv::Archive for super::PrimaryItemContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::PrimaryItemContent
+impl<__S> rkyv::Serialize<__S> for super::PrimaryItemContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         PrimaryItemContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::PrimaryItemContent, D> for ArchivedPrimaryItemContent
+impl<__D> rkyv::Deserialize<super::PrimaryItemContent, __D> for ArchivedPrimaryItemContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::PrimaryItemContent, D::Error> {
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::PrimaryItemContent, __D::Error> {
         PrimaryItemContent::deserialize_with(self, deserializer)
     }
 }
@@ -1014,26 +7607,26 @@ impl rkyv::Archive for super::QuickAccessToolbarItemsContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::QuickAccessToolbarItemsContent
+impl<__S> rkyv::Serialize<__S> for super::QuickAccessToolbarItemsContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         QuickAccessToolbarItemsContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::QuickAccessToolbarItemsContent, D>
+impl<__D> rkyv::Deserialize<super::QuickAccessToolbarItemsContent, __D>
     for ArchivedQuickAccessToolbarItemsContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
     fn deserialize(
         &self,
-        deserializer: &mut D,
-    ) -> Result<super::QuickAccessToolbarItemsContent, D::Error> {
+        deserializer: &mut __D,
+    ) -> Result<super::QuickAccessToolbarItemsContent, __D::Error> {
         QuickAccessToolbarItemsContent::deserialize_with(self, deserializer)
     }
 }
@@ -1058,22 +7651,22 @@ impl rkyv::Archive for super::RibbonContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::RibbonContent
+impl<__S> rkyv::Serialize<__S> for super::RibbonContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         RibbonContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::RibbonContent, D> for ArchivedRibbonContent
+impl<__D> rkyv::Deserialize<super::RibbonContent, __D> for ArchivedRibbonContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::RibbonContent, D::Error> {
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::RibbonContent, __D::Error> {
         RibbonContent::deserialize_with(self, deserializer)
     }
 }
@@ -1097,22 +7690,25 @@ impl rkyv::Archive for super::SimpleGroupsContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::SimpleGroupsContent
+impl<__S> rkyv::Serialize<__S> for super::SimpleGroupsContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         SimpleGroupsContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::SimpleGroupsContent, D> for ArchivedSimpleGroupsContent
+impl<__D> rkyv::Deserialize<super::SimpleGroupsContent, __D> for ArchivedSimpleGroupsContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::SimpleGroupsContent, D::Error> {
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::SimpleGroupsContent, __D::Error> {
         SimpleGroupsContent::deserialize_with(self, deserializer)
     }
 }
@@ -1138,22 +7734,22 @@ impl rkyv::Archive for super::SplitButtonContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::SplitButtonContent
+impl<__S> rkyv::Serialize<__S> for super::SplitButtonContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         SplitButtonContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::SplitButtonContent, D> for ArchivedSplitButtonContent
+impl<__D> rkyv::Deserialize<super::SplitButtonContent, __D> for ArchivedSplitButtonContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::SplitButtonContent, D::Error> {
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::SplitButtonContent, __D::Error> {
         SplitButtonContent::deserialize_with(self, deserializer)
     }
 }

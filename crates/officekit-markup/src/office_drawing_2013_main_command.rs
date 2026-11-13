@@ -223,6 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::{Element, Node};
@@ -1329,60 +1330,61 @@ pub static GROUP_COMMAND_CONTENT_TAGS: officekit_markup_base::Accept =
 
 /// The `oac:blipFill` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BlipFillProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BlipFillBlipFillProperties {
+pub struct BlipFillBlipFillPropertiesWith<X: NodeExtra> {
     /// The child that is `drawing::Blip`, when there is one.
-    pub blip: Option<Box<drawing::Blip>>,
+    pub blip: Option<Box<drawing::BlipWith<X>>>,
     /// The child that is an item of `drawing::FillModeContent`, when there is one.
-    pub content: Option<Box<drawing::FillModeContent>>,
+    pub content: Option<Box<drawing::FillModeContentWith<X>>>,
     /// The attribute `dpi`, when the element has it.
     pub dpi: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandBlipFillBlipFillProperties,
     /// The attribute `rotWithShape`, when the element has it.
     pub rot_with_shape: Option<String>,
     /// The child that is `drawing::SourceRectangle`, when there is one.
-    pub source_rectangle: Option<Box<drawing::SourceRectangle>>,
+    pub source_rectangle: Option<Box<drawing::SourceRectangleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:blipFill` element of the tree a read gives: [`BlipFillBlipFillPropertiesWith`] holding
+/// nothing in `extra`.
+pub type BlipFillBlipFillProperties = BlipFillBlipFillPropertiesWith<()>;
+
+impl Eq for BlipFillBlipFillPropertiesWith<()> {}
 
 /// The `oac:blipFill` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ResetBlipFillProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BlipFillResetBlipFillProperties {
+pub struct BlipFillResetBlipFillPropertiesWith<X: NodeExtra> {
     /// The child that is `Dpi`, when there is one.
-    pub dpi: Option<Box<Dpi>>,
+    pub dpi: Option<Box<DpiWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandBlipFillResetBlipFillProperties,
     /// The child that is `FillMode`, when there is one.
-    pub fill_mode: Option<Box<FillMode>>,
+    pub fill_mode: Option<Box<FillModeWith<X>>>,
     /// The child that is `RotWithShape`, when there is one.
-    pub rot_with_shape: Option<Box<RotWithShape>>,
+    pub rot_with_shape: Option<Box<RotWithShapeWith<X>>>,
     /// The child that is `SrcRectEmpty`, when there is one.
-    pub src_rect_empty: Option<Box<SrcRectEmpty>>,
+    pub src_rect_empty: Option<Box<SrcRectEmptyWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:blipFill` element of the tree a read gives: [`BlipFillResetBlipFillPropertiesWith`]
+/// holding nothing in `extra`.
+pub type BlipFillResetBlipFillProperties = BlipFillResetBlipFillPropertiesWith<()>;
+
+impl Eq for BlipFillResetBlipFillPropertiesWith<()> {}
+
 /// The `oac:bodyPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TextBodyProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BodyPr {
+pub struct BodyPrWith<X: NodeExtra> {
     /// The attribute `anchor`, when the element has it.
     pub anchor: Option<drawing::TextAnchoringTypes>,
     /// The attribute `anchorCtr`, when the element has it.
@@ -1392,7 +1394,9 @@ pub struct BodyPr {
     /// The attribute `compatLnSpc`, when the element has it.
     pub compat_ln_spc: Option<String>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandBodyPr,
     /// The attribute `forceAA`, when the element has it.
     pub force_aa: Option<String>,
     /// The attribute `fromWordArt`, when the element has it.
@@ -1404,7 +1408,7 @@ pub struct BodyPr {
     /// The attribute `numCol`, when the element has it.
     pub num_col: Option<drawing::TextColumnCount>,
     /// The child that is `drawing::PresetTextWarp`, when there is one.
-    pub preset_text_warp: Option<Box<drawing::PresetTextWarp>>,
+    pub preset_text_warp: Option<Box<drawing::PresetTextWarpWith<X>>>,
     /// The attribute `rIns`, when the element has it.
     pub r_ins: Option<drawing::StCoordinate32>,
     /// The attribute `rot`, when the element has it.
@@ -1412,7 +1416,7 @@ pub struct BodyPr {
     /// The attribute `rtlCol`, when the element has it.
     pub rtl_col: Option<String>,
     /// The child that is `drawing::Scene3d`, when there is one.
-    pub scene3d: Option<Box<drawing::Scene3d>>,
+    pub scene3d: Option<Box<drawing::Scene3dWith<X>>>,
     /// The attribute `spcCol`, when the element has it.
     pub spc_col: Option<drawing::PositiveCoordinatePoint>,
     /// The attribute `spcFirstLastPara`, when the element has it.
@@ -1420,9 +1424,9 @@ pub struct BodyPr {
     /// The attribute `tIns`, when the element has it.
     pub t_ins: Option<drawing::StCoordinate32>,
     /// The child that is an item of `drawing::Text3DContent`, when there is one.
-    pub text3d_content: Option<Box<drawing::Text3DContent>>,
+    pub text3d_content: Option<Box<drawing::Text3DContentWith<X>>>,
     /// The child that is an item of `drawing::TextAutofitContent`, when there is one.
-    pub text_autofit_content: Option<Box<drawing::TextAutofitContent>>,
+    pub text_autofit_content: Option<Box<drawing::TextAutofitContentWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `upright`, when the element has it.
@@ -1435,18 +1439,20 @@ pub struct BodyPr {
     pub wrap: Option<drawing::TextWrappingTypes>,
 }
 
+/// The `oac:bodyPr` element of the tree a read gives: [`BodyPrWith`] holding nothing in `extra`.
+pub type BodyPr = BodyPrWith<()>;
+
+impl Eq for BodyPrWith<()> {}
+
 /// The `oac:bounds` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BoundRect`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Bounds {
+pub struct BoundsWith<X: NodeExtra> {
     /// The attribute `b`, when the element has it.
     pub b: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandBounds,
     /// The attribute `l`, when the element has it.
     pub l: Option<String>,
     /// The attribute `r`, when the element has it.
@@ -1457,32 +1463,36 @@ pub struct Bounds {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:bounds` element of the tree a read gives: [`BoundsWith`] holding nothing in `extra`.
+pub type Bounds = BoundsWith<()>;
+
+impl Eq for BoundsWith<()> {}
+
 /// The `oac:bwMode` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BwMode {
+pub struct BwModeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandBwMode,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:bwMode` element of the tree a read gives: [`BwModeWith`] holding nothing in `extra`.
+pub type BwMode = BwModeWith<()>;
+
+impl Eq for BwModeWith<()> {}
+
 /// The `oac:cNvCxnSpPr` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ModifyNonVisualConnectorProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvCxnSpPrModifyNonVisualConnectorProps {
+pub struct CNvCxnSpPrModifyNonVisualConnectorPropsWith<X: NodeExtra> {
     /// The child that is `EndCxnConnection`, when there is one.
-    pub end_cxn_connection: Option<Box<EndCxnConnection>>,
+    pub end_cxn_connection: Option<Box<EndCxnConnectionWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandCNvCxnSpPrModifyNonVisualConnectorProps,
     /// The attribute `noAdjustHandles`, when the element has it.
     pub no_adjust_handles: Option<String>,
     /// The attribute `noChangeArrowheads`, when the element has it.
@@ -1504,59 +1514,65 @@ pub struct CNvCxnSpPrModifyNonVisualConnectorProps {
     /// The attribute `noSelect`, when the element has it.
     pub no_select: Option<String>,
     /// The child that is `StCxnConnection`, when there is one.
-    pub st_cxn_connection: Option<Box<StCxnConnection>>,
+    pub st_cxn_connection: Option<Box<StCxnConnectionWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:cNvCxnSpPr` element of the tree a read gives:
+/// [`CNvCxnSpPrModifyNonVisualConnectorPropsWith`] holding nothing in `extra`.
+pub type CNvCxnSpPrModifyNonVisualConnectorProps = CNvCxnSpPrModifyNonVisualConnectorPropsWith<()>;
+
+impl Eq for CNvCxnSpPrModifyNonVisualConnectorPropsWith<()> {}
 
 /// The `oac:cNvCxnSpPr` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ResetNonVisualConnectorProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvCxnSpPrResetNonVisualConnectorProps {
+pub struct CNvCxnSpPrResetNonVisualConnectorPropsWith<X: NodeExtra> {
     /// The child that is `EndCxnEmpty`, when there is one.
-    pub end_cxn_empty: Option<Box<EndCxnEmpty>>,
+    pub end_cxn_empty: Option<Box<EndCxnEmptyWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandCNvCxnSpPrResetNonVisualConnectorProps,
     /// The child that is `NoAdjustHandles`, when there is one.
-    pub no_adjust_handles: Option<Box<NoAdjustHandles>>,
+    pub no_adjust_handles: Option<Box<NoAdjustHandlesWith<X>>>,
     /// The child that is `NoChangeArrowheads`, when there is one.
-    pub no_change_arrowheads: Option<Box<NoChangeArrowheads>>,
+    pub no_change_arrowheads: Option<Box<NoChangeArrowheadsWith<X>>>,
     /// The child that is `NoChangeAspect`, when there is one.
-    pub no_change_aspect: Option<Box<NoChangeAspect>>,
+    pub no_change_aspect: Option<Box<NoChangeAspectWith<X>>>,
     /// The child that is `NoChangeShapeType`, when there is one.
-    pub no_change_shape_type: Option<Box<NoChangeShapeType>>,
+    pub no_change_shape_type: Option<Box<NoChangeShapeTypeWith<X>>>,
     /// The child that is `NoEditPoints`, when there is one.
-    pub no_edit_points: Option<Box<NoEditPoints>>,
+    pub no_edit_points: Option<Box<NoEditPointsWith<X>>>,
     /// The child that is `NoGrp`, when there is one.
-    pub no_grp: Option<Box<NoGrp>>,
+    pub no_grp: Option<Box<NoGrpWith<X>>>,
     /// The child that is `NoMove`, when there is one.
-    pub no_move: Option<Box<NoMove>>,
+    pub no_move: Option<Box<NoMoveWith<X>>>,
     /// The child that is `NoResize`, when there is one.
-    pub no_resize: Option<Box<NoResize>>,
+    pub no_resize: Option<Box<NoResizeWith<X>>>,
     /// The child that is `NoRot`, when there is one.
-    pub no_rot: Option<Box<NoRot>>,
+    pub no_rot: Option<Box<NoRotWith<X>>>,
     /// The child that is `NoSelect`, when there is one.
-    pub no_select: Option<Box<NoSelect>>,
+    pub no_select: Option<Box<NoSelectWith<X>>>,
     /// The child that is `StCxnEmpty`, when there is one.
-    pub st_cxn_empty: Option<Box<StCxnEmpty>>,
+    pub st_cxn_empty: Option<Box<StCxnEmptyWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:cNvCxnSpPr` element of the tree a read gives:
+/// [`CNvCxnSpPrResetNonVisualConnectorPropsWith`] holding nothing in `extra`.
+pub type CNvCxnSpPrResetNonVisualConnectorProps = CNvCxnSpPrResetNonVisualConnectorPropsWith<()>;
+
+impl Eq for CNvCxnSpPrResetNonVisualConnectorPropsWith<()> {}
+
 /// The `oac:cNvGraphicFramePr` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_ModifyNonVisualGraphicFrameProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvGraphicFramePr {
+pub struct CNvGraphicFramePrWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandCNvGraphicFramePr,
     /// The attribute `noChangeAspect`, when the element has it.
     pub no_change_aspect: Option<String>,
     /// The attribute `noDrilldown`, when the element has it.
@@ -1573,16 +1589,19 @@ pub struct CNvGraphicFramePr {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:cNvGraphicFramePr` element of the tree a read gives: [`CNvGraphicFramePrWith`] holding
+/// nothing in `extra`.
+pub type CNvGraphicFramePr = CNvGraphicFramePrWith<()>;
+
+impl Eq for CNvGraphicFramePrWith<()> {}
+
 /// The `oac:cNvGrpSpPr` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ModifyNonVisualGroupDrawingShapeProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvGrpSpPrModifyNonVisualGroupDrawingShapeProps {
+pub struct CNvGrpSpPrModifyNonVisualGroupDrawingShapePropsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandCNvGrpSpPrModifyNonVisualGroupDrawingShapeProps,
     /// The attribute `noChangeAspect`, when the element has it.
     pub no_change_aspect: Option<String>,
     /// The attribute `noGrp`, when the element has it.
@@ -1601,34 +1620,42 @@ pub struct CNvGrpSpPrModifyNonVisualGroupDrawingShapeProps {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:cNvGrpSpPr` element of the tree a read gives:
+/// [`CNvGrpSpPrModifyNonVisualGroupDrawingShapePropsWith`] holding nothing in `extra`.
+pub type CNvGrpSpPrModifyNonVisualGroupDrawingShapeProps =
+    CNvGrpSpPrModifyNonVisualGroupDrawingShapePropsWith<()>;
+
+impl Eq for CNvGrpSpPrModifyNonVisualGroupDrawingShapePropsWith<()> {}
+
 /// The `oac:cNvGrpSpPr` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_NonVisualGroupDrawingShapeProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvGrpSpPrNonVisualGroupDrawingShapeProps {
+pub struct CNvGrpSpPrNonVisualGroupDrawingShapePropsWith<X: NodeExtra> {
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandCNvGrpSpPrNonVisualGroupDrawingShapeProps,
     /// The child that is `drawing::GroupShapeLocks`, when there is one.
-    pub group_shape_locks: Option<Box<drawing::GroupShapeLocks>>,
+    pub group_shape_locks: Option<Box<drawing::GroupShapeLocksWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:cNvGrpSpPr` element of the tree a read gives:
+/// [`CNvGrpSpPrNonVisualGroupDrawingShapePropsWith`] holding nothing in `extra`.
+pub type CNvGrpSpPrNonVisualGroupDrawingShapeProps =
+    CNvGrpSpPrNonVisualGroupDrawingShapePropsWith<()>;
+
+impl Eq for CNvGrpSpPrNonVisualGroupDrawingShapePropsWith<()> {}
+
 /// The `oac:cNvInkPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ModifyNonVisualInkProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvInkPr {
+pub struct CNvInkPrWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandCNvInkPr,
     /// The attribute `isComment`, when the element has it.
     pub is_comment: Option<String>,
     /// The attribute `noAdjustHandles`, when the element has it.
@@ -1655,16 +1682,19 @@ pub struct CNvInkPr {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:cNvInkPr` element of the tree a read gives: [`CNvInkPrWith`] holding nothing in
+/// `extra`.
+pub type CNvInkPr = CNvInkPrWith<()>;
+
+impl Eq for CNvInkPrWith<()> {}
+
 /// The `oac:cNvPicPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ModifyNonVisualPictureProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvPicPrModifyNonVisualPictureProps {
+pub struct CNvPicPrModifyNonVisualPicturePropsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandCNvPicPrModifyNonVisualPictureProps,
     /// The attribute `noAdjustHandles`, when the element has it.
     pub no_adjust_handles: Option<String>,
     /// The attribute `noChangeArrowheads`, when the element has it.
@@ -1693,36 +1723,42 @@ pub struct CNvPicPrModifyNonVisualPictureProps {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:cNvPicPr` element of the tree a read gives: [`CNvPicPrModifyNonVisualPicturePropsWith`]
+/// holding nothing in `extra`.
+pub type CNvPicPrModifyNonVisualPictureProps = CNvPicPrModifyNonVisualPicturePropsWith<()>;
+
+impl Eq for CNvPicPrModifyNonVisualPicturePropsWith<()> {}
+
 /// The `oac:cNvPicPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ResetNonVisualPictureProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvPicPrResetNonVisualPictureProps {
+pub struct CNvPicPrResetNonVisualPicturePropsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandCNvPicPrResetNonVisualPictureProps,
     /// The child that is `LfPr`, when there is one.
-    pub lf_pr: Option<Box<LfPr>>,
+    pub lf_pr: Option<Box<LfPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:cNvPicPr` element of the tree a read gives: [`CNvPicPrResetNonVisualPicturePropsWith`]
+/// holding nothing in `extra`.
+pub type CNvPicPrResetNonVisualPictureProps = CNvPicPrResetNonVisualPicturePropsWith<()>;
+
+impl Eq for CNvPicPrResetNonVisualPicturePropsWith<()> {}
+
 /// The `oac:cNvPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ModifyNonVisualDrawingProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvPrModifyNonVisualDrawingProps {
+pub struct CNvPrModifyNonVisualDrawingPropsWith<X: NodeExtra> {
     /// The attribute `decor`, when the element has it.
     pub decor: Option<String>,
     /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandCNvPrModifyNonVisualDrawingProps,
     /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
     /// The attribute `name`, when the element has it.
@@ -1735,26 +1771,29 @@ pub struct CNvPrModifyNonVisualDrawingProps {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:cNvPr` element of the tree a read gives: [`CNvPrModifyNonVisualDrawingPropsWith`]
+/// holding nothing in `extra`.
+pub type CNvPrModifyNonVisualDrawingProps = CNvPrModifyNonVisualDrawingPropsWith<()>;
+
+impl Eq for CNvPrModifyNonVisualDrawingPropsWith<()> {}
+
 /// The `oac:cNvPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_NonVisualDrawingProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvPrNonVisualDrawingProps {
+pub struct CNvPrNonVisualDrawingPropsWith<X: NodeExtra> {
     /// The child that is `drawing::ClickHyperlink`, when there is one.
-    pub click_hyperlink: Option<Box<drawing::ClickHyperlink>>,
+    pub click_hyperlink: Option<Box<drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandCNvPrNonVisualDrawingProps,
     /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
     /// The child that is `drawing::HyperlinkForHover`, when there is one.
-    pub hyperlink_for_hover: Option<Box<drawing::HyperlinkForHover>>,
+    pub hyperlink_for_hover: Option<Box<drawing::HyperlinkForHoverWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<drawing::DrawingElementID>,
     /// The attribute `name`, when the element has it.
@@ -1765,16 +1804,19 @@ pub struct CNvPrNonVisualDrawingProps {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:cNvPr` element of the tree a read gives: [`CNvPrNonVisualDrawingPropsWith`] holding
+/// nothing in `extra`.
+pub type CNvPrNonVisualDrawingProps = CNvPrNonVisualDrawingPropsWith<()>;
+
+impl Eq for CNvPrNonVisualDrawingPropsWith<()> {}
+
 /// The `oac:cNvSpPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ModifyNonVisualDrawingShapeProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvSpPr {
+pub struct CNvSpPrWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandCNvSpPr,
     /// The attribute `noAdjustHandles`, when the element has it.
     pub no_adjust_handles: Option<String>,
     /// The attribute `noChangeArrowheads`, when the element has it.
@@ -1803,6 +1845,11 @@ pub struct CNvSpPr {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:cNvSpPr` element of the tree a read gives: [`CNvSpPrWith`] holding nothing in `extra`.
+pub type CNvSpPr = CNvSpPrWith<()>;
+
+impl Eq for CNvSpPrWith<()> {}
+
 /// The simple type `CT_ResourceLinkage`, kept as the text the file carried.
 ///
 /// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
@@ -1830,16 +1877,13 @@ pub enum CTResourceLinkageMember {
 
 /// The `oac:compressPicPr` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_CompressPictureProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CompressPicPr {
+pub struct CompressPicPrWith<X: NodeExtra> {
     /// The attribute `cstate`, when the element has it.
     pub cstate: Option<drawing::BlipCompressionType>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandCompressPicPr,
     /// The attribute `removeCrop`, when the element has it.
     pub remove_crop: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -1847,6 +1891,12 @@ pub struct CompressPicPr {
     /// The attribute `useLocalDpi`, when the element has it.
     pub use_local_dpi: Option<String>,
 }
+
+/// The `oac:compressPicPr` element of the tree a read gives: [`CompressPicPrWith`] holding nothing
+/// in `extra`.
+pub type CompressPicPr = CompressPicPrWith<()>;
+
+impl Eq for CompressPicPrWith<()> {}
 
 /// The hooks of a context for the `oac` namespace.
 ///
@@ -4048,14 +4098,11 @@ pub trait Context: crate::Context {
 
 /// The `oac:context` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TextCharRangeContext`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ContextTextCharRangeContext {
+pub struct ContextTextCharRangeContextWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandContextTextCharRangeContext,
     /// The attribute `hash`, when the element has it.
     pub hash: Option<String>,
     /// The attribute `len`, when the element has it.
@@ -4064,238 +4111,276 @@ pub struct ContextTextCharRangeContext {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:context` element of the tree a read gives: [`ContextTextCharRangeContextWith`] holding
+/// nothing in `extra`.
+pub type ContextTextCharRangeContext = ContextTextCharRangeContextWith<()>;
+
+impl Eq for ContextTextCharRangeContextWith<()> {}
+
 /// The `oac:cxnSpMk` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ConnectorMoniker`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CxnSpMk {
+pub struct CxnSpMkWith<X: NodeExtra> {
     /// The attribute `creationId`, when the element has it.
     pub creation_id: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandCxnSpMk,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:cxnSpMk` element of the tree a read gives: [`CxnSpMkWith`] holding nothing in `extra`.
+pub type CxnSpMk = CxnSpMkWith<()>;
+
+impl Eq for CxnSpMkWith<()> {}
+
 /// The `oac:cxnSpMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ConnectorMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CxnSpMkLst {
+pub struct CxnSpMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandCxnSpMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:cxnSpMkLst` element of the tree a read gives: [`CxnSpMkLstWith`] holding nothing in
+/// `extra`.
+pub type CxnSpMkLst = CxnSpMkLstWith<()>;
+
+impl Eq for CxnSpMkLstWith<()> {}
 
 /// The `oac:dcMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DocumentContextMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DcMkLst {
+pub struct DcMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandDcMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:dcMkLst` element of the tree a read gives: [`DcMkLstWith`] holding nothing in `extra`.
+pub type DcMkLst = DcMkLstWith<()>;
+
+impl Eq for DcMkLstWith<()> {}
 
 /// The `oac:deMasterMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_DrawingElementMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DeMasterMkLst {
+pub struct DeMasterMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandDeMasterMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:deMasterMkLst` element of the tree a read gives: [`DeMasterMkLstWith`] holding nothing
+/// in `extra`.
+pub type DeMasterMkLst = DeMasterMkLstWith<()>;
+
+impl Eq for DeMasterMkLstWith<()> {}
 
 /// The `oac:deMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DrawingElementMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DeMkLst {
+pub struct DeMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandDeMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:deMkLst` element of the tree a read gives: [`DeMkLstWith`] holding nothing in `extra`.
+pub type DeMkLst = DeMkLstWith<()>;
+
+impl Eq for DeMkLstWith<()> {}
 
 /// The `oac:dePkg` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DrawingElementPackage`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DePkg {
+pub struct DePkgWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandDePkg,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:dePkg` element of the tree a read gives: [`DePkgWith`] holding nothing in `extra`.
+pub type DePkg = DePkgWith<()>;
+
+impl Eq for DePkgWith<()> {}
 
 /// The `oac:deSrcMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_DrawingElementMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DeSrcMkLst {
+pub struct DeSrcMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandDeSrcMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:deSrcMkLst` element of the tree a read gives: [`DeSrcMkLstWith`] holding nothing in
+/// `extra`.
+pub type DeSrcMkLst = DeSrcMkLstWith<()>;
+
+impl Eq for DeSrcMkLstWith<()> {}
 
 /// The `oac:deTgtMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_DrawingElementMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DeTgtMkLst {
+pub struct DeTgtMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandDeTgtMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:deTgtMkLst` element of the tree a read gives: [`DeTgtMkLstWith`] holding nothing in
+/// `extra`.
+pub type DeTgtMkLst = DeTgtMkLstWith<()>;
+
+impl Eq for DeTgtMkLstWith<()> {}
 
 /// The `oac:dgMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DrawingMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DgMkLst {
+pub struct DgMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandDgMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:dgMkLst` element of the tree a read gives: [`DgMkLstWith`] holding nothing in `extra`.
+pub type DgMkLst = DgMkLstWith<()>;
+
+impl Eq for DgMkLstWith<()> {}
 
 /// The `oac:dpi` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Dpi {
+pub struct DpiWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandDpi,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:dpi` element of the tree a read gives: [`DpiWith`] holding nothing in `extra`.
+pub type Dpi = DpiWith<()>;
+
+impl Eq for DpiWith<()> {}
 
 /// The `oac:drSelLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DrawingSelectionStgList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DrSelLst {
+pub struct DrSelLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandDrSelLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:drSelLst` element of the tree a read gives: [`DrSelLstWith`] holding nothing in
+/// `extra`.
+pub type DrSelLst = DrSelLstWith<()>;
+
+impl Eq for DrSelLstWith<()> {}
 
 /// The `oac:editorSelLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_EditorSelectionStgList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EditorSelLst {
+pub struct EditorSelLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandEditorSelLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:editorSelLst` element of the tree a read gives: [`EditorSelLstWith`] holding nothing in
+/// `extra`.
+pub type EditorSelLst = EditorSelLstWith<()>;
+
+impl Eq for EditorSelLstWith<()> {}
 
 /// The `oac:effect` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Effect {
+pub struct EffectWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandEffect,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:effect` element of the tree a read gives: [`EffectWith`] holding nothing in `extra`.
+pub type Effect = EffectWith<()>;
+
+impl Eq for EffectWith<()> {}
+
 /// The `oac:effectRef` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleMatrixReference`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EffectRef {
+pub struct EffectRefWith<X: NodeExtra> {
     /// The child that is an item of `drawing::ColorContent`, when there is one.
-    pub content: Option<Box<drawing::ColorContent>>,
+    pub content: Option<Box<drawing::ColorContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandEffectRef,
     /// The attribute `idx`, when the element has it.
     pub idx: Option<drawing::StyleMatrixColumnIndex>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:effectRef` element of the tree a read gives: [`EffectRefWith`] holding nothing in
+/// `extra`.
+pub type EffectRef = EffectRefWith<()>;
+
+impl Eq for EffectRefWith<()> {}
+
 /// The `oac:endCxn` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Connection`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EndCxnConnection {
+pub struct EndCxnConnectionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandEndCxnConnection,
     /// The attribute `id`, when the element has it.
     pub id: Option<drawing::DrawingElementID>,
     /// The attribute `idx`, when the element has it.
@@ -4304,239 +4389,278 @@ pub struct EndCxnConnection {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:endCxn` element of the tree a read gives: [`EndCxnConnectionWith`] holding nothing in
+/// `extra`.
+pub type EndCxnConnection = EndCxnConnectionWith<()>;
+
+impl Eq for EndCxnConnectionWith<()> {}
+
 /// The `oac:endCxn` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EndCxnEmpty {
+pub struct EndCxnEmptyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandEndCxnEmpty,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:endCxn` element of the tree a read gives: [`EndCxnEmptyWith`] holding nothing in
+/// `extra`.
+pub type EndCxnEmpty = EndCxnEmptyWith<()>;
+
+impl Eq for EndCxnEmptyWith<()> {}
 
 /// The `oac:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
 
 /// The `oac:fill` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Fill {
+pub struct FillWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandFill,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:fill` element of the tree a read gives: [`FillWith`] holding nothing in `extra`.
+pub type Fill = FillWith<()>;
+
+impl Eq for FillWith<()> {}
 
 /// The `oac:fillMode` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FillMode {
+pub struct FillModeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandFillMode,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:fillMode` element of the tree a read gives: [`FillModeWith`] holding nothing in
+/// `extra`.
+pub type FillMode = FillModeWith<()>;
+
+impl Eq for FillModeWith<()> {}
 
 /// The `oac:fillRect` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RelativeRectProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FillRect {
+pub struct FillRectWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandFillRect,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:fillRect` element of the tree a read gives: [`FillRectWith`] holding nothing in
+/// `extra`.
+pub type FillRect = FillRectWith<()>;
+
+impl Eq for FillRectWith<()> {}
+
 /// The `oac:fillRef` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleMatrixReference`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FillRef {
+pub struct FillRefWith<X: NodeExtra> {
     /// The child that is an item of `drawing::ColorContent`, when there is one.
-    pub content: Option<Box<drawing::ColorContent>>,
+    pub content: Option<Box<drawing::ColorContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandFillRef,
     /// The attribute `idx`, when the element has it.
     pub idx: Option<drawing::StyleMatrixColumnIndex>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:fillRef` element of the tree a read gives: [`FillRefWith`] holding nothing in `extra`.
+pub type FillRef = FillRefWith<()>;
+
+impl Eq for FillRefWith<()> {}
+
 /// The `oac:fontRef` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_FontReference`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FontRef {
+pub struct FontRefWith<X: NodeExtra> {
     /// The child that is an item of `drawing::ColorContent`, when there is one.
-    pub content: Option<Box<drawing::ColorContent>>,
+    pub content: Option<Box<drawing::ColorContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandFontRef,
     /// The attribute `idx`, when the element has it.
     pub idx: Option<drawing::FontCollectionIndex>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:fontRef` element of the tree a read gives: [`FontRefWith`] holding nothing in `extra`.
+pub type FontRef = FontRefWith<()>;
+
+impl Eq for FontRefWith<()> {}
+
 /// The `oac:geom` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Geom {
+pub struct GeomWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandGeom,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:geom` element of the tree a read gives: [`GeomWith`] holding nothing in `extra`.
+pub type Geom = GeomWith<()>;
+
+impl Eq for GeomWith<()> {}
+
 /// The `oac:graphicFrameMk` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_GraphicFrameMoniker`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GraphicFrameMk {
+pub struct GraphicFrameMkWith<X: NodeExtra> {
     /// The attribute `creationId`, when the element has it.
     pub creation_id: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandGraphicFrameMk,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:graphicFrameMk` element of the tree a read gives: [`GraphicFrameMkWith`] holding
+/// nothing in `extra`.
+pub type GraphicFrameMk = GraphicFrameMkWith<()>;
+
+impl Eq for GraphicFrameMkWith<()> {}
+
 /// The `oac:graphicFrameMkLst` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_GraphicFrameMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GraphicFrameMkLst {
+pub struct GraphicFrameMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandGraphicFrameMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:graphicFrameMkLst` element of the tree a read gives: [`GraphicFrameMkLstWith`] holding
+/// nothing in `extra`.
+pub type GraphicFrameMkLst = GraphicFrameMkLstWith<()>;
+
+impl Eq for GraphicFrameMkLstWith<()> {}
 
 /// The `oac:graphicParentMkLst` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_GraphicParentMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GraphicParentMkLst {
+pub struct GraphicParentMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandGraphicParentMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:graphicParentMkLst` element of the tree a read gives: [`GraphicParentMkLstWith`]
+/// holding nothing in `extra`.
+pub type GraphicParentMkLst = GraphicParentMkLstWith<()>;
+
+impl Eq for GraphicParentMkLstWith<()> {}
+
 /// The `oac:gridColMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_TableColumnMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GridColMkLst {
+pub struct GridColMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandGridColMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:gridColMkLst` element of the tree a read gives: [`GridColMkLstWith`] holding nothing in
+/// `extra`.
+pub type GridColMkLst = GridColMkLstWith<()>;
+
+impl Eq for GridColMkLstWith<()> {}
 
 /// One child element of a choice: choice in `CT_GroupCommand`.
 ///
 /// The schema types that hold it: `CT_GroupCommand`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum GroupCommandContent {
+pub enum GroupCommandContentWith<X: NodeExtra> {
     /// The element `oac:cxnSpMk`, a `CxnSpMk`.
-    CxnSpMk(CxnSpMk),
+    CxnSpMk(CxnSpMkWith<X>),
     /// The element `oac:graphicFrameMk`, a `GraphicFrameMk`.
-    GraphicFrameMk(GraphicFrameMk),
+    GraphicFrameMk(GraphicFrameMkWith<X>),
     /// The element `oac:grpSpMk`, a `GrpSpMk`.
-    GrpSpMk(GrpSpMk),
+    GrpSpMk(GrpSpMkWith<X>),
     /// The element `oac:inkMk`, a `InkMk`.
-    InkMk(InkMk),
+    InkMk(InkMkWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `oac:picMk`, a `PicMk`.
-    PicMk(PicMk),
+    PicMk(PicMkWith<X>),
     /// The element `oac:spMk`, a `SpMk`.
-    SpMk(SpMk),
+    SpMk(SpMkWith<X>),
 }
+
+/// [`GroupCommandContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type GroupCommandContent = GroupCommandContentWith<()>;
+
+impl Eq for GroupCommandContentWith<()> {}
 
 /// The `oac:grpCmd` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_GroupCommand`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GrpCmd {
+pub struct GrpCmdWith<X: NodeExtra> {
     /// The child that is `CNvGrpSpPrNonVisualGroupDrawingShapeProps`, when there is one.
     pub c_nv_grp_sp_pr_non_visual_group_drawing_shape_props:
-        Option<Box<CNvGrpSpPrNonVisualGroupDrawingShapeProps>>,
+        Option<Box<CNvGrpSpPrNonVisualGroupDrawingShapePropsWith<X>>>,
     /// The child that is `CNvPrNonVisualDrawingProps`, when there is one.
-    pub c_nv_pr_non_visual_drawing_props: Option<Box<CNvPrNonVisualDrawingProps>>,
+    pub c_nv_pr_non_visual_drawing_props: Option<Box<CNvPrNonVisualDrawingPropsWith<X>>>,
     /// The children that are an item of `GroupCommandContent`, in order.
-    pub content: Vec<GroupCommandContent>,
+    pub content: Vec<GroupCommandContentWith<X>>,
     /// The child that is `DgMkLst`, which the schema requires.
-    pub dg_mk_lst: Box<DgMkLst>,
+    pub dg_mk_lst: Box<DgMkLstWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandGrpCmd,
     /// The attribute `grpId`, when the element has it.
     pub grp_id: Option<String>,
     /// The child that is `GrpSpPrGroupShapeProperties`, when there is one.
-    pub grp_sp_pr_group_shape_properties: Option<Box<GrpSpPrGroupShapeProperties>>,
+    pub grp_sp_pr_group_shape_properties: Option<Box<GrpSpPrGroupShapePropertiesWith<X>>>,
     /// The attribute `preventRegroup`, when the element has it.
     pub prevent_regroup: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -4545,246 +4669,284 @@ pub struct GrpCmd {
     pub ver_id: Option<String>,
 }
 
+/// The `oac:grpCmd` element of the tree a read gives: [`GrpCmdWith`] holding nothing in `extra`.
+pub type GrpCmd = GrpCmdWith<()>;
+
+impl Eq for GrpCmdWith<()> {}
+
 /// The `oac:grpSpMk` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_GroupShapeMoniker`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GrpSpMk {
+pub struct GrpSpMkWith<X: NodeExtra> {
     /// The attribute `creationId`, when the element has it.
     pub creation_id: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandGrpSpMk,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:grpSpMk` element of the tree a read gives: [`GrpSpMkWith`] holding nothing in `extra`.
+pub type GrpSpMk = GrpSpMkWith<()>;
+
+impl Eq for GrpSpMkWith<()> {}
+
 /// The `oac:grpSpMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_GroupShapeMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GrpSpMkLst {
+pub struct GrpSpMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandGrpSpMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:grpSpMkLst` element of the tree a read gives: [`GrpSpMkLstWith`] holding nothing in
+/// `extra`.
+pub type GrpSpMkLst = GrpSpMkLstWith<()>;
+
+impl Eq for GrpSpMkLstWith<()> {}
 
 /// The `oac:grpSpPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_GroupShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GrpSpPrGroupShapeProperties {
+pub struct GrpSpPrGroupShapePropertiesWith<X: NodeExtra> {
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
     /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
-    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandGrpSpPrGroupShapeProperties,
     /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
-    pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<drawing::FillPropertiesContentWith<X>>>,
     /// The child that is `drawing::Scene3d`, when there is one.
-    pub scene3d: Option<Box<drawing::Scene3d>>,
+    pub scene3d: Option<Box<drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `drawing::XfrmGroupTransform2D`, when there is one.
-    pub xfrm_group_transform2d: Option<Box<drawing::XfrmGroupTransform2D>>,
+    pub xfrm_group_transform2d: Option<Box<drawing::XfrmGroupTransform2DWith<X>>>,
 }
+
+/// The `oac:grpSpPr` element of the tree a read gives: [`GrpSpPrGroupShapePropertiesWith`] holding
+/// nothing in `extra`.
+pub type GrpSpPrGroupShapeProperties = GrpSpPrGroupShapePropertiesWith<()>;
+
+impl Eq for GrpSpPrGroupShapePropertiesWith<()> {}
 
 /// The `oac:grpSpPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ResetGroupShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GrpSpPrResetGroupShapeProperties {
+pub struct GrpSpPrResetGroupShapePropertiesWith<X: NodeExtra> {
     /// The child that is `BwMode`, when there is one.
-    pub bw_mode: Option<Box<BwMode>>,
+    pub bw_mode: Option<Box<BwModeWith<X>>>,
     /// The child that is `Effect`, when there is one.
-    pub effect: Option<Box<Effect>>,
+    pub effect: Option<Box<EffectWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandGrpSpPrResetGroupShapeProperties,
     /// The child that is `Fill`, when there is one.
-    pub fill: Option<Box<Fill>>,
+    pub fill: Option<Box<FillWith<X>>>,
     /// The child that is `Scene3d`, when there is one.
-    pub scene3d: Option<Box<Scene3d>>,
+    pub scene3d: Option<Box<Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `XfrmEmpty`, when there is one.
-    pub xfrm_empty: Option<Box<XfrmEmpty>>,
+    pub xfrm_empty: Option<Box<XfrmEmptyWith<X>>>,
 }
+
+/// The `oac:grpSpPr` element of the tree a read gives: [`GrpSpPrResetGroupShapePropertiesWith`]
+/// holding nothing in `extra`.
+pub type GrpSpPrResetGroupShapeProperties = GrpSpPrResetGroupShapePropertiesWith<()>;
+
+impl Eq for GrpSpPrResetGroupShapePropertiesWith<()> {}
 
 /// The `oac:hlinkClick` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HlinkClickEmpty {
+pub struct HlinkClickEmptyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandHlinkClickEmpty,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:hlinkClick` element of the tree a read gives: [`HlinkClickEmptyWith`] holding nothing
+/// in `extra`.
+pub type HlinkClickEmpty = HlinkClickEmptyWith<()>;
+
+impl Eq for HlinkClickEmptyWith<()> {}
 
 /// The `oac:hlinkClick` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_HyperlinkProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HlinkClickHyperlinkProps {
+pub struct HlinkClickHyperlinkPropsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandHlinkClickHyperlinkProps,
     /// The child that is `SndData`, when there is one.
-    pub snd_data: Option<Box<SndData>>,
+    pub snd_data: Option<Box<SndDataWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:hlinkClick` element of the tree a read gives: [`HlinkClickHyperlinkPropsWith`] holding
+/// nothing in `extra`.
+pub type HlinkClickHyperlinkProps = HlinkClickHyperlinkPropsWith<()>;
+
+impl Eq for HlinkClickHyperlinkPropsWith<()> {}
 
 /// The `oac:hlinkHover` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HlinkHoverEmpty {
+pub struct HlinkHoverEmptyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandHlinkHoverEmpty,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:hlinkHover` element of the tree a read gives: [`HlinkHoverEmptyWith`] holding nothing
+/// in `extra`.
+pub type HlinkHoverEmpty = HlinkHoverEmptyWith<()>;
+
+impl Eq for HlinkHoverEmptyWith<()> {}
+
 /// The `oac:hlinkHover` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_HyperlinkProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HlinkHoverHyperlinkProps {
+pub struct HlinkHoverHyperlinkPropsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandHlinkHoverHyperlinkProps,
     /// The child that is `SndData`, when there is one.
-    pub snd_data: Option<Box<SndData>>,
+    pub snd_data: Option<Box<SndDataWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:hlinkHover` element of the tree a read gives: [`HlinkHoverHyperlinkPropsWith`] holding
+/// nothing in `extra`.
+pub type HlinkHoverHyperlinkProps = HlinkHoverHyperlinkPropsWith<()>;
+
+impl Eq for HlinkHoverHyperlinkPropsWith<()> {}
 
 /// The `oac:hlinkMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_HyperlinkMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HlinkMkLst {
+pub struct HlinkMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandHlinkMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:hlinkMkLst` element of the tree a read gives: [`HlinkMkLstWith`] holding nothing in
+/// `extra`.
+pub type HlinkMkLst = HlinkMkLstWith<()>;
+
+impl Eq for HlinkMkLstWith<()> {}
 
 /// The `oac:hlink` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ModifyHyperlinkProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HlinkModifyHyperlinkProps {
+pub struct HlinkModifyHyperlinkPropsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandHlinkModifyHyperlinkProps,
     /// The child that is `HlinkClickHyperlinkProps`, when there is one.
-    pub hlink_click_hyperlink_props: Option<Box<HlinkClickHyperlinkProps>>,
+    pub hlink_click_hyperlink_props: Option<Box<HlinkClickHyperlinkPropsWith<X>>>,
     /// The child that is `HlinkHoverHyperlinkProps`, when there is one.
-    pub hlink_hover_hyperlink_props: Option<Box<HlinkHoverHyperlinkProps>>,
+    pub hlink_hover_hyperlink_props: Option<Box<HlinkHoverHyperlinkPropsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:hlink` element of the tree a read gives: [`HlinkModifyHyperlinkPropsWith`] holding
+/// nothing in `extra`.
+pub type HlinkModifyHyperlinkProps = HlinkModifyHyperlinkPropsWith<()>;
+
+impl Eq for HlinkModifyHyperlinkPropsWith<()> {}
 
 /// The `oac:hlink` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ResetHyperlinkProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HlinkResetHyperlinkProps {
+pub struct HlinkResetHyperlinkPropsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandHlinkResetHyperlinkProps,
     /// The child that is `HlinkClickEmpty`, when there is one.
-    pub hlink_click_empty: Option<Box<HlinkClickEmpty>>,
+    pub hlink_click_empty: Option<Box<HlinkClickEmptyWith<X>>>,
     /// The child that is `HlinkHoverEmpty`, when there is one.
-    pub hlink_hover_empty: Option<Box<HlinkHoverEmpty>>,
+    pub hlink_hover_empty: Option<Box<HlinkHoverEmptyWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:hlink` element of the tree a read gives: [`HlinkResetHyperlinkPropsWith`] holding
+/// nothing in `extra`.
+pub type HlinkResetHyperlinkProps = HlinkResetHyperlinkPropsWith<()>;
+
+impl Eq for HlinkResetHyperlinkPropsWith<()> {}
+
 /// The `oac:imgData` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ImgData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ImgData {
+pub struct ImgDataWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandImgData,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `oac:imgData` element of the tree a read gives: [`ImgDataWith`] holding nothing in `extra`.
+pub type ImgData = ImgDataWith<()>;
+
+impl Eq for ImgDataWith<()> {}
+
 /// The `oac:imgLink` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ImgLink`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ImgLink {
+pub struct ImgLinkWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandImgLink,
     /// The attribute `tgt`, when the element has it.
     pub tgt: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:imgLink` element of the tree a read gives: [`ImgLinkWith`] holding nothing in `extra`.
+pub type ImgLink = ImgLinkWith<()>;
+
+impl Eq for ImgLinkWith<()> {}
+
 /// The `oac:imgUrl` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ResourceUrl`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ImgUrl {
+pub struct ImgUrlWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandImgUrl,
     /// The attribute `linkage`, when the element has it.
     pub linkage: Option<CTResourceLinkage>,
     /// The attribute `src`, when the element has it.
@@ -4793,64 +4955,71 @@ pub struct ImgUrl {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:imgUrl` element of the tree a read gives: [`ImgUrlWith`] holding nothing in `extra`.
+pub type ImgUrl = ImgUrlWith<()>;
+
+impl Eq for ImgUrlWith<()> {}
+
 /// The `oac:inkMk` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_InkMoniker`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InkMk {
+pub struct InkMkWith<X: NodeExtra> {
     /// The attribute `creationId`, when the element has it.
     pub creation_id: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandInkMk,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:inkMk` element of the tree a read gives: [`InkMkWith`] holding nothing in `extra`.
+pub type InkMk = InkMkWith<()>;
+
+impl Eq for InkMkWith<()> {}
+
 /// The `oac:inkMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_InkMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InkMkLst {
+pub struct InkMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandInkMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:inkMkLst` element of the tree a read gives: [`InkMkLstWith`] holding nothing in
+/// `extra`.
+pub type InkMkLst = InkMkLstWith<()>;
+
+impl Eq for InkMkLstWith<()> {}
 
 /// The `oac:lfPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LfPr {
+pub struct LfPrWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandLfPr,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:lfPr` element of the tree a read gives: [`LfPrWith`] holding nothing in `extra`.
+pub type LfPr = LfPrWith<()>;
+
+impl Eq for LfPrWith<()> {}
+
 /// The `oac:lineProps` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_LineProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LineProps {
+pub struct LinePropsWith<X: NodeExtra> {
     /// The attribute `algn`, when the element has it.
     pub algn: Option<drawing::AlignmentType>,
     /// The attribute `cap`, when the element has it.
@@ -4858,221 +5027,260 @@ pub struct LineProps {
     /// The attribute `cmpd`, when the element has it.
     pub cmpd: Option<drawing::CompoundLineType>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandLineProps,
     /// The child that is an item of `drawing::LineDashContent`, when there is one.
-    pub line_dash_content: Option<Box<drawing::LineDashContent>>,
+    pub line_dash_content: Option<Box<drawing::LineDashContentWith<X>>>,
     /// The child that is an item of `drawing::LineFillContent`, when there is one.
-    pub line_fill_content: Option<Box<drawing::LineFillContent>>,
+    pub line_fill_content: Option<Box<drawing::LineFillContentWith<X>>>,
     /// The child that is `drawing::LineHeadEndStyle`, when there is one.
-    pub line_head_end_style: Option<Box<drawing::LineHeadEndStyle>>,
+    pub line_head_end_style: Option<Box<drawing::LineHeadEndStyleWith<X>>>,
     /// The child that is an item of `drawing::LineJoinContent`, when there is one.
-    pub line_join_content: Option<Box<drawing::LineJoinContent>>,
+    pub line_join_content: Option<Box<drawing::LineJoinContentWith<X>>>,
     /// The child that is `drawing::TailLineEndStyle`, when there is one.
-    pub tail_line_end_style: Option<Box<drawing::TailLineEndStyle>>,
+    pub tail_line_end_style: Option<Box<drawing::TailLineEndStyleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `w`, when the element has it.
     pub w: Option<drawing::LineWidth>,
 }
 
+/// The `oac:lineProps` element of the tree a read gives: [`LinePropsWith`] holding nothing in
+/// `extra`.
+pub type LineProps = LinePropsWith<()>;
+
+impl Eq for LinePropsWith<()> {}
+
 /// The `oac:ln` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Ln {
+pub struct LnWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandLn,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:ln` element of the tree a read gives: [`LnWith`] holding nothing in `extra`.
+pub type Ln = LnWith<()>;
+
+impl Eq for LnWith<()> {}
+
 /// The `oac:lnRef` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StyleMatrixReference`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LnRef {
+pub struct LnRefWith<X: NodeExtra> {
     /// The child that is an item of `drawing::ColorContent`, when there is one.
-    pub content: Option<Box<drawing::ColorContent>>,
+    pub content: Option<Box<drawing::ColorContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandLnRef,
     /// The attribute `idx`, when the element has it.
     pub idx: Option<drawing::StyleMatrixColumnIndex>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:lnRef` element of the tree a read gives: [`LnRefWith`] holding nothing in `extra`.
+pub type LnRef = LnRefWith<()>;
+
+impl Eq for LnRefWith<()> {}
+
 /// The `oac:model3DMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_Model3DMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Model3DMkLst {
+pub struct Model3DMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandModel3DMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:model3DMkLst` element of the tree a read gives: [`Model3DMkLstWith`] holding nothing in
+/// `extra`.
+pub type Model3DMkLst = Model3DMkLstWith<()>;
+
+impl Eq for Model3DMkLstWith<()> {}
 
 /// The `oac:noAdjustHandles` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NoAdjustHandles {
+pub struct NoAdjustHandlesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandNoAdjustHandles,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:noAdjustHandles` element of the tree a read gives: [`NoAdjustHandlesWith`] holding
+/// nothing in `extra`.
+pub type NoAdjustHandles = NoAdjustHandlesWith<()>;
+
+impl Eq for NoAdjustHandlesWith<()> {}
 
 /// The `oac:noChangeArrowheads` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NoChangeArrowheads {
+pub struct NoChangeArrowheadsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandNoChangeArrowheads,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:noChangeArrowheads` element of the tree a read gives: [`NoChangeArrowheadsWith`]
+/// holding nothing in `extra`.
+pub type NoChangeArrowheads = NoChangeArrowheadsWith<()>;
+
+impl Eq for NoChangeArrowheadsWith<()> {}
 
 /// The `oac:noChangeAspect` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NoChangeAspect {
+pub struct NoChangeAspectWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandNoChangeAspect,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:noChangeAspect` element of the tree a read gives: [`NoChangeAspectWith`] holding
+/// nothing in `extra`.
+pub type NoChangeAspect = NoChangeAspectWith<()>;
+
+impl Eq for NoChangeAspectWith<()> {}
 
 /// The `oac:noChangeShapeType` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NoChangeShapeType {
+pub struct NoChangeShapeTypeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandNoChangeShapeType,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:noChangeShapeType` element of the tree a read gives: [`NoChangeShapeTypeWith`] holding
+/// nothing in `extra`.
+pub type NoChangeShapeType = NoChangeShapeTypeWith<()>;
+
+impl Eq for NoChangeShapeTypeWith<()> {}
 
 /// The `oac:noEditPoints` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NoEditPoints {
+pub struct NoEditPointsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandNoEditPoints,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:noEditPoints` element of the tree a read gives: [`NoEditPointsWith`] holding nothing in
+/// `extra`.
+pub type NoEditPoints = NoEditPointsWith<()>;
+
+impl Eq for NoEditPointsWith<()> {}
 
 /// The `oac:noGrp` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NoGrp {
+pub struct NoGrpWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandNoGrp,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:noGrp` element of the tree a read gives: [`NoGrpWith`] holding nothing in `extra`.
+pub type NoGrp = NoGrpWith<()>;
+
+impl Eq for NoGrpWith<()> {}
 
 /// The `oac:noMove` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NoMove {
+pub struct NoMoveWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandNoMove,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:noMove` element of the tree a read gives: [`NoMoveWith`] holding nothing in `extra`.
+pub type NoMove = NoMoveWith<()>;
+
+impl Eq for NoMoveWith<()> {}
 
 /// The `oac:noResize` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NoResize {
+pub struct NoResizeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandNoResize,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:noResize` element of the tree a read gives: [`NoResizeWith`] holding nothing in
+/// `extra`.
+pub type NoResize = NoResizeWith<()>;
+
+impl Eq for NoResizeWith<()> {}
 
 /// The `oac:noRot` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NoRot {
+pub struct NoRotWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandNoRot,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:noRot` element of the tree a read gives: [`NoRotWith`] holding nothing in `extra`.
+pub type NoRot = NoRotWith<()>;
+
+impl Eq for NoRotWith<()> {}
 
 /// The `oac:noSelect` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NoSelect {
+pub struct NoSelectWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandNoSelect,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:noSelect` element of the tree a read gives: [`NoSelectWith`] holding nothing in
+/// `extra`.
+pub type NoSelect = NoSelectWith<()>;
+
+impl Eq for NoSelectWith<()> {}
+
 /// The `oac:off` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Point2D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Off {
+pub struct OffWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandOff,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `x`, when the element has it.
@@ -5081,42 +5289,47 @@ pub struct Off {
     pub y: Option<drawing::Coordinate>,
 }
 
+/// The `oac:off` element of the tree a read gives: [`OffWith`] holding nothing in `extra`.
+pub type Off = OffWith<()>;
+
+impl Eq for OffWith<()> {}
+
 /// The `oac:origImgData` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ImgData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct OrigImgData {
+pub struct OrigImgDataWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandOrigImgData,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `oac:origImgData` element of the tree a read gives: [`OrigImgDataWith`] holding nothing in
+/// `extra`.
+pub type OrigImgData = OrigImgDataWith<()>;
+
+impl Eq for OrigImgDataWith<()> {}
+
 /// The `oac:pPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TextParagraphProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PPr {
+pub struct PPrWith<X: NodeExtra> {
     /// The attribute `algn`, when the element has it.
     pub algn: Option<drawing::TextAlignmentTypes>,
     /// The attribute `defTabSz`, when the element has it.
     pub def_tab_sz: Option<drawing::StCoordinate32>,
     /// The child that is `drawing::DefaultTextRunProperties`, when there is one.
-    pub default_text_run_properties: Option<Box<drawing::DefaultTextRunProperties>>,
+    pub default_text_run_properties: Option<Box<drawing::DefaultTextRunPropertiesWith<X>>>,
     /// The attribute `eaLnBrk`, when the element has it.
     pub ea_ln_brk: Option<String>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandPPr,
     /// The attribute `fontAlgn`, when the element has it.
     pub font_algn: Option<drawing::FontAlignmentTypes>,
     /// The attribute `hangingPunct`, when the element has it.
@@ -5126,7 +5339,7 @@ pub struct PPr {
     /// The attribute `latinLnBrk`, when the element has it.
     pub latin_ln_brk: Option<String>,
     /// The child that is `drawing::LineSpacing`, when there is one.
-    pub line_spacing: Option<Box<drawing::LineSpacing>>,
+    pub line_spacing: Option<Box<drawing::LineSpacingWith<X>>>,
     /// The attribute `lvl`, when the element has it.
     pub lvl: Option<drawing::TextIndentLevelType>,
     /// The attribute `marL`, when the element has it.
@@ -5136,283 +5349,321 @@ pub struct PPr {
     /// The attribute `rtl`, when the element has it.
     pub rtl: Option<String>,
     /// The child that is `drawing::SpaceAfter`, when there is one.
-    pub space_after: Option<Box<drawing::SpaceAfter>>,
+    pub space_after: Option<Box<drawing::SpaceAfterWith<X>>>,
     /// The child that is `drawing::SpaceBefore`, when there is one.
-    pub space_before: Option<Box<drawing::SpaceBefore>>,
+    pub space_before: Option<Box<drawing::SpaceBeforeWith<X>>>,
     /// The child that is `drawing::TabList`, when there is one.
-    pub tab_list: Option<Box<drawing::TabList>>,
+    pub tab_list: Option<Box<drawing::TabListWith<X>>>,
     /// The child that is an item of `drawing::TextBulletColorContent`, when there is one.
-    pub text_bullet_color_content: Option<Box<drawing::TextBulletColorContent>>,
+    pub text_bullet_color_content: Option<Box<drawing::TextBulletColorContentWith<X>>>,
     /// The child that is an item of `drawing::TextBulletContent`, when there is one.
-    pub text_bullet_content: Option<Box<drawing::TextBulletContent>>,
+    pub text_bullet_content: Option<Box<drawing::TextBulletContentWith<X>>>,
     /// The child that is an item of `drawing::TextBulletSizeContent`, when there is one.
-    pub text_bullet_size_content: Option<Box<drawing::TextBulletSizeContent>>,
+    pub text_bullet_size_content: Option<Box<drawing::TextBulletSizeContentWith<X>>>,
     /// The child that is an item of `drawing::TextBulletTypefaceContent`, when there is one.
-    pub text_bullet_typeface_content: Option<Box<drawing::TextBulletTypefaceContent>>,
+    pub text_bullet_typeface_content: Option<Box<drawing::TextBulletTypefaceContentWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:pPr` element of the tree a read gives: [`PPrWith`] holding nothing in `extra`.
+pub type PPr = PPrWith<()>;
+
+impl Eq for PPrWith<()> {}
 
 /// The `oac:picMk` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_PictureMoniker`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PicMk {
+pub struct PicMkWith<X: NodeExtra> {
     /// The attribute `creationId`, when the element has it.
     pub creation_id: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandPicMk,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:picMk` element of the tree a read gives: [`PicMkWith`] holding nothing in `extra`.
+pub type PicMk = PicMkWith<()>;
+
+impl Eq for PicMkWith<()> {}
 
 /// The `oac:picMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_PictureMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PicMkLst {
+pub struct PicMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandPicMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:picMkLst` element of the tree a read gives: [`PicMkLstWith`] holding nothing in
+/// `extra`.
+pub type PicMkLst = PicMkLstWith<()>;
+
+impl Eq for PicMkLstWith<()> {}
 
 /// The `oac:reset` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Reset {
+pub struct ResetWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandReset,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `oac:reset` element of the tree a read gives: [`ResetWith`] holding nothing in `extra`.
+pub type Reset = ResetWith<()>;
+
+impl Eq for ResetWith<()> {}
 
 /// The `oac:rotWithShape` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RotWithShape {
+pub struct RotWithShapeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandRotWithShape,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:rotWithShape` element of the tree a read gives: [`RotWithShapeWith`] holding nothing in
+/// `extra`.
+pub type RotWithShape = RotWithShapeWith<()>;
+
+impl Eq for RotWithShapeWith<()> {}
 
 /// The `oac:scene3d` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Scene3d {
+pub struct Scene3dWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandScene3d,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:scene3d` element of the tree a read gives: [`Scene3dWith`] holding nothing in `extra`.
+pub type Scene3d = Scene3dWith<()>;
+
+impl Eq for Scene3dWith<()> {}
+
 /// The `oac:sndData` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ImgData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SndData {
+pub struct SndDataWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandSndData,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `oac:sndData` element of the tree a read gives: [`SndDataWith`] holding nothing in `extra`.
+pub type SndData = SndDataWith<()>;
+
+impl Eq for SndDataWith<()> {}
+
 /// The `oac:sp3d` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Sp3d {
+pub struct Sp3dWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandSp3d,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:sp3d` element of the tree a read gives: [`Sp3dWith`] holding nothing in `extra`.
+pub type Sp3d = Sp3dWith<()>;
+
+impl Eq for Sp3dWith<()> {}
+
 /// The `oac:spMk` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ShapeMoniker`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpMk {
+pub struct SpMkWith<X: NodeExtra> {
     /// The attribute `creationId`, when the element has it.
     pub creation_id: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandSpMk,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:spMk` element of the tree a read gives: [`SpMkWith`] holding nothing in `extra`.
+pub type SpMk = SpMkWith<()>;
+
+impl Eq for SpMkWith<()> {}
+
 /// The `oac:spMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ShapeMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpMkLstShapeMonikerList {
+pub struct SpMkLstShapeMonikerListWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandSpMkLstShapeMonikerList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:spMkLst` element of the tree a read gives: [`SpMkLstShapeMonikerListWith`] holding
+/// nothing in `extra`.
+pub type SpMkLstShapeMonikerList = SpMkLstShapeMonikerListWith<()>;
+
+impl Eq for SpMkLstShapeMonikerListWith<()> {}
 
 /// The `oac:spMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ShapePropsMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpMkLstShapePropsMonikerList {
+pub struct SpMkLstShapePropsMonikerListWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandSpMkLstShapePropsMonikerList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:spMkLst` element of the tree a read gives: [`SpMkLstShapePropsMonikerListWith`] holding
+/// nothing in `extra`.
+pub type SpMkLstShapePropsMonikerList = SpMkLstShapePropsMonikerListWith<()>;
+
+impl Eq for SpMkLstShapePropsMonikerListWith<()> {}
 
 /// The `oac:spPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ResetShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpPrResetShapeProperties {
+pub struct SpPrResetShapePropertiesWith<X: NodeExtra> {
     /// The child that is `BwMode`, when there is one.
-    pub bw_mode: Option<Box<BwMode>>,
+    pub bw_mode: Option<Box<BwModeWith<X>>>,
     /// The child that is `Effect`, when there is one.
-    pub effect: Option<Box<Effect>>,
+    pub effect: Option<Box<EffectWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandSpPrResetShapeProperties,
     /// The child that is `Fill`, when there is one.
-    pub fill: Option<Box<Fill>>,
+    pub fill: Option<Box<FillWith<X>>>,
     /// The child that is `Geom`, when there is one.
-    pub geom: Option<Box<Geom>>,
+    pub geom: Option<Box<GeomWith<X>>>,
     /// The child that is `Ln`, when there is one.
-    pub ln: Option<Box<Ln>>,
+    pub ln: Option<Box<LnWith<X>>>,
     /// The child that is `Scene3d`, when there is one.
-    pub scene3d: Option<Box<Scene3d>>,
+    pub scene3d: Option<Box<Scene3dWith<X>>>,
     /// The child that is `Sp3d`, when there is one.
-    pub sp3d: Option<Box<Sp3d>>,
+    pub sp3d: Option<Box<Sp3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `XfrmEmpty`, when there is one.
-    pub xfrm_empty: Option<Box<XfrmEmpty>>,
+    pub xfrm_empty: Option<Box<XfrmEmptyWith<X>>>,
 }
+
+/// The `oac:spPr` element of the tree a read gives: [`SpPrResetShapePropertiesWith`] holding
+/// nothing in `extra`.
+pub type SpPrResetShapeProperties = SpPrResetShapePropertiesWith<()>;
+
+impl Eq for SpPrResetShapePropertiesWith<()> {}
 
 /// The `oac:spPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpPrShapeProperties {
+pub struct SpPrShapePropertiesWith<X: NodeExtra> {
     /// The child that is `drawing::Apply3DShapeProperties`, when there is one.
-    pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,
+    pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapePropertiesWith<X>>>,
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
     /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
-    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandSpPrShapeProperties,
     /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
-    pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<drawing::FillPropertiesContentWith<X>>>,
     /// The child that is an item of `drawing::GeometryContent`, when there is one.
-    pub geometry_content: Option<Box<drawing::GeometryContent>>,
+    pub geometry_content: Option<Box<drawing::GeometryContentWith<X>>>,
     /// The child that is `drawing::Outline`, when there is one.
-    pub outline: Option<Box<drawing::Outline>>,
+    pub outline: Option<Box<drawing::OutlineWith<X>>>,
     /// The child that is `drawing::Scene3d`, when there is one.
-    pub scene3d: Option<Box<drawing::Scene3d>>,
+    pub scene3d: Option<Box<drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `drawing::XfrmTransform2D`, when there is one.
-    pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
+    pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2DWith<X>>>,
 }
+
+/// The `oac:spPr` element of the tree a read gives: [`SpPrShapePropertiesWith`] holding nothing in
+/// `extra`.
+pub type SpPrShapeProperties = SpPrShapePropertiesWith<()>;
+
+impl Eq for SpPrShapePropertiesWith<()> {}
 
 /// The `oac:srcRect` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SrcRectEmpty {
+pub struct SrcRectEmptyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandSrcRectEmpty,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:srcRect` element of the tree a read gives: [`SrcRectEmptyWith`] holding nothing in
+/// `extra`.
+pub type SrcRectEmpty = SrcRectEmptyWith<()>;
+
+impl Eq for SrcRectEmptyWith<()> {}
 
 /// The `oac:srcRect` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RelativeRectProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SrcRectRelativeRectProps {
+pub struct SrcRectRelativeRectPropsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandSrcRectRelativeRectProps,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:srcRect` element of the tree a read gives: [`SrcRectRelativeRectPropsWith`] holding
+/// nothing in `extra`.
+pub type SrcRectRelativeRectProps = SrcRectRelativeRectPropsWith<()>;
+
+impl Eq for SrcRectRelativeRectPropsWith<()> {}
+
 /// The `oac:stCxn` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Connection`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StCxnConnection {
+pub struct StCxnConnectionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandStCxnConnection,
     /// The attribute `id`, when the element has it.
     pub id: Option<drawing::DrawingElementID>,
     /// The attribute `idx`, when the element has it.
@@ -5421,183 +5672,217 @@ pub struct StCxnConnection {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:stCxn` element of the tree a read gives: [`StCxnConnectionWith`] holding nothing in
+/// `extra`.
+pub type StCxnConnection = StCxnConnectionWith<()>;
+
+impl Eq for StCxnConnectionWith<()> {}
+
 /// The `oac:stCxn` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StCxnEmpty {
+pub struct StCxnEmptyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandStCxnEmpty,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:stCxn` element of the tree a read gives: [`StCxnEmptyWith`] holding nothing in `extra`.
+pub type StCxnEmpty = StCxnEmptyWith<()>;
+
+impl Eq for StCxnEmptyWith<()> {}
 
 /// The `oac:style` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ModifyShapeStyleProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Style {
+pub struct StyleWith<X: NodeExtra> {
     /// The child that is `EffectRef`, when there is one.
-    pub effect_ref: Option<Box<EffectRef>>,
+    pub effect_ref: Option<Box<EffectRefWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandStyle,
     /// The child that is `FillRef`, when there is one.
-    pub fill_ref: Option<Box<FillRef>>,
+    pub fill_ref: Option<Box<FillRefWith<X>>>,
     /// The child that is `FontRef`, when there is one.
-    pub font_ref: Option<Box<FontRef>>,
+    pub font_ref: Option<Box<FontRefWith<X>>>,
     /// The child that is `LnRef`, when there is one.
-    pub ln_ref: Option<Box<LnRef>>,
+    pub ln_ref: Option<Box<LnRefWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:style` element of the tree a read gives: [`StyleWith`] holding nothing in `extra`.
+pub type Style = StyleWith<()>;
+
+impl Eq for StyleWith<()> {}
 
 /// The `oac:svgBlipMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_SVGBlipMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SvgBlipMkLst {
+pub struct SvgBlipMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandSvgBlipMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:svgBlipMkLst` element of the tree a read gives: [`SvgBlipMkLstWith`] holding nothing in
+/// `extra`.
+pub type SvgBlipMkLst = SvgBlipMkLstWith<()>;
+
+impl Eq for SvgBlipMkLstWith<()> {}
 
 /// The `oac:tblMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TableMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TblMkLst {
+pub struct TblMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandTblMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:tblMkLst` element of the tree a read gives: [`TblMkLstWith`] holding nothing in
+/// `extra`.
+pub type TblMkLst = TblMkLstWith<()>;
+
+impl Eq for TblMkLstWith<()> {}
 
 /// The `oac:tcMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TableCellMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TcMkLst {
+pub struct TcMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandTcMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:tcMkLst` element of the tree a read gives: [`TcMkLstWith`] holding nothing in `extra`.
+pub type TcMkLst = TcMkLstWith<()>;
+
+impl Eq for TcMkLstWith<()> {}
 
 /// The `oac:trMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TableRowMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TrMkLst {
+pub struct TrMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandTrMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:trMkLst` element of the tree a read gives: [`TrMkLstWith`] holding nothing in `extra`.
+pub type TrMkLst = TrMkLstWith<()>;
+
+impl Eq for TrMkLstWith<()> {}
 
 /// The `oac:txBodyMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_TextBodyMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TxBodyMkLst {
+pub struct TxBodyMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandTxBodyMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:txBodyMkLst` element of the tree a read gives: [`TxBodyMkLstWith`] holding nothing in
+/// `extra`.
+pub type TxBodyMkLst = TxBodyMkLstWith<()>;
+
+impl Eq for TxBodyMkLstWith<()> {}
 
 /// The `oac:txBodyPkg` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TextBodyPackage`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TxBodyPkg {
+pub struct TxBodyPkgWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandTxBodyPkg,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:txBodyPkg` element of the tree a read gives: [`TxBodyPkgWith`] holding nothing in
+/// `extra`.
+pub type TxBodyPkg = TxBodyPkgWith<()>;
+
+impl Eq for TxBodyPkgWith<()> {}
 
 /// The `oac:txMkLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TextCharRangeMonikerList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TxMkLst {
+pub struct TxMkLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandTxMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:txMkLst` element of the tree a read gives: [`TxMkLstWith`] holding nothing in `extra`.
+pub type TxMkLst = TxMkLstWith<()>;
+
+impl Eq for TxMkLstWith<()> {}
+
 /// The `oac:useBounds` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct UseBounds {
+pub struct UseBoundsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandUseBounds,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `oac:useBounds` element of the tree a read gives: [`UseBoundsWith`] holding nothing in
+/// `extra`.
+pub type UseBounds = UseBoundsWith<()>;
+
+impl Eq for UseBoundsWith<()> {}
+
 /// The `oac:viewSelLst` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ViewSelectionStgList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ViewSelLst {
+pub struct ViewSelLstWith<X: NodeExtra> {
     /// The children that are an item of `drawing::AnyElementContent`, in order.
-    pub content: Vec<drawing::AnyElementContent>,
+    pub content: Vec<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandViewSelLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `oac:viewSelLst` element of the tree a read gives: [`ViewSelLstWith`] holding nothing in
+/// `extra`.
+pub type ViewSelLst = ViewSelLstWith<()>;
+
+impl Eq for ViewSelLstWith<()> {}
 
 /// The hooks of a visitor for the `oac` namespace.
 ///
@@ -6303,32 +6588,31 @@ pub trait Visitor: crate::Visitor {
 
 /// The `oac:xfrm` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct XfrmEmpty {
+pub struct XfrmEmptyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandXfrmEmpty,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `oac:xfrm` element of the tree a read gives: [`XfrmEmptyWith`] holding nothing in `extra`.
+pub type XfrmEmpty = XfrmEmptyWith<()>;
+
+impl Eq for XfrmEmptyWith<()> {}
+
 /// The `oac:xfrm` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ModifyTransformProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct XfrmModifyTransformProps {
+pub struct XfrmModifyTransformPropsWith<X: NodeExtra> {
     /// The attribute `cx`, when the element has it.
     pub cx: Option<String>,
     /// The attribute `cy`, when the element has it.
     pub cy: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandXfrmModifyTransformProps,
     /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
     /// The attribute `flipV`, when the element has it.
@@ -6343,31 +6627,67 @@ pub struct XfrmModifyTransformProps {
     pub y: Option<String>,
 }
 
+/// The `oac:xfrm` element of the tree a read gives: [`XfrmModifyTransformPropsWith`] holding
+/// nothing in `extra`.
+pub type XfrmModifyTransformProps = XfrmModifyTransformPropsWith<()>;
+
+impl Eq for XfrmModifyTransformPropsWith<()> {}
+
 /// The `oac:xfrm` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Transform2D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct XfrmTransform2D {
+pub struct XfrmTransform2DWith<X: NodeExtra> {
     /// The child that is `drawing::Extents`, when there is one.
-    pub extents: Option<Box<drawing::Extents>>,
+    pub extents: Option<Box<drawing::ExtentsWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2013MainCommandXfrmTransform2D,
     /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
     /// The attribute `flipV`, when the element has it.
     pub flip_v: Option<String>,
     /// The child that is `drawing::Offset`, when there is one.
-    pub offset: Option<Box<drawing::Offset>>,
+    pub offset: Option<Box<drawing::OffsetWith<X>>>,
     /// The attribute `rot`, when the element has it.
     pub rot: Option<drawing::Angle>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-impl BlipFillBlipFillProperties {
+/// The `oac:xfrm` element of the tree a read gives: [`XfrmTransform2DWith`] holding nothing in
+/// `extra`.
+pub type XfrmTransform2D = XfrmTransform2DWith<()>;
+
+impl Eq for XfrmTransform2DWith<()> {}
+
+impl<X: NodeExtra> BlipFillBlipFillPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> BlipFillBlipFillPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BlipFillBlipFillPropertiesWith {
+            blip: officekit_markup_base::into_extra_optional(
+                &mut self.blip,
+                drawing::BlipWith::into_extra,
+            ),
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                drawing::FillModeContentWith::into_extra,
+            ),
+            dpi: self.dpi,
+            extra: Default::default(),
+            rot_with_shape: self.rot_with_shape,
+            source_rectangle: officekit_markup_base::into_extra_optional(
+                &mut self.source_rectangle,
+                drawing::SourceRectangleWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6392,7 +6712,33 @@ impl officekit_markup_base::Write for BlipFillBlipFillProperties {
     }
 }
 
-impl BlipFillResetBlipFillProperties {
+impl<X: NodeExtra> BlipFillResetBlipFillPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> BlipFillResetBlipFillPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BlipFillResetBlipFillPropertiesWith {
+            dpi: officekit_markup_base::into_extra_optional(&mut self.dpi, DpiWith::into_extra),
+            extra: Default::default(),
+            fill_mode: officekit_markup_base::into_extra_optional(
+                &mut self.fill_mode,
+                FillModeWith::into_extra,
+            ),
+            rot_with_shape: officekit_markup_base::into_extra_optional(
+                &mut self.rot_with_shape,
+                RotWithShapeWith::into_extra,
+            ),
+            src_rect_empty: officekit_markup_base::into_extra_optional(
+                &mut self.src_rect_empty,
+                SrcRectEmptyWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6413,7 +6759,59 @@ impl officekit_markup_base::Write for BlipFillResetBlipFillProperties {
     }
 }
 
-impl BodyPr {
+impl<X: NodeExtra> BodyPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> BodyPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BodyPrWith {
+            anchor: self.anchor,
+            anchor_ctr: self.anchor_ctr,
+            b_ins: self.b_ins,
+            compat_ln_spc: self.compat_ln_spc,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            force_aa: self.force_aa,
+            from_word_art: self.from_word_art,
+            horz_overflow: self.horz_overflow,
+            l_ins: self.l_ins,
+            num_col: self.num_col,
+            preset_text_warp: officekit_markup_base::into_extra_optional(
+                &mut self.preset_text_warp,
+                drawing::PresetTextWarpWith::into_extra,
+            ),
+            r_ins: self.r_ins,
+            rot: self.rot,
+            rtl_col: self.rtl_col,
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                drawing::Scene3dWith::into_extra,
+            ),
+            spc_col: self.spc_col,
+            spc_first_last_para: self.spc_first_last_para,
+            t_ins: self.t_ins,
+            text3d_content: officekit_markup_base::into_extra_optional(
+                &mut self.text3d_content,
+                drawing::Text3DContentWith::into_extra,
+            ),
+            text_autofit_content: officekit_markup_base::into_extra_optional(
+                &mut self.text_autofit_content,
+                drawing::TextAutofitContentWith::into_extra,
+            ),
+            unknown: self.unknown,
+            upright: self.upright,
+            vert: self.vert,
+            vert_overflow: self.vert_overflow,
+            wrap: self.wrap,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6455,7 +6853,24 @@ impl officekit_markup_base::Write for BodyPr {
     }
 }
 
-impl Bounds {
+impl<X: NodeExtra> BoundsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BoundsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BoundsWith {
+            b: self.b,
+            extra: Default::default(),
+            l: self.l,
+            r: self.r,
+            t: self.t,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6482,7 +6897,20 @@ impl officekit_markup_base::Write for Bounds {
     }
 }
 
-impl BwMode {
+impl<X: NodeExtra> BwModeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BwModeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BwModeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6503,7 +6931,38 @@ impl officekit_markup_base::Write for BwMode {
     }
 }
 
-impl CNvCxnSpPrModifyNonVisualConnectorProps {
+impl<X: NodeExtra> CNvCxnSpPrModifyNonVisualConnectorPropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> CNvCxnSpPrModifyNonVisualConnectorPropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CNvCxnSpPrModifyNonVisualConnectorPropsWith {
+            end_cxn_connection: officekit_markup_base::into_extra_optional(
+                &mut self.end_cxn_connection,
+                EndCxnConnectionWith::into_extra,
+            ),
+            extra: Default::default(),
+            no_adjust_handles: self.no_adjust_handles,
+            no_change_arrowheads: self.no_change_arrowheads,
+            no_change_aspect: self.no_change_aspect,
+            no_change_shape_type: self.no_change_shape_type,
+            no_edit_points: self.no_edit_points,
+            no_grp: self.no_grp,
+            no_move: self.no_move,
+            no_resize: self.no_resize,
+            no_rot: self.no_rot,
+            no_select: self.no_select,
+            st_cxn_connection: officekit_markup_base::into_extra_optional(
+                &mut self.st_cxn_connection,
+                StCxnConnectionWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6536,7 +6995,68 @@ impl officekit_markup_base::Write for CNvCxnSpPrModifyNonVisualConnectorProps {
     }
 }
 
-impl CNvCxnSpPrResetNonVisualConnectorProps {
+impl<X: NodeExtra> CNvCxnSpPrResetNonVisualConnectorPropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> CNvCxnSpPrResetNonVisualConnectorPropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CNvCxnSpPrResetNonVisualConnectorPropsWith {
+            end_cxn_empty: officekit_markup_base::into_extra_optional(
+                &mut self.end_cxn_empty,
+                EndCxnEmptyWith::into_extra,
+            ),
+            extra: Default::default(),
+            no_adjust_handles: officekit_markup_base::into_extra_optional(
+                &mut self.no_adjust_handles,
+                NoAdjustHandlesWith::into_extra,
+            ),
+            no_change_arrowheads: officekit_markup_base::into_extra_optional(
+                &mut self.no_change_arrowheads,
+                NoChangeArrowheadsWith::into_extra,
+            ),
+            no_change_aspect: officekit_markup_base::into_extra_optional(
+                &mut self.no_change_aspect,
+                NoChangeAspectWith::into_extra,
+            ),
+            no_change_shape_type: officekit_markup_base::into_extra_optional(
+                &mut self.no_change_shape_type,
+                NoChangeShapeTypeWith::into_extra,
+            ),
+            no_edit_points: officekit_markup_base::into_extra_optional(
+                &mut self.no_edit_points,
+                NoEditPointsWith::into_extra,
+            ),
+            no_grp: officekit_markup_base::into_extra_optional(
+                &mut self.no_grp,
+                NoGrpWith::into_extra,
+            ),
+            no_move: officekit_markup_base::into_extra_optional(
+                &mut self.no_move,
+                NoMoveWith::into_extra,
+            ),
+            no_resize: officekit_markup_base::into_extra_optional(
+                &mut self.no_resize,
+                NoResizeWith::into_extra,
+            ),
+            no_rot: officekit_markup_base::into_extra_optional(
+                &mut self.no_rot,
+                NoRotWith::into_extra,
+            ),
+            no_select: officekit_markup_base::into_extra_optional(
+                &mut self.no_select,
+                NoSelectWith::into_extra,
+            ),
+            st_cxn_empty: officekit_markup_base::into_extra_optional(
+                &mut self.st_cxn_empty,
+                StCxnEmptyWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6557,7 +7077,26 @@ impl officekit_markup_base::Write for CNvCxnSpPrResetNonVisualConnectorProps {
     }
 }
 
-impl CNvGraphicFramePr {
+impl<X: NodeExtra> CNvGraphicFramePrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CNvGraphicFramePrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CNvGraphicFramePrWith {
+            extra: Default::default(),
+            no_change_aspect: self.no_change_aspect,
+            no_drilldown: self.no_drilldown,
+            no_grp: self.no_grp,
+            no_move: self.no_move,
+            no_resize: self.no_resize,
+            no_select: self.no_select,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6586,7 +7125,27 @@ impl officekit_markup_base::Write for CNvGraphicFramePr {
     }
 }
 
-impl CNvGrpSpPrModifyNonVisualGroupDrawingShapeProps {
+impl<X: NodeExtra> CNvGrpSpPrModifyNonVisualGroupDrawingShapePropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CNvGrpSpPrModifyNonVisualGroupDrawingShapePropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CNvGrpSpPrModifyNonVisualGroupDrawingShapePropsWith {
+            extra: Default::default(),
+            no_change_aspect: self.no_change_aspect,
+            no_grp: self.no_grp,
+            no_move: self.no_move,
+            no_resize: self.no_resize,
+            no_rot: self.no_rot,
+            no_select: self.no_select,
+            no_ungrp: self.no_ungrp,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6617,7 +7176,28 @@ impl officekit_markup_base::Write for CNvGrpSpPrModifyNonVisualGroupDrawingShape
     }
 }
 
-impl CNvGrpSpPrNonVisualGroupDrawingShapeProps {
+impl<X: NodeExtra> CNvGrpSpPrNonVisualGroupDrawingShapePropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> CNvGrpSpPrNonVisualGroupDrawingShapePropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CNvGrpSpPrNonVisualGroupDrawingShapePropsWith {
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            group_shape_locks: officekit_markup_base::into_extra_optional(
+                &mut self.group_shape_locks,
+                drawing::GroupShapeLocksWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6639,7 +7219,31 @@ impl officekit_markup_base::Write for CNvGrpSpPrNonVisualGroupDrawingShapeProps 
     }
 }
 
-impl CNvInkPr {
+impl<X: NodeExtra> CNvInkPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CNvInkPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CNvInkPrWith {
+            extra: Default::default(),
+            is_comment: self.is_comment,
+            no_adjust_handles: self.no_adjust_handles,
+            no_change_arrowheads: self.no_change_arrowheads,
+            no_change_aspect: self.no_change_aspect,
+            no_change_shape_type: self.no_change_shape_type,
+            no_edit_points: self.no_edit_points,
+            no_grp: self.no_grp,
+            no_move: self.no_move,
+            no_resize: self.no_resize,
+            no_rot: self.no_rot,
+            no_select: self.no_select,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6673,7 +7277,32 @@ impl officekit_markup_base::Write for CNvInkPr {
     }
 }
 
-impl CNvPicPrModifyNonVisualPictureProps {
+impl<X: NodeExtra> CNvPicPrModifyNonVisualPicturePropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CNvPicPrModifyNonVisualPicturePropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CNvPicPrModifyNonVisualPicturePropsWith {
+            extra: Default::default(),
+            no_adjust_handles: self.no_adjust_handles,
+            no_change_arrowheads: self.no_change_arrowheads,
+            no_change_aspect: self.no_change_aspect,
+            no_change_shape_type: self.no_change_shape_type,
+            no_crop: self.no_crop,
+            no_edit_points: self.no_edit_points,
+            no_grp: self.no_grp,
+            no_move: self.no_move,
+            no_resize: self.no_resize,
+            no_rot: self.no_rot,
+            no_select: self.no_select,
+            prefer_relative_resize: self.prefer_relative_resize,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6708,7 +7337,24 @@ impl officekit_markup_base::Write for CNvPicPrModifyNonVisualPictureProps {
     }
 }
 
-impl CNvPicPrResetNonVisualPictureProps {
+impl<X: NodeExtra> CNvPicPrResetNonVisualPicturePropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> CNvPicPrResetNonVisualPicturePropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CNvPicPrResetNonVisualPicturePropsWith {
+            extra: Default::default(),
+            lf_pr: officekit_markup_base::into_extra_optional(
+                &mut self.lf_pr,
+                LfPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6729,7 +7375,26 @@ impl officekit_markup_base::Write for CNvPicPrResetNonVisualPictureProps {
     }
 }
 
-impl CNvPrModifyNonVisualDrawingProps {
+impl<X: NodeExtra> CNvPrModifyNonVisualDrawingPropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CNvPrModifyNonVisualDrawingPropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CNvPrModifyNonVisualDrawingPropsWith {
+            decor: self.decor,
+            descr: self.descr,
+            extra: Default::default(),
+            hidden: self.hidden,
+            name: self.name,
+            script_link: self.script_link,
+            title: self.title,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6758,7 +7423,37 @@ impl officekit_markup_base::Write for CNvPrModifyNonVisualDrawingProps {
     }
 }
 
-impl CNvPrNonVisualDrawingProps {
+impl<X: NodeExtra> CNvPrNonVisualDrawingPropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> CNvPrNonVisualDrawingPropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CNvPrNonVisualDrawingPropsWith {
+            click_hyperlink: officekit_markup_base::into_extra_optional(
+                &mut self.click_hyperlink,
+                drawing::ClickHyperlinkWith::into_extra,
+            ),
+            descr: self.descr,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            hidden: self.hidden,
+            hyperlink_for_hover: officekit_markup_base::into_extra_optional(
+                &mut self.hyperlink_for_hover,
+                drawing::HyperlinkForHoverWith::into_extra,
+            ),
+            id: self.id,
+            name: self.name,
+            title: self.title,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6786,7 +7481,32 @@ impl officekit_markup_base::Write for CNvPrNonVisualDrawingProps {
     }
 }
 
-impl CNvSpPr {
+impl<X: NodeExtra> CNvSpPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CNvSpPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CNvSpPrWith {
+            extra: Default::default(),
+            no_adjust_handles: self.no_adjust_handles,
+            no_change_arrowheads: self.no_change_arrowheads,
+            no_change_aspect: self.no_change_aspect,
+            no_change_shape_type: self.no_change_shape_type,
+            no_edit_points: self.no_edit_points,
+            no_grp: self.no_grp,
+            no_move: self.no_move,
+            no_resize: self.no_resize,
+            no_rot: self.no_rot,
+            no_select: self.no_select,
+            no_text_edit: self.no_text_edit,
+            tx_box: self.tx_box,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6879,7 +7599,23 @@ impl CTResourceLinkage {
     }
 }
 
-impl CompressPicPr {
+impl<X: NodeExtra> CompressPicPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CompressPicPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CompressPicPrWith {
+            cstate: self.cstate,
+            extra: Default::default(),
+            remove_crop: self.remove_crop,
+            unknown: self.unknown,
+            use_local_dpi: self.use_local_dpi,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6905,7 +7641,22 @@ impl officekit_markup_base::Write for CompressPicPr {
     }
 }
 
-impl ContextTextCharRangeContext {
+impl<X: NodeExtra> ContextTextCharRangeContextWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ContextTextCharRangeContextWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ContextTextCharRangeContextWith {
+            extra: Default::default(),
+            hash: self.hash,
+            len: self.len,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6930,7 +7681,22 @@ impl officekit_markup_base::Write for ContextTextCharRangeContext {
     }
 }
 
-impl CxnSpMk {
+impl<X: NodeExtra> CxnSpMkWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CxnSpMkWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CxnSpMkWith {
+            creation_id: self.creation_id,
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6955,7 +7721,24 @@ impl officekit_markup_base::Write for CxnSpMk {
     }
 }
 
-impl CxnSpMkLst {
+impl<X: NodeExtra> CxnSpMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CxnSpMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CxnSpMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6976,7 +7759,24 @@ impl officekit_markup_base::Write for CxnSpMkLst {
     }
 }
 
-impl DcMkLst {
+impl<X: NodeExtra> DcMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DcMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DcMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6997,7 +7797,24 @@ impl officekit_markup_base::Write for DcMkLst {
     }
 }
 
-impl DeMasterMkLst {
+impl<X: NodeExtra> DeMasterMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DeMasterMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DeMasterMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7018,7 +7835,24 @@ impl officekit_markup_base::Write for DeMasterMkLst {
     }
 }
 
-impl DeMkLst {
+impl<X: NodeExtra> DeMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DeMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DeMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7039,7 +7873,20 @@ impl officekit_markup_base::Write for DeMkLst {
     }
 }
 
-impl DePkg {
+impl<X: NodeExtra> DePkgWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DePkgWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DePkgWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7060,7 +7907,24 @@ impl officekit_markup_base::Write for DePkg {
     }
 }
 
-impl DeSrcMkLst {
+impl<X: NodeExtra> DeSrcMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DeSrcMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DeSrcMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7081,7 +7945,24 @@ impl officekit_markup_base::Write for DeSrcMkLst {
     }
 }
 
-impl DeTgtMkLst {
+impl<X: NodeExtra> DeTgtMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DeTgtMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DeTgtMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7102,7 +7983,24 @@ impl officekit_markup_base::Write for DeTgtMkLst {
     }
 }
 
-impl DgMkLst {
+impl<X: NodeExtra> DgMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DgMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DgMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7123,7 +8021,20 @@ impl officekit_markup_base::Write for DgMkLst {
     }
 }
 
-impl Dpi {
+impl<X: NodeExtra> DpiWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DpiWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DpiWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7144,7 +8055,24 @@ impl officekit_markup_base::Write for Dpi {
     }
 }
 
-impl DrSelLst {
+impl<X: NodeExtra> DrSelLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DrSelLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DrSelLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7165,7 +8093,24 @@ impl officekit_markup_base::Write for DrSelLst {
     }
 }
 
-impl EditorSelLst {
+impl<X: NodeExtra> EditorSelLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> EditorSelLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EditorSelLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7186,7 +8131,20 @@ impl officekit_markup_base::Write for EditorSelLst {
     }
 }
 
-impl Effect {
+impl<X: NodeExtra> EffectWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> EffectWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EffectWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7207,7 +8165,25 @@ impl officekit_markup_base::Write for Effect {
     }
 }
 
-impl EffectRef {
+impl<X: NodeExtra> EffectRefWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> EffectRefWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EffectRefWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            idx: self.idx,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7231,7 +8207,22 @@ impl officekit_markup_base::Write for EffectRef {
     }
 }
 
-impl EndCxnConnection {
+impl<X: NodeExtra> EndCxnConnectionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> EndCxnConnectionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EndCxnConnectionWith {
+            extra: Default::default(),
+            id: self.id,
+            idx: self.idx,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7256,7 +8247,20 @@ impl officekit_markup_base::Write for EndCxnConnection {
     }
 }
 
-impl EndCxnEmpty {
+impl<X: NodeExtra> EndCxnEmptyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> EndCxnEmptyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EndCxnEmptyWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7277,7 +8281,20 @@ impl officekit_markup_base::Write for EndCxnEmpty {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7298,7 +8315,20 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl Fill {
+impl<X: NodeExtra> FillWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FillWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FillWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7319,7 +8349,20 @@ impl officekit_markup_base::Write for Fill {
     }
 }
 
-impl FillMode {
+impl<X: NodeExtra> FillModeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FillModeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FillModeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7340,7 +8383,20 @@ impl officekit_markup_base::Write for FillMode {
     }
 }
 
-impl FillRect {
+impl<X: NodeExtra> FillRectWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FillRectWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FillRectWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7361,7 +8417,25 @@ impl officekit_markup_base::Write for FillRect {
     }
 }
 
-impl FillRef {
+impl<X: NodeExtra> FillRefWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> FillRefWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FillRefWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            idx: self.idx,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7385,7 +8459,25 @@ impl officekit_markup_base::Write for FillRef {
     }
 }
 
-impl FontRef {
+impl<X: NodeExtra> FontRefWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> FontRefWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FontRefWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            idx: self.idx,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7409,7 +8501,20 @@ impl officekit_markup_base::Write for FontRef {
     }
 }
 
-impl Geom {
+impl<X: NodeExtra> GeomWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeomWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeomWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7430,7 +8535,22 @@ impl officekit_markup_base::Write for Geom {
     }
 }
 
-impl GraphicFrameMk {
+impl<X: NodeExtra> GraphicFrameMkWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GraphicFrameMkWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GraphicFrameMkWith {
+            creation_id: self.creation_id,
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7455,7 +8575,24 @@ impl officekit_markup_base::Write for GraphicFrameMk {
     }
 }
 
-impl GraphicFrameMkLst {
+impl<X: NodeExtra> GraphicFrameMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GraphicFrameMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GraphicFrameMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7476,7 +8613,24 @@ impl officekit_markup_base::Write for GraphicFrameMkLst {
     }
 }
 
-impl GraphicParentMkLst {
+impl<X: NodeExtra> GraphicParentMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GraphicParentMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GraphicParentMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7497,7 +8651,24 @@ impl officekit_markup_base::Write for GraphicParentMkLst {
     }
 }
 
-impl GridColMkLst {
+impl<X: NodeExtra> GridColMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GridColMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GridColMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7515,6 +8686,27 @@ impl officekit_markup_base::Write for GridColMkLst {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::grid_col_mk_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> GroupCommandContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GroupCommandContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::CxnSpMk(node) => GroupCommandContentWith::CxnSpMk(node.into_extra()),
+            Self::GraphicFrameMk(node) => {
+                GroupCommandContentWith::GraphicFrameMk(node.into_extra())
+            }
+            Self::GrpSpMk(node) => GroupCommandContentWith::GrpSpMk(node.into_extra()),
+            Self::InkMk(node) => GroupCommandContentWith::InkMk(node.into_extra()),
+            Self::Other(node) => GroupCommandContentWith::Other(node),
+            Self::PicMk(node) => GroupCommandContentWith::PicMk(node.into_extra()),
+            Self::SpMk(node) => GroupCommandContentWith::SpMk(node.into_extra()),
+        }
     }
 }
 
@@ -7552,7 +8744,44 @@ impl officekit_markup_base::Write for GroupCommandContent {
     }
 }
 
-impl GrpCmd {
+impl<X: NodeExtra> GrpCmdWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GrpCmdWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GrpCmdWith {
+            c_nv_grp_sp_pr_non_visual_group_drawing_shape_props:
+                officekit_markup_base::into_extra_optional(
+                    &mut self.c_nv_grp_sp_pr_non_visual_group_drawing_shape_props,
+                    CNvGrpSpPrNonVisualGroupDrawingShapePropsWith::into_extra,
+                ),
+            c_nv_pr_non_visual_drawing_props: officekit_markup_base::into_extra_optional(
+                &mut self.c_nv_pr_non_visual_drawing_props,
+                CNvPrNonVisualDrawingPropsWith::into_extra,
+            ),
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                GroupCommandContentWith::into_extra,
+            ),
+            dg_mk_lst: officekit_markup_base::into_extra_required(
+                *self.dg_mk_lst,
+                DgMkLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            grp_id: self.grp_id,
+            grp_sp_pr_group_shape_properties: officekit_markup_base::into_extra_optional(
+                &mut self.grp_sp_pr_group_shape_properties,
+                GrpSpPrGroupShapePropertiesWith::into_extra,
+            ),
+            prevent_regroup: self.prevent_regroup,
+            unknown: self.unknown,
+            ver_id: self.ver_id,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7578,7 +8807,22 @@ impl officekit_markup_base::Write for GrpCmd {
     }
 }
 
-impl GrpSpMk {
+impl<X: NodeExtra> GrpSpMkWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GrpSpMkWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GrpSpMkWith {
+            creation_id: self.creation_id,
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7603,7 +8847,24 @@ impl officekit_markup_base::Write for GrpSpMk {
     }
 }
 
-impl GrpSpMkLst {
+impl<X: NodeExtra> GrpSpMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GrpSpMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GrpSpMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7624,7 +8885,41 @@ impl officekit_markup_base::Write for GrpSpMkLst {
     }
 }
 
-impl GrpSpPrGroupShapeProperties {
+impl<X: NodeExtra> GrpSpPrGroupShapePropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GrpSpPrGroupShapePropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GrpSpPrGroupShapePropertiesWith {
+            bw_mode: self.bw_mode,
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                drawing::FillPropertiesContentWith::into_extra,
+            ),
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                drawing::Scene3dWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm_group_transform2d: officekit_markup_base::into_extra_optional(
+                &mut self.xfrm_group_transform2d,
+                drawing::XfrmGroupTransform2DWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7648,7 +8943,41 @@ impl officekit_markup_base::Write for GrpSpPrGroupShapeProperties {
     }
 }
 
-impl GrpSpPrResetGroupShapeProperties {
+impl<X: NodeExtra> GrpSpPrResetGroupShapePropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GrpSpPrResetGroupShapePropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GrpSpPrResetGroupShapePropertiesWith {
+            bw_mode: officekit_markup_base::into_extra_optional(
+                &mut self.bw_mode,
+                BwModeWith::into_extra,
+            ),
+            effect: officekit_markup_base::into_extra_optional(
+                &mut self.effect,
+                EffectWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill: officekit_markup_base::into_extra_optional(&mut self.fill, FillWith::into_extra),
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                Scene3dWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm_empty: officekit_markup_base::into_extra_optional(
+                &mut self.xfrm_empty,
+                XfrmEmptyWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7669,7 +8998,20 @@ impl officekit_markup_base::Write for GrpSpPrResetGroupShapeProperties {
     }
 }
 
-impl HlinkClickEmpty {
+impl<X: NodeExtra> HlinkClickEmptyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> HlinkClickEmptyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HlinkClickEmptyWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7690,7 +9032,24 @@ impl officekit_markup_base::Write for HlinkClickEmpty {
     }
 }
 
-impl HlinkClickHyperlinkProps {
+impl<X: NodeExtra> HlinkClickHyperlinkPropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> HlinkClickHyperlinkPropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HlinkClickHyperlinkPropsWith {
+            extra: Default::default(),
+            snd_data: officekit_markup_base::into_extra_optional(
+                &mut self.snd_data,
+                SndDataWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7711,7 +9070,20 @@ impl officekit_markup_base::Write for HlinkClickHyperlinkProps {
     }
 }
 
-impl HlinkHoverEmpty {
+impl<X: NodeExtra> HlinkHoverEmptyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> HlinkHoverEmptyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HlinkHoverEmptyWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7732,7 +9104,24 @@ impl officekit_markup_base::Write for HlinkHoverEmpty {
     }
 }
 
-impl HlinkHoverHyperlinkProps {
+impl<X: NodeExtra> HlinkHoverHyperlinkPropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> HlinkHoverHyperlinkPropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HlinkHoverHyperlinkPropsWith {
+            extra: Default::default(),
+            snd_data: officekit_markup_base::into_extra_optional(
+                &mut self.snd_data,
+                SndDataWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7753,7 +9142,24 @@ impl officekit_markup_base::Write for HlinkHoverHyperlinkProps {
     }
 }
 
-impl HlinkMkLst {
+impl<X: NodeExtra> HlinkMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> HlinkMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HlinkMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7774,7 +9180,28 @@ impl officekit_markup_base::Write for HlinkMkLst {
     }
 }
 
-impl HlinkModifyHyperlinkProps {
+impl<X: NodeExtra> HlinkModifyHyperlinkPropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> HlinkModifyHyperlinkPropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HlinkModifyHyperlinkPropsWith {
+            extra: Default::default(),
+            hlink_click_hyperlink_props: officekit_markup_base::into_extra_optional(
+                &mut self.hlink_click_hyperlink_props,
+                HlinkClickHyperlinkPropsWith::into_extra,
+            ),
+            hlink_hover_hyperlink_props: officekit_markup_base::into_extra_optional(
+                &mut self.hlink_hover_hyperlink_props,
+                HlinkHoverHyperlinkPropsWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7795,7 +9222,28 @@ impl officekit_markup_base::Write for HlinkModifyHyperlinkProps {
     }
 }
 
-impl HlinkResetHyperlinkProps {
+impl<X: NodeExtra> HlinkResetHyperlinkPropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> HlinkResetHyperlinkPropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HlinkResetHyperlinkPropsWith {
+            extra: Default::default(),
+            hlink_click_empty: officekit_markup_base::into_extra_optional(
+                &mut self.hlink_click_empty,
+                HlinkClickEmptyWith::into_extra,
+            ),
+            hlink_hover_empty: officekit_markup_base::into_extra_optional(
+                &mut self.hlink_hover_empty,
+                HlinkHoverEmptyWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7816,7 +9264,21 @@ impl officekit_markup_base::Write for HlinkResetHyperlinkProps {
     }
 }
 
-impl ImgData {
+impl<X: NodeExtra> ImgDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ImgDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ImgDataWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7840,7 +9302,21 @@ impl officekit_markup_base::Write for ImgData {
     }
 }
 
-impl ImgLink {
+impl<X: NodeExtra> ImgLinkWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ImgLinkWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ImgLinkWith {
+            extra: Default::default(),
+            tgt: self.tgt,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7864,7 +9340,22 @@ impl officekit_markup_base::Write for ImgLink {
     }
 }
 
-impl ImgUrl {
+impl<X: NodeExtra> ImgUrlWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ImgUrlWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ImgUrlWith {
+            extra: Default::default(),
+            linkage: self.linkage,
+            src: self.src,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7889,7 +9380,22 @@ impl officekit_markup_base::Write for ImgUrl {
     }
 }
 
-impl InkMk {
+impl<X: NodeExtra> InkMkWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> InkMkWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        InkMkWith {
+            creation_id: self.creation_id,
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7914,7 +9420,24 @@ impl officekit_markup_base::Write for InkMk {
     }
 }
 
-impl InkMkLst {
+impl<X: NodeExtra> InkMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> InkMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        InkMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7935,7 +9458,20 @@ impl officekit_markup_base::Write for InkMkLst {
     }
 }
 
-impl LfPr {
+impl<X: NodeExtra> LfPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LfPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LfPrWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7956,7 +9492,48 @@ impl officekit_markup_base::Write for LfPr {
     }
 }
 
-impl LineProps {
+impl<X: NodeExtra> LinePropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> LinePropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LinePropsWith {
+            algn: self.algn,
+            cap: self.cap,
+            cmpd: self.cmpd,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            line_dash_content: officekit_markup_base::into_extra_optional(
+                &mut self.line_dash_content,
+                drawing::LineDashContentWith::into_extra,
+            ),
+            line_fill_content: officekit_markup_base::into_extra_optional(
+                &mut self.line_fill_content,
+                drawing::LineFillContentWith::into_extra,
+            ),
+            line_head_end_style: officekit_markup_base::into_extra_optional(
+                &mut self.line_head_end_style,
+                drawing::LineHeadEndStyleWith::into_extra,
+            ),
+            line_join_content: officekit_markup_base::into_extra_optional(
+                &mut self.line_join_content,
+                drawing::LineJoinContentWith::into_extra,
+            ),
+            tail_line_end_style: officekit_markup_base::into_extra_optional(
+                &mut self.tail_line_end_style,
+                drawing::TailLineEndStyleWith::into_extra,
+            ),
+            unknown: self.unknown,
+            w: self.w,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7983,7 +9560,20 @@ impl officekit_markup_base::Write for LineProps {
     }
 }
 
-impl Ln {
+impl<X: NodeExtra> LnWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LnWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LnWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8004,7 +9594,25 @@ impl officekit_markup_base::Write for Ln {
     }
 }
 
-impl LnRef {
+impl<X: NodeExtra> LnRefWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> LnRefWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LnRefWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            idx: self.idx,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8028,7 +9636,24 @@ impl officekit_markup_base::Write for LnRef {
     }
 }
 
-impl Model3DMkLst {
+impl<X: NodeExtra> Model3DMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> Model3DMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        Model3DMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8049,7 +9674,20 @@ impl officekit_markup_base::Write for Model3DMkLst {
     }
 }
 
-impl NoAdjustHandles {
+impl<X: NodeExtra> NoAdjustHandlesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NoAdjustHandlesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NoAdjustHandlesWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8070,7 +9708,20 @@ impl officekit_markup_base::Write for NoAdjustHandles {
     }
 }
 
-impl NoChangeArrowheads {
+impl<X: NodeExtra> NoChangeArrowheadsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NoChangeArrowheadsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NoChangeArrowheadsWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8091,7 +9742,20 @@ impl officekit_markup_base::Write for NoChangeArrowheads {
     }
 }
 
-impl NoChangeAspect {
+impl<X: NodeExtra> NoChangeAspectWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NoChangeAspectWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NoChangeAspectWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8112,7 +9776,20 @@ impl officekit_markup_base::Write for NoChangeAspect {
     }
 }
 
-impl NoChangeShapeType {
+impl<X: NodeExtra> NoChangeShapeTypeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NoChangeShapeTypeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NoChangeShapeTypeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8133,7 +9810,20 @@ impl officekit_markup_base::Write for NoChangeShapeType {
     }
 }
 
-impl NoEditPoints {
+impl<X: NodeExtra> NoEditPointsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NoEditPointsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NoEditPointsWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8154,7 +9844,20 @@ impl officekit_markup_base::Write for NoEditPoints {
     }
 }
 
-impl NoGrp {
+impl<X: NodeExtra> NoGrpWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NoGrpWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NoGrpWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8175,7 +9878,20 @@ impl officekit_markup_base::Write for NoGrp {
     }
 }
 
-impl NoMove {
+impl<X: NodeExtra> NoMoveWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NoMoveWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NoMoveWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8196,7 +9912,20 @@ impl officekit_markup_base::Write for NoMove {
     }
 }
 
-impl NoResize {
+impl<X: NodeExtra> NoResizeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NoResizeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NoResizeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8217,7 +9946,20 @@ impl officekit_markup_base::Write for NoResize {
     }
 }
 
-impl NoRot {
+impl<X: NodeExtra> NoRotWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NoRotWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NoRotWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8238,7 +9980,20 @@ impl officekit_markup_base::Write for NoRot {
     }
 }
 
-impl NoSelect {
+impl<X: NodeExtra> NoSelectWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NoSelectWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NoSelectWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8259,7 +10014,22 @@ impl officekit_markup_base::Write for NoSelect {
     }
 }
 
-impl Off {
+impl<X: NodeExtra> OffWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> OffWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        OffWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            x: self.x,
+            y: self.y,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8284,7 +10054,21 @@ impl officekit_markup_base::Write for Off {
     }
 }
 
-impl OrigImgData {
+impl<X: NodeExtra> OrigImgDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> OrigImgDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        OrigImgDataWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8308,7 +10092,71 @@ impl officekit_markup_base::Write for OrigImgData {
     }
 }
 
-impl PPr {
+impl<X: NodeExtra> PPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PPrWith {
+            algn: self.algn,
+            def_tab_sz: self.def_tab_sz,
+            default_text_run_properties: officekit_markup_base::into_extra_optional(
+                &mut self.default_text_run_properties,
+                drawing::DefaultTextRunPropertiesWith::into_extra,
+            ),
+            ea_ln_brk: self.ea_ln_brk,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            font_algn: self.font_algn,
+            hanging_punct: self.hanging_punct,
+            indent: self.indent,
+            latin_ln_brk: self.latin_ln_brk,
+            line_spacing: officekit_markup_base::into_extra_optional(
+                &mut self.line_spacing,
+                drawing::LineSpacingWith::into_extra,
+            ),
+            lvl: self.lvl,
+            mar_l: self.mar_l,
+            mar_r: self.mar_r,
+            rtl: self.rtl,
+            space_after: officekit_markup_base::into_extra_optional(
+                &mut self.space_after,
+                drawing::SpaceAfterWith::into_extra,
+            ),
+            space_before: officekit_markup_base::into_extra_optional(
+                &mut self.space_before,
+                drawing::SpaceBeforeWith::into_extra,
+            ),
+            tab_list: officekit_markup_base::into_extra_optional(
+                &mut self.tab_list,
+                drawing::TabListWith::into_extra,
+            ),
+            text_bullet_color_content: officekit_markup_base::into_extra_optional(
+                &mut self.text_bullet_color_content,
+                drawing::TextBulletColorContentWith::into_extra,
+            ),
+            text_bullet_content: officekit_markup_base::into_extra_optional(
+                &mut self.text_bullet_content,
+                drawing::TextBulletContentWith::into_extra,
+            ),
+            text_bullet_size_content: officekit_markup_base::into_extra_optional(
+                &mut self.text_bullet_size_content,
+                drawing::TextBulletSizeContentWith::into_extra,
+            ),
+            text_bullet_typeface_content: officekit_markup_base::into_extra_optional(
+                &mut self.text_bullet_typeface_content,
+                drawing::TextBulletTypefaceContentWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8342,7 +10190,22 @@ impl officekit_markup_base::Write for PPr {
     }
 }
 
-impl PicMk {
+impl<X: NodeExtra> PicMkWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PicMkWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PicMkWith {
+            creation_id: self.creation_id,
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8367,7 +10230,24 @@ impl officekit_markup_base::Write for PicMk {
     }
 }
 
-impl PicMkLst {
+impl<X: NodeExtra> PicMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PicMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PicMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8388,7 +10268,21 @@ impl officekit_markup_base::Write for PicMkLst {
     }
 }
 
-impl Reset {
+impl<X: NodeExtra> ResetWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ResetWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ResetWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8412,7 +10306,20 @@ impl officekit_markup_base::Write for Reset {
     }
 }
 
-impl RotWithShape {
+impl<X: NodeExtra> RotWithShapeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RotWithShapeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RotWithShapeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8433,7 +10340,20 @@ impl officekit_markup_base::Write for RotWithShape {
     }
 }
 
-impl Scene3d {
+impl<X: NodeExtra> Scene3dWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> Scene3dWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        Scene3dWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8454,7 +10374,21 @@ impl officekit_markup_base::Write for Scene3d {
     }
 }
 
-impl SndData {
+impl<X: NodeExtra> SndDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SndDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SndDataWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8478,7 +10412,20 @@ impl officekit_markup_base::Write for SndData {
     }
 }
 
-impl Sp3d {
+impl<X: NodeExtra> Sp3dWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> Sp3dWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        Sp3dWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8499,7 +10446,22 @@ impl officekit_markup_base::Write for Sp3d {
     }
 }
 
-impl SpMk {
+impl<X: NodeExtra> SpMkWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SpMkWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SpMkWith {
+            creation_id: self.creation_id,
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8524,7 +10486,24 @@ impl officekit_markup_base::Write for SpMk {
     }
 }
 
-impl SpMkLstShapeMonikerList {
+impl<X: NodeExtra> SpMkLstShapeMonikerListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SpMkLstShapeMonikerListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SpMkLstShapeMonikerListWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8545,7 +10524,24 @@ impl officekit_markup_base::Write for SpMkLstShapeMonikerList {
     }
 }
 
-impl SpMkLstShapePropsMonikerList {
+impl<X: NodeExtra> SpMkLstShapePropsMonikerListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SpMkLstShapePropsMonikerListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SpMkLstShapePropsMonikerListWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8566,7 +10562,44 @@ impl officekit_markup_base::Write for SpMkLstShapePropsMonikerList {
     }
 }
 
-impl SpPrResetShapeProperties {
+impl<X: NodeExtra> SpPrResetShapePropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SpPrResetShapePropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SpPrResetShapePropertiesWith {
+            bw_mode: officekit_markup_base::into_extra_optional(
+                &mut self.bw_mode,
+                BwModeWith::into_extra,
+            ),
+            effect: officekit_markup_base::into_extra_optional(
+                &mut self.effect,
+                EffectWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill: officekit_markup_base::into_extra_optional(&mut self.fill, FillWith::into_extra),
+            geom: officekit_markup_base::into_extra_optional(&mut self.geom, GeomWith::into_extra),
+            ln: officekit_markup_base::into_extra_optional(&mut self.ln, LnWith::into_extra),
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                Scene3dWith::into_extra,
+            ),
+            sp3d: officekit_markup_base::into_extra_optional(&mut self.sp3d, Sp3dWith::into_extra),
+            unknown: self.unknown,
+            xfrm_empty: officekit_markup_base::into_extra_optional(
+                &mut self.xfrm_empty,
+                XfrmEmptyWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8587,7 +10620,53 @@ impl officekit_markup_base::Write for SpPrResetShapeProperties {
     }
 }
 
-impl SpPrShapeProperties {
+impl<X: NodeExtra> SpPrShapePropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SpPrShapePropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SpPrShapePropertiesWith {
+            apply_3d_shape_properties: officekit_markup_base::into_extra_optional(
+                &mut self.apply_3d_shape_properties,
+                drawing::Apply3DShapePropertiesWith::into_extra,
+            ),
+            bw_mode: self.bw_mode,
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                drawing::FillPropertiesContentWith::into_extra,
+            ),
+            geometry_content: officekit_markup_base::into_extra_optional(
+                &mut self.geometry_content,
+                drawing::GeometryContentWith::into_extra,
+            ),
+            outline: officekit_markup_base::into_extra_optional(
+                &mut self.outline,
+                drawing::OutlineWith::into_extra,
+            ),
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                drawing::Scene3dWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm_transform2d: officekit_markup_base::into_extra_optional(
+                &mut self.xfrm_transform2d,
+                drawing::XfrmTransform2DWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8611,7 +10690,20 @@ impl officekit_markup_base::Write for SpPrShapeProperties {
     }
 }
 
-impl SrcRectEmpty {
+impl<X: NodeExtra> SrcRectEmptyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SrcRectEmptyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SrcRectEmptyWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8632,7 +10724,20 @@ impl officekit_markup_base::Write for SrcRectEmpty {
     }
 }
 
-impl SrcRectRelativeRectProps {
+impl<X: NodeExtra> SrcRectRelativeRectPropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SrcRectRelativeRectPropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SrcRectRelativeRectPropsWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8653,7 +10758,22 @@ impl officekit_markup_base::Write for SrcRectRelativeRectProps {
     }
 }
 
-impl StCxnConnection {
+impl<X: NodeExtra> StCxnConnectionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> StCxnConnectionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StCxnConnectionWith {
+            extra: Default::default(),
+            id: self.id,
+            idx: self.idx,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8678,7 +10798,20 @@ impl officekit_markup_base::Write for StCxnConnection {
     }
 }
 
-impl StCxnEmpty {
+impl<X: NodeExtra> StCxnEmptyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> StCxnEmptyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StCxnEmptyWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8699,7 +10832,36 @@ impl officekit_markup_base::Write for StCxnEmpty {
     }
 }
 
-impl Style {
+impl<X: NodeExtra> StyleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> StyleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StyleWith {
+            effect_ref: officekit_markup_base::into_extra_optional(
+                &mut self.effect_ref,
+                EffectRefWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_ref: officekit_markup_base::into_extra_optional(
+                &mut self.fill_ref,
+                FillRefWith::into_extra,
+            ),
+            font_ref: officekit_markup_base::into_extra_optional(
+                &mut self.font_ref,
+                FontRefWith::into_extra,
+            ),
+            ln_ref: officekit_markup_base::into_extra_optional(
+                &mut self.ln_ref,
+                LnRefWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8720,7 +10882,24 @@ impl officekit_markup_base::Write for Style {
     }
 }
 
-impl SvgBlipMkLst {
+impl<X: NodeExtra> SvgBlipMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SvgBlipMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SvgBlipMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8741,7 +10920,24 @@ impl officekit_markup_base::Write for SvgBlipMkLst {
     }
 }
 
-impl TblMkLst {
+impl<X: NodeExtra> TblMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TblMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TblMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8762,7 +10958,24 @@ impl officekit_markup_base::Write for TblMkLst {
     }
 }
 
-impl TcMkLst {
+impl<X: NodeExtra> TcMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TcMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TcMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8783,7 +10996,24 @@ impl officekit_markup_base::Write for TcMkLst {
     }
 }
 
-impl TrMkLst {
+impl<X: NodeExtra> TrMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TrMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TrMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8804,7 +11034,24 @@ impl officekit_markup_base::Write for TrMkLst {
     }
 }
 
-impl TxBodyMkLst {
+impl<X: NodeExtra> TxBodyMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TxBodyMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TxBodyMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8825,7 +11072,20 @@ impl officekit_markup_base::Write for TxBodyMkLst {
     }
 }
 
-impl TxBodyPkg {
+impl<X: NodeExtra> TxBodyPkgWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TxBodyPkgWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TxBodyPkgWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8846,7 +11106,24 @@ impl officekit_markup_base::Write for TxBodyPkg {
     }
 }
 
-impl TxMkLst {
+impl<X: NodeExtra> TxMkLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TxMkLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TxMkLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8867,7 +11144,21 @@ impl officekit_markup_base::Write for TxMkLst {
     }
 }
 
-impl UseBounds {
+impl<X: NodeExtra> UseBoundsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> UseBoundsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UseBoundsWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8891,7 +11182,24 @@ impl officekit_markup_base::Write for UseBounds {
     }
 }
 
-impl ViewSelLst {
+impl<X: NodeExtra> ViewSelLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ViewSelLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ViewSelLstWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8912,7 +11220,20 @@ impl officekit_markup_base::Write for ViewSelLst {
     }
 }
 
-impl XfrmEmpty {
+impl<X: NodeExtra> XfrmEmptyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> XfrmEmptyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        XfrmEmptyWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8933,7 +11254,27 @@ impl officekit_markup_base::Write for XfrmEmpty {
     }
 }
 
-impl XfrmModifyTransformProps {
+impl<X: NodeExtra> XfrmModifyTransformPropsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> XfrmModifyTransformPropsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        XfrmModifyTransformPropsWith {
+            cx: self.cx,
+            cy: self.cy,
+            extra: Default::default(),
+            flip_h: self.flip_h,
+            flip_v: self.flip_v,
+            rot: self.rot,
+            unknown: self.unknown,
+            x: self.x,
+            y: self.y,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8963,7 +11304,31 @@ impl officekit_markup_base::Write for XfrmModifyTransformProps {
     }
 }
 
-impl XfrmTransform2D {
+impl<X: NodeExtra> XfrmTransform2DWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> XfrmTransform2DWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        XfrmTransform2DWith {
+            extents: officekit_markup_base::into_extra_optional(
+                &mut self.extents,
+                drawing::ExtentsWith::into_extra,
+            ),
+            extra: Default::default(),
+            flip_h: self.flip_h,
+            flip_v: self.flip_v,
+            offset: officekit_markup_base::into_extra_optional(
+                &mut self.offset,
+                drawing::OffsetWith::into_extra,
+            ),
+            rot: self.rot,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

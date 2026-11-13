@@ -25,6 +25,7 @@ binary-format = [
 [dependencies]
 officekit-markup-base.workspace = true
 officekit-markup-core.workspace = true
+officekit-markup-macros.workspace = true
 officekit-xml.workspace = true
 rkyv = { workspace = true, optional = true }
 

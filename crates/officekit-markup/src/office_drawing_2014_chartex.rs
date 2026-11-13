@@ -223,6 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::{Element, Node};
@@ -1483,14 +1484,9 @@ pub static VALUE_COLOR_MIDDLE_POSITION_CONTENT_TAGS: officekit_markup_base::Acce
 
 /// The `cx:address` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Address`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Address {
+pub struct AddressWith<X: NodeExtra> {
     /// The attribute `address1`, when the element has it.
     pub address1: Option<String>,
     /// The attribute `adminDistrict1`, when the element has it.
@@ -1499,6 +1495,8 @@ pub struct Address {
     pub admin_district2: Option<String>,
     /// The attribute `countryRegion`, when the element has it.
     pub country_region: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexAddress,
     /// The attribute `isoCountryCode`, when the element has it.
     pub iso_country_code: Option<String>,
     /// The attribute `locality`, when the element has it.
@@ -1509,93 +1507,110 @@ pub struct Address {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:address` element of the tree a read gives: [`AddressWith`] holding nothing in `extra`.
+pub type Address = AddressWith<()>;
+
+impl Eq for AddressWith<()> {}
+
 /// The `cx:aggregation` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_Aggregation`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Aggregation {
+pub struct AggregationWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexAggregation,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:aggregation` element of the tree a read gives: [`AggregationWith`] holding nothing in
+/// `extra`.
+pub type Aggregation = AggregationWith<()>;
+
+impl Eq for AggregationWith<()> {}
+
 /// The `cx:axis` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Axis`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Axis {
+pub struct AxisWith<X: NodeExtra> {
     /// The child that is an item of `AxisContent`, which the schema requires.
-    pub content: Box<AxisContent>,
+    pub content: Box<AxisContentWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexAxis,
     /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The child that is `MajorGridlines`, when there is one.
-    pub major_gridlines: Option<Box<MajorGridlines>>,
+    pub major_gridlines: Option<Box<MajorGridlinesWith<X>>>,
     /// The child that is `MajorTickMarks`, when there is one.
-    pub major_tick_marks: Option<Box<MajorTickMarks>>,
+    pub major_tick_marks: Option<Box<MajorTickMarksWith<X>>>,
     /// The child that is `MinorGridlines`, when there is one.
-    pub minor_gridlines: Option<Box<MinorGridlines>>,
+    pub minor_gridlines: Option<Box<MinorGridlinesWith<X>>>,
     /// The child that is `MinorTickMarks`, when there is one.
-    pub minor_tick_marks: Option<Box<MinorTickMarks>>,
+    pub minor_tick_marks: Option<Box<MinorTickMarksWith<X>>>,
     /// The child that is `NumFmt`, when there is one.
-    pub num_fmt: Option<Box<NumFmt>>,
+    pub num_fmt: Option<Box<NumFmtWith<X>>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// The child that is `TickLabels`, when there is one.
-    pub tick_labels: Option<Box<TickLabels>>,
+    pub tick_labels: Option<Box<TickLabelsWith<X>>>,
     /// The child that is `TitleAxisTitle`, when there is one.
-    pub title_axis_title: Option<Box<TitleAxisTitle>>,
+    pub title_axis_title: Option<Box<TitleAxisTitleWith<X>>>,
     /// The child that is `TxPr`, when there is one.
-    pub tx_pr: Option<Box<TxPr>>,
+    pub tx_pr: Option<Box<TxPrWith<X>>>,
     /// The child that is `Units`, when there is one.
-    pub units: Option<Box<Units>>,
+    pub units: Option<Box<UnitsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:axis` element of the tree a read gives: [`AxisWith`] holding nothing in `extra`.
+pub type Axis = AxisWith<()>;
+
+impl Eq for AxisWith<()> {}
 
 /// One child element of a choice: choice in `CT_Axis`.
 ///
 /// The schema types that hold it: `CT_Axis`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum AxisContent {
+pub enum AxisContentWith<X: NodeExtra> {
     /// The element `cx:catScaling`, a `CatScaling`.
-    CatScaling(CatScaling),
+    CatScaling(CatScalingWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `cx:valScaling`, a `ValScaling`.
-    ValScaling(ValScaling),
+    ValScaling(ValScalingWith<X>),
 }
+
+/// [`AxisContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type AxisContent = AxisContentWith<()>;
+
+impl Eq for AxisContentWith<()> {}
 
 /// The `cx:axisId` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `ST_AxisId`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AxisId {
+pub struct AxisIdWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexAxisId,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `cx:axisId` element of the tree a read gives: [`AxisIdWith`] holding nothing in `extra`.
+pub type AxisId = AxisIdWith<()>;
+
+impl Eq for AxisIdWith<()> {}
 
 /// The simple type `ST_AxisUnit`, kept as the text the file carried.
 ///
@@ -1638,64 +1653,67 @@ pub enum AxisUnitMember {
 
 /// The `cx:binCount` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `unsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BinCount {
+pub struct BinCountWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexBinCount,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `cx:binCount` element of the tree a read gives: [`BinCountWith`] holding nothing in `extra`.
+pub type BinCount = BinCountWith<()>;
+
+impl Eq for BinCountWith<()> {}
 
 /// The `cx:binSize` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BinSize {
+pub struct BinSizeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexBinSize,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `cx:binSize` element of the tree a read gives: [`BinSizeWith`] holding nothing in `extra`.
+pub type BinSize = BinSizeWith<()>;
+
+impl Eq for BinSizeWith<()> {}
 
 /// The `cx:binary` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `base64Binary`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Binary {
+pub struct BinaryWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexBinary,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `cx:binary` element of the tree a read gives: [`BinaryWith`] holding nothing in `extra`.
+pub type Binary = BinaryWith<()>;
+
+impl Eq for BinaryWith<()> {}
+
 /// The `cx:binning` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Binning`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Binning {
+pub struct BinningWith<X: NodeExtra> {
     /// The child that is an item of `BinningContent`, when there is one.
-    pub content: Option<Box<BinningContent>>,
+    pub content: Option<Box<BinningContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexBinning,
     /// The attribute `intervalClosed`, when the element has it.
     pub interval_closed: Option<IntervalClosedSide>,
     /// The attribute `overflow`, when the element has it.
@@ -1706,166 +1724,187 @@ pub struct Binning {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:binning` element of the tree a read gives: [`BinningWith`] holding nothing in `extra`.
+pub type Binning = BinningWith<()>;
+
+impl Eq for BinningWith<()> {}
+
 /// One child element of a choice: choice in `CT_Binning`.
 ///
 /// The schema types that hold it: `CT_Binning`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum BinningContent {
+pub enum BinningContentWith<X: NodeExtra> {
     /// The element `cx:binCount`, a `BinCount`.
-    BinCount(BinCount),
+    BinCount(BinCountWith<X>),
     /// The element `cx:binSize`, a `BinSize`.
-    BinSize(BinSize),
+    BinSize(BinSizeWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
+/// [`BinningContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type BinningContent = BinningContentWith<()>;
+
+impl Eq for BinningContentWith<()> {}
+
 /// The `cx:catScaling` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_CategoryAxisScaling`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CatScaling {
+pub struct CatScalingWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexCatScaling,
     /// The attribute `gapWidth`, when the element has it.
     pub gap_width: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:catScaling` element of the tree a read gives: [`CatScalingWith`] holding nothing in
+/// `extra`.
+pub type CatScaling = CatScalingWith<()>;
+
+impl Eq for CatScalingWith<()> {}
+
 /// The `cx:chart` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Chart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ChartChart {
+pub struct ChartChartWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexChartChart,
     /// The child that is `Legend`, when there is one.
-    pub legend: Option<Box<Legend>>,
+    pub legend: Option<Box<LegendWith<X>>>,
     /// The child that is `PlotArea`, which the schema requires.
-    pub plot_area: Box<PlotArea>,
+    pub plot_area: Box<PlotAreaWith<X>>,
     /// The child that is `TitleChartTitle`, when there is one.
-    pub title_chart_title: Option<Box<TitleChartTitle>>,
+    pub title_chart_title: Option<Box<TitleChartTitleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:chart` element of the tree a read gives: [`ChartChartWith`] holding nothing in `extra`.
+pub type ChartChart = ChartChartWith<()>;
+
+impl Eq for ChartChartWith<()> {}
 
 /// The `cx:chartData` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ChartData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ChartData {
+pub struct ChartDataWith<X: NodeExtra> {
     /// The children that are `Data`, in order.
-    pub data: Vec<Data>,
+    pub data: Vec<DataWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The child that is `ExternalData`, when there is one.
-    pub external_data: Option<Box<ExternalData>>,
+    pub external_data: Option<Box<ExternalDataWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexChartData,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:chartData` element of the tree a read gives: [`ChartDataWith`] holding nothing in
+/// `extra`.
+pub type ChartData = ChartDataWith<()>;
+
+impl Eq for ChartDataWith<()> {}
+
 /// The `cx:chart` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RelId`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ChartRelId {
+pub struct ChartRelIdWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexChartRelId,
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:chart` element of the tree a read gives: [`ChartRelIdWith`] holding nothing in `extra`.
+pub type ChartRelId = ChartRelIdWith<()>;
+
+impl Eq for ChartRelIdWith<()> {}
+
 /// The `cx:chartSpace` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ChartSpace`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ChartSpace {
+pub struct ChartSpaceWith<X: NodeExtra> {
     /// The child that is `ChartChart`, which the schema requires.
-    pub chart_chart: Box<ChartChart>,
+    pub chart_chart: Box<ChartChartWith<X>>,
     /// The child that is `ChartData`, which the schema requires.
-    pub chart_data: Box<ChartData>,
+    pub chart_data: Box<ChartDataWith<X>>,
     /// The child that is `ClrMapOvr`, when there is one.
-    pub clr_map_ovr: Option<Box<ClrMapOvr>>,
+    pub clr_map_ovr: Option<Box<ClrMapOvrWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexChartSpace,
     /// The attribute `fallbackImg`, when the element has it.
     pub fallback_img: Option<String>,
     /// The attribute `featureList`, when the element has it.
     pub feature_list: Option<String>,
     /// The child that is `FmtOvrs`, when there is one.
-    pub fmt_ovrs: Option<Box<FmtOvrs>>,
+    pub fmt_ovrs: Option<Box<FmtOvrsWith<X>>>,
     /// The child that is `PrintSettings`, when there is one.
-    pub print_settings: Option<Box<PrintSettings>>,
+    pub print_settings: Option<Box<PrintSettingsWith<X>>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// The child that is `TxPr`, when there is one.
-    pub tx_pr: Option<Box<TxPr>>,
+    pub tx_pr: Option<Box<TxPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `version`, when the element has it.
     pub version: Option<String>,
 }
 
+/// The `cx:chartSpace` element of the tree a read gives: [`ChartSpaceWith`] holding nothing in
+/// `extra`.
+pub type ChartSpace = ChartSpaceWith<()>;
+
+impl Eq for ChartSpaceWith<()> {}
+
 /// The `cx:clear` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Clear`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Clear {
+pub struct ClearWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexClear,
     /// The child that is `GeoChildEntitiesQueryResults`, when there is one.
-    pub geo_child_entities_query_results: Option<Box<GeoChildEntitiesQueryResults>>,
+    pub geo_child_entities_query_results: Option<Box<GeoChildEntitiesQueryResultsWith<X>>>,
     /// The child that is `GeoDataEntityQueryResults`, when there is one.
-    pub geo_data_entity_query_results: Option<Box<GeoDataEntityQueryResults>>,
+    pub geo_data_entity_query_results: Option<Box<GeoDataEntityQueryResultsWith<X>>>,
     /// The child that is `GeoDataPointToEntityQueryResults`, when there is one.
-    pub geo_data_point_to_entity_query_results: Option<Box<GeoDataPointToEntityQueryResults>>,
+    pub geo_data_point_to_entity_query_results:
+        Option<Box<GeoDataPointToEntityQueryResultsWith<X>>>,
     /// The child that is `GeoLocationQueryResults`, when there is one.
-    pub geo_location_query_results: Option<Box<GeoLocationQueryResults>>,
+    pub geo_location_query_results: Option<Box<GeoLocationQueryResultsWith<X>>>,
     /// The child that is `GeoParentEntitiesQueryResults`, when there is one.
-    pub geo_parent_entities_query_results: Option<Box<GeoParentEntitiesQueryResults>>,
+    pub geo_parent_entities_query_results: Option<Box<GeoParentEntitiesQueryResultsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:clear` element of the tree a read gives: [`ClearWith`] holding nothing in `extra`.
+pub type Clear = ClearWith<()>;
+
+impl Eq for ClearWith<()> {}
+
 /// The `cx:clrMapOvr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ColorMapping`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ClrMapOvr {
+pub struct ClrMapOvrWith<X: NodeExtra> {
     /// The attribute `accent1`, when the element has it.
     pub accent1: Option<drawing::ThemeColorReference>,
     /// The attribute `accent2`, when the element has it.
@@ -1883,7 +1922,9 @@ pub struct ClrMapOvr {
     /// The attribute `bg2`, when the element has it.
     pub bg2: Option<drawing::ThemeColorReference>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexClrMapOvr,
     /// The attribute `folHlink`, when the element has it.
     pub fol_hlink: Option<drawing::ThemeColorReference>,
     /// The attribute `hlink`, when the element has it.
@@ -1895,6 +1936,12 @@ pub struct ClrMapOvr {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:clrMapOvr` element of the tree a read gives: [`ClrMapOvrWith`] holding nothing in
+/// `extra`.
+pub type ClrMapOvr = ClrMapOvrWith<()>;
+
+impl Eq for ClrMapOvrWith<()> {}
 
 /// The hooks of a context for the `cx` namespace.
 ///
@@ -4531,133 +4578,154 @@ pub trait Context: crate::Context {
 
 /// The `cx:copyright` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Copyright {
+pub struct CopyrightWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexCopyright,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `cx:copyright` element of the tree a read gives: [`CopyrightWith`] holding nothing in
+/// `extra`.
+pub type Copyright = CopyrightWith<()>;
+
+impl Eq for CopyrightWith<()> {}
+
 /// The `cx:copyrights` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Copyrights`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Copyrights {
+pub struct CopyrightsWith<X: NodeExtra> {
     /// The children that are `Copyright`, in order.
-    pub copyright: Vec<Copyright>,
+    pub copyright: Vec<CopyrightWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexCopyrights,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:copyrights` element of the tree a read gives: [`CopyrightsWith`] holding nothing in
+/// `extra`.
+pub type Copyrights = CopyrightsWith<()>;
+
+impl Eq for CopyrightsWith<()> {}
+
 /// The `cx:data` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Data`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Data {
+pub struct DataWith<X: NodeExtra> {
     /// The children that are an item of `DataContent`, in order.
-    pub content: Vec<DataContent>,
+    pub content: Vec<DataContentWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexData,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:data` element of the tree a read gives: [`DataWith`] holding nothing in `extra`.
+pub type Data = DataWith<()>;
+
+impl Eq for DataWith<()> {}
+
 /// One child element of a choice: choice in `CT_Data`.
 ///
 /// The schema types that hold it: `CT_Data`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum DataContent {
+pub enum DataContentWith<X: NodeExtra> {
     /// The element `cx:numDim`, a `NumDim`.
-    NumDim(NumDim),
+    NumDim(NumDimWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `cx:strDim`, a `StrDim`.
-    StrDim(StrDim),
+    StrDim(StrDimWith<X>),
 }
+
+/// [`DataContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type DataContent = DataContentWith<()>;
+
+impl Eq for DataContentWith<()> {}
 
 /// The `cx:dataId` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DataId`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataId {
+pub struct DataIdWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexDataId,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
+/// The `cx:dataId` element of the tree a read gives: [`DataIdWith`] holding nothing in `extra`.
+pub type DataId = DataIdWith<()>;
+
+impl Eq for DataIdWith<()> {}
+
 /// The `cx:dataLabel` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DataLabel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataLabel {
+pub struct DataLabelWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexDataLabel,
     /// The attribute `idx`, when the element has it.
     pub idx: Option<String>,
     /// The child that is `NumFmt`, when there is one.
-    pub num_fmt: Option<Box<NumFmt>>,
+    pub num_fmt: Option<Box<NumFmtWith<X>>>,
     /// The attribute `pos`, when the element has it.
     pub pos: Option<DataLabelPos>,
     /// The child that is `Separator`, when there is one.
-    pub separator: Option<Box<Separator>>,
+    pub separator: Option<Box<SeparatorWith<X>>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// The child that is `TxPr`, when there is one.
-    pub tx_pr: Option<Box<TxPr>>,
+    pub tx_pr: Option<Box<TxPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `VisibilityDataLabelVisibilities`, when there is one.
-    pub visibility_data_label_visibilities: Option<Box<VisibilityDataLabelVisibilities>>,
+    pub visibility_data_label_visibilities: Option<Box<VisibilityDataLabelVisibilitiesWith<X>>>,
 }
+
+/// The `cx:dataLabel` element of the tree a read gives: [`DataLabelWith`] holding nothing in
+/// `extra`.
+pub type DataLabel = DataLabelWith<()>;
+
+impl Eq for DataLabelWith<()> {}
 
 /// The `cx:dataLabelHidden` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_DataLabelHidden`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataLabelHidden {
+pub struct DataLabelHiddenWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexDataLabelHidden,
     /// The attribute `idx`, when the element has it.
     pub idx: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:dataLabelHidden` element of the tree a read gives: [`DataLabelHiddenWith`] holding
+/// nothing in `extra`.
+pub type DataLabelHidden = DataLabelHiddenWith<()>;
+
+impl Eq for DataLabelHiddenWith<()> {}
 
 /// The simple type `ST_DataLabelPos`, kept as the text the file carried.
 ///
@@ -4698,376 +4766,426 @@ pub enum DataLabelPosMember {
 
 /// The `cx:dataLabels` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DataLabels`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataLabels {
+pub struct DataLabelsWith<X: NodeExtra> {
     /// The children that are `DataLabel`, in order.
-    pub data_label: Vec<DataLabel>,
+    pub data_label: Vec<DataLabelWith<X>>,
     /// The children that are `DataLabelHidden`, in order.
-    pub data_label_hidden: Vec<DataLabelHidden>,
+    pub data_label_hidden: Vec<DataLabelHiddenWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexDataLabels,
     /// The child that is `NumFmt`, when there is one.
-    pub num_fmt: Option<Box<NumFmt>>,
+    pub num_fmt: Option<Box<NumFmtWith<X>>>,
     /// The attribute `pos`, when the element has it.
     pub pos: Option<DataLabelPos>,
     /// The child that is `Separator`, when there is one.
-    pub separator: Option<Box<Separator>>,
+    pub separator: Option<Box<SeparatorWith<X>>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// The child that is `TxPr`, when there is one.
-    pub tx_pr: Option<Box<TxPr>>,
+    pub tx_pr: Option<Box<TxPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `VisibilityDataLabelVisibilities`, when there is one.
-    pub visibility_data_label_visibilities: Option<Box<VisibilityDataLabelVisibilities>>,
+    pub visibility_data_label_visibilities: Option<Box<VisibilityDataLabelVisibilitiesWith<X>>>,
 }
+
+/// The `cx:dataLabels` element of the tree a read gives: [`DataLabelsWith`] holding nothing in
+/// `extra`.
+pub type DataLabels = DataLabelsWith<()>;
+
+impl Eq for DataLabelsWith<()> {}
 
 /// The `cx:dataPt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DataPoint`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataPt {
+pub struct DataPtWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexDataPt,
     /// The attribute `idx`, when the element has it.
     pub idx: Option<String>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:dataPt` element of the tree a read gives: [`DataPtWith`] holding nothing in `extra`.
+pub type DataPt = DataPtWith<()>;
+
+impl Eq for DataPtWith<()> {}
 
 /// The `cx:entityType` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `ST_EntityType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EntityType {
+pub struct EntityTypeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexEntityType,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `cx:entityType` element of the tree a read gives: [`EntityTypeWith`] holding nothing in
+/// `extra`.
+pub type EntityType = EntityTypeWith<()>;
+
+impl Eq for EntityTypeWith<()> {}
 
 /// The `cx:evenFooter` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EvenFooter {
+pub struct EvenFooterWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexEvenFooter,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `cx:evenFooter` element of the tree a read gives: [`EvenFooterWith`] holding nothing in
+/// `extra`.
+pub type EvenFooter = EvenFooterWith<()>;
+
+impl Eq for EvenFooterWith<()> {}
 
 /// The `cx:evenHeader` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EvenHeader {
+pub struct EvenHeaderWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexEvenHeader,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `cx:evenHeader` element of the tree a read gives: [`EvenHeaderWith`] holding nothing in
+/// `extra`.
+pub type EvenHeader = EvenHeaderWith<()>;
+
+impl Eq for EvenHeaderWith<()> {}
+
 /// The `cx:ext` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_Extension`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Ext {
+pub struct ExtWith<X: NodeExtra> {
     /// The child that is an item of `drawing::AnyElementContent`, which the schema requires.
-    pub content: Box<drawing::AnyElementContent>,
+    pub content: Box<drawing::AnyElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexExt,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `uri`, when the element has it.
     pub uri: Option<String>,
 }
 
+/// The `cx:ext` element of the tree a read gives: [`ExtWith`] holding nothing in `extra`.
+pub type Ext = ExtWith<()>;
+
+impl Eq for ExtWith<()> {}
+
 /// The `cx:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `Ext`, in order.
-    pub ext: Vec<Ext>,
+    pub ext: Vec<ExtWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
+
 /// The `cx:externalData` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ExternalData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExternalData {
+pub struct ExternalDataWith<X: NodeExtra> {
     /// The attribute `cx:autoUpdate`, when the element has it.
     pub auto_update: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexExternalData,
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:externalData` element of the tree a read gives: [`ExternalDataWith`] holding nothing in
+/// `extra`.
+pub type ExternalData = ExternalDataWith<()>;
+
+impl Eq for ExternalDataWith<()> {}
+
 /// The `cx:extremeValue` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ExtremeValueColorPosition`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtremeValue {
+pub struct ExtremeValueWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexExtremeValue,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:extremeValue` element of the tree a read gives: [`ExtremeValueWith`] holding nothing in
+/// `extra`.
+pub type ExtremeValue = ExtremeValueWith<()>;
+
+impl Eq for ExtremeValueWith<()> {}
 
 /// The `cx:f` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_Formula`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct F {
+pub struct FWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexF,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `cx:f` element of the tree a read gives: [`FWith`] holding nothing in `extra`.
+pub type F = FWith<()>;
+
+impl Eq for FWith<()> {}
 
 /// The `cx:firstFooter` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FirstFooter {
+pub struct FirstFooterWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexFirstFooter,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `cx:firstFooter` element of the tree a read gives: [`FirstFooterWith`] holding nothing in
+/// `extra`.
+pub type FirstFooter = FirstFooterWith<()>;
+
+impl Eq for FirstFooterWith<()> {}
 
 /// The `cx:firstHeader` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FirstHeader {
+pub struct FirstHeaderWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexFirstHeader,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `cx:firstHeader` element of the tree a read gives: [`FirstHeaderWith`] holding nothing in
+/// `extra`.
+pub type FirstHeader = FirstHeaderWith<()>;
+
+impl Eq for FirstHeaderWith<()> {}
+
 /// The `cx:fmtOvr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_FormatOverride`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FmtOvr {
+pub struct FmtOvrWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexFmtOvr,
     /// The attribute `idx`, when the element has it.
     pub idx: Option<String>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:fmtOvr` element of the tree a read gives: [`FmtOvrWith`] holding nothing in `extra`.
+pub type FmtOvr = FmtOvrWith<()>;
+
+impl Eq for FmtOvrWith<()> {}
 
 /// The `cx:fmtOvrs` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_FormatOverrides`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FmtOvrs {
+pub struct FmtOvrsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexFmtOvrs,
     /// The children that are `FmtOvr`, in order.
-    pub fmt_ovr: Vec<FmtOvr>,
+    pub fmt_ovr: Vec<FmtOvrWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:fmtOvrs` element of the tree a read gives: [`FmtOvrsWith`] holding nothing in `extra`.
+pub type FmtOvrs = FmtOvrsWith<()>;
+
+impl Eq for FmtOvrsWith<()> {}
+
 /// The `cx:geoCache` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_GeoCache`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoCache {
+pub struct GeoCacheWith<X: NodeExtra> {
     /// The children that are an item of `GeographyCacheContent`, in order.
-    pub content: Vec<GeographyCacheContent>,
+    pub content: Vec<GeographyCacheContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoCache,
     /// The attribute `provider`, when the element has it.
     pub provider: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:geoCache` element of the tree a read gives: [`GeoCacheWith`] holding nothing in `extra`.
+pub type GeoCache = GeoCacheWith<()>;
+
+impl Eq for GeoCacheWith<()> {}
+
 /// The `cx:geoChildEntities` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_GeoChildEntities`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoChildEntities {
+pub struct GeoChildEntitiesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoChildEntities,
     /// The children that are `GeoHierarchyEntity`, in order.
-    pub geo_hierarchy_entity: Vec<GeoHierarchyEntity>,
+    pub geo_hierarchy_entity: Vec<GeoHierarchyEntityWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:geoChildEntities` element of the tree a read gives: [`GeoChildEntitiesWith`] holding
+/// nothing in `extra`.
+pub type GeoChildEntities = GeoChildEntitiesWith<()>;
+
+impl Eq for GeoChildEntitiesWith<()> {}
 
 /// The `cx:geoChildEntitiesQuery` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_GeoChildEntitiesQuery`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoChildEntitiesQuery {
+pub struct GeoChildEntitiesQueryWith<X: NodeExtra> {
     /// The attribute `entityId`, when the element has it.
     pub entity_id: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoChildEntitiesQuery,
     /// The child that is `GeoChildTypes`, when there is one.
-    pub geo_child_types: Option<Box<GeoChildTypes>>,
+    pub geo_child_types: Option<Box<GeoChildTypesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:geoChildEntitiesQuery` element of the tree a read gives: [`GeoChildEntitiesQueryWith`]
+/// holding nothing in `extra`.
+pub type GeoChildEntitiesQuery = GeoChildEntitiesQueryWith<()>;
+
+impl Eq for GeoChildEntitiesQueryWith<()> {}
 
 /// The `cx:geoChildEntitiesQueryResult` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_GeoChildEntitiesQueryResult`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoChildEntitiesQueryResult {
+pub struct GeoChildEntitiesQueryResultWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoChildEntitiesQueryResult,
     /// The child that is `GeoChildEntities`, when there is one.
-    pub geo_child_entities: Option<Box<GeoChildEntities>>,
+    pub geo_child_entities: Option<Box<GeoChildEntitiesWith<X>>>,
     /// The child that is `GeoChildEntitiesQuery`, when there is one.
-    pub geo_child_entities_query: Option<Box<GeoChildEntitiesQuery>>,
+    pub geo_child_entities_query: Option<Box<GeoChildEntitiesQueryWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:geoChildEntitiesQueryResult` element of the tree a read gives:
+/// [`GeoChildEntitiesQueryResultWith`] holding nothing in `extra`.
+pub type GeoChildEntitiesQueryResult = GeoChildEntitiesQueryResultWith<()>;
+
+impl Eq for GeoChildEntitiesQueryResultWith<()> {}
 
 /// The `cx:geoChildEntitiesQueryResults` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_GeoChildEntitiesQueryResults`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoChildEntitiesQueryResults {
+pub struct GeoChildEntitiesQueryResultsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoChildEntitiesQueryResults,
     /// The children that are `GeoChildEntitiesQueryResult`, in order.
-    pub geo_child_entities_query_result: Vec<GeoChildEntitiesQueryResult>,
+    pub geo_child_entities_query_result: Vec<GeoChildEntitiesQueryResultWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:geoChildEntitiesQueryResults` element of the tree a read gives:
+/// [`GeoChildEntitiesQueryResultsWith`] holding nothing in `extra`.
+pub type GeoChildEntitiesQueryResults = GeoChildEntitiesQueryResultsWith<()>;
+
+impl Eq for GeoChildEntitiesQueryResultsWith<()> {}
 
 /// The `cx:geoChildTypes` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_GeoChildTypes`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoChildTypes {
+pub struct GeoChildTypesWith<X: NodeExtra> {
     /// The children that are `EntityType`, in order.
-    pub entity_type: Vec<EntityType>,
+    pub entity_type: Vec<EntityTypeWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoChildTypes,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:geoChildTypes` element of the tree a read gives: [`GeoChildTypesWith`] holding nothing
+/// in `extra`.
+pub type GeoChildTypes = GeoChildTypesWith<()>;
+
+impl Eq for GeoChildTypesWith<()> {}
+
 /// The `cx:geoData` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_GeoData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoData {
+pub struct GeoDataWith<X: NodeExtra> {
     /// The child that is `Copyrights`, when there is one.
-    pub copyrights: Option<Box<Copyrights>>,
+    pub copyrights: Option<Box<CopyrightsWith<X>>>,
     /// The attribute `east`, when the element has it.
     pub east: Option<String>,
     /// The attribute `entityId`, when the element has it.
     pub entity_id: Option<String>,
     /// The attribute `entityName`, when the element has it.
     pub entity_name: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoData,
     /// The child that is `GeoPolygons`, when there is one.
-    pub geo_polygons: Option<Box<GeoPolygons>>,
+    pub geo_polygons: Option<Box<GeoPolygonsWith<X>>>,
     /// The attribute `north`, when the element has it.
     pub north: Option<String>,
     /// The attribute `south`, when the element has it.
@@ -5078,70 +5196,81 @@ pub struct GeoData {
     pub west: Option<String>,
 }
 
+/// The `cx:geoData` element of the tree a read gives: [`GeoDataWith`] holding nothing in `extra`.
+pub type GeoData = GeoDataWith<()>;
+
+impl Eq for GeoDataWith<()> {}
+
 /// The `cx:geoDataEntityQuery` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_GeoDataEntityQuery`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoDataEntityQuery {
+pub struct GeoDataEntityQueryWith<X: NodeExtra> {
     /// The attribute `entityId`, when the element has it.
     pub entity_id: Option<String>,
     /// The attribute `entityType`, when the element has it.
     pub entity_type: Option<StEntityType>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoDataEntityQuery,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:geoDataEntityQuery` element of the tree a read gives: [`GeoDataEntityQueryWith`] holding
+/// nothing in `extra`.
+pub type GeoDataEntityQuery = GeoDataEntityQueryWith<()>;
+
+impl Eq for GeoDataEntityQueryWith<()> {}
 
 /// The `cx:geoDataEntityQueryResult` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_GeoDataEntityQueryResult`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoDataEntityQueryResult {
+pub struct GeoDataEntityQueryResultWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoDataEntityQueryResult,
     /// The child that is `GeoData`, when there is one.
-    pub geo_data: Option<Box<GeoData>>,
+    pub geo_data: Option<Box<GeoDataWith<X>>>,
     /// The child that is `GeoDataEntityQuery`, when there is one.
-    pub geo_data_entity_query: Option<Box<GeoDataEntityQuery>>,
+    pub geo_data_entity_query: Option<Box<GeoDataEntityQueryWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:geoDataEntityQueryResult` element of the tree a read gives:
+/// [`GeoDataEntityQueryResultWith`] holding nothing in `extra`.
+pub type GeoDataEntityQueryResult = GeoDataEntityQueryResultWith<()>;
+
+impl Eq for GeoDataEntityQueryResultWith<()> {}
 
 /// The `cx:geoDataEntityQueryResults` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_GeoDataEntityQueryResults`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoDataEntityQueryResults {
+pub struct GeoDataEntityQueryResultsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoDataEntityQueryResults,
     /// The children that are `GeoDataEntityQueryResult`, in order.
-    pub geo_data_entity_query_result: Vec<GeoDataEntityQueryResult>,
+    pub geo_data_entity_query_result: Vec<GeoDataEntityQueryResultWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:geoDataEntityQueryResults` element of the tree a read gives:
+/// [`GeoDataEntityQueryResultsWith`] holding nothing in `extra`.
+pub type GeoDataEntityQueryResults = GeoDataEntityQueryResultsWith<()>;
+
+impl Eq for GeoDataEntityQueryResultsWith<()> {}
 
 /// The `cx:geoDataPointQuery` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_GeoDataPointQuery`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoDataPointQuery {
+pub struct GeoDataPointQueryWith<X: NodeExtra> {
     /// The attribute `entityType`, when the element has it.
     pub entity_type: Option<StEntityType>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoDataPointQuery,
     /// The attribute `latitude`, when the element has it.
     pub latitude: Option<String>,
     /// The attribute `longitude`, when the element has it.
@@ -5149,113 +5278,131 @@ pub struct GeoDataPointQuery {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:geoDataPointQuery` element of the tree a read gives: [`GeoDataPointQueryWith`] holding
+/// nothing in `extra`.
+pub type GeoDataPointQuery = GeoDataPointQueryWith<()>;
+
+impl Eq for GeoDataPointQueryWith<()> {}
 
 /// The `cx:geoDataPointToEntityQuery` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_GeoDataPointToEntityQuery`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoDataPointToEntityQuery {
+pub struct GeoDataPointToEntityQueryWith<X: NodeExtra> {
     /// The attribute `entityId`, when the element has it.
     pub entity_id: Option<String>,
     /// The attribute `entityType`, when the element has it.
     pub entity_type: Option<StEntityType>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoDataPointToEntityQuery,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:geoDataPointToEntityQuery` element of the tree a read gives:
+/// [`GeoDataPointToEntityQueryWith`] holding nothing in `extra`.
+pub type GeoDataPointToEntityQuery = GeoDataPointToEntityQueryWith<()>;
+
+impl Eq for GeoDataPointToEntityQueryWith<()> {}
 
 /// The `cx:geoDataPointToEntityQueryResult` element, declared by the schema data of the Open XML
 /// SDK, version 3.5.1. Its schema type is `CT_GeoDataPointToEntityQueryResult`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoDataPointToEntityQueryResult {
+pub struct GeoDataPointToEntityQueryResultWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoDataPointToEntityQueryResult,
     /// The child that is `GeoDataPointQuery`, when there is one.
-    pub geo_data_point_query: Option<Box<GeoDataPointQuery>>,
+    pub geo_data_point_query: Option<Box<GeoDataPointQueryWith<X>>>,
     /// The child that is `GeoDataPointToEntityQuery`, when there is one.
-    pub geo_data_point_to_entity_query: Option<Box<GeoDataPointToEntityQuery>>,
+    pub geo_data_point_to_entity_query: Option<Box<GeoDataPointToEntityQueryWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:geoDataPointToEntityQueryResult` element of the tree a read gives:
+/// [`GeoDataPointToEntityQueryResultWith`] holding nothing in `extra`.
+pub type GeoDataPointToEntityQueryResult = GeoDataPointToEntityQueryResultWith<()>;
+
+impl Eq for GeoDataPointToEntityQueryResultWith<()> {}
 
 /// The `cx:geoDataPointToEntityQueryResults` element, declared by the schema data of the Open XML
 /// SDK, version 3.5.1. Its schema type is `CT_GeoDataPointToEntityQueryResults`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoDataPointToEntityQueryResults {
+pub struct GeoDataPointToEntityQueryResultsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoDataPointToEntityQueryResults,
     /// The children that are `GeoDataPointToEntityQueryResult`, in order.
-    pub geo_data_point_to_entity_query_result: Vec<GeoDataPointToEntityQueryResult>,
+    pub geo_data_point_to_entity_query_result: Vec<GeoDataPointToEntityQueryResultWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:geoDataPointToEntityQueryResults` element of the tree a read gives:
+/// [`GeoDataPointToEntityQueryResultsWith`] holding nothing in `extra`.
+pub type GeoDataPointToEntityQueryResults = GeoDataPointToEntityQueryResultsWith<()>;
+
+impl Eq for GeoDataPointToEntityQueryResultsWith<()> {}
+
 /// The `cx:geoEntity` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_GeoEntity`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoEntity {
+pub struct GeoEntityWith<X: NodeExtra> {
     /// The attribute `entityName`, when the element has it.
     pub entity_name: Option<String>,
     /// The attribute `entityType`, when the element has it.
     pub entity_type: Option<StEntityType>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoEntity,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:geoEntity` element of the tree a read gives: [`GeoEntityWith`] holding nothing in
+/// `extra`.
+pub type GeoEntity = GeoEntityWith<()>;
+
+impl Eq for GeoEntityWith<()> {}
+
 /// The `cx:geoHierarchyEntity` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_GeoHierarchyEntity`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoHierarchyEntity {
+pub struct GeoHierarchyEntityWith<X: NodeExtra> {
     /// The attribute `entityId`, when the element has it.
     pub entity_id: Option<String>,
     /// The attribute `entityName`, when the element has it.
     pub entity_name: Option<String>,
     /// The attribute `entityType`, when the element has it.
     pub entity_type: Option<StEntityType>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoHierarchyEntity,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:geoHierarchyEntity` element of the tree a read gives: [`GeoHierarchyEntityWith`] holding
+/// nothing in `extra`.
+pub type GeoHierarchyEntity = GeoHierarchyEntityWith<()>;
+
+impl Eq for GeoHierarchyEntityWith<()> {}
+
 /// The `cx:geoLocation` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_GeoLocation`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoLocation {
+pub struct GeoLocationWith<X: NodeExtra> {
     /// The child that is `Address`, when there is one.
-    pub address: Option<Box<Address>>,
+    pub address: Option<Box<AddressWith<X>>>,
     /// The attribute `entityName`, when the element has it.
     pub entity_name: Option<String>,
     /// The attribute `entityType`, when the element has it.
     pub entity_type: Option<StEntityType>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoLocation,
     /// The attribute `latitude`, when the element has it.
     pub latitude: Option<String>,
     /// The attribute `longitude`, when the element has it.
@@ -5264,16 +5411,17 @@ pub struct GeoLocation {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:geoLocation` element of the tree a read gives: [`GeoLocationWith`] holding nothing in
+/// `extra`.
+pub type GeoLocation = GeoLocationWith<()>;
+
+impl Eq for GeoLocationWith<()> {}
+
 /// The `cx:geoLocationQuery` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_GeoLocationQuery`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoLocationQuery {
+pub struct GeoLocationQueryWith<X: NodeExtra> {
     /// The attribute `adminDistrict1`, when the element has it.
     pub admin_district1: Option<String>,
     /// The attribute `adminDistrict2`, when the element has it.
@@ -5282,61 +5430,78 @@ pub struct GeoLocationQuery {
     pub country_region: Option<String>,
     /// The attribute `entityType`, when the element has it.
     pub entity_type: Option<StEntityType>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoLocationQuery,
     /// The attribute `postalCode`, when the element has it.
     pub postal_code: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:geoLocationQuery` element of the tree a read gives: [`GeoLocationQueryWith`] holding
+/// nothing in `extra`.
+pub type GeoLocationQuery = GeoLocationQueryWith<()>;
+
+impl Eq for GeoLocationQueryWith<()> {}
+
 /// The `cx:geoLocationQueryResult` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_GeoLocationQueryResult`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoLocationQueryResult {
+pub struct GeoLocationQueryResultWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoLocationQueryResult,
     /// The child that is `GeoLocationQuery`, when there is one.
-    pub geo_location_query: Option<Box<GeoLocationQuery>>,
+    pub geo_location_query: Option<Box<GeoLocationQueryWith<X>>>,
     /// The child that is `GeoLocations`, when there is one.
-    pub geo_locations: Option<Box<GeoLocations>>,
+    pub geo_locations: Option<Box<GeoLocationsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:geoLocationQueryResult` element of the tree a read gives: [`GeoLocationQueryResultWith`]
+/// holding nothing in `extra`.
+pub type GeoLocationQueryResult = GeoLocationQueryResultWith<()>;
+
+impl Eq for GeoLocationQueryResultWith<()> {}
 
 /// The `cx:geoLocationQueryResults` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_GeoLocationQueryResults`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoLocationQueryResults {
+pub struct GeoLocationQueryResultsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoLocationQueryResults,
     /// The children that are `GeoLocationQueryResult`, in order.
-    pub geo_location_query_result: Vec<GeoLocationQueryResult>,
+    pub geo_location_query_result: Vec<GeoLocationQueryResultWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:geoLocationQueryResults` element of the tree a read gives:
+/// [`GeoLocationQueryResultsWith`] holding nothing in `extra`.
+pub type GeoLocationQueryResults = GeoLocationQueryResultsWith<()>;
+
+impl Eq for GeoLocationQueryResultsWith<()> {}
+
 /// The `cx:geoLocations` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_GeoLocations`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoLocations {
+pub struct GeoLocationsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoLocations,
     /// The child that is `GeoLocation`, when there is one.
-    pub geo_location: Option<Box<GeoLocation>>,
+    pub geo_location: Option<Box<GeoLocationWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:geoLocations` element of the tree a read gives: [`GeoLocationsWith`] holding nothing in
+/// `extra`.
+pub type GeoLocations = GeoLocationsWith<()>;
+
+impl Eq for GeoLocationsWith<()> {}
 
 /// The simple type `ST_GeoMappingLevel`, kept as the text the file carried.
 ///
@@ -5373,82 +5538,91 @@ pub enum GeoMappingLevelMember {
 
 /// The `cx:geoParentEntitiesQuery` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_GeoParentEntitiesQuery`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoParentEntitiesQuery {
+pub struct GeoParentEntitiesQueryWith<X: NodeExtra> {
     /// The attribute `entityId`, when the element has it.
     pub entity_id: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoParentEntitiesQuery,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:geoParentEntitiesQuery` element of the tree a read gives: [`GeoParentEntitiesQueryWith`]
+/// holding nothing in `extra`.
+pub type GeoParentEntitiesQuery = GeoParentEntitiesQueryWith<()>;
+
+impl Eq for GeoParentEntitiesQueryWith<()> {}
 
 /// The `cx:geoParentEntitiesQueryResult` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_GeoParentEntitiesQueryResult`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoParentEntitiesQueryResult {
+pub struct GeoParentEntitiesQueryResultWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoParentEntitiesQueryResult,
     /// The child that is `GeoEntity`, when there is one.
-    pub geo_entity: Option<Box<GeoEntity>>,
+    pub geo_entity: Option<Box<GeoEntityWith<X>>>,
     /// The child that is `GeoParentEntitiesQuery`, which the schema requires.
-    pub geo_parent_entities_query: Box<GeoParentEntitiesQuery>,
+    pub geo_parent_entities_query: Box<GeoParentEntitiesQueryWith<X>>,
     /// The child that is `GeoParentEntity`, when there is one.
-    pub geo_parent_entity: Option<Box<GeoParentEntity>>,
+    pub geo_parent_entity: Option<Box<GeoParentEntityWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:geoParentEntitiesQueryResult` element of the tree a read gives:
+/// [`GeoParentEntitiesQueryResultWith`] holding nothing in `extra`.
+pub type GeoParentEntitiesQueryResult = GeoParentEntitiesQueryResultWith<()>;
+
+impl Eq for GeoParentEntitiesQueryResultWith<()> {}
 
 /// The `cx:geoParentEntitiesQueryResults` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_GeoParentEntitiesQueryResults`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoParentEntitiesQueryResults {
+pub struct GeoParentEntitiesQueryResultsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoParentEntitiesQueryResults,
     /// The children that are `GeoParentEntitiesQueryResult`, in order.
-    pub geo_parent_entities_query_result: Vec<GeoParentEntitiesQueryResult>,
+    pub geo_parent_entities_query_result: Vec<GeoParentEntitiesQueryResultWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:geoParentEntitiesQueryResults` element of the tree a read gives:
+/// [`GeoParentEntitiesQueryResultsWith`] holding nothing in `extra`.
+pub type GeoParentEntitiesQueryResults = GeoParentEntitiesQueryResultsWith<()>;
+
+impl Eq for GeoParentEntitiesQueryResultsWith<()> {}
 
 /// The `cx:geoParentEntity` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_GeoParentEntity`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoParentEntity {
+pub struct GeoParentEntityWith<X: NodeExtra> {
     /// The attribute `entityId`, when the element has it.
     pub entity_id: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoParentEntity,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:geoParentEntity` element of the tree a read gives: [`GeoParentEntityWith`] holding
+/// nothing in `extra`.
+pub type GeoParentEntity = GeoParentEntityWith<()>;
+
+impl Eq for GeoParentEntityWith<()> {}
+
 /// The `cx:geoPolygon` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_GeoPolygon`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoPolygon {
+pub struct GeoPolygonWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoPolygon,
     /// The attribute `numPoints`, when the element has it.
     pub num_points: Option<String>,
     /// The attribute `pcaRings`, when the element has it.
@@ -5459,21 +5633,30 @@ pub struct GeoPolygon {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:geoPolygon` element of the tree a read gives: [`GeoPolygonWith`] holding nothing in
+/// `extra`.
+pub type GeoPolygon = GeoPolygonWith<()>;
+
+impl Eq for GeoPolygonWith<()> {}
+
 /// The `cx:geoPolygons` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_GeoPolygons`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GeoPolygons {
+pub struct GeoPolygonsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeoPolygons,
     /// The children that are `GeoPolygon`, in order.
-    pub geo_polygon: Vec<GeoPolygon>,
+    pub geo_polygon: Vec<GeoPolygonWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:geoPolygons` element of the tree a read gives: [`GeoPolygonsWith`] holding nothing in
+/// `extra`.
+pub type GeoPolygons = GeoPolygonsWith<()>;
+
+impl Eq for GeoPolygonsWith<()> {}
 
 /// The simple type `ST_GeoProjectionType`, kept as the text the file carried.
 ///
@@ -5504,22 +5687,19 @@ pub enum GeoProjectionTypeMember {
 
 /// The `cx:geography` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Geography`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Geography {
+pub struct GeographyWith<X: NodeExtra> {
     /// The attribute `attribution`, when the element has it.
     pub attribution: Option<String>,
     /// The attribute `cultureLanguage`, when the element has it.
     pub culture_language: Option<String>,
     /// The attribute `cultureRegion`, when the element has it.
     pub culture_region: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexGeography,
     /// The child that is `GeoCache`, when there is one.
-    pub geo_cache: Option<Box<GeoCache>>,
+    pub geo_cache: Option<Box<GeoCacheWith<X>>>,
     /// The attribute `projectionType`, when the element has it.
     pub projection_type: Option<GeoProjectionType>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -5528,32 +5708,38 @@ pub struct Geography {
     pub viewed_region_type: Option<GeoMappingLevel>,
 }
 
+/// The `cx:geography` element of the tree a read gives: [`GeographyWith`] holding nothing in
+/// `extra`.
+pub type Geography = GeographyWith<()>;
+
+impl Eq for GeographyWith<()> {}
+
 /// One child element of a choice: choice in `CT_GeoCache`.
 ///
 /// The schema types that hold it: `CT_GeoCache`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum GeographyCacheContent {
+pub enum GeographyCacheContentWith<X: NodeExtra> {
     /// The element `cx:binary`, a `Binary`.
-    Binary(Binary),
+    Binary(BinaryWith<X>),
     /// The element `cx:clear`, a `Clear`.
-    Clear(Clear),
+    Clear(ClearWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
+/// [`GeographyCacheContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type GeographyCacheContent = GeographyCacheContentWith<()>;
+
+impl Eq for GeographyCacheContentWith<()> {}
+
 /// The `cx:headerFooter` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_HeaderFooter`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HeaderFooter {
+pub struct HeaderFooterWith<X: NodeExtra> {
     /// The attribute `alignWithMargins`, when the element has it.
     pub align_with_margins: Option<String>,
     /// The attribute `differentFirst`, when the element has it.
@@ -5561,36 +5747,46 @@ pub struct HeaderFooter {
     /// The attribute `differentOddEven`, when the element has it.
     pub different_odd_even: Option<String>,
     /// The child that is `EvenFooter`, when there is one.
-    pub even_footer: Option<Box<EvenFooter>>,
+    pub even_footer: Option<Box<EvenFooterWith<X>>>,
     /// The child that is `EvenHeader`, when there is one.
-    pub even_header: Option<Box<EvenHeader>>,
+    pub even_header: Option<Box<EvenHeaderWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexHeaderFooter,
     /// The child that is `FirstFooter`, when there is one.
-    pub first_footer: Option<Box<FirstFooter>>,
+    pub first_footer: Option<Box<FirstFooterWith<X>>>,
     /// The child that is `FirstHeader`, when there is one.
-    pub first_header: Option<Box<FirstHeader>>,
+    pub first_header: Option<Box<FirstHeaderWith<X>>>,
     /// The child that is `OddFooter`, when there is one.
-    pub odd_footer: Option<Box<OddFooter>>,
+    pub odd_footer: Option<Box<OddFooterWith<X>>>,
     /// The child that is `OddHeader`, when there is one.
-    pub odd_header: Option<Box<OddHeader>>,
+    pub odd_header: Option<Box<OddHeaderWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:headerFooter` element of the tree a read gives: [`HeaderFooterWith`] holding nothing in
+/// `extra`.
+pub type HeaderFooter = HeaderFooterWith<()>;
+
+impl Eq for HeaderFooterWith<()> {}
+
 /// The `cx:idx` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_UnsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Idx {
+pub struct IdxWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexIdx,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
+
+/// The `cx:idx` element of the tree a read gives: [`IdxWith`] holding nothing in `extra`.
+pub type Idx = IdxWith<()>;
+
+impl Eq for IdxWith<()> {}
 
 /// The simple type `ST_IntervalClosedSide`, kept as the text the file carried.
 ///
@@ -5617,72 +5813,74 @@ pub enum IntervalClosedSideMember {
 
 /// The `cx:layoutPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_SeriesLayoutProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LayoutPr {
+pub struct LayoutPrWith<X: NodeExtra> {
     /// The child that is an item of `SeriesLayoutPropertiesContent`, when there is one.
-    pub content: Option<Box<SeriesLayoutPropertiesContent>>,
+    pub content: Option<Box<SeriesLayoutPropertiesContentWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexLayoutPr,
     /// The child that is `Geography`, when there is one.
-    pub geography: Option<Box<Geography>>,
+    pub geography: Option<Box<GeographyWith<X>>>,
     /// The child that is `ParentLabelLayout`, when there is one.
-    pub parent_label_layout: Option<Box<ParentLabelLayout>>,
+    pub parent_label_layout: Option<Box<ParentLabelLayoutWith<X>>>,
     /// The child that is `RegionLabelLayout`, when there is one.
-    pub region_label_layout: Option<Box<RegionLabelLayout>>,
+    pub region_label_layout: Option<Box<RegionLabelLayoutWith<X>>>,
     /// The child that is `Statistics`, when there is one.
-    pub statistics: Option<Box<Statistics>>,
+    pub statistics: Option<Box<StatisticsWith<X>>>,
     /// The child that is `Subtotals`, when there is one.
-    pub subtotals: Option<Box<Subtotals>>,
+    pub subtotals: Option<Box<SubtotalsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `VisibilitySeriesElementVisibilities`, when there is one.
-    pub visibility_series_element_visibilities: Option<Box<VisibilitySeriesElementVisibilities>>,
+    pub visibility_series_element_visibilities:
+        Option<Box<VisibilitySeriesElementVisibilitiesWith<X>>>,
 }
+
+/// The `cx:layoutPr` element of the tree a read gives: [`LayoutPrWith`] holding nothing in `extra`.
+pub type LayoutPr = LayoutPrWith<()>;
+
+impl Eq for LayoutPrWith<()> {}
 
 /// The `cx:legend` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Legend`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Legend {
+pub struct LegendWith<X: NodeExtra> {
     /// The attribute `align`, when the element has it.
     pub align: Option<PosAlign>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexLegend,
     /// The child that is `Offset`, when there is one.
-    pub offset: Option<Box<Offset>>,
+    pub offset: Option<Box<OffsetWith<X>>>,
     /// The attribute `overlay`, when the element has it.
     pub overlay: Option<String>,
     /// The attribute `pos`, when the element has it.
     pub pos: Option<SidePos>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// The child that is `TxPr`, when there is one.
-    pub tx_pr: Option<Box<TxPr>>,
+    pub tx_pr: Option<Box<TxPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:legend` element of the tree a read gives: [`LegendWith`] holding nothing in `extra`.
+pub type Legend = LegendWith<()>;
+
+impl Eq for LegendWith<()> {}
+
 /// The `cx:lvl` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_NumericLevel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LvlNumericLevel {
+pub struct LvlNumericLevelWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexLvlNumericLevel,
     /// The attribute `formatCode`, when the element has it.
     pub format_code: Option<String>,
     /// The attribute `name`, when the element has it.
@@ -5690,239 +5888,273 @@ pub struct LvlNumericLevel {
     /// The attribute `ptCount`, when the element has it.
     pub pt_count: Option<String>,
     /// The children that are `PtNumericValue`, in order.
-    pub pt_numeric_value: Vec<PtNumericValue>,
+    pub pt_numeric_value: Vec<PtNumericValueWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:lvl` element of the tree a read gives: [`LvlNumericLevelWith`] holding nothing in
+/// `extra`.
+pub type LvlNumericLevel = LvlNumericLevelWith<()>;
+
+impl Eq for LvlNumericLevelWith<()> {}
+
 /// The `cx:lvl` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_StringLevel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LvlStringLevel {
+pub struct LvlStringLevelWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexLvlStringLevel,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// The attribute `ptCount`, when the element has it.
     pub pt_count: Option<String>,
     /// The children that are `PtStringValue`, in order.
-    pub pt_string_value: Vec<PtStringValue>,
+    pub pt_string_value: Vec<PtStringValueWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:lvl` element of the tree a read gives: [`LvlStringLevelWith`] holding nothing in
+/// `extra`.
+pub type LvlStringLevel = LvlStringLevelWith<()>;
+
+impl Eq for LvlStringLevelWith<()> {}
 
 /// The `cx:majorGridlines` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_Gridlines`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MajorGridlines {
+pub struct MajorGridlinesWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexMajorGridlines,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:majorGridlines` element of the tree a read gives: [`MajorGridlinesWith`] holding nothing
+/// in `extra`.
+pub type MajorGridlines = MajorGridlinesWith<()>;
+
+impl Eq for MajorGridlinesWith<()> {}
 
 /// The `cx:majorTickMarks` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_TickMarks`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MajorTickMarks {
+pub struct MajorTickMarksWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexMajorTickMarks,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:majorTickMarks` element of the tree a read gives: [`MajorTickMarksWith`] holding nothing
+/// in `extra`.
+pub type MajorTickMarks = MajorTickMarksWith<()>;
+
+impl Eq for MajorTickMarksWith<()> {}
 
 /// The `cx:max` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_ValueColorEndPosition`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Max {
+pub struct MaxWith<X: NodeExtra> {
     /// The child that is an item of `ValueColorEndPositionContent`, which the schema requires.
-    pub content: Box<ValueColorEndPositionContent>,
+    pub content: Box<ValueColorEndPositionContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexMax,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:max` element of the tree a read gives: [`MaxWith`] holding nothing in `extra`.
+pub type Max = MaxWith<()>;
+
+impl Eq for MaxWith<()> {}
 
 /// The `cx:maxColor` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_SolidColorFillProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MaxColor {
+pub struct MaxColorWith<X: NodeExtra> {
     /// The child that is an item of `drawing::ColorContent`, when there is one.
-    pub content: Option<Box<drawing::ColorContent>>,
+    pub content: Option<Box<drawing::ColorContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexMaxColor,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:maxColor` element of the tree a read gives: [`MaxColorWith`] holding nothing in `extra`.
+pub type MaxColor = MaxColorWith<()>;
+
+impl Eq for MaxColorWith<()> {}
 
 /// The `cx:mid` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_ValueColorMiddlePosition`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Mid {
+pub struct MidWith<X: NodeExtra> {
     /// The child that is an item of `ValueColorMiddlePositionContent`, which the schema requires.
-    pub content: Box<ValueColorMiddlePositionContent>,
+    pub content: Box<ValueColorMiddlePositionContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexMid,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:mid` element of the tree a read gives: [`MidWith`] holding nothing in `extra`.
+pub type Mid = MidWith<()>;
+
+impl Eq for MidWith<()> {}
 
 /// The `cx:midColor` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_SolidColorFillProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MidColor {
+pub struct MidColorWith<X: NodeExtra> {
     /// The child that is an item of `drawing::ColorContent`, when there is one.
-    pub content: Option<Box<drawing::ColorContent>>,
+    pub content: Option<Box<drawing::ColorContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexMidColor,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:midColor` element of the tree a read gives: [`MidColorWith`] holding nothing in `extra`.
+pub type MidColor = MidColorWith<()>;
+
+impl Eq for MidColorWith<()> {}
 
 /// The `cx:min` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_ValueColorEndPosition`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Min {
+pub struct MinWith<X: NodeExtra> {
     /// The child that is an item of `ValueColorEndPositionContent`, which the schema requires.
-    pub content: Box<ValueColorEndPositionContent>,
+    pub content: Box<ValueColorEndPositionContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexMin,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:min` element of the tree a read gives: [`MinWith`] holding nothing in `extra`.
+pub type Min = MinWith<()>;
+
+impl Eq for MinWith<()> {}
 
 /// The `cx:minColor` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_SolidColorFillProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MinColor {
+pub struct MinColorWith<X: NodeExtra> {
     /// The child that is an item of `drawing::ColorContent`, when there is one.
-    pub content: Option<Box<drawing::ColorContent>>,
+    pub content: Option<Box<drawing::ColorContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexMinColor,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:minColor` element of the tree a read gives: [`MinColorWith`] holding nothing in `extra`.
+pub type MinColor = MinColorWith<()>;
+
+impl Eq for MinColorWith<()> {}
 
 /// The `cx:minorGridlines` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_Gridlines`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MinorGridlines {
+pub struct MinorGridlinesWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexMinorGridlines,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:minorGridlines` element of the tree a read gives: [`MinorGridlinesWith`] holding nothing
+/// in `extra`.
+pub type MinorGridlines = MinorGridlinesWith<()>;
+
+impl Eq for MinorGridlinesWith<()> {}
 
 /// The `cx:minorTickMarks` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_TickMarks`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MinorTickMarks {
+pub struct MinorTickMarksWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexMinorTickMarks,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:minorTickMarks` element of the tree a read gives: [`MinorTickMarksWith`] holding nothing
+/// in `extra`.
+pub type MinorTickMarks = MinorTickMarksWith<()>;
+
+impl Eq for MinorTickMarksWith<()> {}
+
 /// The `cx:nf` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_Formula`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Nf {
+pub struct NfWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexNf,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `cx:nf` element of the tree a read gives: [`NfWith`] holding nothing in `extra`.
+pub type Nf = NfWith<()>;
+
+impl Eq for NfWith<()> {}
+
 /// The `cx:numDim` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_NumericDimension`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NumDim {
+pub struct NumDimWith<X: NodeExtra> {
     /// The children that are an item of `NumericDimensionContent`, in order.
-    pub content: Vec<NumericDimensionContent>,
+    pub content: Vec<NumericDimensionContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexNumDim,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<NumericDimensionType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:numDim` element of the tree a read gives: [`NumDimWith`] holding nothing in `extra`.
+pub type NumDim = NumDimWith<()>;
+
+impl Eq for NumDimWith<()> {}
+
 /// The `cx:numFmt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_NumberFormat`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NumFmt {
+pub struct NumFmtWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexNumFmt,
     /// The attribute `formatCode`, when the element has it.
     pub format_code: Option<String>,
     /// The attribute `sourceLinked`, when the element has it.
@@ -5931,39 +6163,52 @@ pub struct NumFmt {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:numFmt` element of the tree a read gives: [`NumFmtWith`] holding nothing in `extra`.
+pub type NumFmt = NumFmtWith<()>;
+
+impl Eq for NumFmtWith<()> {}
+
 /// The `cx:number` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_NumberColorPosition`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Number {
+pub struct NumberWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexNumber,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
+/// The `cx:number` element of the tree a read gives: [`NumberWith`] holding nothing in `extra`.
+pub type Number = NumberWith<()>;
+
+impl Eq for NumberWith<()> {}
+
 /// One child element of a choice: choice in `CT_NumericDimension`.
 ///
 /// The schema types that hold it: `CT_NumericDimension`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum NumericDimensionContent {
+pub enum NumericDimensionContentWith<X: NodeExtra> {
     /// The element `cx:f`, a `F`.
-    F(F),
+    F(FWith<X>),
     /// The element `cx:lvl`, a `LvlNumericLevel`.
-    LvlNumericLevel(LvlNumericLevel),
+    LvlNumericLevel(LvlNumericLevelWith<X>),
     /// The element `cx:nf`, a `Nf`.
-    Nf(Nf),
+    Nf(NfWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
+
+/// [`NumericDimensionContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type NumericDimensionContent = NumericDimensionContentWith<()>;
+
+impl Eq for NumericDimensionContentWith<()> {}
 
 /// The simple type `ST_NumericDimensionType`, kept as the text the file carried.
 ///
@@ -5996,46 +6241,49 @@ pub enum NumericDimensionTypeMember {
 
 /// The `cx:oddFooter` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct OddFooter {
+pub struct OddFooterWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexOddFooter,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `cx:oddFooter` element of the tree a read gives: [`OddFooterWith`] holding nothing in
+/// `extra`.
+pub type OddFooter = OddFooterWith<()>;
+
+impl Eq for OddFooterWith<()> {}
 
 /// The `cx:oddHeader` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct OddHeader {
+pub struct OddHeaderWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexOddHeader,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `cx:oddHeader` element of the tree a read gives: [`OddHeaderWith`] holding nothing in
+/// `extra`.
+pub type OddHeader = OddHeaderWith<()>;
+
+impl Eq for OddHeaderWith<()> {}
+
 /// The `cx:offset` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Offset`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Offset {
+pub struct OffsetWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexOffset,
     /// The attribute `left`, when the element has it.
     pub left: Option<String>,
     /// The attribute `top`, when the element has it.
@@ -6044,34 +6292,40 @@ pub struct Offset {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:offset` element of the tree a read gives: [`OffsetWith`] holding nothing in `extra`.
+pub type Offset = OffsetWith<()>;
+
+impl Eq for OffsetWith<()> {}
+
 /// The `cx:openxmlsdk_49BECFFA_3B03_4D13_8272_D6CCB22579E3` element, declared by the schema data of
 /// the Open XML SDK, version 3.5.1. Its schema type is `unsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Openxmlsdk49BECFFA3B034D138272D6CCB22579E3 {
+pub struct Openxmlsdk49BECFFA3B034D138272D6CCB22579E3With<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexOpenxmlsdk49BECFFA3B034D138272D6CCB22579E3,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `cx:openxmlsdk_49BECFFA_3B03_4D13_8272_D6CCB22579E3` element of the tree a read gives:
+/// [`Openxmlsdk49BECFFA3B034D138272D6CCB22579E3With`] holding nothing in `extra`.
+pub type Openxmlsdk49BECFFA3B034D138272D6CCB22579E3 =
+    Openxmlsdk49BECFFA3B034D138272D6CCB22579E3With<()>;
+
+impl Eq for Openxmlsdk49BECFFA3B034D138272D6CCB22579E3With<()> {}
+
 /// The `cx:pageMargins` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_PageMargins`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PageMargins {
+pub struct PageMarginsWith<X: NodeExtra> {
     /// The attribute `b`, when the element has it.
     pub b: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexPageMargins,
     /// The attribute `footer`, when the element has it.
     pub footer: Option<String>,
     /// The attribute `header`, when the element has it.
@@ -6085,6 +6339,12 @@ pub struct PageMargins {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:pageMargins` element of the tree a read gives: [`PageMarginsWith`] holding nothing in
+/// `extra`.
+pub type PageMargins = PageMarginsWith<()>;
+
+impl Eq for PageMarginsWith<()> {}
 
 /// The simple type `ST_PageOrientation`, kept as the text the file carried.
 ///
@@ -6113,20 +6373,17 @@ pub enum PageOrientationMember {
 
 /// The `cx:pageSetup` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_PageSetup`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PageSetup {
+pub struct PageSetupWith<X: NodeExtra> {
     /// The attribute `blackAndWhite`, when the element has it.
     pub black_and_white: Option<String>,
     /// The attribute `copies`, when the element has it.
     pub copies: Option<String>,
     /// The attribute `draft`, when the element has it.
     pub draft: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexPageSetup,
     /// The attribute `firstPageNumber`, when the element has it.
     pub first_page_number: Option<String>,
     /// The attribute `horizontalDpi`, when the element has it.
@@ -6143,97 +6400,116 @@ pub struct PageSetup {
     pub vertical_dpi: Option<String>,
 }
 
+/// The `cx:pageSetup` element of the tree a read gives: [`PageSetupWith`] holding nothing in
+/// `extra`.
+pub type PageSetup = PageSetupWith<()>;
+
+impl Eq for PageSetupWith<()> {}
+
 /// The `cx:parentLabelLayout` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_ParentLabelLayout`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ParentLabelLayout {
+pub struct ParentLabelLayoutWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexParentLabelLayout,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<StParentLabelLayout>,
 }
 
+/// The `cx:parentLabelLayout` element of the tree a read gives: [`ParentLabelLayoutWith`] holding
+/// nothing in `extra`.
+pub type ParentLabelLayout = ParentLabelLayoutWith<()>;
+
+impl Eq for ParentLabelLayoutWith<()> {}
+
 /// The `cx:percent` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_PercentageColorPosition`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Percent {
+pub struct PercentWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexPercent,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
+/// The `cx:percent` element of the tree a read gives: [`PercentWith`] holding nothing in `extra`.
+pub type Percent = PercentWith<()>;
+
+impl Eq for PercentWith<()> {}
+
 /// The `cx:plotArea` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_PlotArea`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PlotArea {
+pub struct PlotAreaWith<X: NodeExtra> {
     /// The children that are `Axis`, in order.
-    pub axis: Vec<Axis>,
+    pub axis: Vec<AxisWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexPlotArea,
     /// The child that is `PlotAreaRegion`, which the schema requires.
-    pub region: Box<PlotAreaRegion>,
+    pub region: Box<PlotAreaRegionWith<X>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:plotArea` element of the tree a read gives: [`PlotAreaWith`] holding nothing in `extra`.
+pub type PlotArea = PlotAreaWith<()>;
+
+impl Eq for PlotAreaWith<()> {}
 
 /// The `cx:plotAreaRegion` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_PlotAreaRegion`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PlotAreaRegion {
+pub struct PlotAreaRegionWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexPlotAreaRegion,
     /// The child that is `PlotSurface`, when there is one.
-    pub plot_surface: Option<Box<PlotSurface>>,
+    pub plot_surface: Option<Box<PlotSurfaceWith<X>>>,
     /// The children that are `Series`, in order.
-    pub series: Vec<Series>,
+    pub series: Vec<SeriesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:plotAreaRegion` element of the tree a read gives: [`PlotAreaRegionWith`] holding nothing
+/// in `extra`.
+pub type PlotAreaRegion = PlotAreaRegionWith<()>;
+
+impl Eq for PlotAreaRegionWith<()> {}
+
 /// The `cx:plotSurface` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_PlotSurface`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PlotSurface {
+pub struct PlotSurfaceWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexPlotSurface,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:plotSurface` element of the tree a read gives: [`PlotSurfaceWith`] holding nothing in
+/// `extra`.
+pub type PlotSurface = PlotSurfaceWith<()>;
+
+impl Eq for PlotSurfaceWith<()> {}
 
 /// The simple type `ST_PosAlign`, kept as the text the file carried.
 ///
@@ -6262,34 +6538,34 @@ pub enum PosAlignMember {
 
 /// The `cx:printSettings` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_PrintSettings`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PrintSettings {
+pub struct PrintSettingsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexPrintSettings,
     /// The child that is `HeaderFooter`, when there is one.
-    pub header_footer: Option<Box<HeaderFooter>>,
+    pub header_footer: Option<Box<HeaderFooterWith<X>>>,
     /// The child that is `PageMargins`, when there is one.
-    pub page_margins: Option<Box<PageMargins>>,
+    pub page_margins: Option<Box<PageMarginsWith<X>>>,
     /// The child that is `PageSetup`, when there is one.
-    pub page_setup: Option<Box<PageSetup>>,
+    pub page_setup: Option<Box<PageSetupWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:printSettings` element of the tree a read gives: [`PrintSettingsWith`] holding nothing
+/// in `extra`.
+pub type PrintSettings = PrintSettingsWith<()>;
+
+impl Eq for PrintSettingsWith<()> {}
 
 /// The `cx:pt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_NumericValue`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PtNumericValue {
+pub struct PtNumericValueWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexPtNumericValue,
     /// The attribute `idx`, when the element has it.
     pub idx: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -6298,16 +6574,18 @@ pub struct PtNumericValue {
     pub value: String,
 }
 
+/// The `cx:pt` element of the tree a read gives: [`PtNumericValueWith`] holding nothing in `extra`.
+pub type PtNumericValue = PtNumericValueWith<()>;
+
+impl Eq for PtNumericValueWith<()> {}
+
 /// The `cx:pt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_StringValue`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PtStringValue {
+pub struct PtStringValueWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexPtStringValue,
     /// The attribute `idx`, when the element has it.
     pub idx: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -6315,6 +6593,11 @@ pub struct PtStringValue {
     /// The element's text.
     pub value: String,
 }
+
+/// The `cx:pt` element of the tree a read gives: [`PtStringValueWith`] holding nothing in `extra`.
+pub type PtStringValue = PtStringValueWith<()>;
+
+impl Eq for PtStringValueWith<()> {}
 
 /// The simple type `ST_QuartileMethod`, kept as the text the file carried.
 ///
@@ -6341,76 +6624,81 @@ pub enum QuartileMethodMember {
 
 /// The `cx:regionLabelLayout` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_RegionLabelLayout`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RegionLabelLayout {
+pub struct RegionLabelLayoutWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexRegionLabelLayout,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<StRegionLabelLayout>,
 }
 
+/// The `cx:regionLabelLayout` element of the tree a read gives: [`RegionLabelLayoutWith`] holding
+/// nothing in `extra`.
+pub type RegionLabelLayout = RegionLabelLayoutWith<()>;
+
+impl Eq for RegionLabelLayoutWith<()> {}
+
 /// The `cx:rich` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TextBody`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Rich {
+pub struct RichWith<X: NodeExtra> {
     /// The child that is `drawing::BodyProperties`, which the schema requires.
-    pub body_properties: Box<drawing::BodyProperties>,
+    pub body_properties: Box<drawing::BodyPropertiesWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexRich,
     /// The child that is `drawing::TextListStyles`, when there is one.
-    pub text_list_styles: Option<Box<drawing::TextListStyles>>,
+    pub text_list_styles: Option<Box<drawing::TextListStylesWith<X>>>,
     /// The children that are `drawing::TextParagraphs`, in order.
-    pub text_paragraphs: Vec<drawing::TextParagraphs>,
+    pub text_paragraphs: Vec<drawing::TextParagraphsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:rich` element of the tree a read gives: [`RichWith`] holding nothing in `extra`.
+pub type Rich = RichWith<()>;
+
+impl Eq for RichWith<()> {}
+
 /// The `cx:separator` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Separator {
+pub struct SeparatorWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexSeparator,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `cx:separator` element of the tree a read gives: [`SeparatorWith`] holding nothing in
+/// `extra`.
+pub type Separator = SeparatorWith<()>;
+
+impl Eq for SeparatorWith<()> {}
+
 /// The `cx:series` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Series`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Series {
+pub struct SeriesWith<X: NodeExtra> {
     /// The children that are `AxisId`, in order.
-    pub axis_id: Vec<AxisId>,
+    pub axis_id: Vec<AxisIdWith<X>>,
     /// The child that is `DataId`, when there is one.
-    pub data_id: Option<Box<DataId>>,
+    pub data_id: Option<Box<DataIdWith<X>>>,
     /// The child that is `DataLabels`, when there is one.
-    pub data_labels: Option<Box<DataLabels>>,
+    pub data_labels: Option<Box<DataLabelsWith<X>>>,
     /// The children that are `DataPt`, in order.
-    pub data_pt: Vec<DataPt>,
+    pub data_pt: Vec<DataPtWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexSeries,
     /// The attribute `formatIdx`, when the element has it.
     pub format_idx: Option<String>,
     /// The attribute `hidden`, when the element has it.
@@ -6418,22 +6706,27 @@ pub struct Series {
     /// The attribute `layoutId`, when the element has it.
     pub layout_id: Option<SeriesLayout>,
     /// The child that is `LayoutPr`, when there is one.
-    pub layout_pr: Option<Box<LayoutPr>>,
+    pub layout_pr: Option<Box<LayoutPrWith<X>>>,
     /// The attribute `ownerIdx`, when the element has it.
     pub owner_idx: Option<String>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// The child that is `Tx`, when there is one.
-    pub tx: Option<Box<Tx>>,
+    pub tx: Option<Box<TxWith<X>>>,
     /// The attribute `uniqueId`, when the element has it.
     pub unique_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `ValueColorPositions`, when there is one.
-    pub value_color_positions: Option<Box<ValueColorPositions>>,
+    pub value_color_positions: Option<Box<ValueColorPositionsWith<X>>>,
     /// The child that is `ValueColors`, when there is one.
-    pub value_colors: Option<Box<ValueColors>>,
+    pub value_colors: Option<Box<ValueColorsWith<X>>>,
 }
+
+/// The `cx:series` element of the tree a read gives: [`SeriesWith`] holding nothing in `extra`.
+pub type Series = SeriesWith<()>;
+
+impl Eq for SeriesWith<()> {}
 
 /// The simple type `ST_SeriesLayout`, kept as the text the file carried.
 ///
@@ -6475,16 +6768,22 @@ pub enum SeriesLayoutMember {
 /// The schema types that hold it: `CT_SeriesLayoutProperties`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum SeriesLayoutPropertiesContent {
+pub enum SeriesLayoutPropertiesContentWith<X: NodeExtra> {
     /// The element `cx:aggregation`, a `Aggregation`.
-    Aggregation(Aggregation),
+    Aggregation(AggregationWith<X>),
     /// The element `cx:binning`, a `Binning`.
-    Binning(Binning),
+    Binning(BinningWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
+
+/// [`SeriesLayoutPropertiesContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type SeriesLayoutPropertiesContent = SeriesLayoutPropertiesContentWith<()>;
+
+impl Eq for SeriesLayoutPropertiesContentWith<()> {}
 
 /// The simple type `ST_SidePos`, kept as the text the file carried.
 ///
@@ -6515,35 +6814,37 @@ pub enum SidePosMember {
 
 /// The `cx:spPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpPr {
+pub struct SpPrWith<X: NodeExtra> {
     /// The child that is `drawing::Apply3DShapeProperties`, when there is one.
-    pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapeProperties>>,
+    pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapePropertiesWith<X>>>,
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
     /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
-    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexSpPr,
     /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
-    pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<drawing::FillPropertiesContentWith<X>>>,
     /// The child that is an item of `drawing::GeometryContent`, when there is one.
-    pub geometry_content: Option<Box<drawing::GeometryContent>>,
+    pub geometry_content: Option<Box<drawing::GeometryContentWith<X>>>,
     /// The child that is `drawing::Outline`, when there is one.
-    pub outline: Option<Box<drawing::Outline>>,
+    pub outline: Option<Box<drawing::OutlineWith<X>>>,
     /// The child that is `drawing::Scene3d`, when there is one.
-    pub scene3d: Option<Box<drawing::Scene3d>>,
+    pub scene3d: Option<Box<drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `drawing::XfrmTransform2D`, when there is one.
-    pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
+    pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2DWith<X>>>,
 }
+
+/// The `cx:spPr` element of the tree a read gives: [`SpPrWith`] holding nothing in `extra`.
+pub type SpPr = SpPrWith<()>;
+
+impl Eq for SpPrWith<()> {}
 
 /// The simple type `ST_EntityType`, kept as the text the file carried.
 ///
@@ -6640,55 +6941,66 @@ pub enum StRegionLabelLayoutMember {
 
 /// The `cx:statistics` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Statistics`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Statistics {
+pub struct StatisticsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexStatistics,
     /// The attribute `quartileMethod`, when the element has it.
     pub quartile_method: Option<QuartileMethod>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:statistics` element of the tree a read gives: [`StatisticsWith`] holding nothing in
+/// `extra`.
+pub type Statistics = StatisticsWith<()>;
+
+impl Eq for StatisticsWith<()> {}
+
 /// The `cx:strDim` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_StringDimension`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StrDim {
+pub struct StrDimWith<X: NodeExtra> {
     /// The children that are an item of `StringDimensionContent`, in order.
-    pub content: Vec<StringDimensionContent>,
+    pub content: Vec<StringDimensionContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexStrDim,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<StringDimensionType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:strDim` element of the tree a read gives: [`StrDimWith`] holding nothing in `extra`.
+pub type StrDim = StrDimWith<()>;
+
+impl Eq for StrDimWith<()> {}
+
 /// One child element of a choice: choice in `CT_StringDimension`.
 ///
 /// The schema types that hold it: `CT_StringDimension`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum StringDimensionContent {
+pub enum StringDimensionContentWith<X: NodeExtra> {
     /// The element `cx:f`, a `F`.
-    F(F),
+    F(FWith<X>),
     /// The element `cx:lvl`, a `LvlStringLevel`.
-    LvlStringLevel(LvlStringLevel),
+    LvlStringLevel(LvlStringLevelWith<X>),
     /// The element `cx:nf`, a `Nf`.
-    Nf(Nf),
+    Nf(NfWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
+
+/// [`StringDimensionContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type StringDimensionContent = StringDimensionContentWith<()>;
+
+impl Eq for StringDimensionContentWith<()> {}
 
 /// The simple type `ST_StringDimensionType`, kept as the text the file carried.
 ///
@@ -6717,242 +7029,274 @@ pub enum StringDimensionTypeMember {
 
 /// The `cx:subtotals` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Subtotals`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Subtotals {
+pub struct SubtotalsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexSubtotals,
     /// The children that are `Idx`, in order.
-    pub idx: Vec<Idx>,
+    pub idx: Vec<IdxWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:subtotals` element of the tree a read gives: [`SubtotalsWith`] holding nothing in
+/// `extra`.
+pub type Subtotals = SubtotalsWith<()>;
+
+impl Eq for SubtotalsWith<()> {}
 
 /// One child element of a choice: choice in `CT_Text`.
 ///
 /// The schema types that hold it: `CT_Text`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum TextContent {
+pub enum TextContentWith<X: NodeExtra> {
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `cx:rich`, a `Rich`.
-    Rich(Rich),
+    Rich(RichWith<X>),
     /// The element `cx:txData`, a `TxData`.
-    TxData(TxData),
+    TxData(TxDataWith<X>),
 }
+
+/// [`TextContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type TextContent = TextContentWith<()>;
+
+impl Eq for TextContentWith<()> {}
 
 /// One child element of a choice: choice in `CT_TextData`.
 ///
 /// The schema types that hold it: `CT_TextData`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum TextDataContent {
+pub enum TextDataContentWith<X: NodeExtra> {
     /// The element `cx:f`, a `F`.
-    F(F),
+    F(FWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `cx:v`, a `V`.
-    V(V),
+    V(VWith<X>),
 }
+
+/// [`TextDataContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type TextDataContent = TextDataContentWith<()>;
+
+impl Eq for TextDataContentWith<()> {}
 
 /// The `cx:tickLabels` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TickLabels`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TickLabels {
+pub struct TickLabelsWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexTickLabels,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:tickLabels` element of the tree a read gives: [`TickLabelsWith`] holding nothing in
+/// `extra`.
+pub type TickLabels = TickLabelsWith<()>;
+
+impl Eq for TickLabelsWith<()> {}
 
 /// The `cx:title` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_AxisTitle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TitleAxisTitle {
+pub struct TitleAxisTitleWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexTitleAxisTitle,
     /// The child that is `Offset`, when there is one.
-    pub offset: Option<Box<Offset>>,
+    pub offset: Option<Box<OffsetWith<X>>>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// The child that is `Tx`, when there is one.
-    pub tx: Option<Box<Tx>>,
+    pub tx: Option<Box<TxWith<X>>>,
     /// The child that is `TxPr`, when there is one.
-    pub tx_pr: Option<Box<TxPr>>,
+    pub tx_pr: Option<Box<TxPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:title` element of the tree a read gives: [`TitleAxisTitleWith`] holding nothing in
+/// `extra`.
+pub type TitleAxisTitle = TitleAxisTitleWith<()>;
+
+impl Eq for TitleAxisTitleWith<()> {}
+
 /// The `cx:title` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ChartTitle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TitleChartTitle {
+pub struct TitleChartTitleWith<X: NodeExtra> {
     /// The attribute `align`, when the element has it.
     pub align: Option<PosAlign>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexTitleChartTitle,
     /// The child that is `Offset`, when there is one.
-    pub offset: Option<Box<Offset>>,
+    pub offset: Option<Box<OffsetWith<X>>>,
     /// The attribute `overlay`, when the element has it.
     pub overlay: Option<String>,
     /// The attribute `pos`, when the element has it.
     pub pos: Option<SidePos>,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// The child that is `Tx`, when there is one.
-    pub tx: Option<Box<Tx>>,
+    pub tx: Option<Box<TxWith<X>>>,
     /// The child that is `TxPr`, when there is one.
-    pub tx_pr: Option<Box<TxPr>>,
+    pub tx_pr: Option<Box<TxPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:title` element of the tree a read gives: [`TitleChartTitleWith`] holding nothing in
+/// `extra`.
+pub type TitleChartTitle = TitleChartTitleWith<()>;
+
+impl Eq for TitleChartTitleWith<()> {}
 
 /// The `cx:tx` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_Text`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Tx {
+pub struct TxWith<X: NodeExtra> {
     /// The child that is an item of `TextContent`, which the schema requires.
-    pub content: Box<TextContent>,
+    pub content: Box<TextContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexTx,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:tx` element of the tree a read gives: [`TxWith`] holding nothing in `extra`.
+pub type Tx = TxWith<()>;
+
+impl Eq for TxWith<()> {}
 
 /// The `cx:txData` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TextData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TxData {
+pub struct TxDataWith<X: NodeExtra> {
     /// The child that is an item of `TextDataContent`, which the schema requires.
-    pub content: Box<TextDataContent>,
+    pub content: Box<TextDataContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexTxData,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:txData` element of the tree a read gives: [`TxDataWith`] holding nothing in `extra`.
+pub type TxData = TxDataWith<()>;
+
+impl Eq for TxDataWith<()> {}
 
 /// The `cx:txPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TextBody`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TxPr {
+pub struct TxPrWith<X: NodeExtra> {
     /// The child that is `drawing::BodyProperties`, which the schema requires.
-    pub body_properties: Box<drawing::BodyProperties>,
+    pub body_properties: Box<drawing::BodyPropertiesWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexTxPr,
     /// The child that is `drawing::TextListStyles`, when there is one.
-    pub text_list_styles: Option<Box<drawing::TextListStyles>>,
+    pub text_list_styles: Option<Box<drawing::TextListStylesWith<X>>>,
     /// The children that are `drawing::TextParagraphs`, in order.
-    pub text_paragraphs: Vec<drawing::TextParagraphs>,
+    pub text_paragraphs: Vec<drawing::TextParagraphsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:txPr` element of the tree a read gives: [`TxPrWith`] holding nothing in `extra`.
+pub type TxPr = TxPrWith<()>;
+
+impl Eq for TxPrWith<()> {}
+
 /// The `cx:units` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_AxisUnits`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Units {
+pub struct UnitsWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexUnits,
     /// The child that is `UnitsLabel`, when there is one.
-    pub label: Option<Box<UnitsLabel>>,
+    pub label: Option<Box<UnitsLabelWith<X>>>,
     /// The attribute `unit`, when the element has it.
     pub unit: Option<AxisUnit>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:units` element of the tree a read gives: [`UnitsWith`] holding nothing in `extra`.
+pub type Units = UnitsWith<()>;
+
+impl Eq for UnitsWith<()> {}
+
 /// The `cx:unitsLabel` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_AxisUnitsLabel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct UnitsLabel {
+pub struct UnitsLabelWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexUnitsLabel,
     /// The child that is `SpPr`, when there is one.
-    pub sp_pr: Option<Box<SpPr>>,
+    pub sp_pr: Option<Box<SpPrWith<X>>>,
     /// The child that is `Tx`, when there is one.
-    pub tx: Option<Box<Tx>>,
+    pub tx: Option<Box<TxWith<X>>>,
     /// The child that is `TxPr`, when there is one.
-    pub tx_pr: Option<Box<TxPr>>,
+    pub tx_pr: Option<Box<TxPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:unitsLabel` element of the tree a read gives: [`UnitsLabelWith`] holding nothing in
+/// `extra`.
+pub type UnitsLabel = UnitsLabelWith<()>;
+
+impl Eq for UnitsLabelWith<()> {}
+
 /// The `cx:v` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct V {
+pub struct VWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexV,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `cx:v` element of the tree a read gives: [`VWith`] holding nothing in `extra`.
+pub type V = VWith<()>;
+
+impl Eq for VWith<()> {}
+
 /// The `cx:valScaling` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ValueAxisScaling`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ValScaling {
+pub struct ValScalingWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexValScaling,
     /// The attribute `majorUnit`, when the element has it.
     pub major_unit: Option<String>,
     /// The attribute `max`, when the element has it.
@@ -6965,94 +7309,115 @@ pub struct ValScaling {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:valScaling` element of the tree a read gives: [`ValScalingWith`] holding nothing in
+/// `extra`.
+pub type ValScaling = ValScalingWith<()>;
+
+impl Eq for ValScalingWith<()> {}
+
 /// One child element of a choice: choice in `CT_ValueColorEndPosition`.
 ///
 /// The schema types that hold it: `CT_ValueColorEndPosition`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum ValueColorEndPositionContent {
+pub enum ValueColorEndPositionContentWith<X: NodeExtra> {
     /// The element `cx:extremeValue`, a `ExtremeValue`.
-    ExtremeValue(ExtremeValue),
+    ExtremeValue(ExtremeValueWith<X>),
     /// The element `cx:number`, a `Number`.
-    Number(Number),
+    Number(NumberWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `cx:percent`, a `Percent`.
-    Percent(Percent),
+    Percent(PercentWith<X>),
 }
+
+/// [`ValueColorEndPositionContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type ValueColorEndPositionContent = ValueColorEndPositionContentWith<()>;
+
+impl Eq for ValueColorEndPositionContentWith<()> {}
 
 /// One child element of a choice: choice in `CT_ValueColorMiddlePosition`.
 ///
 /// The schema types that hold it: `CT_ValueColorMiddlePosition`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum ValueColorMiddlePositionContent {
+pub enum ValueColorMiddlePositionContentWith<X: NodeExtra> {
     /// The element `cx:number`, a `Number`.
-    Number(Number),
+    Number(NumberWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `cx:percent`, a `Percent`.
-    Percent(Percent),
+    Percent(PercentWith<X>),
 }
+
+/// [`ValueColorMiddlePositionContentWith`] of the tree a read gives, where no node holds anything
+/// in `extra`.
+pub type ValueColorMiddlePositionContent = ValueColorMiddlePositionContentWith<()>;
+
+impl Eq for ValueColorMiddlePositionContentWith<()> {}
 
 /// The `cx:valueColorPositions` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_ValueColorPositions`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ValueColorPositions {
+pub struct ValueColorPositionsWith<X: NodeExtra> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexValueColorPositions,
     /// The child that is `Max`, when there is one.
-    pub max: Option<Box<Max>>,
+    pub max: Option<Box<MaxWith<X>>>,
     /// The child that is `Mid`, when there is one.
-    pub mid: Option<Box<Mid>>,
+    pub mid: Option<Box<MidWith<X>>>,
     /// The child that is `Min`, when there is one.
-    pub min: Option<Box<Min>>,
+    pub min: Option<Box<MinWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:valueColorPositions` element of the tree a read gives: [`ValueColorPositionsWith`]
+/// holding nothing in `extra`.
+pub type ValueColorPositions = ValueColorPositionsWith<()>;
+
+impl Eq for ValueColorPositionsWith<()> {}
 
 /// The `cx:valueColors` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ValueColors`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ValueColors {
+pub struct ValueColorsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexValueColors,
     /// The child that is `MaxColor`, when there is one.
-    pub max_color: Option<Box<MaxColor>>,
+    pub max_color: Option<Box<MaxColorWith<X>>>,
     /// The child that is `MidColor`, when there is one.
-    pub mid_color: Option<Box<MidColor>>,
+    pub mid_color: Option<Box<MidColorWith<X>>>,
     /// The child that is `MinColor`, when there is one.
-    pub min_color: Option<Box<MinColor>>,
+    pub min_color: Option<Box<MinColorWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `cx:valueColors` element of the tree a read gives: [`ValueColorsWith`] holding nothing in
+/// `extra`.
+pub type ValueColors = ValueColorsWith<()>;
+
+impl Eq for ValueColorsWith<()> {}
+
 /// The `cx:visibility` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_DataLabelVisibilities`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VisibilityDataLabelVisibilities {
+pub struct VisibilityDataLabelVisibilitiesWith<X: NodeExtra> {
     /// The attribute `categoryName`, when the element has it.
     pub category_name: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexVisibilityDataLabelVisibilities,
     /// The attribute `seriesName`, when the element has it.
     pub series_name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -7061,18 +7426,21 @@ pub struct VisibilityDataLabelVisibilities {
     pub value: Option<String>,
 }
 
+/// The `cx:visibility` element of the tree a read gives: [`VisibilityDataLabelVisibilitiesWith`]
+/// holding nothing in `extra`.
+pub type VisibilityDataLabelVisibilities = VisibilityDataLabelVisibilitiesWith<()>;
+
+impl Eq for VisibilityDataLabelVisibilitiesWith<()> {}
+
 /// The `cx:visibility` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_SeriesElementVisibilities`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VisibilitySeriesElementVisibilities {
+pub struct VisibilitySeriesElementVisibilitiesWith<X: NodeExtra> {
     /// The attribute `connectorLines`, when the element has it.
     pub connector_lines: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014ChartexVisibilitySeriesElementVisibilities,
     /// The attribute `meanLine`, when the element has it.
     pub mean_line: Option<String>,
     /// The attribute `meanMarker`, when the element has it.
@@ -7084,6 +7452,12 @@ pub struct VisibilitySeriesElementVisibilities {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `cx:visibility` element of the tree a read gives:
+/// [`VisibilitySeriesElementVisibilitiesWith`] holding nothing in `extra`.
+pub type VisibilitySeriesElementVisibilities = VisibilitySeriesElementVisibilitiesWith<()>;
+
+impl Eq for VisibilitySeriesElementVisibilitiesWith<()> {}
 
 /// The hooks of a visitor for the `cx` namespace.
 ///
@@ -7904,7 +8278,27 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl Address {
+impl<X: NodeExtra> AddressWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AddressWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AddressWith {
+            address1: self.address1,
+            admin_district1: self.admin_district1,
+            admin_district2: self.admin_district2,
+            country_region: self.country_region,
+            extra: Default::default(),
+            iso_country_code: self.iso_country_code,
+            locality: self.locality,
+            postal_code: self.postal_code,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7934,7 +8328,20 @@ impl officekit_markup_base::Write for Address {
     }
 }
 
-impl Aggregation {
+impl<X: NodeExtra> AggregationWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AggregationWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AggregationWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7955,7 +8362,70 @@ impl officekit_markup_base::Write for Aggregation {
     }
 }
 
-impl Axis {
+impl<X: NodeExtra> AxisWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> AxisWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AxisWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                AxisContentWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            hidden: self.hidden,
+            id: self.id,
+            major_gridlines: officekit_markup_base::into_extra_optional(
+                &mut self.major_gridlines,
+                MajorGridlinesWith::into_extra,
+            ),
+            major_tick_marks: officekit_markup_base::into_extra_optional(
+                &mut self.major_tick_marks,
+                MajorTickMarksWith::into_extra,
+            ),
+            minor_gridlines: officekit_markup_base::into_extra_optional(
+                &mut self.minor_gridlines,
+                MinorGridlinesWith::into_extra,
+            ),
+            minor_tick_marks: officekit_markup_base::into_extra_optional(
+                &mut self.minor_tick_marks,
+                MinorTickMarksWith::into_extra,
+            ),
+            num_fmt: officekit_markup_base::into_extra_optional(
+                &mut self.num_fmt,
+                NumFmtWith::into_extra,
+            ),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            tick_labels: officekit_markup_base::into_extra_optional(
+                &mut self.tick_labels,
+                TickLabelsWith::into_extra,
+            ),
+            title_axis_title: officekit_markup_base::into_extra_optional(
+                &mut self.title_axis_title,
+                TitleAxisTitleWith::into_extra,
+            ),
+            tx_pr: officekit_markup_base::into_extra_optional(
+                &mut self.tx_pr,
+                TxPrWith::into_extra,
+            ),
+            units: officekit_markup_base::into_extra_optional(
+                &mut self.units,
+                UnitsWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7980,9 +8450,24 @@ impl officekit_markup_base::Write for Axis {
     }
 }
 
-impl Default for AxisContent {
+impl<X: NodeExtra> AxisContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AxisContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::CatScaling(node) => AxisContentWith::CatScaling(node.into_extra()),
+            Self::Other(node) => AxisContentWith::Other(node),
+            Self::ValScaling(node) => AxisContentWith::ValScaling(node.into_extra()),
+        }
+    }
+}
+
+impl<X: NodeExtra> Default for AxisContentWith<X> {
     fn default() -> Self {
-        Self::CatScaling(CatScaling::default())
+        Self::CatScaling(CatScalingWith::default())
     }
 }
 
@@ -8010,7 +8495,21 @@ impl officekit_markup_base::Write for AxisContent {
     }
 }
 
-impl AxisId {
+impl<X: NodeExtra> AxisIdWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AxisIdWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AxisIdWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8119,7 +8618,21 @@ impl AxisUnit {
     }
 }
 
-impl BinCount {
+impl<X: NodeExtra> BinCountWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BinCountWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BinCountWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8143,7 +8656,21 @@ impl officekit_markup_base::Write for BinCount {
     }
 }
 
-impl BinSize {
+impl<X: NodeExtra> BinSizeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BinSizeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BinSizeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8167,7 +8694,21 @@ impl officekit_markup_base::Write for BinSize {
     }
 }
 
-impl Binary {
+impl<X: NodeExtra> BinaryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BinaryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BinaryWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8191,7 +8732,27 @@ impl officekit_markup_base::Write for Binary {
     }
 }
 
-impl Binning {
+impl<X: NodeExtra> BinningWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> BinningWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BinningWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                BinningContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            interval_closed: self.interval_closed,
+            overflow: self.overflow,
+            underflow: self.underflow,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8214,6 +8775,21 @@ impl officekit_markup_base::Write for Binning {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::binning(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> BinningContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BinningContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::BinCount(node) => BinningContentWith::BinCount(node.into_extra()),
+            Self::BinSize(node) => BinningContentWith::BinSize(node.into_extra()),
+            Self::Other(node) => BinningContentWith::Other(node),
+        }
     }
 }
 
@@ -8241,7 +8817,21 @@ impl officekit_markup_base::Write for BinningContent {
     }
 }
 
-impl CatScaling {
+impl<X: NodeExtra> CatScalingWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CatScalingWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CatScalingWith {
+            extra: Default::default(),
+            gap_width: self.gap_width,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8265,7 +8855,36 @@ impl officekit_markup_base::Write for CatScaling {
     }
 }
 
-impl ChartChart {
+impl<X: NodeExtra> ChartChartWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ChartChartWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ChartChartWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            legend: officekit_markup_base::into_extra_optional(
+                &mut self.legend,
+                LegendWith::into_extra,
+            ),
+            plot_area: officekit_markup_base::into_extra_required(
+                *self.plot_area,
+                PlotAreaWith::into_extra,
+            ),
+            title_chart_title: officekit_markup_base::into_extra_optional(
+                &mut self.title_chart_title,
+                TitleChartTitleWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8286,7 +8905,29 @@ impl officekit_markup_base::Write for ChartChart {
     }
 }
 
-impl ChartData {
+impl<X: NodeExtra> ChartDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ChartDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ChartDataWith {
+            data: officekit_markup_base::into_extra_list(self.data, DataWith::into_extra),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            external_data: officekit_markup_base::into_extra_optional(
+                &mut self.external_data,
+                ExternalDataWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8307,7 +8948,21 @@ impl officekit_markup_base::Write for ChartData {
     }
 }
 
-impl ChartRelId {
+impl<X: NodeExtra> ChartRelIdWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ChartRelIdWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ChartRelIdWith {
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8331,7 +8986,55 @@ impl officekit_markup_base::Write for ChartRelId {
     }
 }
 
-impl ChartSpace {
+impl<X: NodeExtra> ChartSpaceWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ChartSpaceWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ChartSpaceWith {
+            chart_chart: officekit_markup_base::into_extra_required(
+                *self.chart_chart,
+                ChartChartWith::into_extra,
+            ),
+            chart_data: officekit_markup_base::into_extra_required(
+                *self.chart_data,
+                ChartDataWith::into_extra,
+            ),
+            clr_map_ovr: officekit_markup_base::into_extra_optional(
+                &mut self.clr_map_ovr,
+                ClrMapOvrWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            fallback_img: self.fallback_img,
+            feature_list: self.feature_list,
+            fmt_ovrs: officekit_markup_base::into_extra_optional(
+                &mut self.fmt_ovrs,
+                FmtOvrsWith::into_extra,
+            ),
+            print_settings: officekit_markup_base::into_extra_optional(
+                &mut self.print_settings,
+                PrintSettingsWith::into_extra,
+            ),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            tx_pr: officekit_markup_base::into_extra_optional(
+                &mut self.tx_pr,
+                TxPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+            version: self.version,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8357,7 +9060,40 @@ impl officekit_markup_base::Write for ChartSpace {
     }
 }
 
-impl Clear {
+impl<X: NodeExtra> ClearWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ClearWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ClearWith {
+            extra: Default::default(),
+            geo_child_entities_query_results: officekit_markup_base::into_extra_optional(
+                &mut self.geo_child_entities_query_results,
+                GeoChildEntitiesQueryResultsWith::into_extra,
+            ),
+            geo_data_entity_query_results: officekit_markup_base::into_extra_optional(
+                &mut self.geo_data_entity_query_results,
+                GeoDataEntityQueryResultsWith::into_extra,
+            ),
+            geo_data_point_to_entity_query_results: officekit_markup_base::into_extra_optional(
+                &mut self.geo_data_point_to_entity_query_results,
+                GeoDataPointToEntityQueryResultsWith::into_extra,
+            ),
+            geo_location_query_results: officekit_markup_base::into_extra_optional(
+                &mut self.geo_location_query_results,
+                GeoLocationQueryResultsWith::into_extra,
+            ),
+            geo_parent_entities_query_results: officekit_markup_base::into_extra_optional(
+                &mut self.geo_parent_entities_query_results,
+                GeoParentEntitiesQueryResultsWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8378,7 +9114,36 @@ impl officekit_markup_base::Write for Clear {
     }
 }
 
-impl ClrMapOvr {
+impl<X: NodeExtra> ClrMapOvrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ClrMapOvrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ClrMapOvrWith {
+            accent1: self.accent1,
+            accent2: self.accent2,
+            accent3: self.accent3,
+            accent4: self.accent4,
+            accent5: self.accent5,
+            accent6: self.accent6,
+            bg1: self.bg1,
+            bg2: self.bg2,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fol_hlink: self.fol_hlink,
+            hlink: self.hlink,
+            tx1: self.tx1,
+            tx2: self.tx2,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8413,7 +9178,21 @@ impl officekit_markup_base::Write for ClrMapOvr {
     }
 }
 
-impl Copyright {
+impl<X: NodeExtra> CopyrightWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CopyrightWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CopyrightWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8437,7 +9216,24 @@ impl officekit_markup_base::Write for Copyright {
     }
 }
 
-impl Copyrights {
+impl<X: NodeExtra> CopyrightsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CopyrightsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CopyrightsWith {
+            copyright: officekit_markup_base::into_extra_list(
+                self.copyright,
+                CopyrightWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8458,7 +9254,29 @@ impl officekit_markup_base::Write for Copyrights {
     }
 }
 
-impl Data {
+impl<X: NodeExtra> DataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                DataContentWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8479,6 +9297,21 @@ impl officekit_markup_base::Write for Data {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::data(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> DataContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DataContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::NumDim(node) => DataContentWith::NumDim(node.into_extra()),
+            Self::Other(node) => DataContentWith::Other(node),
+            Self::StrDim(node) => DataContentWith::StrDim(node.into_extra()),
+        }
     }
 }
 
@@ -8506,7 +9339,21 @@ impl officekit_markup_base::Write for DataContent {
     }
 }
 
-impl DataId {
+impl<X: NodeExtra> DataIdWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DataIdWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataIdWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8530,7 +9377,46 @@ impl officekit_markup_base::Write for DataId {
     }
 }
 
-impl DataLabel {
+impl<X: NodeExtra> DataLabelWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DataLabelWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataLabelWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            idx: self.idx,
+            num_fmt: officekit_markup_base::into_extra_optional(
+                &mut self.num_fmt,
+                NumFmtWith::into_extra,
+            ),
+            pos: self.pos,
+            separator: officekit_markup_base::into_extra_optional(
+                &mut self.separator,
+                SeparatorWith::into_extra,
+            ),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            tx_pr: officekit_markup_base::into_extra_optional(
+                &mut self.tx_pr,
+                TxPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+            visibility_data_label_visibilities: officekit_markup_base::into_extra_optional(
+                &mut self.visibility_data_label_visibilities,
+                VisibilityDataLabelVisibilitiesWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8555,7 +9441,21 @@ impl officekit_markup_base::Write for DataLabel {
     }
 }
 
-impl DataLabelHidden {
+impl<X: NodeExtra> DataLabelHiddenWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DataLabelHiddenWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataLabelHiddenWith {
+            extra: Default::default(),
+            idx: self.idx,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8635,7 +9535,53 @@ impl DataLabelPos {
     }
 }
 
-impl DataLabels {
+impl<X: NodeExtra> DataLabelsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DataLabelsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataLabelsWith {
+            data_label: officekit_markup_base::into_extra_list(
+                self.data_label,
+                DataLabelWith::into_extra,
+            ),
+            data_label_hidden: officekit_markup_base::into_extra_list(
+                self.data_label_hidden,
+                DataLabelHiddenWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            num_fmt: officekit_markup_base::into_extra_optional(
+                &mut self.num_fmt,
+                NumFmtWith::into_extra,
+            ),
+            pos: self.pos,
+            separator: officekit_markup_base::into_extra_optional(
+                &mut self.separator,
+                SeparatorWith::into_extra,
+            ),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            tx_pr: officekit_markup_base::into_extra_optional(
+                &mut self.tx_pr,
+                TxPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+            visibility_data_label_visibilities: officekit_markup_base::into_extra_optional(
+                &mut self.visibility_data_label_visibilities,
+                VisibilityDataLabelVisibilitiesWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8659,7 +9605,29 @@ impl officekit_markup_base::Write for DataLabels {
     }
 }
 
-impl DataPt {
+impl<X: NodeExtra> DataPtWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DataPtWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataPtWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            idx: self.idx,
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8683,7 +9651,21 @@ impl officekit_markup_base::Write for DataPt {
     }
 }
 
-impl EntityType {
+impl<X: NodeExtra> EntityTypeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> EntityTypeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EntityTypeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8707,7 +9689,21 @@ impl officekit_markup_base::Write for EntityType {
     }
 }
 
-impl EvenFooter {
+impl<X: NodeExtra> EvenFooterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> EvenFooterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EvenFooterWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8731,7 +9727,21 @@ impl officekit_markup_base::Write for EvenFooter {
     }
 }
 
-impl EvenHeader {
+impl<X: NodeExtra> EvenHeaderWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> EvenHeaderWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EvenHeaderWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8755,7 +9765,25 @@ impl officekit_markup_base::Write for EvenHeader {
     }
 }
 
-impl Ext {
+impl<X: NodeExtra> ExtWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                drawing::AnyElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+            uri: self.uri,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8779,7 +9807,21 @@ impl officekit_markup_base::Write for Ext {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            ext: officekit_markup_base::into_extra_list(self.ext, ExtWith::into_extra),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8800,7 +9842,22 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl ExternalData {
+impl<X: NodeExtra> ExternalDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExternalDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExternalDataWith {
+            auto_update: self.auto_update,
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8825,7 +9882,20 @@ impl officekit_markup_base::Write for ExternalData {
     }
 }
 
-impl ExtremeValue {
+impl<X: NodeExtra> ExtremeValueWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtremeValueWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtremeValueWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8846,7 +9916,21 @@ impl officekit_markup_base::Write for ExtremeValue {
     }
 }
 
-impl F {
+impl<X: NodeExtra> FWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8870,7 +9954,21 @@ impl officekit_markup_base::Write for F {
     }
 }
 
-impl FirstFooter {
+impl<X: NodeExtra> FirstFooterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FirstFooterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FirstFooterWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8894,7 +9992,21 @@ impl officekit_markup_base::Write for FirstFooter {
     }
 }
 
-impl FirstHeader {
+impl<X: NodeExtra> FirstHeaderWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FirstHeaderWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FirstHeaderWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8918,7 +10030,29 @@ impl officekit_markup_base::Write for FirstHeader {
     }
 }
 
-impl FmtOvr {
+impl<X: NodeExtra> FmtOvrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> FmtOvrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FmtOvrWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            idx: self.idx,
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8942,7 +10076,21 @@ impl officekit_markup_base::Write for FmtOvr {
     }
 }
 
-impl FmtOvrs {
+impl<X: NodeExtra> FmtOvrsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FmtOvrsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FmtOvrsWith {
+            extra: Default::default(),
+            fmt_ovr: officekit_markup_base::into_extra_list(self.fmt_ovr, FmtOvrWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8963,7 +10111,25 @@ impl officekit_markup_base::Write for FmtOvrs {
     }
 }
 
-impl GeoCache {
+impl<X: NodeExtra> GeoCacheWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoCacheWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoCacheWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                GeographyCacheContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            provider: self.provider,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8987,7 +10153,24 @@ impl officekit_markup_base::Write for GeoCache {
     }
 }
 
-impl GeoChildEntities {
+impl<X: NodeExtra> GeoChildEntitiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoChildEntitiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoChildEntitiesWith {
+            extra: Default::default(),
+            geo_hierarchy_entity: officekit_markup_base::into_extra_list(
+                self.geo_hierarchy_entity,
+                GeoHierarchyEntityWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9008,7 +10191,25 @@ impl officekit_markup_base::Write for GeoChildEntities {
     }
 }
 
-impl GeoChildEntitiesQuery {
+impl<X: NodeExtra> GeoChildEntitiesQueryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GeoChildEntitiesQueryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoChildEntitiesQueryWith {
+            entity_id: self.entity_id,
+            extra: Default::default(),
+            geo_child_types: officekit_markup_base::into_extra_optional(
+                &mut self.geo_child_types,
+                GeoChildTypesWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9032,7 +10233,28 @@ impl officekit_markup_base::Write for GeoChildEntitiesQuery {
     }
 }
 
-impl GeoChildEntitiesQueryResult {
+impl<X: NodeExtra> GeoChildEntitiesQueryResultWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GeoChildEntitiesQueryResultWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoChildEntitiesQueryResultWith {
+            extra: Default::default(),
+            geo_child_entities: officekit_markup_base::into_extra_optional(
+                &mut self.geo_child_entities,
+                GeoChildEntitiesWith::into_extra,
+            ),
+            geo_child_entities_query: officekit_markup_base::into_extra_optional(
+                &mut self.geo_child_entities_query,
+                GeoChildEntitiesQueryWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9053,7 +10275,24 @@ impl officekit_markup_base::Write for GeoChildEntitiesQueryResult {
     }
 }
 
-impl GeoChildEntitiesQueryResults {
+impl<X: NodeExtra> GeoChildEntitiesQueryResultsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoChildEntitiesQueryResultsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoChildEntitiesQueryResultsWith {
+            extra: Default::default(),
+            geo_child_entities_query_result: officekit_markup_base::into_extra_list(
+                self.geo_child_entities_query_result,
+                GeoChildEntitiesQueryResultWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9074,7 +10313,24 @@ impl officekit_markup_base::Write for GeoChildEntitiesQueryResults {
     }
 }
 
-impl GeoChildTypes {
+impl<X: NodeExtra> GeoChildTypesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoChildTypesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoChildTypesWith {
+            entity_type: officekit_markup_base::into_extra_list(
+                self.entity_type,
+                EntityTypeWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9095,7 +10351,34 @@ impl officekit_markup_base::Write for GeoChildTypes {
     }
 }
 
-impl GeoData {
+impl<X: NodeExtra> GeoDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GeoDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoDataWith {
+            copyrights: officekit_markup_base::into_extra_optional(
+                &mut self.copyrights,
+                CopyrightsWith::into_extra,
+            ),
+            east: self.east,
+            entity_id: self.entity_id,
+            entity_name: self.entity_name,
+            extra: Default::default(),
+            geo_polygons: officekit_markup_base::into_extra_optional(
+                &mut self.geo_polygons,
+                GeoPolygonsWith::into_extra,
+            ),
+            north: self.north,
+            south: self.south,
+            unknown: self.unknown,
+            west: self.west,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9124,7 +10407,22 @@ impl officekit_markup_base::Write for GeoData {
     }
 }
 
-impl GeoDataEntityQuery {
+impl<X: NodeExtra> GeoDataEntityQueryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoDataEntityQueryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoDataEntityQueryWith {
+            entity_id: self.entity_id,
+            entity_type: self.entity_type,
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9149,7 +10447,28 @@ impl officekit_markup_base::Write for GeoDataEntityQuery {
     }
 }
 
-impl GeoDataEntityQueryResult {
+impl<X: NodeExtra> GeoDataEntityQueryResultWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GeoDataEntityQueryResultWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoDataEntityQueryResultWith {
+            extra: Default::default(),
+            geo_data: officekit_markup_base::into_extra_optional(
+                &mut self.geo_data,
+                GeoDataWith::into_extra,
+            ),
+            geo_data_entity_query: officekit_markup_base::into_extra_optional(
+                &mut self.geo_data_entity_query,
+                GeoDataEntityQueryWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9170,7 +10489,24 @@ impl officekit_markup_base::Write for GeoDataEntityQueryResult {
     }
 }
 
-impl GeoDataEntityQueryResults {
+impl<X: NodeExtra> GeoDataEntityQueryResultsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoDataEntityQueryResultsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoDataEntityQueryResultsWith {
+            extra: Default::default(),
+            geo_data_entity_query_result: officekit_markup_base::into_extra_list(
+                self.geo_data_entity_query_result,
+                GeoDataEntityQueryResultWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9191,7 +10527,23 @@ impl officekit_markup_base::Write for GeoDataEntityQueryResults {
     }
 }
 
-impl GeoDataPointQuery {
+impl<X: NodeExtra> GeoDataPointQueryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoDataPointQueryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoDataPointQueryWith {
+            entity_type: self.entity_type,
+            extra: Default::default(),
+            latitude: self.latitude,
+            longitude: self.longitude,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9217,7 +10569,22 @@ impl officekit_markup_base::Write for GeoDataPointQuery {
     }
 }
 
-impl GeoDataPointToEntityQuery {
+impl<X: NodeExtra> GeoDataPointToEntityQueryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoDataPointToEntityQueryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoDataPointToEntityQueryWith {
+            entity_id: self.entity_id,
+            entity_type: self.entity_type,
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9242,7 +10609,28 @@ impl officekit_markup_base::Write for GeoDataPointToEntityQuery {
     }
 }
 
-impl GeoDataPointToEntityQueryResult {
+impl<X: NodeExtra> GeoDataPointToEntityQueryResultWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GeoDataPointToEntityQueryResultWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoDataPointToEntityQueryResultWith {
+            extra: Default::default(),
+            geo_data_point_query: officekit_markup_base::into_extra_optional(
+                &mut self.geo_data_point_query,
+                GeoDataPointQueryWith::into_extra,
+            ),
+            geo_data_point_to_entity_query: officekit_markup_base::into_extra_optional(
+                &mut self.geo_data_point_to_entity_query,
+                GeoDataPointToEntityQueryWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9263,7 +10651,24 @@ impl officekit_markup_base::Write for GeoDataPointToEntityQueryResult {
     }
 }
 
-impl GeoDataPointToEntityQueryResults {
+impl<X: NodeExtra> GeoDataPointToEntityQueryResultsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoDataPointToEntityQueryResultsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoDataPointToEntityQueryResultsWith {
+            extra: Default::default(),
+            geo_data_point_to_entity_query_result: officekit_markup_base::into_extra_list(
+                self.geo_data_point_to_entity_query_result,
+                GeoDataPointToEntityQueryResultWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9284,7 +10689,22 @@ impl officekit_markup_base::Write for GeoDataPointToEntityQueryResults {
     }
 }
 
-impl GeoEntity {
+impl<X: NodeExtra> GeoEntityWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoEntityWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoEntityWith {
+            entity_name: self.entity_name,
+            entity_type: self.entity_type,
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9309,7 +10729,23 @@ impl officekit_markup_base::Write for GeoEntity {
     }
 }
 
-impl GeoHierarchyEntity {
+impl<X: NodeExtra> GeoHierarchyEntityWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoHierarchyEntityWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoHierarchyEntityWith {
+            entity_id: self.entity_id,
+            entity_name: self.entity_name,
+            entity_type: self.entity_type,
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9335,7 +10771,28 @@ impl officekit_markup_base::Write for GeoHierarchyEntity {
     }
 }
 
-impl GeoLocation {
+impl<X: NodeExtra> GeoLocationWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GeoLocationWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoLocationWith {
+            address: officekit_markup_base::into_extra_optional(
+                &mut self.address,
+                AddressWith::into_extra,
+            ),
+            entity_name: self.entity_name,
+            entity_type: self.entity_type,
+            extra: Default::default(),
+            latitude: self.latitude,
+            longitude: self.longitude,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9362,7 +10819,25 @@ impl officekit_markup_base::Write for GeoLocation {
     }
 }
 
-impl GeoLocationQuery {
+impl<X: NodeExtra> GeoLocationQueryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoLocationQueryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoLocationQueryWith {
+            admin_district1: self.admin_district1,
+            admin_district2: self.admin_district2,
+            country_region: self.country_region,
+            entity_type: self.entity_type,
+            extra: Default::default(),
+            postal_code: self.postal_code,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9390,7 +10865,28 @@ impl officekit_markup_base::Write for GeoLocationQuery {
     }
 }
 
-impl GeoLocationQueryResult {
+impl<X: NodeExtra> GeoLocationQueryResultWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GeoLocationQueryResultWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoLocationQueryResultWith {
+            extra: Default::default(),
+            geo_location_query: officekit_markup_base::into_extra_optional(
+                &mut self.geo_location_query,
+                GeoLocationQueryWith::into_extra,
+            ),
+            geo_locations: officekit_markup_base::into_extra_optional(
+                &mut self.geo_locations,
+                GeoLocationsWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9411,7 +10907,24 @@ impl officekit_markup_base::Write for GeoLocationQueryResult {
     }
 }
 
-impl GeoLocationQueryResults {
+impl<X: NodeExtra> GeoLocationQueryResultsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoLocationQueryResultsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoLocationQueryResultsWith {
+            extra: Default::default(),
+            geo_location_query_result: officekit_markup_base::into_extra_list(
+                self.geo_location_query_result,
+                GeoLocationQueryResultWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9432,7 +10945,24 @@ impl officekit_markup_base::Write for GeoLocationQueryResults {
     }
 }
 
-impl GeoLocations {
+impl<X: NodeExtra> GeoLocationsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GeoLocationsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoLocationsWith {
+            extra: Default::default(),
+            geo_location: officekit_markup_base::into_extra_optional(
+                &mut self.geo_location,
+                GeoLocationWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9523,7 +11053,21 @@ impl GeoMappingLevel {
     }
 }
 
-impl GeoParentEntitiesQuery {
+impl<X: NodeExtra> GeoParentEntitiesQueryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoParentEntitiesQueryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoParentEntitiesQueryWith {
+            entity_id: self.entity_id,
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9547,7 +11091,32 @@ impl officekit_markup_base::Write for GeoParentEntitiesQuery {
     }
 }
 
-impl GeoParentEntitiesQueryResult {
+impl<X: NodeExtra> GeoParentEntitiesQueryResultWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GeoParentEntitiesQueryResultWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoParentEntitiesQueryResultWith {
+            extra: Default::default(),
+            geo_entity: officekit_markup_base::into_extra_optional(
+                &mut self.geo_entity,
+                GeoEntityWith::into_extra,
+            ),
+            geo_parent_entities_query: officekit_markup_base::into_extra_required(
+                *self.geo_parent_entities_query,
+                GeoParentEntitiesQueryWith::into_extra,
+            ),
+            geo_parent_entity: officekit_markup_base::into_extra_optional(
+                &mut self.geo_parent_entity,
+                GeoParentEntityWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9568,7 +11137,24 @@ impl officekit_markup_base::Write for GeoParentEntitiesQueryResult {
     }
 }
 
-impl GeoParentEntitiesQueryResults {
+impl<X: NodeExtra> GeoParentEntitiesQueryResultsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoParentEntitiesQueryResultsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoParentEntitiesQueryResultsWith {
+            extra: Default::default(),
+            geo_parent_entities_query_result: officekit_markup_base::into_extra_list(
+                self.geo_parent_entities_query_result,
+                GeoParentEntitiesQueryResultWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9589,7 +11175,21 @@ impl officekit_markup_base::Write for GeoParentEntitiesQueryResults {
     }
 }
 
-impl GeoParentEntity {
+impl<X: NodeExtra> GeoParentEntityWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoParentEntityWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoParentEntityWith {
+            entity_id: self.entity_id,
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9613,7 +11213,23 @@ impl officekit_markup_base::Write for GeoParentEntity {
     }
 }
 
-impl GeoPolygon {
+impl<X: NodeExtra> GeoPolygonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoPolygonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoPolygonWith {
+            extra: Default::default(),
+            num_points: self.num_points,
+            pca_rings: self.pca_rings,
+            polygon_id: self.polygon_id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9639,7 +11255,24 @@ impl officekit_markup_base::Write for GeoPolygon {
     }
 }
 
-impl GeoPolygons {
+impl<X: NodeExtra> GeoPolygonsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeoPolygonsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeoPolygonsWith {
+            extra: Default::default(),
+            geo_polygon: officekit_markup_base::into_extra_list(
+                self.geo_polygon,
+                GeoPolygonWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9715,7 +11348,29 @@ impl GeoProjectionType {
     }
 }
 
-impl Geography {
+impl<X: NodeExtra> GeographyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GeographyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GeographyWith {
+            attribution: self.attribution,
+            culture_language: self.culture_language,
+            culture_region: self.culture_region,
+            extra: Default::default(),
+            geo_cache: officekit_markup_base::into_extra_optional(
+                &mut self.geo_cache,
+                GeoCacheWith::into_extra,
+            ),
+            projection_type: self.projection_type,
+            unknown: self.unknown,
+            viewed_region_type: self.viewed_region_type,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9743,6 +11398,21 @@ impl officekit_markup_base::Write for Geography {
     }
 }
 
+impl<X: NodeExtra> GeographyCacheContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GeographyCacheContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::Binary(node) => GeographyCacheContentWith::Binary(node.into_extra()),
+            Self::Clear(node) => GeographyCacheContentWith::Clear(node.into_extra()),
+            Self::Other(node) => GeographyCacheContentWith::Other(node),
+        }
+    }
+}
+
 impl officekit_markup_base::Read for GeographyCacheContent {
     fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
@@ -9767,7 +11437,47 @@ impl officekit_markup_base::Write for GeographyCacheContent {
     }
 }
 
-impl HeaderFooter {
+impl<X: NodeExtra> HeaderFooterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> HeaderFooterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HeaderFooterWith {
+            align_with_margins: self.align_with_margins,
+            different_first: self.different_first,
+            different_odd_even: self.different_odd_even,
+            even_footer: officekit_markup_base::into_extra_optional(
+                &mut self.even_footer,
+                EvenFooterWith::into_extra,
+            ),
+            even_header: officekit_markup_base::into_extra_optional(
+                &mut self.even_header,
+                EvenHeaderWith::into_extra,
+            ),
+            extra: Default::default(),
+            first_footer: officekit_markup_base::into_extra_optional(
+                &mut self.first_footer,
+                FirstFooterWith::into_extra,
+            ),
+            first_header: officekit_markup_base::into_extra_optional(
+                &mut self.first_header,
+                FirstHeaderWith::into_extra,
+            ),
+            odd_footer: officekit_markup_base::into_extra_optional(
+                &mut self.odd_footer,
+                OddFooterWith::into_extra,
+            ),
+            odd_header: officekit_markup_base::into_extra_optional(
+                &mut self.odd_header,
+                OddHeaderWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9793,7 +11503,21 @@ impl officekit_markup_base::Write for HeaderFooter {
     }
 }
 
-impl Idx {
+impl<X: NodeExtra> IdxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> IdxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        IdxWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9870,7 +11594,52 @@ impl IntervalClosedSide {
     }
 }
 
-impl LayoutPr {
+impl<X: NodeExtra> LayoutPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> LayoutPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LayoutPrWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                SeriesLayoutPropertiesContentWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            geography: officekit_markup_base::into_extra_optional(
+                &mut self.geography,
+                GeographyWith::into_extra,
+            ),
+            parent_label_layout: officekit_markup_base::into_extra_optional(
+                &mut self.parent_label_layout,
+                ParentLabelLayoutWith::into_extra,
+            ),
+            region_label_layout: officekit_markup_base::into_extra_optional(
+                &mut self.region_label_layout,
+                RegionLabelLayoutWith::into_extra,
+            ),
+            statistics: officekit_markup_base::into_extra_optional(
+                &mut self.statistics,
+                StatisticsWith::into_extra,
+            ),
+            subtotals: officekit_markup_base::into_extra_optional(
+                &mut self.subtotals,
+                SubtotalsWith::into_extra,
+            ),
+            unknown: self.unknown,
+            visibility_series_element_visibilities: officekit_markup_base::into_extra_optional(
+                &mut self.visibility_series_element_visibilities,
+                VisibilitySeriesElementVisibilitiesWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9891,7 +11660,39 @@ impl officekit_markup_base::Write for LayoutPr {
     }
 }
 
-impl Legend {
+impl<X: NodeExtra> LegendWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> LegendWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LegendWith {
+            align: self.align,
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            offset: officekit_markup_base::into_extra_optional(
+                &mut self.offset,
+                OffsetWith::into_extra,
+            ),
+            overlay: self.overlay,
+            pos: self.pos,
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            tx_pr: officekit_markup_base::into_extra_optional(
+                &mut self.tx_pr,
+                TxPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9917,7 +11718,27 @@ impl officekit_markup_base::Write for Legend {
     }
 }
 
-impl LvlNumericLevel {
+impl<X: NodeExtra> LvlNumericLevelWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LvlNumericLevelWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LvlNumericLevelWith {
+            extra: Default::default(),
+            format_code: self.format_code,
+            name: self.name,
+            pt_count: self.pt_count,
+            pt_numeric_value: officekit_markup_base::into_extra_list(
+                self.pt_numeric_value,
+                PtNumericValueWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9943,7 +11764,26 @@ impl officekit_markup_base::Write for LvlNumericLevel {
     }
 }
 
-impl LvlStringLevel {
+impl<X: NodeExtra> LvlStringLevelWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LvlStringLevelWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LvlStringLevelWith {
+            extra: Default::default(),
+            name: self.name,
+            pt_count: self.pt_count,
+            pt_string_value: officekit_markup_base::into_extra_list(
+                self.pt_string_value,
+                PtStringValueWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9968,7 +11808,28 @@ impl officekit_markup_base::Write for LvlStringLevel {
     }
 }
 
-impl MajorGridlines {
+impl<X: NodeExtra> MajorGridlinesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> MajorGridlinesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MajorGridlinesWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9989,7 +11850,24 @@ impl officekit_markup_base::Write for MajorGridlines {
     }
 }
 
-impl MajorTickMarks {
+impl<X: NodeExtra> MajorTickMarksWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> MajorTickMarksWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MajorTickMarksWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10010,7 +11888,24 @@ impl officekit_markup_base::Write for MajorTickMarks {
     }
 }
 
-impl Max {
+impl<X: NodeExtra> MaxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MaxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MaxWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                ValueColorEndPositionContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10031,7 +11926,24 @@ impl officekit_markup_base::Write for Max {
     }
 }
 
-impl MaxColor {
+impl<X: NodeExtra> MaxColorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> MaxColorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MaxColorWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10052,7 +11964,24 @@ impl officekit_markup_base::Write for MaxColor {
     }
 }
 
-impl Mid {
+impl<X: NodeExtra> MidWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MidWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MidWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                ValueColorMiddlePositionContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10073,7 +12002,24 @@ impl officekit_markup_base::Write for Mid {
     }
 }
 
-impl MidColor {
+impl<X: NodeExtra> MidColorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> MidColorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MidColorWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10094,7 +12040,24 @@ impl officekit_markup_base::Write for MidColor {
     }
 }
 
-impl Min {
+impl<X: NodeExtra> MinWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MinWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MinWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                ValueColorEndPositionContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10115,7 +12078,24 @@ impl officekit_markup_base::Write for Min {
     }
 }
 
-impl MinColor {
+impl<X: NodeExtra> MinColorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> MinColorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MinColorWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10136,7 +12116,28 @@ impl officekit_markup_base::Write for MinColor {
     }
 }
 
-impl MinorGridlines {
+impl<X: NodeExtra> MinorGridlinesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> MinorGridlinesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MinorGridlinesWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10157,7 +12158,24 @@ impl officekit_markup_base::Write for MinorGridlines {
     }
 }
 
-impl MinorTickMarks {
+impl<X: NodeExtra> MinorTickMarksWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> MinorTickMarksWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MinorTickMarksWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10178,7 +12196,21 @@ impl officekit_markup_base::Write for MinorTickMarks {
     }
 }
 
-impl Nf {
+impl<X: NodeExtra> NfWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NfWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NfWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10202,7 +12234,25 @@ impl officekit_markup_base::Write for Nf {
     }
 }
 
-impl NumDim {
+impl<X: NodeExtra> NumDimWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NumDimWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NumDimWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                NumericDimensionContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            r#type: self.r#type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10226,7 +12276,22 @@ impl officekit_markup_base::Write for NumDim {
     }
 }
 
-impl NumFmt {
+impl<X: NodeExtra> NumFmtWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NumFmtWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NumFmtWith {
+            extra: Default::default(),
+            format_code: self.format_code,
+            source_linked: self.source_linked,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10251,7 +12316,21 @@ impl officekit_markup_base::Write for NumFmt {
     }
 }
 
-impl Number {
+impl<X: NodeExtra> NumberWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NumberWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NumberWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10272,6 +12351,24 @@ impl officekit_markup_base::Write for Number {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::number(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> NumericDimensionContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NumericDimensionContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::F(node) => NumericDimensionContentWith::F(node.into_extra()),
+            Self::LvlNumericLevel(node) => {
+                NumericDimensionContentWith::LvlNumericLevel(node.into_extra())
+            }
+            Self::Nf(node) => NumericDimensionContentWith::Nf(node.into_extra()),
+            Self::Other(node) => NumericDimensionContentWith::Other(node),
+        }
     }
 }
 
@@ -10357,7 +12454,21 @@ impl NumericDimensionType {
     }
 }
 
-impl OddFooter {
+impl<X: NodeExtra> OddFooterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> OddFooterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        OddFooterWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10381,7 +12492,21 @@ impl officekit_markup_base::Write for OddFooter {
     }
 }
 
-impl OddHeader {
+impl<X: NodeExtra> OddHeaderWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> OddHeaderWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        OddHeaderWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10405,7 +12530,22 @@ impl officekit_markup_base::Write for OddHeader {
     }
 }
 
-impl Offset {
+impl<X: NodeExtra> OffsetWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> OffsetWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        OffsetWith {
+            extra: Default::default(),
+            left: self.left,
+            top: self.top,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10430,7 +12570,21 @@ impl officekit_markup_base::Write for Offset {
     }
 }
 
-impl Openxmlsdk49BECFFA3B034D138272D6CCB22579E3 {
+impl<X: NodeExtra> Openxmlsdk49BECFFA3B034D138272D6CCB22579E3With<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> Openxmlsdk49BECFFA3B034D138272D6CCB22579E3With<Y>
+    where
+        Y: NodeExtra,
+    {
+        Openxmlsdk49BECFFA3B034D138272D6CCB22579E3With {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10454,7 +12608,26 @@ impl officekit_markup_base::Write for Openxmlsdk49BECFFA3B034D138272D6CCB22579E3
     }
 }
 
-impl PageMargins {
+impl<X: NodeExtra> PageMarginsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PageMarginsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PageMarginsWith {
+            b: self.b,
+            extra: Default::default(),
+            footer: self.footer,
+            header: self.header,
+            l: self.l,
+            r: self.r,
+            t: self.t,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10541,7 +12714,29 @@ impl PageOrientation {
     }
 }
 
-impl PageSetup {
+impl<X: NodeExtra> PageSetupWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PageSetupWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PageSetupWith {
+            black_and_white: self.black_and_white,
+            copies: self.copies,
+            draft: self.draft,
+            extra: Default::default(),
+            first_page_number: self.first_page_number,
+            horizontal_dpi: self.horizontal_dpi,
+            orientation: self.orientation,
+            paper_size: self.paper_size,
+            unknown: self.unknown,
+            use_first_page_number: self.use_first_page_number,
+            vertical_dpi: self.vertical_dpi,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10573,7 +12768,21 @@ impl officekit_markup_base::Write for PageSetup {
     }
 }
 
-impl ParentLabelLayout {
+impl<X: NodeExtra> ParentLabelLayoutWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ParentLabelLayoutWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ParentLabelLayoutWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10597,7 +12806,21 @@ impl officekit_markup_base::Write for ParentLabelLayout {
     }
 }
 
-impl Percent {
+impl<X: NodeExtra> PercentWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PercentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PercentWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10621,7 +12844,33 @@ impl officekit_markup_base::Write for Percent {
     }
 }
 
-impl PlotArea {
+impl<X: NodeExtra> PlotAreaWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PlotAreaWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PlotAreaWith {
+            axis: officekit_markup_base::into_extra_list(self.axis, AxisWith::into_extra),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            region: officekit_markup_base::into_extra_required(
+                *self.region,
+                PlotAreaRegionWith::into_extra,
+            ),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10642,7 +12891,29 @@ impl officekit_markup_base::Write for PlotArea {
     }
 }
 
-impl PlotAreaRegion {
+impl<X: NodeExtra> PlotAreaRegionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PlotAreaRegionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PlotAreaRegionWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            plot_surface: officekit_markup_base::into_extra_optional(
+                &mut self.plot_surface,
+                PlotSurfaceWith::into_extra,
+            ),
+            series: officekit_markup_base::into_extra_list(self.series, SeriesWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10663,7 +12934,28 @@ impl officekit_markup_base::Write for PlotAreaRegion {
     }
 }
 
-impl PlotSurface {
+impl<X: NodeExtra> PlotSurfaceWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PlotSurfaceWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PlotSurfaceWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10734,7 +13026,32 @@ impl PosAlign {
     }
 }
 
-impl PrintSettings {
+impl<X: NodeExtra> PrintSettingsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PrintSettingsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PrintSettingsWith {
+            extra: Default::default(),
+            header_footer: officekit_markup_base::into_extra_optional(
+                &mut self.header_footer,
+                HeaderFooterWith::into_extra,
+            ),
+            page_margins: officekit_markup_base::into_extra_optional(
+                &mut self.page_margins,
+                PageMarginsWith::into_extra,
+            ),
+            page_setup: officekit_markup_base::into_extra_optional(
+                &mut self.page_setup,
+                PageSetupWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10755,7 +13072,22 @@ impl officekit_markup_base::Write for PrintSettings {
     }
 }
 
-impl PtNumericValue {
+impl<X: NodeExtra> PtNumericValueWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PtNumericValueWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PtNumericValueWith {
+            extra: Default::default(),
+            idx: self.idx,
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10780,7 +13112,22 @@ impl officekit_markup_base::Write for PtNumericValue {
     }
 }
 
-impl PtStringValue {
+impl<X: NodeExtra> PtStringValueWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PtStringValueWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PtStringValueWith {
+            extra: Default::default(),
+            idx: self.idx,
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10862,7 +13209,21 @@ impl QuartileMethod {
     }
 }
 
-impl RegionLabelLayout {
+impl<X: NodeExtra> RegionLabelLayoutWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RegionLabelLayoutWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RegionLabelLayoutWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10886,7 +13247,32 @@ impl officekit_markup_base::Write for RegionLabelLayout {
     }
 }
 
-impl Rich {
+impl<X: NodeExtra> RichWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> RichWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RichWith {
+            body_properties: officekit_markup_base::into_extra_required(
+                *self.body_properties,
+                drawing::BodyPropertiesWith::into_extra,
+            ),
+            extra: Default::default(),
+            text_list_styles: officekit_markup_base::into_extra_optional(
+                &mut self.text_list_styles,
+                drawing::TextListStylesWith::into_extra,
+            ),
+            text_paragraphs: officekit_markup_base::into_extra_list(
+                self.text_paragraphs,
+                drawing::TextParagraphsWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10907,7 +13293,21 @@ impl officekit_markup_base::Write for Rich {
     }
 }
 
-impl Separator {
+impl<X: NodeExtra> SeparatorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SeparatorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SeparatorWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10931,7 +13331,56 @@ impl officekit_markup_base::Write for Separator {
     }
 }
 
-impl Series {
+impl<X: NodeExtra> SeriesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SeriesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SeriesWith {
+            axis_id: officekit_markup_base::into_extra_list(self.axis_id, AxisIdWith::into_extra),
+            data_id: officekit_markup_base::into_extra_optional(
+                &mut self.data_id,
+                DataIdWith::into_extra,
+            ),
+            data_labels: officekit_markup_base::into_extra_optional(
+                &mut self.data_labels,
+                DataLabelsWith::into_extra,
+            ),
+            data_pt: officekit_markup_base::into_extra_list(self.data_pt, DataPtWith::into_extra),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            format_idx: self.format_idx,
+            hidden: self.hidden,
+            layout_id: self.layout_id,
+            layout_pr: officekit_markup_base::into_extra_optional(
+                &mut self.layout_pr,
+                LayoutPrWith::into_extra,
+            ),
+            owner_idx: self.owner_idx,
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            tx: officekit_markup_base::into_extra_optional(&mut self.tx, TxWith::into_extra),
+            unique_id: self.unique_id,
+            unknown: self.unknown,
+            value_color_positions: officekit_markup_base::into_extra_optional(
+                &mut self.value_color_positions,
+                ValueColorPositionsWith::into_extra,
+            ),
+            value_colors: officekit_markup_base::into_extra_optional(
+                &mut self.value_colors,
+                ValueColorsWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11034,6 +13483,23 @@ impl SeriesLayout {
     }
 }
 
+impl<X: NodeExtra> SeriesLayoutPropertiesContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SeriesLayoutPropertiesContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::Aggregation(node) => {
+                SeriesLayoutPropertiesContentWith::Aggregation(node.into_extra())
+            }
+            Self::Binning(node) => SeriesLayoutPropertiesContentWith::Binning(node.into_extra()),
+            Self::Other(node) => SeriesLayoutPropertiesContentWith::Other(node),
+        }
+    }
+}
+
 impl officekit_markup_base::Read for SeriesLayoutPropertiesContent {
     fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
@@ -11109,7 +13575,53 @@ impl SidePos {
     }
 }
 
-impl SpPr {
+impl<X: NodeExtra> SpPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SpPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SpPrWith {
+            apply_3d_shape_properties: officekit_markup_base::into_extra_optional(
+                &mut self.apply_3d_shape_properties,
+                drawing::Apply3DShapePropertiesWith::into_extra,
+            ),
+            bw_mode: self.bw_mode,
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                drawing::FillPropertiesContentWith::into_extra,
+            ),
+            geometry_content: officekit_markup_base::into_extra_optional(
+                &mut self.geometry_content,
+                drawing::GeometryContentWith::into_extra,
+            ),
+            outline: officekit_markup_base::into_extra_optional(
+                &mut self.outline,
+                drawing::OutlineWith::into_extra,
+            ),
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                drawing::Scene3dWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm_transform2d: officekit_markup_base::into_extra_optional(
+                &mut self.xfrm_transform2d,
+                drawing::XfrmTransform2DWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11336,7 +13848,21 @@ impl StRegionLabelLayout {
     }
 }
 
-impl Statistics {
+impl<X: NodeExtra> StatisticsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> StatisticsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StatisticsWith {
+            extra: Default::default(),
+            quartile_method: self.quartile_method,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11360,7 +13886,25 @@ impl officekit_markup_base::Write for Statistics {
     }
 }
 
-impl StrDim {
+impl<X: NodeExtra> StrDimWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> StrDimWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StrDimWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                StringDimensionContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            r#type: self.r#type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11381,6 +13925,24 @@ impl officekit_markup_base::Write for StrDim {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::str_dim(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> StringDimensionContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> StringDimensionContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::F(node) => StringDimensionContentWith::F(node.into_extra()),
+            Self::LvlStringLevel(node) => {
+                StringDimensionContentWith::LvlStringLevel(node.into_extra())
+            }
+            Self::Nf(node) => StringDimensionContentWith::Nf(node.into_extra()),
+            Self::Other(node) => StringDimensionContentWith::Other(node),
+        }
     }
 }
 
@@ -11464,7 +14026,21 @@ impl StringDimensionType {
     }
 }
 
-impl Subtotals {
+impl<X: NodeExtra> SubtotalsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SubtotalsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SubtotalsWith {
+            extra: Default::default(),
+            idx: officekit_markup_base::into_extra_list(self.idx, IdxWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11485,9 +14061,24 @@ impl officekit_markup_base::Write for Subtotals {
     }
 }
 
-impl Default for TextContent {
+impl<X: NodeExtra> TextContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TextContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::Other(node) => TextContentWith::Other(node),
+            Self::Rich(node) => TextContentWith::Rich(node.into_extra()),
+            Self::TxData(node) => TextContentWith::TxData(node.into_extra()),
+        }
+    }
+}
+
+impl<X: NodeExtra> Default for TextContentWith<X> {
     fn default() -> Self {
-        Self::Rich(Rich::default())
+        Self::Rich(RichWith::default())
     }
 }
 
@@ -11515,9 +14106,24 @@ impl officekit_markup_base::Write for TextContent {
     }
 }
 
-impl Default for TextDataContent {
+impl<X: NodeExtra> TextDataContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TextDataContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::F(node) => TextDataContentWith::F(node.into_extra()),
+            Self::Other(node) => TextDataContentWith::Other(node),
+            Self::V(node) => TextDataContentWith::V(node.into_extra()),
+        }
+    }
+}
+
+impl<X: NodeExtra> Default for TextDataContentWith<X> {
     fn default() -> Self {
-        Self::F(F::default())
+        Self::F(FWith::default())
     }
 }
 
@@ -11545,7 +14151,24 @@ impl officekit_markup_base::Write for TextDataContent {
     }
 }
 
-impl TickLabels {
+impl<X: NodeExtra> TickLabelsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TickLabelsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TickLabelsWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11566,7 +14189,37 @@ impl officekit_markup_base::Write for TickLabels {
     }
 }
 
-impl TitleAxisTitle {
+impl<X: NodeExtra> TitleAxisTitleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TitleAxisTitleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TitleAxisTitleWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            offset: officekit_markup_base::into_extra_optional(
+                &mut self.offset,
+                OffsetWith::into_extra,
+            ),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            tx: officekit_markup_base::into_extra_optional(&mut self.tx, TxWith::into_extra),
+            tx_pr: officekit_markup_base::into_extra_optional(
+                &mut self.tx_pr,
+                TxPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11587,7 +14240,40 @@ impl officekit_markup_base::Write for TitleAxisTitle {
     }
 }
 
-impl TitleChartTitle {
+impl<X: NodeExtra> TitleChartTitleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TitleChartTitleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TitleChartTitleWith {
+            align: self.align,
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            offset: officekit_markup_base::into_extra_optional(
+                &mut self.offset,
+                OffsetWith::into_extra,
+            ),
+            overlay: self.overlay,
+            pos: self.pos,
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            tx: officekit_markup_base::into_extra_optional(&mut self.tx, TxWith::into_extra),
+            tx_pr: officekit_markup_base::into_extra_optional(
+                &mut self.tx_pr,
+                TxPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11613,7 +14299,24 @@ impl officekit_markup_base::Write for TitleChartTitle {
     }
 }
 
-impl Tx {
+impl<X: NodeExtra> TxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TxWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                TextContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11634,7 +14337,24 @@ impl officekit_markup_base::Write for Tx {
     }
 }
 
-impl TxData {
+impl<X: NodeExtra> TxDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TxDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TxDataWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                TextDataContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11655,7 +14375,32 @@ impl officekit_markup_base::Write for TxData {
     }
 }
 
-impl TxPr {
+impl<X: NodeExtra> TxPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TxPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TxPrWith {
+            body_properties: officekit_markup_base::into_extra_required(
+                *self.body_properties,
+                drawing::BodyPropertiesWith::into_extra,
+            ),
+            extra: Default::default(),
+            text_list_styles: officekit_markup_base::into_extra_optional(
+                &mut self.text_list_styles,
+                drawing::TextListStylesWith::into_extra,
+            ),
+            text_paragraphs: officekit_markup_base::into_extra_list(
+                self.text_paragraphs,
+                drawing::TextParagraphsWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11676,7 +14421,29 @@ impl officekit_markup_base::Write for TxPr {
     }
 }
 
-impl Units {
+impl<X: NodeExtra> UnitsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> UnitsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UnitsWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            label: officekit_markup_base::into_extra_optional(
+                &mut self.label,
+                UnitsLabelWith::into_extra,
+            ),
+            unit: self.unit,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11700,7 +14467,33 @@ impl officekit_markup_base::Write for Units {
     }
 }
 
-impl UnitsLabel {
+impl<X: NodeExtra> UnitsLabelWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> UnitsLabelWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UnitsLabelWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            sp_pr: officekit_markup_base::into_extra_optional(
+                &mut self.sp_pr,
+                SpPrWith::into_extra,
+            ),
+            tx: officekit_markup_base::into_extra_optional(&mut self.tx, TxWith::into_extra),
+            tx_pr: officekit_markup_base::into_extra_optional(
+                &mut self.tx_pr,
+                TxPrWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11721,7 +14514,21 @@ impl officekit_markup_base::Write for UnitsLabel {
     }
 }
 
-impl V {
+impl<X: NodeExtra> VWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11745,7 +14552,24 @@ impl officekit_markup_base::Write for V {
     }
 }
 
-impl ValScaling {
+impl<X: NodeExtra> ValScalingWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ValScalingWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ValScalingWith {
+            extra: Default::default(),
+            major_unit: self.major_unit,
+            max: self.max,
+            min: self.min,
+            minor_unit: self.minor_unit,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11772,9 +14596,27 @@ impl officekit_markup_base::Write for ValScaling {
     }
 }
 
-impl Default for ValueColorEndPositionContent {
+impl<X: NodeExtra> ValueColorEndPositionContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ValueColorEndPositionContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ExtremeValue(node) => {
+                ValueColorEndPositionContentWith::ExtremeValue(node.into_extra())
+            }
+            Self::Number(node) => ValueColorEndPositionContentWith::Number(node.into_extra()),
+            Self::Other(node) => ValueColorEndPositionContentWith::Other(node),
+            Self::Percent(node) => ValueColorEndPositionContentWith::Percent(node.into_extra()),
+        }
+    }
+}
+
+impl<X: NodeExtra> Default for ValueColorEndPositionContentWith<X> {
     fn default() -> Self {
-        Self::ExtremeValue(ExtremeValue::default())
+        Self::ExtremeValue(ExtremeValueWith::default())
     }
 }
 
@@ -11831,9 +14673,24 @@ impl TryFrom<ValueColorEndPositionContent> for ValueColorMiddlePositionContent {
     }
 }
 
-impl Default for ValueColorMiddlePositionContent {
+impl<X: NodeExtra> ValueColorMiddlePositionContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ValueColorMiddlePositionContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::Number(node) => ValueColorMiddlePositionContentWith::Number(node.into_extra()),
+            Self::Other(node) => ValueColorMiddlePositionContentWith::Other(node),
+            Self::Percent(node) => ValueColorMiddlePositionContentWith::Percent(node.into_extra()),
+        }
+    }
+}
+
+impl<X: NodeExtra> Default for ValueColorMiddlePositionContentWith<X> {
     fn default() -> Self {
-        Self::Number(Number::default())
+        Self::Number(NumberWith::default())
     }
 }
 
@@ -11861,7 +14718,24 @@ impl officekit_markup_base::Write for ValueColorMiddlePositionContent {
     }
 }
 
-impl ValueColorPositions {
+impl<X: NodeExtra> ValueColorPositionsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ValueColorPositionsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ValueColorPositionsWith {
+            count: self.count,
+            extra: Default::default(),
+            max: officekit_markup_base::into_extra_optional(&mut self.max, MaxWith::into_extra),
+            mid: officekit_markup_base::into_extra_optional(&mut self.mid, MidWith::into_extra),
+            min: officekit_markup_base::into_extra_optional(&mut self.min, MinWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11885,7 +14759,32 @@ impl officekit_markup_base::Write for ValueColorPositions {
     }
 }
 
-impl ValueColors {
+impl<X: NodeExtra> ValueColorsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ValueColorsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ValueColorsWith {
+            extra: Default::default(),
+            max_color: officekit_markup_base::into_extra_optional(
+                &mut self.max_color,
+                MaxColorWith::into_extra,
+            ),
+            mid_color: officekit_markup_base::into_extra_optional(
+                &mut self.mid_color,
+                MidColorWith::into_extra,
+            ),
+            min_color: officekit_markup_base::into_extra_optional(
+                &mut self.min_color,
+                MinColorWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11906,7 +14805,23 @@ impl officekit_markup_base::Write for ValueColors {
     }
 }
 
-impl VisibilityDataLabelVisibilities {
+impl<X: NodeExtra> VisibilityDataLabelVisibilitiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VisibilityDataLabelVisibilitiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VisibilityDataLabelVisibilitiesWith {
+            category_name: self.category_name,
+            extra: Default::default(),
+            series_name: self.series_name,
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11932,7 +14847,25 @@ impl officekit_markup_base::Write for VisibilityDataLabelVisibilities {
     }
 }
 
-impl VisibilitySeriesElementVisibilities {
+impl<X: NodeExtra> VisibilitySeriesElementVisibilitiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VisibilitySeriesElementVisibilitiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VisibilitySeriesElementVisibilitiesWith {
+            connector_lines: self.connector_lines,
+            extra: Default::default(),
+            mean_line: self.mean_line,
+            mean_marker: self.mean_marker,
+            nonoutliers: self.nonoutliers,
+            outliers: self.outliers,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

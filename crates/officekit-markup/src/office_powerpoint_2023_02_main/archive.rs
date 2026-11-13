@@ -210,14 +210,48 @@
 //   6833bb8339d1dc179b970db58c13333ff6139e649ef9e044ef10623bed172323  crates/xtask/data/sdk_corrections.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The mirrors rkyv archives the enums of `crate::office_powerpoint_2023_02_main` through: the archived
-//! enums and resolvers it writes stay in this private module.
+//! The mirrors rkyv archives the structs and enums of `crate::office_powerpoint_2023_02_main` through: the archived
+//! types and resolvers it writes stay in this private module.
 
 use officekit_xml::element::Node;
 use rkyv::de::Pooling;
-use rkyv::rancor::{Fallible, Source};
-use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::rancor::{Fallible, Source as ErrorSource};
+use rkyv::ser::{Allocator, Sharing, Writer as ArchiveWriter};
 use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Cameo)]
+#[rkyv(attr(non_exhaustive))]
+pub struct CameoMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::PhTypeExt)]
+#[rkyv(attr(non_exhaustive))]
+pub struct PhTypeExtMirror {
+    pub extra: (),
+    pub r#type: Box<super::Type>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Type)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TypeMirror {
+    pub content: Box<super::PlaceholderTypeContent>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Unknown)]
+#[rkyv(attr(non_exhaustive))]
+pub struct UnknownMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PlaceholderTypeContent)]
@@ -226,6 +260,160 @@ pub enum PlaceholderTypeContent {
     Cameo(super::Cameo),
     Other(Node),
     Unknown(super::Unknown),
+}
+
+impl From<CameoMirror> for super::Cameo {
+    fn from(item: CameoMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Cameo {
+    type Archived = ArchivedCameoMirror;
+    type Resolver = CameoMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        CameoMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Cameo
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        CameoMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Cameo, __D> for ArchivedCameoMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Cameo, __D::Error> {
+        CameoMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<PhTypeExtMirror> for super::PhTypeExt {
+    fn from(item: PhTypeExtMirror) -> Self {
+        Self {
+            extra: item.extra,
+            r#type: item.r#type,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::PhTypeExt {
+    type Archived = ArchivedPhTypeExtMirror;
+    type Resolver = PhTypeExtMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        PhTypeExtMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::PhTypeExt
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        PhTypeExtMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::PhTypeExt, __D> for ArchivedPhTypeExtMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::PhTypeExt, __D::Error> {
+        PhTypeExtMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TypeMirror> for super::Type {
+    fn from(item: TypeMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Type {
+    type Archived = ArchivedTypeMirror;
+    type Resolver = TypeMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TypeMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Type
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TypeMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Type, __D> for ArchivedTypeMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Type, __D::Error> {
+        TypeMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<UnknownMirror> for super::Unknown {
+    fn from(item: UnknownMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Unknown {
+    type Archived = ArchivedUnknownMirror;
+    type Resolver = UnknownMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        UnknownMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Unknown
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        UnknownMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Unknown, __D> for ArchivedUnknownMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Unknown, __D::Error> {
+        UnknownMirror::deserialize_with(self, deserializer)
+    }
 }
 
 impl From<PlaceholderTypeContent> for super::PlaceholderTypeContent {
@@ -247,22 +435,25 @@ impl rkyv::Archive for super::PlaceholderTypeContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::PlaceholderTypeContent
+impl<__S> rkyv::Serialize<__S> for super::PlaceholderTypeContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         PlaceholderTypeContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::PlaceholderTypeContent, D> for ArchivedPlaceholderTypeContent
+impl<__D> rkyv::Deserialize<super::PlaceholderTypeContent, __D> for ArchivedPlaceholderTypeContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::PlaceholderTypeContent, D::Error> {
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::PlaceholderTypeContent, __D::Error> {
         PlaceholderTypeContent::deserialize_with(self, deserializer)
     }
 }

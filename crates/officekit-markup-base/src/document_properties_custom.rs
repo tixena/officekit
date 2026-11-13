@@ -221,6 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use crate::NodeExtra;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 
@@ -289,32 +290,32 @@ pub static CUSTOM_FILE_PROPERTY_CONTENT_TAGS: crate::Accept = crate::Accept {
 
 /// The `op:Properties` element, Custom File Properties (ECMA-376 Part 1, section 22.3.2.1). Its
 /// schema type is `CT_Properties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CustomFileProperties {
+pub struct CustomFilePropertiesWith<X: NodeExtra> {
     /// The children that are `CustomFileProperty`, in order.
-    pub custom_file_property: Vec<CustomFileProperty>,
+    pub custom_file_property: Vec<CustomFilePropertyWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesCustomCustomFileProperties,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
+/// The `op:Properties` element of the tree a read gives: [`CustomFilePropertiesWith`] holding
+/// nothing in `extra`.
+pub type CustomFileProperties = CustomFilePropertiesWith<()>;
+
+impl Eq for CustomFilePropertiesWith<()> {}
+
 /// The `op:property` element, Custom File Property (ECMA-376 Part 1, section 22.3.2.2). Its schema
 /// type is `CT_Property`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CustomFileProperty {
+pub struct CustomFilePropertyWith<X: NodeExtra> {
     /// The child that is an item of `CustomFilePropertyContent`, which the schema requires.
-    pub content: Box<CustomFilePropertyContent>,
+    pub content: Box<CustomFilePropertyContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesCustomCustomFileProperty,
     /// The attribute `fmtid`, when the element has it.
     pub fmtid: Option<super::common_simple_types::Guid>,
     /// The attribute `linkTarget`, when the element has it.
@@ -327,84 +328,113 @@ pub struct CustomFileProperty {
     pub unknown: crate::Unknown,
 }
 
+/// The `op:property` element of the tree a read gives: [`CustomFilePropertyWith`] holding nothing
+/// in `extra`.
+pub type CustomFileProperty = CustomFilePropertyWith<()>;
+
+impl Eq for CustomFilePropertyWith<()> {}
+
 /// One child element of a choice: local choice in `CT_Property`.
 ///
 /// The schema types that hold it: `CT_Property`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
-pub enum CustomFilePropertyContent {
+#[derive(Clone, Debug, PartialEq)]
+pub enum CustomFilePropertyContentWith<X: NodeExtra> {
     /// The element `vt:array`, a `Array`.
-    Array(super::document_properties_variant_types::Array),
+    Array(super::document_properties_variant_types::ArrayWith<X>),
     /// The element `vt:bstr`, a `BasicString`.
-    BasicString(super::document_properties_variant_types::BasicString),
+    BasicString(super::document_properties_variant_types::BasicStringWith<X>),
     /// The element `vt:blob`, a `BinaryBlob`.
-    BinaryBlob(super::document_properties_variant_types::BinaryBlob),
+    BinaryBlob(super::document_properties_variant_types::BinaryBlobWith<X>),
     /// The element `vt:oblob`, a `BinaryBlobObject`.
-    BinaryBlobObject(super::document_properties_variant_types::BinaryBlobObject),
+    BinaryBlobObject(super::document_properties_variant_types::BinaryBlobObjectWith<X>),
     /// The element `vt:storage`, a `BinaryStorage`.
-    BinaryStorage(super::document_properties_variant_types::BinaryStorage),
+    BinaryStorage(super::document_properties_variant_types::BinaryStorageWith<X>),
     /// The element `vt:ostorage`, a `BinaryStorageObject`.
-    BinaryStorageObject(super::document_properties_variant_types::BinaryStorageObject),
+    BinaryStorageObject(super::document_properties_variant_types::BinaryStorageObjectWith<X>),
     /// The element `vt:stream`, a `BinaryStream`.
-    BinaryStream(super::document_properties_variant_types::BinaryStream),
+    BinaryStream(super::document_properties_variant_types::BinaryStreamWith<X>),
     /// The element `vt:ostream`, a `BinaryStreamObject`.
-    BinaryStreamObject(super::document_properties_variant_types::BinaryStreamObject),
+    BinaryStreamObject(super::document_properties_variant_types::BinaryStreamObjectWith<X>),
     /// The element `vt:vstream`, a `BinaryVersionedStream`.
-    BinaryVersionedStream(super::document_properties_variant_types::BinaryVersionedStream),
+    BinaryVersionedStream(super::document_properties_variant_types::BinaryVersionedStreamWith<X>),
     /// The element `vt:bool`, a `Boolean`.
-    Boolean(super::document_properties_variant_types::Boolean),
+    Boolean(super::document_properties_variant_types::BooleanWith<X>),
     /// The element `vt:clsid`, a `ClassID`.
-    ClassID(super::document_properties_variant_types::ClassID),
+    ClassID(super::document_properties_variant_types::ClassIDWith<X>),
     /// The element `vt:cy`, a `Currency`.
-    Currency(super::document_properties_variant_types::Currency),
+    Currency(super::document_properties_variant_types::CurrencyWith<X>),
     /// The element `vt:date`, a `DateAndTime`.
-    DateAndTime(super::document_properties_variant_types::DateAndTime),
+    DateAndTime(super::document_properties_variant_types::DateAndTimeWith<X>),
     /// The element `vt:decimal`, a `Decimal`.
-    Decimal(super::document_properties_variant_types::Decimal),
+    Decimal(super::document_properties_variant_types::DecimalWith<X>),
     /// The element `vt:empty`, a `Empty`.
-    Empty(super::document_properties_variant_types::Empty),
+    Empty(super::document_properties_variant_types::EmptyWith<X>),
     /// The element `vt:error`, a `ErrorStatusCode`.
-    ErrorStatusCode(super::document_properties_variant_types::ErrorStatusCode),
+    ErrorStatusCode(super::document_properties_variant_types::ErrorStatusCodeWith<X>),
     /// The element `vt:filetime`, a `FileTime`.
-    FileTime(super::document_properties_variant_types::FileTime),
+    FileTime(super::document_properties_variant_types::FileTimeWith<X>),
     /// The element `vt:i1`, a `I1`.
-    I1(super::document_properties_variant_types::I1),
+    I1(super::document_properties_variant_types::I1With<X>),
     /// The element `vt:i2`, a `I2`.
-    I2(super::document_properties_variant_types::I2),
+    I2(super::document_properties_variant_types::I2With<X>),
     /// The element `vt:i4`, a `I4`.
-    I4(super::document_properties_variant_types::I4),
+    I4(super::document_properties_variant_types::I4With<X>),
     /// The element `vt:i8`, a `I8`.
-    I8(super::document_properties_variant_types::I8),
+    I8(super::document_properties_variant_types::I8With<X>),
     /// The element `vt:int`, a `Integer`.
-    Integer(super::document_properties_variant_types::Integer),
+    Integer(super::document_properties_variant_types::IntegerWith<X>),
     /// The element `vt:lpstr`, a `Lpstr`.
-    Lpstr(super::document_properties_variant_types::Lpstr),
+    Lpstr(super::document_properties_variant_types::LpstrWith<X>),
     /// The element `vt:lpwstr`, a `Lpwstr`.
-    Lpwstr(super::document_properties_variant_types::Lpwstr),
+    Lpwstr(super::document_properties_variant_types::LpwstrWith<X>),
     /// The element `vt:null`, a `Null`.
-    Null(super::document_properties_variant_types::Null),
+    Null(super::document_properties_variant_types::NullWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `vt:r4`, a `R4`.
-    R4(super::document_properties_variant_types::R4),
+    R4(super::document_properties_variant_types::R4With<X>),
     /// The element `vt:r8`, a `R8`.
-    R8(super::document_properties_variant_types::R8),
+    R8(super::document_properties_variant_types::R8With<X>),
     /// The element `vt:ui1`, a `Ui1`.
-    Ui1(super::document_properties_variant_types::Ui1),
+    Ui1(super::document_properties_variant_types::Ui1With<X>),
     /// The element `vt:ui2`, a `Ui2`.
-    Ui2(super::document_properties_variant_types::Ui2),
+    Ui2(super::document_properties_variant_types::Ui2With<X>),
     /// The element `vt:ui4`, a `Ui4`.
-    Ui4(super::document_properties_variant_types::Ui4),
+    Ui4(super::document_properties_variant_types::Ui4With<X>),
     /// The element `vt:ui8`, a `Ui8`.
-    Ui8(super::document_properties_variant_types::Ui8),
+    Ui8(super::document_properties_variant_types::Ui8With<X>),
     /// The element `vt:uint`, a `UnsignedInteger`.
-    UnsignedInteger(super::document_properties_variant_types::UnsignedInteger),
+    UnsignedInteger(super::document_properties_variant_types::UnsignedIntegerWith<X>),
     /// The element `vt:vector`, a `Vector`.
-    Vector(super::document_properties_variant_types::Vector),
+    Vector(super::document_properties_variant_types::VectorWith<X>),
 }
 
-impl CustomFileProperties {
+/// [`CustomFilePropertyContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type CustomFilePropertyContent = CustomFilePropertyContentWith<()>;
+
+impl Eq for CustomFilePropertyContentWith<()> {}
+
+impl<X: NodeExtra> CustomFilePropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CustomFilePropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CustomFilePropertiesWith {
+            custom_file_property: crate::into_extra_list(
+                self.custom_file_property,
+                CustomFilePropertyWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -425,7 +455,28 @@ impl crate::Write for CustomFileProperties {
     }
 }
 
-impl CustomFileProperty {
+impl<X: NodeExtra> CustomFilePropertyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CustomFilePropertyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CustomFilePropertyWith {
+            content: crate::into_extra_required(
+                *self.content,
+                CustomFilePropertyContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            fmtid: self.fmtid,
+            link_target: self.link_target,
+            name: self.name,
+            pid: self.pid,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -452,9 +503,75 @@ impl crate::Write for CustomFileProperty {
     }
 }
 
-impl Default for CustomFilePropertyContent {
+impl<X: NodeExtra> CustomFilePropertyContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CustomFilePropertyContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::Array(node) => CustomFilePropertyContentWith::Array(node.into_extra()),
+            Self::BasicString(node) => {
+                CustomFilePropertyContentWith::BasicString(node.into_extra())
+            }
+            Self::BinaryBlob(node) => CustomFilePropertyContentWith::BinaryBlob(node.into_extra()),
+            Self::BinaryBlobObject(node) => {
+                CustomFilePropertyContentWith::BinaryBlobObject(node.into_extra())
+            }
+            Self::BinaryStorage(node) => {
+                CustomFilePropertyContentWith::BinaryStorage(node.into_extra())
+            }
+            Self::BinaryStorageObject(node) => {
+                CustomFilePropertyContentWith::BinaryStorageObject(node.into_extra())
+            }
+            Self::BinaryStream(node) => {
+                CustomFilePropertyContentWith::BinaryStream(node.into_extra())
+            }
+            Self::BinaryStreamObject(node) => {
+                CustomFilePropertyContentWith::BinaryStreamObject(node.into_extra())
+            }
+            Self::BinaryVersionedStream(node) => {
+                CustomFilePropertyContentWith::BinaryVersionedStream(node.into_extra())
+            }
+            Self::Boolean(node) => CustomFilePropertyContentWith::Boolean(node.into_extra()),
+            Self::ClassID(node) => CustomFilePropertyContentWith::ClassID(node.into_extra()),
+            Self::Currency(node) => CustomFilePropertyContentWith::Currency(node.into_extra()),
+            Self::DateAndTime(node) => {
+                CustomFilePropertyContentWith::DateAndTime(node.into_extra())
+            }
+            Self::Decimal(node) => CustomFilePropertyContentWith::Decimal(node.into_extra()),
+            Self::Empty(node) => CustomFilePropertyContentWith::Empty(node.into_extra()),
+            Self::ErrorStatusCode(node) => {
+                CustomFilePropertyContentWith::ErrorStatusCode(node.into_extra())
+            }
+            Self::FileTime(node) => CustomFilePropertyContentWith::FileTime(node.into_extra()),
+            Self::I1(node) => CustomFilePropertyContentWith::I1(node.into_extra()),
+            Self::I2(node) => CustomFilePropertyContentWith::I2(node.into_extra()),
+            Self::I4(node) => CustomFilePropertyContentWith::I4(node.into_extra()),
+            Self::I8(node) => CustomFilePropertyContentWith::I8(node.into_extra()),
+            Self::Integer(node) => CustomFilePropertyContentWith::Integer(node.into_extra()),
+            Self::Lpstr(node) => CustomFilePropertyContentWith::Lpstr(node.into_extra()),
+            Self::Lpwstr(node) => CustomFilePropertyContentWith::Lpwstr(node.into_extra()),
+            Self::Null(node) => CustomFilePropertyContentWith::Null(node.into_extra()),
+            Self::Other(node) => CustomFilePropertyContentWith::Other(node),
+            Self::R4(node) => CustomFilePropertyContentWith::R4(node.into_extra()),
+            Self::R8(node) => CustomFilePropertyContentWith::R8(node.into_extra()),
+            Self::Ui1(node) => CustomFilePropertyContentWith::Ui1(node.into_extra()),
+            Self::Ui2(node) => CustomFilePropertyContentWith::Ui2(node.into_extra()),
+            Self::Ui4(node) => CustomFilePropertyContentWith::Ui4(node.into_extra()),
+            Self::Ui8(node) => CustomFilePropertyContentWith::Ui8(node.into_extra()),
+            Self::UnsignedInteger(node) => {
+                CustomFilePropertyContentWith::UnsignedInteger(node.into_extra())
+            }
+            Self::Vector(node) => CustomFilePropertyContentWith::Vector(node.into_extra()),
+        }
+    }
+}
+
+impl<X: NodeExtra> Default for CustomFilePropertyContentWith<X> {
     fn default() -> Self {
-        Self::Array(super::document_properties_variant_types::Array::default())
+        Self::Array(super::document_properties_variant_types::ArrayWith::default())
     }
 }
 

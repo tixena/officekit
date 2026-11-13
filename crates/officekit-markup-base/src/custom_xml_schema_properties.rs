@@ -216,9 +216,12 @@
 //! elements. The `read` module has a function that reads an element into each, and the
 //! `write` module one that writes each back to an element.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use crate::NodeExtra;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -245,14 +248,11 @@ pub static EMBEDDED_CUSTOM_XML_SCHEMA_SUPPLEMENTARY_DATA_SHAPE: crate::Shape = c
 
 /// The `sl:schema` element, Custom XML Schema Reference (ECMA-376 Part 1, section 23.2.1). Its
 /// schema type is `CT_Schema`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CustomXMLSchemaReference {
+pub struct CustomXMLSchemaReferenceWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::CustomXmlSchemaPropertiesCustomXMLSchemaReference,
     /// The attribute `sl:manifestLocation`, when the element has it.
     pub manifest_location: Option<String>,
     /// The attribute `sl:schemaLanguage`, when the element has it.
@@ -265,23 +265,50 @@ pub struct CustomXMLSchemaReference {
     pub uri: Option<String>,
 }
 
+/// The `sl:schema` element of the tree a read gives: [`CustomXMLSchemaReferenceWith`] holding
+/// nothing in `extra`.
+pub type CustomXMLSchemaReference = CustomXMLSchemaReferenceWith<()>;
+
+impl Eq for CustomXMLSchemaReferenceWith<()> {}
+
 /// The `sl:schemaLibrary` element, Embedded Custom XML Schema Supplementary Data (ECMA-376 Part 1,
 /// section 23.2.2). Its schema type is `CT_SchemaLibrary`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EmbeddedCustomXMLSchemaSupplementaryData {
+pub struct EmbeddedCustomXMLSchemaSupplementaryDataWith<X: NodeExtra> {
     /// The children that are `CustomXMLSchemaReference`, in order.
-    pub custom_xml_schema_reference: Vec<CustomXMLSchemaReference>,
+    pub custom_xml_schema_reference: Vec<CustomXMLSchemaReferenceWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::CustomXmlSchemaPropertiesEmbeddedCustomXMLSchemaSupplementaryData,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
-impl CustomXMLSchemaReference {
+/// The `sl:schemaLibrary` element of the tree a read gives:
+/// [`EmbeddedCustomXMLSchemaSupplementaryDataWith`] holding nothing in `extra`.
+pub type EmbeddedCustomXMLSchemaSupplementaryData =
+    EmbeddedCustomXMLSchemaSupplementaryDataWith<()>;
+
+impl Eq for EmbeddedCustomXMLSchemaSupplementaryDataWith<()> {}
+
+impl<X: NodeExtra> CustomXMLSchemaReferenceWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CustomXMLSchemaReferenceWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CustomXMLSchemaReferenceWith {
+            extra: Default::default(),
+            manifest_location: self.manifest_location,
+            schema_language: self.schema_language,
+            schema_location: self.schema_location,
+            unknown: self.unknown,
+            uri: self.uri,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -308,7 +335,24 @@ impl crate::Write for CustomXMLSchemaReference {
     }
 }
 
-impl EmbeddedCustomXMLSchemaSupplementaryData {
+impl<X: NodeExtra> EmbeddedCustomXMLSchemaSupplementaryDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> EmbeddedCustomXMLSchemaSupplementaryDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EmbeddedCustomXMLSchemaSupplementaryDataWith {
+            custom_xml_schema_reference: crate::into_extra_list(
+                self.custom_xml_schema_reference,
+                CustomXMLSchemaReferenceWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

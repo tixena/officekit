@@ -17,7 +17,7 @@ const ARRAY_WIDTH: usize = 60;
 /// rustfmt's widest call or tuple arguments on one line.
 const CALL_WIDTH: usize = 60;
 /// rustfmt's widest chain of more than one call on one line.
-const CHAIN_WIDTH: usize = 60;
+pub const CHAIN_WIDTH: usize = 60;
 /// clippy's smallest decimal literal `decimal_literal_representation` looks at.
 const HEX_THRESHOLD: u128 = 0x4000;
 pub const INDENT: usize = 4;
@@ -916,6 +916,39 @@ pub fn signature(indent: usize, head: &str, parameters: &[String], output: &str)
     out
 }
 
+/// `signature`, its `{` moved after a `where` clause of `bounds`, one on each line.
+#[must_use]
+pub fn signature_where(
+    indent: usize,
+    head: &str,
+    parameters: &[String],
+    output: &str,
+    bounds: &[&str],
+) -> String {
+    let mut out = signature(indent, head, parameters, output);
+    let opener = if out.ends_with(" {\n") {
+        " {\n"
+    } else {
+        "\n{\n"
+    };
+    out.truncate(out.len() - opener.len());
+    if output.is_empty() && out.ends_with(')') && out.contains("(\n") {
+        out.push_str(" where\n");
+    } else {
+        out.push('\n');
+        pad(indent, &mut out);
+        out.push_str("where\n");
+    }
+    for bound in bounds {
+        pad(indent + INDENT, &mut out);
+        out.push_str(bound);
+        out.push_str(",\n");
+    }
+    pad(indent, &mut out);
+    out.push_str("{\n");
+    out
+}
+
 /// A generic type too long for its line: each of its arguments on a line of
 /// its own one step in, as rustfmt breaks `Result<A, B>`.
 fn broken_type(indent: usize, shown: &str) -> String {
@@ -955,11 +988,17 @@ fn broken_type(indent: usize, shown: &str) -> String {
 /// `for target` on a line of its own and `{` after it.
 #[must_use]
 pub fn impl_header(trait_part: &str, target: &str) -> String {
-    let flat = format!("impl {trait_part} for {target} {{\n");
+    generic_impl_header("", trait_part, target)
+}
+
+/// `impl_header` of an `impl` that declares `generics`, `<X: NodeExtra>`.
+#[must_use]
+pub fn generic_impl_header(generics: &str, trait_part: &str, target: &str) -> String {
+    let flat = format!("impl{generics} {trait_part} for {target} {{\n");
     if flat.len() - 1 <= MAX_WIDTH {
         return flat;
     }
-    format!("impl {trait_part}\n    for {target}\n{{\n")
+    format!("impl{generics} {trait_part}\n    for {target}\n{{\n")
 }
 
 /// A match arm at `indent`: `pattern => body,` on one line when it fits. A

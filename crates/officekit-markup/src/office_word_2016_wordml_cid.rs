@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -245,37 +248,43 @@ pub static COMMENTS_IDS_SHAPE: officekit_markup_base::Shape = officekit_markup_b
 
 /// The `w16cid:commentId` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_CommentId`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentId {
+pub struct CommentIdWith<X: NodeExtra> {
     /// The attribute `w16cid:durableId`, when the element has it.
     pub durable_id: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWord2016WordmlCidCommentId,
     /// The attribute `w16cid:paraId`, when the element has it.
     pub para_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `w16cid:commentId` element of the tree a read gives: [`CommentIdWith`] holding nothing in
+/// `extra`.
+pub type CommentId = CommentIdWith<()>;
+
+impl Eq for CommentIdWith<()> {}
+
 /// The `w16cid:commentsIds` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_CommentsIds`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentsIds {
+pub struct CommentsIdsWith<X: NodeExtra> {
     /// The children that are `CommentId`, in order.
-    pub comment_id: Vec<CommentId>,
+    pub comment_id: Vec<CommentIdWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWord2016WordmlCidCommentsIds,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `w16cid:commentsIds` element of the tree a read gives: [`CommentsIdsWith`] holding nothing
+/// in `extra`.
+pub type CommentsIds = CommentsIdsWith<()>;
+
+impl Eq for CommentsIdsWith<()> {}
 
 /// The hooks of a context for the `w16cid` namespace.
 ///
@@ -346,7 +355,22 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl CommentId {
+impl<X: NodeExtra> CommentIdWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CommentIdWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CommentIdWith {
+            durable_id: self.durable_id,
+            extra: Default::default(),
+            para_id: self.para_id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -371,7 +395,24 @@ impl officekit_markup_base::Write for CommentId {
     }
 }
 
-impl CommentsIds {
+impl<X: NodeExtra> CommentsIdsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CommentsIdsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CommentsIdsWith {
+            comment_id: officekit_markup_base::into_extra_list(
+                self.comment_id,
+                CommentIdWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

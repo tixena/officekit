@@ -110,6 +110,9 @@ extern crate alloc;
 include!("modules.rs");
 
 pub mod class_rules;
+mod node_extra;
+
+pub use node_extra::{ExtraSlot, NodeExtra};
 
 use alloc::collections::VecDeque;
 use core::num::ParseFloatError;
@@ -133,6 +136,33 @@ macro_rules! mirror_into {
     ($item:expr, $from:ident => $to:ident; $($variant:ident),+ $(,)?) => {
         match $item {
             $($from::$variant(arm) => $to::$variant(arm),)+
+        }
+    };
+}
+
+/// The `From` of a struct's rkyv mirror too long to write out: the struct
+/// literal that moves each field of the mirror `$item` into the field of the
+/// same name.
+#[cfg(feature = "binary-format")]
+#[macro_export]
+macro_rules! mirror_fields {
+    ($item:expr; $($field:ident),+ $(,)?) => {{
+        let item = $item;
+        Self { $($field: item.$field),+ }
+    }};
+}
+
+/// The `into_extra` of an enum too long to write out.
+///
+/// It is the match that converts each arm of `$item`, the plain ones as they are and the `boxed`
+/// ones through their box, into the arm of the same name of `$enum`, and moves `Other`.
+#[macro_export]
+macro_rules! into_extra_match {
+    ($item:expr, $enum:ident; plain [$($plain:ident,)*] boxed [$($boxed:ident,)*]) => {
+        match $item {
+            $($enum::$plain(node) => $enum::$plain(node.into_extra()),)*
+            $($enum::$boxed(node) => $enum::$boxed(Box::new((*node).into_extra())),)*
+            $enum::Other(node) => $enum::Other(node),
         }
     };
 }
@@ -1103,6 +1133,30 @@ impl<'scope, 'node> Writer<'scope, 'node> {
             self.children.other(Node::Text(value.to_owned()));
         }
     }
+}
+
+/// The children of a list field, each converted by `each`.
+///
+/// `each` is the `into_extra` of the node a list holds.
+#[must_use]
+pub fn into_extra_list<T, U>(items: Vec<T>, each: fn(T) -> U) -> Vec<U> {
+    items.into_iter().map(each).collect()
+}
+
+/// The child of an optional field, taken out of the field and converted by `each`.
+///
+/// `each` is the `into_extra` of the node the field holds.
+#[must_use]
+pub fn into_extra_optional<T, U>(item: &mut Option<Box<T>>, each: fn(T) -> U) -> Option<Box<U>> {
+    item.take().map(|boxed| Box::new(each(*boxed)))
+}
+
+/// The child of a required field, converted by `each` and boxed again.
+///
+/// `each` is the `into_extra` of the node the field holds.
+#[must_use]
+pub fn into_extra_required<T, U>(item: T, each: fn(T) -> U) -> Box<U> {
+    Box::new(each(item))
 }
 
 /// An enumeration member's value: `ValueError` when the text names none.

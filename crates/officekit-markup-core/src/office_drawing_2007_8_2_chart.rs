@@ -216,9 +216,12 @@
 //! elements. The `read` module has a function that reads an element into each, and the
 //! `write` module one that writes each back to an element.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -331,211 +334,258 @@ pub static STYLE_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Sh
 
 /// The `c14:dropZoneCategories` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_BooleanFalse`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropZoneCategories {
+pub struct DropZoneCategoriesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing200782ChartDropZoneCategories,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c14:dropZoneCategories` element of the tree a read gives: [`DropZoneCategoriesWith`]
+/// holding nothing in `extra`.
+pub type DropZoneCategories = DropZoneCategoriesWith<()>;
+
+impl Eq for DropZoneCategoriesWith<()> {}
 
 /// The `c14:dropZoneData` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_BooleanFalse`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropZoneData {
+pub struct DropZoneDataWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing200782ChartDropZoneData,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c14:dropZoneData` element of the tree a read gives: [`DropZoneDataWith`] holding nothing in
+/// `extra`.
+pub type DropZoneData = DropZoneDataWith<()>;
+
+impl Eq for DropZoneDataWith<()> {}
 
 /// The `c14:dropZoneFilter` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_BooleanFalse`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropZoneFilter {
+pub struct DropZoneFilterWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing200782ChartDropZoneFilter,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c14:dropZoneFilter` element of the tree a read gives: [`DropZoneFilterWith`] holding
+/// nothing in `extra`.
+pub type DropZoneFilter = DropZoneFilterWith<()>;
+
+impl Eq for DropZoneFilterWith<()> {}
 
 /// The `c14:dropZoneSeries` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_BooleanFalse`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropZoneSeries {
+pub struct DropZoneSeriesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing200782ChartDropZoneSeries,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c14:dropZoneSeries` element of the tree a read gives: [`DropZoneSeriesWith`] holding
+/// nothing in `extra`.
+pub type DropZoneSeries = DropZoneSeriesWith<()>;
+
+impl Eq for DropZoneSeriesWith<()> {}
 
 /// The `c14:dropZonesVisible` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_BooleanFalse`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropZonesVisible {
+pub struct DropZonesVisibleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing200782ChartDropZonesVisible,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c14:dropZonesVisible` element of the tree a read gives: [`DropZonesVisibleWith`] holding
+/// nothing in `extra`.
+pub type DropZonesVisible = DropZonesVisibleWith<()>;
+
+impl Eq for DropZonesVisibleWith<()> {}
 
 /// The `c14:inSketchMode` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_BooleanFalse`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InSketchMode {
+pub struct InSketchModeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing200782ChartInSketchMode,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c14:inSketchMode` element of the tree a read gives: [`InSketchModeWith`] holding nothing in
+/// `extra`.
+pub type InSketchMode = InSketchModeWith<()>;
+
+impl Eq for InSketchModeWith<()> {}
 
 /// The `c14:invertSolidFillFmt` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_InvertSolidFillFmt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InvertSolidFillFmt {
+pub struct InvertSolidFillFmtWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing200782ChartInvertSolidFillFmt,
     /// The child that is `SpPr`, which the schema requires.
-    pub sp_pr: Box<SpPr>,
+    pub sp_pr: Box<SpPrWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c14:invertSolidFillFmt` element of the tree a read gives: [`InvertSolidFillFmtWith`]
+/// holding nothing in `extra`.
+pub type InvertSolidFillFmt = InvertSolidFillFmtWith<()>;
+
+impl Eq for InvertSolidFillFmtWith<()> {}
 
 /// The `c14:pivotOptions` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_PivotOptions`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotOptions {
+pub struct PivotOptionsWith<X: NodeExtra> {
     /// The child that is `DropZoneCategories`, when there is one.
-    pub drop_zone_categories: Option<Box<DropZoneCategories>>,
+    pub drop_zone_categories: Option<Box<DropZoneCategoriesWith<X>>>,
     /// The child that is `DropZoneData`, when there is one.
-    pub drop_zone_data: Option<Box<DropZoneData>>,
+    pub drop_zone_data: Option<Box<DropZoneDataWith<X>>>,
     /// The child that is `DropZoneFilter`, when there is one.
-    pub drop_zone_filter: Option<Box<DropZoneFilter>>,
+    pub drop_zone_filter: Option<Box<DropZoneFilterWith<X>>>,
     /// The child that is `DropZoneSeries`, when there is one.
-    pub drop_zone_series: Option<Box<DropZoneSeries>>,
+    pub drop_zone_series: Option<Box<DropZoneSeriesWith<X>>>,
     /// The child that is `DropZonesVisible`, when there is one.
-    pub drop_zones_visible: Option<Box<DropZonesVisible>>,
+    pub drop_zones_visible: Option<Box<DropZonesVisibleWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing200782ChartPivotOptions,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c14:pivotOptions` element of the tree a read gives: [`PivotOptionsWith`] holding nothing in
+/// `extra`.
+pub type PivotOptions = PivotOptionsWith<()>;
+
+impl Eq for PivotOptionsWith<()> {}
 
 /// The `c14:showSketchBtn` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_BooleanTrue`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShowSketchBtn {
+pub struct ShowSketchBtnWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing200782ChartShowSketchBtn,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
+
+/// The `c14:showSketchBtn` element of the tree a read gives: [`ShowSketchBtnWith`] holding nothing
+/// in `extra`.
+pub type ShowSketchBtn = ShowSketchBtnWith<()>;
+
+impl Eq for ShowSketchBtnWith<()> {}
 
 /// The `c14:sketchOptions` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_SketchOptions`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SketchOptions {
+pub struct SketchOptionsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing200782ChartSketchOptions,
     /// The child that is `InSketchMode`, when there is one.
-    pub in_sketch_mode: Option<Box<InSketchMode>>,
+    pub in_sketch_mode: Option<Box<InSketchModeWith<X>>>,
     /// The child that is `ShowSketchBtn`, when there is one.
-    pub show_sketch_btn: Option<Box<ShowSketchBtn>>,
+    pub show_sketch_btn: Option<Box<ShowSketchBtnWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `c14:sketchOptions` element of the tree a read gives: [`SketchOptionsWith`] holding nothing
+/// in `extra`.
+pub type SketchOptions = SketchOptionsWith<()>;
+
+impl Eq for SketchOptionsWith<()> {}
 
 /// The `c14:spPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpPr {
+pub struct SpPrWith<X: NodeExtra> {
     /// The child that is `super::drawing::Apply3DShapeProperties`, when there is one.
-    pub apply_3d_shape_properties: Option<Box<super::drawing::Apply3DShapeProperties>>,
+    pub apply_3d_shape_properties: Option<Box<super::drawing::Apply3DShapePropertiesWith<X>>>,
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
     /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
-    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing200782ChartSpPr,
     /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
-    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContentWith<X>>>,
     /// The child that is an item of `super::drawing::GeometryContent`, when there is one.
-    pub geometry_content: Option<Box<super::drawing::GeometryContent>>,
+    pub geometry_content: Option<Box<super::drawing::GeometryContentWith<X>>>,
     /// The child that is `super::drawing::Outline`, when there is one.
-    pub outline: Option<Box<super::drawing::Outline>>,
+    pub outline: Option<Box<super::drawing::OutlineWith<X>>>,
     /// The child that is `super::drawing::Scene3d`, when there is one.
-    pub scene3d: Option<Box<super::drawing::Scene3d>>,
+    pub scene3d: Option<Box<super::drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `super::drawing::XfrmTransform2D`, when there is one.
-    pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2D>>,
+    pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2DWith<X>>>,
 }
+
+/// The `c14:spPr` element of the tree a read gives: [`SpPrWith`] holding nothing in `extra`.
+pub type SpPr = SpPrWith<()>;
+
+impl Eq for SpPrWith<()> {}
 
 /// The `c14:style` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Style`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Style {
+pub struct StyleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing200782ChartStyle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-impl DropZoneCategories {
+/// The `c14:style` element of the tree a read gives: [`StyleWith`] holding nothing in `extra`.
+pub type Style = StyleWith<()>;
+
+impl Eq for StyleWith<()> {}
+
+impl<X: NodeExtra> DropZoneCategoriesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DropZoneCategoriesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DropZoneCategoriesWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -556,7 +606,20 @@ impl officekit_markup_base::Write for DropZoneCategories {
     }
 }
 
-impl DropZoneData {
+impl<X: NodeExtra> DropZoneDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DropZoneDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DropZoneDataWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -577,7 +640,20 @@ impl officekit_markup_base::Write for DropZoneData {
     }
 }
 
-impl DropZoneFilter {
+impl<X: NodeExtra> DropZoneFilterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DropZoneFilterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DropZoneFilterWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -598,7 +674,20 @@ impl officekit_markup_base::Write for DropZoneFilter {
     }
 }
 
-impl DropZoneSeries {
+impl<X: NodeExtra> DropZoneSeriesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DropZoneSeriesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DropZoneSeriesWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -619,7 +708,20 @@ impl officekit_markup_base::Write for DropZoneSeries {
     }
 }
 
-impl DropZonesVisible {
+impl<X: NodeExtra> DropZonesVisibleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DropZonesVisibleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DropZonesVisibleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -640,7 +742,20 @@ impl officekit_markup_base::Write for DropZonesVisible {
     }
 }
 
-impl InSketchMode {
+impl<X: NodeExtra> InSketchModeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> InSketchModeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        InSketchModeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -661,7 +776,21 @@ impl officekit_markup_base::Write for InSketchMode {
     }
 }
 
-impl InvertSolidFillFmt {
+impl<X: NodeExtra> InvertSolidFillFmtWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> InvertSolidFillFmtWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        InvertSolidFillFmtWith {
+            extra: Default::default(),
+            sp_pr: officekit_markup_base::into_extra_required(*self.sp_pr, SpPrWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -682,7 +811,40 @@ impl officekit_markup_base::Write for InvertSolidFillFmt {
     }
 }
 
-impl PivotOptions {
+impl<X: NodeExtra> PivotOptionsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PivotOptionsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PivotOptionsWith {
+            drop_zone_categories: officekit_markup_base::into_extra_optional(
+                &mut self.drop_zone_categories,
+                DropZoneCategoriesWith::into_extra,
+            ),
+            drop_zone_data: officekit_markup_base::into_extra_optional(
+                &mut self.drop_zone_data,
+                DropZoneDataWith::into_extra,
+            ),
+            drop_zone_filter: officekit_markup_base::into_extra_optional(
+                &mut self.drop_zone_filter,
+                DropZoneFilterWith::into_extra,
+            ),
+            drop_zone_series: officekit_markup_base::into_extra_optional(
+                &mut self.drop_zone_series,
+                DropZoneSeriesWith::into_extra,
+            ),
+            drop_zones_visible: officekit_markup_base::into_extra_optional(
+                &mut self.drop_zones_visible,
+                DropZonesVisibleWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -703,7 +865,21 @@ impl officekit_markup_base::Write for PivotOptions {
     }
 }
 
-impl ShowSketchBtn {
+impl<X: NodeExtra> ShowSketchBtnWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShowSketchBtnWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShowSketchBtnWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -727,7 +903,28 @@ impl officekit_markup_base::Write for ShowSketchBtn {
     }
 }
 
-impl SketchOptions {
+impl<X: NodeExtra> SketchOptionsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SketchOptionsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SketchOptionsWith {
+            extra: Default::default(),
+            in_sketch_mode: officekit_markup_base::into_extra_optional(
+                &mut self.in_sketch_mode,
+                InSketchModeWith::into_extra,
+            ),
+            show_sketch_btn: officekit_markup_base::into_extra_optional(
+                &mut self.show_sketch_btn,
+                ShowSketchBtnWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -748,7 +945,53 @@ impl officekit_markup_base::Write for SketchOptions {
     }
 }
 
-impl SpPr {
+impl<X: NodeExtra> SpPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SpPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SpPrWith {
+            apply_3d_shape_properties: officekit_markup_base::into_extra_optional(
+                &mut self.apply_3d_shape_properties,
+                super::drawing::Apply3DShapePropertiesWith::into_extra,
+            ),
+            bw_mode: self.bw_mode,
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                super::drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                super::drawing::FillPropertiesContentWith::into_extra,
+            ),
+            geometry_content: officekit_markup_base::into_extra_optional(
+                &mut self.geometry_content,
+                super::drawing::GeometryContentWith::into_extra,
+            ),
+            outline: officekit_markup_base::into_extra_optional(
+                &mut self.outline,
+                super::drawing::OutlineWith::into_extra,
+            ),
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                super::drawing::Scene3dWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm_transform2d: officekit_markup_base::into_extra_optional(
+                &mut self.xfrm_transform2d,
+                super::drawing::XfrmTransform2DWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -772,7 +1015,21 @@ impl officekit_markup_base::Write for SpPr {
     }
 }
 
-impl Style {
+impl<X: NodeExtra> StyleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> StyleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StyleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

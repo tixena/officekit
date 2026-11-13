@@ -216,9 +216,12 @@
 //! elements. The `read` module has a function that reads an element into each, and the
 //! `write` module one that writes each back to an element.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use crate::NodeExtra;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -233,21 +236,38 @@ pub static ABS_PATH_SHAPE: crate::Shape = crate::Shape {
 
 /// The `x15ac:absPath` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_AbsolutePath`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AbsPath {
+pub struct AbsPathWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml201011AcAbsPath,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The attribute `url`, when the element has it.
     pub url: Option<String>,
 }
 
-impl AbsPath {
+/// The `x15ac:absPath` element of the tree a read gives: [`AbsPathWith`] holding nothing in
+/// `extra`.
+pub type AbsPath = AbsPathWith<()>;
+
+impl Eq for AbsPathWith<()> {}
+
+impl<X: NodeExtra> AbsPathWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AbsPathWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AbsPathWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            url: self.url,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

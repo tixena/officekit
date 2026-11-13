@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::presentation;
 use officekit_xml::element::Element;
@@ -343,73 +346,83 @@ pub trait Context: crate::Context {
 
 /// The `p223:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `presentation::Extension`, in order.
-    pub extension: Vec<presentation::Extension>,
+    pub extension: Vec<presentation::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint202203MainExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `p223:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
+
 /// The `p223:instance` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ReactionInstance`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Instance {
+pub struct InstanceWith<X: NodeExtra> {
     /// The attribute `authorId`, when the element has it.
     pub author_id: Option<String>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint202203MainInstance,
     /// The attribute `time`, when the element has it.
     pub time: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `p223:instance` element of the tree a read gives: [`InstanceWith`] holding nothing in
+/// `extra`.
+pub type Instance = InstanceWith<()>;
+
+impl Eq for InstanceWith<()> {}
+
 /// The `p223:reactions` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_Reactions`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Reactions {
+pub struct ReactionsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint202203MainReactions,
     /// The children that are `Rxn`, in order.
-    pub rxn: Vec<Rxn>,
+    pub rxn: Vec<RxnWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `p223:reactions` element of the tree a read gives: [`ReactionsWith`] holding nothing in
+/// `extra`.
+pub type Reactions = ReactionsWith<()>;
+
+impl Eq for ReactionsWith<()> {}
+
 /// The `p223:rxn` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Reaction`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Rxn {
+pub struct RxnWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint202203MainRxn,
     /// The children that are `Instance`, in order.
-    pub instance: Vec<Instance>,
+    pub instance: Vec<InstanceWith<X>>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `p223:rxn` element of the tree a read gives: [`RxnWith`] holding nothing in `extra`.
+pub type Rxn = RxnWith<()>;
+
+impl Eq for RxnWith<()> {}
 
 /// The hooks of a visitor for the `p223` namespace.
 ///
@@ -439,7 +452,24 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                presentation::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -460,7 +490,26 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl Instance {
+impl<X: NodeExtra> InstanceWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> InstanceWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        InstanceWith {
+            author_id: self.author_id,
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            time: self.time,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -485,7 +534,21 @@ impl officekit_markup_base::Write for Instance {
     }
 }
 
-impl Reactions {
+impl<X: NodeExtra> ReactionsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ReactionsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ReactionsWith {
+            extra: Default::default(),
+            rxn: officekit_markup_base::into_extra_list(self.rxn, RxnWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -506,7 +569,25 @@ impl officekit_markup_base::Write for Reactions {
     }
 }
 
-impl Rxn {
+impl<X: NodeExtra> RxnWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RxnWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RxnWith {
+            extra: Default::default(),
+            instance: officekit_markup_base::into_extra_list(
+                self.instance,
+                InstanceWith::into_extra,
+            ),
+            r#type: self.r#type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

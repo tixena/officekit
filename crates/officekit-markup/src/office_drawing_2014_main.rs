@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -266,17 +269,19 @@ pub static PRED_DE_REF_SHAPE: officekit_markup_base::Shape = officekit_markup_ba
 
 /// The `a16:colId` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Identifier`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColId {
+pub struct ColIdWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014MainColId,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `a16:colId` element of the tree a read gives: [`ColIdWith`] holding nothing in `extra`.
+pub type ColId = ColIdWith<()>;
+
+impl Eq for ColIdWith<()> {}
 
 /// The hooks of a context for the `a16` namespace.
 ///
@@ -382,67 +387,78 @@ pub trait Context: crate::Context {
 
 /// The `a16:creationId` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_CreationId`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CreationId {
+pub struct CreationIdWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014MainCreationId,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `a16:creationId` element of the tree a read gives: [`CreationIdWith`] holding nothing in
+/// `extra`.
+pub type CreationId = CreationIdWith<()>;
+
+impl Eq for CreationIdWith<()> {}
+
 /// The `a16:cxnDERefs` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ConnectableReferences`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CxnDERefs {
+pub struct CxnDERefsWith<X: NodeExtra> {
     /// The attribute `end`, when the element has it.
     pub end: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014MainCxnDERefs,
     /// The attribute `st`, when the element has it.
     pub st: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `a16:cxnDERefs` element of the tree a read gives: [`CxnDERefsWith`] holding nothing in
+/// `extra`.
+pub type CxnDERefs = CxnDERefsWith<()>;
+
+impl Eq for CxnDERefsWith<()> {}
+
 /// The `a16:predDERef` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_PredecessorDrawingElementReference`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PredDERef {
+pub struct PredDERefWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014MainPredDERef,
     /// The attribute `pred`, when the element has it.
     pub pred: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `a16:predDERef` element of the tree a read gives: [`PredDERefWith`] holding nothing in
+/// `extra`.
+pub type PredDERef = PredDERefWith<()>;
+
+impl Eq for PredDERefWith<()> {}
+
 /// The `a16:rowId` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Identifier`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RowId {
+pub struct RowIdWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing2014MainRowId,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `a16:rowId` element of the tree a read gives: [`RowIdWith`] holding nothing in `extra`.
+pub type RowId = RowIdWith<()>;
+
+impl Eq for RowIdWith<()> {}
 
 /// The hooks of a visitor for the `a16` namespace.
 ///
@@ -479,7 +495,20 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl ColId {
+impl<X: NodeExtra> ColIdWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ColIdWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ColIdWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -500,7 +529,21 @@ impl officekit_markup_base::Write for ColId {
     }
 }
 
-impl CreationId {
+impl<X: NodeExtra> CreationIdWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CreationIdWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CreationIdWith {
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -524,7 +567,22 @@ impl officekit_markup_base::Write for CreationId {
     }
 }
 
-impl CxnDERefs {
+impl<X: NodeExtra> CxnDERefsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CxnDERefsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CxnDERefsWith {
+            end: self.end,
+            extra: Default::default(),
+            st: self.st,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -549,7 +607,21 @@ impl officekit_markup_base::Write for CxnDERefs {
     }
 }
 
-impl PredDERef {
+impl<X: NodeExtra> PredDERefWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PredDERefWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PredDERefWith {
+            extra: Default::default(),
+            pred: self.pred,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -573,7 +645,20 @@ impl officekit_markup_base::Write for PredDERef {
     }
 }
 
-impl RowId {
+impl<X: NodeExtra> RowIdWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RowIdWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RowIdWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

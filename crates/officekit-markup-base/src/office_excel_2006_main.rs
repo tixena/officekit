@@ -216,9 +216,12 @@
 //! elements. The `read` module has a function that reads an element into each, and the
 //! `write` module one that writes each back to an element.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use crate::NodeExtra;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -240,37 +243,55 @@ pub static SQREF_SHAPE: crate::Shape = crate::Shape {
 
 /// The `xne:f` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `ST_Formula`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct F {
+pub struct FWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeExcel2006MainF,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xne:f` element of the tree a read gives: [`FWith`] holding nothing in `extra`.
+pub type F = FWith<()>;
+
+impl Eq for FWith<()> {}
 
 /// The `xne:sqref` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `ST_Sqref`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Sqref {
+pub struct SqrefWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeExcel2006MainSqref,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
-impl F {
+/// The `xne:sqref` element of the tree a read gives: [`SqrefWith`] holding nothing in `extra`.
+pub type Sqref = SqrefWith<()>;
+
+impl Eq for SqrefWith<()> {}
+
+impl<X: NodeExtra> FWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -294,7 +315,21 @@ impl crate::Write for F {
     }
 }
 
-impl Sqref {
+impl<X: NodeExtra> SqrefWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SqrefWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SqrefWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

@@ -210,14 +210,87 @@
 //   6833bb8339d1dc179b970db58c13333ff6139e649ef9e044ef10623bed172323  crates/xtask/data/sdk_corrections.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The mirrors rkyv archives the enums of `crate::office_drawing_2018_sketchyshapes` through: the archived
-//! enums and resolvers it writes stay in this private module.
+//! The mirrors rkyv archives the structs and enums of `crate::office_drawing_2018_sketchyshapes` through: the archived
+//! types and resolvers it writes stay in this private module.
 
+use officekit_markup_core::drawing;
 use officekit_xml::element::Node;
 use rkyv::de::Pooling;
-use rkyv::rancor::{Fallible, Source};
-use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::rancor::{Fallible, Source as ErrorSource};
+use rkyv::ser::{Allocator, Sharing, Writer as ArchiveWriter};
 use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ExtLst)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ExtLstMirror {
+    pub extension: Vec<drawing::Extension>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::LineSketchCurved)]
+#[rkyv(attr(non_exhaustive))]
+pub struct LineSketchCurvedMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::LineSketchFreehand)]
+#[rkyv(attr(non_exhaustive))]
+pub struct LineSketchFreehandMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::LineSketchNone)]
+#[rkyv(attr(non_exhaustive))]
+pub struct LineSketchNoneMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::LineSketchScribble)]
+#[rkyv(attr(non_exhaustive))]
+pub struct LineSketchScribbleMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::LineSketchStyleProps)]
+#[rkyv(attr(non_exhaustive))]
+pub struct LineSketchStylePropsMirror {
+    pub content: Option<Box<drawing::GeometryContent>>,
+    pub ext_lst: Option<Box<super::ExtLst>>,
+    pub extra: (),
+    pub sd: Option<String>,
+    pub seed: Option<Box<super::Seed>>,
+    pub r#type: Option<Box<super::Type>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Seed)]
+#[rkyv(attr(non_exhaustive))]
+pub struct SeedMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+    pub value: String,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Type)]
+#[rkyv(attr(non_exhaustive))]
+pub struct TypeMirror {
+    pub content: Option<Box<super::LineSketchTypePropertiesContent>>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LineSketchTypePropertiesContent)]
@@ -228,6 +301,321 @@ pub enum LineSketchTypePropertiesContent {
     LineSketchNone(super::LineSketchNone),
     LineSketchScribble(super::LineSketchScribble),
     Other(Node),
+}
+
+impl From<ExtLstMirror> for super::ExtLst {
+    fn from(item: ExtLstMirror) -> Self {
+        Self {
+            extension: item.extension,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ExtLst {
+    type Archived = ArchivedExtLstMirror;
+    type Resolver = ExtLstMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ExtLstMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ExtLst
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ExtLstMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ExtLst, __D> for ArchivedExtLstMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ExtLst, __D::Error> {
+        ExtLstMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<LineSketchCurvedMirror> for super::LineSketchCurved {
+    fn from(item: LineSketchCurvedMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::LineSketchCurved {
+    type Archived = ArchivedLineSketchCurvedMirror;
+    type Resolver = LineSketchCurvedMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        LineSketchCurvedMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::LineSketchCurved
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        LineSketchCurvedMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::LineSketchCurved, __D> for ArchivedLineSketchCurvedMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::LineSketchCurved, __D::Error> {
+        LineSketchCurvedMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<LineSketchFreehandMirror> for super::LineSketchFreehand {
+    fn from(item: LineSketchFreehandMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::LineSketchFreehand {
+    type Archived = ArchivedLineSketchFreehandMirror;
+    type Resolver = LineSketchFreehandMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        LineSketchFreehandMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::LineSketchFreehand
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        LineSketchFreehandMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::LineSketchFreehand, __D> for ArchivedLineSketchFreehandMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::LineSketchFreehand, __D::Error> {
+        LineSketchFreehandMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<LineSketchNoneMirror> for super::LineSketchNone {
+    fn from(item: LineSketchNoneMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::LineSketchNone {
+    type Archived = ArchivedLineSketchNoneMirror;
+    type Resolver = LineSketchNoneMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        LineSketchNoneMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::LineSketchNone
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        LineSketchNoneMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::LineSketchNone, __D> for ArchivedLineSketchNoneMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::LineSketchNone, __D::Error> {
+        LineSketchNoneMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<LineSketchScribbleMirror> for super::LineSketchScribble {
+    fn from(item: LineSketchScribbleMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::LineSketchScribble {
+    type Archived = ArchivedLineSketchScribbleMirror;
+    type Resolver = LineSketchScribbleMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        LineSketchScribbleMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::LineSketchScribble
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        LineSketchScribbleMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::LineSketchScribble, __D> for ArchivedLineSketchScribbleMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::LineSketchScribble, __D::Error> {
+        LineSketchScribbleMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<LineSketchStylePropsMirror> for super::LineSketchStyleProps {
+    fn from(item: LineSketchStylePropsMirror) -> Self {
+        Self {
+            content: item.content,
+            ext_lst: item.ext_lst,
+            extra: item.extra,
+            sd: item.sd,
+            seed: item.seed,
+            r#type: item.r#type,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::LineSketchStyleProps {
+    type Archived = ArchivedLineSketchStylePropsMirror;
+    type Resolver = LineSketchStylePropsMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        LineSketchStylePropsMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::LineSketchStyleProps
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        LineSketchStylePropsMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::LineSketchStyleProps, __D> for ArchivedLineSketchStylePropsMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::LineSketchStyleProps, __D::Error> {
+        LineSketchStylePropsMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<SeedMirror> for super::Seed {
+    fn from(item: SeedMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+            value: item.value,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Seed {
+    type Archived = ArchivedSeedMirror;
+    type Resolver = SeedMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        SeedMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Seed
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        SeedMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Seed, __D> for ArchivedSeedMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Seed, __D::Error> {
+        SeedMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<TypeMirror> for super::Type {
+    fn from(item: TypeMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Type {
+    type Archived = ArchivedTypeMirror;
+    type Resolver = TypeMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        TypeMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Type
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        TypeMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Type, __D> for ArchivedTypeMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Type, __D::Error> {
+        TypeMirror::deserialize_with(self, deserializer)
+    }
 }
 
 impl From<LineSketchTypePropertiesContent> for super::LineSketchTypePropertiesContent {
@@ -255,26 +643,26 @@ impl rkyv::Archive for super::LineSketchTypePropertiesContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::LineSketchTypePropertiesContent
+impl<__S> rkyv::Serialize<__S> for super::LineSketchTypePropertiesContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         LineSketchTypePropertiesContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::LineSketchTypePropertiesContent, D>
+impl<__D> rkyv::Deserialize<super::LineSketchTypePropertiesContent, __D>
     for ArchivedLineSketchTypePropertiesContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
     fn deserialize(
         &self,
-        deserializer: &mut D,
-    ) -> Result<super::LineSketchTypePropertiesContent, D::Error> {
+        deserializer: &mut __D,
+    ) -> Result<super::LineSketchTypePropertiesContent, __D::Error> {
         LineSketchTypePropertiesContent::deserialize_with(self, deserializer)
     }
 }

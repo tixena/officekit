@@ -221,6 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use crate::NodeExtra;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
@@ -850,67 +851,77 @@ pub static SOURCE_CONTENT_TAGS: crate::Accept = crate::Accept {
 
 /// The `b:AbbreviatedCaseNumber` element, Abbreviated Case Number (ECMA-376 Part 1, section
 /// 22.6.2.1). Its schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AbbreviatedCaseNumber {
+pub struct AbbreviatedCaseNumberWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyAbbreviatedCaseNumber,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:AbbreviatedCaseNumber` element of the tree a read gives: [`AbbreviatedCaseNumberWith`]
+/// holding nothing in `extra`.
+pub type AbbreviatedCaseNumber = AbbreviatedCaseNumberWith<()>;
+
+impl Eq for AbbreviatedCaseNumberWith<()> {}
 
 /// The `b:AlbumTitle` element, Album Title (ECMA-376 Part 1, section 22.6.2.2). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AlbumTitle {
+pub struct AlbumTitleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyAlbumTitle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `b:AlbumTitle` element of the tree a read gives: [`AlbumTitleWith`] holding nothing in
+/// `extra`.
+pub type AlbumTitle = AlbumTitleWith<()>;
+
+impl Eq for AlbumTitleWith<()> {}
+
 /// The `b:Artist` element, Artist (ECMA-376 Part 1, section 22.6.2.3). Its schema type is
 /// `CT_NameType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Artist {
+pub struct ArtistWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyArtist,
     /// The child that is `NameList`, which the schema requires.
-    pub name_list: Box<NameList>,
+    pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
+/// The `b:Artist` element of the tree a read gives: [`ArtistWith`] holding nothing in `extra`.
+pub type Artist = ArtistWith<()>;
+
+impl Eq for ArtistWith<()> {}
+
 /// The `b:Author` element, Author (ECMA-376 Part 1, section 22.6.2.5). Its schema type is
 /// `CT_NameOrCorporateType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Author {
+pub struct AuthorWith<X: NodeExtra> {
     /// The child that is an item of `NameOrCorporateContent`, when there is one.
-    pub content: Option<Box<NameOrCorporateContent>>,
+    pub content: Option<Box<NameOrCorporateContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyAuthor,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `b:Author` element of the tree a read gives: [`AuthorWith`] holding nothing in `extra`.
+pub type Author = AuthorWith<()>;
+
+impl Eq for AuthorWith<()> {}
 
 /// Bibliographic Data Source Types, the simple type `ST_SourceType` (ECMA-376 Part 1, section
 /// 22.6.3.1), kept as the text the file carried.
@@ -968,1107 +979,1271 @@ pub enum BibliographicDataSourceTypesMember {
 
 /// The `b:BookAuthor` element, Book Author (ECMA-376 Part 1, section 22.6.2.6). Its schema type is
 /// `CT_NameType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BookAuthor {
+pub struct BookAuthorWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyBookAuthor,
     /// The child that is `NameList`, which the schema requires.
-    pub name_list: Box<NameList>,
+    pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `b:BookAuthor` element of the tree a read gives: [`BookAuthorWith`] holding nothing in
+/// `extra`.
+pub type BookAuthor = BookAuthorWith<()>;
+
+impl Eq for BookAuthorWith<()> {}
 
 /// The `b:BookTitle` element, Book Title (ECMA-376 Part 1, section 22.6.2.7). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BookTitle {
+pub struct BookTitleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyBookTitle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:BookTitle` element of the tree a read gives: [`BookTitleWith`] holding nothing in
+/// `extra`.
+pub type BookTitle = BookTitleWith<()>;
+
+impl Eq for BookTitleWith<()> {}
 
 /// The `b:BroadcastTitle` element, Broadcast Title (ECMA-376 Part 1, section 22.6.2.9). Its schema
 /// type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BroadcastTitle {
+pub struct BroadcastTitleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyBroadcastTitle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:BroadcastTitle` element of the tree a read gives: [`BroadcastTitleWith`] holding nothing
+/// in `extra`.
+pub type BroadcastTitle = BroadcastTitleWith<()>;
+
+impl Eq for BroadcastTitleWith<()> {}
 
 /// The `b:Broadcaster` element, Broadcaster (ECMA-376 Part 1, section 22.6.2.8). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Broadcaster {
+pub struct BroadcasterWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyBroadcaster,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Broadcaster` element of the tree a read gives: [`BroadcasterWith`] holding nothing in
+/// `extra`.
+pub type Broadcaster = BroadcasterWith<()>;
+
+impl Eq for BroadcasterWith<()> {}
 
 /// The `b:CaseNumber` element, Case Number (ECMA-376 Part 1, section 22.6.2.10). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CaseNumber {
+pub struct CaseNumberWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyCaseNumber,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:CaseNumber` element of the tree a read gives: [`CaseNumberWith`] holding nothing in
+/// `extra`.
+pub type CaseNumber = CaseNumberWith<()>;
+
+impl Eq for CaseNumberWith<()> {}
 
 /// The `b:ChapterNumber` element, Chapter Number (ECMA-376 Part 1, section 22.6.2.11). Its schema
 /// type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ChapterNumber {
+pub struct ChapterNumberWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyChapterNumber,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `b:ChapterNumber` element of the tree a read gives: [`ChapterNumberWith`] holding nothing in
+/// `extra`.
+pub type ChapterNumber = ChapterNumberWith<()>;
+
+impl Eq for ChapterNumberWith<()> {}
+
 /// The `b:City` element, City (ECMA-376 Part 1, section 22.6.2.12). Its schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct City {
+pub struct CityWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyCity,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:City` element of the tree a read gives: [`CityWith`] holding nothing in `extra`.
+pub type City = CityWith<()>;
+
+impl Eq for CityWith<()> {}
 
 /// The `b:Comments` element, Comments (ECMA-376 Part 1, section 22.6.2.13). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Comments {
+pub struct CommentsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyComments,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Comments` element of the tree a read gives: [`CommentsWith`] holding nothing in `extra`.
+pub type Comments = CommentsWith<()>;
+
+impl Eq for CommentsWith<()> {}
 
 /// The `b:Compiler` element, Compiler (ECMA-376 Part 1, section 22.6.2.14). Its schema type is
 /// `CT_NameType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Compiler {
+pub struct CompilerWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyCompiler,
     /// The child that is `NameList`, which the schema requires.
-    pub name_list: Box<NameList>,
+    pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `b:Compiler` element of the tree a read gives: [`CompilerWith`] holding nothing in `extra`.
+pub type Compiler = CompilerWith<()>;
+
+impl Eq for CompilerWith<()> {}
 
 /// The `b:Composer` element, Composer (ECMA-376 Part 1, section 22.6.2.15). Its schema type is
 /// `CT_NameType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Composer {
+pub struct ComposerWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyComposer,
     /// The child that is `NameList`, which the schema requires.
-    pub name_list: Box<NameList>,
+    pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `b:Composer` element of the tree a read gives: [`ComposerWith`] holding nothing in `extra`.
+pub type Composer = ComposerWith<()>;
+
+impl Eq for ComposerWith<()> {}
 
 /// The `b:Conductor` element, Conductor (ECMA-376 Part 1, section 22.6.2.16). Its schema type is
 /// `CT_NameType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Conductor {
+pub struct ConductorWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyConductor,
     /// The child that is `NameList`, which the schema requires.
-    pub name_list: Box<NameList>,
+    pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
+/// The `b:Conductor` element of the tree a read gives: [`ConductorWith`] holding nothing in
+/// `extra`.
+pub type Conductor = ConductorWith<()>;
+
+impl Eq for ConductorWith<()> {}
+
 /// The `b:ConferenceName` element, Conference or Proceedings Name (ECMA-376 Part 1, section
 /// 22.6.2.17). Its schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ConferenceOrProceedingsName {
+pub struct ConferenceOrProceedingsNameWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyConferenceOrProceedingsName,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `b:ConferenceName` element of the tree a read gives: [`ConferenceOrProceedingsNameWith`]
+/// holding nothing in `extra`.
+pub type ConferenceOrProceedingsName = ConferenceOrProceedingsNameWith<()>;
+
+impl Eq for ConferenceOrProceedingsNameWith<()> {}
+
 /// The `b:Author` element, Contributors List (ECMA-376 Part 1, section 22.6.2.4). Its schema type
 /// is `CT_AuthorType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ContributorsList {
+pub struct ContributorsListWith<X: NodeExtra> {
     /// The children that are an item of `ContributorsListContent`, in order.
-    pub content: Vec<ContributorsListContent>,
+    pub content: Vec<ContributorsListContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyContributorsList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `b:Author` element of the tree a read gives: [`ContributorsListWith`] holding nothing in
+/// `extra`.
+pub type ContributorsList = ContributorsListWith<()>;
+
+impl Eq for ContributorsListWith<()> {}
 
 /// One child element of a choice: local choice in `CT_AuthorType`.
 ///
 /// The schema types that hold it: `CT_AuthorType`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum ContributorsListContent {
+pub enum ContributorsListContentWith<X: NodeExtra> {
     /// The element `b:Artist`, a `Artist`.
-    Artist(Artist),
+    Artist(ArtistWith<X>),
     /// The element `b:Author`, a `Author`.
-    Author(Author),
+    Author(AuthorWith<X>),
     /// The element `b:BookAuthor`, a `BookAuthor`.
-    BookAuthor(BookAuthor),
+    BookAuthor(BookAuthorWith<X>),
     /// The element `b:Compiler`, a `Compiler`.
-    Compiler(Compiler),
+    Compiler(CompilerWith<X>),
     /// The element `b:Composer`, a `Composer`.
-    Composer(Composer),
+    Composer(ComposerWith<X>),
     /// The element `b:Conductor`, a `Conductor`.
-    Conductor(Conductor),
+    Conductor(ConductorWith<X>),
     /// The element `b:Counsel`, a `Counsel`.
-    Counsel(Counsel),
+    Counsel(CounselWith<X>),
     /// The element `b:Director`, a `Director`.
-    Director(Director),
+    Director(DirectorWith<X>),
     /// The element `b:Editor`, a `Editor`.
-    Editor(Editor),
+    Editor(EditorWith<X>),
     /// The element `b:Interviewee`, a `Interviewee`.
-    Interviewee(Interviewee),
+    Interviewee(IntervieweeWith<X>),
     /// The element `b:Interviewer`, a `Interviewer`.
-    Interviewer(Interviewer),
+    Interviewer(InterviewerWith<X>),
     /// The element `b:Inventor`, a `Inventor`.
-    Inventor(Inventor),
+    Inventor(InventorWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `b:Performer`, a `Performer`.
-    Performer(Performer),
+    Performer(PerformerWith<X>),
     /// The element `b:ProducerName`, a `ProducerName`.
-    ProducerName(ProducerName),
+    ProducerName(ProducerNameWith<X>),
     /// The element `b:Translator`, a `Translator`.
-    Translator(Translator),
+    Translator(TranslatorWith<X>),
     /// The element `b:Writer`, a `Writer`.
-    Writer(Writer),
+    Writer(WriterWith<X>),
 }
+
+/// [`ContributorsListContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type ContributorsListContent = ContributorsListContentWith<()>;
+
+impl Eq for ContributorsListContentWith<()> {}
 
 /// The `b:Corporate` element, Corporate Author (ECMA-376 Part 1, section 22.6.2.18). Its schema
 /// type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CorporateAuthor {
+pub struct CorporateAuthorWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyCorporateAuthor,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Corporate` element of the tree a read gives: [`CorporateAuthorWith`] holding nothing in
+/// `extra`.
+pub type CorporateAuthor = CorporateAuthorWith<()>;
+
+impl Eq for CorporateAuthorWith<()> {}
 
 /// The `b:Counsel` element, Counsel (ECMA-376 Part 1, section 22.6.2.19). Its schema type is
 /// `CT_NameType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Counsel {
+pub struct CounselWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyCounsel,
     /// The child that is `NameList`, which the schema requires.
-    pub name_list: Box<NameList>,
+    pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `b:Counsel` element of the tree a read gives: [`CounselWith`] holding nothing in `extra`.
+pub type Counsel = CounselWith<()>;
+
+impl Eq for CounselWith<()> {}
 
 /// The `b:CountryRegion` element, Country or Region (ECMA-376 Part 1, section 22.6.2.20). Its
 /// schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CountryOrRegion {
+pub struct CountryOrRegionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyCountryOrRegion,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:CountryRegion` element of the tree a read gives: [`CountryOrRegionWith`] holding nothing
+/// in `extra`.
+pub type CountryOrRegion = CountryOrRegionWith<()>;
+
+impl Eq for CountryOrRegionWith<()> {}
 
 /// The `b:Court` element, Court (ECMA-376 Part 1, section 22.6.2.21). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Court {
+pub struct CourtWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyCourt,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `b:Court` element of the tree a read gives: [`CourtWith`] holding nothing in `extra`.
+pub type Court = CourtWith<()>;
+
+impl Eq for CourtWith<()> {}
+
 /// The `b:Day` element, Day (ECMA-376 Part 1, section 22.6.2.22). Its schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Day {
+pub struct DayWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyDay,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Day` element of the tree a read gives: [`DayWith`] holding nothing in `extra`.
+pub type Day = DayWith<()>;
+
+impl Eq for DayWith<()> {}
 
 /// The `b:DayAccessed` element, Day Accessed (ECMA-376 Part 1, section 22.6.2.23). Its schema type
 /// is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DayAccessed {
+pub struct DayAccessedWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyDayAccessed,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:DayAccessed` element of the tree a read gives: [`DayAccessedWith`] holding nothing in
+/// `extra`.
+pub type DayAccessed = DayAccessedWith<()>;
+
+impl Eq for DayAccessedWith<()> {}
 
 /// The `b:Department` element, Department (ECMA-376 Part 1, section 22.6.2.24). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Department {
+pub struct DepartmentWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyDepartment,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Department` element of the tree a read gives: [`DepartmentWith`] holding nothing in
+/// `extra`.
+pub type Department = DepartmentWith<()>;
+
+impl Eq for DepartmentWith<()> {}
 
 /// The `b:Director` element, Director (ECMA-376 Part 1, section 22.6.2.25). Its schema type is
 /// `CT_NameType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Director {
+pub struct DirectorWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyDirector,
     /// The child that is `NameList`, which the schema requires.
-    pub name_list: Box<NameList>,
+    pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `b:Director` element of the tree a read gives: [`DirectorWith`] holding nothing in `extra`.
+pub type Director = DirectorWith<()>;
+
+impl Eq for DirectorWith<()> {}
 
 /// The `b:Distributor` element, Distributor (ECMA-376 Part 1, section 22.6.2.26). Its schema type
 /// is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Distributor {
+pub struct DistributorWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyDistributor,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Distributor` element of the tree a read gives: [`DistributorWith`] holding nothing in
+/// `extra`.
+pub type Distributor = DistributorWith<()>;
+
+impl Eq for DistributorWith<()> {}
 
 /// The `b:Editor` element, Editor (ECMA-376 Part 1, section 22.6.2.28). Its schema type is
 /// `CT_NameType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Editor {
+pub struct EditorWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyEditor,
     /// The child that is `NameList`, which the schema requires.
-    pub name_list: Box<NameList>,
+    pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `b:Editor` element of the tree a read gives: [`EditorWith`] holding nothing in `extra`.
+pub type Editor = EditorWith<()>;
+
+impl Eq for EditorWith<()> {}
 
 /// The `b:Edition` element, Editor (ECMA-376 Part 1, section 22.6.2.27). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EditorEdition {
+pub struct EditorEditionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyEditorEdition,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `b:Edition` element of the tree a read gives: [`EditorEditionWith`] holding nothing in
+/// `extra`.
+pub type EditorEdition = EditorEditionWith<()>;
+
+impl Eq for EditorEditionWith<()> {}
+
 /// The `b:Guid` element, GUID (ECMA-376 Part 1, section 22.6.2.30). Its schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Guid {
+pub struct GuidWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyGuid,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Guid` element of the tree a read gives: [`GuidWith`] holding nothing in `extra`.
+pub type Guid = GuidWith<()>;
+
+impl Eq for GuidWith<()> {}
 
 /// The `b:Institution` element, Institution (ECMA-376 Part 1, section 22.6.2.31). Its schema type
 /// is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Institution {
+pub struct InstitutionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyInstitution,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Institution` element of the tree a read gives: [`InstitutionWith`] holding nothing in
+/// `extra`.
+pub type Institution = InstitutionWith<()>;
+
+impl Eq for InstitutionWith<()> {}
 
 /// The `b:InternetSiteTitle` element, Internet Site Title (ECMA-376 Part 1, section 22.6.2.32). Its
 /// schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InternetSiteTitle {
+pub struct InternetSiteTitleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyInternetSiteTitle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:InternetSiteTitle` element of the tree a read gives: [`InternetSiteTitleWith`] holding
+/// nothing in `extra`.
+pub type InternetSiteTitle = InternetSiteTitleWith<()>;
+
+impl Eq for InternetSiteTitleWith<()> {}
 
 /// The `b:Interviewee` element, Interviewee (ECMA-376 Part 1, section 22.6.2.33). Its schema type
 /// is `CT_NameType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Interviewee {
+pub struct IntervieweeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyInterviewee,
     /// The child that is `NameList`, which the schema requires.
-    pub name_list: Box<NameList>,
+    pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `b:Interviewee` element of the tree a read gives: [`IntervieweeWith`] holding nothing in
+/// `extra`.
+pub type Interviewee = IntervieweeWith<()>;
+
+impl Eq for IntervieweeWith<()> {}
 
 /// The `b:Interviewer` element, Interviewer (ECMA-376 Part 1, section 22.6.2.34). Its schema type
 /// is `CT_NameType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Interviewer {
+pub struct InterviewerWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyInterviewer,
     /// The child that is `NameList`, which the schema requires.
-    pub name_list: Box<NameList>,
+    pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `b:Interviewer` element of the tree a read gives: [`InterviewerWith`] holding nothing in
+/// `extra`.
+pub type Interviewer = InterviewerWith<()>;
+
+impl Eq for InterviewerWith<()> {}
 
 /// The `b:Inventor` element, Inventor (ECMA-376 Part 1, section 22.6.2.35). Its schema type is
 /// `CT_NameType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Inventor {
+pub struct InventorWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyInventor,
     /// The child that is `NameList`, which the schema requires.
-    pub name_list: Box<NameList>,
+    pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `b:Inventor` element of the tree a read gives: [`InventorWith`] holding nothing in `extra`.
+pub type Inventor = InventorWith<()>;
+
+impl Eq for InventorWith<()> {}
 
 /// The `b:Issue` element, Issue (ECMA-376 Part 1, section 22.6.2.36). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Issue {
+pub struct IssueWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyIssue,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Issue` element of the tree a read gives: [`IssueWith`] holding nothing in `extra`.
+pub type Issue = IssueWith<()>;
+
+impl Eq for IssueWith<()> {}
 
 /// The `b:JournalName` element, Journal Name (ECMA-376 Part 1, section 22.6.2.37). Its schema type
 /// is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct JournalName {
+pub struct JournalNameWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyJournalName,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:JournalName` element of the tree a read gives: [`JournalNameWith`] holding nothing in
+/// `extra`.
+pub type JournalName = JournalNameWith<()>;
+
+impl Eq for JournalNameWith<()> {}
 
 /// The `b:LCID` element, Locale ID (ECMA-376 Part 1, section 22.6.2.39). Its schema type is
 /// `ST_Lang`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LocaleID {
+pub struct LocaleIDWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyLocaleID,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:LCID` element of the tree a read gives: [`LocaleIDWith`] holding nothing in `extra`.
+pub type LocaleID = LocaleIDWith<()>;
+
+impl Eq for LocaleIDWith<()> {}
 
 /// The `b:Medium` element, Medium (ECMA-376 Part 1, section 22.6.2.40). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Medium {
+pub struct MediumWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyMedium,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Medium` element of the tree a read gives: [`MediumWith`] holding nothing in `extra`.
+pub type Medium = MediumWith<()>;
+
+impl Eq for MediumWith<()> {}
 
 /// The `b:Month` element, Month (ECMA-376 Part 1, section 22.6.2.42). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Month {
+pub struct MonthWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyMonth,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Month` element of the tree a read gives: [`MonthWith`] holding nothing in `extra`.
+pub type Month = MonthWith<()>;
+
+impl Eq for MonthWith<()> {}
 
 /// The `b:MonthAccessed` element, Month Accessed (ECMA-376 Part 1, section 22.6.2.43). Its schema
 /// type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MonthAccessed {
+pub struct MonthAccessedWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyMonthAccessed,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `b:MonthAccessed` element of the tree a read gives: [`MonthAccessedWith`] holding nothing in
+/// `extra`.
+pub type MonthAccessed = MonthAccessedWith<()>;
+
+impl Eq for MonthAccessedWith<()> {}
+
 /// The `b:NameList` element, Name List (ECMA-376 Part 1, section 22.6.2.44). Its schema type is
 /// `CT_NameListType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NameList {
+pub struct NameListWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyNameList,
     /// The children that are `Person`, in order.
-    pub person: Vec<Person>,
+    pub person: Vec<PersonWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `b:NameList` element of the tree a read gives: [`NameListWith`] holding nothing in `extra`.
+pub type NameList = NameListWith<()>;
+
+impl Eq for NameListWith<()> {}
 
 /// One child element of a choice: local choice in `CT_NameOrCorporateType`.
 ///
 /// The schema types that hold it: `CT_NameOrCorporateType`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum NameOrCorporateContent {
+pub enum NameOrCorporateContentWith<X: NodeExtra> {
     /// The element `b:Corporate`, a `CorporateAuthor`.
-    CorporateAuthor(CorporateAuthor),
+    CorporateAuthor(CorporateAuthorWith<X>),
     /// The element `b:NameList`, a `NameList`.
-    NameList(NameList),
+    NameList(NameListWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
+/// [`NameOrCorporateContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type NameOrCorporateContent = NameOrCorporateContentWith<()>;
+
+impl Eq for NameOrCorporateContentWith<()> {}
+
 /// The `b:NumberVolumes` element, Number of Volumes (ECMA-376 Part 1, section 22.6.2.45). Its
 /// schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NumberOfVolumes {
+pub struct NumberOfVolumesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyNumberOfVolumes,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:NumberVolumes` element of the tree a read gives: [`NumberOfVolumesWith`] holding nothing
+/// in `extra`.
+pub type NumberOfVolumes = NumberOfVolumesWith<()>;
+
+impl Eq for NumberOfVolumesWith<()> {}
 
 /// The `b:Pages` element, Pages (ECMA-376 Part 1, section 22.6.2.46). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Pages {
+pub struct PagesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyPages,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Pages` element of the tree a read gives: [`PagesWith`] holding nothing in `extra`.
+pub type Pages = PagesWith<()>;
+
+impl Eq for PagesWith<()> {}
 
 /// The `b:PatentNumber` element, Patent Number (ECMA-376 Part 1, section 22.6.2.47). Its schema
 /// type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PatentNumber {
+pub struct PatentNumberWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyPatentNumber,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:PatentNumber` element of the tree a read gives: [`PatentNumberWith`] holding nothing in
+/// `extra`.
+pub type PatentNumber = PatentNumberWith<()>;
+
+impl Eq for PatentNumberWith<()> {}
 
 /// The `b:Type` element, Patent Type (ECMA-376 Part 1, section 22.6.2.70). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PatentType {
+pub struct PatentTypeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyPatentType,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Type` element of the tree a read gives: [`PatentTypeWith`] holding nothing in `extra`.
+pub type PatentType = PatentTypeWith<()>;
+
+impl Eq for PatentTypeWith<()> {}
 
 /// The `b:Performer` element, Performer (ECMA-376 Part 1, section 22.6.2.48). Its schema type is
 /// `CT_NameOrCorporateType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Performer {
+pub struct PerformerWith<X: NodeExtra> {
     /// The child that is an item of `NameOrCorporateContent`, when there is one.
-    pub content: Option<Box<NameOrCorporateContent>>,
+    pub content: Option<Box<NameOrCorporateContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyPerformer,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `b:Performer` element of the tree a read gives: [`PerformerWith`] holding nothing in
+/// `extra`.
+pub type Performer = PerformerWith<()>;
+
+impl Eq for PerformerWith<()> {}
 
 /// The `b:PeriodicalTitle` element, Periodical Title (ECMA-376 Part 1, section 22.6.2.49). Its
 /// schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PeriodicalTitle {
+pub struct PeriodicalTitleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyPeriodicalTitle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:PeriodicalTitle` element of the tree a read gives: [`PeriodicalTitleWith`] holding
+/// nothing in `extra`.
+pub type PeriodicalTitle = PeriodicalTitleWith<()>;
+
+impl Eq for PeriodicalTitleWith<()> {}
 
 /// The `b:Person` element, Person (ECMA-376 Part 1, section 22.6.2.50). Its schema type is
 /// `CT_PersonType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Person {
+pub struct PersonWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyPerson,
     /// The children that are `PersonsFirstOrGivenName`, in order.
-    pub persons_first_or_given_name: Vec<PersonsFirstOrGivenName>,
+    pub persons_first_or_given_name: Vec<PersonsFirstOrGivenNameWith<X>>,
     /// The children that are `PersonsLastOrFamilyName`, in order.
-    pub persons_last_or_family_name: Vec<PersonsLastOrFamilyName>,
+    pub persons_last_or_family_name: Vec<PersonsLastOrFamilyNameWith<X>>,
     /// The children that are `PersonsMiddleOrOtherName`, in order.
-    pub persons_middle_or_other_name: Vec<PersonsMiddleOrOtherName>,
+    pub persons_middle_or_other_name: Vec<PersonsMiddleOrOtherNameWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `b:Person` element of the tree a read gives: [`PersonWith`] holding nothing in `extra`.
+pub type Person = PersonWith<()>;
+
+impl Eq for PersonWith<()> {}
 
 /// The `b:First` element, Person's First, or Given, Name (ECMA-376 Part 1, section 22.6.2.29). Its
 /// schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PersonsFirstOrGivenName {
+pub struct PersonsFirstOrGivenNameWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyPersonsFirstOrGivenName,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:First` element of the tree a read gives: [`PersonsFirstOrGivenNameWith`] holding nothing
+/// in `extra`.
+pub type PersonsFirstOrGivenName = PersonsFirstOrGivenNameWith<()>;
+
+impl Eq for PersonsFirstOrGivenNameWith<()> {}
 
 /// The `b:Last` element, Person's Last, or Family, Name (ECMA-376 Part 1, section 22.6.2.38). Its
 /// schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PersonsLastOrFamilyName {
+pub struct PersonsLastOrFamilyNameWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyPersonsLastOrFamilyName,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Last` element of the tree a read gives: [`PersonsLastOrFamilyNameWith`] holding nothing
+/// in `extra`.
+pub type PersonsLastOrFamilyName = PersonsLastOrFamilyNameWith<()>;
+
+impl Eq for PersonsLastOrFamilyNameWith<()> {}
 
 /// The `b:Middle` element, Person's Middle, or Other, Name (ECMA-376 Part 1, section 22.6.2.41).
 /// Its schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PersonsMiddleOrOtherName {
+pub struct PersonsMiddleOrOtherNameWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyPersonsMiddleOrOtherName,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Middle` element of the tree a read gives: [`PersonsMiddleOrOtherNameWith`] holding
+/// nothing in `extra`.
+pub type PersonsMiddleOrOtherName = PersonsMiddleOrOtherNameWith<()>;
+
+impl Eq for PersonsMiddleOrOtherNameWith<()> {}
 
 /// The `b:ProducerName` element, Producer Name (ECMA-376 Part 1, section 22.6.2.51). Its schema
 /// type is `CT_NameType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ProducerName {
+pub struct ProducerNameWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyProducerName,
     /// The child that is `NameList`, which the schema requires.
-    pub list: Box<NameList>,
+    pub list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `b:ProducerName` element of the tree a read gives: [`ProducerNameWith`] holding nothing in
+/// `extra`.
+pub type ProducerName = ProducerNameWith<()>;
+
+impl Eq for ProducerNameWith<()> {}
 
 /// The `b:ProductionCompany` element, Production Company (ECMA-376 Part 1, section 22.6.2.52). Its
 /// schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ProductionCompany {
+pub struct ProductionCompanyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyProductionCompany,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:ProductionCompany` element of the tree a read gives: [`ProductionCompanyWith`] holding
+/// nothing in `extra`.
+pub type ProductionCompany = ProductionCompanyWith<()>;
+
+impl Eq for ProductionCompanyWith<()> {}
 
 /// The `b:PublicationTitle` element, Publication Title (ECMA-376 Part 1, section 22.6.2.53). Its
 /// schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PublicationTitle {
+pub struct PublicationTitleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyPublicationTitle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:PublicationTitle` element of the tree a read gives: [`PublicationTitleWith`] holding
+/// nothing in `extra`.
+pub type PublicationTitle = PublicationTitleWith<()>;
+
+impl Eq for PublicationTitleWith<()> {}
 
 /// The `b:Publisher` element, Publisher (ECMA-376 Part 1, section 22.6.2.54). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Publisher {
+pub struct PublisherWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyPublisher,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Publisher` element of the tree a read gives: [`PublisherWith`] holding nothing in
+/// `extra`.
+pub type Publisher = PublisherWith<()>;
+
+impl Eq for PublisherWith<()> {}
 
 /// The `b:RecordingNumber` element, Recording Number (ECMA-376 Part 1, section 22.6.2.55). Its
 /// schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RecordingNumber {
+pub struct RecordingNumberWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyRecordingNumber,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:RecordingNumber` element of the tree a read gives: [`RecordingNumberWith`] holding
+/// nothing in `extra`.
+pub type RecordingNumber = RecordingNumberWith<()>;
+
+impl Eq for RecordingNumberWith<()> {}
 
 /// The `b:RefOrder` element, Reference Order (ECMA-376 Part 1, section 22.6.2.56). Its schema type
 /// is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ReferenceOrder {
+pub struct ReferenceOrderWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyReferenceOrder,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:RefOrder` element of the tree a read gives: [`ReferenceOrderWith`] holding nothing in
+/// `extra`.
+pub type ReferenceOrder = ReferenceOrderWith<()>;
+
+impl Eq for ReferenceOrderWith<()> {}
 
 /// The `b:Reporter` element, Reporter (ECMA-376 Part 1, section 22.6.2.57). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Reporter {
+pub struct ReporterWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyReporter,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Reporter` element of the tree a read gives: [`ReporterWith`] holding nothing in `extra`.
+pub type Reporter = ReporterWith<()>;
+
+impl Eq for ReporterWith<()> {}
 
 /// The `b:ShortTitle` element, Short Title (ECMA-376 Part 1, section 22.6.2.58). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShortTitle {
+pub struct ShortTitleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyShortTitle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `b:ShortTitle` element of the tree a read gives: [`ShortTitleWith`] holding nothing in
+/// `extra`.
+pub type ShortTitle = ShortTitleWith<()>;
+
+impl Eq for ShortTitleWith<()> {}
+
 /// The `b:Source` element, Source (ECMA-376 Part 1, section 22.6.2.59). Its schema type is
 /// `CT_SourceType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Source {
+pub struct SourceWith<X: NodeExtra> {
     /// The children that are an item of `SourceContent`, in order.
-    pub content: Vec<SourceContent>,
+    pub content: Vec<SourceContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographySource,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `b:Source` element of the tree a read gives: [`SourceWith`] holding nothing in `extra`.
+pub type Source = SourceWith<()>;
+
+impl Eq for SourceWith<()> {}
 
 /// One child element of a choice: local choice in `CT_SourceType`.
 ///
 /// The schema types that hold it: `CT_SourceType`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum SourceContent {
+pub enum SourceContentWith<X: NodeExtra> {
     /// The element `b:AbbreviatedCaseNumber`, a `AbbreviatedCaseNumber`.
-    AbbreviatedCaseNumber(AbbreviatedCaseNumber),
+    AbbreviatedCaseNumber(AbbreviatedCaseNumberWith<X>),
     /// The element `b:AlbumTitle`, a `AlbumTitle`.
-    AlbumTitle(AlbumTitle),
+    AlbumTitle(AlbumTitleWith<X>),
     /// The element `b:BookTitle`, a `BookTitle`.
-    BookTitle(BookTitle),
+    BookTitle(BookTitleWith<X>),
     /// The element `b:BroadcastTitle`, a `BroadcastTitle`.
-    BroadcastTitle(BroadcastTitle),
+    BroadcastTitle(BroadcastTitleWith<X>),
     /// The element `b:Broadcaster`, a `Broadcaster`.
-    Broadcaster(Broadcaster),
+    Broadcaster(BroadcasterWith<X>),
     /// The element `b:CaseNumber`, a `CaseNumber`.
-    CaseNumber(CaseNumber),
+    CaseNumber(CaseNumberWith<X>),
     /// The element `b:ChapterNumber`, a `ChapterNumber`.
-    ChapterNumber(ChapterNumber),
+    ChapterNumber(ChapterNumberWith<X>),
     /// The element `b:City`, a `City`.
-    City(City),
+    City(CityWith<X>),
     /// The element `b:Comments`, a `Comments`.
-    Comments(Comments),
+    Comments(CommentsWith<X>),
     /// The element `b:ConferenceName`, a `ConferenceOrProceedingsName`.
-    ConferenceOrProceedingsName(ConferenceOrProceedingsName),
+    ConferenceOrProceedingsName(ConferenceOrProceedingsNameWith<X>),
     /// The element `b:Author`, a `ContributorsList`.
-    ContributorsList(ContributorsList),
+    ContributorsList(ContributorsListWith<X>),
     /// The element `b:CountryRegion`, a `CountryOrRegion`.
-    CountryOrRegion(CountryOrRegion),
+    CountryOrRegion(CountryOrRegionWith<X>),
     /// The element `b:Court`, a `Court`.
-    Court(Court),
+    Court(CourtWith<X>),
     /// The element `b:Day`, a `Day`.
-    Day(Day),
+    Day(DayWith<X>),
     /// The element `b:DayAccessed`, a `DayAccessed`.
-    DayAccessed(DayAccessed),
+    DayAccessed(DayAccessedWith<X>),
     /// The element `b:Department`, a `Department`.
-    Department(Department),
+    Department(DepartmentWith<X>),
     /// The element `b:Distributor`, a `Distributor`.
-    Distributor(Distributor),
+    Distributor(DistributorWith<X>),
     /// The element `b:Edition`, a `EditorEdition`.
-    EditorEdition(EditorEdition),
+    EditorEdition(EditorEditionWith<X>),
     /// The element `b:Guid`, a `Guid`.
-    Guid(Guid),
+    Guid(GuidWith<X>),
     /// The element `b:Institution`, a `Institution`.
-    Institution(Institution),
+    Institution(InstitutionWith<X>),
     /// The element `b:InternetSiteTitle`, a `InternetSiteTitle`.
-    InternetSiteTitle(InternetSiteTitle),
+    InternetSiteTitle(InternetSiteTitleWith<X>),
     /// The element `b:Issue`, a `Issue`.
-    Issue(Issue),
+    Issue(IssueWith<X>),
     /// The element `b:JournalName`, a `JournalName`.
-    JournalName(JournalName),
+    JournalName(JournalNameWith<X>),
     /// The element `b:LCID`, a `LocaleID`.
-    LocaleID(LocaleID),
+    LocaleID(LocaleIDWith<X>),
     /// The element `b:Medium`, a `Medium`.
-    Medium(Medium),
+    Medium(MediumWith<X>),
     /// The element `b:Month`, a `Month`.
-    Month(Month),
+    Month(MonthWith<X>),
     /// The element `b:MonthAccessed`, a `MonthAccessed`.
-    MonthAccessed(MonthAccessed),
+    MonthAccessed(MonthAccessedWith<X>),
     /// The element `b:NumberVolumes`, a `NumberOfVolumes`.
-    NumberOfVolumes(NumberOfVolumes),
+    NumberOfVolumes(NumberOfVolumesWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `b:Pages`, a `Pages`.
-    Pages(Pages),
+    Pages(PagesWith<X>),
     /// The element `b:PatentNumber`, a `PatentNumber`.
-    PatentNumber(PatentNumber),
+    PatentNumber(PatentNumberWith<X>),
     /// The element `b:Type`, a `PatentType`.
-    PatentType(PatentType),
+    PatentType(PatentTypeWith<X>),
     /// The element `b:PeriodicalTitle`, a `PeriodicalTitle`.
-    PeriodicalTitle(PeriodicalTitle),
+    PeriodicalTitle(PeriodicalTitleWith<X>),
     /// The element `b:ProductionCompany`, a `ProductionCompany`.
-    ProductionCompany(ProductionCompany),
+    ProductionCompany(ProductionCompanyWith<X>),
     /// The element `b:PublicationTitle`, a `PublicationTitle`.
-    PublicationTitle(PublicationTitle),
+    PublicationTitle(PublicationTitleWith<X>),
     /// The element `b:Publisher`, a `Publisher`.
-    Publisher(Publisher),
+    Publisher(PublisherWith<X>),
     /// The element `b:RecordingNumber`, a `RecordingNumber`.
-    RecordingNumber(RecordingNumber),
+    RecordingNumber(RecordingNumberWith<X>),
     /// The element `b:RefOrder`, a `ReferenceOrder`.
-    ReferenceOrder(ReferenceOrder),
+    ReferenceOrder(ReferenceOrderWith<X>),
     /// The element `b:Reporter`, a `Reporter`.
-    Reporter(Reporter),
+    Reporter(ReporterWith<X>),
     /// The element `b:ShortTitle`, a `ShortTitle`.
-    ShortTitle(ShortTitle),
+    ShortTitle(ShortTitleWith<X>),
     /// The element `b:SourceType`, a `SourceType`.
-    SourceType(SourceType),
+    SourceType(SourceTypeWith<X>),
     /// The element `b:StandardNumber`, a `StandardNumber`.
-    StandardNumber(StandardNumber),
+    StandardNumber(StandardNumberWith<X>),
     /// The element `b:StateProvince`, a `StateOrProvince`.
-    StateOrProvince(StateOrProvince),
+    StateOrProvince(StateOrProvinceWith<X>),
     /// The element `b:Station`, a `Station`.
-    Station(Station),
+    Station(StationWith<X>),
     /// The element `b:Tag`, a `Tag`.
-    Tag(Tag),
+    Tag(TagWith<X>),
     /// The element `b:Theater`, a `Theater`.
-    Theater(Theater),
+    Theater(TheaterWith<X>),
     /// The element `b:ThesisType`, a `ThesisType`.
-    ThesisType(ThesisType),
+    ThesisType(ThesisTypeWith<X>),
     /// The element `b:Title`, a `Title`.
-    Title(Title),
+    Title(TitleWith<X>),
     /// The element `b:URL`, a `Url`.
-    Url(Url),
+    Url(UrlWith<X>),
     /// The element `b:Version`, a `Version`.
-    Version(Version),
+    Version(VersionWith<X>),
     /// The element `b:Volume`, a `Volume`.
-    Volume(Volume),
+    Volume(VolumeWith<X>),
     /// The element `b:Year`, a `Year`.
-    Year(Year),
+    Year(YearWith<X>),
     /// The element `b:YearAccessed`, a `YearAccessed`.
-    YearAccessed(YearAccessed),
+    YearAccessed(YearAccessedWith<X>),
 }
+
+/// [`SourceContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type SourceContent = SourceContentWith<()>;
+
+impl Eq for SourceContentWith<()> {}
 
 /// The `b:SourceType` element, Source Type (ECMA-376 Part 1, section 22.6.2.61). Its schema type is
 /// `ST_SourceType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SourceType {
+pub struct SourceTypeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographySourceType,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: BibliographicDataSourceTypes,
 }
 
+/// The `b:SourceType` element of the tree a read gives: [`SourceTypeWith`] holding nothing in
+/// `extra`.
+pub type SourceType = SourceTypeWith<()>;
+
+impl Eq for SourceTypeWith<()> {}
+
 /// The `b:Sources` element, Sources (ECMA-376 Part 1, section 22.6.2.60). Its schema type is
 /// `CT_Sources`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Sources {
+pub struct SourcesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographySources,
     /// The attribute `SelectedStyle`, when the element has it.
     pub selected_style: Option<String>,
     /// The children that are `Source`, in order.
-    pub source: Vec<Source>,
+    pub source: Vec<SourceWith<X>>,
     /// The attribute `StyleName`, when the element has it.
     pub style_name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -2077,228 +2252,280 @@ pub struct Sources {
     pub uri: Option<String>,
 }
 
+/// The `b:Sources` element of the tree a read gives: [`SourcesWith`] holding nothing in `extra`.
+pub type Sources = SourcesWith<()>;
+
+impl Eq for SourcesWith<()> {}
+
 /// The `b:StandardNumber` element, Standard Number (ECMA-376 Part 1, section 22.6.2.62). Its schema
 /// type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StandardNumber {
+pub struct StandardNumberWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyStandardNumber,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:StandardNumber` element of the tree a read gives: [`StandardNumberWith`] holding nothing
+/// in `extra`.
+pub type StandardNumber = StandardNumberWith<()>;
+
+impl Eq for StandardNumberWith<()> {}
 
 /// The `b:StateProvince` element, State or Province (ECMA-376 Part 1, section 22.6.2.63). Its
 /// schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StateOrProvince {
+pub struct StateOrProvinceWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyStateOrProvince,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:StateProvince` element of the tree a read gives: [`StateOrProvinceWith`] holding nothing
+/// in `extra`.
+pub type StateOrProvince = StateOrProvinceWith<()>;
+
+impl Eq for StateOrProvinceWith<()> {}
 
 /// The `b:Station` element, Station (ECMA-376 Part 1, section 22.6.2.64). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Station {
+pub struct StationWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyStation,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `b:Station` element of the tree a read gives: [`StationWith`] holding nothing in `extra`.
+pub type Station = StationWith<()>;
+
+impl Eq for StationWith<()> {}
+
 /// The `b:Tag` element, Tag (ECMA-376 Part 1, section 22.6.2.65). Its schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Tag {
+pub struct TagWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyTag,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Tag` element of the tree a read gives: [`TagWith`] holding nothing in `extra`.
+pub type Tag = TagWith<()>;
+
+impl Eq for TagWith<()> {}
 
 /// The `b:Theater` element, Theater (ECMA-376 Part 1, section 22.6.2.66). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Theater {
+pub struct TheaterWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyTheater,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Theater` element of the tree a read gives: [`TheaterWith`] holding nothing in `extra`.
+pub type Theater = TheaterWith<()>;
+
+impl Eq for TheaterWith<()> {}
 
 /// The `b:ThesisType` element, Thesis Type (ECMA-376 Part 1, section 22.6.2.67). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ThesisType {
+pub struct ThesisTypeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyThesisType,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:ThesisType` element of the tree a read gives: [`ThesisTypeWith`] holding nothing in
+/// `extra`.
+pub type ThesisType = ThesisTypeWith<()>;
+
+impl Eq for ThesisTypeWith<()> {}
 
 /// The `b:Title` element, Title (ECMA-376 Part 1, section 22.6.2.68). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Title {
+pub struct TitleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyTitle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Title` element of the tree a read gives: [`TitleWith`] holding nothing in `extra`.
+pub type Title = TitleWith<()>;
+
+impl Eq for TitleWith<()> {}
 
 /// The `b:Translator` element, Translator (ECMA-376 Part 1, section 22.6.2.69). Its schema type is
 /// `CT_NameType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Translator {
+pub struct TranslatorWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyTranslator,
     /// The child that is `NameList`, which the schema requires.
-    pub name_list: Box<NameList>,
+    pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
+/// The `b:Translator` element of the tree a read gives: [`TranslatorWith`] holding nothing in
+/// `extra`.
+pub type Translator = TranslatorWith<()>;
+
+impl Eq for TranslatorWith<()> {}
+
 /// The `b:URL` element, URL (ECMA-376 Part 1, section 22.6.2.71). Its schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Url {
+pub struct UrlWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyUrl,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:URL` element of the tree a read gives: [`UrlWith`] holding nothing in `extra`.
+pub type Url = UrlWith<()>;
+
+impl Eq for UrlWith<()> {}
 
 /// The `b:Version` element, Version (ECMA-376 Part 1, section 22.6.2.72). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Version {
+pub struct VersionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyVersion,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Version` element of the tree a read gives: [`VersionWith`] holding nothing in `extra`.
+pub type Version = VersionWith<()>;
+
+impl Eq for VersionWith<()> {}
 
 /// The `b:Volume` element, Volume (ECMA-376 Part 1, section 22.6.2.73). Its schema type is
 /// `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Volume {
+pub struct VolumeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyVolume,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Volume` element of the tree a read gives: [`VolumeWith`] holding nothing in `extra`.
+pub type Volume = VolumeWith<()>;
+
+impl Eq for VolumeWith<()> {}
 
 /// The `b:Writer` element, Writer (ECMA-376 Part 1, section 22.6.2.74). Its schema type is
 /// `CT_NameType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Writer {
+pub struct WriterWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyWriter,
     /// The child that is `NameList`, which the schema requires.
-    pub name_list: Box<NameList>,
+    pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
+/// The `b:Writer` element of the tree a read gives: [`WriterWith`] holding nothing in `extra`.
+pub type Writer = WriterWith<()>;
+
+impl Eq for WriterWith<()> {}
+
 /// The `b:Year` element, Year (ECMA-376 Part 1, section 22.6.2.75). Its schema type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Year {
+pub struct YearWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyYear,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `b:Year` element of the tree a read gives: [`YearWith`] holding nothing in `extra`.
+pub type Year = YearWith<()>;
+
+impl Eq for YearWith<()> {}
 
 /// The `b:YearAccessed` element, Year Accessed (ECMA-376 Part 1, section 22.6.2.76). Its schema
 /// type is `ST_String`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct YearAccessed {
+pub struct YearAccessedWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::BibliographyYearAccessed,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
-impl AbbreviatedCaseNumber {
+/// The `b:YearAccessed` element of the tree a read gives: [`YearAccessedWith`] holding nothing in
+/// `extra`.
+pub type YearAccessed = YearAccessedWith<()>;
+
+impl Eq for YearAccessedWith<()> {}
+
+impl<X: NodeExtra> AbbreviatedCaseNumberWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AbbreviatedCaseNumberWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AbbreviatedCaseNumberWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2322,7 +2549,21 @@ impl crate::Write for AbbreviatedCaseNumber {
     }
 }
 
-impl AlbumTitle {
+impl<X: NodeExtra> AlbumTitleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AlbumTitleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AlbumTitleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2346,7 +2587,21 @@ impl crate::Write for AlbumTitle {
     }
 }
 
-impl Artist {
+impl<X: NodeExtra> ArtistWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ArtistWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ArtistWith {
+            extra: Default::default(),
+            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2367,7 +2622,24 @@ impl crate::Write for Artist {
     }
 }
 
-impl Author {
+impl<X: NodeExtra> AuthorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> AuthorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AuthorWith {
+            content: crate::into_extra_optional(
+                &mut self.content,
+                NameOrCorporateContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2460,7 +2732,21 @@ impl BibliographicDataSourceTypes {
     }
 }
 
-impl BookAuthor {
+impl<X: NodeExtra> BookAuthorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BookAuthorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BookAuthorWith {
+            extra: Default::default(),
+            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2481,7 +2767,21 @@ impl crate::Write for BookAuthor {
     }
 }
 
-impl BookTitle {
+impl<X: NodeExtra> BookTitleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BookTitleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BookTitleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2505,7 +2805,21 @@ impl crate::Write for BookTitle {
     }
 }
 
-impl BroadcastTitle {
+impl<X: NodeExtra> BroadcastTitleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BroadcastTitleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BroadcastTitleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2529,7 +2843,21 @@ impl crate::Write for BroadcastTitle {
     }
 }
 
-impl Broadcaster {
+impl<X: NodeExtra> BroadcasterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BroadcasterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BroadcasterWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2553,7 +2881,21 @@ impl crate::Write for Broadcaster {
     }
 }
 
-impl CaseNumber {
+impl<X: NodeExtra> CaseNumberWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CaseNumberWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CaseNumberWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2577,7 +2919,21 @@ impl crate::Write for CaseNumber {
     }
 }
 
-impl ChapterNumber {
+impl<X: NodeExtra> ChapterNumberWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ChapterNumberWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ChapterNumberWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2601,7 +2957,21 @@ impl crate::Write for ChapterNumber {
     }
 }
 
-impl City {
+impl<X: NodeExtra> CityWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CityWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CityWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2625,7 +2995,21 @@ impl crate::Write for City {
     }
 }
 
-impl Comments {
+impl<X: NodeExtra> CommentsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CommentsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CommentsWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2649,7 +3033,21 @@ impl crate::Write for Comments {
     }
 }
 
-impl Compiler {
+impl<X: NodeExtra> CompilerWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CompilerWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CompilerWith {
+            extra: Default::default(),
+            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2670,7 +3068,21 @@ impl crate::Write for Compiler {
     }
 }
 
-impl Composer {
+impl<X: NodeExtra> ComposerWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ComposerWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ComposerWith {
+            extra: Default::default(),
+            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2691,7 +3103,21 @@ impl crate::Write for Composer {
     }
 }
 
-impl Conductor {
+impl<X: NodeExtra> ConductorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ConductorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ConductorWith {
+            extra: Default::default(),
+            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2712,7 +3138,21 @@ impl crate::Write for Conductor {
     }
 }
 
-impl ConferenceOrProceedingsName {
+impl<X: NodeExtra> ConferenceOrProceedingsNameWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ConferenceOrProceedingsNameWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ConferenceOrProceedingsNameWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2736,7 +3176,21 @@ impl crate::Write for ConferenceOrProceedingsName {
     }
 }
 
-impl ContributorsList {
+impl<X: NodeExtra> ContributorsListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ContributorsListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ContributorsListWith {
+            content: crate::into_extra_list(self.content, ContributorsListContentWith::into_extra),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2754,6 +3208,37 @@ impl crate::Write for ContributorsList {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::contributors_list(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> ContributorsListContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ContributorsListContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::Artist(node) => ContributorsListContentWith::Artist(node.into_extra()),
+            Self::Author(node) => ContributorsListContentWith::Author(node.into_extra()),
+            Self::BookAuthor(node) => ContributorsListContentWith::BookAuthor(node.into_extra()),
+            Self::Compiler(node) => ContributorsListContentWith::Compiler(node.into_extra()),
+            Self::Composer(node) => ContributorsListContentWith::Composer(node.into_extra()),
+            Self::Conductor(node) => ContributorsListContentWith::Conductor(node.into_extra()),
+            Self::Counsel(node) => ContributorsListContentWith::Counsel(node.into_extra()),
+            Self::Director(node) => ContributorsListContentWith::Director(node.into_extra()),
+            Self::Editor(node) => ContributorsListContentWith::Editor(node.into_extra()),
+            Self::Interviewee(node) => ContributorsListContentWith::Interviewee(node.into_extra()),
+            Self::Interviewer(node) => ContributorsListContentWith::Interviewer(node.into_extra()),
+            Self::Inventor(node) => ContributorsListContentWith::Inventor(node.into_extra()),
+            Self::Other(node) => ContributorsListContentWith::Other(node),
+            Self::Performer(node) => ContributorsListContentWith::Performer(node.into_extra()),
+            Self::ProducerName(node) => {
+                ContributorsListContentWith::ProducerName(node.into_extra())
+            }
+            Self::Translator(node) => ContributorsListContentWith::Translator(node.into_extra()),
+            Self::Writer(node) => ContributorsListContentWith::Writer(node.into_extra()),
+        }
     }
 }
 
@@ -2809,7 +3294,21 @@ impl crate::Write for ContributorsListContent {
     }
 }
 
-impl CorporateAuthor {
+impl<X: NodeExtra> CorporateAuthorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CorporateAuthorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CorporateAuthorWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2833,7 +3332,21 @@ impl crate::Write for CorporateAuthor {
     }
 }
 
-impl Counsel {
+impl<X: NodeExtra> CounselWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CounselWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CounselWith {
+            extra: Default::default(),
+            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2854,7 +3367,21 @@ impl crate::Write for Counsel {
     }
 }
 
-impl CountryOrRegion {
+impl<X: NodeExtra> CountryOrRegionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CountryOrRegionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CountryOrRegionWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2878,7 +3405,21 @@ impl crate::Write for CountryOrRegion {
     }
 }
 
-impl Court {
+impl<X: NodeExtra> CourtWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CourtWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CourtWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2902,7 +3443,21 @@ impl crate::Write for Court {
     }
 }
 
-impl Day {
+impl<X: NodeExtra> DayWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DayWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DayWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2926,7 +3481,21 @@ impl crate::Write for Day {
     }
 }
 
-impl DayAccessed {
+impl<X: NodeExtra> DayAccessedWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DayAccessedWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DayAccessedWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2950,7 +3519,21 @@ impl crate::Write for DayAccessed {
     }
 }
 
-impl Department {
+impl<X: NodeExtra> DepartmentWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DepartmentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DepartmentWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2974,7 +3557,21 @@ impl crate::Write for Department {
     }
 }
 
-impl Director {
+impl<X: NodeExtra> DirectorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DirectorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DirectorWith {
+            extra: Default::default(),
+            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2995,7 +3592,21 @@ impl crate::Write for Director {
     }
 }
 
-impl Distributor {
+impl<X: NodeExtra> DistributorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DistributorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DistributorWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3019,7 +3630,21 @@ impl crate::Write for Distributor {
     }
 }
 
-impl Editor {
+impl<X: NodeExtra> EditorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> EditorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EditorWith {
+            extra: Default::default(),
+            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3040,7 +3665,21 @@ impl crate::Write for Editor {
     }
 }
 
-impl EditorEdition {
+impl<X: NodeExtra> EditorEditionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> EditorEditionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EditorEditionWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3064,7 +3703,21 @@ impl crate::Write for EditorEdition {
     }
 }
 
-impl Guid {
+impl<X: NodeExtra> GuidWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GuidWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GuidWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3088,7 +3741,21 @@ impl crate::Write for Guid {
     }
 }
 
-impl Institution {
+impl<X: NodeExtra> InstitutionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> InstitutionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        InstitutionWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3112,7 +3779,21 @@ impl crate::Write for Institution {
     }
 }
 
-impl InternetSiteTitle {
+impl<X: NodeExtra> InternetSiteTitleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> InternetSiteTitleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        InternetSiteTitleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3136,7 +3817,21 @@ impl crate::Write for InternetSiteTitle {
     }
 }
 
-impl Interviewee {
+impl<X: NodeExtra> IntervieweeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> IntervieweeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        IntervieweeWith {
+            extra: Default::default(),
+            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3157,7 +3852,21 @@ impl crate::Write for Interviewee {
     }
 }
 
-impl Interviewer {
+impl<X: NodeExtra> InterviewerWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> InterviewerWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        InterviewerWith {
+            extra: Default::default(),
+            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3178,7 +3887,21 @@ impl crate::Write for Interviewer {
     }
 }
 
-impl Inventor {
+impl<X: NodeExtra> InventorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> InventorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        InventorWith {
+            extra: Default::default(),
+            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3199,7 +3922,21 @@ impl crate::Write for Inventor {
     }
 }
 
-impl Issue {
+impl<X: NodeExtra> IssueWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> IssueWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        IssueWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3223,7 +3960,21 @@ impl crate::Write for Issue {
     }
 }
 
-impl JournalName {
+impl<X: NodeExtra> JournalNameWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> JournalNameWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        JournalNameWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3247,7 +3998,21 @@ impl crate::Write for JournalName {
     }
 }
 
-impl LocaleID {
+impl<X: NodeExtra> LocaleIDWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LocaleIDWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LocaleIDWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3271,7 +4036,21 @@ impl crate::Write for LocaleID {
     }
 }
 
-impl Medium {
+impl<X: NodeExtra> MediumWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MediumWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MediumWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3295,7 +4074,21 @@ impl crate::Write for Medium {
     }
 }
 
-impl Month {
+impl<X: NodeExtra> MonthWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MonthWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MonthWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3319,7 +4112,21 @@ impl crate::Write for Month {
     }
 }
 
-impl MonthAccessed {
+impl<X: NodeExtra> MonthAccessedWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MonthAccessedWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MonthAccessedWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3343,7 +4150,21 @@ impl crate::Write for MonthAccessed {
     }
 }
 
-impl NameList {
+impl<X: NodeExtra> NameListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NameListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NameListWith {
+            extra: Default::default(),
+            person: crate::into_extra_list(self.person, PersonWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3361,6 +4182,23 @@ impl crate::Write for NameList {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::name_list(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> NameOrCorporateContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NameOrCorporateContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::CorporateAuthor(node) => {
+                NameOrCorporateContentWith::CorporateAuthor(node.into_extra())
+            }
+            Self::NameList(node) => NameOrCorporateContentWith::NameList(node.into_extra()),
+            Self::Other(node) => NameOrCorporateContentWith::Other(node),
+        }
     }
 }
 
@@ -3388,7 +4226,21 @@ impl crate::Write for NameOrCorporateContent {
     }
 }
 
-impl NumberOfVolumes {
+impl<X: NodeExtra> NumberOfVolumesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NumberOfVolumesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NumberOfVolumesWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3412,7 +4264,21 @@ impl crate::Write for NumberOfVolumes {
     }
 }
 
-impl Pages {
+impl<X: NodeExtra> PagesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PagesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PagesWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3436,7 +4302,21 @@ impl crate::Write for Pages {
     }
 }
 
-impl PatentNumber {
+impl<X: NodeExtra> PatentNumberWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PatentNumberWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PatentNumberWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3460,7 +4340,21 @@ impl crate::Write for PatentNumber {
     }
 }
 
-impl PatentType {
+impl<X: NodeExtra> PatentTypeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PatentTypeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PatentTypeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3484,7 +4378,24 @@ impl crate::Write for PatentType {
     }
 }
 
-impl Performer {
+impl<X: NodeExtra> PerformerWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PerformerWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PerformerWith {
+            content: crate::into_extra_optional(
+                &mut self.content,
+                NameOrCorporateContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3505,7 +4416,21 @@ impl crate::Write for Performer {
     }
 }
 
-impl PeriodicalTitle {
+impl<X: NodeExtra> PeriodicalTitleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PeriodicalTitleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PeriodicalTitleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3529,7 +4454,32 @@ impl crate::Write for PeriodicalTitle {
     }
 }
 
-impl Person {
+impl<X: NodeExtra> PersonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PersonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PersonWith {
+            extra: Default::default(),
+            persons_first_or_given_name: crate::into_extra_list(
+                self.persons_first_or_given_name,
+                PersonsFirstOrGivenNameWith::into_extra,
+            ),
+            persons_last_or_family_name: crate::into_extra_list(
+                self.persons_last_or_family_name,
+                PersonsLastOrFamilyNameWith::into_extra,
+            ),
+            persons_middle_or_other_name: crate::into_extra_list(
+                self.persons_middle_or_other_name,
+                PersonsMiddleOrOtherNameWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3550,7 +4500,21 @@ impl crate::Write for Person {
     }
 }
 
-impl PersonsFirstOrGivenName {
+impl<X: NodeExtra> PersonsFirstOrGivenNameWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PersonsFirstOrGivenNameWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PersonsFirstOrGivenNameWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3574,7 +4538,21 @@ impl crate::Write for PersonsFirstOrGivenName {
     }
 }
 
-impl PersonsLastOrFamilyName {
+impl<X: NodeExtra> PersonsLastOrFamilyNameWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PersonsLastOrFamilyNameWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PersonsLastOrFamilyNameWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3598,7 +4576,21 @@ impl crate::Write for PersonsLastOrFamilyName {
     }
 }
 
-impl PersonsMiddleOrOtherName {
+impl<X: NodeExtra> PersonsMiddleOrOtherNameWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PersonsMiddleOrOtherNameWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PersonsMiddleOrOtherNameWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3622,7 +4614,21 @@ impl crate::Write for PersonsMiddleOrOtherName {
     }
 }
 
-impl ProducerName {
+impl<X: NodeExtra> ProducerNameWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ProducerNameWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ProducerNameWith {
+            extra: Default::default(),
+            list: crate::into_extra_required(*self.list, NameListWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3643,7 +4649,21 @@ impl crate::Write for ProducerName {
     }
 }
 
-impl ProductionCompany {
+impl<X: NodeExtra> ProductionCompanyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ProductionCompanyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ProductionCompanyWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3667,7 +4687,21 @@ impl crate::Write for ProductionCompany {
     }
 }
 
-impl PublicationTitle {
+impl<X: NodeExtra> PublicationTitleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PublicationTitleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PublicationTitleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3691,7 +4725,21 @@ impl crate::Write for PublicationTitle {
     }
 }
 
-impl Publisher {
+impl<X: NodeExtra> PublisherWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PublisherWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PublisherWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3715,7 +4763,21 @@ impl crate::Write for Publisher {
     }
 }
 
-impl RecordingNumber {
+impl<X: NodeExtra> RecordingNumberWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RecordingNumberWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RecordingNumberWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3739,7 +4801,21 @@ impl crate::Write for RecordingNumber {
     }
 }
 
-impl ReferenceOrder {
+impl<X: NodeExtra> ReferenceOrderWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ReferenceOrderWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ReferenceOrderWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3763,7 +4839,21 @@ impl crate::Write for ReferenceOrder {
     }
 }
 
-impl Reporter {
+impl<X: NodeExtra> ReporterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ReporterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ReporterWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3787,7 +4877,21 @@ impl crate::Write for Reporter {
     }
 }
 
-impl ShortTitle {
+impl<X: NodeExtra> ShortTitleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShortTitleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShortTitleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3811,7 +4915,21 @@ impl crate::Write for ShortTitle {
     }
 }
 
-impl Source {
+impl<X: NodeExtra> SourceWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SourceWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SourceWith {
+            content: crate::into_extra_list(self.content, SourceContentWith::into_extra),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3829,6 +4947,79 @@ impl crate::Write for Source {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::source(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> SourceContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SourceContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::AbbreviatedCaseNumber(node) => {
+                SourceContentWith::AbbreviatedCaseNumber(node.into_extra())
+            }
+            Self::AlbumTitle(node) => SourceContentWith::AlbumTitle(node.into_extra()),
+            Self::BookTitle(node) => SourceContentWith::BookTitle(node.into_extra()),
+            Self::BroadcastTitle(node) => SourceContentWith::BroadcastTitle(node.into_extra()),
+            Self::Broadcaster(node) => SourceContentWith::Broadcaster(node.into_extra()),
+            Self::CaseNumber(node) => SourceContentWith::CaseNumber(node.into_extra()),
+            Self::ChapterNumber(node) => SourceContentWith::ChapterNumber(node.into_extra()),
+            Self::City(node) => SourceContentWith::City(node.into_extra()),
+            Self::Comments(node) => SourceContentWith::Comments(node.into_extra()),
+            Self::ConferenceOrProceedingsName(node) => {
+                SourceContentWith::ConferenceOrProceedingsName(node.into_extra())
+            }
+            Self::ContributorsList(node) => SourceContentWith::ContributorsList(node.into_extra()),
+            Self::CountryOrRegion(node) => SourceContentWith::CountryOrRegion(node.into_extra()),
+            Self::Court(node) => SourceContentWith::Court(node.into_extra()),
+            Self::Day(node) => SourceContentWith::Day(node.into_extra()),
+            Self::DayAccessed(node) => SourceContentWith::DayAccessed(node.into_extra()),
+            Self::Department(node) => SourceContentWith::Department(node.into_extra()),
+            Self::Distributor(node) => SourceContentWith::Distributor(node.into_extra()),
+            Self::EditorEdition(node) => SourceContentWith::EditorEdition(node.into_extra()),
+            Self::Guid(node) => SourceContentWith::Guid(node.into_extra()),
+            Self::Institution(node) => SourceContentWith::Institution(node.into_extra()),
+            Self::InternetSiteTitle(node) => {
+                SourceContentWith::InternetSiteTitle(node.into_extra())
+            }
+            Self::Issue(node) => SourceContentWith::Issue(node.into_extra()),
+            Self::JournalName(node) => SourceContentWith::JournalName(node.into_extra()),
+            Self::LocaleID(node) => SourceContentWith::LocaleID(node.into_extra()),
+            Self::Medium(node) => SourceContentWith::Medium(node.into_extra()),
+            Self::Month(node) => SourceContentWith::Month(node.into_extra()),
+            Self::MonthAccessed(node) => SourceContentWith::MonthAccessed(node.into_extra()),
+            Self::NumberOfVolumes(node) => SourceContentWith::NumberOfVolumes(node.into_extra()),
+            Self::Other(node) => SourceContentWith::Other(node),
+            Self::Pages(node) => SourceContentWith::Pages(node.into_extra()),
+            Self::PatentNumber(node) => SourceContentWith::PatentNumber(node.into_extra()),
+            Self::PatentType(node) => SourceContentWith::PatentType(node.into_extra()),
+            Self::PeriodicalTitle(node) => SourceContentWith::PeriodicalTitle(node.into_extra()),
+            Self::ProductionCompany(node) => {
+                SourceContentWith::ProductionCompany(node.into_extra())
+            }
+            Self::PublicationTitle(node) => SourceContentWith::PublicationTitle(node.into_extra()),
+            Self::Publisher(node) => SourceContentWith::Publisher(node.into_extra()),
+            Self::RecordingNumber(node) => SourceContentWith::RecordingNumber(node.into_extra()),
+            Self::ReferenceOrder(node) => SourceContentWith::ReferenceOrder(node.into_extra()),
+            Self::Reporter(node) => SourceContentWith::Reporter(node.into_extra()),
+            Self::ShortTitle(node) => SourceContentWith::ShortTitle(node.into_extra()),
+            Self::SourceType(node) => SourceContentWith::SourceType(node.into_extra()),
+            Self::StandardNumber(node) => SourceContentWith::StandardNumber(node.into_extra()),
+            Self::StateOrProvince(node) => SourceContentWith::StateOrProvince(node.into_extra()),
+            Self::Station(node) => SourceContentWith::Station(node.into_extra()),
+            Self::Tag(node) => SourceContentWith::Tag(node.into_extra()),
+            Self::Theater(node) => SourceContentWith::Theater(node.into_extra()),
+            Self::ThesisType(node) => SourceContentWith::ThesisType(node.into_extra()),
+            Self::Title(node) => SourceContentWith::Title(node.into_extra()),
+            Self::Url(node) => SourceContentWith::Url(node.into_extra()),
+            Self::Version(node) => SourceContentWith::Version(node.into_extra()),
+            Self::Volume(node) => SourceContentWith::Volume(node.into_extra()),
+            Self::Year(node) => SourceContentWith::Year(node.into_extra()),
+            Self::YearAccessed(node) => SourceContentWith::YearAccessed(node.into_extra()),
+        }
     }
 }
 
@@ -3960,7 +5151,21 @@ impl crate::Write for SourceContent {
     }
 }
 
-impl SourceType {
+impl<X: NodeExtra> SourceTypeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SourceTypeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SourceTypeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3984,7 +5189,24 @@ impl crate::Write for SourceType {
     }
 }
 
-impl Sources {
+impl<X: NodeExtra> SourcesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SourcesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SourcesWith {
+            extra: Default::default(),
+            selected_style: self.selected_style,
+            source: crate::into_extra_list(self.source, SourceWith::into_extra),
+            style_name: self.style_name,
+            unknown: self.unknown,
+            uri: self.uri,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4010,7 +5232,21 @@ impl crate::Write for Sources {
     }
 }
 
-impl StandardNumber {
+impl<X: NodeExtra> StandardNumberWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> StandardNumberWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StandardNumberWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4034,7 +5270,21 @@ impl crate::Write for StandardNumber {
     }
 }
 
-impl StateOrProvince {
+impl<X: NodeExtra> StateOrProvinceWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> StateOrProvinceWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StateOrProvinceWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4058,7 +5308,21 @@ impl crate::Write for StateOrProvince {
     }
 }
 
-impl Station {
+impl<X: NodeExtra> StationWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> StationWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StationWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4082,7 +5346,21 @@ impl crate::Write for Station {
     }
 }
 
-impl Tag {
+impl<X: NodeExtra> TagWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TagWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TagWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4106,7 +5384,21 @@ impl crate::Write for Tag {
     }
 }
 
-impl Theater {
+impl<X: NodeExtra> TheaterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TheaterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TheaterWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4130,7 +5422,21 @@ impl crate::Write for Theater {
     }
 }
 
-impl ThesisType {
+impl<X: NodeExtra> ThesisTypeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ThesisTypeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ThesisTypeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4154,7 +5460,21 @@ impl crate::Write for ThesisType {
     }
 }
 
-impl Title {
+impl<X: NodeExtra> TitleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TitleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TitleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4178,7 +5498,21 @@ impl crate::Write for Title {
     }
 }
 
-impl Translator {
+impl<X: NodeExtra> TranslatorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TranslatorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TranslatorWith {
+            extra: Default::default(),
+            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4199,7 +5533,21 @@ impl crate::Write for Translator {
     }
 }
 
-impl Url {
+impl<X: NodeExtra> UrlWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> UrlWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UrlWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4223,7 +5571,21 @@ impl crate::Write for Url {
     }
 }
 
-impl Version {
+impl<X: NodeExtra> VersionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VersionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VersionWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4247,7 +5609,21 @@ impl crate::Write for Version {
     }
 }
 
-impl Volume {
+impl<X: NodeExtra> VolumeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VolumeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VolumeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4271,7 +5647,21 @@ impl crate::Write for Volume {
     }
 }
 
-impl Writer {
+impl<X: NodeExtra> WriterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> WriterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WriterWith {
+            extra: Default::default(),
+            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4292,7 +5682,21 @@ impl crate::Write for Writer {
     }
 }
 
-impl Year {
+impl<X: NodeExtra> YearWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> YearWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        YearWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4316,7 +5720,21 @@ impl crate::Write for Year {
     }
 }
 
-impl YearAccessed {
+impl<X: NodeExtra> YearAccessedWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> YearAccessedWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        YearAccessedWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

@@ -221,6 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use crate::NodeExtra;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
@@ -778,871 +779,1009 @@ pub static ATTACHED_OBJECT_DATA_CONTENT_TAGS: crate::Accept = crate::Accept {
 
 /// The `xvml:Anchor` element, Anchor (ECMA-376 Part 4, section 19.4.2.3). Its schema type is
 /// `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Anchor {
+pub struct AnchorWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingAnchor,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `xvml:Anchor` element of the tree a read gives: [`AnchorWith`] holding nothing in `extra`.
+pub type Anchor = AnchorWith<()>;
+
+impl Eq for AnchorWith<()> {}
+
 /// The `xvml:ClientData` element, Attached Object Data (ECMA-376 Part 4, section 19.4.2.12). Its
 /// schema type is `CT_ClientData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AttachedObjectData {
+pub struct AttachedObjectDataWith<X: NodeExtra> {
     /// The children that are an item of `AttachedObjectDataContent`, in order.
-    pub content: Vec<AttachedObjectDataContent>,
+    pub content: Vec<AttachedObjectDataContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingAttachedObjectData,
     /// The attribute `ObjectType`, when the element has it.
     pub object_type: Option<ObjectType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
+/// The `xvml:ClientData` element of the tree a read gives: [`AttachedObjectDataWith`] holding
+/// nothing in `extra`.
+pub type AttachedObjectData = AttachedObjectDataWith<()>;
+
+impl Eq for AttachedObjectDataWith<()> {}
+
 /// One child element of a choice: local choice in `CT_ClientData`.
 ///
 /// The schema types that hold it: `CT_ClientData`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum AttachedObjectDataContent {
+pub enum AttachedObjectDataContentWith<X: NodeExtra> {
     /// The element `xvml:Anchor`, a `Anchor`.
-    Anchor(Anchor),
+    Anchor(AnchorWith<X>),
     /// The element `xvml:AutoFill`, a `AutoFill`.
-    AutoFill(AutoFill),
+    AutoFill(AutoFillWith<X>),
     /// The element `xvml:AutoLine`, a `AutoLine`.
-    AutoLine(AutoLine),
+    AutoLine(AutoLineWith<X>),
     /// The element `xvml:AutoPict`, a `AutomaticallySize`.
-    AutomaticallySize(AutomaticallySize),
+    AutomaticallySize(AutomaticallySizeWith<X>),
     /// The element `xvml:LCT`, a `CallbackType`.
-    CallbackType(CallbackType),
+    CallbackType(CallbackTypeWith<X>),
     /// The element `xvml:FmlaPict`, a `CameraSourceRange`.
-    CameraSourceRange(CameraSourceRange),
+    CameraSourceRange(CameraSourceRangeWith<X>),
     /// The element `xvml:Camera`, a `CameraTool`.
-    CameraTool(CameraTool),
+    CameraTool(CameraToolWith<X>),
     /// The element `xvml:Cancel`, a `CancelButton`.
-    CancelButton(CancelButton),
+    CancelButton(CancelButtonWith<X>),
     /// The element `xvml:Checked`, a `Checked`.
-    Checked(Checked),
+    Checked(CheckedWith<X>),
     /// The element `xvml:CF`, a `ClipboardFormat`.
-    ClipboardFormat(ClipboardFormat),
+    ClipboardFormat(ClipboardFormatWith<X>),
     /// The element `xvml:Column`, a `CommentColumnTarget`.
-    CommentColumnTarget(CommentColumnTarget),
+    CommentColumnTarget(CommentColumnTargetWith<X>),
     /// The element `xvml:Row`, a `CommentRowTarget`.
-    CommentRowTarget(CommentRowTarget),
+    CommentRowTarget(CommentRowTargetWith<X>),
     /// The element `xvml:Visible`, a `CommentVisibilityToggle`.
-    CommentVisibilityToggle(CommentVisibilityToggle),
+    CommentVisibilityToggle(CommentVisibilityToggleWith<X>),
     /// The element `xvml:ColHidden`, a `CommentsColumnIsHidden`.
-    CommentsColumnIsHidden(CommentsColumnIsHidden),
+    CommentsColumnIsHidden(CommentsColumnIsHiddenWith<X>),
     /// The element `xvml:RowHidden`, a `CommentsRowIsHidden`.
-    CommentsRowIsHidden(CommentsRowIsHidden),
+    CommentsRowIsHidden(CommentsRowIsHiddenWith<X>),
     /// The element `xvml:Default`, a `DefaultButton`.
-    DefaultButton(DefaultButton),
+    DefaultButton(DefaultButtonWith<X>),
     /// The element `xvml:DefaultSize`, a `DefaultSizeToggle`.
-    DefaultSizeToggle(DefaultSizeToggle),
+    DefaultSizeToggle(DefaultSizeToggleWith<X>),
     /// The element `xvml:NoThreeD`, a `Disable3DNoThreeD`.
-    Disable3DNoThreeD(Disable3DNoThreeD),
+    Disable3DNoThreeD(Disable3DNoThreeDWith<X>),
     /// The element `xvml:NoThreeD2`, a `Disable3DNoThreeD2`.
-    Disable3DNoThreeD2(Disable3DNoThreeD2),
+    Disable3DNoThreeD2(Disable3DNoThreeD2With<X>),
     /// The element `xvml:Dismiss`, a `DismissButton`.
-    DismissButton(DismissButton),
+    DismissButton(DismissButtonWith<X>),
     /// The element `xvml:Colored`, a `DropdownColorToggle`.
-    DropdownColorToggle(DropdownColorToggle),
+    DropdownColorToggle(DropdownColorToggleWith<X>),
     /// The element `xvml:DropLines`, a `DropdownMaximumLines`.
-    DropdownMaximumLines(DropdownMaximumLines),
+    DropdownMaximumLines(DropdownMaximumLinesWith<X>),
     /// The element `xvml:DropStyle`, a `DropdownStyle`.
-    DropdownStyle(DropdownStyle),
+    DropdownStyle(DropdownStyleWith<X>),
     /// The element `xvml:DDE`, a `DynamicDataExchange`.
-    DynamicDataExchange(DynamicDataExchange),
+    DynamicDataExchange(DynamicDataExchangeWith<X>),
     /// The element `xvml:MapOCX`, a `EmbeddedControl`.
-    EmbeddedControl(EmbeddedControl),
+    EmbeddedControl(EmbeddedControlWith<X>),
     /// The element `xvml:JustLastX`, a `FarEastAlignmentToggle`.
-    FarEastAlignmentToggle(FarEastAlignmentToggle),
+    FarEastAlignmentToggle(FarEastAlignmentToggleWith<X>),
     /// The element `xvml:FirstButton`, a `FirstRadioButton`.
-    FirstRadioButton(FirstRadioButton),
+    FirstRadioButton(FirstRadioButtonWith<X>),
     /// The element `xvml:AutoScale`, a `FontAutoScale`.
-    FontAutoScale(FontAutoScale),
+    FontAutoScale(FontAutoScaleWith<X>),
     /// The element `xvml:ScriptExtended`, a `HTMLScriptAttributes`.
-    HTMLScriptAttributes(HTMLScriptAttributes),
+    HTMLScriptAttributes(HTMLScriptAttributesWith<X>),
     /// The element `xvml:ScriptLanguage`, a `HTMLScriptLanguage`.
-    HTMLScriptLanguage(HTMLScriptLanguage),
+    HTMLScriptLanguage(HTMLScriptLanguageWith<X>),
     /// The element `xvml:ScriptLocation`, a `HTMLScriptLocation`.
-    HTMLScriptLocation(HTMLScriptLocation),
+    HTMLScriptLocation(HTMLScriptLocationWith<X>),
     /// The element `xvml:ScriptText`, a `HTMLScriptText`.
-    HTMLScriptText(HTMLScriptText),
+    HTMLScriptText(HTMLScriptTextWith<X>),
     /// The element `xvml:Help`, a `HelpButton`.
-    HelpButton(HelpButton),
+    HelpButton(HelpButtonWith<X>),
     /// The element `xvml:TextHAlign`, a `HorizontalTextAlignment`.
-    HorizontalTextAlignment(HorizontalTextAlignment),
+    HorizontalTextAlignment(HorizontalTextAlignmentWith<X>),
     /// The element `xvml:FmlaLink`, a `LinkedFormula`.
-    LinkedFormula(LinkedFormula),
+    LinkedFormula(LinkedFormulaWith<X>),
     /// The element `xvml:FmlaGroup`, a `LinkedFormulaGroupBox`.
-    LinkedFormulaGroupBox(LinkedFormulaGroupBox),
+    LinkedFormulaGroupBox(LinkedFormulaGroupBoxWith<X>),
     /// The element `xvml:FmlaRange`, a `ListItemsSourceRange`.
-    ListItemsSourceRange(ListItemsSourceRange),
+    ListItemsSourceRange(ListItemsSourceRangeWith<X>),
     /// The element `xvml:Locked`, a `LockToggle`.
-    LockToggle(LockToggle),
+    LockToggle(LockToggleWith<X>),
     /// The element `xvml:Disabled`, a `MacroDisableToggle`.
-    MacroDisableToggle(MacroDisableToggle),
+    MacroDisableToggle(MacroDisableToggleWith<X>),
     /// The element `xvml:WidthMin`, a `MinimumWidth`.
-    MinimumWidth(MinimumWidth),
+    MinimumWidth(MinimumWidthWith<X>),
     /// The element `xvml:MoveWithCells`, a `MoveWithCells`.
-    MoveWithCells(MoveWithCells),
+    MoveWithCells(MoveWithCellsWith<X>),
     /// The element `xvml:MultiLine`, a `MultiLine`.
-    MultiLine(MultiLine),
+    MultiLine(MultiLineWith<X>),
     /// The element `xvml:MultiSel`, a `MultipleSelections`.
-    MultipleSelections(MultipleSelections),
+    MultipleSelections(MultipleSelectionsWith<X>),
     /// The element `xvml:ListItem`, a `NonLinkedListItem`.
-    NonLinkedListItem(NonLinkedListItem),
+    NonLinkedListItem(NonLinkedListItemWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `xvml:SecretEdit`, a `PasswordEdit`.
-    PasswordEdit(PasswordEdit),
+    PasswordEdit(PasswordEditWith<X>),
     /// The element `xvml:Accel`, a `PrimaryKeyboardAccelerator`.
-    PrimaryKeyboardAccelerator(PrimaryKeyboardAccelerator),
+    PrimaryKeyboardAccelerator(PrimaryKeyboardAcceleratorWith<X>),
     /// The element `xvml:PrintObject`, a `PrintToggle`.
-    PrintToggle(PrintToggle),
+    PrintToggle(PrintToggleWith<X>),
     /// The element `xvml:RecalcAlways`, a `RecalculationToggle`.
-    RecalculationToggle(RecalculationToggle),
+    RecalculationToggle(RecalculationToggleWith<X>),
     /// The element `xvml:FmlaMacro`, a `ReferenceToCustomFunction`.
-    ReferenceToCustomFunction(ReferenceToCustomFunction),
+    ReferenceToCustomFunction(ReferenceToCustomFunctionWith<X>),
     /// The element `xvml:SizeWithCells`, a `ResizeWithCells`.
-    ResizeWithCells(ResizeWithCells),
+    ResizeWithCells(ResizeWithCellsWith<X>),
     /// The element `xvml:Inc`, a `ScrollBarIncrement`.
-    ScrollBarIncrement(ScrollBarIncrement),
+    ScrollBarIncrement(ScrollBarIncrementWith<X>),
     /// The element `xvml:Max`, a `ScrollBarMaximum`.
-    ScrollBarMaximum(ScrollBarMaximum),
+    ScrollBarMaximum(ScrollBarMaximumWith<X>),
     /// The element `xvml:Min`, a `ScrollBarMinimum`.
-    ScrollBarMinimum(ScrollBarMinimum),
+    ScrollBarMinimum(ScrollBarMinimumWith<X>),
     /// The element `xvml:Horiz`, a `ScrollBarOrientation`.
-    ScrollBarOrientation(ScrollBarOrientation),
+    ScrollBarOrientation(ScrollBarOrientationWith<X>),
     /// The element `xvml:Page`, a `ScrollBarPageIncrement`.
-    ScrollBarPageIncrement(ScrollBarPageIncrement),
+    ScrollBarPageIncrement(ScrollBarPageIncrementWith<X>),
     /// The element `xvml:Val`, a `ScrollBarPosition`.
-    ScrollBarPosition(ScrollBarPosition),
+    ScrollBarPosition(ScrollBarPositionWith<X>),
     /// The element `xvml:Dx`, a `ScrollBarWidth`.
-    ScrollBarWidth(ScrollBarWidth),
+    ScrollBarWidth(ScrollBarWidthWith<X>),
     /// The element `xvml:Accel2`, a `SecondaryKeyboardAccelerator`.
-    SecondaryKeyboardAccelerator(SecondaryKeyboardAccelerator),
+    SecondaryKeyboardAccelerator(SecondaryKeyboardAcceleratorWith<X>),
     /// The element `xvml:Sel`, a `SelectedEntry`.
-    SelectedEntry(SelectedEntry),
+    SelectedEntry(SelectedEntryWith<X>),
     /// The element `xvml:SelType`, a `SelectionType`.
-    SelectionType(SelectionType),
+    SelectionType(SelectionTypeWith<X>),
     /// The element `xvml:FmlaTxbx`, a `TextFormula`.
-    TextFormula(TextFormula),
+    TextFormula(TextFormulaWith<X>),
     /// The element `xvml:LockText`, a `TextLock`.
-    TextLock(TextLock),
+    TextLock(TextLockWith<X>),
     /// The element `xvml:UIObj`, a `UIObjectToggle`.
-    UIObjectToggle(UIObjectToggle),
+    UIObjectToggle(UIObjectToggleWith<X>),
     /// The element `xvml:ValidIds`, a `ValidID`.
-    ValidID(ValidID),
+    ValidID(ValidIDWith<X>),
     /// The element `xvml:VTEdit`, a `ValidationType`.
-    ValidationType(ValidationType),
+    ValidationType(ValidationTypeWith<X>),
     /// The element `xvml:VScroll`, a `VerticalScroll`.
-    VerticalScroll(VerticalScroll),
+    VerticalScroll(VerticalScrollWith<X>),
     /// The element `xvml:TextVAlign`, a `VerticalTextAlignment`.
-    VerticalTextAlignment(VerticalTextAlignment),
+    VerticalTextAlignment(VerticalTextAlignmentWith<X>),
 }
+
+/// [`AttachedObjectDataContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type AttachedObjectDataContent = AttachedObjectDataContentWith<()>;
+
+impl Eq for AttachedObjectDataContentWith<()> {}
 
 /// The `xvml:AutoFill` element, `AutoFill` (ECMA-376 Part 4, section 19.4.2.4). Its schema type is
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AutoFill {
+pub struct AutoFillWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingAutoFill,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:AutoFill` element of the tree a read gives: [`AutoFillWith`] holding nothing in
+/// `extra`.
+pub type AutoFill = AutoFillWith<()>;
+
+impl Eq for AutoFillWith<()> {}
 
 /// The `xvml:AutoLine` element, `AutoLine` (ECMA-376 Part 4, section 19.4.2.5). Its schema type is
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AutoLine {
+pub struct AutoLineWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingAutoLine,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:AutoLine` element of the tree a read gives: [`AutoLineWith`] holding nothing in
+/// `extra`.
+pub type AutoLine = AutoLineWith<()>;
+
+impl Eq for AutoLineWith<()> {}
 
 /// The `xvml:AutoPict` element, Automatically Size (ECMA-376 Part 4, section 19.4.2.6). Its schema
 /// type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AutomaticallySize {
+pub struct AutomaticallySizeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingAutomaticallySize,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:AutoPict` element of the tree a read gives: [`AutomaticallySizeWith`] holding nothing
+/// in `extra`.
+pub type AutomaticallySize = AutomaticallySizeWith<()>;
+
+impl Eq for AutomaticallySizeWith<()> {}
 
 /// The `xvml:LCT` element, Callback Type (ECMA-376 Part 4, section 19.4.2.35). Its schema type is
 /// `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CallbackType {
+pub struct CallbackTypeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingCallbackType,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:LCT` element of the tree a read gives: [`CallbackTypeWith`] holding nothing in
+/// `extra`.
+pub type CallbackType = CallbackTypeWith<()>;
+
+impl Eq for CallbackTypeWith<()> {}
 
 /// The `xvml:FmlaPict` element, Camera Source Range (ECMA-376 Part 4, section 19.4.2.28). Its
 /// schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CameraSourceRange {
+pub struct CameraSourceRangeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingCameraSourceRange,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:FmlaPict` element of the tree a read gives: [`CameraSourceRangeWith`] holding nothing
+/// in `extra`.
+pub type CameraSourceRange = CameraSourceRangeWith<()>;
+
+impl Eq for CameraSourceRangeWith<()> {}
 
 /// The `xvml:Camera` element, Camera Tool (ECMA-376 Part 4, section 19.4.2.8). Its schema type is
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CameraTool {
+pub struct CameraToolWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingCameraTool,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:Camera` element of the tree a read gives: [`CameraToolWith`] holding nothing in
+/// `extra`.
+pub type CameraTool = CameraToolWith<()>;
+
+impl Eq for CameraToolWith<()> {}
 
 /// The `xvml:Cancel` element, Cancel Button (ECMA-376 Part 4, section 19.4.2.9). Its schema type is
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CancelButton {
+pub struct CancelButtonWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingCancelButton,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:Cancel` element of the tree a read gives: [`CancelButtonWith`] holding nothing in
+/// `extra`.
+pub type CancelButton = CancelButtonWith<()>;
+
+impl Eq for CancelButtonWith<()> {}
 
 /// The `xvml:Checked` element, Checked (ECMA-376 Part 4, section 19.4.2.11). Its schema type is
 /// `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Checked {
+pub struct CheckedWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingChecked,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:Checked` element of the tree a read gives: [`CheckedWith`] holding nothing in `extra`.
+pub type Checked = CheckedWith<()>;
+
+impl Eq for CheckedWith<()> {}
 
 /// The `xvml:CF` element, Clipboard Format (ECMA-376 Part 4, section 19.4.2.10). Its schema type is
 /// `ST_CF`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ClipboardFormat {
+pub struct ClipboardFormatWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingClipboardFormat,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:CF` element of the tree a read gives: [`ClipboardFormatWith`] holding nothing in
+/// `extra`.
+pub type ClipboardFormat = ClipboardFormatWith<()>;
+
+impl Eq for ClipboardFormatWith<()> {}
 
 /// The `xvml:Column` element, Comment Column Target (ECMA-376 Part 4, section 19.4.2.15). Its
 /// schema type is `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentColumnTarget {
+pub struct CommentColumnTargetWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingCommentColumnTarget,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:Column` element of the tree a read gives: [`CommentColumnTargetWith`] holding nothing
+/// in `extra`.
+pub type CommentColumnTarget = CommentColumnTargetWith<()>;
+
+impl Eq for CommentColumnTargetWith<()> {}
 
 /// The `xvml:Row` element, Comment Row Target (ECMA-376 Part 4, section 19.4.2.50). Its schema type
 /// is `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentRowTarget {
+pub struct CommentRowTargetWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingCommentRowTarget,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:Row` element of the tree a read gives: [`CommentRowTargetWith`] holding nothing in
+/// `extra`.
+pub type CommentRowTarget = CommentRowTargetWith<()>;
+
+impl Eq for CommentRowTargetWith<()> {}
 
 /// The `xvml:Visible` element, Comment Visibility Toggle (ECMA-376 Part 4, section 19.4.2.65). Its
 /// schema type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentVisibilityToggle {
+pub struct CommentVisibilityToggleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingCommentVisibilityToggle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:Visible` element of the tree a read gives: [`CommentVisibilityToggleWith`] holding
+/// nothing in `extra`.
+pub type CommentVisibilityToggle = CommentVisibilityToggleWith<()>;
+
+impl Eq for CommentVisibilityToggleWith<()> {}
 
 /// The `xvml:ColHidden` element, Comment's Column is Hidden (ECMA-376 Part 4, section 19.4.2.13).
 /// Its schema type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentsColumnIsHidden {
+pub struct CommentsColumnIsHiddenWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingCommentsColumnIsHidden,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:ColHidden` element of the tree a read gives: [`CommentsColumnIsHiddenWith`] holding
+/// nothing in `extra`.
+pub type CommentsColumnIsHidden = CommentsColumnIsHiddenWith<()>;
+
+impl Eq for CommentsColumnIsHiddenWith<()> {}
 
 /// The `xvml:RowHidden` element, Comment's Row is Hidden (ECMA-376 Part 4, section 19.4.2.51). Its
 /// schema type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentsRowIsHidden {
+pub struct CommentsRowIsHiddenWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingCommentsRowIsHidden,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:RowHidden` element of the tree a read gives: [`CommentsRowIsHiddenWith`] holding
+/// nothing in `extra`.
+pub type CommentsRowIsHidden = CommentsRowIsHiddenWith<()>;
+
+impl Eq for CommentsRowIsHiddenWith<()> {}
 
 /// The `xvml:Default` element, Default Button (ECMA-376 Part 4, section 19.4.2.17). Its schema type
 /// is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DefaultButton {
+pub struct DefaultButtonWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingDefaultButton,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:Default` element of the tree a read gives: [`DefaultButtonWith`] holding nothing in
+/// `extra`.
+pub type DefaultButton = DefaultButtonWith<()>;
+
+impl Eq for DefaultButtonWith<()> {}
 
 /// The `xvml:DefaultSize` element, Default Size Toggle (ECMA-376 Part 4, section 19.4.2.18). Its
 /// schema type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DefaultSizeToggle {
+pub struct DefaultSizeToggleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingDefaultSizeToggle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:DefaultSize` element of the tree a read gives: [`DefaultSizeToggleWith`] holding
+/// nothing in `extra`.
+pub type DefaultSizeToggle = DefaultSizeToggleWith<()>;
+
+impl Eq for DefaultSizeToggleWith<()> {}
 
 /// The `xvml:NoThreeD` element, Disable 3D (ECMA-376 Part 4, section 19.4.2.45). Its schema type is
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Disable3DNoThreeD {
+pub struct Disable3DNoThreeDWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingDisable3DNoThreeD,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:NoThreeD` element of the tree a read gives: [`Disable3DNoThreeDWith`] holding nothing
+/// in `extra`.
+pub type Disable3DNoThreeD = Disable3DNoThreeDWith<()>;
+
+impl Eq for Disable3DNoThreeDWith<()> {}
 
 /// The `xvml:NoThreeD2` element, Disable 3D (ECMA-376 Part 4, section 19.4.2.46). Its schema type
 /// is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Disable3DNoThreeD2 {
+pub struct Disable3DNoThreeD2With<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingDisable3DNoThreeD2,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:NoThreeD2` element of the tree a read gives: [`Disable3DNoThreeD2With`] holding
+/// nothing in `extra`.
+pub type Disable3DNoThreeD2 = Disable3DNoThreeD2With<()>;
+
+impl Eq for Disable3DNoThreeD2With<()> {}
 
 /// The `xvml:Dismiss` element, Dismiss Button (ECMA-376 Part 4, section 19.4.2.20). Its schema type
 /// is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DismissButton {
+pub struct DismissButtonWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingDismissButton,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:Dismiss` element of the tree a read gives: [`DismissButtonWith`] holding nothing in
+/// `extra`.
+pub type DismissButton = DismissButtonWith<()>;
+
+impl Eq for DismissButtonWith<()> {}
 
 /// The `xvml:Colored` element, Dropdown Color Toggle (ECMA-376 Part 4, section 19.4.2.14). Its
 /// schema type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropdownColorToggle {
+pub struct DropdownColorToggleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingDropdownColorToggle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:Colored` element of the tree a read gives: [`DropdownColorToggleWith`] holding nothing
+/// in `extra`.
+pub type DropdownColorToggle = DropdownColorToggleWith<()>;
+
+impl Eq for DropdownColorToggleWith<()> {}
 
 /// The `xvml:DropLines` element, Dropdown Maximum Lines (ECMA-376 Part 4, section 19.4.2.21). Its
 /// schema type is `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropdownMaximumLines {
+pub struct DropdownMaximumLinesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingDropdownMaximumLines,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:DropLines` element of the tree a read gives: [`DropdownMaximumLinesWith`] holding
+/// nothing in `extra`.
+pub type DropdownMaximumLines = DropdownMaximumLinesWith<()>;
+
+impl Eq for DropdownMaximumLinesWith<()> {}
 
 /// The `xvml:DropStyle` element, Dropdown Style (ECMA-376 Part 4, section 19.4.2.22). Its schema
 /// type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropdownStyle {
+pub struct DropdownStyleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingDropdownStyle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:DropStyle` element of the tree a read gives: [`DropdownStyleWith`] holding nothing in
+/// `extra`.
+pub type DropdownStyle = DropdownStyleWith<()>;
+
+impl Eq for DropdownStyleWith<()> {}
 
 /// The `xvml:DDE` element, Dynamic Data Exchange (ECMA-376 Part 4, section 19.4.2.16). Its schema
 /// type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DynamicDataExchange {
+pub struct DynamicDataExchangeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingDynamicDataExchange,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:DDE` element of the tree a read gives: [`DynamicDataExchangeWith`] holding nothing in
+/// `extra`.
+pub type DynamicDataExchange = DynamicDataExchangeWith<()>;
+
+impl Eq for DynamicDataExchangeWith<()> {}
 
 /// The `xvml:MapOCX` element, Embedded Control (ECMA-376 Part 4, section 19.4.2.39). Its schema
 /// type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EmbeddedControl {
+pub struct EmbeddedControlWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingEmbeddedControl,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:MapOCX` element of the tree a read gives: [`EmbeddedControlWith`] holding nothing in
+/// `extra`.
+pub type EmbeddedControl = EmbeddedControlWith<()>;
+
+impl Eq for EmbeddedControlWith<()> {}
 
 /// The `xvml:JustLastX` element, Far East Alignment Toggle (ECMA-376 Part 4, section 19.4.2.34).
 /// Its schema type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FarEastAlignmentToggle {
+pub struct FarEastAlignmentToggleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingFarEastAlignmentToggle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:JustLastX` element of the tree a read gives: [`FarEastAlignmentToggleWith`] holding
+/// nothing in `extra`.
+pub type FarEastAlignmentToggle = FarEastAlignmentToggleWith<()>;
+
+impl Eq for FarEastAlignmentToggleWith<()> {}
 
 /// The `xvml:FirstButton` element, First Radio Button (ECMA-376 Part 4, section 19.4.2.24). Its
 /// schema type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FirstRadioButton {
+pub struct FirstRadioButtonWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingFirstRadioButton,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:FirstButton` element of the tree a read gives: [`FirstRadioButtonWith`] holding
+/// nothing in `extra`.
+pub type FirstRadioButton = FirstRadioButtonWith<()>;
+
+impl Eq for FirstRadioButtonWith<()> {}
 
 /// The `xvml:AutoScale` element, Font `AutoScale` (ECMA-376 Part 4, section 19.4.2.7). Its schema
 /// type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FontAutoScale {
+pub struct FontAutoScaleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingFontAutoScale,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:AutoScale` element of the tree a read gives: [`FontAutoScaleWith`] holding nothing in
+/// `extra`.
+pub type FontAutoScale = FontAutoScaleWith<()>;
+
+impl Eq for FontAutoScaleWith<()> {}
 
 /// The `xvml:ScriptExtended` element, HTML Script Attributes (ECMA-376 Part 4, section 19.4.2.52).
 /// Its schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HTMLScriptAttributes {
+pub struct HTMLScriptAttributesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingHTMLScriptAttributes,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:ScriptExtended` element of the tree a read gives: [`HTMLScriptAttributesWith`] holding
+/// nothing in `extra`.
+pub type HTMLScriptAttributes = HTMLScriptAttributesWith<()>;
+
+impl Eq for HTMLScriptAttributesWith<()> {}
 
 /// The `xvml:ScriptLanguage` element, HTML Script Language (ECMA-376 Part 4, section 19.4.2.53).
 /// Its schema type is `nonNegativeInteger`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HTMLScriptLanguage {
+pub struct HTMLScriptLanguageWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingHTMLScriptLanguage,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:ScriptLanguage` element of the tree a read gives: [`HTMLScriptLanguageWith`] holding
+/// nothing in `extra`.
+pub type HTMLScriptLanguage = HTMLScriptLanguageWith<()>;
+
+impl Eq for HTMLScriptLanguageWith<()> {}
 
 /// The `xvml:ScriptLocation` element, HTML Script Location (ECMA-376 Part 4, section 19.4.2.54).
 /// Its schema type is `nonNegativeInteger`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HTMLScriptLocation {
+pub struct HTMLScriptLocationWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingHTMLScriptLocation,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:ScriptLocation` element of the tree a read gives: [`HTMLScriptLocationWith`] holding
+/// nothing in `extra`.
+pub type HTMLScriptLocation = HTMLScriptLocationWith<()>;
+
+impl Eq for HTMLScriptLocationWith<()> {}
 
 /// The `xvml:ScriptText` element, HTML Script Text (ECMA-376 Part 4, section 19.4.2.55). Its schema
 /// type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HTMLScriptText {
+pub struct HTMLScriptTextWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingHTMLScriptText,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:ScriptText` element of the tree a read gives: [`HTMLScriptTextWith`] holding nothing
+/// in `extra`.
+pub type HTMLScriptText = HTMLScriptTextWith<()>;
+
+impl Eq for HTMLScriptTextWith<()> {}
 
 /// The `xvml:Help` element, Help Button (ECMA-376 Part 4, section 19.4.2.31). Its schema type is
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HelpButton {
+pub struct HelpButtonWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingHelpButton,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:Help` element of the tree a read gives: [`HelpButtonWith`] holding nothing in `extra`.
+pub type HelpButton = HelpButtonWith<()>;
+
+impl Eq for HelpButtonWith<()> {}
 
 /// The `xvml:TextHAlign` element, Horizontal Text Alignment (ECMA-376 Part 4, section 19.4.2.60).
 /// Its schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HorizontalTextAlignment {
+pub struct HorizontalTextAlignmentWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingHorizontalTextAlignment,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:TextHAlign` element of the tree a read gives: [`HorizontalTextAlignmentWith`] holding
+/// nothing in `extra`.
+pub type HorizontalTextAlignment = HorizontalTextAlignmentWith<()>;
+
+impl Eq for HorizontalTextAlignmentWith<()> {}
 
 /// The `xvml:FmlaLink` element, Linked Formula (ECMA-376 Part 4, section 19.4.2.26). Its schema
 /// type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LinkedFormula {
+pub struct LinkedFormulaWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingLinkedFormula,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:FmlaLink` element of the tree a read gives: [`LinkedFormulaWith`] holding nothing in
+/// `extra`.
+pub type LinkedFormula = LinkedFormulaWith<()>;
+
+impl Eq for LinkedFormulaWith<()> {}
 
 /// The `xvml:FmlaGroup` element, Linked Formula - Group Box (ECMA-376 Part 4, section 19.4.2.25).
 /// Its schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LinkedFormulaGroupBox {
+pub struct LinkedFormulaGroupBoxWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingLinkedFormulaGroupBox,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:FmlaGroup` element of the tree a read gives: [`LinkedFormulaGroupBoxWith`] holding
+/// nothing in `extra`.
+pub type LinkedFormulaGroupBox = LinkedFormulaGroupBoxWith<()>;
+
+impl Eq for LinkedFormulaGroupBoxWith<()> {}
 
 /// The `xvml:FmlaRange` element, List Items Source Range (ECMA-376 Part 4, section 19.4.2.29). Its
 /// schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ListItemsSourceRange {
+pub struct ListItemsSourceRangeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingListItemsSourceRange,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:FmlaRange` element of the tree a read gives: [`ListItemsSourceRangeWith`] holding
+/// nothing in `extra`.
+pub type ListItemsSourceRange = ListItemsSourceRangeWith<()>;
+
+impl Eq for ListItemsSourceRangeWith<()> {}
 
 /// The `xvml:Locked` element, Lock Toggle (ECMA-376 Part 4, section 19.4.2.37). Its schema type is
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LockToggle {
+pub struct LockToggleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingLockToggle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:Locked` element of the tree a read gives: [`LockToggleWith`] holding nothing in
+/// `extra`.
+pub type LockToggle = LockToggleWith<()>;
+
+impl Eq for LockToggleWith<()> {}
 
 /// The `xvml:Disabled` element, Macro Disable Toggle (ECMA-376 Part 4, section 19.4.2.19). Its
 /// schema type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MacroDisableToggle {
+pub struct MacroDisableToggleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingMacroDisableToggle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:Disabled` element of the tree a read gives: [`MacroDisableToggleWith`] holding nothing
+/// in `extra`.
+pub type MacroDisableToggle = MacroDisableToggleWith<()>;
+
+impl Eq for MacroDisableToggleWith<()> {}
 
 /// The `xvml:WidthMin` element, Minimum Width (ECMA-376 Part 4, section 19.4.2.68). Its schema type
 /// is `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MinimumWidth {
+pub struct MinimumWidthWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingMinimumWidth,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:WidthMin` element of the tree a read gives: [`MinimumWidthWith`] holding nothing in
+/// `extra`.
+pub type MinimumWidth = MinimumWidthWith<()>;
+
+impl Eq for MinimumWidthWith<()> {}
 
 /// The `xvml:MoveWithCells` element, Move with Cells (ECMA-376 Part 4, section 19.4.2.42). Its
 /// schema type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MoveWithCells {
+pub struct MoveWithCellsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingMoveWithCells,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:MoveWithCells` element of the tree a read gives: [`MoveWithCellsWith`] holding nothing
+/// in `extra`.
+pub type MoveWithCells = MoveWithCellsWith<()>;
+
+impl Eq for MoveWithCellsWith<()> {}
 
 /// The `xvml:MultiLine` element, Multi-line (ECMA-376 Part 4, section 19.4.2.43). Its schema type
 /// is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MultiLine {
+pub struct MultiLineWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingMultiLine,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
+/// The `xvml:MultiLine` element of the tree a read gives: [`MultiLineWith`] holding nothing in
+/// `extra`.
+pub type MultiLine = MultiLineWith<()>;
+
+impl Eq for MultiLineWith<()> {}
+
 /// The `xvml:MultiSel` element, Multiple Selections (ECMA-376 Part 4, section 19.4.2.44). Its
 /// schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MultipleSelections {
+pub struct MultipleSelectionsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingMultipleSelections,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `xvml:MultiSel` element of the tree a read gives: [`MultipleSelectionsWith`] holding nothing
+/// in `extra`.
+pub type MultipleSelections = MultipleSelectionsWith<()>;
+
+impl Eq for MultipleSelectionsWith<()> {}
+
 /// The `xvml:ListItem` element, Non-linked List Item (ECMA-376 Part 4, section 19.4.2.36). Its
 /// schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonLinkedListItem {
+pub struct NonLinkedListItemWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingNonLinkedListItem,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:ListItem` element of the tree a read gives: [`NonLinkedListItemWith`] holding nothing
+/// in `extra`.
+pub type NonLinkedListItem = NonLinkedListItemWith<()>;
+
+impl Eq for NonLinkedListItemWith<()> {}
 
 /// Object Type, the simple type `ST_ObjectType` (ECMA-376 Part 4, section 19.4.3.2), kept as the
 /// text the file carried.
@@ -1704,373 +1843,456 @@ pub enum ObjectTypeMember {
 
 /// The `xvml:SecretEdit` element, Password Edit (ECMA-376 Part 4, section 19.4.2.56). Its schema
 /// type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PasswordEdit {
+pub struct PasswordEditWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingPasswordEdit,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:SecretEdit` element of the tree a read gives: [`PasswordEditWith`] holding nothing in
+/// `extra`.
+pub type PasswordEdit = PasswordEditWith<()>;
+
+impl Eq for PasswordEditWith<()> {}
 
 /// The `xvml:Accel` element, Primary Keyboard Accelerator (ECMA-376 Part 4, section 19.4.2.1). Its
 /// schema type is `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PrimaryKeyboardAccelerator {
+pub struct PrimaryKeyboardAcceleratorWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingPrimaryKeyboardAccelerator,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:Accel` element of the tree a read gives: [`PrimaryKeyboardAcceleratorWith`] holding
+/// nothing in `extra`.
+pub type PrimaryKeyboardAccelerator = PrimaryKeyboardAcceleratorWith<()>;
+
+impl Eq for PrimaryKeyboardAcceleratorWith<()> {}
 
 /// The `xvml:PrintObject` element, Print Toggle (ECMA-376 Part 4, section 19.4.2.48). Its schema
 /// type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PrintToggle {
+pub struct PrintToggleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingPrintToggle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:PrintObject` element of the tree a read gives: [`PrintToggleWith`] holding nothing in
+/// `extra`.
+pub type PrintToggle = PrintToggleWith<()>;
+
+impl Eq for PrintToggleWith<()> {}
 
 /// The `xvml:RecalcAlways` element, Recalculation Toggle (ECMA-376 Part 4, section 19.4.2.49). Its
 /// schema type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RecalculationToggle {
+pub struct RecalculationToggleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingRecalculationToggle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:RecalcAlways` element of the tree a read gives: [`RecalculationToggleWith`] holding
+/// nothing in `extra`.
+pub type RecalculationToggle = RecalculationToggleWith<()>;
+
+impl Eq for RecalculationToggleWith<()> {}
 
 /// The `xvml:FmlaMacro` element, Reference to Custom Function (ECMA-376 Part 4, section 19.4.2.27).
 /// Its schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ReferenceToCustomFunction {
+pub struct ReferenceToCustomFunctionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingReferenceToCustomFunction,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:FmlaMacro` element of the tree a read gives: [`ReferenceToCustomFunctionWith`] holding
+/// nothing in `extra`.
+pub type ReferenceToCustomFunction = ReferenceToCustomFunctionWith<()>;
+
+impl Eq for ReferenceToCustomFunctionWith<()> {}
 
 /// The `xvml:SizeWithCells` element, Resize with Cells (ECMA-376 Part 4, section 19.4.2.59). Its
 /// schema type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ResizeWithCells {
+pub struct ResizeWithCellsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingResizeWithCells,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:SizeWithCells` element of the tree a read gives: [`ResizeWithCellsWith`] holding
+/// nothing in `extra`.
+pub type ResizeWithCells = ResizeWithCellsWith<()>;
+
+impl Eq for ResizeWithCellsWith<()> {}
 
 /// The `xvml:Inc` element, Scroll Bar Increment (ECMA-376 Part 4, section 19.4.2.33). Its schema
 /// type is `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ScrollBarIncrement {
+pub struct ScrollBarIncrementWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingScrollBarIncrement,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:Inc` element of the tree a read gives: [`ScrollBarIncrementWith`] holding nothing in
+/// `extra`.
+pub type ScrollBarIncrement = ScrollBarIncrementWith<()>;
+
+impl Eq for ScrollBarIncrementWith<()> {}
 
 /// The `xvml:Max` element, Scroll Bar Maximum (ECMA-376 Part 4, section 19.4.2.40). Its schema type
 /// is `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ScrollBarMaximum {
+pub struct ScrollBarMaximumWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingScrollBarMaximum,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:Max` element of the tree a read gives: [`ScrollBarMaximumWith`] holding nothing in
+/// `extra`.
+pub type ScrollBarMaximum = ScrollBarMaximumWith<()>;
+
+impl Eq for ScrollBarMaximumWith<()> {}
 
 /// The `xvml:Min` element, Scroll Bar Minimum (ECMA-376 Part 4, section 19.4.2.41). Its schema type
 /// is `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ScrollBarMinimum {
+pub struct ScrollBarMinimumWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingScrollBarMinimum,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:Min` element of the tree a read gives: [`ScrollBarMinimumWith`] holding nothing in
+/// `extra`.
+pub type ScrollBarMinimum = ScrollBarMinimumWith<()>;
+
+impl Eq for ScrollBarMinimumWith<()> {}
 
 /// The `xvml:Horiz` element, Scroll Bar Orientation (ECMA-376 Part 4, section 19.4.2.32). Its
 /// schema type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ScrollBarOrientation {
+pub struct ScrollBarOrientationWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingScrollBarOrientation,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:Horiz` element of the tree a read gives: [`ScrollBarOrientationWith`] holding nothing
+/// in `extra`.
+pub type ScrollBarOrientation = ScrollBarOrientationWith<()>;
+
+impl Eq for ScrollBarOrientationWith<()> {}
 
 /// The `xvml:Page` element, Scroll Bar Page Increment (ECMA-376 Part 4, section 19.4.2.47). Its
 /// schema type is `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ScrollBarPageIncrement {
+pub struct ScrollBarPageIncrementWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingScrollBarPageIncrement,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:Page` element of the tree a read gives: [`ScrollBarPageIncrementWith`] holding nothing
+/// in `extra`.
+pub type ScrollBarPageIncrement = ScrollBarPageIncrementWith<()>;
+
+impl Eq for ScrollBarPageIncrementWith<()> {}
 
 /// The `xvml:Val` element, Scroll bar position (ECMA-376 Part 4, section 19.4.2.63). Its schema
 /// type is `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ScrollBarPosition {
+pub struct ScrollBarPositionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingScrollBarPosition,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:Val` element of the tree a read gives: [`ScrollBarPositionWith`] holding nothing in
+/// `extra`.
+pub type ScrollBarPosition = ScrollBarPositionWith<()>;
+
+impl Eq for ScrollBarPositionWith<()> {}
 
 /// The `xvml:Dx` element, Scroll Bar Width (ECMA-376 Part 4, section 19.4.2.23). Its schema type is
 /// `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ScrollBarWidth {
+pub struct ScrollBarWidthWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingScrollBarWidth,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:Dx` element of the tree a read gives: [`ScrollBarWidthWith`] holding nothing in
+/// `extra`.
+pub type ScrollBarWidth = ScrollBarWidthWith<()>;
+
+impl Eq for ScrollBarWidthWith<()> {}
 
 /// The `xvml:Accel2` element, Secondary Keyboard Accelerator (ECMA-376 Part 4, section 19.4.2.2).
 /// Its schema type is `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SecondaryKeyboardAccelerator {
+pub struct SecondaryKeyboardAcceleratorWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingSecondaryKeyboardAccelerator,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:Accel2` element of the tree a read gives: [`SecondaryKeyboardAcceleratorWith`] holding
+/// nothing in `extra`.
+pub type SecondaryKeyboardAccelerator = SecondaryKeyboardAcceleratorWith<()>;
+
+impl Eq for SecondaryKeyboardAcceleratorWith<()> {}
 
 /// The `xvml:Sel` element, Selected Entry (ECMA-376 Part 4, section 19.4.2.57). Its schema type is
 /// `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SelectedEntry {
+pub struct SelectedEntryWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingSelectedEntry,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:Sel` element of the tree a read gives: [`SelectedEntryWith`] holding nothing in
+/// `extra`.
+pub type SelectedEntry = SelectedEntryWith<()>;
+
+impl Eq for SelectedEntryWith<()> {}
 
 /// The `xvml:SelType` element, Selection Type (ECMA-376 Part 4, section 19.4.2.58). Its schema type
 /// is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SelectionType {
+pub struct SelectionTypeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingSelectionType,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:SelType` element of the tree a read gives: [`SelectionTypeWith`] holding nothing in
+/// `extra`.
+pub type SelectionType = SelectionTypeWith<()>;
+
+impl Eq for SelectionTypeWith<()> {}
 
 /// The `xvml:FmlaTxbx` element, Text Formula (ECMA-376 Part 4, section 19.4.2.30). Its schema type
 /// is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextFormula {
+pub struct TextFormulaWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingTextFormula,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xvml:FmlaTxbx` element of the tree a read gives: [`TextFormulaWith`] holding nothing in
+/// `extra`.
+pub type TextFormula = TextFormulaWith<()>;
+
+impl Eq for TextFormulaWith<()> {}
 
 /// The `xvml:LockText` element, Text Lock (ECMA-376 Part 4, section 19.4.2.38). Its schema type is
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextLock {
+pub struct TextLockWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingTextLock,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:LockText` element of the tree a read gives: [`TextLockWith`] holding nothing in
+/// `extra`.
+pub type TextLock = TextLockWith<()>;
+
+impl Eq for TextLockWith<()> {}
 
 /// The `xvml:UIObj` element, UI Object Toggle (ECMA-376 Part 4, section 19.4.2.62). Its schema type
 /// is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct UIObjectToggle {
+pub struct UIObjectToggleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingUIObjectToggle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:UIObj` element of the tree a read gives: [`UIObjectToggleWith`] holding nothing in
+/// `extra`.
+pub type UIObjectToggle = UIObjectToggleWith<()>;
+
+impl Eq for UIObjectToggleWith<()> {}
 
 /// The `xvml:ValidIds` element, Valid ID (ECMA-376 Part 4, section 19.4.2.64). Its schema type is
 /// `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ValidID {
+pub struct ValidIDWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingValidID,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
+
+/// The `xvml:ValidIds` element of the tree a read gives: [`ValidIDWith`] holding nothing in
+/// `extra`.
+pub type ValidID = ValidIDWith<()>;
+
+impl Eq for ValidIDWith<()> {}
 
 /// The `xvml:VTEdit` element, Validation Type (ECMA-376 Part 4, section 19.4.2.67). Its schema type
 /// is `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ValidationType {
+pub struct ValidationTypeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingValidationType,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `xvml:VTEdit` element of the tree a read gives: [`ValidationTypeWith`] holding nothing in
+/// `extra`.
+pub type ValidationType = ValidationTypeWith<()>;
+
+impl Eq for ValidationTypeWith<()> {}
+
 /// The `xvml:VScroll` element, Vertical Scroll (ECMA-376 Part 4, section 19.4.2.66). Its schema
 /// type is `ST_TrueFalseBlank`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VerticalScroll {
+pub struct VerticalScrollWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingVerticalScroll,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
+/// The `xvml:VScroll` element of the tree a read gives: [`VerticalScrollWith`] holding nothing in
+/// `extra`.
+pub type VerticalScroll = VerticalScrollWith<()>;
+
+impl Eq for VerticalScrollWith<()> {}
+
 /// The `xvml:TextVAlign` element, Vertical Text Alignment (ECMA-376 Part 4, section 19.4.2.61). Its
 /// schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VerticalTextAlignment {
+pub struct VerticalTextAlignmentWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::VmlSpreadsheetDrawingVerticalTextAlignment,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
-impl Anchor {
+/// The `xvml:TextVAlign` element of the tree a read gives: [`VerticalTextAlignmentWith`] holding
+/// nothing in `extra`.
+pub type VerticalTextAlignment = VerticalTextAlignmentWith<()>;
+
+impl Eq for VerticalTextAlignmentWith<()> {}
+
+impl<X: NodeExtra> AnchorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AnchorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AnchorWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2094,7 +2316,25 @@ impl crate::Write for Anchor {
     }
 }
 
-impl AttachedObjectData {
+impl<X: NodeExtra> AttachedObjectDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AttachedObjectDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AttachedObjectDataWith {
+            content: crate::into_extra_list(
+                self.content,
+                AttachedObjectDataContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            object_type: self.object_type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2115,6 +2355,38 @@ impl crate::Write for AttachedObjectData {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::attached_object_data(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> AttachedObjectDataContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AttachedObjectDataContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        crate::into_extra_match!(self, AttachedObjectDataContentWith;
+            plain [
+                Anchor, AutoFill, AutoLine, AutomaticallySize, CallbackType, CameraSourceRange,
+                CameraTool, CancelButton, Checked, ClipboardFormat, CommentColumnTarget,
+                CommentRowTarget, CommentVisibilityToggle, CommentsColumnIsHidden,
+                CommentsRowIsHidden, DefaultButton, DefaultSizeToggle, Disable3DNoThreeD,
+                Disable3DNoThreeD2, DismissButton, DropdownColorToggle, DropdownMaximumLines,
+                DropdownStyle, DynamicDataExchange, EmbeddedControl, FarEastAlignmentToggle,
+                FirstRadioButton, FontAutoScale, HTMLScriptAttributes, HTMLScriptLanguage,
+                HTMLScriptLocation, HTMLScriptText, HelpButton, HorizontalTextAlignment,
+                LinkedFormula, LinkedFormulaGroupBox, ListItemsSourceRange, LockToggle,
+                MacroDisableToggle, MinimumWidth, MoveWithCells, MultiLine, MultipleSelections,
+                NonLinkedListItem, PasswordEdit, PrimaryKeyboardAccelerator, PrintToggle,
+                RecalculationToggle, ReferenceToCustomFunction, ResizeWithCells, ScrollBarIncrement,
+                ScrollBarMaximum, ScrollBarMinimum, ScrollBarOrientation, ScrollBarPageIncrement,
+                ScrollBarPosition, ScrollBarWidth, SecondaryKeyboardAccelerator, SelectedEntry,
+                SelectionType, TextFormula, TextLock, UIObjectToggle, ValidID, ValidationType,
+                VerticalScroll, VerticalTextAlignment,
+            ]
+            boxed [
+            ]
+        )
     }
 }
 
@@ -2272,7 +2544,21 @@ impl crate::Write for AttachedObjectDataContent {
     }
 }
 
-impl AutoFill {
+impl<X: NodeExtra> AutoFillWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AutoFillWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AutoFillWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2296,7 +2582,21 @@ impl crate::Write for AutoFill {
     }
 }
 
-impl AutoLine {
+impl<X: NodeExtra> AutoLineWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AutoLineWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AutoLineWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2320,7 +2620,21 @@ impl crate::Write for AutoLine {
     }
 }
 
-impl AutomaticallySize {
+impl<X: NodeExtra> AutomaticallySizeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AutomaticallySizeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AutomaticallySizeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2344,7 +2658,21 @@ impl crate::Write for AutomaticallySize {
     }
 }
 
-impl CallbackType {
+impl<X: NodeExtra> CallbackTypeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CallbackTypeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CallbackTypeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2368,7 +2696,21 @@ impl crate::Write for CallbackType {
     }
 }
 
-impl CameraSourceRange {
+impl<X: NodeExtra> CameraSourceRangeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CameraSourceRangeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CameraSourceRangeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2392,7 +2734,21 @@ impl crate::Write for CameraSourceRange {
     }
 }
 
-impl CameraTool {
+impl<X: NodeExtra> CameraToolWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CameraToolWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CameraToolWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2416,7 +2772,21 @@ impl crate::Write for CameraTool {
     }
 }
 
-impl CancelButton {
+impl<X: NodeExtra> CancelButtonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CancelButtonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CancelButtonWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2440,7 +2810,21 @@ impl crate::Write for CancelButton {
     }
 }
 
-impl Checked {
+impl<X: NodeExtra> CheckedWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CheckedWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CheckedWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2464,7 +2848,21 @@ impl crate::Write for Checked {
     }
 }
 
-impl ClipboardFormat {
+impl<X: NodeExtra> ClipboardFormatWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ClipboardFormatWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ClipboardFormatWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2488,7 +2886,21 @@ impl crate::Write for ClipboardFormat {
     }
 }
 
-impl CommentColumnTarget {
+impl<X: NodeExtra> CommentColumnTargetWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CommentColumnTargetWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CommentColumnTargetWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2512,7 +2924,21 @@ impl crate::Write for CommentColumnTarget {
     }
 }
 
-impl CommentRowTarget {
+impl<X: NodeExtra> CommentRowTargetWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CommentRowTargetWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CommentRowTargetWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2536,7 +2962,21 @@ impl crate::Write for CommentRowTarget {
     }
 }
 
-impl CommentVisibilityToggle {
+impl<X: NodeExtra> CommentVisibilityToggleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CommentVisibilityToggleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CommentVisibilityToggleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2560,7 +3000,21 @@ impl crate::Write for CommentVisibilityToggle {
     }
 }
 
-impl CommentsColumnIsHidden {
+impl<X: NodeExtra> CommentsColumnIsHiddenWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CommentsColumnIsHiddenWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CommentsColumnIsHiddenWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2584,7 +3038,21 @@ impl crate::Write for CommentsColumnIsHidden {
     }
 }
 
-impl CommentsRowIsHidden {
+impl<X: NodeExtra> CommentsRowIsHiddenWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CommentsRowIsHiddenWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CommentsRowIsHiddenWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2608,7 +3076,21 @@ impl crate::Write for CommentsRowIsHidden {
     }
 }
 
-impl DefaultButton {
+impl<X: NodeExtra> DefaultButtonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DefaultButtonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DefaultButtonWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2632,7 +3114,21 @@ impl crate::Write for DefaultButton {
     }
 }
 
-impl DefaultSizeToggle {
+impl<X: NodeExtra> DefaultSizeToggleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DefaultSizeToggleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DefaultSizeToggleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2656,7 +3152,21 @@ impl crate::Write for DefaultSizeToggle {
     }
 }
 
-impl Disable3DNoThreeD {
+impl<X: NodeExtra> Disable3DNoThreeDWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> Disable3DNoThreeDWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        Disable3DNoThreeDWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2680,7 +3190,21 @@ impl crate::Write for Disable3DNoThreeD {
     }
 }
 
-impl Disable3DNoThreeD2 {
+impl<X: NodeExtra> Disable3DNoThreeD2With<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> Disable3DNoThreeD2With<Y>
+    where
+        Y: NodeExtra,
+    {
+        Disable3DNoThreeD2With {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2704,7 +3228,21 @@ impl crate::Write for Disable3DNoThreeD2 {
     }
 }
 
-impl DismissButton {
+impl<X: NodeExtra> DismissButtonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DismissButtonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DismissButtonWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2728,7 +3266,21 @@ impl crate::Write for DismissButton {
     }
 }
 
-impl DropdownColorToggle {
+impl<X: NodeExtra> DropdownColorToggleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DropdownColorToggleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DropdownColorToggleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2752,7 +3304,21 @@ impl crate::Write for DropdownColorToggle {
     }
 }
 
-impl DropdownMaximumLines {
+impl<X: NodeExtra> DropdownMaximumLinesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DropdownMaximumLinesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DropdownMaximumLinesWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2776,7 +3342,21 @@ impl crate::Write for DropdownMaximumLines {
     }
 }
 
-impl DropdownStyle {
+impl<X: NodeExtra> DropdownStyleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DropdownStyleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DropdownStyleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2800,7 +3380,21 @@ impl crate::Write for DropdownStyle {
     }
 }
 
-impl DynamicDataExchange {
+impl<X: NodeExtra> DynamicDataExchangeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DynamicDataExchangeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DynamicDataExchangeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2824,7 +3418,21 @@ impl crate::Write for DynamicDataExchange {
     }
 }
 
-impl EmbeddedControl {
+impl<X: NodeExtra> EmbeddedControlWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> EmbeddedControlWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EmbeddedControlWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2848,7 +3456,21 @@ impl crate::Write for EmbeddedControl {
     }
 }
 
-impl FarEastAlignmentToggle {
+impl<X: NodeExtra> FarEastAlignmentToggleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FarEastAlignmentToggleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FarEastAlignmentToggleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2872,7 +3494,21 @@ impl crate::Write for FarEastAlignmentToggle {
     }
 }
 
-impl FirstRadioButton {
+impl<X: NodeExtra> FirstRadioButtonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FirstRadioButtonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FirstRadioButtonWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2896,7 +3532,21 @@ impl crate::Write for FirstRadioButton {
     }
 }
 
-impl FontAutoScale {
+impl<X: NodeExtra> FontAutoScaleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FontAutoScaleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FontAutoScaleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2920,7 +3570,21 @@ impl crate::Write for FontAutoScale {
     }
 }
 
-impl HTMLScriptAttributes {
+impl<X: NodeExtra> HTMLScriptAttributesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> HTMLScriptAttributesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HTMLScriptAttributesWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2944,7 +3608,21 @@ impl crate::Write for HTMLScriptAttributes {
     }
 }
 
-impl HTMLScriptLanguage {
+impl<X: NodeExtra> HTMLScriptLanguageWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> HTMLScriptLanguageWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HTMLScriptLanguageWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2968,7 +3646,21 @@ impl crate::Write for HTMLScriptLanguage {
     }
 }
 
-impl HTMLScriptLocation {
+impl<X: NodeExtra> HTMLScriptLocationWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> HTMLScriptLocationWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HTMLScriptLocationWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2992,7 +3684,21 @@ impl crate::Write for HTMLScriptLocation {
     }
 }
 
-impl HTMLScriptText {
+impl<X: NodeExtra> HTMLScriptTextWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> HTMLScriptTextWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HTMLScriptTextWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3016,7 +3722,21 @@ impl crate::Write for HTMLScriptText {
     }
 }
 
-impl HelpButton {
+impl<X: NodeExtra> HelpButtonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> HelpButtonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HelpButtonWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3040,7 +3760,21 @@ impl crate::Write for HelpButton {
     }
 }
 
-impl HorizontalTextAlignment {
+impl<X: NodeExtra> HorizontalTextAlignmentWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> HorizontalTextAlignmentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HorizontalTextAlignmentWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3064,7 +3798,21 @@ impl crate::Write for HorizontalTextAlignment {
     }
 }
 
-impl LinkedFormula {
+impl<X: NodeExtra> LinkedFormulaWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LinkedFormulaWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LinkedFormulaWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3088,7 +3836,21 @@ impl crate::Write for LinkedFormula {
     }
 }
 
-impl LinkedFormulaGroupBox {
+impl<X: NodeExtra> LinkedFormulaGroupBoxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LinkedFormulaGroupBoxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LinkedFormulaGroupBoxWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3112,7 +3874,21 @@ impl crate::Write for LinkedFormulaGroupBox {
     }
 }
 
-impl ListItemsSourceRange {
+impl<X: NodeExtra> ListItemsSourceRangeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ListItemsSourceRangeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ListItemsSourceRangeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3136,7 +3912,21 @@ impl crate::Write for ListItemsSourceRange {
     }
 }
 
-impl LockToggle {
+impl<X: NodeExtra> LockToggleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LockToggleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LockToggleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3160,7 +3950,21 @@ impl crate::Write for LockToggle {
     }
 }
 
-impl MacroDisableToggle {
+impl<X: NodeExtra> MacroDisableToggleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MacroDisableToggleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MacroDisableToggleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3184,7 +3988,21 @@ impl crate::Write for MacroDisableToggle {
     }
 }
 
-impl MinimumWidth {
+impl<X: NodeExtra> MinimumWidthWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MinimumWidthWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MinimumWidthWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3208,7 +4026,21 @@ impl crate::Write for MinimumWidth {
     }
 }
 
-impl MoveWithCells {
+impl<X: NodeExtra> MoveWithCellsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MoveWithCellsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MoveWithCellsWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3232,7 +4064,21 @@ impl crate::Write for MoveWithCells {
     }
 }
 
-impl MultiLine {
+impl<X: NodeExtra> MultiLineWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MultiLineWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MultiLineWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3256,7 +4102,21 @@ impl crate::Write for MultiLine {
     }
 }
 
-impl MultipleSelections {
+impl<X: NodeExtra> MultipleSelectionsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MultipleSelectionsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MultipleSelectionsWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3280,7 +4140,21 @@ impl crate::Write for MultipleSelections {
     }
 }
 
-impl NonLinkedListItem {
+impl<X: NodeExtra> NonLinkedListItemWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NonLinkedListItemWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NonLinkedListItemWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3370,7 +4244,21 @@ impl ObjectType {
     }
 }
 
-impl PasswordEdit {
+impl<X: NodeExtra> PasswordEditWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PasswordEditWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PasswordEditWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3394,7 +4282,21 @@ impl crate::Write for PasswordEdit {
     }
 }
 
-impl PrimaryKeyboardAccelerator {
+impl<X: NodeExtra> PrimaryKeyboardAcceleratorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PrimaryKeyboardAcceleratorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PrimaryKeyboardAcceleratorWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3418,7 +4320,21 @@ impl crate::Write for PrimaryKeyboardAccelerator {
     }
 }
 
-impl PrintToggle {
+impl<X: NodeExtra> PrintToggleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PrintToggleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PrintToggleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3442,7 +4358,21 @@ impl crate::Write for PrintToggle {
     }
 }
 
-impl RecalculationToggle {
+impl<X: NodeExtra> RecalculationToggleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RecalculationToggleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RecalculationToggleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3466,7 +4396,21 @@ impl crate::Write for RecalculationToggle {
     }
 }
 
-impl ReferenceToCustomFunction {
+impl<X: NodeExtra> ReferenceToCustomFunctionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ReferenceToCustomFunctionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ReferenceToCustomFunctionWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3490,7 +4434,21 @@ impl crate::Write for ReferenceToCustomFunction {
     }
 }
 
-impl ResizeWithCells {
+impl<X: NodeExtra> ResizeWithCellsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ResizeWithCellsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ResizeWithCellsWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3514,7 +4472,21 @@ impl crate::Write for ResizeWithCells {
     }
 }
 
-impl ScrollBarIncrement {
+impl<X: NodeExtra> ScrollBarIncrementWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ScrollBarIncrementWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ScrollBarIncrementWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3538,7 +4510,21 @@ impl crate::Write for ScrollBarIncrement {
     }
 }
 
-impl ScrollBarMaximum {
+impl<X: NodeExtra> ScrollBarMaximumWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ScrollBarMaximumWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ScrollBarMaximumWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3562,7 +4548,21 @@ impl crate::Write for ScrollBarMaximum {
     }
 }
 
-impl ScrollBarMinimum {
+impl<X: NodeExtra> ScrollBarMinimumWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ScrollBarMinimumWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ScrollBarMinimumWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3586,7 +4586,21 @@ impl crate::Write for ScrollBarMinimum {
     }
 }
 
-impl ScrollBarOrientation {
+impl<X: NodeExtra> ScrollBarOrientationWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ScrollBarOrientationWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ScrollBarOrientationWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3610,7 +4624,21 @@ impl crate::Write for ScrollBarOrientation {
     }
 }
 
-impl ScrollBarPageIncrement {
+impl<X: NodeExtra> ScrollBarPageIncrementWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ScrollBarPageIncrementWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ScrollBarPageIncrementWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3634,7 +4662,21 @@ impl crate::Write for ScrollBarPageIncrement {
     }
 }
 
-impl ScrollBarPosition {
+impl<X: NodeExtra> ScrollBarPositionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ScrollBarPositionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ScrollBarPositionWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3658,7 +4700,21 @@ impl crate::Write for ScrollBarPosition {
     }
 }
 
-impl ScrollBarWidth {
+impl<X: NodeExtra> ScrollBarWidthWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ScrollBarWidthWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ScrollBarWidthWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3682,7 +4738,21 @@ impl crate::Write for ScrollBarWidth {
     }
 }
 
-impl SecondaryKeyboardAccelerator {
+impl<X: NodeExtra> SecondaryKeyboardAcceleratorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SecondaryKeyboardAcceleratorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SecondaryKeyboardAcceleratorWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3706,7 +4776,21 @@ impl crate::Write for SecondaryKeyboardAccelerator {
     }
 }
 
-impl SelectedEntry {
+impl<X: NodeExtra> SelectedEntryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SelectedEntryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SelectedEntryWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3730,7 +4814,21 @@ impl crate::Write for SelectedEntry {
     }
 }
 
-impl SelectionType {
+impl<X: NodeExtra> SelectionTypeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SelectionTypeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SelectionTypeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3754,7 +4852,21 @@ impl crate::Write for SelectionType {
     }
 }
 
-impl TextFormula {
+impl<X: NodeExtra> TextFormulaWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TextFormulaWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TextFormulaWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3778,7 +4890,21 @@ impl crate::Write for TextFormula {
     }
 }
 
-impl TextLock {
+impl<X: NodeExtra> TextLockWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TextLockWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TextLockWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3802,7 +4928,21 @@ impl crate::Write for TextLock {
     }
 }
 
-impl UIObjectToggle {
+impl<X: NodeExtra> UIObjectToggleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> UIObjectToggleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UIObjectToggleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3826,7 +4966,21 @@ impl crate::Write for UIObjectToggle {
     }
 }
 
-impl ValidID {
+impl<X: NodeExtra> ValidIDWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ValidIDWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ValidIDWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3850,7 +5004,21 @@ impl crate::Write for ValidID {
     }
 }
 
-impl ValidationType {
+impl<X: NodeExtra> ValidationTypeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ValidationTypeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ValidationTypeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3874,7 +5042,21 @@ impl crate::Write for ValidationType {
     }
 }
 
-impl VerticalScroll {
+impl<X: NodeExtra> VerticalScrollWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VerticalScrollWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VerticalScrollWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3898,7 +5080,21 @@ impl crate::Write for VerticalScroll {
     }
 }
 
-impl VerticalTextAlignment {
+impl<X: NodeExtra> VerticalTextAlignmentWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VerticalTextAlignmentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VerticalTextAlignmentWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

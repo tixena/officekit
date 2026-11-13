@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -273,21 +276,24 @@ pub trait Context: crate::Context {
 
 /// The `xlecs:externalCodeService` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_ExternalCodeService`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExternalCodeService {
+pub struct ExternalCodeServiceWith<X: NodeExtra> {
     /// The attribute `autoShow`, when the element has it.
     pub auto_show: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2023ExternalCodeServiceExternalCodeService,
     /// The attribute `timeout`, when the element has it.
     pub timeout: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlecs:externalCodeService` element of the tree a read gives: [`ExternalCodeServiceWith`]
+/// holding nothing in `extra`.
+pub type ExternalCodeService = ExternalCodeServiceWith<()>;
+
+impl Eq for ExternalCodeServiceWith<()> {}
 
 /// The hooks of a visitor for the `xlecs` namespace.
 ///
@@ -305,7 +311,22 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl ExternalCodeService {
+impl<X: NodeExtra> ExternalCodeServiceWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExternalCodeServiceWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExternalCodeServiceWith {
+            auto_show: self.auto_show,
+            extra: Default::default(),
+            timeout: self.timeout,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

@@ -216,19 +216,14 @@
 //! elements. The `read` module has a function that reads an element into each, and the
 //! `write` module one that writes each back to an element.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
-#[cfg(feature = "binary-format")]
-use rkyv::de::Pooling;
-#[cfg(feature = "binary-format")]
-use rkyv::rancor::Source;
-#[cfg(feature = "binary-format")]
-use rkyv::ser::{Allocator, Sharing, Writer};
-#[cfg(feature = "binary-format")]
-use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_LC: Option<NamespaceId> = Some(50);
@@ -248,36 +243,61 @@ pub static LOCKED_CANVAS_CONTAINER_SHAPE: officekit_markup_base::Shape =
 
 /// The `lc:lockedCanvas` element, Locked Canvas Container (ECMA-376 Part 1, section 20.3.2.1). Its
 /// schema type is `CT_GvmlGroupShape`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LockedCanvasContainer {
+pub struct LockedCanvasContainerWith<X: NodeExtra> {
     /// The children that are an item of `super::drawing::GroupShapeContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<super::drawing::GroupShapeContent>,
+    pub content: Vec<super::drawing::GroupShapeContentWith<X>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::LockedCanvasLockedCanvasContainer,
     /// The child that is `super::drawing::NonVisualPropertiesForAGroupShape`, which the schema
     /// requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
     pub non_visual_properties_for_a_group_shape:
-        Box<super::drawing::NonVisualPropertiesForAGroupShape>,
+        Box<super::drawing::NonVisualPropertiesForAGroupShapeWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `super::drawing::VisualGroupShapeProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub visual_group_shape_properties: Box<super::drawing::VisualGroupShapeProperties>,
+    pub visual_group_shape_properties: Box<super::drawing::VisualGroupShapePropertiesWith<X>>,
 }
 
-impl LockedCanvasContainer {
+/// The `lc:lockedCanvas` element of the tree a read gives: [`LockedCanvasContainerWith`] holding
+/// nothing in `extra`.
+pub type LockedCanvasContainer = LockedCanvasContainerWith<()>;
+
+impl Eq for LockedCanvasContainerWith<()> {}
+
+impl<X: NodeExtra> LockedCanvasContainerWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> LockedCanvasContainerWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LockedCanvasContainerWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                super::drawing::GroupShapeContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            non_visual_properties_for_a_group_shape: officekit_markup_base::into_extra_required(
+                *self.non_visual_properties_for_a_group_shape,
+                super::drawing::NonVisualPropertiesForAGroupShapeWith::into_extra,
+            ),
+            unknown: self.unknown,
+            visual_group_shape_properties: officekit_markup_base::into_extra_required(
+                *self.visual_group_shape_properties,
+                super::drawing::VisualGroupShapePropertiesWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

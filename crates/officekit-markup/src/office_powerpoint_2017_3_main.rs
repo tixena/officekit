@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
@@ -349,16 +352,13 @@ pub enum DisplayLocationMember {
 
 /// The `p173:track` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Track`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Track {
+pub struct TrackWith<X: NodeExtra> {
     /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20173MainTrack,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `label`, when the element has it.
@@ -371,39 +371,50 @@ pub struct Track {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `p173:track` element of the tree a read gives: [`TrackWith`] holding nothing in `extra`.
+pub type Track = TrackWith<()>;
+
+impl Eq for TrackWith<()> {}
+
 /// The `p173:trackLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TrackList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TrackLst {
+pub struct TrackLstWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20173MainTrackLst,
     /// The children that are `Track`, in order.
-    pub track: Vec<Track>,
+    pub track: Vec<TrackWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `p173:trackLst` element of the tree a read gives: [`TrackLstWith`] holding nothing in
+/// `extra`.
+pub type TrackLst = TrackLstWith<()>;
+
+impl Eq for TrackLstWith<()> {}
+
 /// The `p173:tracksInfo` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_TracksInfo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TracksInfo {
+pub struct TracksInfoWith<X: NodeExtra> {
     /// The attribute `displayLoc`, when the element has it.
     pub display_loc: Option<DisplayLocation>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint20173MainTracksInfo,
     /// The child that is `TrackLst`, when there is one.
-    pub track_lst: Option<Box<TrackLst>>,
+    pub track_lst: Option<Box<TrackLstWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `p173:tracksInfo` element of the tree a read gives: [`TracksInfoWith`] holding nothing in
+/// `extra`.
+pub type TracksInfo = TracksInfoWith<()>;
+
+impl Eq for TracksInfoWith<()> {}
 
 /// The hooks of a visitor for the `p173` namespace.
 ///
@@ -481,7 +492,25 @@ impl DisplayLocation {
     }
 }
 
-impl Track {
+impl<X: NodeExtra> TrackWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TrackWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TrackWith {
+            embed: self.embed,
+            extra: Default::default(),
+            id: self.id,
+            label: self.label,
+            lang: self.lang,
+            link: self.link,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -509,7 +538,21 @@ impl officekit_markup_base::Write for Track {
     }
 }
 
-impl TrackLst {
+impl<X: NodeExtra> TrackLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TrackLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TrackLstWith {
+            extra: Default::default(),
+            track: officekit_markup_base::into_extra_list(self.track, TrackWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -530,7 +573,25 @@ impl officekit_markup_base::Write for TrackLst {
     }
 }
 
-impl TracksInfo {
+impl<X: NodeExtra> TracksInfoWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TracksInfoWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TracksInfoWith {
+            display_loc: self.display_loc,
+            extra: Default::default(),
+            track_lst: officekit_markup_base::into_extra_optional(
+                &mut self.track_lst,
+                TrackLstWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

@@ -210,21 +210,478 @@
 //   6833bb8339d1dc179b970db58c13333ff6139e649ef9e044ef10623bed172323  crates/xtask/data/sdk_corrections.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The mirrors rkyv archives the enums of `crate::chart_drawing` through: the archived
-//! enums and resolvers it writes stay in this private module.
+//! The mirrors rkyv archives the structs and enums of `crate::chart_drawing` through: the archived
+//! types and resolvers it writes stay in this private module.
 
 use officekit_xml::element::Node;
 use rkyv::de::Pooling;
-use rkyv::rancor::{Fallible, Source};
-use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::rancor::{Fallible, Source as ErrorSource};
+use rkyv::ser::{Allocator, Sharing, Writer as ArchiveWriter};
 use rkyv::validation::{ArchiveContext, SharedContext};
 use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::AbsoluteAnchorShapeSize)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct AbsoluteAnchorShapeSizeMirror {
+    #[rkyv(omit_bounds)]
+    pub content: Box<super::ObjectContent>,
+    pub extra: (),
+    pub shape_extent: Box<super::ShapeExtent>,
+    pub starting_anchor_point: Box<super::StartingAnchorPoint>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ConnectionShape)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ConnectionShapeMirror {
+    #[rkyv(omit_bounds)]
+    pub connector_non_visual_properties: Box<super::ConnectorNonVisualProperties>,
+    pub extra: (),
+    pub f_published: Option<String>,
+    pub r#macro: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub properties: Box<super::ShapeProperties>,
+    pub style: Option<Box<super::ShapeStyle>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ConnectorNonVisualProperties)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ConnectorNonVisualPropertiesMirror {
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub non_visual_connection_shape_drawing_properties:
+        Box<super::NonVisualConnectionShapeDrawingProperties>,
+    #[rkyv(omit_bounds)]
+    pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::EndingAnchorPoint)]
+#[rkyv(attr(non_exhaustive))]
+pub struct EndingAnchorPointMirror {
+    pub extra: (),
+    pub relative_x_coordinate: Box<super::RelativeXCoordinate>,
+    pub relative_y_coordinate: Box<super::RelativeYCoordinate>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::GraphicFrame)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct GraphicFrameMirror {
+    pub extra: (),
+    pub f_published: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub graphic_object: Box<super::super::drawing::GraphicObject>,
+    pub r#macro: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub non_visual_graphic_frame_properties: Box<super::NonVisualGraphicFrameProperties>,
+    pub transform: Box<super::GraphicFrameTransform>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::GraphicFrameTransform)]
+#[rkyv(attr(non_exhaustive))]
+pub struct GraphicFrameTransformMirror {
+    pub extents: Option<Box<super::super::drawing::Extents>>,
+    pub extra: (),
+    pub flip_h: Option<String>,
+    pub flip_v: Option<String>,
+    pub offset: Option<Box<super::super::drawing::Offset>>,
+    pub rot: Option<super::super::drawing::Angle>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::GroupShape)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct GroupShapeMirror {
+    #[rkyv(omit_bounds)]
+    pub content: Vec<super::ObjectContent>,
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub non_visual_group_shape_properties: Box<super::NonVisualGroupShapeProperties>,
+    #[rkyv(omit_bounds)]
+    pub properties: Box<super::GroupShapeProperties>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::GroupShapeProperties)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct GroupShapePropertiesMirror {
+    pub bw_mode: Option<super::super::drawing::BlackAndWhiteMode>,
+    #[rkyv(omit_bounds)]
+    pub effect_properties_content: Option<Box<super::super::drawing::EffectPropertiesContent>>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub fill_properties_content: Option<Box<super::super::drawing::FillPropertiesContent>>,
+    #[rkyv(omit_bounds)]
+    pub scene3d: Option<Box<super::super::drawing::Scene3d>>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub xfrm_group_transform2d: Option<Box<super::super::drawing::XfrmGroupTransform2D>>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::NonVisualConnectionShapeDrawingProperties)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct NonVisualConnectionShapeDrawingPropertiesMirror {
+    pub connection_end: Option<Box<super::super::drawing::ConnectionEnd>>,
+    #[rkyv(omit_bounds)]
+    pub connection_shape_locks: Option<Box<super::super::drawing::ConnectionShapeLocks>>,
+    pub connection_start: Option<Box<super::super::drawing::ConnectionStart>>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::NonVisualDrawingProperties)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct NonVisualDrawingPropertiesMirror {
+    #[rkyv(omit_bounds)]
+    pub click_hyperlink: Option<Box<super::super::drawing::ClickHyperlink>>,
+    pub descr: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
+    pub extra: (),
+    pub hidden: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub hyperlink_for_hover: Option<Box<super::super::drawing::HyperlinkForHover>>,
+    pub id: Option<super::super::drawing::DrawingElementID>,
+    pub name: Option<String>,
+    pub title: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::NonVisualGraphicFrameDrawingProperties)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct NonVisualGraphicFrameDrawingPropertiesMirror {
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub graphic_frame_locks: Option<Box<super::super::drawing::GraphicFrameLocks>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::NonVisualGraphicFrameProperties)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct NonVisualGraphicFramePropertiesMirror {
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
+    #[rkyv(omit_bounds)]
+    pub non_visual_graphic_frame_drawing_properties:
+        Box<super::NonVisualGraphicFrameDrawingProperties>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::NonVisualGroupShapeDrawingProperties)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct NonVisualGroupShapeDrawingPropertiesMirror {
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub group_shape_locks: Option<Box<super::super::drawing::GroupShapeLocks>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::NonVisualGroupShapeProperties)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct NonVisualGroupShapePropertiesMirror {
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
+    #[rkyv(omit_bounds)]
+    pub non_visual_group_shape_drawing_properties: Box<super::NonVisualGroupShapeDrawingProperties>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::NonVisualPictureDrawingProperties)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct NonVisualPictureDrawingPropertiesMirror {
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub picture_locks: Option<Box<super::super::drawing::PictureLocks>>,
+    pub prefer_relative_resize: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::NonVisualPictureProperties)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct NonVisualPicturePropertiesMirror {
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
+    #[rkyv(omit_bounds)]
+    pub non_visual_picture_drawing_properties: Box<super::NonVisualPictureDrawingProperties>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::NonVisualShapeDrawingProperties)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct NonVisualShapeDrawingPropertiesMirror {
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub shape_locks: Option<Box<super::super::drawing::ShapeLocks>>,
+    pub tx_box: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::NonVisualShapeProperties)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct NonVisualShapePropertiesMirror {
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
+    #[rkyv(omit_bounds)]
+    pub non_visual_shape_drawing_properties: Box<super::NonVisualShapeDrawingProperties>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Picture)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct PictureMirror {
+    pub extra: (),
+    pub f_published: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub fill: Box<super::PictureFill>,
+    pub r#macro: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub non_visual_picture_properties: Box<super::NonVisualPictureProperties>,
+    #[rkyv(omit_bounds)]
+    pub shape_properties: Box<super::ShapeProperties>,
+    pub shape_style: Option<Box<super::ShapeStyle>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::PictureFill)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct PictureFillMirror {
+    #[rkyv(omit_bounds)]
+    pub blip: Option<Box<super::super::drawing::Blip>>,
+    pub content: Option<Box<super::super::drawing::FillModeContent>>,
+    pub dpi: Option<String>,
+    pub extra: (),
+    pub rot_with_shape: Option<String>,
+    pub source_rectangle: Option<Box<super::super::drawing::SourceRectangle>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::RelativeAnchorShapeSize)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct RelativeAnchorShapeSizeMirror {
+    #[rkyv(omit_bounds)]
+    pub content: Box<super::ObjectContent>,
+    pub ending_anchor_point: Box<super::EndingAnchorPoint>,
+    pub extra: (),
+    pub starting_anchor_point: Box<super::StartingAnchorPoint>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::RelativeXCoordinate)]
+#[rkyv(attr(non_exhaustive))]
+pub struct RelativeXCoordinateMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+    pub value: super::ChartMarkerCoordinateValue,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::RelativeYCoordinate)]
+#[rkyv(attr(non_exhaustive))]
+pub struct RelativeYCoordinateMirror {
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+    pub value: super::ChartMarkerCoordinateValue,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Shape)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapeMirror {
+    pub extra: (),
+    pub f_locks_text: Option<String>,
+    pub f_published: Option<String>,
+    pub r#macro: Option<String>,
+    #[rkyv(omit_bounds)]
+    pub non_visual_shape_properties: Box<super::NonVisualShapeProperties>,
+    #[rkyv(omit_bounds)]
+    pub properties: Box<super::ShapeProperties>,
+    pub style: Option<Box<super::ShapeStyle>>,
+    #[rkyv(omit_bounds)]
+    pub text_body: Option<Box<super::ShapeTextBody>>,
+    pub textlink: Option<String>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShapeExtent)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapeExtentMirror {
+    pub cx: Option<super::super::drawing::PositiveCoordinate>,
+    pub cy: Option<super::super::drawing::PositiveCoordinate>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShapeProperties)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapePropertiesMirror {
+    #[rkyv(omit_bounds)]
+    pub apply_3d: Option<Box<super::super::drawing::Apply3DShapeProperties>>,
+    pub bw_mode: Option<super::super::drawing::BlackAndWhiteMode>,
+    #[rkyv(omit_bounds)]
+    pub effect_properties_content: Option<Box<super::super::drawing::EffectPropertiesContent>>,
+    #[rkyv(omit_bounds)]
+    pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub fill_properties_content: Option<Box<super::super::drawing::FillPropertiesContent>>,
+    pub geometry_content: Option<Box<super::super::drawing::GeometryContent>>,
+    #[rkyv(omit_bounds)]
+    pub outline: Option<Box<super::super::drawing::Outline>>,
+    #[rkyv(omit_bounds)]
+    pub scene3d: Option<Box<super::super::drawing::Scene3d>>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub xfrm_transform2d: Option<Box<super::super::drawing::XfrmTransform2D>>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShapeStyle)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapeStyleMirror {
+    pub effect_reference: Box<super::super::drawing::EffectReference>,
+    pub extra: (),
+    pub fill_reference: Box<super::super::drawing::FillReference>,
+    pub font_reference: Box<super::super::drawing::FontReference>,
+    pub line_reference: Box<super::super::drawing::LineReference>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ShapeTextBody)]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
+#[rkyv(attr(non_exhaustive))]
+pub struct ShapeTextBodyMirror {
+    pub extra: (),
+    #[rkyv(omit_bounds)]
+    pub properties: Box<super::super::drawing::BodyProperties>,
+    #[rkyv(omit_bounds)]
+    pub text_list_styles: Option<Box<super::super::drawing::TextListStyles>>,
+    #[rkyv(omit_bounds)]
+    pub text_paragraphs: Vec<super::super::drawing::TextParagraphs>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::StartingAnchorPoint)]
+#[rkyv(attr(non_exhaustive))]
+pub struct StartingAnchorPointMirror {
+    pub extra: (),
+    pub relative_x_coordinate: Box<super::RelativeXCoordinate>,
+    pub relative_y_coordinate: Box<super::RelativeYCoordinate>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ObjectContent)]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum ObjectContent {
     ConnectionShape(#[rkyv(omit_bounds)] super::ConnectionShape),
@@ -238,14 +695,1298 @@ pub enum ObjectContent {
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::UserShapesContent)]
-#[rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source))]
-#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source))]
-#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source)))]
+#[rkyv(serialize_bounds(__S: Allocator + Sharing + ArchiveWriter, __S::Error: ErrorSource))]
+#[rkyv(deserialize_bounds(__D: Pooling, __D::Error: ErrorSource))]
+#[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum UserShapesContent {
     AbsoluteAnchorShapeSize(#[rkyv(omit_bounds)] super::AbsoluteAnchorShapeSize),
     Other(Node),
     RelativeAnchorShapeSize(#[rkyv(omit_bounds)] super::RelativeAnchorShapeSize),
+}
+
+impl From<AbsoluteAnchorShapeSizeMirror> for super::AbsoluteAnchorShapeSize {
+    fn from(item: AbsoluteAnchorShapeSizeMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            shape_extent: item.shape_extent,
+            starting_anchor_point: item.starting_anchor_point,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::AbsoluteAnchorShapeSize {
+    type Archived = ArchivedAbsoluteAnchorShapeSizeMirror;
+    type Resolver = AbsoluteAnchorShapeSizeMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        AbsoluteAnchorShapeSizeMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::AbsoluteAnchorShapeSize
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        AbsoluteAnchorShapeSizeMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::AbsoluteAnchorShapeSize, __D>
+    for ArchivedAbsoluteAnchorShapeSizeMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::AbsoluteAnchorShapeSize, __D::Error> {
+        AbsoluteAnchorShapeSizeMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ConnectionShapeMirror> for super::ConnectionShape {
+    fn from(item: ConnectionShapeMirror) -> Self {
+        Self {
+            connector_non_visual_properties: item.connector_non_visual_properties,
+            extra: item.extra,
+            f_published: item.f_published,
+            r#macro: item.r#macro,
+            properties: item.properties,
+            style: item.style,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ConnectionShape {
+    type Archived = ArchivedConnectionShapeMirror;
+    type Resolver = ConnectionShapeMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ConnectionShapeMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ConnectionShape
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ConnectionShapeMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ConnectionShape, __D> for ArchivedConnectionShapeMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ConnectionShape, __D::Error> {
+        ConnectionShapeMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ConnectorNonVisualPropertiesMirror> for super::ConnectorNonVisualProperties {
+    fn from(item: ConnectorNonVisualPropertiesMirror) -> Self {
+        Self {
+            extra: item.extra,
+            non_visual_connection_shape_drawing_properties: item
+                .non_visual_connection_shape_drawing_properties,
+            non_visual_drawing_properties: item.non_visual_drawing_properties,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ConnectorNonVisualProperties {
+    type Archived = ArchivedConnectorNonVisualPropertiesMirror;
+    type Resolver = ConnectorNonVisualPropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ConnectorNonVisualPropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ConnectorNonVisualProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ConnectorNonVisualPropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ConnectorNonVisualProperties, __D>
+    for ArchivedConnectorNonVisualPropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::ConnectorNonVisualProperties, __D::Error> {
+        ConnectorNonVisualPropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<EndingAnchorPointMirror> for super::EndingAnchorPoint {
+    fn from(item: EndingAnchorPointMirror) -> Self {
+        Self {
+            extra: item.extra,
+            relative_x_coordinate: item.relative_x_coordinate,
+            relative_y_coordinate: item.relative_y_coordinate,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::EndingAnchorPoint {
+    type Archived = ArchivedEndingAnchorPointMirror;
+    type Resolver = EndingAnchorPointMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        EndingAnchorPointMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::EndingAnchorPoint
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        EndingAnchorPointMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::EndingAnchorPoint, __D> for ArchivedEndingAnchorPointMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::EndingAnchorPoint, __D::Error> {
+        EndingAnchorPointMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<GraphicFrameMirror> for super::GraphicFrame {
+    fn from(item: GraphicFrameMirror) -> Self {
+        Self {
+            extra: item.extra,
+            f_published: item.f_published,
+            graphic_object: item.graphic_object,
+            r#macro: item.r#macro,
+            non_visual_graphic_frame_properties: item.non_visual_graphic_frame_properties,
+            transform: item.transform,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::GraphicFrame {
+    type Archived = ArchivedGraphicFrameMirror;
+    type Resolver = GraphicFrameMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        GraphicFrameMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::GraphicFrame
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        GraphicFrameMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::GraphicFrame, __D> for ArchivedGraphicFrameMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::GraphicFrame, __D::Error> {
+        GraphicFrameMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<GraphicFrameTransformMirror> for super::GraphicFrameTransform {
+    fn from(item: GraphicFrameTransformMirror) -> Self {
+        Self {
+            extents: item.extents,
+            extra: item.extra,
+            flip_h: item.flip_h,
+            flip_v: item.flip_v,
+            offset: item.offset,
+            rot: item.rot,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::GraphicFrameTransform {
+    type Archived = ArchivedGraphicFrameTransformMirror;
+    type Resolver = GraphicFrameTransformMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        GraphicFrameTransformMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::GraphicFrameTransform
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        GraphicFrameTransformMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::GraphicFrameTransform, __D>
+    for ArchivedGraphicFrameTransformMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::GraphicFrameTransform, __D::Error> {
+        GraphicFrameTransformMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<GroupShapeMirror> for super::GroupShape {
+    fn from(item: GroupShapeMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            non_visual_group_shape_properties: item.non_visual_group_shape_properties,
+            properties: item.properties,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::GroupShape {
+    type Archived = ArchivedGroupShapeMirror;
+    type Resolver = GroupShapeMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        GroupShapeMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::GroupShape
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        GroupShapeMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::GroupShape, __D> for ArchivedGroupShapeMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::GroupShape, __D::Error> {
+        GroupShapeMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<GroupShapePropertiesMirror> for super::GroupShapeProperties {
+    fn from(item: GroupShapePropertiesMirror) -> Self {
+        Self {
+            bw_mode: item.bw_mode,
+            effect_properties_content: item.effect_properties_content,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            fill_properties_content: item.fill_properties_content,
+            scene3d: item.scene3d,
+            unknown: item.unknown,
+            xfrm_group_transform2d: item.xfrm_group_transform2d,
+        }
+    }
+}
+
+impl rkyv::Archive for super::GroupShapeProperties {
+    type Archived = ArchivedGroupShapePropertiesMirror;
+    type Resolver = GroupShapePropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        GroupShapePropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::GroupShapeProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        GroupShapePropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::GroupShapeProperties, __D> for ArchivedGroupShapePropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::GroupShapeProperties, __D::Error> {
+        GroupShapePropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<NonVisualConnectionShapeDrawingPropertiesMirror>
+    for super::NonVisualConnectionShapeDrawingProperties
+{
+    fn from(item: NonVisualConnectionShapeDrawingPropertiesMirror) -> Self {
+        Self {
+            connection_end: item.connection_end,
+            connection_shape_locks: item.connection_shape_locks,
+            connection_start: item.connection_start,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::NonVisualConnectionShapeDrawingProperties {
+    type Archived = ArchivedNonVisualConnectionShapeDrawingPropertiesMirror;
+    type Resolver = NonVisualConnectionShapeDrawingPropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        NonVisualConnectionShapeDrawingPropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::NonVisualConnectionShapeDrawingProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        NonVisualConnectionShapeDrawingPropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::NonVisualConnectionShapeDrawingProperties, __D>
+    for ArchivedNonVisualConnectionShapeDrawingPropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::NonVisualConnectionShapeDrawingProperties, __D::Error> {
+        NonVisualConnectionShapeDrawingPropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<NonVisualDrawingPropertiesMirror> for super::NonVisualDrawingProperties {
+    fn from(item: NonVisualDrawingPropertiesMirror) -> Self {
+        Self {
+            click_hyperlink: item.click_hyperlink,
+            descr: item.descr,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            hidden: item.hidden,
+            hyperlink_for_hover: item.hyperlink_for_hover,
+            id: item.id,
+            name: item.name,
+            title: item.title,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::NonVisualDrawingProperties {
+    type Archived = ArchivedNonVisualDrawingPropertiesMirror;
+    type Resolver = NonVisualDrawingPropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        NonVisualDrawingPropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::NonVisualDrawingProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        NonVisualDrawingPropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::NonVisualDrawingProperties, __D>
+    for ArchivedNonVisualDrawingPropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::NonVisualDrawingProperties, __D::Error> {
+        NonVisualDrawingPropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<NonVisualGraphicFrameDrawingPropertiesMirror>
+    for super::NonVisualGraphicFrameDrawingProperties
+{
+    fn from(item: NonVisualGraphicFrameDrawingPropertiesMirror) -> Self {
+        Self {
+            extension_list: item.extension_list,
+            extra: item.extra,
+            graphic_frame_locks: item.graphic_frame_locks,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::NonVisualGraphicFrameDrawingProperties {
+    type Archived = ArchivedNonVisualGraphicFrameDrawingPropertiesMirror;
+    type Resolver = NonVisualGraphicFrameDrawingPropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        NonVisualGraphicFrameDrawingPropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::NonVisualGraphicFrameDrawingProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        NonVisualGraphicFrameDrawingPropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::NonVisualGraphicFrameDrawingProperties, __D>
+    for ArchivedNonVisualGraphicFrameDrawingPropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::NonVisualGraphicFrameDrawingProperties, __D::Error> {
+        NonVisualGraphicFrameDrawingPropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<NonVisualGraphicFramePropertiesMirror> for super::NonVisualGraphicFrameProperties {
+    fn from(item: NonVisualGraphicFramePropertiesMirror) -> Self {
+        Self {
+            extra: item.extra,
+            non_visual_drawing_properties: item.non_visual_drawing_properties,
+            non_visual_graphic_frame_drawing_properties: item
+                .non_visual_graphic_frame_drawing_properties,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::NonVisualGraphicFrameProperties {
+    type Archived = ArchivedNonVisualGraphicFramePropertiesMirror;
+    type Resolver = NonVisualGraphicFramePropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        NonVisualGraphicFramePropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::NonVisualGraphicFrameProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        NonVisualGraphicFramePropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::NonVisualGraphicFrameProperties, __D>
+    for ArchivedNonVisualGraphicFramePropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::NonVisualGraphicFrameProperties, __D::Error> {
+        NonVisualGraphicFramePropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<NonVisualGroupShapeDrawingPropertiesMirror>
+    for super::NonVisualGroupShapeDrawingProperties
+{
+    fn from(item: NonVisualGroupShapeDrawingPropertiesMirror) -> Self {
+        Self {
+            extension_list: item.extension_list,
+            extra: item.extra,
+            group_shape_locks: item.group_shape_locks,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::NonVisualGroupShapeDrawingProperties {
+    type Archived = ArchivedNonVisualGroupShapeDrawingPropertiesMirror;
+    type Resolver = NonVisualGroupShapeDrawingPropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        NonVisualGroupShapeDrawingPropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::NonVisualGroupShapeDrawingProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        NonVisualGroupShapeDrawingPropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::NonVisualGroupShapeDrawingProperties, __D>
+    for ArchivedNonVisualGroupShapeDrawingPropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::NonVisualGroupShapeDrawingProperties, __D::Error> {
+        NonVisualGroupShapeDrawingPropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<NonVisualGroupShapePropertiesMirror> for super::NonVisualGroupShapeProperties {
+    fn from(item: NonVisualGroupShapePropertiesMirror) -> Self {
+        Self {
+            extra: item.extra,
+            non_visual_drawing_properties: item.non_visual_drawing_properties,
+            non_visual_group_shape_drawing_properties: item
+                .non_visual_group_shape_drawing_properties,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::NonVisualGroupShapeProperties {
+    type Archived = ArchivedNonVisualGroupShapePropertiesMirror;
+    type Resolver = NonVisualGroupShapePropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        NonVisualGroupShapePropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::NonVisualGroupShapeProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        NonVisualGroupShapePropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::NonVisualGroupShapeProperties, __D>
+    for ArchivedNonVisualGroupShapePropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::NonVisualGroupShapeProperties, __D::Error> {
+        NonVisualGroupShapePropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<NonVisualPictureDrawingPropertiesMirror> for super::NonVisualPictureDrawingProperties {
+    fn from(item: NonVisualPictureDrawingPropertiesMirror) -> Self {
+        Self {
+            extension_list: item.extension_list,
+            extra: item.extra,
+            picture_locks: item.picture_locks,
+            prefer_relative_resize: item.prefer_relative_resize,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::NonVisualPictureDrawingProperties {
+    type Archived = ArchivedNonVisualPictureDrawingPropertiesMirror;
+    type Resolver = NonVisualPictureDrawingPropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        NonVisualPictureDrawingPropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::NonVisualPictureDrawingProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        NonVisualPictureDrawingPropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::NonVisualPictureDrawingProperties, __D>
+    for ArchivedNonVisualPictureDrawingPropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::NonVisualPictureDrawingProperties, __D::Error> {
+        NonVisualPictureDrawingPropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<NonVisualPicturePropertiesMirror> for super::NonVisualPictureProperties {
+    fn from(item: NonVisualPicturePropertiesMirror) -> Self {
+        Self {
+            extra: item.extra,
+            non_visual_drawing_properties: item.non_visual_drawing_properties,
+            non_visual_picture_drawing_properties: item.non_visual_picture_drawing_properties,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::NonVisualPictureProperties {
+    type Archived = ArchivedNonVisualPicturePropertiesMirror;
+    type Resolver = NonVisualPicturePropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        NonVisualPicturePropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::NonVisualPictureProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        NonVisualPicturePropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::NonVisualPictureProperties, __D>
+    for ArchivedNonVisualPicturePropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::NonVisualPictureProperties, __D::Error> {
+        NonVisualPicturePropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<NonVisualShapeDrawingPropertiesMirror> for super::NonVisualShapeDrawingProperties {
+    fn from(item: NonVisualShapeDrawingPropertiesMirror) -> Self {
+        Self {
+            extension_list: item.extension_list,
+            extra: item.extra,
+            shape_locks: item.shape_locks,
+            tx_box: item.tx_box,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::NonVisualShapeDrawingProperties {
+    type Archived = ArchivedNonVisualShapeDrawingPropertiesMirror;
+    type Resolver = NonVisualShapeDrawingPropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        NonVisualShapeDrawingPropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::NonVisualShapeDrawingProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        NonVisualShapeDrawingPropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::NonVisualShapeDrawingProperties, __D>
+    for ArchivedNonVisualShapeDrawingPropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::NonVisualShapeDrawingProperties, __D::Error> {
+        NonVisualShapeDrawingPropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<NonVisualShapePropertiesMirror> for super::NonVisualShapeProperties {
+    fn from(item: NonVisualShapePropertiesMirror) -> Self {
+        Self {
+            extra: item.extra,
+            non_visual_drawing_properties: item.non_visual_drawing_properties,
+            non_visual_shape_drawing_properties: item.non_visual_shape_drawing_properties,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::NonVisualShapeProperties {
+    type Archived = ArchivedNonVisualShapePropertiesMirror;
+    type Resolver = NonVisualShapePropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        NonVisualShapePropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::NonVisualShapeProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        NonVisualShapePropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::NonVisualShapeProperties, __D>
+    for ArchivedNonVisualShapePropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::NonVisualShapeProperties, __D::Error> {
+        NonVisualShapePropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<PictureMirror> for super::Picture {
+    fn from(item: PictureMirror) -> Self {
+        Self {
+            extra: item.extra,
+            f_published: item.f_published,
+            fill: item.fill,
+            r#macro: item.r#macro,
+            non_visual_picture_properties: item.non_visual_picture_properties,
+            shape_properties: item.shape_properties,
+            shape_style: item.shape_style,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Picture {
+    type Archived = ArchivedPictureMirror;
+    type Resolver = PictureMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        PictureMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Picture
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        PictureMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Picture, __D> for ArchivedPictureMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Picture, __D::Error> {
+        PictureMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<PictureFillMirror> for super::PictureFill {
+    fn from(item: PictureFillMirror) -> Self {
+        Self {
+            blip: item.blip,
+            content: item.content,
+            dpi: item.dpi,
+            extra: item.extra,
+            rot_with_shape: item.rot_with_shape,
+            source_rectangle: item.source_rectangle,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::PictureFill {
+    type Archived = ArchivedPictureFillMirror;
+    type Resolver = PictureFillMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        PictureFillMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::PictureFill
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        PictureFillMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::PictureFill, __D> for ArchivedPictureFillMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::PictureFill, __D::Error> {
+        PictureFillMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<RelativeAnchorShapeSizeMirror> for super::RelativeAnchorShapeSize {
+    fn from(item: RelativeAnchorShapeSizeMirror) -> Self {
+        Self {
+            content: item.content,
+            ending_anchor_point: item.ending_anchor_point,
+            extra: item.extra,
+            starting_anchor_point: item.starting_anchor_point,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::RelativeAnchorShapeSize {
+    type Archived = ArchivedRelativeAnchorShapeSizeMirror;
+    type Resolver = RelativeAnchorShapeSizeMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        RelativeAnchorShapeSizeMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::RelativeAnchorShapeSize
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        RelativeAnchorShapeSizeMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::RelativeAnchorShapeSize, __D>
+    for ArchivedRelativeAnchorShapeSizeMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::RelativeAnchorShapeSize, __D::Error> {
+        RelativeAnchorShapeSizeMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<RelativeXCoordinateMirror> for super::RelativeXCoordinate {
+    fn from(item: RelativeXCoordinateMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+            value: item.value,
+        }
+    }
+}
+
+impl rkyv::Archive for super::RelativeXCoordinate {
+    type Archived = ArchivedRelativeXCoordinateMirror;
+    type Resolver = RelativeXCoordinateMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        RelativeXCoordinateMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::RelativeXCoordinate
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        RelativeXCoordinateMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::RelativeXCoordinate, __D> for ArchivedRelativeXCoordinateMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::RelativeXCoordinate, __D::Error> {
+        RelativeXCoordinateMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<RelativeYCoordinateMirror> for super::RelativeYCoordinate {
+    fn from(item: RelativeYCoordinateMirror) -> Self {
+        Self {
+            extra: item.extra,
+            unknown: item.unknown,
+            value: item.value,
+        }
+    }
+}
+
+impl rkyv::Archive for super::RelativeYCoordinate {
+    type Archived = ArchivedRelativeYCoordinateMirror;
+    type Resolver = RelativeYCoordinateMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        RelativeYCoordinateMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::RelativeYCoordinate
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        RelativeYCoordinateMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::RelativeYCoordinate, __D> for ArchivedRelativeYCoordinateMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::RelativeYCoordinate, __D::Error> {
+        RelativeYCoordinateMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapeMirror> for super::Shape {
+    fn from(item: ShapeMirror) -> Self {
+        Self {
+            extra: item.extra,
+            f_locks_text: item.f_locks_text,
+            f_published: item.f_published,
+            r#macro: item.r#macro,
+            non_visual_shape_properties: item.non_visual_shape_properties,
+            properties: item.properties,
+            style: item.style,
+            text_body: item.text_body,
+            textlink: item.textlink,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Shape {
+    type Archived = ArchivedShapeMirror;
+    type Resolver = ShapeMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapeMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Shape
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapeMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Shape, __D> for ArchivedShapeMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Shape, __D::Error> {
+        ShapeMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapeExtentMirror> for super::ShapeExtent {
+    fn from(item: ShapeExtentMirror) -> Self {
+        Self {
+            cx: item.cx,
+            cy: item.cy,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShapeExtent {
+    type Archived = ArchivedShapeExtentMirror;
+    type Resolver = ShapeExtentMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapeExtentMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShapeExtent
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapeExtentMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShapeExtent, __D> for ArchivedShapeExtentMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShapeExtent, __D::Error> {
+        ShapeExtentMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapePropertiesMirror> for super::ShapeProperties {
+    fn from(item: ShapePropertiesMirror) -> Self {
+        Self {
+            apply_3d: item.apply_3d,
+            bw_mode: item.bw_mode,
+            effect_properties_content: item.effect_properties_content,
+            extension_list: item.extension_list,
+            extra: item.extra,
+            fill_properties_content: item.fill_properties_content,
+            geometry_content: item.geometry_content,
+            outline: item.outline,
+            scene3d: item.scene3d,
+            unknown: item.unknown,
+            xfrm_transform2d: item.xfrm_transform2d,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShapeProperties {
+    type Archived = ArchivedShapePropertiesMirror;
+    type Resolver = ShapePropertiesMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapePropertiesMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShapeProperties
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapePropertiesMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShapeProperties, __D> for ArchivedShapePropertiesMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShapeProperties, __D::Error> {
+        ShapePropertiesMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapeStyleMirror> for super::ShapeStyle {
+    fn from(item: ShapeStyleMirror) -> Self {
+        Self {
+            effect_reference: item.effect_reference,
+            extra: item.extra,
+            fill_reference: item.fill_reference,
+            font_reference: item.font_reference,
+            line_reference: item.line_reference,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShapeStyle {
+    type Archived = ArchivedShapeStyleMirror;
+    type Resolver = ShapeStyleMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapeStyleMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShapeStyle
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapeStyleMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShapeStyle, __D> for ArchivedShapeStyleMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShapeStyle, __D::Error> {
+        ShapeStyleMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ShapeTextBodyMirror> for super::ShapeTextBody {
+    fn from(item: ShapeTextBodyMirror) -> Self {
+        Self {
+            extra: item.extra,
+            properties: item.properties,
+            text_list_styles: item.text_list_styles,
+            text_paragraphs: item.text_paragraphs,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ShapeTextBody {
+    type Archived = ArchivedShapeTextBodyMirror;
+    type Resolver = ShapeTextBodyMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ShapeTextBodyMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ShapeTextBody
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ShapeTextBodyMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ShapeTextBody, __D> for ArchivedShapeTextBodyMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ShapeTextBody, __D::Error> {
+        ShapeTextBodyMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<StartingAnchorPointMirror> for super::StartingAnchorPoint {
+    fn from(item: StartingAnchorPointMirror) -> Self {
+        Self {
+            extra: item.extra,
+            relative_x_coordinate: item.relative_x_coordinate,
+            relative_y_coordinate: item.relative_y_coordinate,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::StartingAnchorPoint {
+    type Archived = ArchivedStartingAnchorPointMirror;
+    type Resolver = StartingAnchorPointMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        StartingAnchorPointMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::StartingAnchorPoint
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        StartingAnchorPointMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::StartingAnchorPoint, __D> for ArchivedStartingAnchorPointMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(
+        &self,
+        deserializer: &mut __D,
+    ) -> Result<super::StartingAnchorPoint, __D::Error> {
+        StartingAnchorPointMirror::deserialize_with(self, deserializer)
+    }
 }
 
 impl From<ObjectContent> for super::ObjectContent {
@@ -271,22 +2012,22 @@ impl rkyv::Archive for super::ObjectContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::ObjectContent
+impl<__S> rkyv::Serialize<__S> for super::ObjectContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         ObjectContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::ObjectContent, D> for ArchivedObjectContent
+impl<__D> rkyv::Deserialize<super::ObjectContent, __D> for ArchivedObjectContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::ObjectContent, D::Error> {
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ObjectContent, __D::Error> {
         ObjectContent::deserialize_with(self, deserializer)
     }
 }
@@ -310,22 +2051,22 @@ impl rkyv::Archive for super::UserShapesContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::UserShapesContent
+impl<__S> rkyv::Serialize<__S> for super::UserShapesContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         UserShapesContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::UserShapesContent, D> for ArchivedUserShapesContent
+impl<__D> rkyv::Deserialize<super::UserShapesContent, __D> for ArchivedUserShapesContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
-    fn deserialize(&self, deserializer: &mut D) -> Result<super::UserShapesContent, D::Error> {
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::UserShapesContent, __D::Error> {
         UserShapesContent::deserialize_with(self, deserializer)
     }
 }

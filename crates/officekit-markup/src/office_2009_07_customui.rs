@@ -223,19 +223,12 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::values::ValueError;
-#[cfg(feature = "binary-format")]
-use rkyv::de::Pooling;
-#[cfg(feature = "binary-format")]
-use rkyv::rancor::Source;
-#[cfg(feature = "binary-format")]
-use rkyv::ser::{Allocator, Sharing, Writer};
-#[cfg(feature = "binary-format")]
-use rkyv::validation::{ArchiveContext, SharedContext};
 use std::io;
 
 const NS_MSO14: Option<NamespaceId> = Some(58);
@@ -2420,16 +2413,13 @@ pub static RIBBON_CONTENT_TAGS: officekit_markup_base::Accept = officekit_markup
 
 /// The `mso14:backstage` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_Backstage`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Backstage {
+pub struct BackstageWith<X: NodeExtra> {
     /// The children that are an item of `BackstageContent`, in order.
-    pub content: Vec<BackstageContent>,
+    pub content: Vec<BackstageContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiBackstage,
     /// The attribute `onHide`, when the element has it.
     pub on_hide: Option<String>,
     /// The attribute `onShow`, when the element has it.
@@ -2438,94 +2428,113 @@ pub struct Backstage {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:backstage` element of the tree a read gives: [`BackstageWith`] holding nothing in
+/// `extra`.
+pub type Backstage = BackstageWith<()>;
+
+impl Eq for BackstageWith<()> {}
+
 /// One child element of a choice: choice in `CT_Backstage`.
 ///
 /// The schema types that hold it: `CT_Backstage`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum BackstageContent {
+pub enum BackstageContentWith<X: NodeExtra> {
     /// The element `mso14:button`, a `ButtonBackstageFastCommandButton`.
-    ButtonBackstageFastCommandButton(ButtonBackstageFastCommandButton),
+    ButtonBackstageFastCommandButton(ButtonBackstageFastCommandButtonWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `mso14:tab`, a `TabBackstageTab`.
-    TabBackstageTab(TabBackstageTab),
+    TabBackstageTab(TabBackstageTabWith<X>),
 }
+
+/// [`BackstageContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type BackstageContent = BackstageContentWith<()>;
+
+impl Eq for BackstageContentWith<()> {}
 
 /// One child element of a choice: choice in `CT_BackstageGroups`.
 ///
 /// The schema types that hold it: `CT_BackstageGroups`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum BackstageGroupsContent {
+pub enum BackstageGroupsContentWith<X: NodeExtra> {
     /// The element `mso14:group`, a `GroupBackstageGroup`.
-    GroupBackstageGroup(GroupBackstageGroup),
+    GroupBackstageGroup(GroupBackstageGroupWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `mso14:taskFormGroup`, a `TaskFormGroup`.
-    TaskFormGroup(TaskFormGroup),
+    TaskFormGroup(TaskFormGroupWith<X>),
     /// The element `mso14:taskGroup`, a `TaskGroup`.
-    TaskGroup(TaskGroup),
+    TaskGroup(TaskGroupWith<X>),
 }
+
+/// [`BackstageGroupsContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type BackstageGroupsContent = BackstageGroupsContentWith<()>;
+
+impl Eq for BackstageGroupsContentWith<()> {}
 
 /// One child element of a choice: choice in `CT_BackstageMenuGroup`.
 ///
 /// The schema types that hold it: `CT_BackstageMenuGroup`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum BackstageMenuGroupContent {
+pub enum BackstageMenuGroupContentWith<X: NodeExtra> {
     /// The element `mso14:button`, a `ButtonBackstageMenuButton`.
-    ButtonBackstageMenuButton(ButtonBackstageMenuButton),
+    ButtonBackstageMenuButton(ButtonBackstageMenuButtonWith<X>),
     /// The element `mso14:checkBox`, a `CheckBoxBackstageMenuCheckBox`.
-    CheckBoxBackstageMenuCheckBox(CheckBoxBackstageMenuCheckBox),
+    CheckBoxBackstageMenuCheckBox(CheckBoxBackstageMenuCheckBoxWith<X>),
     /// The element `mso14:menu`, a `MenuBackstageSubMenu`.
-    MenuBackstageSubMenu(MenuBackstageSubMenu),
+    MenuBackstageSubMenu(MenuBackstageSubMenuWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `mso14:toggleButton`, a `ToggleButtonBackstageMenuToggleButton`.
-    ToggleButtonBackstageMenuToggleButton(ToggleButtonBackstageMenuToggleButton),
+    ToggleButtonBackstageMenuToggleButton(ToggleButtonBackstageMenuToggleButtonWith<X>),
 }
+
+/// [`BackstageMenuGroupContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type BackstageMenuGroupContent = BackstageMenuGroupContentWith<()>;
+
+impl Eq for BackstageMenuGroupContentWith<()> {}
 
 /// The `mso14:bottomItems` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_GroupControls`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BottomItems {
+pub struct BottomItemsWith<X: NodeExtra> {
     /// The children that are an item of `GroupControlsContent`, in order.
-    pub content: Vec<GroupControlsContent>,
+    pub content: Vec<GroupControlsContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiBottomItems,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:bottomItems` element of the tree a read gives: [`BottomItemsWith`] holding nothing in
+/// `extra`.
+pub type BottomItems = BottomItemsWith<()>;
+
+impl Eq for BottomItemsWith<()> {}
+
 /// The `mso14:box` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Box`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BoxBox {
+pub struct BoxBoxWith<X: NodeExtra> {
     /// The attribute `boxStyle`, when the element has it.
     pub box_style: Option<BoxStyle>,
     /// The children that are an item of `BoxContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<BoxContent>,
+    pub content: Vec<BoxContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiBoxBox,
     /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
     /// The attribute `id`, when the element has it.
@@ -2548,45 +2557,55 @@ pub struct BoxBox {
     pub visible: Option<String>,
 }
 
+/// The `mso14:box` element of the tree a read gives: [`BoxBoxWith`] holding nothing in `extra`.
+pub type BoxBox = BoxBoxWith<()>;
+
+impl Eq for BoxBoxWith<()> {}
+
 /// One child element of a choice: choice in `CT_Box`.
 ///
 /// The schema types that hold it: `CT_Box`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum BoxContent {
+pub enum BoxContentWith<X: NodeExtra> {
     /// The element `mso14:box`, a `BoxBox`.
-    BoxBox(BoxBox),
+    BoxBox(BoxBoxWith<X>),
     /// The element `mso14:button`, a `ButtonButton`.
-    ButtonButton(ButtonButton),
+    ButtonButton(ButtonButtonWith<X>),
     /// The element `mso14:buttonGroup`, a `ButtonGroup`.
-    ButtonGroup(ButtonGroup),
+    ButtonGroup(ButtonGroupWith<X>),
     /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
-    CheckBoxCheckBox(CheckBoxCheckBox),
+    CheckBoxCheckBox(CheckBoxCheckBoxWith<X>),
     /// The element `mso14:comboBox`, a `ComboBoxComboBox`.
-    ComboBoxComboBox(ComboBoxComboBox),
+    ComboBoxComboBox(ComboBoxComboBoxWith<X>),
     /// The element `mso14:control`, a `ControlControlClone`.
-    ControlControlClone(ControlControlClone),
+    ControlControlClone(ControlControlCloneWith<X>),
     /// The element `mso14:dropDown`, a `DropDownDropDownRegular`.
-    DropDownDropDownRegular(DropDownDropDownRegular),
+    DropDownDropDownRegular(DropDownDropDownRegularWith<X>),
     /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenu`.
-    DynamicMenuDynamicMenu(DynamicMenuDynamicMenu),
+    DynamicMenuDynamicMenu(DynamicMenuDynamicMenuWith<X>),
     /// The element `mso14:editBox`, a `EditBoxEditBox`.
-    EditBoxEditBox(EditBoxEditBox),
+    EditBoxEditBox(EditBoxEditBoxWith<X>),
     /// The element `mso14:gallery`, a `GalleryGallery`.
-    GalleryGallery(Box<GalleryGallery>),
+    GalleryGallery(Box<GalleryGalleryWith<X>>),
     /// The element `mso14:labelControl`, a `LabelControlLabelControl`.
-    LabelControlLabelControl(LabelControlLabelControl),
+    LabelControlLabelControl(LabelControlLabelControlWith<X>),
     /// The element `mso14:menu`, a `MenuMenu`.
-    MenuMenu(MenuMenu),
+    MenuMenu(MenuMenuWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `mso14:splitButton`, a `SplitButtonSplitButton`.
-    SplitButtonSplitButton(SplitButtonSplitButton),
+    SplitButtonSplitButton(SplitButtonSplitButtonWith<X>),
     /// The element `mso14:toggleButton`, a `ToggleButtonToggleButton`.
-    ToggleButtonToggleButton(ToggleButtonToggleButton),
+    ToggleButtonToggleButton(ToggleButtonToggleButtonWith<X>),
 }
+
+/// [`BoxContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type BoxContent = BoxContentWith<()>;
+
+impl Eq for BoxContentWith<()> {}
 
 /// The simple type `ST_BoxStyle`, kept as the text the file carried.
 ///
@@ -2613,16 +2632,13 @@ pub enum BoxStyleMember {
 
 /// The `mso14:button` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BackstageFastCommandButton`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ButtonBackstageFastCommandButton {
+pub struct ButtonBackstageFastCommandButtonWith<X: NodeExtra> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiButtonBackstageFastCommandButton,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -2667,20 +2683,23 @@ pub struct ButtonBackstageFastCommandButton {
     pub visible: Option<String>,
 }
 
+/// The `mso14:button` element of the tree a read gives: [`ButtonBackstageFastCommandButtonWith`]
+/// holding nothing in `extra`.
+pub type ButtonBackstageFastCommandButton = ButtonBackstageFastCommandButtonWith<()>;
+
+impl Eq for ButtonBackstageFastCommandButtonWith<()> {}
+
 /// The `mso14:button` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BackstageGroupButton`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ButtonBackstageGroupButton {
+pub struct ButtonBackstageGroupButtonWith<X: NodeExtra> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiButtonBackstageGroupButton,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -2725,20 +2744,23 @@ pub struct ButtonBackstageGroupButton {
     pub visible: Option<String>,
 }
 
+/// The `mso14:button` element of the tree a read gives: [`ButtonBackstageGroupButtonWith`] holding
+/// nothing in `extra`.
+pub type ButtonBackstageGroupButton = ButtonBackstageGroupButtonWith<()>;
+
+impl Eq for ButtonBackstageGroupButtonWith<()> {}
+
 /// The `mso14:button` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BackstageMenuButton`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ButtonBackstageMenuButton {
+pub struct ButtonBackstageMenuButtonWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiButtonBackstageMenuButton,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -2775,18 +2797,21 @@ pub struct ButtonBackstageMenuButton {
     pub visible: Option<String>,
 }
 
+/// The `mso14:button` element of the tree a read gives: [`ButtonBackstageMenuButtonWith`] holding
+/// nothing in `extra`.
+pub type ButtonBackstageMenuButton = ButtonBackstageMenuButtonWith<()>;
+
+impl Eq for ButtonBackstageMenuButtonWith<()> {}
+
 /// The `mso14:button` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BackstageRegularButton`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ButtonBackstageRegularButton {
+pub struct ButtonBackstageRegularButtonWith<X: NodeExtra> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiButtonBackstageRegularButton,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -2829,20 +2854,23 @@ pub struct ButtonBackstageRegularButton {
     pub visible: Option<String>,
 }
 
+/// The `mso14:button` element of the tree a read gives: [`ButtonBackstageRegularButtonWith`]
+/// holding nothing in `extra`.
+pub type ButtonBackstageRegularButton = ButtonBackstageRegularButtonWith<()>;
+
+impl Eq for ButtonBackstageRegularButtonWith<()> {}
+
 /// The `mso14:button` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Button`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ButtonButton {
+pub struct ButtonButtonWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiButtonButton,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -2907,20 +2935,23 @@ pub struct ButtonButton {
     pub visible: Option<String>,
 }
 
+/// The `mso14:button` element of the tree a read gives: [`ButtonButtonWith`] holding nothing in
+/// `extra`.
+pub type ButtonButton = ButtonButtonWith<()>;
+
+impl Eq for ButtonButtonWith<()> {}
+
 /// The `mso14:button` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ButtonRegular`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ButtonButtonRegular {
+pub struct ButtonButtonRegularWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiButtonButtonRegular,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -2981,18 +3012,21 @@ pub struct ButtonButtonRegular {
     pub visible: Option<String>,
 }
 
+/// The `mso14:button` element of the tree a read gives: [`ButtonButtonRegularWith`] holding nothing
+/// in `extra`.
+pub type ButtonButtonRegular = ButtonButtonRegularWith<()>;
+
+impl Eq for ButtonButtonRegularWith<()> {}
+
 /// The `mso14:buttonGroup` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ButtonGroup`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ButtonGroup {
+pub struct ButtonGroupWith<X: NodeExtra> {
     /// The children that are an item of `ButtonGroupContent`, in order.
-    pub content: Vec<ButtonGroupContent>,
+    pub content: Vec<ButtonGroupContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiButtonGroup,
     /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
     /// The attribute `id`, when the element has it.
@@ -3014,49 +3048,57 @@ pub struct ButtonGroup {
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
+
+/// The `mso14:buttonGroup` element of the tree a read gives: [`ButtonGroupWith`] holding nothing in
+/// `extra`.
+pub type ButtonGroup = ButtonGroupWith<()>;
+
+impl Eq for ButtonGroupWith<()> {}
 
 /// One child element of a choice: choice in `CT_ButtonGroup`.
 ///
 /// The schema types that hold it: `CT_ButtonGroup`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum ButtonGroupContent {
+pub enum ButtonGroupContentWith<X: NodeExtra> {
     /// The element `mso14:button`, a `ButtonButtonRegular`.
-    ButtonButtonRegular(ButtonButtonRegular),
+    ButtonButtonRegular(ButtonButtonRegularWith<X>),
     /// The element `mso14:control`, a `ControlControlCloneRegular`.
-    ControlControlCloneRegular(ControlControlCloneRegular),
+    ControlControlCloneRegular(ControlControlCloneRegularWith<X>),
     /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenuRegular`.
-    DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegular),
+    DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegularWith<X>),
     /// The element `mso14:gallery`, a `GalleryGalleryRegular`.
-    GalleryGalleryRegular(Box<GalleryGalleryRegular>),
+    GalleryGalleryRegular(Box<GalleryGalleryRegularWith<X>>),
     /// The element `mso14:menu`, a `MenuMenuRegular`.
-    MenuMenuRegular(MenuMenuRegular),
+    MenuMenuRegular(MenuMenuRegularWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `mso14:separator`, a `Separator`.
-    Separator(Separator),
+    Separator(SeparatorWith<X>),
     /// The element `mso14:splitButton`, a `SplitButtonSplitButtonRegular`.
-    SplitButtonSplitButtonRegular(SplitButtonSplitButtonRegular),
+    SplitButtonSplitButtonRegular(SplitButtonSplitButtonRegularWith<X>),
     /// The element `mso14:toggleButton`, a `ToggleButtonToggleButtonRegular`.
-    ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegular),
+    ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegularWith<X>),
 }
+
+/// [`ButtonGroupContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type ButtonGroupContent = ButtonGroupContentWith<()>;
+
+impl Eq for ButtonGroupContentWith<()> {}
 
 /// The `mso14:button` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_VisibleButton`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ButtonVisibleButton {
+pub struct ButtonVisibleButtonWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiButtonVisibleButton,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -3113,16 +3155,19 @@ pub struct ButtonVisibleButton {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:button` element of the tree a read gives: [`ButtonVisibleButtonWith`] holding nothing
+/// in `extra`.
+pub type ButtonVisibleButton = ButtonVisibleButtonWith<()>;
+
+impl Eq for ButtonVisibleButtonWith<()> {}
+
 /// The `mso14:category` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_TaskFormGroupCategory`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CategoryTaskFormGroupCategory {
+pub struct CategoryTaskFormGroupCategoryWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiCategoryTaskFormGroupCategory,
     /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
     /// The attribute `getVisible`, when the element has it.
@@ -3146,23 +3191,26 @@ pub struct CategoryTaskFormGroupCategory {
     /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
     /// The children that are `TaskTaskFormGroupTask`, in order.
-    pub task_task_form_group_task: Vec<TaskTaskFormGroupTask>,
+    pub task_task_form_group_task: Vec<TaskTaskFormGroupTaskWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
+/// The `mso14:category` element of the tree a read gives: [`CategoryTaskFormGroupCategoryWith`]
+/// holding nothing in `extra`.
+pub type CategoryTaskFormGroupCategory = CategoryTaskFormGroupCategoryWith<()>;
+
+impl Eq for CategoryTaskFormGroupCategoryWith<()> {}
+
 /// The `mso14:category` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_TaskGroupCategory`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CategoryTaskGroupCategory {
+pub struct CategoryTaskGroupCategoryWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiCategoryTaskGroupCategory,
     /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
     /// The attribute `getVisible`, when the element has it.
@@ -3186,29 +3234,32 @@ pub struct CategoryTaskGroupCategory {
     /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
     /// The children that are `TaskTaskGroupTask`, in order.
-    pub task_task_group_task: Vec<TaskTaskGroupTask>,
+    pub task_task_group_task: Vec<TaskTaskGroupTaskWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
+/// The `mso14:category` element of the tree a read gives: [`CategoryTaskGroupCategoryWith`] holding
+/// nothing in `extra`.
+pub type CategoryTaskGroupCategory = CategoryTaskGroupCategoryWith<()>;
+
+impl Eq for CategoryTaskGroupCategoryWith<()> {}
+
 /// The `mso14:checkBox` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_BackstageCheckBox`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CheckBoxBackstageCheckBox {
+pub struct CheckBoxBackstageCheckBoxWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiCheckBoxBackstageCheckBox,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -3247,20 +3298,23 @@ pub struct CheckBoxBackstageCheckBox {
     pub visible: Option<String>,
 }
 
+/// The `mso14:checkBox` element of the tree a read gives: [`CheckBoxBackstageCheckBoxWith`] holding
+/// nothing in `extra`.
+pub type CheckBoxBackstageCheckBox = CheckBoxBackstageCheckBoxWith<()>;
+
+impl Eq for CheckBoxBackstageCheckBoxWith<()> {}
+
 /// The `mso14:checkBox` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_BackstageMenuCheckBox`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CheckBoxBackstageMenuCheckBox {
+pub struct CheckBoxBackstageMenuCheckBoxWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiCheckBoxBackstageMenuCheckBox,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -3291,20 +3345,23 @@ pub struct CheckBoxBackstageMenuCheckBox {
     pub visible: Option<String>,
 }
 
+/// The `mso14:checkBox` element of the tree a read gives: [`CheckBoxBackstageMenuCheckBoxWith`]
+/// holding nothing in `extra`.
+pub type CheckBoxBackstageMenuCheckBox = CheckBoxBackstageMenuCheckBoxWith<()>;
+
+impl Eq for CheckBoxBackstageMenuCheckBoxWith<()> {}
+
 /// The `mso14:checkBox` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_CheckBox`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CheckBoxCheckBox {
+pub struct CheckBoxCheckBoxWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiCheckBoxCheckBox,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -3353,22 +3410,25 @@ pub struct CheckBoxCheckBox {
     pub visible: Option<String>,
 }
 
+/// The `mso14:checkBox` element of the tree a read gives: [`CheckBoxCheckBoxWith`] holding nothing
+/// in `extra`.
+pub type CheckBoxCheckBox = CheckBoxCheckBoxWith<()>;
+
+impl Eq for CheckBoxCheckBoxWith<()> {}
+
 /// The `mso14:comboBox` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_BackstageComboBox`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ComboBoxBackstageComboBox {
+pub struct ComboBoxBackstageComboBoxWith<X: NodeExtra> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiComboBoxBackstageComboBox,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getItemCount`, when the element has it.
@@ -3390,7 +3450,7 @@ pub struct ComboBoxBackstageComboBox {
     /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
     /// The children that are `ItemBackstageItem`, in order.
-    pub item_backstage_item: Vec<ItemBackstageItem>,
+    pub item_backstage_item: Vec<ItemBackstageItemWith<X>>,
     /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
     /// The attribute `label`, when the element has it.
@@ -3407,18 +3467,21 @@ pub struct ComboBoxBackstageComboBox {
     pub visible: Option<String>,
 }
 
+/// The `mso14:comboBox` element of the tree a read gives: [`ComboBoxBackstageComboBoxWith`] holding
+/// nothing in `extra`.
+pub type ComboBoxBackstageComboBox = ComboBoxBackstageComboBoxWith<()>;
+
+impl Eq for ComboBoxBackstageComboBoxWith<()> {}
+
 /// The `mso14:comboBox` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ComboBox`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ComboBoxComboBox {
+pub struct ComboBoxComboBoxWith<X: NodeExtra> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiComboBoxComboBox,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -3472,7 +3535,7 @@ pub struct ComboBoxComboBox {
     /// The attribute `invalidateContentOnDrop`, when the element has it.
     pub invalidate_content_on_drop: Option<String>,
     /// The children that are `ItemItem`, in order.
-    pub item_item: Vec<ItemItem>,
+    pub item_item: Vec<ItemItemWith<X>>,
     /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
     /// The attribute `label`, when the element has it.
@@ -3501,18 +3564,21 @@ pub struct ComboBoxComboBox {
     pub visible: Option<String>,
 }
 
+/// The `mso14:comboBox` element of the tree a read gives: [`ComboBoxComboBoxWith`] holding nothing
+/// in `extra`.
+pub type ComboBoxComboBox = ComboBoxComboBoxWith<()>;
+
+impl Eq for ComboBoxComboBoxWith<()> {}
+
 /// The `mso14:command` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Command`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Command {
+pub struct CommandWith<X: NodeExtra> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiCommand,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `idMso`, when the element has it.
@@ -3523,21 +3589,30 @@ pub struct Command {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:command` element of the tree a read gives: [`CommandWith`] holding nothing in
+/// `extra`.
+pub type Command = CommandWith<()>;
+
+impl Eq for CommandWith<()> {}
+
 /// The `mso14:commands` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_Commands`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Commands {
+pub struct CommandsWith<X: NodeExtra> {
     /// The children that are `Command`, in order.
-    pub command: Vec<Command>,
+    pub command: Vec<CommandWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiCommands,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `mso14:commands` element of the tree a read gives: [`CommandsWith`] holding nothing in
+/// `extra`.
+pub type Commands = CommandsWith<()>;
+
+impl Eq for CommandsWith<()> {}
 
 /// The hooks of a context for the `mso14` namespace.
 ///
@@ -5840,98 +5915,109 @@ pub trait Context: crate::Context {
 
 /// The `mso14:contextMenu` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ContextMenu`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ContextMenu {
+pub struct ContextMenuWith<X: NodeExtra> {
     /// The children that are an item of `ContextMenuContent`, in order.
-    pub content: Vec<ContextMenuContent>,
+    pub content: Vec<ContextMenuContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiContextMenu,
     /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:contextMenu` element of the tree a read gives: [`ContextMenuWith`] holding nothing in
+/// `extra`.
+pub type ContextMenu = ContextMenuWith<()>;
+
+impl Eq for ContextMenuWith<()> {}
+
 /// One child element of a choice: choice in `CT_ContextMenu`.
 ///
 /// The schema types that hold it: `CT_ContextMenu`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum ContextMenuContent {
+pub enum ContextMenuContentWith<X: NodeExtra> {
     /// The element `mso14:button`, a `ButtonButtonRegular`.
-    ButtonButtonRegular(ButtonButtonRegular),
+    ButtonButtonRegular(ButtonButtonRegularWith<X>),
     /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
-    CheckBoxCheckBox(CheckBoxCheckBox),
+    CheckBoxCheckBox(CheckBoxCheckBoxWith<X>),
     /// The element `mso14:control`, a `ControlControlCloneRegular`.
-    ControlControlCloneRegular(ControlControlCloneRegular),
+    ControlControlCloneRegular(ControlControlCloneRegularWith<X>),
     /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenuRegular`.
-    DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegular),
+    DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegularWith<X>),
     /// The element `mso14:gallery`, a `GalleryGalleryRegular`.
-    GalleryGalleryRegular(Box<GalleryGalleryRegular>),
+    GalleryGalleryRegular(Box<GalleryGalleryRegularWith<X>>),
     /// The element `mso14:menu`, a `MenuMenuRegular`.
-    MenuMenuRegular(MenuMenuRegular),
+    MenuMenuRegular(MenuMenuRegularWith<X>),
     /// The element `mso14:menuSeparator`, a `MenuSeparatorMenuSeparatorNoTitle`.
-    MenuSeparatorMenuSeparatorNoTitle(MenuSeparatorMenuSeparatorNoTitle),
+    MenuSeparatorMenuSeparatorNoTitle(MenuSeparatorMenuSeparatorNoTitleWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `mso14:splitButton`, a `SplitButtonSplitButtonRegular`.
-    SplitButtonSplitButtonRegular(SplitButtonSplitButtonRegular),
+    SplitButtonSplitButtonRegular(SplitButtonSplitButtonRegularWith<X>),
     /// The element `mso14:toggleButton`, a `ToggleButtonToggleButtonRegular`.
-    ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegular),
+    ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegularWith<X>),
 }
+
+/// [`ContextMenuContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type ContextMenuContent = ContextMenuContentWith<()>;
+
+impl Eq for ContextMenuContentWith<()> {}
 
 /// The `mso14:contextMenus` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_ContextMenus`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ContextMenus {
+pub struct ContextMenusWith<X: NodeExtra> {
     /// The children that are `ContextMenu`, in order.
-    pub context_menu: Vec<ContextMenu>,
+    pub context_menu: Vec<ContextMenuWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiContextMenus,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `mso14:contextMenus` element of the tree a read gives: [`ContextMenusWith`] holding nothing
+/// in `extra`.
+pub type ContextMenus = ContextMenusWith<()>;
+
+impl Eq for ContextMenusWith<()> {}
 
 /// The `mso14:contextualTabs` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_ContextualTabs`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ContextualTabs {
+pub struct ContextualTabsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiContextualTabs,
     /// The children that are `TabSet`, in order.
-    pub tab_set: Vec<TabSet>,
+    pub tab_set: Vec<TabSetWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:contextualTabs` element of the tree a read gives: [`ContextualTabsWith`] holding
+/// nothing in `extra`.
+pub type ContextualTabs = ContextualTabsWith<()>;
+
+impl Eq for ContextualTabsWith<()> {}
+
 /// The `mso14:control` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ControlClone`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ControlControlClone {
+pub struct ControlControlCloneWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiControlControlClone,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -5992,20 +6078,23 @@ pub struct ControlControlClone {
     pub visible: Option<String>,
 }
 
+/// The `mso14:control` element of the tree a read gives: [`ControlControlCloneWith`] holding
+/// nothing in `extra`.
+pub type ControlControlClone = ControlControlCloneWith<()>;
+
+impl Eq for ControlControlCloneWith<()> {}
+
 /// The `mso14:control` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ControlCloneQat`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ControlControlCloneQat {
+pub struct ControlControlCloneQatWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiControlControlCloneQat,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -6066,18 +6155,21 @@ pub struct ControlControlCloneQat {
     pub visible: Option<String>,
 }
 
+/// The `mso14:control` element of the tree a read gives: [`ControlControlCloneQatWith`] holding
+/// nothing in `extra`.
+pub type ControlControlCloneQat = ControlControlCloneQatWith<()>;
+
+impl Eq for ControlControlCloneQatWith<()> {}
+
 /// The `mso14:control` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ControlCloneRegular`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ControlControlCloneRegular {
+pub struct ControlControlCloneRegularWith<X: NodeExtra> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiControlControlCloneRegular,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -6132,80 +6224,92 @@ pub struct ControlControlCloneRegular {
     pub visible: Option<String>,
 }
 
+/// The `mso14:control` element of the tree a read gives: [`ControlControlCloneRegularWith`] holding
+/// nothing in `extra`.
+pub type ControlControlCloneRegular = ControlControlCloneRegularWith<()>;
+
+impl Eq for ControlControlCloneRegularWith<()> {}
+
 /// The `mso14:customUI` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_CustomUI`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CustomUI {
+pub struct CustomUIWith<X: NodeExtra> {
     /// The child that is `Backstage`, when there is one.
-    pub backstage: Option<Box<Backstage>>,
+    pub backstage: Option<Box<BackstageWith<X>>>,
     /// The child that is `Commands`, when there is one.
-    pub commands: Option<Box<Commands>>,
+    pub commands: Option<Box<CommandsWith<X>>>,
     /// The child that is `ContextMenus`, when there is one.
-    pub context_menus: Option<Box<ContextMenus>>,
+    pub context_menus: Option<Box<ContextMenusWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiCustomUI,
     /// The attribute `loadImage`, when the element has it.
     pub load_image: Option<String>,
     /// The attribute `onLoad`, when the element has it.
     pub on_load: Option<String>,
     /// The child that is `Ribbon`, when there is one.
-    pub ribbon: Option<Box<Ribbon>>,
+    pub ribbon: Option<Box<RibbonWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `mso14:customUI` element of the tree a read gives: [`CustomUIWith`] holding nothing in
+/// `extra`.
+pub type CustomUI = CustomUIWith<()>;
+
+impl Eq for CustomUIWith<()> {}
 
 /// The `mso14:dialogBoxLauncher` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_DialogLauncher`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DialogBoxLauncher {
+pub struct DialogBoxLauncherWith<X: NodeExtra> {
     /// The child that is `ButtonButtonRegular`, which the schema requires.
-    pub button_button_regular: Box<ButtonButtonRegular>,
+    pub button_button_regular: Box<ButtonButtonRegularWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiDialogBoxLauncher,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `mso14:dialogBoxLauncher` element of the tree a read gives: [`DialogBoxLauncherWith`]
+/// holding nothing in `extra`.
+pub type DialogBoxLauncher = DialogBoxLauncherWith<()>;
+
+impl Eq for DialogBoxLauncherWith<()> {}
 
 /// The `mso14:documentControls` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_QatItems`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DocumentControls {
+pub struct DocumentControlsWith<X: NodeExtra> {
     /// The children that are an item of `QuickAccessToolbarItemsContent`, in order.
-    pub content: Vec<QuickAccessToolbarItemsContent>,
+    pub content: Vec<QuickAccessToolbarItemsContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiDocumentControls,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:documentControls` element of the tree a read gives: [`DocumentControlsWith`] holding
+/// nothing in `extra`.
+pub type DocumentControls = DocumentControlsWith<()>;
+
+impl Eq for DocumentControlsWith<()> {}
+
 /// The `mso14:dropDown` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_BackstageDropDown`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropDownBackstageDropDown {
+pub struct DropDownBackstageDropDownWith<X: NodeExtra> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiDropDownBackstageDropDown,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getItemCount`, when the element has it.
@@ -6231,7 +6335,7 @@ pub struct DropDownBackstageDropDown {
     /// The attribute `idQ`, when the element has it.
     pub id_q: Option<String>,
     /// The children that are `ItemBackstageItem`, in order.
-    pub item_backstage_item: Vec<ItemBackstageItem>,
+    pub item_backstage_item: Vec<ItemBackstageItemWith<X>>,
     /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
     /// The attribute `label`, when the element has it.
@@ -6252,20 +6356,23 @@ pub struct DropDownBackstageDropDown {
     pub visible: Option<String>,
 }
 
+/// The `mso14:dropDown` element of the tree a read gives: [`DropDownBackstageDropDownWith`] holding
+/// nothing in `extra`.
+pub type DropDownBackstageDropDown = DropDownBackstageDropDownWith<()>;
+
+impl Eq for DropDownBackstageDropDownWith<()> {}
+
 /// The `mso14:dropDown` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_DropDownRegular`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropDownDropDownRegular {
+pub struct DropDownDropDownRegularWith<X: NodeExtra> {
     /// The children that are `ButtonButtonRegular`, in order.
-    pub button_button_regular: Vec<ButtonButtonRegular>,
+    pub button_button_regular: Vec<ButtonButtonRegularWith<X>>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiDropDownDropDownRegular,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -6319,7 +6426,7 @@ pub struct DropDownDropDownRegular {
     /// The attribute `insertBeforeQ`, when the element has it.
     pub insert_before_q: Option<String>,
     /// The children that are `ItemItem`, in order.
-    pub item_item: Vec<ItemItem>,
+    pub item_item: Vec<ItemItemWith<X>>,
     /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
     /// The attribute `label`, when the element has it.
@@ -6348,20 +6455,23 @@ pub struct DropDownDropDownRegular {
     pub visible: Option<String>,
 }
 
+/// The `mso14:dropDown` element of the tree a read gives: [`DropDownDropDownRegularWith`] holding
+/// nothing in `extra`.
+pub type DropDownDropDownRegular = DropDownDropDownRegularWith<()>;
+
+impl Eq for DropDownDropDownRegularWith<()> {}
+
 /// The `mso14:dynamicMenu` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_DynamicMenu`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DynamicMenuDynamicMenu {
+pub struct DynamicMenuDynamicMenuWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiDynamicMenuDynamicMenu,
     /// The attribute `getContent`, when the element has it.
     pub get_content: Option<String>,
     /// The attribute `getDescription`, when the element has it.
@@ -6428,20 +6538,23 @@ pub struct DynamicMenuDynamicMenu {
     pub visible: Option<String>,
 }
 
+/// The `mso14:dynamicMenu` element of the tree a read gives: [`DynamicMenuDynamicMenuWith`] holding
+/// nothing in `extra`.
+pub type DynamicMenuDynamicMenu = DynamicMenuDynamicMenuWith<()>;
+
+impl Eq for DynamicMenuDynamicMenuWith<()> {}
+
 /// The `mso14:dynamicMenu` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_DynamicMenuRegular`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DynamicMenuDynamicMenuRegular {
+pub struct DynamicMenuDynamicMenuRegularWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiDynamicMenuDynamicMenuRegular,
     /// The attribute `getContent`, when the element has it.
     pub get_content: Option<String>,
     /// The attribute `getDescription`, when the element has it.
@@ -6504,22 +6617,25 @@ pub struct DynamicMenuDynamicMenuRegular {
     pub visible: Option<String>,
 }
 
+/// The `mso14:dynamicMenu` element of the tree a read gives: [`DynamicMenuDynamicMenuRegularWith`]
+/// holding nothing in `extra`.
+pub type DynamicMenuDynamicMenuRegular = DynamicMenuDynamicMenuRegularWith<()>;
+
+impl Eq for DynamicMenuDynamicMenuRegularWith<()> {}
+
 /// The `mso14:editBox` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BackstageEditBox`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EditBoxBackstageEditBox {
+pub struct EditBoxBackstageEditBoxWith<X: NodeExtra> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiEditBoxBackstageEditBox,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getKeytip`, when the element has it.
@@ -6552,18 +6668,21 @@ pub struct EditBoxBackstageEditBox {
     pub visible: Option<String>,
 }
 
+/// The `mso14:editBox` element of the tree a read gives: [`EditBoxBackstageEditBoxWith`] holding
+/// nothing in `extra`.
+pub type EditBoxBackstageEditBox = EditBoxBackstageEditBoxWith<()>;
+
+impl Eq for EditBoxBackstageEditBoxWith<()> {}
+
 /// The `mso14:editBox` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_EditBox`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EditBoxEditBox {
+pub struct EditBoxEditBoxWith<X: NodeExtra> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiEditBoxEditBox,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -6627,6 +6746,12 @@ pub struct EditBoxEditBox {
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
+
+/// The `mso14:editBox` element of the tree a read gives: [`EditBoxEditBoxWith`] holding nothing in
+/// `extra`.
+pub type EditBoxEditBox = EditBoxEditBoxWith<()>;
+
+impl Eq for EditBoxEditBoxWith<()> {}
 
 /// The simple type `ST_Expand`, kept as the text the file carried.
 ///
@@ -6667,38 +6792,38 @@ pub enum ExpandMember {
 
 /// The `mso14:firstColumn` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_BackstageGroups`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FirstColumn {
+pub struct FirstColumnWith<X: NodeExtra> {
     /// The children that are an item of `BackstageGroupsContent`, in order.
-    pub content: Vec<BackstageGroupsContent>,
+    pub content: Vec<BackstageGroupsContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiFirstColumn,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:firstColumn` element of the tree a read gives: [`FirstColumnWith`] holding nothing in
+/// `extra`.
+pub type FirstColumn = FirstColumnWith<()>;
+
+impl Eq for FirstColumnWith<()> {}
+
 /// The `mso14:gallery` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Gallery`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GalleryGallery {
+pub struct GalleryGalleryWith<X: NodeExtra> {
     /// The children that are `ButtonButtonRegular`, in order.
-    pub button_button_regular: Vec<ButtonButtonRegular>,
+    pub button_button_regular: Vec<ButtonButtonRegularWith<X>>,
     /// The attribute `columns`, when the element has it.
     pub columns: Option<String>,
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiGalleryGallery,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -6764,7 +6889,7 @@ pub struct GalleryGallery {
     /// The attribute `itemHeight`, when the element has it.
     pub item_height: Option<String>,
     /// The children that are `ItemItem`, in order.
-    pub item_item: Vec<ItemItem>,
+    pub item_item: Vec<ItemItemWith<X>>,
     /// The attribute `itemWidth`, when the element has it.
     pub item_width: Option<String>,
     /// The attribute `keytip`, when the element has it.
@@ -6801,24 +6926,27 @@ pub struct GalleryGallery {
     pub visible: Option<String>,
 }
 
+/// The `mso14:gallery` element of the tree a read gives: [`GalleryGalleryWith`] holding nothing in
+/// `extra`.
+pub type GalleryGallery = GalleryGalleryWith<()>;
+
+impl Eq for GalleryGalleryWith<()> {}
+
 /// The `mso14:gallery` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_GalleryRegular`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GalleryGalleryRegular {
+pub struct GalleryGalleryRegularWith<X: NodeExtra> {
     /// The children that are `ButtonButtonRegular`, in order.
-    pub button_button_regular: Vec<ButtonButtonRegular>,
+    pub button_button_regular: Vec<ButtonButtonRegularWith<X>>,
     /// The attribute `columns`, when the element has it.
     pub columns: Option<String>,
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiGalleryGalleryRegular,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -6882,7 +7010,7 @@ pub struct GalleryGalleryRegular {
     /// The attribute `itemHeight`, when the element has it.
     pub item_height: Option<String>,
     /// The children that are `ItemItem`, in order.
-    pub item_item: Vec<ItemItem>,
+    pub item_item: Vec<ItemItemWith<X>>,
     /// The attribute `itemWidth`, when the element has it.
     pub item_width: Option<String>,
     /// The attribute `keytip`, when the element has it.
@@ -6917,6 +7045,12 @@ pub struct GalleryGalleryRegular {
     pub visible: Option<String>,
 }
 
+/// The `mso14:gallery` element of the tree a read gives: [`GalleryGalleryRegularWith`] holding
+/// nothing in `extra`.
+pub type GalleryGalleryRegular = GalleryGalleryRegularWith<()>;
+
+impl Eq for GalleryGalleryRegularWith<()> {}
+
 /// The simple type `ST_GalleryShowInRibbon`, kept as the text the file carried.
 ///
 /// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
@@ -6942,16 +7076,13 @@ pub enum GalleryShowInRibbonMember {
 
 /// The `mso14:group` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BackstageGroup`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GroupBackstageGroup {
+pub struct GroupBackstageGroupWith<X: NodeExtra> {
     /// The child that is `BottomItems`, when there is one.
-    pub bottom_items: Option<Box<BottomItems>>,
+    pub bottom_items: Option<Box<BottomItemsWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiGroupBackstageGroup,
     /// The attribute `getHelperText`, when the element has it.
     pub get_helper_text: Option<String>,
     /// The attribute `getLabel`, when the element has it.
@@ -6981,7 +7112,7 @@ pub struct GroupBackstageGroup {
     /// The attribute `label`, when the element has it.
     pub label: Option<String>,
     /// The child that is `PrimaryItem`, when there is one.
-    pub primary_item: Option<Box<PrimaryItem>>,
+    pub primary_item: Option<Box<PrimaryItemWith<X>>>,
     /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
     /// The attribute `style`, when the element has it.
@@ -6989,31 +7120,30 @@ pub struct GroupBackstageGroup {
     /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
     /// The child that is `TopItems`, when there is one.
-    pub top_items: Option<Box<TopItems>>,
+    pub top_items: Option<Box<TopItemsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
+/// The `mso14:group` element of the tree a read gives: [`GroupBackstageGroupWith`] holding nothing
+/// in `extra`.
+pub type GroupBackstageGroup = GroupBackstageGroupWith<()>;
+
+impl Eq for GroupBackstageGroupWith<()> {}
+
 /// The `mso14:groupBox` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_GroupBox`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GroupBox {
+pub struct GroupBoxWith<X: NodeExtra> {
     /// The children that are an item of `GroupControlsContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<GroupControlsContent>,
+    pub content: Vec<GroupControlsContentWith<X>>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiGroupBox,
     /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
     /// The attribute `id`, when the element has it.
@@ -7028,47 +7158,58 @@ pub struct GroupBox {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:groupBox` element of the tree a read gives: [`GroupBoxWith`] holding nothing in
+/// `extra`.
+pub type GroupBox = GroupBoxWith<()>;
+
+impl Eq for GroupBoxWith<()> {}
+
 /// One child element of a choice: choice in `CT_Group`.
 ///
 /// The schema types that hold it: `CT_Group`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum GroupContent {
+pub enum GroupContentWith<X: NodeExtra> {
     /// The element `mso14:box`, a `BoxBox`.
-    BoxBox(BoxBox),
+    BoxBox(BoxBoxWith<X>),
     /// The element `mso14:button`, a `ButtonButton`.
-    ButtonButton(ButtonButton),
+    ButtonButton(ButtonButtonWith<X>),
     /// The element `mso14:buttonGroup`, a `ButtonGroup`.
-    ButtonGroup(ButtonGroup),
+    ButtonGroup(ButtonGroupWith<X>),
     /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
-    CheckBoxCheckBox(CheckBoxCheckBox),
+    CheckBoxCheckBox(CheckBoxCheckBoxWith<X>),
     /// The element `mso14:comboBox`, a `ComboBoxComboBox`.
-    ComboBoxComboBox(ComboBoxComboBox),
+    ComboBoxComboBox(ComboBoxComboBoxWith<X>),
     /// The element `mso14:control`, a `ControlControlClone`.
-    ControlControlClone(ControlControlClone),
+    ControlControlClone(ControlControlCloneWith<X>),
     /// The element `mso14:dropDown`, a `DropDownDropDownRegular`.
-    DropDownDropDownRegular(DropDownDropDownRegular),
+    DropDownDropDownRegular(DropDownDropDownRegularWith<X>),
     /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenu`.
-    DynamicMenuDynamicMenu(DynamicMenuDynamicMenu),
+    DynamicMenuDynamicMenu(DynamicMenuDynamicMenuWith<X>),
     /// The element `mso14:editBox`, a `EditBoxEditBox`.
-    EditBoxEditBox(EditBoxEditBox),
+    EditBoxEditBox(EditBoxEditBoxWith<X>),
     /// The element `mso14:gallery`, a `GalleryGallery`.
-    GalleryGallery(Box<GalleryGallery>),
+    GalleryGallery(Box<GalleryGalleryWith<X>>),
     /// The element `mso14:labelControl`, a `LabelControlLabelControl`.
-    LabelControlLabelControl(LabelControlLabelControl),
+    LabelControlLabelControl(LabelControlLabelControlWith<X>),
     /// The element `mso14:menu`, a `MenuMenu`.
-    MenuMenu(MenuMenu),
+    MenuMenu(MenuMenuWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `mso14:separator`, a `Separator`.
-    Separator(Separator),
+    Separator(SeparatorWith<X>),
     /// The element `mso14:splitButton`, a `SplitButtonSplitButton`.
-    SplitButtonSplitButton(SplitButtonSplitButton),
+    SplitButtonSplitButton(SplitButtonSplitButtonWith<X>),
     /// The element `mso14:toggleButton`, a `ToggleButtonToggleButton`.
-    ToggleButtonToggleButton(ToggleButtonToggleButton),
+    ToggleButtonToggleButton(ToggleButtonToggleButtonWith<X>),
 }
+
+/// [`GroupContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type GroupContent = GroupContentWith<()>;
+
+impl Eq for GroupContentWith<()> {}
 
 /// One child element of a choice: choice in `CT_GroupBox`, choice in `CT_LayoutContainer`, choice
 /// in `CT_GroupControls`.
@@ -7076,53 +7217,55 @@ pub enum GroupContent {
 /// The schema types that hold it: `CT_GroupBox`, `CT_GroupControls`, `CT_LayoutContainer`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum GroupControlsContent {
+pub enum GroupControlsContentWith<X: NodeExtra> {
     /// The element `mso14:button`, a `ButtonBackstageGroupButton`.
-    ButtonBackstageGroupButton(ButtonBackstageGroupButton),
+    ButtonBackstageGroupButton(ButtonBackstageGroupButtonWith<X>),
     /// The element `mso14:checkBox`, a `CheckBoxBackstageCheckBox`.
-    CheckBoxBackstageCheckBox(CheckBoxBackstageCheckBox),
+    CheckBoxBackstageCheckBox(CheckBoxBackstageCheckBoxWith<X>),
     /// The element `mso14:comboBox`, a `ComboBoxBackstageComboBox`.
-    ComboBoxBackstageComboBox(ComboBoxBackstageComboBox),
+    ComboBoxBackstageComboBox(ComboBoxBackstageComboBoxWith<X>),
     /// The element `mso14:dropDown`, a `DropDownBackstageDropDown`.
-    DropDownBackstageDropDown(DropDownBackstageDropDown),
+    DropDownBackstageDropDown(DropDownBackstageDropDownWith<X>),
     /// The element `mso14:editBox`, a `EditBoxBackstageEditBox`.
-    EditBoxBackstageEditBox(EditBoxBackstageEditBox),
+    EditBoxBackstageEditBox(EditBoxBackstageEditBoxWith<X>),
     /// The element `mso14:groupBox`, a `GroupBox`.
-    GroupBox(GroupBox),
+    GroupBox(GroupBoxWith<X>),
     /// The element `mso14:hyperlink`, a `Hyperlink`.
-    Hyperlink(Hyperlink),
+    Hyperlink(HyperlinkWith<X>),
     /// The element `mso14:imageControl`, a `ImageControl`.
-    ImageControl(ImageControl),
+    ImageControl(ImageControlWith<X>),
     /// The element `mso14:labelControl`, a `LabelControlBackstageLabelControl`.
-    LabelControlBackstageLabelControl(LabelControlBackstageLabelControl),
+    LabelControlBackstageLabelControl(LabelControlBackstageLabelControlWith<X>),
     /// The element `mso14:layoutContainer`, a `LayoutContainer`.
-    LayoutContainer(LayoutContainer),
+    LayoutContainer(LayoutContainerWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `mso14:radioGroup`, a `RadioGroup`.
-    RadioGroup(RadioGroup),
+    RadioGroup(RadioGroupWith<X>),
 }
+
+/// [`GroupControlsContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type GroupControlsContent = GroupControlsContentWith<()>;
+
+impl Eq for GroupControlsContentWith<()> {}
 
 /// The `mso14:group` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Group`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GroupGroup {
+pub struct GroupGroupWith<X: NodeExtra> {
     /// The attribute `autoScale`, when the element has it.
     pub auto_scale: Option<String>,
     /// The attribute `centerVertically`, when the element has it.
     pub center_vertically: Option<String>,
     /// The children that are an item of `GroupContent`, in order.
-    pub content: Vec<GroupContent>,
+    pub content: Vec<GroupContentWith<X>>,
     /// The child that is `DialogBoxLauncher`, when there is one.
-    pub dialog_box_launcher: Option<Box<DialogBoxLauncher>>,
+    pub dialog_box_launcher: Option<Box<DialogBoxLauncherWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiGroupGroup,
     /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
     /// The attribute `getKeytip`, when the element has it.
@@ -7169,22 +7312,25 @@ pub struct GroupGroup {
     pub visible: Option<String>,
 }
 
+/// The `mso14:group` element of the tree a read gives: [`GroupGroupWith`] holding nothing in
+/// `extra`.
+pub type GroupGroup = GroupGroupWith<()>;
+
+impl Eq for GroupGroupWith<()> {}
+
 /// The `mso14:hyperlink` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_Hyperlink`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Hyperlink {
+pub struct HyperlinkWith<X: NodeExtra> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiHyperlink,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -7229,20 +7375,23 @@ pub struct Hyperlink {
     pub visible: Option<String>,
 }
 
+/// The `mso14:hyperlink` element of the tree a read gives: [`HyperlinkWith`] holding nothing in
+/// `extra`.
+pub type Hyperlink = HyperlinkWith<()>;
+
+impl Eq for HyperlinkWith<()> {}
+
 /// The `mso14:imageControl` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_ImageControl`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ImageControl {
+pub struct ImageControlWith<X: NodeExtra> {
     /// The attribute `altText`, when the element has it.
     pub alt_text: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiImageControl,
     /// The attribute `getAltText`, when the element has it.
     pub get_alt_text: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -7267,30 +7416,36 @@ pub struct ImageControl {
     pub visible: Option<String>,
 }
 
+/// The `mso14:imageControl` element of the tree a read gives: [`ImageControlWith`] holding nothing
+/// in `extra`.
+pub type ImageControl = ImageControlWith<()>;
+
+impl Eq for ImageControlWith<()> {}
+
 /// The `mso14:item` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BackstageItem`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ItemBackstageItem {
+pub struct ItemBackstageItemWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiItemBackstageItem,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:item` element of the tree a read gives: [`ItemBackstageItemWith`] holding nothing in
+/// `extra`.
+pub type ItemBackstageItem = ItemBackstageItemWith<()>;
+
+impl Eq for ItemBackstageItemWith<()> {}
+
 /// The `mso14:item` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Item`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ItemItem {
+pub struct ItemItemWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiItemItem,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `image`, when the element has it.
@@ -7306,6 +7461,11 @@ pub struct ItemItem {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `mso14:item` element of the tree a read gives: [`ItemItemWith`] holding nothing in `extra`.
+pub type ItemItem = ItemItemWith<()>;
+
+impl Eq for ItemItemWith<()> {}
 
 /// The simple type `ST_ItemSize`, kept as the text the file carried.
 ///
@@ -7332,20 +7492,17 @@ pub enum ItemSizeMember {
 
 /// The `mso14:labelControl` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_BackstageLabelControl`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LabelControlBackstageLabelControl {
+pub struct LabelControlBackstageLabelControlWith<X: NodeExtra> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiLabelControlBackstageLabelControl,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getLabel`, when the element has it.
@@ -7368,18 +7525,21 @@ pub struct LabelControlBackstageLabelControl {
     pub visible: Option<String>,
 }
 
+/// The `mso14:labelControl` element of the tree a read gives:
+/// [`LabelControlBackstageLabelControlWith`] holding nothing in `extra`.
+pub type LabelControlBackstageLabelControl = LabelControlBackstageLabelControlWith<()>;
+
+impl Eq for LabelControlBackstageLabelControlWith<()> {}
+
 /// The `mso14:labelControl` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_LabelControl`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LabelControlLabelControl {
+pub struct LabelControlLabelControlWith<X: NodeExtra> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiLabelControlLabelControl,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getLabel`, when the element has it.
@@ -7422,6 +7582,12 @@ pub struct LabelControlLabelControl {
     pub visible: Option<String>,
 }
 
+/// The `mso14:labelControl` element of the tree a read gives: [`LabelControlLabelControlWith`]
+/// holding nothing in `extra`.
+pub type LabelControlLabelControl = LabelControlLabelControlWith<()>;
+
+impl Eq for LabelControlLabelControlWith<()> {}
+
 /// The simple type `ST_LayoutChildren`, kept as the text the file carried.
 ///
 /// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
@@ -7447,24 +7613,17 @@ pub enum LayoutChildrenMember {
 
 /// The `mso14:layoutContainer` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_LayoutContainer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LayoutContainer {
+pub struct LayoutContainerWith<X: NodeExtra> {
     /// The attribute `align`, when the element has it.
     pub align: Option<Expand>,
     /// The children that are an item of `GroupControlsContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<GroupControlsContent>,
+    pub content: Vec<GroupControlsContentWith<X>>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiLayoutContainer,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `idQ`, when the element has it.
@@ -7477,18 +7636,21 @@ pub struct LayoutContainer {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:layoutContainer` element of the tree a read gives: [`LayoutContainerWith`] holding
+/// nothing in `extra`.
+pub type LayoutContainer = LayoutContainerWith<()>;
+
+impl Eq for LayoutContainerWith<()> {}
+
 /// The `mso14:menu` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BackstagePrimaryMenu`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuBackstagePrimaryMenu {
+pub struct MenuBackstagePrimaryMenuWith<X: NodeExtra> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiMenuBackstagePrimaryMenu,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -7504,7 +7666,7 @@ pub struct MenuBackstagePrimaryMenu {
     /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
     /// The children that are `MenuGroup`, in order.
-    pub group: Vec<MenuGroup>,
+    pub group: Vec<MenuGroupWith<X>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `idQ`, when the element has it.
@@ -7529,23 +7691,23 @@ pub struct MenuBackstagePrimaryMenu {
     pub visible: Option<String>,
 }
 
+/// The `mso14:menu` element of the tree a read gives: [`MenuBackstagePrimaryMenuWith`] holding
+/// nothing in `extra`.
+pub type MenuBackstagePrimaryMenu = MenuBackstagePrimaryMenuWith<()>;
+
+impl Eq for MenuBackstagePrimaryMenuWith<()> {}
+
 /// The `mso14:menu` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BackstageSubMenu`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuBackstageSubMenu {
+pub struct MenuBackstageSubMenuWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiMenuBackstageSubMenu,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -7559,8 +7721,7 @@ pub struct MenuBackstageSubMenu {
     /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
     /// The children that are `MenuGroup`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub group: Vec<MenuGroup>,
+    pub group: Vec<MenuGroupWith<X>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `idQ`, when the element has it.
@@ -7581,53 +7742,57 @@ pub struct MenuBackstageSubMenu {
     pub visible: Option<String>,
 }
 
+/// The `mso14:menu` element of the tree a read gives: [`MenuBackstageSubMenuWith`] holding nothing
+/// in `extra`.
+pub type MenuBackstageSubMenu = MenuBackstageSubMenuWith<()>;
+
+impl Eq for MenuBackstageSubMenuWith<()> {}
+
 /// One child element of a choice: choice in `CT_MenuRegular`, choice in `CT_Menu`, choice in
 /// `CT_MenuRoot`.
 ///
 /// The schema types that hold it: `CT_Menu`, `CT_MenuRegular`, `CT_MenuRoot`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum MenuContent {
+pub enum MenuContentWith<X: NodeExtra> {
     /// The element `mso14:button`, a `ButtonButtonRegular`.
-    ButtonButtonRegular(ButtonButtonRegular),
+    ButtonButtonRegular(ButtonButtonRegularWith<X>),
     /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
-    CheckBoxCheckBox(CheckBoxCheckBox),
+    CheckBoxCheckBox(CheckBoxCheckBoxWith<X>),
     /// The element `mso14:control`, a `ControlControlCloneRegular`.
-    ControlControlCloneRegular(ControlControlCloneRegular),
+    ControlControlCloneRegular(ControlControlCloneRegularWith<X>),
     /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenuRegular`.
-    DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegular),
+    DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegularWith<X>),
     /// The element `mso14:gallery`, a `GalleryGalleryRegular`.
-    GalleryGalleryRegular(Box<GalleryGalleryRegular>),
+    GalleryGalleryRegular(Box<GalleryGalleryRegularWith<X>>),
     /// The element `mso14:menu`, a `MenuMenuRegular`.
-    MenuMenuRegular(MenuMenuRegular),
+    MenuMenuRegular(MenuMenuRegularWith<X>),
     /// The element `mso14:menuSeparator`, a `MenuSeparatorMenuSeparator`.
-    MenuSeparatorMenuSeparator(MenuSeparatorMenuSeparator),
+    MenuSeparatorMenuSeparator(MenuSeparatorMenuSeparatorWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `mso14:splitButton`, a `SplitButtonSplitButtonRegular`.
-    SplitButtonSplitButtonRegular(SplitButtonSplitButtonRegular),
+    SplitButtonSplitButtonRegular(SplitButtonSplitButtonRegularWith<X>),
     /// The element `mso14:toggleButton`, a `ToggleButtonToggleButtonRegular`.
-    ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegular),
+    ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegularWith<X>),
 }
+
+/// [`MenuContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type MenuContent = MenuContentWith<()>;
+
+impl Eq for MenuContentWith<()> {}
 
 /// The `mso14:menuGroup` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_BackstageMenuGroup`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuGroup {
+pub struct MenuGroupWith<X: NodeExtra> {
     /// The children that are an item of `BackstageMenuGroupContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<BackstageMenuGroupContent>,
+    pub content: Vec<BackstageMenuGroupContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiMenuGroup,
     /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
     /// The attribute `id`, when the element has it.
@@ -7644,22 +7809,25 @@ pub struct MenuGroup {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:menuGroup` element of the tree a read gives: [`MenuGroupWith`] holding nothing in
+/// `extra`.
+pub type MenuGroup = MenuGroupWith<()>;
+
+impl Eq for MenuGroupWith<()> {}
+
 /// The `mso14:menu` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Menu`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuMenu {
+pub struct MenuMenuWith<X: NodeExtra> {
     /// The children that are an item of `MenuContent`, in order.
-    pub content: Vec<MenuContent>,
+    pub content: Vec<MenuContentWith<X>>,
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiMenuMenu,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -7724,26 +7892,24 @@ pub struct MenuMenu {
     pub visible: Option<String>,
 }
 
+/// The `mso14:menu` element of the tree a read gives: [`MenuMenuWith`] holding nothing in `extra`.
+pub type MenuMenu = MenuMenuWith<()>;
+
+impl Eq for MenuMenuWith<()> {}
+
 /// The `mso14:menu` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_MenuRegular`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuMenuRegular {
+pub struct MenuMenuRegularWith<X: NodeExtra> {
     /// The children that are an item of `MenuContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<MenuContent>,
+    pub content: Vec<MenuContentWith<X>>,
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiMenuMenuRegular,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -7804,18 +7970,21 @@ pub struct MenuMenuRegular {
     pub visible: Option<String>,
 }
 
+/// The `mso14:menu` element of the tree a read gives: [`MenuMenuRegularWith`] holding nothing in
+/// `extra`.
+pub type MenuMenuRegular = MenuMenuRegularWith<()>;
+
+impl Eq for MenuMenuRegularWith<()> {}
+
 /// The `mso14:menu` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_MenuRoot`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuMenuRoot {
+pub struct MenuMenuRootWith<X: NodeExtra> {
     /// The children that are an item of `MenuContent`, in order.
-    pub content: Vec<MenuContent>,
+    pub content: Vec<MenuContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiMenuMenuRoot,
     /// The attribute `getTitle`, when the element has it.
     pub get_title: Option<String>,
     /// The attribute `itemSize`, when the element has it.
@@ -7826,24 +7995,23 @@ pub struct MenuMenuRoot {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:menu` element of the tree a read gives: [`MenuMenuRootWith`] holding nothing in
+/// `extra`.
+pub type MenuMenuRoot = MenuMenuRootWith<()>;
+
+impl Eq for MenuMenuRootWith<()> {}
+
 /// The `mso14:menu` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_MenuWithTitle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuMenuWithTitle {
+pub struct MenuMenuWithTitleWith<X: NodeExtra> {
     /// The children that are an item of `MenuWithTitleContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<MenuWithTitleContent>,
+    pub content: Vec<MenuWithTitleContentWith<X>>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiMenuMenuWithTitle,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -7906,16 +8074,19 @@ pub struct MenuMenuWithTitle {
     pub visible: Option<String>,
 }
 
+/// The `mso14:menu` element of the tree a read gives: [`MenuMenuWithTitleWith`] holding nothing in
+/// `extra`.
+pub type MenuMenuWithTitle = MenuMenuWithTitleWith<()>;
+
+impl Eq for MenuMenuWithTitleWith<()> {}
+
 /// The `mso14:menuSeparator` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_MenuSeparator`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuSeparatorMenuSeparator {
+pub struct MenuSeparatorMenuSeparatorWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiMenuSeparatorMenuSeparator,
     /// The attribute `getTitle`, when the element has it.
     pub get_title: Option<String>,
     /// The attribute `id`, when the element has it.
@@ -7938,16 +8109,19 @@ pub struct MenuSeparatorMenuSeparator {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:menuSeparator` element of the tree a read gives: [`MenuSeparatorMenuSeparatorWith`]
+/// holding nothing in `extra`.
+pub type MenuSeparatorMenuSeparator = MenuSeparatorMenuSeparatorWith<()>;
+
+impl Eq for MenuSeparatorMenuSeparatorWith<()> {}
+
 /// The `mso14:menuSeparator` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_MenuSeparatorNoTitle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuSeparatorMenuSeparatorNoTitle {
+pub struct MenuSeparatorMenuSeparatorNoTitleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiMenuSeparatorMenuSeparatorNoTitle,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `idQ`, when the element has it.
@@ -7966,134 +8140,161 @@ pub struct MenuSeparatorMenuSeparatorNoTitle {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:menuSeparator` element of the tree a read gives:
+/// [`MenuSeparatorMenuSeparatorNoTitleWith`] holding nothing in `extra`.
+pub type MenuSeparatorMenuSeparatorNoTitle = MenuSeparatorMenuSeparatorNoTitleWith<()>;
+
+impl Eq for MenuSeparatorMenuSeparatorNoTitleWith<()> {}
+
 /// One child element of a choice: choice in `CT_MenuWithTitle`.
 ///
 /// The schema types that hold it: `CT_MenuWithTitle`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum MenuWithTitleContent {
+pub enum MenuWithTitleContentWith<X: NodeExtra> {
     /// The element `mso14:button`, a `ButtonButtonRegular`.
-    ButtonButtonRegular(ButtonButtonRegular),
+    ButtonButtonRegular(ButtonButtonRegularWith<X>),
     /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
-    CheckBoxCheckBox(CheckBoxCheckBox),
+    CheckBoxCheckBox(CheckBoxCheckBoxWith<X>),
     /// The element `mso14:control`, a `ControlControlCloneRegular`.
-    ControlControlCloneRegular(ControlControlCloneRegular),
+    ControlControlCloneRegular(ControlControlCloneRegularWith<X>),
     /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenuRegular`.
-    DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegular),
+    DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegularWith<X>),
     /// The element `mso14:gallery`, a `GalleryGalleryRegular`.
-    GalleryGalleryRegular(Box<GalleryGalleryRegular>),
+    GalleryGalleryRegular(Box<GalleryGalleryRegularWith<X>>),
     /// The element `mso14:menu`, a `MenuMenuWithTitle`.
-    MenuMenuWithTitle(MenuMenuWithTitle),
+    MenuMenuWithTitle(MenuMenuWithTitleWith<X>),
     /// The element `mso14:menuSeparator`, a `MenuSeparatorMenuSeparator`.
-    MenuSeparatorMenuSeparator(MenuSeparatorMenuSeparator),
+    MenuSeparatorMenuSeparator(MenuSeparatorMenuSeparatorWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `mso14:splitButton`, a `SplitButtonSplitButtonWithTitle`.
-    SplitButtonSplitButtonWithTitle(SplitButtonSplitButtonWithTitle),
+    SplitButtonSplitButtonWithTitle(SplitButtonSplitButtonWithTitleWith<X>),
     /// The element `mso14:toggleButton`, a `ToggleButtonToggleButtonRegular`.
-    ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegular),
+    ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegularWith<X>),
 }
+
+/// [`MenuWithTitleContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type MenuWithTitleContent = MenuWithTitleContentWith<()>;
+
+impl Eq for MenuWithTitleContentWith<()> {}
 
 /// The `mso14:primaryItem` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_PrimaryItem`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PrimaryItem {
+pub struct PrimaryItemWith<X: NodeExtra> {
     /// The child that is an item of `PrimaryItemContent`, which the schema requires.
-    pub content: Box<PrimaryItemContent>,
+    pub content: Box<PrimaryItemContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiPrimaryItem,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `mso14:primaryItem` element of the tree a read gives: [`PrimaryItemWith`] holding nothing in
+/// `extra`.
+pub type PrimaryItem = PrimaryItemWith<()>;
+
+impl Eq for PrimaryItemWith<()> {}
 
 /// One child element of a choice: choice in `CT_PrimaryItem`.
 ///
 /// The schema types that hold it: `CT_PrimaryItem`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum PrimaryItemContent {
+pub enum PrimaryItemContentWith<X: NodeExtra> {
     /// The element `mso14:button`, a `ButtonBackstageRegularButton`.
-    ButtonBackstageRegularButton(ButtonBackstageRegularButton),
+    ButtonBackstageRegularButton(ButtonBackstageRegularButtonWith<X>),
     /// The element `mso14:menu`, a `MenuBackstagePrimaryMenu`.
-    MenuBackstagePrimaryMenu(MenuBackstagePrimaryMenu),
+    MenuBackstagePrimaryMenu(MenuBackstagePrimaryMenuWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
+/// [`PrimaryItemContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type PrimaryItemContent = PrimaryItemContentWith<()>;
+
+impl Eq for PrimaryItemContentWith<()> {}
+
 /// The `mso14:qat` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Qat`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Qat {
+pub struct QatWith<X: NodeExtra> {
     /// The child that is `DocumentControls`, when there is one.
-    pub document_controls: Option<Box<DocumentControls>>,
+    pub document_controls: Option<Box<DocumentControlsWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiQat,
     /// The child that is `SharedControls`, when there is one.
-    pub shared_controls: Option<Box<SharedControls>>,
+    pub shared_controls: Option<Box<SharedControlsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `mso14:qat` element of the tree a read gives: [`QatWith`] holding nothing in `extra`.
+pub type Qat = QatWith<()>;
+
+impl Eq for QatWith<()> {}
 
 /// One child element of a choice: choice in `CT_QatItems`.
 ///
 /// The schema types that hold it: `CT_QatItems`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum QuickAccessToolbarItemsContent {
+pub enum QuickAccessToolbarItemsContentWith<X: NodeExtra> {
     /// The element `mso14:button`, a `ButtonButtonRegular`.
-    ButtonButtonRegular(ButtonButtonRegular),
+    ButtonButtonRegular(ButtonButtonRegularWith<X>),
     /// The element `mso14:control`, a `ControlControlCloneQat`.
-    ControlControlCloneQat(ControlControlCloneQat),
+    ControlControlCloneQat(ControlControlCloneQatWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `mso14:separator`, a `Separator`.
-    Separator(Separator),
+    Separator(SeparatorWith<X>),
 }
+
+/// [`QuickAccessToolbarItemsContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type QuickAccessToolbarItemsContent = QuickAccessToolbarItemsContentWith<()>;
+
+impl Eq for QuickAccessToolbarItemsContentWith<()> {}
 
 /// The `mso14:radioButton` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_BackstageItem`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RadioButton {
+pub struct RadioButtonWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiRadioButton,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:radioButton` element of the tree a read gives: [`RadioButtonWith`] holding nothing in
+/// `extra`.
+pub type RadioButton = RadioButtonWith<()>;
+
+impl Eq for RadioButtonWith<()> {}
+
 /// The `mso14:radioGroup` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_RadioGroup`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RadioGroup {
+pub struct RadioGroupWith<X: NodeExtra> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiRadioGroup,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getItemCount`, when the element has it.
@@ -8121,7 +8322,7 @@ pub struct RadioGroup {
     /// The attribute `onAction`, when the element has it.
     pub on_action: Option<String>,
     /// The children that are `RadioButton`, in order.
-    pub radio_button: Vec<RadioButton>,
+    pub radio_button: Vec<RadioButtonWith<X>>,
     /// The attribute `tag`, when the element has it.
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -8130,68 +8331,81 @@ pub struct RadioGroup {
     pub visible: Option<String>,
 }
 
+/// The `mso14:radioGroup` element of the tree a read gives: [`RadioGroupWith`] holding nothing in
+/// `extra`.
+pub type RadioGroup = RadioGroupWith<()>;
+
+impl Eq for RadioGroupWith<()> {}
+
 /// The `mso14:ribbon` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Ribbon`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Ribbon {
+pub struct RibbonWith<X: NodeExtra> {
     /// The children that are an item of `RibbonContent`, in order.
-    pub content: Vec<RibbonContent>,
+    pub content: Vec<RibbonContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiRibbon,
     /// The attribute `startFromScratch`, when the element has it.
     pub start_from_scratch: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:ribbon` element of the tree a read gives: [`RibbonWith`] holding nothing in `extra`.
+pub type Ribbon = RibbonWith<()>;
+
+impl Eq for RibbonWith<()> {}
+
 /// One child element of a choice: xsd:all in `CT_Ribbon`.
 ///
 /// The schema types that hold it: `CT_Ribbon`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum RibbonContent {
+pub enum RibbonContentWith<X: NodeExtra> {
     /// The element `mso14:contextualTabs`, a `ContextualTabs`.
-    ContextualTabs(ContextualTabs),
+    ContextualTabs(ContextualTabsWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `mso14:qat`, a `Qat`.
-    Qat(Qat),
+    Qat(QatWith<X>),
     /// The element `mso14:tabs`, a `Tabs`.
-    Tabs(Tabs),
+    Tabs(TabsWith<X>),
 }
+
+/// [`RibbonContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type RibbonContent = RibbonContentWith<()>;
+
+impl Eq for RibbonContentWith<()> {}
 
 /// The `mso14:secondColumn` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_SimpleGroups`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SecondColumn {
+pub struct SecondColumnWith<X: NodeExtra> {
     /// The children that are an item of `SimpleGroupsContent`, in order.
-    pub content: Vec<SimpleGroupsContent>,
+    pub content: Vec<SimpleGroupsContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiSecondColumn,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:secondColumn` element of the tree a read gives: [`SecondColumnWith`] holding nothing
+/// in `extra`.
+pub type SecondColumn = SecondColumnWith<()>;
+
+impl Eq for SecondColumnWith<()> {}
+
 /// The `mso14:separator` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_Separator`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Separator {
+pub struct SeparatorWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiSeparator,
     /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
     /// The attribute `id`, when the element has it.
@@ -8214,37 +8428,51 @@ pub struct Separator {
     pub visible: Option<String>,
 }
 
+/// The `mso14:separator` element of the tree a read gives: [`SeparatorWith`] holding nothing in
+/// `extra`.
+pub type Separator = SeparatorWith<()>;
+
+impl Eq for SeparatorWith<()> {}
+
 /// The `mso14:sharedControls` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_QatItems`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SharedControls {
+pub struct SharedControlsWith<X: NodeExtra> {
     /// The children that are an item of `QuickAccessToolbarItemsContent`, in order.
-    pub content: Vec<QuickAccessToolbarItemsContent>,
+    pub content: Vec<QuickAccessToolbarItemsContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiSharedControls,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `mso14:sharedControls` element of the tree a read gives: [`SharedControlsWith`] holding
+/// nothing in `extra`.
+pub type SharedControls = SharedControlsWith<()>;
+
+impl Eq for SharedControlsWith<()> {}
 
 /// One child element of a choice: choice in `CT_SimpleGroups`.
 ///
 /// The schema types that hold it: `CT_SimpleGroups`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum SimpleGroupsContent {
+pub enum SimpleGroupsContentWith<X: NodeExtra> {
     /// The element `mso14:group`, a `GroupBackstageGroup`.
-    GroupBackstageGroup(GroupBackstageGroup),
+    GroupBackstageGroup(GroupBackstageGroupWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `mso14:taskGroup`, a `TaskGroup`.
-    TaskGroup(TaskGroup),
+    TaskGroup(TaskGroupWith<X>),
 }
+
+/// [`SimpleGroupsContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type SimpleGroupsContent = SimpleGroupsContentWith<()>;
+
+impl Eq for SimpleGroupsContentWith<()> {}
 
 /// The simple type `ST_Size`, kept as the text the file carried.
 ///
@@ -8276,31 +8504,33 @@ pub enum SizeMember {
 /// `CT_SplitButtonWithTitle`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum SplitButtonContent {
+pub enum SplitButtonContentWith<X: NodeExtra> {
     /// The element `mso14:button`, a `ButtonVisibleButton`.
-    ButtonVisibleButton(ButtonVisibleButton),
+    ButtonVisibleButton(ButtonVisibleButtonWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `mso14:toggleButton`, a `ToggleButtonVisibleToggleButton`.
-    ToggleButtonVisibleToggleButton(ToggleButtonVisibleToggleButton),
+    ToggleButtonVisibleToggleButton(ToggleButtonVisibleToggleButtonWith<X>),
 }
+
+/// [`SplitButtonContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type SplitButtonContent = SplitButtonContentWith<()>;
+
+impl Eq for SplitButtonContentWith<()> {}
 
 /// The `mso14:splitButton` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_SplitButton`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SplitButtonSplitButton {
+pub struct SplitButtonSplitButtonWith<X: NodeExtra> {
     /// The child that is an item of `SplitButtonContent`, when there is one.
-    pub content: Option<Box<SplitButtonContent>>,
+    pub content: Option<Box<SplitButtonContentWith<X>>>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiSplitButtonSplitButton,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getKeytip`, when the element has it.
@@ -8328,7 +8558,7 @@ pub struct SplitButtonSplitButton {
     /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
     /// The child that is `MenuMenuRegular`, when there is one.
-    pub menu_menu_regular: Option<Box<MenuMenuRegular>>,
+    pub menu_menu_regular: Option<Box<MenuMenuRegularWith<X>>>,
     /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
     /// The attribute `size`, when the element has it.
@@ -8341,23 +8571,23 @@ pub struct SplitButtonSplitButton {
     pub visible: Option<String>,
 }
 
+/// The `mso14:splitButton` element of the tree a read gives: [`SplitButtonSplitButtonWith`] holding
+/// nothing in `extra`.
+pub type SplitButtonSplitButton = SplitButtonSplitButtonWith<()>;
+
+impl Eq for SplitButtonSplitButtonWith<()> {}
+
 /// The `mso14:splitButton` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_SplitButtonRegular`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SplitButtonSplitButtonRegular {
+pub struct SplitButtonSplitButtonRegularWith<X: NodeExtra> {
     /// The child that is an item of `SplitButtonContent`, when there is one.
-    pub content: Option<Box<SplitButtonContent>>,
+    pub content: Option<Box<SplitButtonContentWith<X>>>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiSplitButtonSplitButtonRegular,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getKeytip`, when the element has it.
@@ -8383,8 +8613,7 @@ pub struct SplitButtonSplitButtonRegular {
     /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
     /// The child that is `MenuMenuRegular`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub menu_menu_regular: Option<Box<MenuMenuRegular>>,
+    pub menu_menu_regular: Option<Box<MenuMenuRegularWith<X>>>,
     /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
     /// The attribute `tag`, when the element has it.
@@ -8395,23 +8624,23 @@ pub struct SplitButtonSplitButtonRegular {
     pub visible: Option<String>,
 }
 
+/// The `mso14:splitButton` element of the tree a read gives: [`SplitButtonSplitButtonRegularWith`]
+/// holding nothing in `extra`.
+pub type SplitButtonSplitButtonRegular = SplitButtonSplitButtonRegularWith<()>;
+
+impl Eq for SplitButtonSplitButtonRegularWith<()> {}
+
 /// The `mso14:splitButton` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_SplitButtonWithTitle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SplitButtonSplitButtonWithTitle {
+pub struct SplitButtonSplitButtonWithTitleWith<X: NodeExtra> {
     /// The child that is an item of `SplitButtonContent`, when there is one.
-    pub content: Option<Box<SplitButtonContent>>,
+    pub content: Option<Box<SplitButtonContentWith<X>>>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiSplitButtonSplitButtonWithTitle,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getKeytip`, when the element has it.
@@ -8437,8 +8666,7 @@ pub struct SplitButtonSplitButtonWithTitle {
     /// The attribute `keytip`, when the element has it.
     pub keytip: Option<String>,
     /// The child that is `MenuMenuWithTitle`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub menu_menu_with_title: Option<Box<MenuMenuWithTitle>>,
+    pub menu_menu_with_title: Option<Box<MenuMenuWithTitleWith<X>>>,
     /// The attribute `showLabel`, when the element has it.
     pub show_label: Option<String>,
     /// The attribute `tag`, when the element has it.
@@ -8448,6 +8676,12 @@ pub struct SplitButtonSplitButtonWithTitle {
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
+
+/// The `mso14:splitButton` element of the tree a read gives:
+/// [`SplitButtonSplitButtonWithTitleWith`] holding nothing in `extra`.
+pub type SplitButtonSplitButtonWithTitle = SplitButtonSplitButtonWithTitleWith<()>;
+
+impl Eq for SplitButtonSplitButtonWithTitleWith<()> {}
 
 /// The simple type `ST_Style`, kept as the text the file carried.
 ///
@@ -8501,20 +8735,17 @@ pub enum Style2Member {
 
 /// The `mso14:tab` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BackstageTab`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TabBackstageTab {
+pub struct TabBackstageTabWith<X: NodeExtra> {
     /// The attribute `columnWidthPercent`, when the element has it.
     pub column_width_percent: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiTabBackstageTab,
     /// The child that is `FirstColumn`, when there is one.
-    pub first_column: Option<Box<FirstColumn>>,
+    pub first_column: Option<Box<FirstColumnWith<X>>>,
     /// The attribute `firstColumnMaxWidth`, when the element has it.
     pub first_column_max_width: Option<String>,
     /// The attribute `firstColumnMinWidth`, when the element has it.
@@ -8548,7 +8779,7 @@ pub struct TabBackstageTab {
     /// The attribute `label`, when the element has it.
     pub label: Option<String>,
     /// The child that is `SecondColumn`, when there is one.
-    pub second_column: Option<Box<SecondColumn>>,
+    pub second_column: Option<Box<SecondColumnWith<X>>>,
     /// The attribute `secondColumnMaxWidth`, when the element has it.
     pub second_column_max_width: Option<String>,
     /// The attribute `secondColumnMinWidth`, when the element has it.
@@ -8563,38 +8794,43 @@ pub struct TabBackstageTab {
     pub visible: Option<String>,
 }
 
+/// The `mso14:tab` element of the tree a read gives: [`TabBackstageTabWith`] holding nothing in
+/// `extra`.
+pub type TabBackstageTab = TabBackstageTabWith<()>;
+
+impl Eq for TabBackstageTabWith<()> {}
+
 /// The `mso14:tabSet` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TabSet`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TabSet {
+pub struct TabSetWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiTabSet,
     /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
     /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
     /// The children that are `TabTab`, in order.
-    pub tab_tab: Vec<TabTab>,
+    pub tab_tab: Vec<TabTabWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
+/// The `mso14:tabSet` element of the tree a read gives: [`TabSetWith`] holding nothing in `extra`.
+pub type TabSet = TabSetWith<()>;
+
+impl Eq for TabSetWith<()> {}
+
 /// The `mso14:tab` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Tab`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TabTab {
+pub struct TabTabWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiTabTab,
     /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
     /// The attribute `getLabel`, when the element has it.
@@ -8602,7 +8838,7 @@ pub struct TabTab {
     /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
     /// The children that are `GroupGroup`, in order.
-    pub group_group: Vec<GroupGroup>,
+    pub group_group: Vec<GroupGroupWith<X>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `idMso`, when the element has it.
@@ -8629,36 +8865,40 @@ pub struct TabTab {
     pub visible: Option<String>,
 }
 
+/// The `mso14:tab` element of the tree a read gives: [`TabTabWith`] holding nothing in `extra`.
+pub type TabTab = TabTabWith<()>;
+
+impl Eq for TabTabWith<()> {}
+
 /// The `mso14:tabs` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Tabs`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Tabs {
+pub struct TabsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiTabs,
     /// The children that are `TabTab`, in order.
-    pub tab_tab: Vec<TabTab>,
+    pub tab_tab: Vec<TabTabWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:tabs` element of the tree a read gives: [`TabsWith`] holding nothing in `extra`.
+pub type Tabs = TabsWith<()>;
+
+impl Eq for TabsWith<()> {}
+
 /// The `mso14:taskFormGroup` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_TaskFormGroup`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TaskFormGroup {
+pub struct TaskFormGroupWith<X: NodeExtra> {
     /// The attribute `allowedTaskSizes`, when the element has it.
     pub allowed_task_sizes: Option<TaskSizes>,
     /// The children that are `CategoryTaskFormGroupCategory`, in order.
-    pub category_task_form_group_category: Vec<CategoryTaskFormGroupCategory>,
+    pub category_task_form_group_category: Vec<CategoryTaskFormGroupCategoryWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiTaskFormGroup,
     /// The attribute `getHelperText`, when the element has it.
     pub get_helper_text: Option<String>,
     /// The attribute `getLabel`, when the element has it.
@@ -8687,20 +8927,23 @@ pub struct TaskFormGroup {
     pub visible: Option<String>,
 }
 
+/// The `mso14:taskFormGroup` element of the tree a read gives: [`TaskFormGroupWith`] holding
+/// nothing in `extra`.
+pub type TaskFormGroup = TaskFormGroupWith<()>;
+
+impl Eq for TaskFormGroupWith<()> {}
+
 /// The `mso14:taskGroup` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_TaskGroup`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TaskGroup {
+pub struct TaskGroupWith<X: NodeExtra> {
     /// The attribute `allowedTaskSizes`, when the element has it.
     pub allowed_task_sizes: Option<TaskSizes>,
     /// The children that are `CategoryTaskGroupCategory`, in order.
-    pub category_task_group_category: Vec<CategoryTaskGroupCategory>,
+    pub category_task_group_category: Vec<CategoryTaskGroupCategoryWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiTaskGroup,
     /// The attribute `getHelperText`, when the element has it.
     pub get_helper_text: Option<String>,
     /// The attribute `getLabel`, when the element has it.
@@ -8736,6 +8979,12 @@ pub struct TaskGroup {
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
+
+/// The `mso14:taskGroup` element of the tree a read gives: [`TaskGroupWith`] holding nothing in
+/// `extra`.
+pub type TaskGroup = TaskGroupWith<()>;
+
+impl Eq for TaskGroupWith<()> {}
 
 /// The simple type `ST_TaskSizes`, kept as the text the file carried.
 ///
@@ -8770,18 +9019,15 @@ pub enum TaskSizesMember {
 
 /// The `mso14:task` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TaskFormGroupTask`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TaskTaskFormGroupTask {
+pub struct TaskTaskFormGroupTaskWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiTaskTaskFormGroupTask,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -8795,7 +9041,7 @@ pub struct TaskTaskFormGroupTask {
     /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
     /// The children that are `GroupBackstageGroup`, in order.
-    pub group_backstage_group: Vec<GroupBackstageGroup>,
+    pub group_backstage_group: Vec<GroupBackstageGroupWith<X>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `idMso`, when the element has it.
@@ -8826,20 +9072,23 @@ pub struct TaskTaskFormGroupTask {
     pub visible: Option<String>,
 }
 
+/// The `mso14:task` element of the tree a read gives: [`TaskTaskFormGroupTaskWith`] holding nothing
+/// in `extra`.
+pub type TaskTaskFormGroupTask = TaskTaskFormGroupTaskWith<()>;
+
+impl Eq for TaskTaskFormGroupTaskWith<()> {}
+
 /// The `mso14:task` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_TaskGroupTask`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TaskTaskGroupTask {
+pub struct TaskTaskGroupTaskWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiTaskTaskGroupTask,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -8886,20 +9135,23 @@ pub struct TaskTaskGroupTask {
     pub visible: Option<String>,
 }
 
+/// The `mso14:task` element of the tree a read gives: [`TaskTaskGroupTaskWith`] holding nothing in
+/// `extra`.
+pub type TaskTaskGroupTask = TaskTaskGroupTaskWith<()>;
+
+impl Eq for TaskTaskGroupTaskWith<()> {}
+
 /// The `mso14:toggleButton` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_BackstageMenuToggleButton`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ToggleButtonBackstageMenuToggleButton {
+pub struct ToggleButtonBackstageMenuToggleButtonWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiToggleButtonBackstageMenuToggleButton,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -8936,20 +9188,23 @@ pub struct ToggleButtonBackstageMenuToggleButton {
     pub visible: Option<String>,
 }
 
+/// The `mso14:toggleButton` element of the tree a read gives:
+/// [`ToggleButtonBackstageMenuToggleButtonWith`] holding nothing in `extra`.
+pub type ToggleButtonBackstageMenuToggleButton = ToggleButtonBackstageMenuToggleButtonWith<()>;
+
+impl Eq for ToggleButtonBackstageMenuToggleButtonWith<()> {}
+
 /// The `mso14:toggleButton` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_ToggleButton`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ToggleButtonToggleButton {
+pub struct ToggleButtonToggleButtonWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiToggleButtonToggleButton,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -9016,20 +9271,23 @@ pub struct ToggleButtonToggleButton {
     pub visible: Option<String>,
 }
 
+/// The `mso14:toggleButton` element of the tree a read gives: [`ToggleButtonToggleButtonWith`]
+/// holding nothing in `extra`.
+pub type ToggleButtonToggleButton = ToggleButtonToggleButtonWith<()>;
+
+impl Eq for ToggleButtonToggleButtonWith<()> {}
+
 /// The `mso14:toggleButton` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_ToggleButtonRegular`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ToggleButtonToggleButtonRegular {
+pub struct ToggleButtonToggleButtonRegularWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiToggleButtonToggleButtonRegular,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -9092,20 +9350,23 @@ pub struct ToggleButtonToggleButtonRegular {
     pub visible: Option<String>,
 }
 
+/// The `mso14:toggleButton` element of the tree a read gives:
+/// [`ToggleButtonToggleButtonRegularWith`] holding nothing in `extra`.
+pub type ToggleButtonToggleButtonRegular = ToggleButtonToggleButtonRegularWith<()>;
+
+impl Eq for ToggleButtonToggleButtonRegularWith<()> {}
+
 /// The `mso14:toggleButton` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_VisibleToggleButton`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ToggleButtonVisibleToggleButton {
+pub struct ToggleButtonVisibleToggleButtonWith<X: NodeExtra> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiToggleButtonVisibleToggleButton,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -9164,21 +9425,30 @@ pub struct ToggleButtonVisibleToggleButton {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `mso14:toggleButton` element of the tree a read gives:
+/// [`ToggleButtonVisibleToggleButtonWith`] holding nothing in `extra`.
+pub type ToggleButtonVisibleToggleButton = ToggleButtonVisibleToggleButtonWith<()>;
+
+impl Eq for ToggleButtonVisibleToggleButtonWith<()> {}
+
 /// The `mso14:topItems` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_GroupControls`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TopItems {
+pub struct TopItemsWith<X: NodeExtra> {
     /// The children that are an item of `GroupControlsContent`, in order.
-    pub content: Vec<GroupControlsContent>,
+    pub content: Vec<GroupControlsContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::Office200907CustomuiTopItems,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `mso14:topItems` element of the tree a read gives: [`TopItemsWith`] holding nothing in
+/// `extra`.
+pub type TopItems = TopItemsWith<()>;
+
+impl Eq for TopItemsWith<()> {}
 
 /// The hooks of a visitor for the `mso14` namespace.
 ///
@@ -9879,7 +10149,26 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl Backstage {
+impl<X: NodeExtra> BackstageWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BackstageWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BackstageWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                BackstageContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            on_hide: self.on_hide,
+            on_show: self.on_show,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9901,6 +10190,23 @@ impl officekit_markup_base::Write for Backstage {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::backstage(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> BackstageContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BackstageContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ButtonBackstageFastCommandButton(node) => {
+                BackstageContentWith::ButtonBackstageFastCommandButton(node.into_extra())
+            }
+            Self::Other(node) => BackstageContentWith::Other(node),
+            Self::TabBackstageTab(node) => BackstageContentWith::TabBackstageTab(node.into_extra()),
+        }
     }
 }
 
@@ -9926,6 +10232,26 @@ impl officekit_markup_base::Write for BackstageContent {
             Self::ButtonBackstageFastCommandButton(arm) => arm.write_into(writer),
             Self::Other(node) => writer.other(node.clone()),
             Self::TabBackstageTab(arm) => arm.write_into(writer),
+        }
+    }
+}
+
+impl<X: NodeExtra> BackstageGroupsContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BackstageGroupsContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::GroupBackstageGroup(node) => {
+                BackstageGroupsContentWith::GroupBackstageGroup(node.into_extra())
+            }
+            Self::Other(node) => BackstageGroupsContentWith::Other(node),
+            Self::TaskFormGroup(node) => {
+                BackstageGroupsContentWith::TaskFormGroup(node.into_extra())
+            }
+            Self::TaskGroup(node) => BackstageGroupsContentWith::TaskGroup(node.into_extra()),
         }
     }
 }
@@ -9985,6 +10311,33 @@ impl TryFrom<BackstageGroupsContent> for SimpleGroupsContent {
     }
 }
 
+impl<X: NodeExtra> BackstageMenuGroupContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BackstageMenuGroupContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ButtonBackstageMenuButton(node) => {
+                BackstageMenuGroupContentWith::ButtonBackstageMenuButton(node.into_extra())
+            }
+            Self::CheckBoxBackstageMenuCheckBox(node) => {
+                BackstageMenuGroupContentWith::CheckBoxBackstageMenuCheckBox(node.into_extra())
+            }
+            Self::MenuBackstageSubMenu(node) => {
+                BackstageMenuGroupContentWith::MenuBackstageSubMenu(node.into_extra())
+            }
+            Self::Other(node) => BackstageMenuGroupContentWith::Other(node),
+            Self::ToggleButtonBackstageMenuToggleButton(node) => {
+                BackstageMenuGroupContentWith::ToggleButtonBackstageMenuToggleButton(
+                    node.into_extra(),
+                )
+            }
+        }
+    }
+}
+
 impl officekit_markup_base::Read for BackstageMenuGroupContent {
     fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
@@ -10021,7 +10374,24 @@ impl officekit_markup_base::Write for BackstageMenuGroupContent {
     }
 }
 
-impl BottomItems {
+impl<X: NodeExtra> BottomItemsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BottomItemsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BottomItemsWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                GroupControlsContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10042,7 +10412,34 @@ impl officekit_markup_base::Write for BottomItems {
     }
 }
 
-impl BoxBox {
+impl<X: NodeExtra> BoxBoxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BoxBoxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BoxBoxWith {
+            box_style: self.box_style,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                BoxContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            get_visible: self.get_visible,
+            id: self.id,
+            id_q: self.id_q,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10072,6 +10469,47 @@ impl officekit_markup_base::Write for BoxBox {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::box_box(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> BoxContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BoxContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::BoxBox(node) => BoxContentWith::BoxBox(node.into_extra()),
+            Self::ButtonButton(node) => BoxContentWith::ButtonButton(node.into_extra()),
+            Self::ButtonGroup(node) => BoxContentWith::ButtonGroup(node.into_extra()),
+            Self::CheckBoxCheckBox(node) => BoxContentWith::CheckBoxCheckBox(node.into_extra()),
+            Self::ComboBoxComboBox(node) => BoxContentWith::ComboBoxComboBox(node.into_extra()),
+            Self::ControlControlClone(node) => {
+                BoxContentWith::ControlControlClone(node.into_extra())
+            }
+            Self::DropDownDropDownRegular(node) => {
+                BoxContentWith::DropDownDropDownRegular(node.into_extra())
+            }
+            Self::DynamicMenuDynamicMenu(node) => {
+                BoxContentWith::DynamicMenuDynamicMenu(node.into_extra())
+            }
+            Self::EditBoxEditBox(node) => BoxContentWith::EditBoxEditBox(node.into_extra()),
+            Self::GalleryGallery(node) => {
+                BoxContentWith::GalleryGallery(Box::new((*node).into_extra()))
+            }
+            Self::LabelControlLabelControl(node) => {
+                BoxContentWith::LabelControlLabelControl(node.into_extra())
+            }
+            Self::MenuMenu(node) => BoxContentWith::MenuMenu(node.into_extra()),
+            Self::Other(node) => BoxContentWith::Other(node),
+            Self::SplitButtonSplitButton(node) => {
+                BoxContentWith::SplitButtonSplitButton(node.into_extra())
+            }
+            Self::ToggleButtonToggleButton(node) => {
+                BoxContentWith::ToggleButtonToggleButton(node.into_extra())
+            }
+        }
     }
 }
 
@@ -10198,7 +10636,41 @@ impl BoxStyle {
     }
 }
 
-impl ButtonBackstageFastCommandButton {
+impl<X: NodeExtra> ButtonBackstageFastCommandButtonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ButtonBackstageFastCommandButtonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ButtonBackstageFastCommandButtonWith {
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            is_definitive: self.is_definitive,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10242,7 +10714,42 @@ impl officekit_markup_base::Write for ButtonBackstageFastCommandButton {
     }
 }
 
-impl ButtonBackstageGroupButton {
+impl<X: NodeExtra> ButtonBackstageGroupButtonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ButtonBackstageGroupButtonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ButtonBackstageGroupButtonWith {
+            enabled: self.enabled,
+            expand: self.expand,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            is_definitive: self.is_definitive,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            screentip: self.screentip,
+            style: self.style,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10287,7 +10794,38 @@ impl officekit_markup_base::Write for ButtonBackstageGroupButton {
     }
 }
 
-impl ButtonBackstageMenuButton {
+impl<X: NodeExtra> ButtonBackstageMenuButtonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ButtonBackstageMenuButtonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ButtonBackstageMenuButtonWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            is_definitive: self.is_definitive,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10328,7 +10866,40 @@ impl officekit_markup_base::Write for ButtonBackstageMenuButton {
     }
 }
 
-impl ButtonBackstageRegularButton {
+impl<X: NodeExtra> ButtonBackstageRegularButtonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ButtonBackstageRegularButtonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ButtonBackstageRegularButtonWith {
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            is_definitive: self.is_definitive,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            screentip: self.screentip,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10371,7 +10942,52 @@ impl officekit_markup_base::Write for ButtonBackstageRegularButton {
     }
 }
 
-impl ButtonButton {
+impl<X: NodeExtra> ButtonButtonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ButtonButtonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ButtonButtonWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_size: self.get_size,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_label: self.show_label,
+            size: self.size,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10426,7 +11042,50 @@ impl officekit_markup_base::Write for ButtonButton {
     }
 }
 
-impl ButtonButtonRegular {
+impl<X: NodeExtra> ButtonButtonRegularWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ButtonButtonRegularWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ButtonButtonRegularWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_label: self.show_label,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10479,7 +11138,33 @@ impl officekit_markup_base::Write for ButtonButtonRegular {
     }
 }
 
-impl ButtonGroup {
+impl<X: NodeExtra> ButtonGroupWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ButtonGroupWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ButtonGroupWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                ButtonGroupContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            get_visible: self.get_visible,
+            id: self.id,
+            id_q: self.id_q,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10508,6 +11193,41 @@ impl officekit_markup_base::Write for ButtonGroup {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::button_group(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> ButtonGroupContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ButtonGroupContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ButtonButtonRegular(node) => {
+                ButtonGroupContentWith::ButtonButtonRegular(node.into_extra())
+            }
+            Self::ControlControlCloneRegular(node) => {
+                ButtonGroupContentWith::ControlControlCloneRegular(node.into_extra())
+            }
+            Self::DynamicMenuDynamicMenuRegular(node) => {
+                ButtonGroupContentWith::DynamicMenuDynamicMenuRegular(node.into_extra())
+            }
+            Self::GalleryGalleryRegular(node) => {
+                ButtonGroupContentWith::GalleryGalleryRegular(Box::new((*node).into_extra()))
+            }
+            Self::MenuMenuRegular(node) => {
+                ButtonGroupContentWith::MenuMenuRegular(node.into_extra())
+            }
+            Self::Other(node) => ButtonGroupContentWith::Other(node),
+            Self::Separator(node) => ButtonGroupContentWith::Separator(node.into_extra()),
+            Self::SplitButtonSplitButtonRegular(node) => {
+                ButtonGroupContentWith::SplitButtonSplitButtonRegular(node.into_extra())
+            }
+            Self::ToggleButtonToggleButtonRegular(node) => {
+                ButtonGroupContentWith::ToggleButtonToggleButtonRegular(node.into_extra())
+            }
+        }
     }
 }
 
@@ -10559,7 +11279,48 @@ impl officekit_markup_base::Write for ButtonGroupContent {
     }
 }
 
-impl ButtonVisibleButton {
+impl<X: NodeExtra> ButtonVisibleButtonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ButtonVisibleButtonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ButtonVisibleButtonWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_supertip: self.get_supertip,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_label: self.show_label,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10610,7 +11371,36 @@ impl officekit_markup_base::Write for ButtonVisibleButton {
     }
 }
 
-impl CategoryTaskFormGroupCategory {
+impl<X: NodeExtra> CategoryTaskFormGroupCategoryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CategoryTaskFormGroupCategoryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CategoryTaskFormGroupCategoryWith {
+            extra: Default::default(),
+            get_label: self.get_label,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            label: self.label,
+            tag: self.tag,
+            task_task_form_group_task: officekit_markup_base::into_extra_list(
+                self.task_task_form_group_task,
+                TaskTaskFormGroupTaskWith::into_extra,
+            ),
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10645,7 +11435,36 @@ impl officekit_markup_base::Write for CategoryTaskFormGroupCategory {
     }
 }
 
-impl CategoryTaskGroupCategory {
+impl<X: NodeExtra> CategoryTaskGroupCategoryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CategoryTaskGroupCategoryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CategoryTaskGroupCategoryWith {
+            extra: Default::default(),
+            get_label: self.get_label,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            label: self.label,
+            tag: self.tag,
+            task_task_group_task: officekit_markup_base::into_extra_list(
+                self.task_task_group_task,
+                TaskTaskGroupTaskWith::into_extra,
+            ),
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10680,7 +11499,40 @@ impl officekit_markup_base::Write for CategoryTaskGroupCategory {
     }
 }
 
-impl CheckBoxBackstageCheckBox {
+impl<X: NodeExtra> CheckBoxBackstageCheckBoxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CheckBoxBackstageCheckBoxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CheckBoxBackstageCheckBoxWith {
+            description: self.description,
+            enabled: self.enabled,
+            expand: self.expand,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_pressed: self.get_pressed,
+            get_screentip: self.get_screentip,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_q: self.id_q,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            screentip: self.screentip,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10723,7 +11575,35 @@ impl officekit_markup_base::Write for CheckBoxBackstageCheckBox {
     }
 }
 
-impl CheckBoxBackstageMenuCheckBox {
+impl<X: NodeExtra> CheckBoxBackstageMenuCheckBoxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CheckBoxBackstageMenuCheckBoxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CheckBoxBackstageMenuCheckBoxWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_pressed: self.get_pressed,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_q: self.id_q,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10761,7 +11641,44 @@ impl officekit_markup_base::Write for CheckBoxBackstageMenuCheckBox {
     }
 }
 
-impl CheckBoxCheckBox {
+impl<X: NodeExtra> CheckBoxCheckBoxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CheckBoxCheckBoxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CheckBoxCheckBoxWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_pressed: self.get_pressed,
+            get_screentip: self.get_screentip,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            screentip: self.screentip,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10808,7 +11725,43 @@ impl officekit_markup_base::Write for CheckBoxCheckBox {
     }
 }
 
-impl ComboBoxBackstageComboBox {
+impl<X: NodeExtra> ComboBoxBackstageComboBoxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ComboBoxBackstageComboBoxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ComboBoxBackstageComboBoxWith {
+            align_label: self.align_label,
+            enabled: self.enabled,
+            expand: self.expand,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_item_count: self.get_item_count,
+            get_item_id: self.get_item_id,
+            get_item_label: self.get_item_label,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_text: self.get_text,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_q: self.id_q,
+            item_backstage_item: officekit_markup_base::into_extra_list(
+                self.item_backstage_item,
+                ItemBackstageItemWith::into_extra,
+            ),
+            keytip: self.keytip,
+            label: self.label,
+            on_change: self.on_change,
+            size_string: self.size_string,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10850,7 +11803,63 @@ impl officekit_markup_base::Write for ComboBoxBackstageComboBox {
     }
 }
 
-impl ComboBoxComboBox {
+impl<X: NodeExtra> ComboBoxComboBoxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ComboBoxComboBoxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ComboBoxComboBoxWith {
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_item_count: self.get_item_count,
+            get_item_id: self.get_item_id,
+            get_item_image: self.get_item_image,
+            get_item_label: self.get_item_label,
+            get_item_screentip: self.get_item_screentip,
+            get_item_supertip: self.get_item_supertip,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_supertip: self.get_supertip,
+            get_text: self.get_text,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            invalidate_content_on_drop: self.invalidate_content_on_drop,
+            item_item: officekit_markup_base::into_extra_list(
+                self.item_item,
+                ItemItemWith::into_extra,
+            ),
+            keytip: self.keytip,
+            label: self.label,
+            max_length: self.max_length,
+            on_change: self.on_change,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_item_image: self.show_item_image,
+            show_label: self.show_label,
+            size_string: self.size_string,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10912,7 +11921,24 @@ impl officekit_markup_base::Write for ComboBoxComboBox {
     }
 }
 
-impl Command {
+impl<X: NodeExtra> CommandWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CommandWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CommandWith {
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            id_mso: self.id_mso,
+            on_action: self.on_action,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10939,7 +11965,21 @@ impl officekit_markup_base::Write for Command {
     }
 }
 
-impl Commands {
+impl<X: NodeExtra> CommandsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CommandsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CommandsWith {
+            command: officekit_markup_base::into_extra_list(self.command, CommandWith::into_extra),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10960,7 +12000,25 @@ impl officekit_markup_base::Write for Commands {
     }
 }
 
-impl ContextMenu {
+impl<X: NodeExtra> ContextMenuWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ContextMenuWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ContextMenuWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                ContextMenuContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            id_mso: self.id_mso,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10981,6 +12039,46 @@ impl officekit_markup_base::Write for ContextMenu {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::context_menu(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> ContextMenuContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ContextMenuContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ButtonButtonRegular(node) => {
+                ContextMenuContentWith::ButtonButtonRegular(node.into_extra())
+            }
+            Self::CheckBoxCheckBox(node) => {
+                ContextMenuContentWith::CheckBoxCheckBox(node.into_extra())
+            }
+            Self::ControlControlCloneRegular(node) => {
+                ContextMenuContentWith::ControlControlCloneRegular(node.into_extra())
+            }
+            Self::DynamicMenuDynamicMenuRegular(node) => {
+                ContextMenuContentWith::DynamicMenuDynamicMenuRegular(node.into_extra())
+            }
+            Self::GalleryGalleryRegular(node) => {
+                ContextMenuContentWith::GalleryGalleryRegular(Box::new((*node).into_extra()))
+            }
+            Self::MenuMenuRegular(node) => {
+                ContextMenuContentWith::MenuMenuRegular(node.into_extra())
+            }
+            Self::MenuSeparatorMenuSeparatorNoTitle(node) => {
+                ContextMenuContentWith::MenuSeparatorMenuSeparatorNoTitle(node.into_extra())
+            }
+            Self::Other(node) => ContextMenuContentWith::Other(node),
+            Self::SplitButtonSplitButtonRegular(node) => {
+                ContextMenuContentWith::SplitButtonSplitButtonRegular(node.into_extra())
+            }
+            Self::ToggleButtonToggleButtonRegular(node) => {
+                ContextMenuContentWith::ToggleButtonToggleButtonRegular(node.into_extra())
+            }
+        }
     }
 }
 
@@ -11038,7 +12136,24 @@ impl officekit_markup_base::Write for ContextMenuContent {
     }
 }
 
-impl ContextMenus {
+impl<X: NodeExtra> ContextMenusWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ContextMenusWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ContextMenusWith {
+            context_menu: officekit_markup_base::into_extra_list(
+                self.context_menu,
+                ContextMenuWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11059,7 +12174,21 @@ impl officekit_markup_base::Write for ContextMenus {
     }
 }
 
-impl ContextualTabs {
+impl<X: NodeExtra> ContextualTabsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ContextualTabsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ContextualTabsWith {
+            extra: Default::default(),
+            tab_set: officekit_markup_base::into_extra_list(self.tab_set, TabSetWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11080,7 +12209,50 @@ impl officekit_markup_base::Write for ContextualTabs {
     }
 }
 
-impl ControlControlClone {
+impl<X: NodeExtra> ControlControlCloneWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ControlControlCloneWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ControlControlCloneWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_size: self.get_size,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            label: self.label,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_label: self.show_label,
+            size: self.size,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11133,7 +12305,50 @@ impl officekit_markup_base::Write for ControlControlClone {
     }
 }
 
-impl ControlControlCloneQat {
+impl<X: NodeExtra> ControlControlCloneQatWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ControlControlCloneQatWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ControlControlCloneQatWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_size: self.get_size,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            label: self.label,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_label: self.show_label,
+            size: self.size,
+            supertip: self.supertip,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11186,7 +12401,46 @@ impl officekit_markup_base::Write for ControlControlCloneQat {
     }
 }
 
-impl ControlControlCloneRegular {
+impl<X: NodeExtra> ControlControlCloneRegularWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ControlControlCloneRegularWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ControlControlCloneRegularWith {
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            label: self.label,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_label: self.show_label,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11235,7 +12489,38 @@ impl officekit_markup_base::Write for ControlControlCloneRegular {
     }
 }
 
-impl CustomUI {
+impl<X: NodeExtra> CustomUIWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> CustomUIWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CustomUIWith {
+            backstage: officekit_markup_base::into_extra_optional(
+                &mut self.backstage,
+                BackstageWith::into_extra,
+            ),
+            commands: officekit_markup_base::into_extra_optional(
+                &mut self.commands,
+                CommandsWith::into_extra,
+            ),
+            context_menus: officekit_markup_base::into_extra_optional(
+                &mut self.context_menus,
+                ContextMenusWith::into_extra,
+            ),
+            extra: Default::default(),
+            load_image: self.load_image,
+            on_load: self.on_load,
+            ribbon: officekit_markup_base::into_extra_optional(
+                &mut self.ribbon,
+                RibbonWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11260,7 +12545,24 @@ impl officekit_markup_base::Write for CustomUI {
     }
 }
 
-impl DialogBoxLauncher {
+impl<X: NodeExtra> DialogBoxLauncherWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DialogBoxLauncherWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DialogBoxLauncherWith {
+            button_button_regular: officekit_markup_base::into_extra_required(
+                *self.button_button_regular,
+                ButtonButtonRegularWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11281,7 +12583,24 @@ impl officekit_markup_base::Write for DialogBoxLauncher {
     }
 }
 
-impl DocumentControls {
+impl<X: NodeExtra> DocumentControlsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DocumentControlsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DocumentControlsWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                QuickAccessToolbarItemsContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11302,7 +12621,47 @@ impl officekit_markup_base::Write for DocumentControls {
     }
 }
 
-impl DropDownBackstageDropDown {
+impl<X: NodeExtra> DropDownBackstageDropDownWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DropDownBackstageDropDownWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DropDownBackstageDropDownWith {
+            align_label: self.align_label,
+            enabled: self.enabled,
+            expand: self.expand,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_item_count: self.get_item_count,
+            get_item_id: self.get_item_id,
+            get_item_label: self.get_item_label,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_selected_item_index: self.get_selected_item_index,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_q: self.id_q,
+            item_backstage_item: officekit_markup_base::into_extra_list(
+                self.item_backstage_item,
+                ItemBackstageItemWith::into_extra,
+            ),
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            screentip: self.screentip,
+            size_string: self.size_string,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11348,7 +12707,67 @@ impl officekit_markup_base::Write for DropDownBackstageDropDown {
     }
 }
 
-impl DropDownDropDownRegular {
+impl<X: NodeExtra> DropDownDropDownRegularWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DropDownDropDownRegularWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DropDownDropDownRegularWith {
+            button_button_regular: officekit_markup_base::into_extra_list(
+                self.button_button_regular,
+                ButtonButtonRegularWith::into_extra,
+            ),
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_item_count: self.get_item_count,
+            get_item_id: self.get_item_id,
+            get_item_image: self.get_item_image,
+            get_item_label: self.get_item_label,
+            get_item_screentip: self.get_item_screentip,
+            get_item_supertip: self.get_item_supertip,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_selected_item_id: self.get_selected_item_id,
+            get_selected_item_index: self.get_selected_item_index,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            item_item: officekit_markup_base::into_extra_list(
+                self.item_item,
+                ItemItemWith::into_extra,
+            ),
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_item_image: self.show_item_image,
+            show_item_label: self.show_item_label,
+            show_label: self.show_label,
+            size_string: self.size_string,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11410,7 +12829,53 @@ impl officekit_markup_base::Write for DropDownDropDownRegular {
     }
 }
 
-impl DynamicMenuDynamicMenu {
+impl<X: NodeExtra> DynamicMenuDynamicMenuWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DynamicMenuDynamicMenuWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DynamicMenuDynamicMenuWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_content: self.get_content,
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_size: self.get_size,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            invalidate_content_on_drop: self.invalidate_content_on_drop,
+            keytip: self.keytip,
+            label: self.label,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_label: self.show_label,
+            size: self.size,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11466,7 +12931,51 @@ impl officekit_markup_base::Write for DynamicMenuDynamicMenu {
     }
 }
 
-impl DynamicMenuDynamicMenuRegular {
+impl<X: NodeExtra> DynamicMenuDynamicMenuRegularWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DynamicMenuDynamicMenuRegularWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DynamicMenuDynamicMenuRegularWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_content: self.get_content,
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            invalidate_content_on_drop: self.invalidate_content_on_drop,
+            keytip: self.keytip,
+            label: self.label,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_label: self.show_label,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11520,7 +13029,37 @@ impl officekit_markup_base::Write for DynamicMenuDynamicMenuRegular {
     }
 }
 
-impl EditBoxBackstageEditBox {
+impl<X: NodeExtra> EditBoxBackstageEditBoxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> EditBoxBackstageEditBoxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EditBoxBackstageEditBoxWith {
+            align_label: self.align_label,
+            enabled: self.enabled,
+            expand: self.expand,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_text: self.get_text,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_q: self.id_q,
+            keytip: self.keytip,
+            label: self.label,
+            max_length: self.max_length,
+            on_change: self.on_change,
+            size_string: self.size_string,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11560,7 +13099,51 @@ impl officekit_markup_base::Write for EditBoxBackstageEditBox {
     }
 }
 
-impl EditBoxEditBox {
+impl<X: NodeExtra> EditBoxEditBoxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> EditBoxEditBoxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EditBoxEditBoxWith {
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_supertip: self.get_supertip,
+            get_text: self.get_text,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            label: self.label,
+            max_length: self.max_length,
+            on_change: self.on_change,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_label: self.show_label,
+            size_string: self.size_string,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11678,7 +13261,24 @@ impl Expand {
     }
 }
 
-impl FirstColumn {
+impl<X: NodeExtra> FirstColumnWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FirstColumnWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FirstColumnWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                BackstageGroupsContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11699,7 +13299,79 @@ impl officekit_markup_base::Write for FirstColumn {
     }
 }
 
-impl GalleryGallery {
+impl<X: NodeExtra> GalleryGalleryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GalleryGalleryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GalleryGalleryWith {
+            button_button_regular: officekit_markup_base::into_extra_list(
+                self.button_button_regular,
+                ButtonButtonRegularWith::into_extra,
+            ),
+            columns: self.columns,
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_item_count: self.get_item_count,
+            get_item_height: self.get_item_height,
+            get_item_id: self.get_item_id,
+            get_item_image: self.get_item_image,
+            get_item_label: self.get_item_label,
+            get_item_screentip: self.get_item_screentip,
+            get_item_supertip: self.get_item_supertip,
+            get_item_width: self.get_item_width,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_selected_item_id: self.get_selected_item_id,
+            get_selected_item_index: self.get_selected_item_index,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_size: self.get_size,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            invalidate_content_on_drop: self.invalidate_content_on_drop,
+            item_height: self.item_height,
+            item_item: officekit_markup_base::into_extra_list(
+                self.item_item,
+                ItemItemWith::into_extra,
+            ),
+            item_width: self.item_width,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            rows: self.rows,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_in_ribbon: self.show_in_ribbon,
+            show_item_image: self.show_item_image,
+            show_item_label: self.show_item_label,
+            show_label: self.show_label,
+            size: self.size,
+            size_string: self.size_string,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11773,7 +13445,77 @@ impl officekit_markup_base::Write for GalleryGallery {
     }
 }
 
-impl GalleryGalleryRegular {
+impl<X: NodeExtra> GalleryGalleryRegularWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GalleryGalleryRegularWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GalleryGalleryRegularWith {
+            button_button_regular: officekit_markup_base::into_extra_list(
+                self.button_button_regular,
+                ButtonButtonRegularWith::into_extra,
+            ),
+            columns: self.columns,
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_item_count: self.get_item_count,
+            get_item_height: self.get_item_height,
+            get_item_id: self.get_item_id,
+            get_item_image: self.get_item_image,
+            get_item_label: self.get_item_label,
+            get_item_screentip: self.get_item_screentip,
+            get_item_supertip: self.get_item_supertip,
+            get_item_width: self.get_item_width,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_selected_item_id: self.get_selected_item_id,
+            get_selected_item_index: self.get_selected_item_index,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            invalidate_content_on_drop: self.invalidate_content_on_drop,
+            item_height: self.item_height,
+            item_item: officekit_markup_base::into_extra_list(
+                self.item_item,
+                ItemItemWith::into_extra,
+            ),
+            item_width: self.item_width,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            rows: self.rows,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_in_ribbon: self.show_in_ribbon,
+            show_item_image: self.show_item_image,
+            show_item_label: self.show_item_label,
+            show_label: self.show_label,
+            size_string: self.size_string,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11898,7 +13640,50 @@ impl GalleryShowInRibbon {
     }
 }
 
-impl GroupBackstageGroup {
+impl<X: NodeExtra> GroupBackstageGroupWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GroupBackstageGroupWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GroupBackstageGroupWith {
+            bottom_items: officekit_markup_base::into_extra_optional(
+                &mut self.bottom_items,
+                BottomItemsWith::into_extra,
+            ),
+            extra: Default::default(),
+            get_helper_text: self.get_helper_text,
+            get_label: self.get_label,
+            get_show_label: self.get_show_label,
+            get_style: self.get_style,
+            get_visible: self.get_visible,
+            helper_text: self.helper_text,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            label: self.label,
+            primary_item: officekit_markup_base::into_extra_optional(
+                &mut self.primary_item,
+                PrimaryItemWith::into_extra,
+            ),
+            show_label: self.show_label,
+            style: self.style,
+            tag: self.tag,
+            top_items: officekit_markup_base::into_extra_optional(
+                &mut self.top_items,
+                TopItemsWith::into_extra,
+            ),
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11939,7 +13724,30 @@ impl officekit_markup_base::Write for GroupBackstageGroup {
     }
 }
 
-impl GroupBox {
+impl<X: NodeExtra> GroupBoxWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GroupBoxWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GroupBoxWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                GroupControlsContentWith::into_extra,
+            ),
+            expand: self.expand,
+            extra: Default::default(),
+            get_label: self.get_label,
+            id: self.id,
+            id_q: self.id_q,
+            label: self.label,
+            tag: self.tag,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -11965,6 +13773,48 @@ impl officekit_markup_base::Write for GroupBox {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::group_box(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> GroupContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GroupContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::BoxBox(node) => GroupContentWith::BoxBox(node.into_extra()),
+            Self::ButtonButton(node) => GroupContentWith::ButtonButton(node.into_extra()),
+            Self::ButtonGroup(node) => GroupContentWith::ButtonGroup(node.into_extra()),
+            Self::CheckBoxCheckBox(node) => GroupContentWith::CheckBoxCheckBox(node.into_extra()),
+            Self::ComboBoxComboBox(node) => GroupContentWith::ComboBoxComboBox(node.into_extra()),
+            Self::ControlControlClone(node) => {
+                GroupContentWith::ControlControlClone(node.into_extra())
+            }
+            Self::DropDownDropDownRegular(node) => {
+                GroupContentWith::DropDownDropDownRegular(node.into_extra())
+            }
+            Self::DynamicMenuDynamicMenu(node) => {
+                GroupContentWith::DynamicMenuDynamicMenu(node.into_extra())
+            }
+            Self::EditBoxEditBox(node) => GroupContentWith::EditBoxEditBox(node.into_extra()),
+            Self::GalleryGallery(node) => {
+                GroupContentWith::GalleryGallery(Box::new((*node).into_extra()))
+            }
+            Self::LabelControlLabelControl(node) => {
+                GroupContentWith::LabelControlLabelControl(node.into_extra())
+            }
+            Self::MenuMenu(node) => GroupContentWith::MenuMenu(node.into_extra()),
+            Self::Other(node) => GroupContentWith::Other(node),
+            Self::Separator(node) => GroupContentWith::Separator(node.into_extra()),
+            Self::SplitButtonSplitButton(node) => {
+                GroupContentWith::SplitButtonSplitButton(node.into_extra())
+            }
+            Self::ToggleButtonToggleButton(node) => {
+                GroupContentWith::ToggleButtonToggleButton(node.into_extra())
+            }
+        }
     }
 }
 
@@ -12087,6 +13937,44 @@ impl TryFrom<GroupContent> for BoxContent {
     }
 }
 
+impl<X: NodeExtra> GroupControlsContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> GroupControlsContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ButtonBackstageGroupButton(node) => {
+                GroupControlsContentWith::ButtonBackstageGroupButton(node.into_extra())
+            }
+            Self::CheckBoxBackstageCheckBox(node) => {
+                GroupControlsContentWith::CheckBoxBackstageCheckBox(node.into_extra())
+            }
+            Self::ComboBoxBackstageComboBox(node) => {
+                GroupControlsContentWith::ComboBoxBackstageComboBox(node.into_extra())
+            }
+            Self::DropDownBackstageDropDown(node) => {
+                GroupControlsContentWith::DropDownBackstageDropDown(node.into_extra())
+            }
+            Self::EditBoxBackstageEditBox(node) => {
+                GroupControlsContentWith::EditBoxBackstageEditBox(node.into_extra())
+            }
+            Self::GroupBox(node) => GroupControlsContentWith::GroupBox(node.into_extra()),
+            Self::Hyperlink(node) => GroupControlsContentWith::Hyperlink(node.into_extra()),
+            Self::ImageControl(node) => GroupControlsContentWith::ImageControl(node.into_extra()),
+            Self::LabelControlBackstageLabelControl(node) => {
+                GroupControlsContentWith::LabelControlBackstageLabelControl(node.into_extra())
+            }
+            Self::LayoutContainer(node) => {
+                GroupControlsContentWith::LayoutContainer(node.into_extra())
+            }
+            Self::Other(node) => GroupControlsContentWith::Other(node),
+            Self::RadioGroup(node) => GroupControlsContentWith::RadioGroup(node.into_extra()),
+        }
+    }
+}
+
 impl officekit_markup_base::Read for GroupControlsContent {
     fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
@@ -12147,7 +14035,51 @@ impl officekit_markup_base::Write for GroupControlsContent {
     }
 }
 
-impl GroupGroup {
+impl<X: NodeExtra> GroupGroupWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GroupGroupWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GroupGroupWith {
+            auto_scale: self.auto_scale,
+            center_vertically: self.center_vertically,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                GroupContentWith::into_extra,
+            ),
+            dialog_box_launcher: officekit_markup_base::into_extra_optional(
+                &mut self.dialog_box_launcher,
+                DialogBoxLauncherWith::into_extra,
+            ),
+            extra: Default::default(),
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            label: self.label,
+            screentip: self.screentip,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12193,7 +14125,43 @@ impl officekit_markup_base::Write for GroupGroup {
     }
 }
 
-impl Hyperlink {
+impl<X: NodeExtra> HyperlinkWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> HyperlinkWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HyperlinkWith {
+            align_label: self.align_label,
+            enabled: self.enabled,
+            expand: self.expand,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_supertip: self.get_supertip,
+            get_target: self.get_target,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            screentip: self.screentip,
+            supertip: self.supertip,
+            tag: self.tag,
+            target: self.target,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12239,7 +14207,32 @@ impl officekit_markup_base::Write for Hyperlink {
     }
 }
 
-impl ImageControl {
+impl<X: NodeExtra> ImageControlWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ImageControlWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ImageControlWith {
+            alt_text: self.alt_text,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_alt_text: self.get_alt_text,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12274,7 +14267,20 @@ impl officekit_markup_base::Write for ImageControl {
     }
 }
 
-impl ItemBackstageItem {
+impl<X: NodeExtra> ItemBackstageItemWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ItemBackstageItemWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ItemBackstageItemWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12295,7 +14301,26 @@ impl officekit_markup_base::Write for ItemBackstageItem {
     }
 }
 
-impl ItemItem {
+impl<X: NodeExtra> ItemItemWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ItemItemWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ItemItemWith {
+            extra: Default::default(),
+            id: self.id,
+            image: self.image,
+            image_mso: self.image_mso,
+            label: self.label,
+            screentip: self.screentip,
+            supertip: self.supertip,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12373,7 +14398,32 @@ impl ItemSize {
     }
 }
 
-impl LabelControlBackstageLabelControl {
+impl<X: NodeExtra> LabelControlBackstageLabelControlWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LabelControlBackstageLabelControlWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LabelControlBackstageLabelControlWith {
+            align_label: self.align_label,
+            enabled: self.enabled,
+            expand: self.expand,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_label: self.get_label,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_q: self.id_q,
+            label: self.label,
+            no_wrap: self.no_wrap,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12408,7 +14458,40 @@ impl officekit_markup_base::Write for LabelControlBackstageLabelControl {
     }
 }
 
-impl LabelControlLabelControl {
+impl<X: NodeExtra> LabelControlLabelControlWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LabelControlLabelControlWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LabelControlLabelControlWith {
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_show_label: self.get_show_label,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            label: self.label,
+            screentip: self.screentip,
+            show_label: self.show_label,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12504,7 +14587,30 @@ impl LayoutChildren {
     }
 }
 
-impl LayoutContainer {
+impl<X: NodeExtra> LayoutContainerWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LayoutContainerWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LayoutContainerWith {
+            align: self.align,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                GroupControlsContentWith::into_extra,
+            ),
+            expand: self.expand,
+            extra: Default::default(),
+            id: self.id,
+            id_q: self.id_q,
+            layout_children: self.layout_children,
+            tag: self.tag,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12533,7 +14639,39 @@ impl officekit_markup_base::Write for LayoutContainer {
     }
 }
 
-impl MenuBackstagePrimaryMenu {
+impl<X: NodeExtra> MenuBackstagePrimaryMenuWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MenuBackstagePrimaryMenuWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MenuBackstagePrimaryMenuWith {
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            group: officekit_markup_base::into_extra_list(self.group, MenuGroupWith::into_extra),
+            id: self.id,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            keytip: self.keytip,
+            label: self.label,
+            screentip: self.screentip,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12574,7 +14712,37 @@ impl officekit_markup_base::Write for MenuBackstagePrimaryMenu {
     }
 }
 
-impl MenuBackstageSubMenu {
+impl<X: NodeExtra> MenuBackstageSubMenuWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MenuBackstageSubMenuWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MenuBackstageSubMenuWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_visible: self.get_visible,
+            group: officekit_markup_base::into_extra_list(self.group, MenuGroupWith::into_extra),
+            id: self.id,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            keytip: self.keytip,
+            label: self.label,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12610,6 +14778,42 @@ impl officekit_markup_base::Write for MenuBackstageSubMenu {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::menu_backstage_sub_menu(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> MenuContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MenuContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ButtonButtonRegular(node) => {
+                MenuContentWith::ButtonButtonRegular(node.into_extra())
+            }
+            Self::CheckBoxCheckBox(node) => MenuContentWith::CheckBoxCheckBox(node.into_extra()),
+            Self::ControlControlCloneRegular(node) => {
+                MenuContentWith::ControlControlCloneRegular(node.into_extra())
+            }
+            Self::DynamicMenuDynamicMenuRegular(node) => {
+                MenuContentWith::DynamicMenuDynamicMenuRegular(node.into_extra())
+            }
+            Self::GalleryGalleryRegular(node) => {
+                MenuContentWith::GalleryGalleryRegular(Box::new((*node).into_extra()))
+            }
+            Self::MenuMenuRegular(node) => MenuContentWith::MenuMenuRegular(node.into_extra()),
+            Self::MenuSeparatorMenuSeparator(node) => {
+                MenuContentWith::MenuSeparatorMenuSeparator(node.into_extra())
+            }
+            Self::Other(node) => MenuContentWith::Other(node),
+            Self::SplitButtonSplitButtonRegular(node) => {
+                MenuContentWith::SplitButtonSplitButtonRegular(node.into_extra())
+            }
+            Self::ToggleButtonToggleButtonRegular(node) => {
+                MenuContentWith::ToggleButtonToggleButtonRegular(node.into_extra())
+            }
+        }
     }
 }
 
@@ -12667,7 +14871,30 @@ impl officekit_markup_base::Write for MenuContent {
     }
 }
 
-impl MenuGroup {
+impl<X: NodeExtra> MenuGroupWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MenuGroupWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MenuGroupWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                BackstageMenuGroupContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            get_label: self.get_label,
+            id: self.id,
+            id_q: self.id_q,
+            item_size: self.item_size,
+            label: self.label,
+            tag: self.tag,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12696,7 +14923,56 @@ impl officekit_markup_base::Write for MenuGroup {
     }
 }
 
-impl MenuMenu {
+impl<X: NodeExtra> MenuMenuWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MenuMenuWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MenuMenuWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                MenuContentWith::into_extra,
+            ),
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_size: self.get_size,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            item_size: self.item_size,
+            keytip: self.keytip,
+            label: self.label,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_label: self.show_label,
+            size: self.size,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12751,7 +15027,54 @@ impl officekit_markup_base::Write for MenuMenu {
     }
 }
 
-impl MenuMenuRegular {
+impl<X: NodeExtra> MenuMenuRegularWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MenuMenuRegularWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MenuMenuRegularWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                MenuContentWith::into_extra,
+            ),
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            item_size: self.item_size,
+            keytip: self.keytip,
+            label: self.label,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_label: self.show_label,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12804,7 +15127,27 @@ impl officekit_markup_base::Write for MenuMenuRegular {
     }
 }
 
-impl MenuMenuRoot {
+impl<X: NodeExtra> MenuMenuRootWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MenuMenuRootWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MenuMenuRootWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                MenuContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            get_title: self.get_title,
+            item_size: self.item_size,
+            title: self.title,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12830,7 +15173,54 @@ impl officekit_markup_base::Write for MenuMenuRoot {
     }
 }
 
-impl MenuMenuWithTitle {
+impl<X: NodeExtra> MenuMenuWithTitleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MenuMenuWithTitleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MenuMenuWithTitleWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                MenuWithTitleContentWith::into_extra,
+            ),
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_screentip: self.get_screentip,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_supertip: self.get_supertip,
+            get_title: self.get_title,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            item_size: self.item_size,
+            keytip: self.keytip,
+            label: self.label,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_label: self.show_label,
+            supertip: self.supertip,
+            tag: self.tag,
+            title: self.title,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12883,7 +15273,29 @@ impl officekit_markup_base::Write for MenuMenuWithTitle {
     }
 }
 
-impl MenuSeparatorMenuSeparator {
+impl<X: NodeExtra> MenuSeparatorMenuSeparatorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MenuSeparatorMenuSeparatorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MenuSeparatorMenuSeparatorWith {
+            extra: Default::default(),
+            get_title: self.get_title,
+            id: self.id,
+            id_q: self.id_q,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            tag: self.tag,
+            title: self.title,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12915,7 +15327,27 @@ impl officekit_markup_base::Write for MenuSeparatorMenuSeparator {
     }
 }
 
-impl MenuSeparatorMenuSeparatorNoTitle {
+impl<X: NodeExtra> MenuSeparatorMenuSeparatorNoTitleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MenuSeparatorMenuSeparatorNoTitleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MenuSeparatorMenuSeparatorNoTitleWith {
+            extra: Default::default(),
+            id: self.id,
+            id_q: self.id_q,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            tag: self.tag,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -12942,6 +15374,46 @@ impl officekit_markup_base::Write for MenuSeparatorMenuSeparatorNoTitle {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::menu_separator_menu_separator_no_title(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> MenuWithTitleContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MenuWithTitleContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ButtonButtonRegular(node) => {
+                MenuWithTitleContentWith::ButtonButtonRegular(node.into_extra())
+            }
+            Self::CheckBoxCheckBox(node) => {
+                MenuWithTitleContentWith::CheckBoxCheckBox(node.into_extra())
+            }
+            Self::ControlControlCloneRegular(node) => {
+                MenuWithTitleContentWith::ControlControlCloneRegular(node.into_extra())
+            }
+            Self::DynamicMenuDynamicMenuRegular(node) => {
+                MenuWithTitleContentWith::DynamicMenuDynamicMenuRegular(node.into_extra())
+            }
+            Self::GalleryGalleryRegular(node) => {
+                MenuWithTitleContentWith::GalleryGalleryRegular(Box::new((*node).into_extra()))
+            }
+            Self::MenuMenuWithTitle(node) => {
+                MenuWithTitleContentWith::MenuMenuWithTitle(node.into_extra())
+            }
+            Self::MenuSeparatorMenuSeparator(node) => {
+                MenuWithTitleContentWith::MenuSeparatorMenuSeparator(node.into_extra())
+            }
+            Self::Other(node) => MenuWithTitleContentWith::Other(node),
+            Self::SplitButtonSplitButtonWithTitle(node) => {
+                MenuWithTitleContentWith::SplitButtonSplitButtonWithTitle(node.into_extra())
+            }
+            Self::ToggleButtonToggleButtonRegular(node) => {
+                MenuWithTitleContentWith::ToggleButtonToggleButtonRegular(node.into_extra())
+            }
+        }
     }
 }
 
@@ -13001,7 +15473,24 @@ impl officekit_markup_base::Write for MenuWithTitleContent {
     }
 }
 
-impl PrimaryItem {
+impl<X: NodeExtra> PrimaryItemWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PrimaryItemWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PrimaryItemWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                PrimaryItemContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13022,9 +15511,28 @@ impl officekit_markup_base::Write for PrimaryItem {
     }
 }
 
-impl Default for PrimaryItemContent {
+impl<X: NodeExtra> PrimaryItemContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PrimaryItemContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ButtonBackstageRegularButton(node) => {
+                PrimaryItemContentWith::ButtonBackstageRegularButton(node.into_extra())
+            }
+            Self::MenuBackstagePrimaryMenu(node) => {
+                PrimaryItemContentWith::MenuBackstagePrimaryMenu(node.into_extra())
+            }
+            Self::Other(node) => PrimaryItemContentWith::Other(node),
+        }
+    }
+}
+
+impl<X: NodeExtra> Default for PrimaryItemContentWith<X> {
     fn default() -> Self {
-        Self::ButtonBackstageRegularButton(ButtonBackstageRegularButton::default())
+        Self::ButtonBackstageRegularButton(ButtonBackstageRegularButtonWith::default())
     }
 }
 
@@ -13056,7 +15564,28 @@ impl officekit_markup_base::Write for PrimaryItemContent {
     }
 }
 
-impl Qat {
+impl<X: NodeExtra> QatWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> QatWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        QatWith {
+            document_controls: officekit_markup_base::into_extra_optional(
+                &mut self.document_controls,
+                DocumentControlsWith::into_extra,
+            ),
+            extra: Default::default(),
+            shared_controls: officekit_markup_base::into_extra_optional(
+                &mut self.shared_controls,
+                SharedControlsWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13074,6 +15603,28 @@ impl officekit_markup_base::Write for Qat {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::qat(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> QuickAccessToolbarItemsContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> QuickAccessToolbarItemsContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ButtonButtonRegular(node) => {
+                QuickAccessToolbarItemsContentWith::ButtonButtonRegular(node.into_extra())
+            }
+            Self::ControlControlCloneQat(node) => {
+                QuickAccessToolbarItemsContentWith::ControlControlCloneQat(node.into_extra())
+            }
+            Self::Other(node) => QuickAccessToolbarItemsContentWith::Other(node),
+            Self::Separator(node) => {
+                QuickAccessToolbarItemsContentWith::Separator(node.into_extra())
+            }
+        }
     }
 }
 
@@ -13107,7 +15658,20 @@ impl officekit_markup_base::Write for QuickAccessToolbarItemsContent {
     }
 }
 
-impl RadioButton {
+impl<X: NodeExtra> RadioButtonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RadioButtonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RadioButtonWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13128,7 +15692,42 @@ impl officekit_markup_base::Write for RadioButton {
     }
 }
 
-impl RadioGroup {
+impl<X: NodeExtra> RadioGroupWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RadioGroupWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RadioGroupWith {
+            align_label: self.align_label,
+            enabled: self.enabled,
+            expand: self.expand,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_item_count: self.get_item_count,
+            get_item_id: self.get_item_id,
+            get_item_label: self.get_item_label,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_selected_item_index: self.get_selected_item_index,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_q: self.id_q,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            radio_button: officekit_markup_base::into_extra_list(
+                self.radio_button,
+                RadioButtonWith::into_extra,
+            ),
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13169,7 +15768,25 @@ impl officekit_markup_base::Write for RadioGroup {
     }
 }
 
-impl Ribbon {
+impl<X: NodeExtra> RibbonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RibbonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RibbonWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                RibbonContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            start_from_scratch: self.start_from_scratch,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13190,6 +15807,22 @@ impl officekit_markup_base::Write for Ribbon {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::ribbon(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> RibbonContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RibbonContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ContextualTabs(node) => RibbonContentWith::ContextualTabs(node.into_extra()),
+            Self::Other(node) => RibbonContentWith::Other(node),
+            Self::Qat(node) => RibbonContentWith::Qat(node.into_extra()),
+            Self::Tabs(node) => RibbonContentWith::Tabs(node.into_extra()),
+        }
     }
 }
 
@@ -13221,7 +15854,24 @@ impl officekit_markup_base::Write for RibbonContent {
     }
 }
 
-impl SecondColumn {
+impl<X: NodeExtra> SecondColumnWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SecondColumnWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SecondColumnWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                SimpleGroupsContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13242,7 +15892,29 @@ impl officekit_markup_base::Write for SecondColumn {
     }
 }
 
-impl Separator {
+impl<X: NodeExtra> SeparatorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SeparatorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SeparatorWith {
+            extra: Default::default(),
+            get_visible: self.get_visible,
+            id: self.id,
+            id_q: self.id_q,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13274,7 +15946,24 @@ impl officekit_markup_base::Write for Separator {
     }
 }
 
-impl SharedControls {
+impl<X: NodeExtra> SharedControlsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SharedControlsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SharedControlsWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                QuickAccessToolbarItemsContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13292,6 +15981,23 @@ impl officekit_markup_base::Write for SharedControls {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::shared_controls(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> SimpleGroupsContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SimpleGroupsContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::GroupBackstageGroup(node) => {
+                SimpleGroupsContentWith::GroupBackstageGroup(node.into_extra())
+            }
+            Self::Other(node) => SimpleGroupsContentWith::Other(node),
+            Self::TaskGroup(node) => SimpleGroupsContentWith::TaskGroup(node.into_extra()),
+        }
     }
 }
 
@@ -13370,6 +16076,25 @@ impl Size {
     }
 }
 
+impl<X: NodeExtra> SplitButtonContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SplitButtonContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::ButtonVisibleButton(node) => {
+                SplitButtonContentWith::ButtonVisibleButton(node.into_extra())
+            }
+            Self::Other(node) => SplitButtonContentWith::Other(node),
+            Self::ToggleButtonVisibleToggleButton(node) => {
+                SplitButtonContentWith::ToggleButtonVisibleToggleButton(node.into_extra())
+            }
+        }
+    }
+}
+
 impl officekit_markup_base::Read for SplitButtonContent {
     fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
@@ -13398,7 +16123,46 @@ impl officekit_markup_base::Write for SplitButtonContent {
     }
 }
 
-impl SplitButtonSplitButton {
+impl<X: NodeExtra> SplitButtonSplitButtonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SplitButtonSplitButtonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SplitButtonSplitButtonWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                SplitButtonContentWith::into_extra,
+            ),
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_keytip: self.get_keytip,
+            get_show_label: self.get_show_label,
+            get_size: self.get_size,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            menu_menu_regular: officekit_markup_base::into_extra_optional(
+                &mut self.menu_menu_regular,
+                MenuMenuRegularWith::into_extra,
+            ),
+            show_label: self.show_label,
+            size: self.size,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13439,7 +16203,44 @@ impl officekit_markup_base::Write for SplitButtonSplitButton {
     }
 }
 
-impl SplitButtonSplitButtonRegular {
+impl<X: NodeExtra> SplitButtonSplitButtonRegularWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SplitButtonSplitButtonRegularWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SplitButtonSplitButtonRegularWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                SplitButtonContentWith::into_extra,
+            ),
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_keytip: self.get_keytip,
+            get_show_label: self.get_show_label,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            menu_menu_regular: officekit_markup_base::into_extra_optional(
+                &mut self.menu_menu_regular,
+                MenuMenuRegularWith::into_extra,
+            ),
+            show_label: self.show_label,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13478,7 +16279,44 @@ impl officekit_markup_base::Write for SplitButtonSplitButtonRegular {
     }
 }
 
-impl SplitButtonSplitButtonWithTitle {
+impl<X: NodeExtra> SplitButtonSplitButtonWithTitleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SplitButtonSplitButtonWithTitleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SplitButtonSplitButtonWithTitleWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                SplitButtonContentWith::into_extra,
+            ),
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_enabled: self.get_enabled,
+            get_keytip: self.get_keytip,
+            get_show_label: self.get_show_label,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            menu_menu_with_title: officekit_markup_base::into_extra_optional(
+                &mut self.menu_menu_with_title,
+                MenuMenuWithTitleWith::into_extra,
+            ),
+            show_label: self.show_label,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13621,7 +16459,51 @@ impl Style2 {
     }
 }
 
-impl TabBackstageTab {
+impl<X: NodeExtra> TabBackstageTabWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TabBackstageTabWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TabBackstageTabWith {
+            column_width_percent: self.column_width_percent,
+            enabled: self.enabled,
+            extra: Default::default(),
+            first_column: officekit_markup_base::into_extra_optional(
+                &mut self.first_column,
+                FirstColumnWith::into_extra,
+            ),
+            first_column_max_width: self.first_column_max_width,
+            first_column_min_width: self.first_column_min_width,
+            get_enabled: self.get_enabled,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_title: self.get_title,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            label: self.label,
+            second_column: officekit_markup_base::into_extra_optional(
+                &mut self.second_column,
+                SecondColumnWith::into_extra,
+            ),
+            second_column_max_width: self.second_column_max_width,
+            second_column_min_width: self.second_column_min_width,
+            tag: self.tag,
+            title: self.title,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13667,7 +16549,24 @@ impl officekit_markup_base::Write for TabBackstageTab {
     }
 }
 
-impl TabSet {
+impl<X: NodeExtra> TabSetWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TabSetWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TabSetWith {
+            extra: Default::default(),
+            get_visible: self.get_visible,
+            id_mso: self.id_mso,
+            tab_tab: officekit_markup_base::into_extra_list(self.tab_tab, TabTabWith::into_extra),
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13693,7 +16592,38 @@ impl officekit_markup_base::Write for TabSet {
     }
 }
 
-impl TabTab {
+impl<X: NodeExtra> TabTabWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TabTabWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TabTabWith {
+            extra: Default::default(),
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_visible: self.get_visible,
+            group_group: officekit_markup_base::into_extra_list(
+                self.group_group,
+                GroupGroupWith::into_extra,
+            ),
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            label: self.label,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13730,7 +16660,21 @@ impl officekit_markup_base::Write for TabTab {
     }
 }
 
-impl Tabs {
+impl<X: NodeExtra> TabsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TabsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TabsWith {
+            extra: Default::default(),
+            tab_tab: officekit_markup_base::into_extra_list(self.tab_tab, TabTabWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13751,7 +16695,37 @@ impl officekit_markup_base::Write for Tabs {
     }
 }
 
-impl TaskFormGroup {
+impl<X: NodeExtra> TaskFormGroupWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TaskFormGroupWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TaskFormGroupWith {
+            allowed_task_sizes: self.allowed_task_sizes,
+            category_task_form_group_category: officekit_markup_base::into_extra_list(
+                self.category_task_form_group_category,
+                CategoryTaskFormGroupCategoryWith::into_extra,
+            ),
+            extra: Default::default(),
+            get_helper_text: self.get_helper_text,
+            get_label: self.get_label,
+            get_show_label: self.get_show_label,
+            get_visible: self.get_visible,
+            helper_text: self.helper_text,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            label: self.label,
+            show_label: self.show_label,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13787,7 +16761,41 @@ impl officekit_markup_base::Write for TaskFormGroup {
     }
 }
 
-impl TaskGroup {
+impl<X: NodeExtra> TaskGroupWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TaskGroupWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TaskGroupWith {
+            allowed_task_sizes: self.allowed_task_sizes,
+            category_task_group_category: officekit_markup_base::into_extra_list(
+                self.category_task_group_category,
+                CategoryTaskGroupCategoryWith::into_extra,
+            ),
+            extra: Default::default(),
+            get_helper_text: self.get_helper_text,
+            get_label: self.get_label,
+            get_show_label: self.get_show_label,
+            get_visible: self.get_visible,
+            helper_text: self.helper_text,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            label: self.label,
+            show_label: self.show_label,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13892,7 +16900,45 @@ impl TaskSizes {
     }
 }
 
-impl TaskTaskFormGroupTask {
+impl<X: NodeExtra> TaskTaskFormGroupTaskWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TaskTaskFormGroupTaskWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TaskTaskFormGroupTaskWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_visible: self.get_visible,
+            group_backstage_group: officekit_markup_base::into_extra_list(
+                self.group_backstage_group,
+                GroupBackstageGroupWith::into_extra,
+            ),
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            label: self.label,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13936,7 +16982,43 @@ impl officekit_markup_base::Write for TaskTaskFormGroupTask {
     }
 }
 
-impl TaskTaskGroupTask {
+impl<X: NodeExtra> TaskTaskGroupTaskWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TaskTaskGroupTaskWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TaskTaskGroupTaskWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            is_definitive: self.is_definitive,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -13982,7 +17064,38 @@ impl officekit_markup_base::Write for TaskTaskGroupTask {
     }
 }
 
-impl ToggleButtonBackstageMenuToggleButton {
+impl<X: NodeExtra> ToggleButtonBackstageMenuToggleButtonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ToggleButtonBackstageMenuToggleButtonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ToggleButtonBackstageMenuToggleButtonWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_pressed: self.get_pressed,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -14023,7 +17136,53 @@ impl officekit_markup_base::Write for ToggleButtonBackstageMenuToggleButton {
     }
 }
 
-impl ToggleButtonToggleButton {
+impl<X: NodeExtra> ToggleButtonToggleButtonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ToggleButtonToggleButtonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ToggleButtonToggleButtonWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_pressed: self.get_pressed,
+            get_screentip: self.get_screentip,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_size: self.get_size,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_label: self.show_label,
+            size: self.size,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -14079,7 +17238,51 @@ impl officekit_markup_base::Write for ToggleButtonToggleButton {
     }
 }
 
-impl ToggleButtonToggleButtonRegular {
+impl<X: NodeExtra> ToggleButtonToggleButtonRegularWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ToggleButtonToggleButtonRegularWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ToggleButtonToggleButtonRegularWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_pressed: self.get_pressed,
+            get_screentip: self.get_screentip,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_supertip: self.get_supertip,
+            get_visible: self.get_visible,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_label: self.show_label,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+            visible: self.visible,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -14133,7 +17336,49 @@ impl officekit_markup_base::Write for ToggleButtonToggleButtonRegular {
     }
 }
 
-impl ToggleButtonVisibleToggleButton {
+impl<X: NodeExtra> ToggleButtonVisibleToggleButtonWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ToggleButtonVisibleToggleButtonWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ToggleButtonVisibleToggleButtonWith {
+            description: self.description,
+            enabled: self.enabled,
+            extra: Default::default(),
+            get_description: self.get_description,
+            get_enabled: self.get_enabled,
+            get_image: self.get_image,
+            get_keytip: self.get_keytip,
+            get_label: self.get_label,
+            get_pressed: self.get_pressed,
+            get_screentip: self.get_screentip,
+            get_show_image: self.get_show_image,
+            get_show_label: self.get_show_label,
+            get_supertip: self.get_supertip,
+            id: self.id,
+            id_mso: self.id_mso,
+            id_q: self.id_q,
+            image: self.image,
+            image_mso: self.image_mso,
+            insert_after_mso: self.insert_after_mso,
+            insert_after_q: self.insert_after_q,
+            insert_before_mso: self.insert_before_mso,
+            insert_before_q: self.insert_before_q,
+            keytip: self.keytip,
+            label: self.label,
+            on_action: self.on_action,
+            screentip: self.screentip,
+            show_image: self.show_image,
+            show_label: self.show_label,
+            supertip: self.supertip,
+            tag: self.tag,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -14185,7 +17430,24 @@ impl officekit_markup_base::Write for ToggleButtonVisibleToggleButton {
     }
 }
 
-impl TopItems {
+impl<X: NodeExtra> TopItemsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TopItemsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TopItemsWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                GroupControlsContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

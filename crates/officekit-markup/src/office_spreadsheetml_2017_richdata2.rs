@@ -223,6 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::office_spreadsheetml_2009_9_main;
 use officekit_markup_core::spreadsheet;
@@ -592,61 +593,69 @@ pub static RICH_FILTER_COLUMN_CONTENT_TAGS: officekit_markup_base::Accept =
 
 /// The `xlrd2:a` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Array`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AArray {
+pub struct AArrayWith<X: NodeExtra> {
     /// The attribute `c`, when the element has it.
     pub c: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2AArray,
     /// The attribute `r`, when the element has it.
     pub r: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The children that are `VArrayValue`, in order.
-    pub v_array_value: Vec<VArrayValue>,
+    pub v_array_value: Vec<VArrayValueWith<X>>,
 }
+
+/// The `xlrd2:a` element of the tree a read gives: [`AArrayWith`] holding nothing in `extra`.
+pub type AArray = AArrayWith<()>;
+
+impl Eq for AArrayWith<()> {}
 
 /// The `xlrd2:a` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_SupportingPropertyBagArray`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ASupportingPropertyBagArray {
+pub struct ASupportingPropertyBagArrayWith<X: NodeExtra> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2ASupportingPropertyBagArray,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The children that are `VSupportingPropertyBagArrayValue`, in order.
-    pub v_supporting_property_bag_array_value: Vec<VSupportingPropertyBagArrayValue>,
+    pub v_supporting_property_bag_array_value: Vec<VSupportingPropertyBagArrayValueWith<X>>,
 }
+
+/// The `xlrd2:a` element of the tree a read gives: [`ASupportingPropertyBagArrayWith`] holding
+/// nothing in `extra`.
+pub type ASupportingPropertyBagArray = ASupportingPropertyBagArrayWith<()>;
+
+impl Eq for ASupportingPropertyBagArrayWith<()> {}
 
 /// The `xlrd2:arrayData` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_ArrayData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArrayData {
+pub struct ArrayDataWith<X: NodeExtra> {
     /// The children that are `AArray`, in order.
-    pub a_array: Vec<AArray>,
+    pub a_array: Vec<AArrayWith<X>>,
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2ArrayData,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlrd2:arrayData` element of the tree a read gives: [`ArrayDataWith`] holding nothing in
+/// `extra`.
+pub type ArrayData = ArrayDataWith<()>;
+
+impl Eq for ArrayDataWith<()> {}
 
 /// The simple type `ST_ArrayValueType`, kept as the text the file carried.
 ///
@@ -1446,14 +1455,11 @@ pub trait Context: crate::Context {
 
 /// The `xlrd2:customFilter` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_CustomRichFilter`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CustomFilter {
+pub struct CustomFilterWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2CustomFilter,
     /// The attribute `key`, when the element has it.
     pub key: Option<String>,
     /// The attribute `operator`, when the element has it.
@@ -1464,54 +1470,66 @@ pub struct CustomFilter {
     pub val: Option<String>,
 }
 
+/// The `xlrd2:customFilter` element of the tree a read gives: [`CustomFilterWith`] holding nothing
+/// in `extra`.
+pub type CustomFilter = CustomFilterWith<()>;
+
+impl Eq for CustomFilterWith<()> {}
+
 /// The `xlrd2:customFilters` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_CustomRichFilters`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CustomFilters {
+pub struct CustomFiltersWith<X: NodeExtra> {
     /// The attribute `and`, when the element has it.
     pub and: Option<String>,
     /// The children that are an item of `CustomRichFiltersContent`, in order.
-    pub content: Vec<CustomRichFiltersContent>,
+    pub content: Vec<CustomRichFiltersContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2CustomFilters,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlrd2:customFilters` element of the tree a read gives: [`CustomFiltersWith`] holding
+/// nothing in `extra`.
+pub type CustomFilters = CustomFiltersWith<()>;
+
+impl Eq for CustomFiltersWith<()> {}
 
 /// One child element of a choice: choice in `CT_CustomRichFilters`.
 ///
 /// The schema types that hold it: `CT_CustomRichFilters`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum CustomRichFiltersContent {
+pub enum CustomRichFiltersContentWith<X: NodeExtra> {
     /// The element `xlrd2:customFilter`, a `CustomFilter`.
-    CustomFilter(CustomFilter),
+    CustomFilter(CustomFilterWith<X>),
     /// The element `xlrd2:extLst`, a `ExtLst`.
-    ExtLst(ExtLst),
+    ExtLst(ExtLstWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
 }
 
+/// [`CustomRichFiltersContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type CustomRichFiltersContent = CustomRichFiltersContentWith<()>;
+
+impl Eq for CustomRichFiltersContentWith<()> {}
+
 /// The `xlrd2:dateGroupItem` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_RichDateGroupItem`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DateGroupItem {
+pub struct DateGroupItemWith<X: NodeExtra> {
     /// The attribute `dateTimeGrouping`, when the element has it.
     pub date_time_grouping: Option<spreadsheet::DateTimeGrouping>,
     /// The attribute `day`, when the element has it.
     pub day: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2DateGroupItem,
     /// The attribute `hour`, when the element has it.
     pub hour: Option<String>,
     /// The attribute `key`, when the element has it.
@@ -1528,34 +1546,39 @@ pub struct DateGroupItem {
     pub year: Option<String>,
 }
 
+/// The `xlrd2:dateGroupItem` element of the tree a read gives: [`DateGroupItemWith`] holding
+/// nothing in `extra`.
+pub type DateGroupItem = DateGroupItemWith<()>;
+
+impl Eq for DateGroupItemWith<()> {}
+
 /// The `xlrd2:dxfs` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Dxfs`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Dxfs {
+pub struct DxfsWith<X: NodeExtra> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2Dxfs,
     /// The children that are `spreadsheet::Formatting`, in order.
-    pub formatting: Vec<spreadsheet::Formatting>,
+    pub formatting: Vec<spreadsheet::FormattingWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrd2:dxfs` element of the tree a read gives: [`DxfsWith`] holding nothing in `extra`.
+pub type Dxfs = DxfsWith<()>;
+
+impl Eq for DxfsWith<()> {}
+
 /// The `xlrd2:dynamicFilter` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_DynamicRichFilter`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DynamicFilter {
+pub struct DynamicFilterWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2DynamicFilter,
     /// The attribute `key`, when the element has it.
     pub key: Option<String>,
     /// The attribute `maxVal`, when the element has it.
@@ -1572,34 +1595,39 @@ pub struct DynamicFilter {
     pub val_iso: Option<String>,
 }
 
+/// The `xlrd2:dynamicFilter` element of the tree a read gives: [`DynamicFilterWith`] holding
+/// nothing in `extra`.
+pub type DynamicFilter = DynamicFilterWith<()>;
+
+impl Eq for DynamicFilterWith<()> {}
+
 /// The `xlrd2:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `spreadsheet::Extension`, in order.
-    pub extension: Vec<spreadsheet::Extension>,
+    pub extension: Vec<spreadsheet::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2ExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrd2:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
+
 /// The `xlrd2:filter` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RichFilter`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Filter {
+pub struct FilterWith<X: NodeExtra> {
     /// The attribute `blank`, when the element has it.
     pub blank: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2Filter,
     /// The attribute `key`, when the element has it.
     pub key: Option<String>,
     /// The attribute `nodata`, when the element has it.
@@ -1610,52 +1638,60 @@ pub struct Filter {
     pub val: Option<String>,
 }
 
+/// The `xlrd2:filter` element of the tree a read gives: [`FilterWith`] holding nothing in `extra`.
+pub type Filter = FilterWith<()>;
+
+impl Eq for FilterWith<()> {}
+
 /// The `xlrd2:filterColumn` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_RichFilterColumn`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilterColumn {
+pub struct FilterColumnWith<X: NodeExtra> {
     /// The child that is an item of `RichFilterColumnContent`, when there is one.
-    pub content: Option<Box<RichFilterColumnContent>>,
+    pub content: Option<Box<RichFilterColumnContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2FilterColumn,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlrd2:filterColumn` element of the tree a read gives: [`FilterColumnWith`] holding nothing
+/// in `extra`.
+pub type FilterColumn = FilterColumnWith<()>;
+
+impl Eq for FilterColumnWith<()> {}
 
 /// The `xlrd2:filters` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RichFilters`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Filters {
+pub struct FiltersWith<X: NodeExtra> {
     /// The children that are `DateGroupItem`, in order.
-    pub date_group_item: Vec<DateGroupItem>,
+    pub date_group_item: Vec<DateGroupItemWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2Filters,
     /// The children that are `Filter`, in order.
-    pub filter: Vec<Filter>,
+    pub filter: Vec<FilterWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrd2:filters` element of the tree a read gives: [`FiltersWith`] holding nothing in
+/// `extra`.
+pub type Filters = FiltersWith<()>;
+
+impl Eq for FiltersWith<()> {}
+
 /// The `xlrd2:flag` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RichValueTypeReservedKeyFlag`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Flag {
+pub struct FlagWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2Flag,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -1664,34 +1700,38 @@ pub struct Flag {
     pub value: Option<String>,
 }
 
+/// The `xlrd2:flag` element of the tree a read gives: [`FlagWith`] holding nothing in `extra`.
+pub type Flag = FlagWith<()>;
+
+impl Eq for FlagWith<()> {}
+
 /// The `xlrd2:global` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RichValueGlobalType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Global {
+pub struct GlobalWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2Global,
     /// The child that is `KeyFlags`, when there is one.
-    pub key_flags: Option<Box<KeyFlags>>,
+    pub key_flags: Option<Box<KeyFlagsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrd2:global` element of the tree a read gives: [`GlobalWith`] holding nothing in `extra`.
+pub type Global = GlobalWith<()>;
+
+impl Eq for GlobalWith<()> {}
+
 /// The `xlrd2:k` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_SupportingPropertyBagKey`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct K {
+pub struct KWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2K,
     /// The attribute `n`, when the element has it.
     pub n: Option<String>,
     /// The attribute `t`, when the element has it.
@@ -1700,50 +1740,57 @@ pub struct K {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrd2:k` element of the tree a read gives: [`KWith`] holding nothing in `extra`.
+pub type K = KWith<()>;
+
+impl Eq for KWith<()> {}
+
 /// The `xlrd2:key` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RichValueTypeReservedKey`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Key {
+pub struct KeyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2Key,
     /// The children that are `Flag`, in order.
-    pub flag: Vec<Flag>,
+    pub flag: Vec<FlagWith<X>>,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrd2:key` element of the tree a read gives: [`KeyWith`] holding nothing in `extra`.
+pub type Key = KeyWith<()>;
+
+impl Eq for KeyWith<()> {}
+
 /// The `xlrd2:keyFlags` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_RichValueTypeKeyFlags`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct KeyFlags {
+pub struct KeyFlagsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2KeyFlags,
     /// The children that are `Key`, in order.
-    pub key: Vec<Key>,
+    pub key: Vec<KeyWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrd2:keyFlags` element of the tree a read gives: [`KeyFlagsWith`] holding nothing in
+/// `extra`.
+pub type KeyFlags = KeyFlagsWith<()>;
+
+impl Eq for KeyFlagsWith<()> {}
+
 /// The `xlrd2:rPr` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RichFormatProperty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RPr {
+pub struct RPrWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2RPr,
     /// The attribute `n`, when the element has it.
     pub n: Option<String>,
     /// The attribute `t`, when the element has it.
@@ -1752,45 +1799,58 @@ pub struct RPr {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrd2:rPr` element of the tree a read gives: [`RPrWith`] holding nothing in `extra`.
+pub type RPr = RPrWith<()>;
+
+impl Eq for RPrWith<()> {}
+
 /// The `xlrd2:rSty` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RichStyle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RSty {
+pub struct RStyWith<X: NodeExtra> {
     /// The attribute `dxfid`, when the element has it.
     pub dxfid: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2RSty,
     /// The children that are `Rpv`, in order.
-    pub rpv: Vec<Rpv>,
+    pub rpv: Vec<RpvWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlrd2:rSty` element of the tree a read gives: [`RStyWith`] holding nothing in `extra`.
+pub type RSty = RStyWith<()>;
+
+impl Eq for RStyWith<()> {}
 
 /// One child element of a choice: choice in `CT_RichFilterColumn`.
 ///
 /// The schema types that hold it: `CT_RichFilterColumn`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum RichFilterColumnContent {
+pub enum RichFilterColumnContentWith<X: NodeExtra> {
     /// The element `xlrd2:customFilters`, a `CustomFilters`.
-    CustomFilters(CustomFilters),
+    CustomFilters(CustomFiltersWith<X>),
     /// The element `xlrd2:dynamicFilter`, a `DynamicFilter`.
-    DynamicFilter(DynamicFilter),
+    DynamicFilter(DynamicFilterWith<X>),
     /// The element `xlrd2:extLst`, a `ExtLst`.
-    ExtLst(ExtLst),
+    ExtLst(ExtLstWith<X>),
     /// The element `xlrd2:filters`, a `Filters`.
-    Filters(Filters),
+    Filters(FiltersWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `xlrd2:top10`, a `Top10`.
-    Top10(Top10),
+    Top10(Top10With<X>),
 }
+
+/// [`RichFilterColumnContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type RichFilterColumnContent = RichFilterColumnContentWith<()>;
+
+impl Eq for RichFilterColumnContentWith<()> {}
 
 /// The simple type `ST_RichFormatPropertyType`, kept as the text the file carried.
 ///
@@ -1821,36 +1881,36 @@ pub enum RichFormatPropertyTypeMember {
 
 /// The `xlrd2:richProperties` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_RichFormatProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RichProperties {
+pub struct RichPropertiesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2RichProperties,
     /// The children that are `RPr`, in order.
-    pub r_pr: Vec<RPr>,
+    pub r_pr: Vec<RPrWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrd2:richProperties` element of the tree a read gives: [`RichPropertiesWith`] holding
+/// nothing in `extra`.
+pub type RichProperties = RichPropertiesWith<()>;
+
+impl Eq for RichPropertiesWith<()> {}
+
 /// The `xlrd2:richSortCondition` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_RichSortCondition`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RichSortCondition {
+pub struct RichSortConditionWith<X: NodeExtra> {
     /// The attribute `customList`, when the element has it.
     pub custom_list: Option<String>,
     /// The attribute `descending`, when the element has it.
     pub descending: Option<String>,
     /// The attribute `dxfId`, when the element has it.
     pub dxf_id: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2RichSortCondition,
     /// The attribute `iconId`, when the element has it.
     pub icon_id: Option<String>,
     /// The attribute `iconSet`, when the element has it.
@@ -1865,54 +1925,63 @@ pub struct RichSortCondition {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrd2:richSortCondition` element of the tree a read gives: [`RichSortConditionWith`]
+/// holding nothing in `extra`.
+pub type RichSortCondition = RichSortConditionWith<()>;
+
+impl Eq for RichSortConditionWith<()> {}
+
 /// The `xlrd2:richStyleSheet` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_RichStylesheet`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RichStyleSheet {
+pub struct RichStyleSheetWith<X: NodeExtra> {
     /// The child that is `Dxfs`, when there is one.
-    pub dxfs: Option<Box<Dxfs>>,
+    pub dxfs: Option<Box<DxfsWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2RichStyleSheet,
     /// The child that is `RichProperties`, when there is one.
-    pub rich_properties: Option<Box<RichProperties>>,
+    pub rich_properties: Option<Box<RichPropertiesWith<X>>>,
     /// The child that is `RichStyles`, when there is one.
-    pub rich_styles: Option<Box<RichStyles>>,
+    pub rich_styles: Option<Box<RichStylesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlrd2:richStyleSheet` element of the tree a read gives: [`RichStyleSheetWith`] holding
+/// nothing in `extra`.
+pub type RichStyleSheet = RichStyleSheetWith<()>;
+
+impl Eq for RichStyleSheetWith<()> {}
 
 /// The `xlrd2:richStyles` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_RichStyles`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RichStyles {
+pub struct RichStylesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2RichStyles,
     /// The children that are `RSty`, in order.
-    pub r_sty: Vec<RSty>,
+    pub r_sty: Vec<RStyWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrd2:richStyles` element of the tree a read gives: [`RichStylesWith`] holding nothing in
+/// `extra`.
+pub type RichStyles = RichStylesWith<()>;
+
+impl Eq for RichStylesWith<()> {}
+
 /// The `xlrd2:rpv` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RichStylePropertyValue`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Rpv {
+pub struct RpvWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2Rpv,
     /// The attribute `i`, when the element has it.
     pub i: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -1921,119 +1990,140 @@ pub struct Rpv {
     pub value: String,
 }
 
+/// The `xlrd2:rpv` element of the tree a read gives: [`RpvWith`] holding nothing in `extra`.
+pub type Rpv = RpvWith<()>;
+
+impl Eq for RpvWith<()> {}
+
 /// The `xlrd2:rvTypesInfo` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_RichValueTypesInfo`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RvTypesInfo {
+pub struct RvTypesInfoWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2RvTypesInfo,
     /// The child that is `Global`, when there is one.
-    pub global: Option<Box<Global>>,
+    pub global: Option<Box<GlobalWith<X>>>,
     /// The child that is `Types`, when there is one.
-    pub types: Option<Box<Types>>,
+    pub types: Option<Box<TypesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlrd2:rvTypesInfo` element of the tree a read gives: [`RvTypesInfoWith`] holding nothing in
+/// `extra`.
+pub type RvTypesInfo = RvTypesInfoWith<()>;
+
+impl Eq for RvTypesInfoWith<()> {}
 
 /// The `xlrd2:s` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_SupportingPropertyBagStructure`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct S {
+pub struct SWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2S,
     /// The children that are `K`, in order.
-    pub k: Vec<K>,
+    pub k: Vec<KWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrd2:s` element of the tree a read gives: [`SWith`] holding nothing in `extra`.
+pub type S = SWith<()>;
+
+impl Eq for SWith<()> {}
+
 /// The `xlrd2:spb` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_SupportingPropertyBag`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Spb {
+pub struct SpbWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2Spb,
     /// The attribute `s`, when the element has it.
     pub s: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The children that are `VSupportingPropertyBagValue`, in order.
-    pub v_supporting_property_bag_value: Vec<VSupportingPropertyBagValue>,
+    pub v_supporting_property_bag_value: Vec<VSupportingPropertyBagValueWith<X>>,
 }
+
+/// The `xlrd2:spb` element of the tree a read gives: [`SpbWith`] holding nothing in `extra`.
+pub type Spb = SpbWith<()>;
+
+impl Eq for SpbWith<()> {}
 
 /// The `xlrd2:spbArrays` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_SupportingPropertyBagArrayData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpbArrays {
+pub struct SpbArraysWith<X: NodeExtra> {
     /// The children that are `ASupportingPropertyBagArray`, in order.
-    pub a_supporting_property_bag_array: Vec<ASupportingPropertyBagArray>,
+    pub a_supporting_property_bag_array: Vec<ASupportingPropertyBagArrayWith<X>>,
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2SpbArrays,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlrd2:spbArrays` element of the tree a read gives: [`SpbArraysWith`] holding nothing in
+/// `extra`.
+pub type SpbArrays = SpbArraysWith<()>;
+
+impl Eq for SpbArraysWith<()> {}
 
 /// The `xlrd2:spbData` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_SupportingPropertyBagData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpbData {
+pub struct SpbDataWith<X: NodeExtra> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2SpbData,
     /// The children that are `Spb`, in order.
-    pub spb: Vec<Spb>,
+    pub spb: Vec<SpbWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrd2:spbData` element of the tree a read gives: [`SpbDataWith`] holding nothing in
+/// `extra`.
+pub type SpbData = SpbDataWith<()>;
+
+impl Eq for SpbDataWith<()> {}
+
 /// The `xlrd2:spbStructures` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_SupportingPropertyBagStructures`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpbStructures {
+pub struct SpbStructuresWith<X: NodeExtra> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2SpbStructures,
     /// The children that are `S`, in order.
-    pub s: Vec<S>,
+    pub s: Vec<SWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlrd2:spbStructures` element of the tree a read gives: [`SpbStructuresWith`] holding
+/// nothing in `extra`.
+pub type SpbStructures = SpbStructuresWith<()>;
+
+impl Eq for SpbStructuresWith<()> {}
 
 /// The simple type `ST_SupportingPropertyBagArrayValueType`, kept as the text the file carried.
 ///
@@ -2097,32 +2187,32 @@ pub enum SupportingPropertyBagValueTypeMember {
 
 /// The `xlrd2:supportingPropertyBags` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_SupportingPropertyBags`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SupportingPropertyBags {
+pub struct SupportingPropertyBagsWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2SupportingPropertyBags,
     /// The child that is `SpbArrays`, when there is one.
-    pub spb_arrays: Option<Box<SpbArrays>>,
+    pub spb_arrays: Option<Box<SpbArraysWith<X>>>,
     /// The child that is `SpbData`, which the schema requires.
-    pub spb_data: Box<SpbData>,
+    pub spb_data: Box<SpbDataWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrd2:supportingPropertyBags` element of the tree a read gives:
+/// [`SupportingPropertyBagsWith`] holding nothing in `extra`.
+pub type SupportingPropertyBags = SupportingPropertyBagsWith<()>;
+
+impl Eq for SupportingPropertyBagsWith<()> {}
+
 /// The `xlrd2:top10` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RichTop10`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Top10 {
+pub struct Top10With<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2Top10,
     /// The attribute `filterVal`, when the element has it.
     pub filter_val: Option<String>,
     /// The attribute `key`, when the element has it.
@@ -2137,52 +2227,58 @@ pub struct Top10 {
     pub val: Option<String>,
 }
 
+/// The `xlrd2:top10` element of the tree a read gives: [`Top10With`] holding nothing in `extra`.
+pub type Top10 = Top10With<()>;
+
+impl Eq for Top10With<()> {}
+
 /// The `xlrd2:type` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RichValueType`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Type {
+pub struct TypeWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2Type,
     /// The child that is `KeyFlags`, when there is one.
-    pub key_flags: Option<Box<KeyFlags>>,
+    pub key_flags: Option<Box<KeyFlagsWith<X>>>,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrd2:type` element of the tree a read gives: [`TypeWith`] holding nothing in `extra`.
+pub type Type = TypeWith<()>;
+
+impl Eq for TypeWith<()> {}
+
 /// The `xlrd2:types` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RichValueTypes`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Types {
+pub struct TypesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2Types,
     /// The children that are `Type`, in order.
-    pub r#type: Vec<Type>,
+    pub r#type: Vec<TypeWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xlrd2:types` element of the tree a read gives: [`TypesWith`] holding nothing in `extra`.
+pub type Types = TypesWith<()>;
+
+impl Eq for TypesWith<()> {}
+
 /// The `xlrd2:v` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ArrayValue`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VArrayValue {
+pub struct VArrayValueWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2VArrayValue,
     /// The attribute `t`, when the element has it.
     pub t: Option<ArrayValueType>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -2191,16 +2287,18 @@ pub struct VArrayValue {
     pub value: String,
 }
 
+/// The `xlrd2:v` element of the tree a read gives: [`VArrayValueWith`] holding nothing in `extra`.
+pub type VArrayValue = VArrayValueWith<()>;
+
+impl Eq for VArrayValueWith<()> {}
+
 /// The `xlrd2:v` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_SupportingPropertyBagArrayValue`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VSupportingPropertyBagArrayValue {
+pub struct VSupportingPropertyBagArrayValueWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2VSupportingPropertyBagArrayValue,
     /// The attribute `t`, when the element has it.
     pub t: Option<SupportingPropertyBagArrayValueType>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -2209,21 +2307,30 @@ pub struct VSupportingPropertyBagArrayValue {
     pub value: String,
 }
 
+/// The `xlrd2:v` element of the tree a read gives: [`VSupportingPropertyBagArrayValueWith`] holding
+/// nothing in `extra`.
+pub type VSupportingPropertyBagArrayValue = VSupportingPropertyBagArrayValueWith<()>;
+
+impl Eq for VSupportingPropertyBagArrayValueWith<()> {}
+
 /// The `xlrd2:v` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_SupportingPropertyBagValue`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VSupportingPropertyBagValue {
+pub struct VSupportingPropertyBagValueWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2017Richdata2VSupportingPropertyBagValue,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xlrd2:v` element of the tree a read gives: [`VSupportingPropertyBagValueWith`] holding
+/// nothing in `extra`.
+pub type VSupportingPropertyBagValue = VSupportingPropertyBagValueWith<()>;
+
+impl Eq for VSupportingPropertyBagValueWith<()> {}
 
 /// The hooks of a visitor for the `xlrd2` namespace.
 ///
@@ -2465,7 +2572,26 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl AArray {
+impl<X: NodeExtra> AArrayWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AArrayWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AArrayWith {
+            c: self.c,
+            extra: Default::default(),
+            r: self.r,
+            unknown: self.unknown,
+            v_array_value: officekit_markup_base::into_extra_list(
+                self.v_array_value,
+                VArrayValueWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2490,7 +2616,25 @@ impl officekit_markup_base::Write for AArray {
     }
 }
 
-impl ASupportingPropertyBagArray {
+impl<X: NodeExtra> ASupportingPropertyBagArrayWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ASupportingPropertyBagArrayWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ASupportingPropertyBagArrayWith {
+            count: self.count,
+            extra: Default::default(),
+            unknown: self.unknown,
+            v_supporting_property_bag_array_value: officekit_markup_base::into_extra_list(
+                self.v_supporting_property_bag_array_value,
+                VSupportingPropertyBagArrayValueWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2514,7 +2658,26 @@ impl officekit_markup_base::Write for ASupportingPropertyBagArray {
     }
 }
 
-impl ArrayData {
+impl<X: NodeExtra> ArrayDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ArrayDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ArrayDataWith {
+            a_array: officekit_markup_base::into_extra_list(self.a_array, AArrayWith::into_extra),
+            count: self.count,
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2592,7 +2755,23 @@ impl ArrayValueType {
     }
 }
 
-impl CustomFilter {
+impl<X: NodeExtra> CustomFilterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CustomFilterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CustomFilterWith {
+            extra: Default::default(),
+            key: self.key,
+            operator: self.operator,
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2618,7 +2797,25 @@ impl officekit_markup_base::Write for CustomFilter {
     }
 }
 
-impl CustomFilters {
+impl<X: NodeExtra> CustomFiltersWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CustomFiltersWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CustomFiltersWith {
+            and: self.and,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                CustomRichFiltersContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2639,6 +2836,23 @@ impl officekit_markup_base::Write for CustomFilters {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::custom_filters(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> CustomRichFiltersContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CustomRichFiltersContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::CustomFilter(node) => {
+                CustomRichFiltersContentWith::CustomFilter(node.into_extra())
+            }
+            Self::ExtLst(node) => CustomRichFiltersContentWith::ExtLst(node.into_extra()),
+            Self::Other(node) => CustomRichFiltersContentWith::Other(node),
+        }
     }
 }
 
@@ -2668,7 +2882,28 @@ impl officekit_markup_base::Write for CustomRichFiltersContent {
     }
 }
 
-impl DateGroupItem {
+impl<X: NodeExtra> DateGroupItemWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DateGroupItemWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DateGroupItemWith {
+            date_time_grouping: self.date_time_grouping,
+            day: self.day,
+            extra: Default::default(),
+            hour: self.hour,
+            key: self.key,
+            minute: self.minute,
+            month: self.month,
+            second: self.second,
+            unknown: self.unknown,
+            year: self.year,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2699,7 +2934,25 @@ impl officekit_markup_base::Write for DateGroupItem {
     }
 }
 
-impl Dxfs {
+impl<X: NodeExtra> DxfsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DxfsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DxfsWith {
+            count: self.count,
+            extra: Default::default(),
+            formatting: officekit_markup_base::into_extra_list(
+                self.formatting,
+                spreadsheet::FormattingWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2723,7 +2976,26 @@ impl officekit_markup_base::Write for Dxfs {
     }
 }
 
-impl DynamicFilter {
+impl<X: NodeExtra> DynamicFilterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DynamicFilterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DynamicFilterWith {
+            extra: Default::default(),
+            key: self.key,
+            max_val: self.max_val,
+            max_val_iso: self.max_val_iso,
+            r#type: self.r#type,
+            unknown: self.unknown,
+            val: self.val,
+            val_iso: self.val_iso,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2752,7 +3024,24 @@ impl officekit_markup_base::Write for DynamicFilter {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                spreadsheet::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2773,7 +3062,24 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl Filter {
+impl<X: NodeExtra> FilterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FilterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FilterWith {
+            blank: self.blank,
+            extra: Default::default(),
+            key: self.key,
+            nodata: self.nodata,
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2800,7 +3106,24 @@ impl officekit_markup_base::Write for Filter {
     }
 }
 
-impl FilterColumn {
+impl<X: NodeExtra> FilterColumnWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> FilterColumnWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FilterColumnWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                RichFilterColumnContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2821,7 +3144,29 @@ impl officekit_markup_base::Write for FilterColumn {
     }
 }
 
-impl Filters {
+impl<X: NodeExtra> FiltersWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> FiltersWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FiltersWith {
+            date_group_item: officekit_markup_base::into_extra_list(
+                self.date_group_item,
+                DateGroupItemWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            filter: officekit_markup_base::into_extra_list(self.filter, FilterWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2842,7 +3187,22 @@ impl officekit_markup_base::Write for Filters {
     }
 }
 
-impl Flag {
+impl<X: NodeExtra> FlagWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FlagWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FlagWith {
+            extra: Default::default(),
+            name: self.name,
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2867,7 +3227,28 @@ impl officekit_markup_base::Write for Flag {
     }
 }
 
-impl Global {
+impl<X: NodeExtra> GlobalWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> GlobalWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        GlobalWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            key_flags: officekit_markup_base::into_extra_optional(
+                &mut self.key_flags,
+                KeyFlagsWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2888,7 +3269,22 @@ impl officekit_markup_base::Write for Global {
     }
 }
 
-impl K {
+impl<X: NodeExtra> KWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> KWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        KWith {
+            extra: Default::default(),
+            n: self.n,
+            t: self.t,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2913,7 +3309,22 @@ impl officekit_markup_base::Write for K {
     }
 }
 
-impl Key {
+impl<X: NodeExtra> KeyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> KeyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        KeyWith {
+            extra: Default::default(),
+            flag: officekit_markup_base::into_extra_list(self.flag, FlagWith::into_extra),
+            name: self.name,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2937,7 +3348,21 @@ impl officekit_markup_base::Write for Key {
     }
 }
 
-impl KeyFlags {
+impl<X: NodeExtra> KeyFlagsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> KeyFlagsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        KeyFlagsWith {
+            extra: Default::default(),
+            key: officekit_markup_base::into_extra_list(self.key, KeyWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2958,7 +3383,22 @@ impl officekit_markup_base::Write for KeyFlags {
     }
 }
 
-impl RPr {
+impl<X: NodeExtra> RPrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RPrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RPrWith {
+            extra: Default::default(),
+            n: self.n,
+            t: self.t,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2983,7 +3423,22 @@ impl officekit_markup_base::Write for RPr {
     }
 }
 
-impl RSty {
+impl<X: NodeExtra> RStyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RStyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RStyWith {
+            dxfid: self.dxfid,
+            extra: Default::default(),
+            rpv: officekit_markup_base::into_extra_list(self.rpv, RpvWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3004,6 +3459,28 @@ impl officekit_markup_base::Write for RSty {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::r_sty(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> RichFilterColumnContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RichFilterColumnContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::CustomFilters(node) => {
+                RichFilterColumnContentWith::CustomFilters(node.into_extra())
+            }
+            Self::DynamicFilter(node) => {
+                RichFilterColumnContentWith::DynamicFilter(node.into_extra())
+            }
+            Self::ExtLst(node) => RichFilterColumnContentWith::ExtLst(node.into_extra()),
+            Self::Filters(node) => RichFilterColumnContentWith::Filters(node.into_extra()),
+            Self::Other(node) => RichFilterColumnContentWith::Other(node),
+            Self::Top10(node) => RichFilterColumnContentWith::Top10(node.into_extra()),
+        }
     }
 }
 
@@ -3096,7 +3573,21 @@ impl RichFormatPropertyType {
     }
 }
 
-impl RichProperties {
+impl<X: NodeExtra> RichPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RichPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RichPropertiesWith {
+            extra: Default::default(),
+            r_pr: officekit_markup_base::into_extra_list(self.r_pr, RPrWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3117,7 +3608,28 @@ impl officekit_markup_base::Write for RichProperties {
     }
 }
 
-impl RichSortCondition {
+impl<X: NodeExtra> RichSortConditionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RichSortConditionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RichSortConditionWith {
+            custom_list: self.custom_list,
+            descending: self.descending,
+            dxf_id: self.dxf_id,
+            extra: Default::default(),
+            icon_id: self.icon_id,
+            icon_set: self.icon_set,
+            r#ref: self.r#ref,
+            rich_sort_key: self.rich_sort_key,
+            sort_by: self.sort_by,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3148,7 +3660,33 @@ impl officekit_markup_base::Write for RichSortCondition {
     }
 }
 
-impl RichStyleSheet {
+impl<X: NodeExtra> RichStyleSheetWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> RichStyleSheetWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RichStyleSheetWith {
+            dxfs: officekit_markup_base::into_extra_optional(&mut self.dxfs, DxfsWith::into_extra),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            rich_properties: officekit_markup_base::into_extra_optional(
+                &mut self.rich_properties,
+                RichPropertiesWith::into_extra,
+            ),
+            rich_styles: officekit_markup_base::into_extra_optional(
+                &mut self.rich_styles,
+                RichStylesWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3169,7 +3707,21 @@ impl officekit_markup_base::Write for RichStyleSheet {
     }
 }
 
-impl RichStyles {
+impl<X: NodeExtra> RichStylesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RichStylesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RichStylesWith {
+            extra: Default::default(),
+            r_sty: officekit_markup_base::into_extra_list(self.r_sty, RStyWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3190,7 +3742,22 @@ impl officekit_markup_base::Write for RichStyles {
     }
 }
 
-impl Rpv {
+impl<X: NodeExtra> RpvWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RpvWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RpvWith {
+            extra: Default::default(),
+            i: self.i,
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3215,7 +3782,32 @@ impl officekit_markup_base::Write for Rpv {
     }
 }
 
-impl RvTypesInfo {
+impl<X: NodeExtra> RvTypesInfoWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> RvTypesInfoWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RvTypesInfoWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            global: officekit_markup_base::into_extra_optional(
+                &mut self.global,
+                GlobalWith::into_extra,
+            ),
+            types: officekit_markup_base::into_extra_optional(
+                &mut self.types,
+                TypesWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3236,7 +3828,21 @@ impl officekit_markup_base::Write for RvTypesInfo {
     }
 }
 
-impl S {
+impl<X: NodeExtra> SWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SWith {
+            extra: Default::default(),
+            k: officekit_markup_base::into_extra_list(self.k, KWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3257,7 +3863,25 @@ impl officekit_markup_base::Write for S {
     }
 }
 
-impl Spb {
+impl<X: NodeExtra> SpbWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SpbWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SpbWith {
+            extra: Default::default(),
+            s: self.s,
+            unknown: self.unknown,
+            v_supporting_property_bag_value: officekit_markup_base::into_extra_list(
+                self.v_supporting_property_bag_value,
+                VSupportingPropertyBagValueWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3281,7 +3905,29 @@ impl officekit_markup_base::Write for Spb {
     }
 }
 
-impl SpbArrays {
+impl<X: NodeExtra> SpbArraysWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SpbArraysWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SpbArraysWith {
+            a_supporting_property_bag_array: officekit_markup_base::into_extra_list(
+                self.a_supporting_property_bag_array,
+                ASupportingPropertyBagArrayWith::into_extra,
+            ),
+            count: self.count,
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3305,7 +3951,26 @@ impl officekit_markup_base::Write for SpbArrays {
     }
 }
 
-impl SpbData {
+impl<X: NodeExtra> SpbDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SpbDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SpbDataWith {
+            count: self.count,
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            spb: officekit_markup_base::into_extra_list(self.spb, SpbWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3329,7 +3994,26 @@ impl officekit_markup_base::Write for SpbData {
     }
 }
 
-impl SpbStructures {
+impl<X: NodeExtra> SpbStructuresWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SpbStructuresWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SpbStructuresWith {
+            count: self.count,
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            s: officekit_markup_base::into_extra_list(self.s, SWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3466,7 +4150,28 @@ impl SupportingPropertyBagValueType {
     }
 }
 
-impl SupportingPropertyBags {
+impl<X: NodeExtra> SupportingPropertyBagsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SupportingPropertyBagsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SupportingPropertyBagsWith {
+            extra: Default::default(),
+            spb_arrays: officekit_markup_base::into_extra_optional(
+                &mut self.spb_arrays,
+                SpbArraysWith::into_extra,
+            ),
+            spb_data: officekit_markup_base::into_extra_required(
+                *self.spb_data,
+                SpbDataWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3487,7 +4192,25 @@ impl officekit_markup_base::Write for SupportingPropertyBags {
     }
 }
 
-impl Top10 {
+impl<X: NodeExtra> Top10With<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> Top10With<Y>
+    where
+        Y: NodeExtra,
+    {
+        Top10With {
+            extra: Default::default(),
+            filter_val: self.filter_val,
+            key: self.key,
+            percent: self.percent,
+            top: self.top,
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3515,7 +4238,29 @@ impl officekit_markup_base::Write for Top10 {
     }
 }
 
-impl Type {
+impl<X: NodeExtra> TypeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TypeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TypeWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            key_flags: officekit_markup_base::into_extra_optional(
+                &mut self.key_flags,
+                KeyFlagsWith::into_extra,
+            ),
+            name: self.name,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3539,7 +4284,21 @@ impl officekit_markup_base::Write for Type {
     }
 }
 
-impl Types {
+impl<X: NodeExtra> TypesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TypesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TypesWith {
+            extra: Default::default(),
+            r#type: officekit_markup_base::into_extra_list(self.r#type, TypeWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3560,7 +4319,22 @@ impl officekit_markup_base::Write for Types {
     }
 }
 
-impl VArrayValue {
+impl<X: NodeExtra> VArrayValueWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VArrayValueWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VArrayValueWith {
+            extra: Default::default(),
+            t: self.t,
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3585,7 +4359,22 @@ impl officekit_markup_base::Write for VArrayValue {
     }
 }
 
-impl VSupportingPropertyBagArrayValue {
+impl<X: NodeExtra> VSupportingPropertyBagArrayValueWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VSupportingPropertyBagArrayValueWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VSupportingPropertyBagArrayValueWith {
+            extra: Default::default(),
+            t: self.t,
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3610,7 +4399,21 @@ impl officekit_markup_base::Write for VSupportingPropertyBagArrayValue {
     }
 }
 
-impl VSupportingPropertyBagValue {
+impl<X: NodeExtra> VSupportingPropertyBagValueWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VSupportingPropertyBagValueWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VSupportingPropertyBagValueWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

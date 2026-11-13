@@ -210,16 +210,71 @@
 //   6833bb8339d1dc179b970db58c13333ff6139e649ef9e044ef10623bed172323  crates/xtask/data/sdk_corrections.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The mirrors rkyv archives the enums of `crate::office_word_2010_wordprocessing_canvas` through: the archived
-//! enums and resolvers it writes stay in this private module.
+//! The mirrors rkyv archives the structs and enums of `crate::office_word_2010_wordprocessing_canvas` through: the archived
+//! types and resolvers it writes stay in this private module.
 
+use officekit_markup_core::drawing;
 use officekit_markup_core::office_word_2010_wordml;
 use officekit_markup_core::picture;
 use officekit_xml::element::Node;
 use rkyv::de::Pooling;
-use rkyv::rancor::{Fallible, Source};
-use rkyv::ser::{Allocator, Sharing, Writer};
+use rkyv::rancor::{Fallible, Source as ErrorSource};
+use rkyv::ser::{Allocator, Sharing, Writer as ArchiveWriter};
 use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Bg)]
+#[rkyv(attr(non_exhaustive))]
+pub struct BgMirror {
+    pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
+    pub extra: (),
+    pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::ExtLst)]
+#[rkyv(attr(non_exhaustive))]
+pub struct ExtLstMirror {
+    pub extension: Vec<drawing::Extension>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::GraphicFrame)]
+#[rkyv(attr(non_exhaustive))]
+pub struct GraphicFrameMirror {
+    pub c_nv_fr_pr: Box<super::super::office_word_2010_wordprocessing_group::CNvFrPr>,
+    pub c_nv_pr: Box<super::super::office_word_2010_wordprocessing_group::CNvPr>,
+    pub ext_lst: Option<Box<super::super::office_word_2010_wordprocessing_group::ExtLst>>,
+    pub extra: (),
+    pub graphic_object: Box<drawing::GraphicObject>,
+    pub unknown: officekit_markup_base::Unknown,
+    pub xfrm: Box<super::super::office_word_2010_wordprocessing_group::Xfrm>,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Whole)]
+#[rkyv(attr(non_exhaustive))]
+pub struct WholeMirror {
+    pub content: Option<Box<drawing::EffectPropertiesContent>>,
+    pub extra: (),
+    pub outline: Option<Box<drawing::Outline>>,
+    pub unknown: officekit_markup_base::Unknown,
+}
+
+#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(remote = super::Wpc)]
+#[rkyv(attr(non_exhaustive))]
+pub struct WpcMirror {
+    pub bg: Option<Box<super::Bg>>,
+    pub content: Vec<super::WordprocessingCanvasContent>,
+    pub ext_lst: Option<Box<super::ExtLst>>,
+    pub extra: (),
+    pub unknown: officekit_markup_base::Unknown,
+    pub whole: Option<Box<super::Whole>>,
+}
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::WordprocessingCanvasContent)]
@@ -231,6 +286,210 @@ pub enum WordprocessingCanvasContent {
     Picture(picture::Picture),
     Wgp(super::super::office_word_2010_wordprocessing_group::Wgp),
     Wsp(super::super::office_word_2010_wordprocessing_shape::Wsp),
+}
+
+impl From<BgMirror> for super::Bg {
+    fn from(item: BgMirror) -> Self {
+        Self {
+            effect_properties_content: item.effect_properties_content,
+            extra: item.extra,
+            fill_properties_content: item.fill_properties_content,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Bg {
+    type Archived = ArchivedBgMirror;
+    type Resolver = BgMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        BgMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Bg
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        BgMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Bg, __D> for ArchivedBgMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Bg, __D::Error> {
+        BgMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<ExtLstMirror> for super::ExtLst {
+    fn from(item: ExtLstMirror) -> Self {
+        Self {
+            extension: item.extension,
+            extra: item.extra,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::ExtLst {
+    type Archived = ArchivedExtLstMirror;
+    type Resolver = ExtLstMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        ExtLstMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::ExtLst
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        ExtLstMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::ExtLst, __D> for ArchivedExtLstMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::ExtLst, __D::Error> {
+        ExtLstMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<GraphicFrameMirror> for super::GraphicFrame {
+    fn from(item: GraphicFrameMirror) -> Self {
+        Self {
+            c_nv_fr_pr: item.c_nv_fr_pr,
+            c_nv_pr: item.c_nv_pr,
+            ext_lst: item.ext_lst,
+            extra: item.extra,
+            graphic_object: item.graphic_object,
+            unknown: item.unknown,
+            xfrm: item.xfrm,
+        }
+    }
+}
+
+impl rkyv::Archive for super::GraphicFrame {
+    type Archived = ArchivedGraphicFrameMirror;
+    type Resolver = GraphicFrameMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        GraphicFrameMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::GraphicFrame
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        GraphicFrameMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::GraphicFrame, __D> for ArchivedGraphicFrameMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::GraphicFrame, __D::Error> {
+        GraphicFrameMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<WholeMirror> for super::Whole {
+    fn from(item: WholeMirror) -> Self {
+        Self {
+            content: item.content,
+            extra: item.extra,
+            outline: item.outline,
+            unknown: item.unknown,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Whole {
+    type Archived = ArchivedWholeMirror;
+    type Resolver = WholeMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        WholeMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Whole
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        WholeMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Whole, __D> for ArchivedWholeMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Whole, __D::Error> {
+        WholeMirror::deserialize_with(self, deserializer)
+    }
+}
+
+impl From<WpcMirror> for super::Wpc {
+    fn from(item: WpcMirror) -> Self {
+        Self {
+            bg: item.bg,
+            content: item.content,
+            ext_lst: item.ext_lst,
+            extra: item.extra,
+            unknown: item.unknown,
+            whole: item.whole,
+        }
+    }
+}
+
+impl rkyv::Archive for super::Wpc {
+    type Archived = ArchivedWpcMirror;
+    type Resolver = WpcMirrorResolver;
+
+    fn resolve(&self, resolver: Self::Resolver, out: rkyv::Place<Self::Archived>) {
+        WpcMirror::resolve_with(self, resolver, out);
+    }
+}
+
+impl<__S> rkyv::Serialize<__S> for super::Wpc
+where
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
+{
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
+        WpcMirror::serialize_with(self, serializer)
+    }
+}
+
+impl<__D> rkyv::Deserialize<super::Wpc, __D> for ArchivedWpcMirror
+where
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
+{
+    fn deserialize(&self, deserializer: &mut __D) -> Result<super::Wpc, __D::Error> {
+        WpcMirror::deserialize_with(self, deserializer)
+    }
 }
 
 impl From<WordprocessingCanvasContent> for super::WordprocessingCanvasContent {
@@ -255,26 +514,26 @@ impl rkyv::Archive for super::WordprocessingCanvasContent {
     }
 }
 
-impl<S> rkyv::Serialize<S> for super::WordprocessingCanvasContent
+impl<__S> rkyv::Serialize<__S> for super::WordprocessingCanvasContent
 where
-    S: Fallible + Allocator + Sharing + Writer + ?Sized,
-    S::Error: Source,
+    __S: Fallible + Allocator + Sharing + ArchiveWriter + ?Sized,
+    __S::Error: ErrorSource,
 {
-    fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+    fn serialize(&self, serializer: &mut __S) -> Result<Self::Resolver, __S::Error> {
         WordprocessingCanvasContent::serialize_with(self, serializer)
     }
 }
 
-impl<D> rkyv::Deserialize<super::WordprocessingCanvasContent, D>
+impl<__D> rkyv::Deserialize<super::WordprocessingCanvasContent, __D>
     for ArchivedWordprocessingCanvasContent
 where
-    D: Fallible + Pooling + ?Sized,
-    D::Error: Source,
+    __D: Fallible + Pooling + ?Sized,
+    __D::Error: ErrorSource,
 {
     fn deserialize(
         &self,
-        deserializer: &mut D,
-    ) -> Result<super::WordprocessingCanvasContent, D::Error> {
+        deserializer: &mut __D,
+    ) -> Result<super::WordprocessingCanvasContent, __D::Error> {
         WordprocessingCanvasContent::deserialize_with(self, deserializer)
     }
 }

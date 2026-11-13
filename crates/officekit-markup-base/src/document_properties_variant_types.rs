@@ -221,17 +221,10 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use crate::NodeExtra;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
-#[cfg(feature = "binary-format")]
-use rkyv::de::Pooling;
-#[cfg(feature = "binary-format")]
-use rkyv::rancor::Source;
-#[cfg(feature = "binary-format")]
-use rkyv::ser::{Allocator, Sharing, Writer};
-#[cfg(feature = "binary-format")]
-use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_VT: Option<NamespaceId> = Some(96);
 
@@ -578,22 +571,15 @@ static ERROR_STATUS_CODE_SIMPLE_TYPE_FACETS: crate::Facets = crate::Facets {
 
 /// The `vt:array` element, Array (ECMA-376 Part 1, section 22.4.2.1). Its schema type is
 /// `CT_Array`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Array {
+pub struct ArrayWith<X: NodeExtra> {
     /// The attribute `baseType`, when the element has it.
     pub base_type: Option<ArrayBaseTypeSimpleType>,
     /// The children that are an item of `ArrayContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<ArrayContent>,
+    pub content: Vec<ArrayContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesArray,
     /// The attribute `lBounds`, when the element has it.
     pub l_bounds: Option<String>,
     /// The attribute `uBounds`, when the element has it.
@@ -601,6 +587,11 @@ pub struct Array {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `vt:array` element of the tree a read gives: [`ArrayWith`] holding nothing in `extra`.
+pub type Array = ArrayWith<()>;
+
+impl Eq for ArrayWith<()> {}
 
 /// Array Base Type Simple Type, the simple type `ST_ArrayBaseType` (ECMA-376 Part 1, section
 /// 22.4.3.1), kept as the text the file carried.
@@ -661,168 +652,189 @@ pub enum ArrayBaseTypeSimpleTypeMember {
 /// The schema types that hold it: `CT_Array`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
-pub enum ArrayContent {
+#[derive(Clone, Debug, PartialEq)]
+pub enum ArrayContentWith<X: NodeExtra> {
     /// The element `vt:bstr`, a `BasicString`.
-    BasicString(BasicString),
+    BasicString(BasicStringWith<X>),
     /// The element `vt:bool`, a `Boolean`.
-    Boolean(Boolean),
+    Boolean(BooleanWith<X>),
     /// The element `vt:cy`, a `Currency`.
-    Currency(Currency),
+    Currency(CurrencyWith<X>),
     /// The element `vt:date`, a `DateAndTime`.
-    DateAndTime(DateAndTime),
+    DateAndTime(DateAndTimeWith<X>),
     /// The element `vt:decimal`, a `Decimal`.
-    Decimal(Decimal),
+    Decimal(DecimalWith<X>),
     /// The element `vt:error`, a `ErrorStatusCode`.
-    ErrorStatusCode(ErrorStatusCode),
+    ErrorStatusCode(ErrorStatusCodeWith<X>),
     /// The element `vt:i1`, a `I1`.
-    I1(I1),
+    I1(I1With<X>),
     /// The element `vt:i2`, a `I2`.
-    I2(I2),
+    I2(I2With<X>),
     /// The element `vt:i4`, a `I4`.
-    I4(I4),
+    I4(I4With<X>),
     /// The element `vt:int`, a `Integer`.
-    Integer(Integer),
+    Integer(IntegerWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `vt:r4`, a `R4`.
-    R4(R4),
+    R4(R4With<X>),
     /// The element `vt:r8`, a `R8`.
-    R8(R8),
+    R8(R8With<X>),
     /// The element `vt:ui1`, a `Ui1`.
-    Ui1(Ui1),
+    Ui1(Ui1With<X>),
     /// The element `vt:ui2`, a `Ui2`.
-    Ui2(Ui2),
+    Ui2(Ui2With<X>),
     /// The element `vt:ui4`, a `Ui4`.
-    Ui4(Ui4),
+    Ui4(Ui4With<X>),
     /// The element `vt:uint`, a `UnsignedInteger`.
-    UnsignedInteger(UnsignedInteger),
+    UnsignedInteger(UnsignedIntegerWith<X>),
     /// The element `vt:variant`, a `Variant`.
-    Variant(Variant),
+    Variant(VariantWith<X>),
 }
+
+/// [`ArrayContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type ArrayContent = ArrayContentWith<()>;
+
+impl Eq for ArrayContentWith<()> {}
 
 /// The `vt:bstr` element, Basic String (ECMA-376 Part 1, section 22.4.2.4). Its schema type is
 /// `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BasicString {
+pub struct BasicStringWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesBasicString,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:bstr` element of the tree a read gives: [`BasicStringWith`] holding nothing in `extra`.
+pub type BasicString = BasicStringWith<()>;
+
+impl Eq for BasicStringWith<()> {}
 
 /// The `vt:blob` element, Binary Blob (ECMA-376 Part 1, section 22.4.2.2). Its schema type is
 /// `base64Binary`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BinaryBlob {
+pub struct BinaryBlobWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesBinaryBlob,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:blob` element of the tree a read gives: [`BinaryBlobWith`] holding nothing in `extra`.
+pub type BinaryBlob = BinaryBlobWith<()>;
+
+impl Eq for BinaryBlobWith<()> {}
 
 /// The `vt:oblob` element, Binary Blob Object (ECMA-376 Part 1, section 22.4.2.20). Its schema type
 /// is `base64Binary`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BinaryBlobObject {
+pub struct BinaryBlobObjectWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesBinaryBlobObject,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:oblob` element of the tree a read gives: [`BinaryBlobObjectWith`] holding nothing in
+/// `extra`.
+pub type BinaryBlobObject = BinaryBlobObjectWith<()>;
+
+impl Eq for BinaryBlobObjectWith<()> {}
 
 /// The `vt:storage` element, Binary Storage (ECMA-376 Part 1, section 22.4.2.25). Its schema type
 /// is `base64Binary`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BinaryStorage {
+pub struct BinaryStorageWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesBinaryStorage,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:storage` element of the tree a read gives: [`BinaryStorageWith`] holding nothing in
+/// `extra`.
+pub type BinaryStorage = BinaryStorageWith<()>;
+
+impl Eq for BinaryStorageWith<()> {}
 
 /// The `vt:ostorage` element, Binary Storage Object (ECMA-376 Part 1, section 22.4.2.21). Its
 /// schema type is `base64Binary`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BinaryStorageObject {
+pub struct BinaryStorageObjectWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesBinaryStorageObject,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:ostorage` element of the tree a read gives: [`BinaryStorageObjectWith`] holding nothing
+/// in `extra`.
+pub type BinaryStorageObject = BinaryStorageObjectWith<()>;
+
+impl Eq for BinaryStorageObjectWith<()> {}
 
 /// The `vt:stream` element, Binary Stream (ECMA-376 Part 1, section 22.4.2.26). Its schema type is
 /// `base64Binary`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BinaryStream {
+pub struct BinaryStreamWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesBinaryStream,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:stream` element of the tree a read gives: [`BinaryStreamWith`] holding nothing in
+/// `extra`.
+pub type BinaryStream = BinaryStreamWith<()>;
+
+impl Eq for BinaryStreamWith<()> {}
 
 /// The `vt:ostream` element, Binary Stream Object (ECMA-376 Part 1, section 22.4.2.22). Its schema
 /// type is `base64Binary`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BinaryStreamObject {
+pub struct BinaryStreamObjectWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesBinaryStreamObject,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `vt:ostream` element of the tree a read gives: [`BinaryStreamObjectWith`] holding nothing in
+/// `extra`.
+pub type BinaryStreamObject = BinaryStreamObjectWith<()>;
+
+impl Eq for BinaryStreamObjectWith<()> {}
+
 /// The `vt:vstream` element, Binary Versioned Stream (ECMA-376 Part 1, section 22.4.2.34). Its
 /// schema type is `CT_Vstream`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BinaryVersionedStream {
+pub struct BinaryVersionedStreamWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesBinaryVersionedStream,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
@@ -831,52 +843,64 @@ pub struct BinaryVersionedStream {
     pub version: Option<super::common_simple_types::Guid>,
 }
 
+/// The `vt:vstream` element of the tree a read gives: [`BinaryVersionedStreamWith`] holding nothing
+/// in `extra`.
+pub type BinaryVersionedStream = BinaryVersionedStreamWith<()>;
+
+impl Eq for BinaryVersionedStreamWith<()> {}
+
 /// The `vt:bool` element, Boolean (ECMA-376 Part 1, section 22.4.2.3). Its schema type is
 /// `boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Boolean {
+pub struct BooleanWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesBoolean,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `vt:bool` element of the tree a read gives: [`BooleanWith`] holding nothing in `extra`.
+pub type Boolean = BooleanWith<()>;
+
+impl Eq for BooleanWith<()> {}
+
 /// The `vt:clsid` element, Class ID (ECMA-376 Part 1, section 22.4.2.5). Its schema type is
 /// `ST_Guid`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ClassID {
+pub struct ClassIDWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesClassID,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: super::common_simple_types::Guid,
 }
 
+/// The `vt:clsid` element of the tree a read gives: [`ClassIDWith`] holding nothing in `extra`.
+pub type ClassID = ClassIDWith<()>;
+
+impl Eq for ClassIDWith<()> {}
+
 /// The `vt:cy` element, Currency (ECMA-376 Part 1, section 22.4.2.6). Its schema type is `ST_Cy`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Currency {
+pub struct CurrencyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesCurrency,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: CurrencySimpleType,
 }
+
+/// The `vt:cy` element of the tree a read gives: [`CurrencyWith`] holding nothing in `extra`.
+pub type Currency = CurrencyWith<()>;
+
+impl Eq for CurrencyWith<()> {}
 
 /// Currency Simple Type, the simple type `ST_Cy` (ECMA-376 Part 1, section 22.4.3.2), kept as the
 /// text the file carried.
@@ -894,65 +918,74 @@ pub struct CurrencySimpleType(pub String);
 
 /// The `vt:date` element, Date and Time (ECMA-376 Part 1, section 22.4.2.7). Its schema type is
 /// `dateTime`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DateAndTime {
+pub struct DateAndTimeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesDateAndTime,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:date` element of the tree a read gives: [`DateAndTimeWith`] holding nothing in `extra`.
+pub type DateAndTime = DateAndTimeWith<()>;
+
+impl Eq for DateAndTimeWith<()> {}
 
 /// The `vt:decimal` element, Decimal (ECMA-376 Part 1, section 22.4.2.8). Its schema type is
 /// `decimal`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Decimal {
+pub struct DecimalWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesDecimal,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `vt:decimal` element of the tree a read gives: [`DecimalWith`] holding nothing in `extra`.
+pub type Decimal = DecimalWith<()>;
+
+impl Eq for DecimalWith<()> {}
+
 /// The `vt:empty` element, Empty (ECMA-376 Part 1, section 22.4.2.9). Its schema type is
 /// `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Empty {
+pub struct EmptyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesEmpty,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
 
+/// The `vt:empty` element of the tree a read gives: [`EmptyWith`] holding nothing in `extra`.
+pub type Empty = EmptyWith<()>;
+
+impl Eq for EmptyWith<()> {}
+
 /// The `vt:error` element, Error Status Code (ECMA-376 Part 1, section 22.4.2.10). Its schema type
 /// is `ST_Error`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ErrorStatusCode {
+pub struct ErrorStatusCodeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesErrorStatusCode,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: ErrorStatusCodeSimpleType,
 }
+
+/// The `vt:error` element of the tree a read gives: [`ErrorStatusCodeWith`] holding nothing in
+/// `extra`.
+pub type ErrorStatusCode = ErrorStatusCodeWith<()>;
+
+impl Eq for ErrorStatusCodeWith<()> {}
 
 /// Error Status Code Simple Type, the simple type `ST_Error` (ECMA-376 Part 1, section 22.4.3.3),
 /// kept as the text the file carried.
@@ -970,367 +1003,401 @@ pub struct ErrorStatusCodeSimpleType(pub String);
 
 /// The `vt:filetime` element, File Time (ECMA-376 Part 1, section 22.4.2.11). Its schema type is
 /// `dateTime`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FileTime {
+pub struct FileTimeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesFileTime,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:filetime` element of the tree a read gives: [`FileTimeWith`] holding nothing in `extra`.
+pub type FileTime = FileTimeWith<()>;
+
+impl Eq for FileTimeWith<()> {}
 
 /// The `vt:i1` element. Its schema type is `byte`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct I1 {
+pub struct I1With<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesI1,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:i1` element of the tree a read gives: [`I1With`] holding nothing in `extra`.
+pub type I1 = I1With<()>;
+
+impl Eq for I1With<()> {}
 
 /// The `vt:i2` element. Its schema type is `short`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct I2 {
+pub struct I2With<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesI2,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:i2` element of the tree a read gives: [`I2With`] holding nothing in `extra`.
+pub type I2 = I2With<()>;
+
+impl Eq for I2With<()> {}
 
 /// The `vt:i4` element. Its schema type is `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct I4 {
+pub struct I4With<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesI4,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:i4` element of the tree a read gives: [`I4With`] holding nothing in `extra`.
+pub type I4 = I4With<()>;
+
+impl Eq for I4With<()> {}
 
 /// The `vt:i8` element. Its schema type is `long`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct I8 {
+pub struct I8With<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesI8,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:i8` element of the tree a read gives: [`I8With`] holding nothing in `extra`.
+pub type I8 = I8With<()>;
+
+impl Eq for I8With<()> {}
 
 /// The `vt:int` element, Integer (ECMA-376 Part 1, section 22.4.2.16). Its schema type is `int`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Integer {
+pub struct IntegerWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesInteger,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `vt:int` element of the tree a read gives: [`IntegerWith`] holding nothing in `extra`.
+pub type Integer = IntegerWith<()>;
+
+impl Eq for IntegerWith<()> {}
+
 /// The `vt:lpstr` element, LPSTR (ECMA-376 Part 1, section 22.4.2.17). Its schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Lpstr {
+pub struct LpstrWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesLpstr,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:lpstr` element of the tree a read gives: [`LpstrWith`] holding nothing in `extra`.
+pub type Lpstr = LpstrWith<()>;
+
+impl Eq for LpstrWith<()> {}
 
 /// The `vt:lpwstr` element, LPWSTR (ECMA-376 Part 1, section 22.4.2.18). Its schema type is
 /// `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Lpwstr {
+pub struct LpwstrWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesLpwstr,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:lpwstr` element of the tree a read gives: [`LpwstrWith`] holding nothing in `extra`.
+pub type Lpwstr = LpwstrWith<()>;
+
+impl Eq for LpwstrWith<()> {}
 
 /// The `vt:null` element, Null (ECMA-376 Part 1, section 22.4.2.19). Its schema type is `CT_Null`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Null {
+pub struct NullWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesNull,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `vt:null` element of the tree a read gives: [`NullWith`] holding nothing in `extra`.
+pub type Null = NullWith<()>;
+
+impl Eq for NullWith<()> {}
 
 /// The `vt:r4` element. Its schema type is `float`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct R4 {
+pub struct R4With<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesR4,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:r4` element of the tree a read gives: [`R4With`] holding nothing in `extra`.
+pub type R4 = R4With<()>;
+
+impl Eq for R4With<()> {}
 
 /// The `vt:r8` element. Its schema type is `double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct R8 {
+pub struct R8With<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesR8,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:r8` element of the tree a read gives: [`R8With`] holding nothing in `extra`.
+pub type R8 = R8With<()>;
+
+impl Eq for R8With<()> {}
 
 /// The `vt:ui1` element. Its schema type is `unsignedByte`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Ui1 {
+pub struct Ui1With<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesUi1,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:ui1` element of the tree a read gives: [`Ui1With`] holding nothing in `extra`.
+pub type Ui1 = Ui1With<()>;
+
+impl Eq for Ui1With<()> {}
 
 /// The `vt:ui2` element. Its schema type is `unsignedShort`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Ui2 {
+pub struct Ui2With<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesUi2,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:ui2` element of the tree a read gives: [`Ui2With`] holding nothing in `extra`.
+pub type Ui2 = Ui2With<()>;
+
+impl Eq for Ui2With<()> {}
 
 /// The `vt:ui4` element. Its schema type is `unsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Ui4 {
+pub struct Ui4With<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesUi4,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `vt:ui4` element of the tree a read gives: [`Ui4With`] holding nothing in `extra`.
+pub type Ui4 = Ui4With<()>;
+
+impl Eq for Ui4With<()> {}
+
 /// The `vt:ui8` element. Its schema type is `unsignedLong`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Ui8 {
+pub struct Ui8With<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesUi8,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `vt:ui8` element of the tree a read gives: [`Ui8With`] holding nothing in `extra`.
+pub type Ui8 = Ui8With<()>;
+
+impl Eq for Ui8With<()> {}
 
 /// The `vt:uint` element, Unsigned Integer (ECMA-376 Part 1, section 22.4.2.31). Its schema type is
 /// `unsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct UnsignedInteger {
+pub struct UnsignedIntegerWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesUnsignedInteger,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `vt:uint` element of the tree a read gives: [`UnsignedIntegerWith`] holding nothing in
+/// `extra`.
+pub type UnsignedInteger = UnsignedIntegerWith<()>;
+
+impl Eq for UnsignedIntegerWith<()> {}
+
 /// The `vt:variant` element, Variant (ECMA-376 Part 1, section 22.4.2.32). Its schema type is
 /// `CT_Variant`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Variant {
+pub struct VariantWith<X: NodeExtra> {
     /// The child that is an item of `VariantContent`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Box<VariantContent>,
+    pub content: Box<VariantContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesVariant,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `vt:variant` element of the tree a read gives: [`VariantWith`] holding nothing in `extra`.
+pub type Variant = VariantWith<()>;
+
+impl Eq for VariantWith<()> {}
 
 /// One child element of a choice: local choice in `CT_Variant`.
 ///
 /// The schema types that hold it: `CT_Variant`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
-pub enum VariantContent {
+#[derive(Clone, Debug, PartialEq)]
+pub enum VariantContentWith<X: NodeExtra> {
     /// The element `vt:array`, a `Array`.
-    Array(Array),
+    Array(ArrayWith<X>),
     /// The element `vt:bstr`, a `BasicString`.
-    BasicString(BasicString),
+    BasicString(BasicStringWith<X>),
     /// The element `vt:blob`, a `BinaryBlob`.
-    BinaryBlob(BinaryBlob),
+    BinaryBlob(BinaryBlobWith<X>),
     /// The element `vt:oblob`, a `BinaryBlobObject`.
-    BinaryBlobObject(BinaryBlobObject),
+    BinaryBlobObject(BinaryBlobObjectWith<X>),
     /// The element `vt:storage`, a `BinaryStorage`.
-    BinaryStorage(BinaryStorage),
+    BinaryStorage(BinaryStorageWith<X>),
     /// The element `vt:ostorage`, a `BinaryStorageObject`.
-    BinaryStorageObject(BinaryStorageObject),
+    BinaryStorageObject(BinaryStorageObjectWith<X>),
     /// The element `vt:stream`, a `BinaryStream`.
-    BinaryStream(BinaryStream),
+    BinaryStream(BinaryStreamWith<X>),
     /// The element `vt:ostream`, a `BinaryStreamObject`.
-    BinaryStreamObject(BinaryStreamObject),
+    BinaryStreamObject(BinaryStreamObjectWith<X>),
     /// The element `vt:vstream`, a `BinaryVersionedStream`.
-    BinaryVersionedStream(BinaryVersionedStream),
+    BinaryVersionedStream(BinaryVersionedStreamWith<X>),
     /// The element `vt:bool`, a `Boolean`.
-    Boolean(Boolean),
+    Boolean(BooleanWith<X>),
     /// The element `vt:clsid`, a `ClassID`.
-    ClassID(ClassID),
+    ClassID(ClassIDWith<X>),
     /// The element `vt:cy`, a `Currency`.
-    Currency(Currency),
+    Currency(CurrencyWith<X>),
     /// The element `vt:date`, a `DateAndTime`.
-    DateAndTime(DateAndTime),
+    DateAndTime(DateAndTimeWith<X>),
     /// The element `vt:decimal`, a `Decimal`.
-    Decimal(Decimal),
+    Decimal(DecimalWith<X>),
     /// The element `vt:empty`, a `Empty`.
-    Empty(Empty),
+    Empty(EmptyWith<X>),
     /// The element `vt:error`, a `ErrorStatusCode`.
-    ErrorStatusCode(ErrorStatusCode),
+    ErrorStatusCode(ErrorStatusCodeWith<X>),
     /// The element `vt:filetime`, a `FileTime`.
-    FileTime(FileTime),
+    FileTime(FileTimeWith<X>),
     /// The element `vt:i1`, a `I1`.
-    I1(I1),
+    I1(I1With<X>),
     /// The element `vt:i2`, a `I2`.
-    I2(I2),
+    I2(I2With<X>),
     /// The element `vt:i4`, a `I4`.
-    I4(I4),
+    I4(I4With<X>),
     /// The element `vt:i8`, a `I8`.
-    I8(I8),
+    I8(I8With<X>),
     /// The element `vt:int`, a `Integer`.
-    Integer(Integer),
+    Integer(IntegerWith<X>),
     /// The element `vt:lpstr`, a `Lpstr`.
-    Lpstr(Lpstr),
+    Lpstr(LpstrWith<X>),
     /// The element `vt:lpwstr`, a `Lpwstr`.
-    Lpwstr(Lpwstr),
+    Lpwstr(LpwstrWith<X>),
     /// The element `vt:null`, a `Null`.
-    Null(Null),
+    Null(NullWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `vt:r4`, a `R4`.
-    R4(R4),
+    R4(R4With<X>),
     /// The element `vt:r8`, a `R8`.
-    R8(R8),
+    R8(R8With<X>),
     /// The element `vt:ui1`, a `Ui1`.
-    Ui1(Ui1),
+    Ui1(Ui1With<X>),
     /// The element `vt:ui2`, a `Ui2`.
-    Ui2(Ui2),
+    Ui2(Ui2With<X>),
     /// The element `vt:ui4`, a `Ui4`.
-    Ui4(Ui4),
+    Ui4(Ui4With<X>),
     /// The element `vt:ui8`, a `Ui8`.
-    Ui8(Ui8),
+    Ui8(Ui8With<X>),
     /// The element `vt:uint`, a `UnsignedInteger`.
-    UnsignedInteger(UnsignedInteger),
+    UnsignedInteger(UnsignedIntegerWith<X>),
     /// The element `vt:variant`, a `Variant`.
-    Variant(Variant),
+    Variant(VariantWith<X>),
     /// The element `vt:vector`, a `Vector`.
-    Vector(Vector),
+    Vector(VectorWith<X>),
 }
+
+/// [`VariantContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type VariantContent = VariantContentWith<()>;
+
+impl Eq for VariantContentWith<()> {}
 
 /// The `vt:vector` element, Vector (ECMA-376 Part 1, section 22.4.2.33). Its schema type is
 /// `CT_Vector`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Vector {
+pub struct VectorWith<X: NodeExtra> {
     /// The attribute `baseType`, when the element has it.
     pub base_type: Option<VectorBaseTypeSimpleType>,
     /// The children that are an item of `VectorContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<VectorContent>,
+    pub content: Vec<VectorContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DocumentPropertiesVariantTypesVector,
     /// The attribute `size`, when the element has it.
     pub size: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
 }
+
+/// The `vt:vector` element of the tree a read gives: [`VectorWith`] holding nothing in `extra`.
+pub type Vector = VectorWith<()>;
+
+impl Eq for VectorWith<()> {}
 
 /// Vector Base Type Simple Type, the simple type `ST_VectorBaseType` (ECMA-376 Part 1, section
 /// 22.4.3.4), kept as the text the file carried.
@@ -1397,53 +1464,75 @@ pub enum VectorBaseTypeSimpleTypeMember {
 /// The schema types that hold it: `CT_Vector`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
-pub enum VectorContent {
+#[derive(Clone, Debug, PartialEq)]
+pub enum VectorContentWith<X: NodeExtra> {
     /// The element `vt:bstr`, a `BasicString`.
-    BasicString(BasicString),
+    BasicString(BasicStringWith<X>),
     /// The element `vt:bool`, a `Boolean`.
-    Boolean(Boolean),
+    Boolean(BooleanWith<X>),
     /// The element `vt:clsid`, a `ClassID`.
-    ClassID(ClassID),
+    ClassID(ClassIDWith<X>),
     /// The element `vt:cy`, a `Currency`.
-    Currency(Currency),
+    Currency(CurrencyWith<X>),
     /// The element `vt:date`, a `DateAndTime`.
-    DateAndTime(DateAndTime),
+    DateAndTime(DateAndTimeWith<X>),
     /// The element `vt:error`, a `ErrorStatusCode`.
-    ErrorStatusCode(ErrorStatusCode),
+    ErrorStatusCode(ErrorStatusCodeWith<X>),
     /// The element `vt:filetime`, a `FileTime`.
-    FileTime(FileTime),
+    FileTime(FileTimeWith<X>),
     /// The element `vt:i1`, a `I1`.
-    I1(I1),
+    I1(I1With<X>),
     /// The element `vt:i2`, a `I2`.
-    I2(I2),
+    I2(I2With<X>),
     /// The element `vt:i4`, a `I4`.
-    I4(I4),
+    I4(I4With<X>),
     /// The element `vt:i8`, a `I8`.
-    I8(I8),
+    I8(I8With<X>),
     /// The element `vt:lpstr`, a `Lpstr`.
-    Lpstr(Lpstr),
+    Lpstr(LpstrWith<X>),
     /// The element `vt:lpwstr`, a `Lpwstr`.
-    Lpwstr(Lpwstr),
+    Lpwstr(LpwstrWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `vt:r4`, a `R4`.
-    R4(R4),
+    R4(R4With<X>),
     /// The element `vt:r8`, a `R8`.
-    R8(R8),
+    R8(R8With<X>),
     /// The element `vt:ui1`, a `Ui1`.
-    Ui1(Ui1),
+    Ui1(Ui1With<X>),
     /// The element `vt:ui2`, a `Ui2`.
-    Ui2(Ui2),
+    Ui2(Ui2With<X>),
     /// The element `vt:ui4`, a `Ui4`.
-    Ui4(Ui4),
+    Ui4(Ui4With<X>),
     /// The element `vt:ui8`, a `Ui8`.
-    Ui8(Ui8),
+    Ui8(Ui8With<X>),
     /// The element `vt:variant`, a `Variant`.
-    Variant(Variant),
+    Variant(VariantWith<X>),
 }
 
-impl Array {
+/// [`VectorContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type VectorContent = VectorContentWith<()>;
+
+impl Eq for VectorContentWith<()> {}
+
+impl<X: NodeExtra> ArrayWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ArrayWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ArrayWith {
+            base_type: self.base_type,
+            content: crate::into_extra_list(self.content, ArrayContentWith::into_extra),
+            extra: Default::default(),
+            l_bounds: self.l_bounds,
+            u_bounds: self.u_bounds,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1537,6 +1626,36 @@ impl ArrayBaseTypeSimpleType {
     }
 }
 
+impl<X: NodeExtra> ArrayContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ArrayContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::BasicString(node) => ArrayContentWith::BasicString(node.into_extra()),
+            Self::Boolean(node) => ArrayContentWith::Boolean(node.into_extra()),
+            Self::Currency(node) => ArrayContentWith::Currency(node.into_extra()),
+            Self::DateAndTime(node) => ArrayContentWith::DateAndTime(node.into_extra()),
+            Self::Decimal(node) => ArrayContentWith::Decimal(node.into_extra()),
+            Self::ErrorStatusCode(node) => ArrayContentWith::ErrorStatusCode(node.into_extra()),
+            Self::I1(node) => ArrayContentWith::I1(node.into_extra()),
+            Self::I2(node) => ArrayContentWith::I2(node.into_extra()),
+            Self::I4(node) => ArrayContentWith::I4(node.into_extra()),
+            Self::Integer(node) => ArrayContentWith::Integer(node.into_extra()),
+            Self::Other(node) => ArrayContentWith::Other(node),
+            Self::R4(node) => ArrayContentWith::R4(node.into_extra()),
+            Self::R8(node) => ArrayContentWith::R8(node.into_extra()),
+            Self::Ui1(node) => ArrayContentWith::Ui1(node.into_extra()),
+            Self::Ui2(node) => ArrayContentWith::Ui2(node.into_extra()),
+            Self::Ui4(node) => ArrayContentWith::Ui4(node.into_extra()),
+            Self::UnsignedInteger(node) => ArrayContentWith::UnsignedInteger(node.into_extra()),
+            Self::Variant(node) => ArrayContentWith::Variant(node.into_extra()),
+        }
+    }
+}
+
 impl crate::Read for ArrayContent {
     fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
@@ -1591,7 +1710,21 @@ impl crate::Write for ArrayContent {
     }
 }
 
-impl BasicString {
+impl<X: NodeExtra> BasicStringWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BasicStringWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BasicStringWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1615,7 +1748,21 @@ impl crate::Write for BasicString {
     }
 }
 
-impl BinaryBlob {
+impl<X: NodeExtra> BinaryBlobWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BinaryBlobWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BinaryBlobWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1639,7 +1786,21 @@ impl crate::Write for BinaryBlob {
     }
 }
 
-impl BinaryBlobObject {
+impl<X: NodeExtra> BinaryBlobObjectWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BinaryBlobObjectWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BinaryBlobObjectWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1663,7 +1824,21 @@ impl crate::Write for BinaryBlobObject {
     }
 }
 
-impl BinaryStorage {
+impl<X: NodeExtra> BinaryStorageWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BinaryStorageWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BinaryStorageWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1687,7 +1862,21 @@ impl crate::Write for BinaryStorage {
     }
 }
 
-impl BinaryStorageObject {
+impl<X: NodeExtra> BinaryStorageObjectWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BinaryStorageObjectWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BinaryStorageObjectWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1711,7 +1900,21 @@ impl crate::Write for BinaryStorageObject {
     }
 }
 
-impl BinaryStream {
+impl<X: NodeExtra> BinaryStreamWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BinaryStreamWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BinaryStreamWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1735,7 +1938,21 @@ impl crate::Write for BinaryStream {
     }
 }
 
-impl BinaryStreamObject {
+impl<X: NodeExtra> BinaryStreamObjectWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BinaryStreamObjectWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BinaryStreamObjectWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1759,7 +1976,22 @@ impl crate::Write for BinaryStreamObject {
     }
 }
 
-impl BinaryVersionedStream {
+impl<X: NodeExtra> BinaryVersionedStreamWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BinaryVersionedStreamWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BinaryVersionedStreamWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+            version: self.version,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1784,7 +2016,21 @@ impl crate::Write for BinaryVersionedStream {
     }
 }
 
-impl Boolean {
+impl<X: NodeExtra> BooleanWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BooleanWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BooleanWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1808,7 +2054,21 @@ impl crate::Write for Boolean {
     }
 }
 
-impl ClassID {
+impl<X: NodeExtra> ClassIDWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ClassIDWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ClassIDWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1832,7 +2092,21 @@ impl crate::Write for ClassID {
     }
 }
 
-impl Currency {
+impl<X: NodeExtra> CurrencyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CurrencyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CurrencyWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1879,7 +2153,21 @@ impl CurrencySimpleType {
     }
 }
 
-impl DateAndTime {
+impl<X: NodeExtra> DateAndTimeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DateAndTimeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DateAndTimeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1903,7 +2191,21 @@ impl crate::Write for DateAndTime {
     }
 }
 
-impl Decimal {
+impl<X: NodeExtra> DecimalWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DecimalWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DecimalWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1927,7 +2229,20 @@ impl crate::Write for Decimal {
     }
 }
 
-impl Empty {
+impl<X: NodeExtra> EmptyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> EmptyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EmptyWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1948,7 +2263,21 @@ impl crate::Write for Empty {
     }
 }
 
-impl ErrorStatusCode {
+impl<X: NodeExtra> ErrorStatusCodeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ErrorStatusCodeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ErrorStatusCodeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -1995,7 +2324,21 @@ impl ErrorStatusCodeSimpleType {
     }
 }
 
-impl FileTime {
+impl<X: NodeExtra> FileTimeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FileTimeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FileTimeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2019,7 +2362,21 @@ impl crate::Write for FileTime {
     }
 }
 
-impl I1 {
+impl<X: NodeExtra> I1With<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> I1With<Y>
+    where
+        Y: NodeExtra,
+    {
+        I1With {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2043,7 +2400,21 @@ impl crate::Write for I1 {
     }
 }
 
-impl I2 {
+impl<X: NodeExtra> I2With<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> I2With<Y>
+    where
+        Y: NodeExtra,
+    {
+        I2With {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2067,7 +2438,21 @@ impl crate::Write for I2 {
     }
 }
 
-impl I4 {
+impl<X: NodeExtra> I4With<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> I4With<Y>
+    where
+        Y: NodeExtra,
+    {
+        I4With {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2091,7 +2476,21 @@ impl crate::Write for I4 {
     }
 }
 
-impl I8 {
+impl<X: NodeExtra> I8With<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> I8With<Y>
+    where
+        Y: NodeExtra,
+    {
+        I8With {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2115,7 +2514,21 @@ impl crate::Write for I8 {
     }
 }
 
-impl Integer {
+impl<X: NodeExtra> IntegerWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> IntegerWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        IntegerWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2139,7 +2552,21 @@ impl crate::Write for Integer {
     }
 }
 
-impl Lpstr {
+impl<X: NodeExtra> LpstrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LpstrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LpstrWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2163,7 +2590,21 @@ impl crate::Write for Lpstr {
     }
 }
 
-impl Lpwstr {
+impl<X: NodeExtra> LpwstrWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LpwstrWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LpwstrWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2187,7 +2628,20 @@ impl crate::Write for Lpwstr {
     }
 }
 
-impl Null {
+impl<X: NodeExtra> NullWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> NullWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        NullWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2208,7 +2662,21 @@ impl crate::Write for Null {
     }
 }
 
-impl R4 {
+impl<X: NodeExtra> R4With<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> R4With<Y>
+    where
+        Y: NodeExtra,
+    {
+        R4With {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2232,7 +2700,21 @@ impl crate::Write for R4 {
     }
 }
 
-impl R8 {
+impl<X: NodeExtra> R8With<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> R8With<Y>
+    where
+        Y: NodeExtra,
+    {
+        R8With {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2256,7 +2738,21 @@ impl crate::Write for R8 {
     }
 }
 
-impl Ui1 {
+impl<X: NodeExtra> Ui1With<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> Ui1With<Y>
+    where
+        Y: NodeExtra,
+    {
+        Ui1With {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2280,7 +2776,21 @@ impl crate::Write for Ui1 {
     }
 }
 
-impl Ui2 {
+impl<X: NodeExtra> Ui2With<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> Ui2With<Y>
+    where
+        Y: NodeExtra,
+    {
+        Ui2With {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2304,7 +2814,21 @@ impl crate::Write for Ui2 {
     }
 }
 
-impl Ui4 {
+impl<X: NodeExtra> Ui4With<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> Ui4With<Y>
+    where
+        Y: NodeExtra,
+    {
+        Ui4With {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2328,7 +2852,21 @@ impl crate::Write for Ui4 {
     }
 }
 
-impl Ui8 {
+impl<X: NodeExtra> Ui8With<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> Ui8With<Y>
+    where
+        Y: NodeExtra,
+    {
+        Ui8With {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2352,7 +2890,21 @@ impl crate::Write for Ui8 {
     }
 }
 
-impl UnsignedInteger {
+impl<X: NodeExtra> UnsignedIntegerWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> UnsignedIntegerWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UnsignedIntegerWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2376,7 +2928,21 @@ impl crate::Write for UnsignedInteger {
     }
 }
 
-impl Variant {
+impl<X: NodeExtra> VariantWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VariantWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VariantWith {
+            content: crate::into_extra_required(*self.content, VariantContentWith::into_extra),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2397,9 +2963,62 @@ impl crate::Write for Variant {
     }
 }
 
-impl Default for VariantContent {
+impl<X: NodeExtra> VariantContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VariantContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::Array(node) => VariantContentWith::Array(node.into_extra()),
+            Self::BasicString(node) => VariantContentWith::BasicString(node.into_extra()),
+            Self::BinaryBlob(node) => VariantContentWith::BinaryBlob(node.into_extra()),
+            Self::BinaryBlobObject(node) => VariantContentWith::BinaryBlobObject(node.into_extra()),
+            Self::BinaryStorage(node) => VariantContentWith::BinaryStorage(node.into_extra()),
+            Self::BinaryStorageObject(node) => {
+                VariantContentWith::BinaryStorageObject(node.into_extra())
+            }
+            Self::BinaryStream(node) => VariantContentWith::BinaryStream(node.into_extra()),
+            Self::BinaryStreamObject(node) => {
+                VariantContentWith::BinaryStreamObject(node.into_extra())
+            }
+            Self::BinaryVersionedStream(node) => {
+                VariantContentWith::BinaryVersionedStream(node.into_extra())
+            }
+            Self::Boolean(node) => VariantContentWith::Boolean(node.into_extra()),
+            Self::ClassID(node) => VariantContentWith::ClassID(node.into_extra()),
+            Self::Currency(node) => VariantContentWith::Currency(node.into_extra()),
+            Self::DateAndTime(node) => VariantContentWith::DateAndTime(node.into_extra()),
+            Self::Decimal(node) => VariantContentWith::Decimal(node.into_extra()),
+            Self::Empty(node) => VariantContentWith::Empty(node.into_extra()),
+            Self::ErrorStatusCode(node) => VariantContentWith::ErrorStatusCode(node.into_extra()),
+            Self::FileTime(node) => VariantContentWith::FileTime(node.into_extra()),
+            Self::I1(node) => VariantContentWith::I1(node.into_extra()),
+            Self::I2(node) => VariantContentWith::I2(node.into_extra()),
+            Self::I4(node) => VariantContentWith::I4(node.into_extra()),
+            Self::I8(node) => VariantContentWith::I8(node.into_extra()),
+            Self::Integer(node) => VariantContentWith::Integer(node.into_extra()),
+            Self::Lpstr(node) => VariantContentWith::Lpstr(node.into_extra()),
+            Self::Lpwstr(node) => VariantContentWith::Lpwstr(node.into_extra()),
+            Self::Null(node) => VariantContentWith::Null(node.into_extra()),
+            Self::Other(node) => VariantContentWith::Other(node),
+            Self::R4(node) => VariantContentWith::R4(node.into_extra()),
+            Self::R8(node) => VariantContentWith::R8(node.into_extra()),
+            Self::Ui1(node) => VariantContentWith::Ui1(node.into_extra()),
+            Self::Ui2(node) => VariantContentWith::Ui2(node.into_extra()),
+            Self::Ui4(node) => VariantContentWith::Ui4(node.into_extra()),
+            Self::Ui8(node) => VariantContentWith::Ui8(node.into_extra()),
+            Self::UnsignedInteger(node) => VariantContentWith::UnsignedInteger(node.into_extra()),
+            Self::Variant(node) => VariantContentWith::Variant(node.into_extra()),
+            Self::Vector(node) => VariantContentWith::Vector(node.into_extra()),
+        }
+    }
+}
+
+impl<X: NodeExtra> Default for VariantContentWith<X> {
     fn default() -> Self {
-        Self::Array(Array::default())
+        Self::Array(ArrayWith::default())
     }
 }
 
@@ -2692,7 +3311,23 @@ impl TryFrom<VariantContent> for VectorContent {
     }
 }
 
-impl Vector {
+impl<X: NodeExtra> VectorWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VectorWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VectorWith {
+            base_type: self.base_type,
+            content: crate::into_extra_list(self.content, VectorContentWith::into_extra),
+            extra: Default::default(),
+            size: self.size,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2785,6 +3420,39 @@ impl VectorBaseTypeSimpleType {
             &self.0,
             "ST_VectorBaseType",
         )
+    }
+}
+
+impl<X: NodeExtra> VectorContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> VectorContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::BasicString(node) => VectorContentWith::BasicString(node.into_extra()),
+            Self::Boolean(node) => VectorContentWith::Boolean(node.into_extra()),
+            Self::ClassID(node) => VectorContentWith::ClassID(node.into_extra()),
+            Self::Currency(node) => VectorContentWith::Currency(node.into_extra()),
+            Self::DateAndTime(node) => VectorContentWith::DateAndTime(node.into_extra()),
+            Self::ErrorStatusCode(node) => VectorContentWith::ErrorStatusCode(node.into_extra()),
+            Self::FileTime(node) => VectorContentWith::FileTime(node.into_extra()),
+            Self::I1(node) => VectorContentWith::I1(node.into_extra()),
+            Self::I2(node) => VectorContentWith::I2(node.into_extra()),
+            Self::I4(node) => VectorContentWith::I4(node.into_extra()),
+            Self::I8(node) => VectorContentWith::I8(node.into_extra()),
+            Self::Lpstr(node) => VectorContentWith::Lpstr(node.into_extra()),
+            Self::Lpwstr(node) => VectorContentWith::Lpwstr(node.into_extra()),
+            Self::Other(node) => VectorContentWith::Other(node),
+            Self::R4(node) => VectorContentWith::R4(node.into_extra()),
+            Self::R8(node) => VectorContentWith::R8(node.into_extra()),
+            Self::Ui1(node) => VectorContentWith::Ui1(node.into_extra()),
+            Self::Ui2(node) => VectorContentWith::Ui2(node.into_extra()),
+            Self::Ui4(node) => VectorContentWith::Ui4(node.into_extra()),
+            Self::Ui8(node) => VectorContentWith::Ui8(node.into_extra()),
+            Self::Variant(node) => VectorContentWith::Variant(node.into_extra()),
+        }
     }
 }
 

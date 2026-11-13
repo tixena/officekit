@@ -223,6 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::spreadsheet;
 use officekit_xml::element::{Element, Node};
@@ -546,56 +547,61 @@ pub static FEATURE_PROPERTY_BAG_CONTENT_TAGS: officekit_markup_base::Accept =
 
 /// The `xfpb:a` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_ArrayFeatureProperty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct A {
+pub struct AWith<X: NodeExtra> {
     /// The children that are an item of `ArrayFeaturePropertyContent`, in order.
-    pub content: Vec<ArrayFeaturePropertyContent>,
+    pub content: Vec<ArrayFeaturePropertyContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagA,
     /// The attribute `k`, when the element has it.
     pub k: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xfpb:a` element of the tree a read gives: [`AWith`] holding nothing in `extra`.
+pub type A = AWith<()>;
+
+impl Eq for AWith<()> {}
 
 /// One child element of a choice: choice in `CT_ArrayFeatureProperty`.
 ///
 /// The schema types that hold it: `CT_ArrayFeatureProperty`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum ArrayFeaturePropertyContent {
+pub enum ArrayFeaturePropertyContentWith<X: NodeExtra> {
     /// The element `xfpb:b`, a `BBoolean`.
-    BBoolean(BBoolean),
+    BBoolean(BBooleanWith<X>),
     /// The element `xfpb:bagId`, a `BagIdUnsignedInt`.
-    BagIdUnsignedInt(BagIdUnsignedInt),
+    BagIdUnsignedInt(BagIdUnsignedIntWith<X>),
     /// The element `xfpb:d`, a `DDouble`.
-    DDouble(DDouble),
+    DDouble(DDoubleWith<X>),
     /// The element `xfpb:i`, a `IInteger`.
-    IInteger(IInteger),
+    IInteger(IIntegerWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `xfpb:rel`, a `RelString`.
-    RelString(RelString),
+    RelString(RelStringWith<X>),
     /// The element `xfpb:s`, a `SString`.
-    SString(SString),
+    SString(SStringWith<X>),
 }
+
+/// [`ArrayFeaturePropertyContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type ArrayFeaturePropertyContent = ArrayFeaturePropertyContentWith<()>;
+
+impl Eq for ArrayFeaturePropertyContentWith<()> {}
 
 /// The `xfpb:b` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_BoolFeatureProperty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BBoolFeatureProperty {
+pub struct BBoolFeaturePropertyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagBBoolFeatureProperty,
     /// The attribute `k`, when the element has it.
     pub k: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -604,72 +610,81 @@ pub struct BBoolFeatureProperty {
     pub value: String,
 }
 
+/// The `xfpb:b` element of the tree a read gives: [`BBoolFeaturePropertyWith`] holding nothing in
+/// `extra`.
+pub type BBoolFeatureProperty = BBoolFeaturePropertyWith<()>;
+
+impl Eq for BBoolFeaturePropertyWith<()> {}
+
 /// The `xfpb:b` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BBoolean {
+pub struct BBooleanWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagBBoolean,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `xfpb:b` element of the tree a read gives: [`BBooleanWith`] holding nothing in `extra`.
+pub type BBoolean = BBooleanWith<()>;
+
+impl Eq for BBooleanWith<()> {}
+
 /// The `xfpb:bag` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_FeaturePropertyBag`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Bag {
+pub struct BagWith<X: NodeExtra> {
     /// The attribute `att`, when the element has it.
     pub att: Option<String>,
     /// The attribute `bagExtId`, when the element has it.
     pub bag_ext_id: Option<String>,
     /// The children that are an item of `FeaturePropertyBagContent`, in order.
-    pub content: Vec<FeaturePropertyBagContent>,
+    pub content: Vec<FeaturePropertyBagContentWith<X>>,
     /// The attribute `extRef`, when the element has it.
     pub ext_ref: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagBag,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xfpb:bag` element of the tree a read gives: [`BagWith`] holding nothing in `extra`.
+pub type Bag = BagWith<()>;
+
+impl Eq for BagWith<()> {}
+
 /// The `xfpb:bagExt` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BagExtensions`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BagExt {
+pub struct BagExtWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagBagExt,
     /// The child that is `ExtLst`, when there is one.
-    pub lst: Option<Box<ExtLst>>,
+    pub lst: Option<Box<ExtLstWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xfpb:bagExt` element of the tree a read gives: [`BagExtWith`] holding nothing in `extra`.
+pub type BagExt = BagExtWith<()>;
+
+impl Eq for BagExtWith<()> {}
+
 /// The `xfpb:bagId` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_BagFeatureProperty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BagIdBagFeatureProperty {
+pub struct BagIdBagFeaturePropertyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagBagIdBagFeatureProperty,
     /// The attribute `k`, when the element has it.
     pub k: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -678,75 +693,93 @@ pub struct BagIdBagFeatureProperty {
     pub value: String,
 }
 
+/// The `xfpb:bagId` element of the tree a read gives: [`BagIdBagFeaturePropertyWith`] holding
+/// nothing in `extra`.
+pub type BagIdBagFeatureProperty = BagIdBagFeaturePropertyWith<()>;
+
+impl Eq for BagIdBagFeaturePropertyWith<()> {}
+
 /// The `xfpb:bagId` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `unsignedInt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BagIdUnsignedInt {
+pub struct BagIdUnsignedIntWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagBagIdUnsignedInt,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `xfpb:bagId` element of the tree a read gives: [`BagIdUnsignedIntWith`] holding nothing in
+/// `extra`.
+pub type BagIdUnsignedInt = BagIdUnsignedIntWith<()>;
+
+impl Eq for BagIdUnsignedIntWith<()> {}
+
 /// The `xfpb:columnBodyRevDxf` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_TableRevDxf`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColumnBodyRevDxf {
+pub struct ColumnBodyRevDxfWith<X: NodeExtra> {
     /// The child that is `Dxf`, when there is one.
-    pub dxf: Option<Box<Dxf>>,
+    pub dxf: Option<Box<DxfWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagColumnBodyRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
-    pub fpbs: Box<Fpbs>,
+    pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xfpb:columnBodyRevDxf` element of the tree a read gives: [`ColumnBodyRevDxfWith`] holding
+/// nothing in `extra`.
+pub type ColumnBodyRevDxf = ColumnBodyRevDxfWith<()>;
+
+impl Eq for ColumnBodyRevDxfWith<()> {}
 
 /// The `xfpb:columnHeaderRevDxf` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_TableRevDxf`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColumnHeaderRevDxf {
+pub struct ColumnHeaderRevDxfWith<X: NodeExtra> {
     /// The child that is `Dxf`, when there is one.
-    pub dxf: Option<Box<Dxf>>,
+    pub dxf: Option<Box<DxfWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagColumnHeaderRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
-    pub fpbs: Box<Fpbs>,
+    pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xfpb:columnHeaderRevDxf` element of the tree a read gives: [`ColumnHeaderRevDxfWith`]
+/// holding nothing in `extra`.
+pub type ColumnHeaderRevDxf = ColumnHeaderRevDxfWith<()>;
+
+impl Eq for ColumnHeaderRevDxfWith<()> {}
+
 /// The `xfpb:columnTotalsRevDxf` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_TableRevDxf`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColumnTotalsRevDxf {
+pub struct ColumnTotalsRevDxfWith<X: NodeExtra> {
     /// The child that is `Dxf`, when there is one.
-    pub dxf: Option<Box<Dxf>>,
+    pub dxf: Option<Box<DxfWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagColumnTotalsRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
-    pub fpbs: Box<Fpbs>,
+    pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xfpb:columnTotalsRevDxf` element of the tree a read gives: [`ColumnTotalsRevDxfWith`]
+/// holding nothing in `extra`.
+pub type ColumnTotalsRevDxf = ColumnTotalsRevDxfWith<()>;
+
+impl Eq for ColumnTotalsRevDxfWith<()> {}
 
 /// The hooks of a context for the `xfpb` namespace.
 ///
@@ -1472,14 +1505,11 @@ pub trait Context: crate::Context {
 
 /// The `xfpb:d` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_DecimalFeatureProperty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DDecimalFeatureProperty {
+pub struct DDecimalFeaturePropertyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagDDecimalFeatureProperty,
     /// The attribute `k`, when the element has it.
     pub k: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -1488,214 +1518,247 @@ pub struct DDecimalFeatureProperty {
     pub value: String,
 }
 
+/// The `xfpb:d` element of the tree a read gives: [`DDecimalFeaturePropertyWith`] holding nothing
+/// in `extra`.
+pub type DDecimalFeatureProperty = DDecimalFeaturePropertyWith<()>;
+
+impl Eq for DDecimalFeaturePropertyWith<()> {}
+
 /// The `xfpb:d` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `double`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DDouble {
+pub struct DDoubleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagDDouble,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `xfpb:d` element of the tree a read gives: [`DDoubleWith`] holding nothing in `extra`.
+pub type DDouble = DDoubleWith<()>;
+
+impl Eq for DDoubleWith<()> {}
+
 /// The `xfpb:DXFComplement` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_DXFComplement`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DXFComplement {
+pub struct DXFComplementWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagDXFComplement,
     /// The attribute `i`, when the element has it.
     pub i: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xfpb:DXFComplement` element of the tree a read gives: [`DXFComplementWith`] holding nothing
+/// in `extra`.
+pub type DXFComplement = DXFComplementWith<()>;
+
+impl Eq for DXFComplementWith<()> {}
+
 /// The `xfpb:dataRevDxf` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_TableRevDxf`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataRevDxf {
+pub struct DataRevDxfWith<X: NodeExtra> {
     /// The child that is `Dxf`, when there is one.
-    pub dxf: Option<Box<Dxf>>,
+    pub dxf: Option<Box<DxfWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagDataRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
-    pub fpbs: Box<Fpbs>,
+    pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xfpb:dataRevDxf` element of the tree a read gives: [`DataRevDxfWith`] holding nothing in
+/// `extra`.
+pub type DataRevDxf = DataRevDxfWith<()>;
+
+impl Eq for DataRevDxfWith<()> {}
 
 /// The `xfpb:dxf` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Dxf`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Dxf {
+pub struct DxfWith<X: NodeExtra> {
     /// The child that is `spreadsheet::Alignment`, when there is one.
-    pub alignment: Option<Box<spreadsheet::Alignment>>,
+    pub alignment: Option<Box<spreadsheet::AlignmentWith<X>>>,
     /// The child that is `spreadsheet::Border`, when there is one.
-    pub border: Option<Box<spreadsheet::Border>>,
+    pub border: Option<Box<spreadsheet::BorderWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagDxf,
     /// The child that is `spreadsheet::Fill`, when there is one.
-    pub fill: Option<Box<spreadsheet::Fill>>,
+    pub fill: Option<Box<spreadsheet::FillWith<X>>>,
     /// The child that is `spreadsheet::Font`, when there is one.
-    pub font: Option<Box<spreadsheet::Font>>,
+    pub font: Option<Box<spreadsheet::FontWith<X>>>,
     /// The child that is `spreadsheet::FutureFeatureDataStorageArea`, when there is one.
-    pub future_feature_data_storage_area: Option<Box<spreadsheet::FutureFeatureDataStorageArea>>,
+    pub future_feature_data_storage_area:
+        Option<Box<spreadsheet::FutureFeatureDataStorageAreaWith<X>>>,
     /// The child that is `spreadsheet::NumberFormat`, when there is one.
-    pub number_format: Option<Box<spreadsheet::NumberFormat>>,
+    pub number_format: Option<Box<spreadsheet::NumberFormatWith<X>>>,
     /// The child that is `spreadsheet::ProtectionProperties`, when there is one.
-    pub protection_properties: Option<Box<spreadsheet::ProtectionProperties>>,
+    pub protection_properties: Option<Box<spreadsheet::ProtectionPropertiesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xfpb:dxf` element of the tree a read gives: [`DxfWith`] holding nothing in `extra`.
+pub type Dxf = DxfWith<()>;
+
+impl Eq for DxfWith<()> {}
+
 /// The `xfpb:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_ExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `spreadsheet::Extension`, in order.
-    pub extension: Vec<spreadsheet::Extension>,
+    pub extension: Vec<spreadsheet::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xfpb:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
 
 /// One child element of a choice: choice in `CT_FeaturePropertyBag`.
 ///
 /// The schema types that hold it: `CT_FeaturePropertyBag`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum FeaturePropertyBagContent {
+pub enum FeaturePropertyBagContentWith<X: NodeExtra> {
     /// The element `xfpb:a`, a `A`.
-    A(A),
+    A(AWith<X>),
     /// The element `xfpb:b`, a `BBoolFeatureProperty`.
-    BBoolFeatureProperty(BBoolFeatureProperty),
+    BBoolFeatureProperty(BBoolFeaturePropertyWith<X>),
     /// The element `xfpb:bagId`, a `BagIdBagFeatureProperty`.
-    BagIdBagFeatureProperty(BagIdBagFeatureProperty),
+    BagIdBagFeatureProperty(BagIdBagFeaturePropertyWith<X>),
     /// The element `xfpb:d`, a `DDecimalFeatureProperty`.
-    DDecimalFeatureProperty(DDecimalFeatureProperty),
+    DDecimalFeatureProperty(DDecimalFeaturePropertyWith<X>),
     /// The element `xfpb:i`, a `IIntFeatureProperty`.
-    IIntFeatureProperty(IIntFeatureProperty),
+    IIntFeatureProperty(IIntFeaturePropertyWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `xfpb:rel`, a `RelRelFeatureProperty`.
-    RelRelFeatureProperty(RelRelFeatureProperty),
+    RelRelFeatureProperty(RelRelFeaturePropertyWith<X>),
     /// The element `xfpb:s`, a `SStringFeatureProperty`.
-    SStringFeatureProperty(SStringFeatureProperty),
+    SStringFeatureProperty(SStringFeaturePropertyWith<X>),
 }
+
+/// [`FeaturePropertyBagContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type FeaturePropertyBagContent = FeaturePropertyBagContentWith<()>;
+
+impl Eq for FeaturePropertyBagContentWith<()> {}
 
 /// The `xfpb:FeaturePropertyBags` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_FeaturePropertyBags`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FeaturePropertyBags {
+pub struct FeaturePropertyBagsWith<X: NodeExtra> {
     /// The children that are `Bag`, in order.
-    pub bag: Vec<Bag>,
+    pub bag: Vec<BagWith<X>>,
     /// The children that are `BagExt`, in order.
-    pub bag_ext: Vec<BagExt>,
+    pub bag_ext: Vec<BagExtWith<X>>,
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagFeaturePropertyBags,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xfpb:FeaturePropertyBags` element of the tree a read gives: [`FeaturePropertyBagsWith`]
+/// holding nothing in `extra`.
+pub type FeaturePropertyBags = FeaturePropertyBagsWith<()>;
+
+impl Eq for FeaturePropertyBagsWith<()> {}
 
 /// The `xfpb:fpbs` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_FeaturePropertyBags`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Fpbs {
+pub struct FpbsWith<X: NodeExtra> {
     /// The children that are `Bag`, in order.
-    pub bag: Vec<Bag>,
+    pub bag: Vec<BagWith<X>>,
     /// The children that are `BagExt`, in order.
-    pub bag_ext: Vec<BagExt>,
+    pub bag_ext: Vec<BagExtWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagFpbs,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xfpb:fpbs` element of the tree a read gives: [`FpbsWith`] holding nothing in `extra`.
+pub type Fpbs = FpbsWith<()>;
+
+impl Eq for FpbsWith<()> {}
 
 /// The `xfpb:headerRowBorderRevDxf` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_TableRevDxf`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HeaderRowBorderRevDxf {
+pub struct HeaderRowBorderRevDxfWith<X: NodeExtra> {
     /// The child that is `Dxf`, when there is one.
-    pub dxf: Option<Box<Dxf>>,
+    pub dxf: Option<Box<DxfWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagHeaderRowBorderRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
-    pub fpbs: Box<Fpbs>,
+    pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xfpb:headerRowBorderRevDxf` element of the tree a read gives: [`HeaderRowBorderRevDxfWith`]
+/// holding nothing in `extra`.
+pub type HeaderRowBorderRevDxf = HeaderRowBorderRevDxfWith<()>;
+
+impl Eq for HeaderRowBorderRevDxfWith<()> {}
 
 /// The `xfpb:headerRowRevDxf` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_TableRevDxf`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HeaderRowRevDxf {
+pub struct HeaderRowRevDxfWith<X: NodeExtra> {
     /// The child that is `Dxf`, when there is one.
-    pub dxf: Option<Box<Dxf>>,
+    pub dxf: Option<Box<DxfWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagHeaderRowRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
-    pub fpbs: Box<Fpbs>,
+    pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xfpb:headerRowRevDxf` element of the tree a read gives: [`HeaderRowRevDxfWith`] holding
+/// nothing in `extra`.
+pub type HeaderRowRevDxf = HeaderRowRevDxfWith<()>;
+
+impl Eq for HeaderRowRevDxfWith<()> {}
 
 /// The `xfpb:i` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_IntFeatureProperty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IIntFeatureProperty {
+pub struct IIntFeaturePropertyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagIIntFeatureProperty,
     /// The attribute `k`, when the element has it.
     pub k: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -1703,33 +1766,38 @@ pub struct IIntFeatureProperty {
     /// The element's text.
     pub value: String,
 }
+
+/// The `xfpb:i` element of the tree a read gives: [`IIntFeaturePropertyWith`] holding nothing in
+/// `extra`.
+pub type IIntFeatureProperty = IIntFeaturePropertyWith<()>;
+
+impl Eq for IIntFeaturePropertyWith<()> {}
 
 /// The `xfpb:i` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `integer`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IInteger {
+pub struct IIntegerWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagIInteger,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xfpb:i` element of the tree a read gives: [`IIntegerWith`] holding nothing in `extra`.
+pub type IInteger = IIntegerWith<()>;
+
+impl Eq for IIntegerWith<()> {}
 
 /// The `xfpb:rel` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RelFeatureProperty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RelRelFeatureProperty {
+pub struct RelRelFeaturePropertyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagRelRelFeatureProperty,
     /// The attribute `k`, when the element has it.
     pub k: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -1737,67 +1805,76 @@ pub struct RelRelFeatureProperty {
     /// The element's text.
     pub value: String,
 }
+
+/// The `xfpb:rel` element of the tree a read gives: [`RelRelFeaturePropertyWith`] holding nothing
+/// in `extra`.
+pub type RelRelFeatureProperty = RelRelFeaturePropertyWith<()>;
+
+impl Eq for RelRelFeaturePropertyWith<()> {}
 
 /// The `xfpb:rel` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RelString {
+pub struct RelStringWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagRelString,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xfpb:rel` element of the tree a read gives: [`RelStringWith`] holding nothing in `extra`.
+pub type RelString = RelStringWith<()>;
+
+impl Eq for RelStringWith<()> {}
 
 /// The `xfpb:revdxf` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_RevDxf`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Revdxf {
+pub struct RevdxfWith<X: NodeExtra> {
     /// The child that is `Dxf`, when there is one.
-    pub dxf: Option<Box<Dxf>>,
+    pub dxf: Option<Box<DxfWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagRevdxf,
     /// The child that is `Fpbs`, which the schema requires.
-    pub fpbs: Box<Fpbs>,
+    pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xfpb:revdxf` element of the tree a read gives: [`RevdxfWith`] holding nothing in `extra`.
+pub type Revdxf = RevdxfWith<()>;
+
+impl Eq for RevdxfWith<()> {}
+
 /// The `xfpb:s` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `string`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SString {
+pub struct SStringWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagSString,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
 
+/// The `xfpb:s` element of the tree a read gives: [`SStringWith`] holding nothing in `extra`.
+pub type SString = SStringWith<()>;
+
+impl Eq for SStringWith<()> {}
+
 /// The `xfpb:s` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its schema
 /// type is `CT_StringFeatureProperty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SStringFeatureProperty {
+pub struct SStringFeaturePropertyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagSStringFeatureProperty,
     /// The attribute `k`, when the element has it.
     pub k: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -1806,59 +1883,74 @@ pub struct SStringFeatureProperty {
     pub value: String,
 }
 
+/// The `xfpb:s` element of the tree a read gives: [`SStringFeaturePropertyWith`] holding nothing in
+/// `extra`.
+pub type SStringFeatureProperty = SStringFeaturePropertyWith<()>;
+
+impl Eq for SStringFeaturePropertyWith<()> {}
+
 /// The `xfpb:tableBorderRevDxf` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_TableRevDxf`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TableBorderRevDxf {
+pub struct TableBorderRevDxfWith<X: NodeExtra> {
     /// The child that is `Dxf`, when there is one.
-    pub dxf: Option<Box<Dxf>>,
+    pub dxf: Option<Box<DxfWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagTableBorderRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
-    pub fpbs: Box<Fpbs>,
+    pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xfpb:tableBorderRevDxf` element of the tree a read gives: [`TableBorderRevDxfWith`] holding
+/// nothing in `extra`.
+pub type TableBorderRevDxf = TableBorderRevDxfWith<()>;
+
+impl Eq for TableBorderRevDxfWith<()> {}
 
 /// The `xfpb:totalsRowBorderRevDxf` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_TableRevDxf`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TotalsRowBorderRevDxf {
+pub struct TotalsRowBorderRevDxfWith<X: NodeExtra> {
     /// The child that is `Dxf`, when there is one.
-    pub dxf: Option<Box<Dxf>>,
+    pub dxf: Option<Box<DxfWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagTotalsRowBorderRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
-    pub fpbs: Box<Fpbs>,
+    pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `xfpb:totalsRowBorderRevDxf` element of the tree a read gives: [`TotalsRowBorderRevDxfWith`]
+/// holding nothing in `extra`.
+pub type TotalsRowBorderRevDxf = TotalsRowBorderRevDxfWith<()>;
+
+impl Eq for TotalsRowBorderRevDxfWith<()> {}
+
 /// The `xfpb:totalsRowRevDxf` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_TableRevDxf`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TotalsRowRevDxf {
+pub struct TotalsRowRevDxfWith<X: NodeExtra> {
     /// The child that is `Dxf`, when there is one.
-    pub dxf: Option<Box<Dxf>>,
+    pub dxf: Option<Box<DxfWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagTotalsRowRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
-    pub fpbs: Box<Fpbs>,
+    pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xfpb:totalsRowRevDxf` element of the tree a read gives: [`TotalsRowRevDxfWith`] holding
+/// nothing in `extra`.
+pub type TotalsRowRevDxf = TotalsRowRevDxfWith<()>;
+
+impl Eq for TotalsRowRevDxfWith<()> {}
 
 /// The hooks of a visitor for the `xfpb` namespace.
 ///
@@ -2098,21 +2190,42 @@ pub trait Visitor: crate::Visitor {
 
 /// The `xfpb:xfComplement` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_XfComplement`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct XfComplement {
+pub struct XfComplementWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagXfComplement,
     /// The attribute `i`, when the element has it.
     pub i: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-impl A {
+/// The `xfpb:xfComplement` element of the tree a read gives: [`XfComplementWith`] holding nothing
+/// in `extra`.
+pub type XfComplement = XfComplementWith<()>;
+
+impl Eq for XfComplementWith<()> {}
+
+impl<X: NodeExtra> AWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                ArrayFeaturePropertyContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            k: self.k,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2133,6 +2246,27 @@ impl officekit_markup_base::Write for A {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::a(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> ArrayFeaturePropertyContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ArrayFeaturePropertyContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::BBoolean(node) => ArrayFeaturePropertyContentWith::BBoolean(node.into_extra()),
+            Self::BagIdUnsignedInt(node) => {
+                ArrayFeaturePropertyContentWith::BagIdUnsignedInt(node.into_extra())
+            }
+            Self::DDouble(node) => ArrayFeaturePropertyContentWith::DDouble(node.into_extra()),
+            Self::IInteger(node) => ArrayFeaturePropertyContentWith::IInteger(node.into_extra()),
+            Self::Other(node) => ArrayFeaturePropertyContentWith::Other(node),
+            Self::RelString(node) => ArrayFeaturePropertyContentWith::RelString(node.into_extra()),
+            Self::SString(node) => ArrayFeaturePropertyContentWith::SString(node.into_extra()),
+        }
     }
 }
 
@@ -2170,7 +2304,22 @@ impl officekit_markup_base::Write for ArrayFeaturePropertyContent {
     }
 }
 
-impl BBoolFeatureProperty {
+impl<X: NodeExtra> BBoolFeaturePropertyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BBoolFeaturePropertyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BBoolFeaturePropertyWith {
+            extra: Default::default(),
+            k: self.k,
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2195,7 +2344,21 @@ impl officekit_markup_base::Write for BBoolFeatureProperty {
     }
 }
 
-impl BBoolean {
+impl<X: NodeExtra> BBooleanWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BBooleanWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BBooleanWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2219,7 +2382,28 @@ impl officekit_markup_base::Write for BBoolean {
     }
 }
 
-impl Bag {
+impl<X: NodeExtra> BagWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BagWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BagWith {
+            att: self.att,
+            bag_ext_id: self.bag_ext_id,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                FeaturePropertyBagContentWith::into_extra,
+            ),
+            ext_ref: self.ext_ref,
+            extra: Default::default(),
+            r#type: self.r#type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2246,7 +2430,21 @@ impl officekit_markup_base::Write for Bag {
     }
 }
 
-impl BagExt {
+impl<X: NodeExtra> BagExtWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> BagExtWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BagExtWith {
+            extra: Default::default(),
+            lst: officekit_markup_base::into_extra_optional(&mut self.lst, ExtLstWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2267,7 +2465,22 @@ impl officekit_markup_base::Write for BagExt {
     }
 }
 
-impl BagIdBagFeatureProperty {
+impl<X: NodeExtra> BagIdBagFeaturePropertyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BagIdBagFeaturePropertyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BagIdBagFeaturePropertyWith {
+            extra: Default::default(),
+            k: self.k,
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2292,7 +2505,21 @@ impl officekit_markup_base::Write for BagIdBagFeatureProperty {
     }
 }
 
-impl BagIdUnsignedInt {
+impl<X: NodeExtra> BagIdUnsignedIntWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BagIdUnsignedIntWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BagIdUnsignedIntWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2316,7 +2543,22 @@ impl officekit_markup_base::Write for BagIdUnsignedInt {
     }
 }
 
-impl ColumnBodyRevDxf {
+impl<X: NodeExtra> ColumnBodyRevDxfWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ColumnBodyRevDxfWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ColumnBodyRevDxfWith {
+            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
+            extra: Default::default(),
+            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2337,7 +2579,22 @@ impl officekit_markup_base::Write for ColumnBodyRevDxf {
     }
 }
 
-impl ColumnHeaderRevDxf {
+impl<X: NodeExtra> ColumnHeaderRevDxfWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ColumnHeaderRevDxfWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ColumnHeaderRevDxfWith {
+            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
+            extra: Default::default(),
+            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2358,7 +2615,22 @@ impl officekit_markup_base::Write for ColumnHeaderRevDxf {
     }
 }
 
-impl ColumnTotalsRevDxf {
+impl<X: NodeExtra> ColumnTotalsRevDxfWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ColumnTotalsRevDxfWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ColumnTotalsRevDxfWith {
+            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
+            extra: Default::default(),
+            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2379,7 +2651,22 @@ impl officekit_markup_base::Write for ColumnTotalsRevDxf {
     }
 }
 
-impl DDecimalFeatureProperty {
+impl<X: NodeExtra> DDecimalFeaturePropertyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DDecimalFeaturePropertyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DDecimalFeaturePropertyWith {
+            extra: Default::default(),
+            k: self.k,
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2404,7 +2691,21 @@ impl officekit_markup_base::Write for DDecimalFeatureProperty {
     }
 }
 
-impl DDouble {
+impl<X: NodeExtra> DDoubleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DDoubleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DDoubleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2428,7 +2729,21 @@ impl officekit_markup_base::Write for DDouble {
     }
 }
 
-impl DXFComplement {
+impl<X: NodeExtra> DXFComplementWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DXFComplementWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DXFComplementWith {
+            extra: Default::default(),
+            i: self.i,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2452,7 +2767,22 @@ impl officekit_markup_base::Write for DXFComplement {
     }
 }
 
-impl DataRevDxf {
+impl<X: NodeExtra> DataRevDxfWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DataRevDxfWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataRevDxfWith {
+            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
+            extra: Default::default(),
+            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2473,7 +2803,48 @@ impl officekit_markup_base::Write for DataRevDxf {
     }
 }
 
-impl Dxf {
+impl<X: NodeExtra> DxfWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DxfWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DxfWith {
+            alignment: officekit_markup_base::into_extra_optional(
+                &mut self.alignment,
+                spreadsheet::AlignmentWith::into_extra,
+            ),
+            border: officekit_markup_base::into_extra_optional(
+                &mut self.border,
+                spreadsheet::BorderWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill: officekit_markup_base::into_extra_optional(
+                &mut self.fill,
+                spreadsheet::FillWith::into_extra,
+            ),
+            font: officekit_markup_base::into_extra_optional(
+                &mut self.font,
+                spreadsheet::FontWith::into_extra,
+            ),
+            future_feature_data_storage_area: officekit_markup_base::into_extra_optional(
+                &mut self.future_feature_data_storage_area,
+                spreadsheet::FutureFeatureDataStorageAreaWith::into_extra,
+            ),
+            number_format: officekit_markup_base::into_extra_optional(
+                &mut self.number_format,
+                spreadsheet::NumberFormatWith::into_extra,
+            ),
+            protection_properties: officekit_markup_base::into_extra_optional(
+                &mut self.protection_properties,
+                spreadsheet::ProtectionPropertiesWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2494,7 +2865,24 @@ impl officekit_markup_base::Write for Dxf {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                spreadsheet::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2512,6 +2900,38 @@ impl officekit_markup_base::Write for ExtLst {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::ext_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> FeaturePropertyBagContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FeaturePropertyBagContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::A(node) => FeaturePropertyBagContentWith::A(node.into_extra()),
+            Self::BBoolFeatureProperty(node) => {
+                FeaturePropertyBagContentWith::BBoolFeatureProperty(node.into_extra())
+            }
+            Self::BagIdBagFeatureProperty(node) => {
+                FeaturePropertyBagContentWith::BagIdBagFeatureProperty(node.into_extra())
+            }
+            Self::DDecimalFeatureProperty(node) => {
+                FeaturePropertyBagContentWith::DDecimalFeatureProperty(node.into_extra())
+            }
+            Self::IIntFeatureProperty(node) => {
+                FeaturePropertyBagContentWith::IIntFeatureProperty(node.into_extra())
+            }
+            Self::Other(node) => FeaturePropertyBagContentWith::Other(node),
+            Self::RelRelFeatureProperty(node) => {
+                FeaturePropertyBagContentWith::RelRelFeatureProperty(node.into_extra())
+            }
+            Self::SStringFeatureProperty(node) => {
+                FeaturePropertyBagContentWith::SStringFeatureProperty(node.into_extra())
+            }
+        }
     }
 }
 
@@ -2559,7 +2979,27 @@ impl officekit_markup_base::Write for FeaturePropertyBagContent {
     }
 }
 
-impl FeaturePropertyBags {
+impl<X: NodeExtra> FeaturePropertyBagsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> FeaturePropertyBagsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FeaturePropertyBagsWith {
+            bag: officekit_markup_base::into_extra_list(self.bag, BagWith::into_extra),
+            bag_ext: officekit_markup_base::into_extra_list(self.bag_ext, BagExtWith::into_extra),
+            count: self.count,
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2583,7 +3023,26 @@ impl officekit_markup_base::Write for FeaturePropertyBags {
     }
 }
 
-impl Fpbs {
+impl<X: NodeExtra> FpbsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> FpbsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FpbsWith {
+            bag: officekit_markup_base::into_extra_list(self.bag, BagWith::into_extra),
+            bag_ext: officekit_markup_base::into_extra_list(self.bag_ext, BagExtWith::into_extra),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2604,7 +3063,22 @@ impl officekit_markup_base::Write for Fpbs {
     }
 }
 
-impl HeaderRowBorderRevDxf {
+impl<X: NodeExtra> HeaderRowBorderRevDxfWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> HeaderRowBorderRevDxfWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HeaderRowBorderRevDxfWith {
+            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
+            extra: Default::default(),
+            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2625,7 +3099,22 @@ impl officekit_markup_base::Write for HeaderRowBorderRevDxf {
     }
 }
 
-impl HeaderRowRevDxf {
+impl<X: NodeExtra> HeaderRowRevDxfWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> HeaderRowRevDxfWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        HeaderRowRevDxfWith {
+            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
+            extra: Default::default(),
+            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2646,7 +3135,22 @@ impl officekit_markup_base::Write for HeaderRowRevDxf {
     }
 }
 
-impl IIntFeatureProperty {
+impl<X: NodeExtra> IIntFeaturePropertyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> IIntFeaturePropertyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        IIntFeaturePropertyWith {
+            extra: Default::default(),
+            k: self.k,
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2671,7 +3175,21 @@ impl officekit_markup_base::Write for IIntFeatureProperty {
     }
 }
 
-impl IInteger {
+impl<X: NodeExtra> IIntegerWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> IIntegerWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        IIntegerWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2695,7 +3213,22 @@ impl officekit_markup_base::Write for IInteger {
     }
 }
 
-impl RelRelFeatureProperty {
+impl<X: NodeExtra> RelRelFeaturePropertyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RelRelFeaturePropertyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RelRelFeaturePropertyWith {
+            extra: Default::default(),
+            k: self.k,
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2720,7 +3253,21 @@ impl officekit_markup_base::Write for RelRelFeatureProperty {
     }
 }
 
-impl RelString {
+impl<X: NodeExtra> RelStringWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RelStringWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RelStringWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2744,7 +3291,22 @@ impl officekit_markup_base::Write for RelString {
     }
 }
 
-impl Revdxf {
+impl<X: NodeExtra> RevdxfWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> RevdxfWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RevdxfWith {
+            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
+            extra: Default::default(),
+            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2765,7 +3327,21 @@ impl officekit_markup_base::Write for Revdxf {
     }
 }
 
-impl SString {
+impl<X: NodeExtra> SStringWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SStringWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SStringWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2789,7 +3365,22 @@ impl officekit_markup_base::Write for SString {
     }
 }
 
-impl SStringFeatureProperty {
+impl<X: NodeExtra> SStringFeaturePropertyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SStringFeaturePropertyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SStringFeaturePropertyWith {
+            extra: Default::default(),
+            k: self.k,
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2814,7 +3405,22 @@ impl officekit_markup_base::Write for SStringFeatureProperty {
     }
 }
 
-impl TableBorderRevDxf {
+impl<X: NodeExtra> TableBorderRevDxfWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TableBorderRevDxfWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TableBorderRevDxfWith {
+            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
+            extra: Default::default(),
+            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2835,7 +3441,22 @@ impl officekit_markup_base::Write for TableBorderRevDxf {
     }
 }
 
-impl TotalsRowBorderRevDxf {
+impl<X: NodeExtra> TotalsRowBorderRevDxfWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TotalsRowBorderRevDxfWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TotalsRowBorderRevDxfWith {
+            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
+            extra: Default::default(),
+            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2856,7 +3477,22 @@ impl officekit_markup_base::Write for TotalsRowBorderRevDxf {
     }
 }
 
-impl TotalsRowRevDxf {
+impl<X: NodeExtra> TotalsRowRevDxfWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TotalsRowRevDxfWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TotalsRowRevDxfWith {
+            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
+            extra: Default::default(),
+            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2877,7 +3513,21 @@ impl officekit_markup_base::Write for TotalsRowRevDxf {
     }
 }
 
-impl XfComplement {
+impl<X: NodeExtra> XfComplementWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> XfComplementWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        XfComplementWith {
+            extra: Default::default(),
+            i: self.i,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_base::office_excel_2006_main;
 use officekit_xml::element::Element;
@@ -275,21 +278,24 @@ pub trait Context: crate::Context {
 
 /// The `xlpds:pivotCacheDataSource` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_PivotCacheDataSource`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotCacheDataSource {
+pub struct PivotCacheDataSourceWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2025PivotDataSourcePivotCacheDataSource,
     /// The child that is `office_excel_2006_main::F`, when there is one.
-    pub f: Option<Box<office_excel_2006_main::F>>,
+    pub f: Option<Box<office_excel_2006_main::FWith<X>>>,
     /// The attribute `ref`, when the element has it.
     pub r#ref: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xlpds:pivotCacheDataSource` element of the tree a read gives: [`PivotCacheDataSourceWith`]
+/// holding nothing in `extra`.
+pub type PivotCacheDataSource = PivotCacheDataSourceWith<()>;
+
+impl Eq for PivotCacheDataSourceWith<()> {}
 
 /// The hooks of a visitor for the `xlpds` namespace.
 ///
@@ -307,7 +313,25 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl PivotCacheDataSource {
+impl<X: NodeExtra> PivotCacheDataSourceWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PivotCacheDataSourceWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PivotCacheDataSourceWith {
+            extra: Default::default(),
+            f: officekit_markup_base::into_extra_optional(
+                &mut self.f,
+                office_excel_2006_main::FWith::into_extra,
+            ),
+            r#ref: self.r#ref,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

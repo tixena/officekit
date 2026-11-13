@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -245,19 +248,22 @@ pub static CALC_FEATURES_SHAPE: officekit_markup_base::Shape = officekit_markup_
 
 /// The `xcalcf:calcFeatures` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_CalcFeatures`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CalcFeatures {
+pub struct CalcFeaturesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2018CalcfeaturesCalcFeatures,
     /// The children that are `Feature`, in order.
-    pub feature: Vec<Feature>,
+    pub feature: Vec<FeatureWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xcalcf:calcFeatures` element of the tree a read gives: [`CalcFeaturesWith`] holding nothing
+/// in `extra`.
+pub type CalcFeatures = CalcFeaturesWith<()>;
+
+impl Eq for CalcFeaturesWith<()> {}
 
 /// The hooks of a context for the `xcalcf` namespace.
 ///
@@ -307,19 +313,22 @@ pub trait Context: crate::Context {
 
 /// The `xcalcf:feature` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_CalcFeature`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Feature {
+pub struct FeatureWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2018CalcfeaturesFeature,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `xcalcf:feature` element of the tree a read gives: [`FeatureWith`] holding nothing in
+/// `extra`.
+pub type Feature = FeatureWith<()>;
+
+impl Eq for FeatureWith<()> {}
 
 /// The hooks of a visitor for the `xcalcf` namespace.
 ///
@@ -339,7 +348,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl CalcFeatures {
+impl<X: NodeExtra> CalcFeaturesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CalcFeaturesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CalcFeaturesWith {
+            extra: Default::default(),
+            feature: officekit_markup_base::into_extra_list(self.feature, FeatureWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -360,7 +383,21 @@ impl officekit_markup_base::Write for CalcFeatures {
     }
 }
 
-impl Feature {
+impl<X: NodeExtra> FeatureWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FeatureWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FeatureWith {
+            extra: Default::default(),
+            name: self.name,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

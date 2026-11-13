@@ -216,9 +216,12 @@
 //! elements. The `read` module has a function that reads an element into each, and the
 //! `write` module one that writes each back to an element.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
@@ -272,67 +275,79 @@ pub static SIZE_REL_V_SHAPE: officekit_markup_base::Shape = officekit_markup_bas
 
 /// The `wp14:pctHeight` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `ST_PositivePercentage`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PctHeight {
+pub struct PctHeightWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWord2010WordprocessingDrawingPctHeight,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: super::drawing::PositivePercentageValueWithSign,
 }
+
+/// The `wp14:pctHeight` element of the tree a read gives: [`PctHeightWith`] holding nothing in
+/// `extra`.
+pub type PctHeight = PctHeightWith<()>;
+
+impl Eq for PctHeightWith<()> {}
 
 /// The `wp14:pctPosHOffset` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `ST_Percentage`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PctPosHOffset {
+pub struct PctPosHOffsetWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWord2010WordprocessingDrawingPctPosHOffset,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: super::drawing::Percentage,
 }
+
+/// The `wp14:pctPosHOffset` element of the tree a read gives: [`PctPosHOffsetWith`] holding nothing
+/// in `extra`.
+pub type PctPosHOffset = PctPosHOffsetWith<()>;
+
+impl Eq for PctPosHOffsetWith<()> {}
 
 /// The `wp14:pctPosVOffset` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `ST_Percentage`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PctPosVOffset {
+pub struct PctPosVOffsetWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWord2010WordprocessingDrawingPctPosVOffset,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: super::drawing::Percentage,
 }
 
+/// The `wp14:pctPosVOffset` element of the tree a read gives: [`PctPosVOffsetWith`] holding nothing
+/// in `extra`.
+pub type PctPosVOffset = PctPosVOffsetWith<()>;
+
+impl Eq for PctPosVOffsetWith<()> {}
+
 /// The `wp14:pctWidth` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `ST_PositivePercentage`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PctWidth {
+pub struct PctWidthWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWord2010WordprocessingDrawingPctWidth,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: super::drawing::PositivePercentageValueWithSign,
 }
+
+/// The `wp14:pctWidth` element of the tree a read gives: [`PctWidthWith`] holding nothing in
+/// `extra`.
+pub type PctWidth = PctWidthWith<()>;
+
+impl Eq for PctWidthWith<()> {}
 
 /// The simple type `ST_SizeRelFromH`, kept as the text the file carried.
 ///
@@ -398,41 +413,61 @@ pub enum SizeRelFromVMember {
 
 /// The `wp14:sizeRelH` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_SizeRelH`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SizeRelH {
+pub struct SizeRelHWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWord2010WordprocessingDrawingSizeRelH,
     /// The child that is `PctWidth`, which the schema requires.
-    pub pct_width: Box<PctWidth>,
+    pub pct_width: Box<PctWidthWith<X>>,
     /// The attribute `relativeFrom`, when the element has it.
     pub relative_from: Option<SizeRelFromH>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `wp14:sizeRelH` element of the tree a read gives: [`SizeRelHWith`] holding nothing in
+/// `extra`.
+pub type SizeRelH = SizeRelHWith<()>;
+
+impl Eq for SizeRelHWith<()> {}
+
 /// The `wp14:sizeRelV` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_SizeRelV`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SizeRelV {
+pub struct SizeRelVWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWord2010WordprocessingDrawingSizeRelV,
     /// The child that is `PctHeight`, which the schema requires.
-    pub pct_height: Box<PctHeight>,
+    pub pct_height: Box<PctHeightWith<X>>,
     /// The attribute `relativeFrom`, when the element has it.
     pub relative_from: Option<SizeRelFromV>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-impl PctHeight {
+/// The `wp14:sizeRelV` element of the tree a read gives: [`SizeRelVWith`] holding nothing in
+/// `extra`.
+pub type SizeRelV = SizeRelVWith<()>;
+
+impl Eq for SizeRelVWith<()> {}
+
+impl<X: NodeExtra> PctHeightWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PctHeightWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PctHeightWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -456,7 +491,21 @@ impl officekit_markup_base::Write for PctHeight {
     }
 }
 
-impl PctPosHOffset {
+impl<X: NodeExtra> PctPosHOffsetWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PctPosHOffsetWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PctPosHOffsetWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -480,7 +529,21 @@ impl officekit_markup_base::Write for PctPosHOffset {
     }
 }
 
-impl PctPosVOffset {
+impl<X: NodeExtra> PctPosVOffsetWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PctPosVOffsetWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PctPosVOffsetWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -504,7 +567,21 @@ impl officekit_markup_base::Write for PctPosVOffset {
     }
 }
 
-impl PctWidth {
+impl<X: NodeExtra> PctWidthWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PctWidthWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PctWidthWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -666,7 +743,25 @@ impl SizeRelFromV {
     }
 }
 
-impl SizeRelH {
+impl<X: NodeExtra> SizeRelHWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SizeRelHWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SizeRelHWith {
+            extra: Default::default(),
+            pct_width: officekit_markup_base::into_extra_required(
+                *self.pct_width,
+                PctWidthWith::into_extra,
+            ),
+            relative_from: self.relative_from,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -690,7 +785,25 @@ impl officekit_markup_base::Write for SizeRelH {
     }
 }
 
-impl SizeRelV {
+impl<X: NodeExtra> SizeRelVWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> SizeRelVWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SizeRelVWith {
+            extra: Default::default(),
+            pct_height: officekit_markup_base::into_extra_required(
+                *self.pct_height,
+                PctHeightWith::into_extra,
+            ),
+            relative_from: self.relative_from,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

@@ -561,6 +561,7 @@ pub fn str_cache(element: &Element) -> super::StrCache {
 pub fn unique_id(element: &Element) -> super::UniqueID {
     let reader = officekit_markup_base::Reader::new(element, &super::UNIQUE_ID_SHAPE);
     super::UniqueID {
+        extra: (),
         unknown: reader.finish(),
     }
 }
@@ -570,6 +571,7 @@ pub fn unique_id(element: &Element) -> super::UniqueID {
 pub fn unique_id_2(element: &Element) -> super::UniqueId {
     let reader = officekit_markup_base::Reader::new(element, &super::UNIQUE_ID_2_SHAPE);
     super::UniqueId {
+        extra: (),
         unknown: reader.finish(),
     }
 }

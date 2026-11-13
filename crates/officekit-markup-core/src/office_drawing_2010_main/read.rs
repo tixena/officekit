@@ -953,6 +953,7 @@ pub fn is_canvas(element: &Element) -> super::IsCanvas {
 pub fn m(element: &Element) -> super::M {
     let reader = officekit_markup_base::Reader::new(element, &super::M_SHAPE);
     super::M {
+        extra: (),
         unknown: reader.finish(),
     }
 }

@@ -221,18 +221,11 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::common_simple_types;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::{ValueError, parse};
-#[cfg(feature = "binary-format")]
-use rkyv::de::Pooling;
-#[cfg(feature = "binary-format")]
-use rkyv::rancor::Source;
-#[cfg(feature = "binary-format")]
-use rkyv::ser::{Allocator, Sharing, Writer};
-#[cfg(feature = "binary-format")]
-use rkyv::validation::{ArchiveContext, SharedContext};
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_DGM: Option<NamespaceId> = Some(42);
@@ -1094,22 +1087,15 @@ static PARAMETER_VALUES_STRING_FACETS: officekit_markup_base::Facets =
 
 /// The `dgm:alg` element, Algorithm (ECMA-376 Part 1, section 21.4.2.3). Its schema type is
 /// `CT_Algorithm`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Algorithm {
+pub struct AlgorithmWith<X: NodeExtra> {
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramAlgorithm,
     /// The children that are `Parameter`, in order.
-    pub parameter: Vec<Parameter>,
+    pub parameter: Vec<ParameterWith<X>>,
     /// The attribute `rev`, when the element has it.
     pub rev: Option<String>,
     /// The attribute `type`, when the element has it.
@@ -1117,6 +1103,11 @@ pub struct Algorithm {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:alg` element of the tree a read gives: [`AlgorithmWith`] holding nothing in `extra`.
+pub type Algorithm = AlgorithmWith<()>;
+
+impl Eq for AlgorithmWith<()> {}
 
 /// Algorithm Types, the simple type `ST_AlgorithmType` (ECMA-376 Part 1, section 21.4.7.1), kept as
 /// the text the file carried.
@@ -1298,26 +1289,24 @@ pub struct AxisTypeList(pub String);
 
 /// The `dgm:bg` element, Background Formatting (ECMA-376 Part 1, section 21.4.3.1). Its schema type
 /// is `CT_BackgroundFormatting`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BackgroundFormatting {
+pub struct BackgroundFormattingWith<X: NodeExtra> {
     /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramBackgroundFormatting,
     /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContentWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:bg` element of the tree a read gives: [`BackgroundFormattingWith`] holding nothing in
+/// `extra`.
+pub type BackgroundFormatting = BackgroundFormattingWith<()>;
+
+impl Eq for BackgroundFormattingWith<()> {}
 
 /// Bend Point, the simple type `ST_BendPoint` (ECMA-376 Part 1, section 21.4.7.8), kept as the text
 /// the file carried.
@@ -1415,14 +1404,11 @@ pub enum BreakpointMember {
 
 /// The `dgm:cat` element, Category (ECMA-376 Part 1, section 21.4.2.4). Its schema type is
 /// `CT_Category`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Category {
+pub struct CategoryWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramCategory,
     /// The attribute `pri`, when the element has it.
     pub pri: Option<String>,
     /// The attribute `type`, when the element has it.
@@ -1430,49 +1416,57 @@ pub struct Category {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:cat` element of the tree a read gives: [`CategoryWith`] holding nothing in `extra`.
+pub type Category = CategoryWith<()>;
+
+impl Eq for CategoryWith<()> {}
 
 /// The `dgm:catLst` element, Category List (ECMA-376 Part 1, section 21.4.2.5). Its schema type is
 /// `CT_Categories`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CategoryList {
+pub struct CategoryListWith<X: NodeExtra> {
     /// The children that are `Category`, in order.
-    pub category: Vec<Category>,
+    pub category: Vec<CategoryWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramCategoryList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:catLst` element of the tree a read gives: [`CategoryListWith`] holding nothing in
+/// `extra`.
+pub type CategoryList = CategoryListWith<()>;
+
+impl Eq for CategoryListWith<()> {}
 
 /// The `dgm:catLst` element, Category List (ECMA-376 Part 1, section 21.4.5.2). Its schema type is
 /// `CT_SDCategories`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CategoryListSDCategories {
+pub struct CategoryListSDCategoriesWith<X: NodeExtra> {
     /// The children that are `CategorySDCategory`, in order.
-    pub category_sd_category: Vec<CategorySDCategory>,
+    pub category_sd_category: Vec<CategorySDCategoryWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramCategoryListSDCategories,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:catLst` element of the tree a read gives: [`CategoryListSDCategoriesWith`] holding
+/// nothing in `extra`.
+pub type CategoryListSDCategories = CategoryListSDCategoriesWith<()>;
+
+impl Eq for CategoryListSDCategoriesWith<()> {}
+
 /// The `dgm:cat` element, Category (ECMA-376 Part 1, section 21.4.5.1). Its schema type is
 /// `CT_SDCategory`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CategorySDCategory {
+pub struct CategorySDCategoryWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramCategorySDCategory,
     /// The attribute `pri`, when the element has it.
     pub pri: Option<String>,
     /// The attribute `type`, when the element has it.
@@ -1480,6 +1474,12 @@ pub struct CategorySDCategory {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:cat` element of the tree a read gives: [`CategorySDCategoryWith`] holding nothing in
+/// `extra`.
+pub type CategorySDCategory = CategorySDCategoryWith<()>;
+
+impl Eq for CategorySDCategoryWith<()> {}
 
 /// Center Shape Mapping, the simple type `ST_CenterShapeMapping` (ECMA-376 Part 1, section
 /// 21.4.7.12), kept as the text the file carried.
@@ -1583,28 +1583,26 @@ pub enum ChildOrderMember {
 
 /// The `dgm:choose` element, Choose Element (ECMA-376 Part 1, section 21.4.2.6). Its schema type is
 /// `CT_Choose`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ChooseElement {
+pub struct ChooseElementWith<X: NodeExtra> {
     /// The child that is `Else`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub r#else: Option<Box<Else>>,
+    pub r#else: Option<Box<ElseWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramChooseElement,
     /// The children that are `If`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub r#if: Vec<If>,
+    pub r#if: Vec<IfWith<X>>,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:choose` element of the tree a read gives: [`ChooseElementWith`] holding nothing in
+/// `extra`.
+pub type ChooseElement = ChooseElementWith<()>;
+
+impl Eq for ChooseElementWith<()> {}
 
 /// Color Application Method Type, the simple type `ST_ClrAppMethod` (ECMA-376 Part 1, section
 /// 21.4.7.16), kept as the text the file carried.
@@ -1634,14 +1632,11 @@ pub enum ColorApplicationMethodTypeMember {
 
 /// The `dgm:cat` element, Color Transform Category (ECMA-376 Part 1, section 21.4.4.1). Its schema
 /// type is `CT_CTCategory`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorTransformCategory {
+pub struct ColorTransformCategoryWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramColorTransformCategory,
     /// The attribute `pri`, when the element has it.
     pub pri: Option<String>,
     /// The attribute `type`, when the element has it.
@@ -1650,149 +1645,146 @@ pub struct ColorTransformCategory {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:cat` element of the tree a read gives: [`ColorTransformCategoryWith`] holding nothing
+/// in `extra`.
+pub type ColorTransformCategory = ColorTransformCategoryWith<()>;
+
+impl Eq for ColorTransformCategoryWith<()> {}
+
 /// The `dgm:catLst` element, Color Transform Category List (ECMA-376 Part 1, section 21.4.4.2). Its
 /// schema type is `CT_CTCategories`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorTransformCategoryList {
+pub struct ColorTransformCategoryListWith<X: NodeExtra> {
     /// The children that are `ColorTransformCategory`, in order.
-    pub color_transform_category: Vec<ColorTransformCategory>,
+    pub color_transform_category: Vec<ColorTransformCategoryWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramColorTransformCategoryList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:catLst` element of the tree a read gives: [`ColorTransformCategoryListWith`] holding
+/// nothing in `extra`.
+pub type ColorTransformCategoryList = ColorTransformCategoryListWith<()>;
+
+impl Eq for ColorTransformCategoryListWith<()> {}
+
 /// The `dgm:colorsDefHdr` element, Color Transform Definition Header (ECMA-376 Part 1, section
 /// 21.4.4.4). Its schema type is `CT_ColorTransformHeader`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorTransformDefinitionHeader {
+pub struct ColorTransformDefinitionHeaderWith<X: NodeExtra> {
     /// The child that is `ColorTransformCategoryList`, when there is one.
-    pub color_transform_category_list: Option<Box<ColorTransformCategoryList>>,
+    pub color_transform_category_list: Option<Box<ColorTransformCategoryListWith<X>>>,
     /// The children that are `DescriptionCTDescription`, in order.
-    pub description_ct_description: Vec<DescriptionCTDescription>,
+    pub description_ct_description: Vec<DescriptionCTDescriptionWith<X>>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramColorTransformDefinitionHeader,
     /// The attribute `minVer`, when the element has it.
     pub min_ver: Option<String>,
     /// The attribute `resId`, when the element has it.
     pub res_id: Option<String>,
     /// The children that are `TitleCTName`, in order.
-    pub title_ct_name: Vec<TitleCTName>,
+    pub title_ct_name: Vec<TitleCTNameWith<X>>,
     /// The attribute `uniqueId`, when the element has it.
     pub unique_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:colorsDefHdr` element of the tree a read gives: [`ColorTransformDefinitionHeaderWith`]
+/// holding nothing in `extra`.
+pub type ColorTransformDefinitionHeader = ColorTransformDefinitionHeaderWith<()>;
+
+impl Eq for ColorTransformDefinitionHeaderWith<()> {}
 
 /// The `dgm:colorsDef` element, Color Transform Definitions (ECMA-376 Part 1, section 21.4.4.3).
 /// Its schema type is `CT_ColorTransform`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorTransformDefinitions {
+pub struct ColorTransformDefinitionsWith<X: NodeExtra> {
     /// The child that is `ColorTransformCategoryList`, when there is one.
-    pub color_transform_category_list: Option<Box<ColorTransformCategoryList>>,
+    pub color_transform_category_list: Option<Box<ColorTransformCategoryListWith<X>>>,
     /// The children that are `DescriptionCTDescription`, in order.
-    pub description_ct_description: Vec<DescriptionCTDescription>,
+    pub description_ct_description: Vec<DescriptionCTDescriptionWith<X>>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramColorTransformDefinitions,
     /// The attribute `minVer`, when the element has it.
     pub min_ver: Option<String>,
     /// The children that are `StyleLabel`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub style_label: Vec<StyleLabel>,
+    pub style_label: Vec<StyleLabelWith<X>>,
     /// The children that are `TitleCTName`, in order.
-    pub title_ct_name: Vec<TitleCTName>,
+    pub title_ct_name: Vec<TitleCTNameWith<X>>,
     /// The attribute `uniqueId`, when the element has it.
     pub unique_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:colorsDef` element of the tree a read gives: [`ColorTransformDefinitionsWith`] holding
+/// nothing in `extra`.
+pub type ColorTransformDefinitions = ColorTransformDefinitionsWith<()>;
+
+impl Eq for ColorTransformDefinitionsWith<()> {}
+
 /// The `dgm:colorsDefHdrLst` element, Color Transform Header List (ECMA-376 Part 1, section
 /// 21.4.4.5). Its schema type is `CT_ColorTransformHeaderLst`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorTransformHeaderList {
+pub struct ColorTransformHeaderListWith<X: NodeExtra> {
     /// The children that are `ColorTransformDefinitionHeader`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub color_transform_definition_header: Vec<ColorTransformDefinitionHeader>,
+    pub color_transform_definition_header: Vec<ColorTransformDefinitionHeaderWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramColorTransformHeaderList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:colorsDefHdrLst` element of the tree a read gives: [`ColorTransformHeaderListWith`]
+/// holding nothing in `extra`.
+pub type ColorTransformHeaderList = ColorTransformHeaderListWith<()>;
+
+impl Eq for ColorTransformHeaderListWith<()> {}
+
 /// The `dgm:clrData` element, Color Transform Sample Data (ECMA-376 Part 1, section 21.4.2.7). Its
 /// schema type is `CT_SampleData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorTransformSampleData {
+pub struct ColorTransformSampleDataWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramColorTransformSampleData,
     /// The child that is `DataModel`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub model: Option<Box<DataModel>>,
+    pub model: Option<Box<DataModelWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `useDef`, when the element has it.
     pub use_def: Option<String>,
 }
 
+/// The `dgm:clrData` element of the tree a read gives: [`ColorTransformSampleDataWith`] holding
+/// nothing in `extra`.
+pub type ColorTransformSampleData = ColorTransformSampleDataWith<()>;
+
+impl Eq for ColorTransformSampleDataWith<()> {}
+
 /// The `dgm:cxn` element, Connection (ECMA-376 Part 1, section 21.4.3.2). Its schema type is
 /// `CT_Cxn`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Connection {
+pub struct ConnectionWith<X: NodeExtra> {
     /// The attribute `destId`, when the element has it.
     pub dest_id: Option<ModelIdentifier>,
     /// The attribute `destOrd`, when the element has it.
     pub dest_ord: Option<String>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramConnection,
     /// The attribute `modelId`, when the element has it.
     pub model_id: Option<ModelIdentifier>,
     /// The attribute `parTransId`, when the element has it.
@@ -1811,25 +1803,29 @@ pub struct Connection {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:cxn` element of the tree a read gives: [`ConnectionWith`] holding nothing in `extra`.
+pub type Connection = ConnectionWith<()>;
+
+impl Eq for ConnectionWith<()> {}
+
 /// The `dgm:cxnLst` element, Connection List (ECMA-376 Part 1, section 21.4.3.3). Its schema type
 /// is `CT_CxnList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ConnectionList {
+pub struct ConnectionListWith<X: NodeExtra> {
     /// The children that are `Connection`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub connection: Vec<Connection>,
+    pub connection: Vec<ConnectionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramConnectionList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:cxnLst` element of the tree a read gives: [`ConnectionListWith`] holding nothing in
+/// `extra`.
+pub type ConnectionList = ConnectionListWith<()>;
+
+impl Eq for ConnectionListWith<()> {}
 
 /// Connection Type, the simple type `ST_CxnType` (ECMA-376 Part 1, section 21.4.7.23), kept as the
 /// text the file carried.
@@ -1957,20 +1953,13 @@ pub enum ConnectorRoutingMember {
 
 /// The `dgm:constr` element, Constraint (ECMA-376 Part 1, section 21.4.2.8). Its schema type is
 /// `CT_Constraint`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Constraint {
+pub struct ConstraintWith<X: NodeExtra> {
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramConstraint,
     /// The attribute `fact`, when the element has it.
     pub fact: Option<String>,
     /// The attribute `for`, when the element has it.
@@ -1997,25 +1986,30 @@ pub struct Constraint {
     pub val: Option<String>,
 }
 
+/// The `dgm:constr` element of the tree a read gives: [`ConstraintWith`] holding nothing in
+/// `extra`.
+pub type Constraint = ConstraintWith<()>;
+
+impl Eq for ConstraintWith<()> {}
+
 /// The `dgm:constrLst` element, Constraint List (ECMA-376 Part 1, section 21.4.2.9). Its schema
 /// type is `CT_Constraints`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ConstraintList {
+pub struct ConstraintListWith<X: NodeExtra> {
     /// The children that are `Constraint`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub constraint: Vec<Constraint>,
+    pub constraint: Vec<ConstraintWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramConstraintList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:constrLst` element of the tree a read gives: [`ConstraintListWith`] holding nothing in
+/// `extra`.
+pub type ConstraintList = ConstraintListWith<()>;
+
+impl Eq for ConstraintListWith<()> {}
 
 /// Constraint Relationship, the simple type `ST_ConstraintRelationship` (ECMA-376 Part 1, section
 /// 21.4.7.20), kept as the text the file carried.
@@ -2217,35 +2211,30 @@ pub enum ContinueDirectionMember {
 
 /// The `dgm:dataModel` element, Data Model (ECMA-376 Part 1, section 21.4.2.10). Its schema type is
 /// `CT_DataModel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataModel {
+pub struct DataModelWith<X: NodeExtra> {
     /// The child that is `BackgroundFormatting`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub background_formatting: Option<Box<BackgroundFormatting>>,
+    pub background_formatting: Option<Box<BackgroundFormattingWith<X>>>,
     /// The child that is `ConnectionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub connection_list: Option<Box<ConnectionList>>,
+    pub connection_list: Option<Box<ConnectionListWith<X>>>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramDataModel,
     /// The child that is `PointList`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub point_list: Box<PointList>,
+    pub point_list: Box<PointListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `WholeE2OFormatting`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub whole_e2o_formatting: Option<Box<WholeE2OFormatting>>,
+    pub whole_e2o_formatting: Option<Box<WholeE2OFormattingWith<X>>>,
 }
+
+/// The `dgm:dataModel` element of the tree a read gives: [`DataModelWith`] holding nothing in
+/// `extra`.
+pub type DataModel = DataModelWith<()>;
+
+impl Eq for DataModelWith<()> {}
 
 /// Data Point Type, the simple type `ST_ElementType` (ECMA-376 Part 1, section 21.4.7.27), kept as
 /// the text the file carried.
@@ -2289,14 +2278,11 @@ pub enum DataPointTypeMember {
 
 /// The `dgm:desc` element, Description (ECMA-376 Part 1, section 21.4.2.11). Its schema type is
 /// `CT_Description`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Description {
+pub struct DescriptionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramDescription,
     /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -2304,17 +2290,19 @@ pub struct Description {
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
+
+/// The `dgm:desc` element of the tree a read gives: [`DescriptionWith`] holding nothing in `extra`.
+pub type Description = DescriptionWith<()>;
+
+impl Eq for DescriptionWith<()> {}
 
 /// The `dgm:desc` element, Description (ECMA-376 Part 1, section 21.4.4.6). Its schema type is
 /// `CT_CTDescription`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DescriptionCTDescription {
+pub struct DescriptionCTDescriptionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramDescriptionCTDescription,
     /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -2323,21 +2311,30 @@ pub struct DescriptionCTDescription {
     pub val: Option<String>,
 }
 
+/// The `dgm:desc` element of the tree a read gives: [`DescriptionCTDescriptionWith`] holding
+/// nothing in `extra`.
+pub type DescriptionCTDescription = DescriptionCTDescriptionWith<()>;
+
+impl Eq for DescriptionCTDescriptionWith<()> {}
+
 /// The `dgm:dir` element, Diagram Direction (ECMA-376 Part 1, section 21.4.6.6). Its schema type is
 /// `CT_Direction`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DiagramDirection {
+pub struct DiagramDirectionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramDiagramDirection,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<DiagramDirectionDefinition>,
 }
+
+/// The `dgm:dir` element of the tree a read gives: [`DiagramDirectionWith`] holding nothing in
+/// `extra`.
+pub type DiagramDirection = DiagramDirectionWith<()>;
+
+impl Eq for DiagramDirectionWith<()> {}
 
 /// Diagram Direction Definition, the simple type `ST_Direction` (ECMA-376 Part 1, section
 /// 21.4.7.26), kept as the text the file carried.
@@ -2365,23 +2362,22 @@ pub enum DiagramDirectionDefinitionMember {
 
 /// The `dgm:layoutDefHdrLst` element, Diagram Layout Header List (ECMA-376 Part 1, section
 /// 21.4.2.18). Its schema type is `CT_DiagramDefinitionHeaderLst`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DiagramLayoutHeaderList {
+pub struct DiagramLayoutHeaderListWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramDiagramLayoutHeaderList,
     /// The children that are `LayoutDefinitionHeader`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub layout_definition_header: Vec<LayoutDefinitionHeader>,
+    pub layout_definition_header: Vec<LayoutDefinitionHeaderWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:layoutDefHdrLst` element of the tree a read gives: [`DiagramLayoutHeaderListWith`]
+/// holding nothing in `extra`.
+pub type DiagramLayoutHeaderList = DiagramLayoutHeaderListWith<()>;
+
+impl Eq for DiagramLayoutHeaderListWith<()> {}
 
 /// Diagream Layout Node Type List, the simple type `ST_ElementTypes` (ECMA-376 Part 1, section
 /// 21.4.7.28), kept as the text the file carried.
@@ -2399,16 +2395,13 @@ pub struct DiagreamLayoutNodeTypeList(pub String);
 
 /// The `dgm:effectClrLst` element, Effect Color List (ECMA-376 Part 1, section 21.4.4.7). Its
 /// schema type is `CT_Colors`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EffectColorList {
+pub struct EffectColorListWith<X: NodeExtra> {
     /// The children that are an item of `super::drawing::ColorContent`, in order.
-    pub content: Vec<super::drawing::ColorContent>,
+    pub content: Vec<super::drawing::ColorContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramEffectColorList,
     /// The attribute `hueDir`, when the element has it.
     pub hue_dir: Option<HueDirection>,
     /// The attribute `meth`, when the element has it.
@@ -2417,42 +2410,43 @@ pub struct EffectColorList {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:effectClrLst` element of the tree a read gives: [`EffectColorListWith`] holding nothing
+/// in `extra`.
+pub type EffectColorList = EffectColorListWith<()>;
+
+impl Eq for EffectColorListWith<()> {}
+
 /// The `dgm:else` element, Else (ECMA-376 Part 1, section 21.4.2.12). Its schema type is
 /// `CT_Otherwise`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Else {
+pub struct ElseWith<X: NodeExtra> {
     /// The children that are an item of `LayoutElementContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<LayoutElementContent>,
+    pub content: Vec<LayoutElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramElse,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:else` element of the tree a read gives: [`ElseWith`] holding nothing in `extra`.
+pub type Else = ElseWith<()>;
+
+impl Eq for ElseWith<()> {}
+
 /// The `dgm:relIds` element, Explicit Relationships to Diagram Parts (ECMA-376 Part 1, section
 /// 21.4.2.22). Its schema type is `CT_RelIds`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExplicitRelationshipsToDiagramParts {
+pub struct ExplicitRelationshipsToDiagramPartsWith<X: NodeExtra> {
     /// The attribute `r:cs`, when the element has it.
     pub cs: Option<String>,
     /// The attribute `r:dm`, when the element has it.
     pub dm: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramExplicitRelationshipsToDiagramParts,
     /// The attribute `r:lo`, when the element has it.
     pub lo: Option<String>,
     /// The attribute `r:qs`, when the element has it.
@@ -2461,25 +2455,30 @@ pub struct ExplicitRelationshipsToDiagramParts {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:relIds` element of the tree a read gives: [`ExplicitRelationshipsToDiagramPartsWith`]
+/// holding nothing in `extra`.
+pub type ExplicitRelationshipsToDiagramParts = ExplicitRelationshipsToDiagramPartsWith<()>;
+
+impl Eq for ExplicitRelationshipsToDiagramPartsWith<()> {}
+
 /// The `dgm:extLst` element, Extension List (ECMA-376 Part 1, section 21.4.2.13). Its schema type
 /// is `CT_OfficeArtExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtensionList {
+pub struct ExtensionListWith<X: NodeExtra> {
     /// The children that are `super::drawing::Extension`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension: Vec<super::drawing::Extension>,
+    pub extension: Vec<super::drawing::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramExtensionList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:extLst` element of the tree a read gives: [`ExtensionListWith`] holding nothing in
+/// `extra`.
+pub type ExtensionList = ExtensionListWith<()>;
+
+impl Eq for ExtensionListWith<()> {}
 
 /// Fallback Dimension, the simple type `ST_FallbackDimension` (ECMA-376 Part 1, section 21.4.7.29),
 /// kept as the text the file carried.
@@ -2507,16 +2506,13 @@ pub enum FallbackDimensionMember {
 
 /// The `dgm:fillClrLst` element, Fill Color List (ECMA-376 Part 1, section 21.4.4.8). Its schema
 /// type is `CT_Colors`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FillColorList {
+pub struct FillColorListWith<X: NodeExtra> {
     /// The children that are an item of `super::drawing::ColorContent`, in order.
-    pub content: Vec<super::drawing::ColorContent>,
+    pub content: Vec<super::drawing::ColorContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramFillColorList,
     /// The attribute `hueDir`, when the element has it.
     pub hue_dir: Option<HueDirection>,
     /// The attribute `meth`, when the element has it.
@@ -2524,6 +2520,12 @@ pub struct FillColorList {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:fillClrLst` element of the tree a read gives: [`FillColorListWith`] holding nothing in
+/// `extra`.
+pub type FillColorList = FillColorListWith<()>;
+
+impl Eq for FillColorListWith<()> {}
 
 /// Flow Direction, the simple type `ST_FlowDirection` (ECMA-376 Part 1, section 21.4.7.30), kept as
 /// the text the file carried.
@@ -2551,24 +2553,17 @@ pub enum FlowDirectionMember {
 
 /// The `dgm:forEach` element, For Each (ECMA-376 Part 1, section 21.4.2.14). Its schema type is
 /// `CT_ForEach`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ForEach {
+pub struct ForEachWith<X: NodeExtra> {
     /// The attribute `axis`, when the element has it.
     pub axis: Option<AxisTypeList>,
     /// The attribute `cnt`, when the element has it.
     pub cnt: Option<UnsignedIntegerList>,
     /// The children that are an item of `LayoutElementContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<LayoutElementContent>,
+    pub content: Vec<LayoutElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramForEach,
     /// The attribute `hideLastTrans`, when the element has it.
     pub hide_last_trans: Option<BooleanList>,
     /// The attribute `name`, when the element has it.
@@ -2584,6 +2579,11 @@ pub struct ForEach {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:forEach` element of the tree a read gives: [`ForEachWith`] holding nothing in `extra`.
+pub type ForEach = ForEachWith<()>;
+
+impl Eq for ForEachWith<()> {}
 
 /// Function Argument, the simple type `ST_FunctionArgument` (ECMA-376 Part 1, section 21.4.7.31),
 /// kept as the text the file carried.
@@ -2872,17 +2872,9 @@ pub enum HueDirectionMember {
 }
 
 /// The `dgm:if` element, If (ECMA-376 Part 1, section 21.4.2.15). Its schema type is `CT_When`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct If {
+pub struct IfWith<X: NodeExtra> {
     /// The attribute `arg`, when the element has it.
     pub arg: Option<FunctionArgument>,
     /// The attribute `axis`, when the element has it.
@@ -2890,8 +2882,9 @@ pub struct If {
     /// The attribute `cnt`, when the element has it.
     pub cnt: Option<UnsignedIntegerList>,
     /// The children that are an item of `LayoutElementContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<LayoutElementContent>,
+    pub content: Vec<LayoutElementContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramIf,
     /// The attribute `func`, when the element has it.
     pub func: Option<FunctionType>,
     /// The attribute `hideLastTrans`, when the element has it.
@@ -2911,6 +2904,11 @@ pub struct If {
     /// The attribute `val`, when the element has it.
     pub val: Option<FunctionValue>,
 }
+
+/// The `dgm:if` element of the tree a read gives: [`IfWith`] holding nothing in `extra`.
+pub type If = IfWith<()>;
+
+impl Eq for IfWith<()> {}
 
 /// The simple type `ST_Index1`, kept as the text the file carried.
 ///
@@ -2941,81 +2939,75 @@ pub struct IntegerList(pub String);
 
 /// The `dgm:layoutDef` element, Layout Definition (ECMA-376 Part 1, section 21.4.2.16). Its schema
 /// type is `CT_DiagramDefinition`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LayoutDefinition {
+pub struct LayoutDefinitionWith<X: NodeExtra> {
     /// The child that is `CategoryList`, when there is one.
-    pub category_list: Option<Box<CategoryList>>,
+    pub category_list: Option<Box<CategoryListWith<X>>>,
     /// The child that is `ColorTransformSampleData`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub color_transform_sample_data: Option<Box<ColorTransformSampleData>>,
+    pub color_transform_sample_data: Option<Box<ColorTransformSampleDataWith<X>>>,
     /// The attribute `defStyle`, when the element has it.
     pub def_style: Option<String>,
     /// The children that are `Description`, in order.
-    pub description: Vec<Description>,
+    pub description: Vec<DescriptionWith<X>>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramLayoutDefinition,
     /// The child that is `LayoutNode`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub layout_node: Box<LayoutNode>,
+    pub layout_node: Box<LayoutNodeWith<X>>,
     /// The attribute `minVer`, when the element has it.
     pub min_ver: Option<String>,
     /// The child that is `SampleData`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub sample_data: Option<Box<SampleData>>,
+    pub sample_data: Option<Box<SampleDataWith<X>>>,
     /// The child that is `StyleData`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub style_data: Option<Box<StyleData>>,
+    pub style_data: Option<Box<StyleDataWith<X>>>,
     /// The children that are `Title`, in order.
-    pub title: Vec<Title>,
+    pub title: Vec<TitleWith<X>>,
     /// The attribute `uniqueId`, when the element has it.
     pub unique_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:layoutDef` element of the tree a read gives: [`LayoutDefinitionWith`] holding nothing
+/// in `extra`.
+pub type LayoutDefinition = LayoutDefinitionWith<()>;
+
+impl Eq for LayoutDefinitionWith<()> {}
+
 /// The `dgm:layoutDefHdr` element, Layout Definition Header (ECMA-376 Part 1, section 21.4.2.17).
 /// Its schema type is `CT_DiagramDefinitionHeader`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LayoutDefinitionHeader {
+pub struct LayoutDefinitionHeaderWith<X: NodeExtra> {
     /// The child that is `CategoryList`, when there is one.
-    pub category_list: Option<Box<CategoryList>>,
+    pub category_list: Option<Box<CategoryListWith<X>>>,
     /// The attribute `defStyle`, when the element has it.
     pub def_style: Option<String>,
     /// The children that are `Description`, in order.
-    pub description: Vec<Description>,
+    pub description: Vec<DescriptionWith<X>>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramLayoutDefinitionHeader,
     /// The attribute `minVer`, when the element has it.
     pub min_ver: Option<String>,
     /// The attribute `resId`, when the element has it.
     pub res_id: Option<String>,
     /// The children that are `Title`, in order.
-    pub title: Vec<Title>,
+    pub title: Vec<TitleWith<X>>,
     /// The attribute `uniqueId`, when the element has it.
     pub unique_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:layoutDefHdr` element of the tree a read gives: [`LayoutDefinitionHeaderWith`] holding
+/// nothing in `extra`.
+pub type LayoutDefinitionHeader = LayoutDefinitionHeaderWith<()>;
+
+impl Eq for LayoutDefinitionHeaderWith<()> {}
 
 /// One child element of a choice: local choice in `CT_ForEach`, local choice in `CT_When`, local
 /// choice in `CT_Otherwise`.
@@ -3023,49 +3015,47 @@ pub struct LayoutDefinitionHeader {
 /// The schema types that hold it: `CT_ForEach`, `CT_Otherwise`, `CT_When`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum LayoutElementContent {
+pub enum LayoutElementContentWith<X: NodeExtra> {
     /// The element `dgm:alg`, a `Algorithm`.
-    Algorithm(Algorithm),
+    Algorithm(AlgorithmWith<X>),
     /// The element `dgm:choose`, a `ChooseElement`.
-    ChooseElement(ChooseElement),
+    ChooseElement(ChooseElementWith<X>),
     /// The element `dgm:constrLst`, a `ConstraintList`.
-    ConstraintList(ConstraintList),
+    ConstraintList(ConstraintListWith<X>),
     /// The element `dgm:extLst`, a `ExtensionList`.
-    ExtensionList(ExtensionList),
+    ExtensionList(ExtensionListWith<X>),
     /// The element `dgm:forEach`, a `ForEach`.
-    ForEach(ForEach),
+    ForEach(ForEachWith<X>),
     /// The element `dgm:layoutNode`, a `LayoutNode`.
-    LayoutNode(LayoutNode),
+    LayoutNode(LayoutNodeWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `dgm:presOf`, a `PresentationOf`.
-    PresentationOf(PresentationOf),
+    PresentationOf(PresentationOfWith<X>),
     /// The element `dgm:ruleLst`, a `RuleList`.
-    RuleList(RuleList),
+    RuleList(RuleListWith<X>),
     /// The element `dgm:shape`, a `Shape`.
-    Shape(Shape),
+    Shape(ShapeWith<X>),
 }
+
+/// [`LayoutElementContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type LayoutElementContent = LayoutElementContentWith<()>;
+
+impl Eq for LayoutElementContentWith<()> {}
 
 /// The `dgm:layoutNode` element, Layout Node (ECMA-376 Part 1, section 21.4.2.19). Its schema type
 /// is `CT_LayoutNode`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LayoutNode {
+pub struct LayoutNodeWith<X: NodeExtra> {
     /// The attribute `chOrder`, when the element has it.
     pub ch_order: Option<ChildOrder>,
     /// The children that are an item of `LayoutNodeContent`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Vec<LayoutNodeContent>,
+    pub content: Vec<LayoutNodeContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramLayoutNode,
     /// The attribute `moveWith`, when the element has it.
     pub move_with: Option<String>,
     /// The attribute `name`, when the element has it.
@@ -3076,37 +3066,48 @@ pub struct LayoutNode {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:layoutNode` element of the tree a read gives: [`LayoutNodeWith`] holding nothing in
+/// `extra`.
+pub type LayoutNode = LayoutNodeWith<()>;
+
+impl Eq for LayoutNodeWith<()> {}
+
 /// One child element of a choice: local choice in `CT_LayoutNode`.
 ///
 /// The schema types that hold it: `CT_LayoutNode`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum LayoutNodeContent {
+pub enum LayoutNodeContentWith<X: NodeExtra> {
     /// The element `dgm:alg`, a `Algorithm`.
-    Algorithm(Algorithm),
+    Algorithm(AlgorithmWith<X>),
     /// The element `dgm:choose`, a `ChooseElement`.
-    ChooseElement(ChooseElement),
+    ChooseElement(ChooseElementWith<X>),
     /// The element `dgm:constrLst`, a `ConstraintList`.
-    ConstraintList(ConstraintList),
+    ConstraintList(ConstraintListWith<X>),
     /// The element `dgm:extLst`, a `ExtensionList`.
-    ExtensionList(ExtensionList),
+    ExtensionList(ExtensionListWith<X>),
     /// The element `dgm:forEach`, a `ForEach`.
-    ForEach(ForEach),
+    ForEach(ForEachWith<X>),
     /// The element `dgm:layoutNode`, a `LayoutNode`.
-    LayoutNode(LayoutNode),
+    LayoutNode(LayoutNodeWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `dgm:presOf`, a `PresentationOf`.
-    PresentationOf(PresentationOf),
+    PresentationOf(PresentationOfWith<X>),
     /// The element `dgm:ruleLst`, a `RuleList`.
-    RuleList(RuleList),
+    RuleList(RuleListWith<X>),
     /// The element `dgm:shape`, a `Shape`.
-    Shape(Shape),
+    Shape(ShapeWith<X>),
     /// The element `dgm:varLst`, a `VariableList`.
-    VariableList(VariableList),
+    VariableList(VariableListWith<X>),
 }
+
+/// [`LayoutNodeContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+pub type LayoutNodeContent = LayoutNodeContentWith<()>;
+
+impl Eq for LayoutNodeContentWith<()> {}
 
 /// Layout Shape Type, the simple type `ST_LayoutShapeType` (ECMA-376 Part 1, section 21.4.7.41),
 /// kept as the text the file carried.
@@ -3134,32 +3135,32 @@ pub enum LayoutShapeTypeMember {
 
 /// The `dgm:animLvl` element, Level Animation (ECMA-376 Part 1, section 21.4.6.1). Its schema type
 /// is `CT_AnimLvl`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LevelAnimation {
+pub struct LevelAnimationWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramLevelAnimation,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<AnimationLevelStringDefinition>,
 }
 
+/// The `dgm:animLvl` element of the tree a read gives: [`LevelAnimationWith`] holding nothing in
+/// `extra`.
+pub type LevelAnimation = LevelAnimationWith<()>;
+
+impl Eq for LevelAnimationWith<()> {}
+
 /// The `dgm:linClrLst` element, Line Color List (ECMA-376 Part 1, section 21.4.4.9). Its schema
 /// type is `CT_Colors`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LineColorList {
+pub struct LineColorListWith<X: NodeExtra> {
     /// The children that are an item of `super::drawing::ColorContent`, in order.
-    pub content: Vec<super::drawing::ColorContent>,
+    pub content: Vec<super::drawing::ColorContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramLineColorList,
     /// The attribute `hueDir`, when the element has it.
     pub hue_dir: Option<HueDirection>,
     /// The attribute `meth`, when the element has it.
@@ -3167,6 +3168,12 @@ pub struct LineColorList {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:linClrLst` element of the tree a read gives: [`LineColorListWith`] holding nothing in
+/// `extra`.
+pub type LineColorList = LineColorListWith<()>;
+
+impl Eq for LineColorListWith<()> {}
 
 /// Linear Direction, the simple type `ST_LinearDirection` (ECMA-376 Part 1, section 21.4.7.42),
 /// kept as the text the file carried.
@@ -3198,39 +3205,41 @@ pub enum LinearDirectionMember {
 
 /// The `dgm:styleDefHdrLst` element, List of Style Definition Headers (ECMA-376 Part 1, section
 /// 21.4.5.9). Its schema type is `CT_StyleDefinitionHeaderLst`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ListOfStyleDefinitionHeaders {
+pub struct ListOfStyleDefinitionHeadersWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramListOfStyleDefinitionHeaders,
     /// The children that are `StyleDefinitionHeader`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub style_definition_header: Vec<StyleDefinitionHeader>,
+    pub style_definition_header: Vec<StyleDefinitionHeaderWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:styleDefHdrLst` element of the tree a read gives: [`ListOfStyleDefinitionHeadersWith`]
+/// holding nothing in `extra`.
+pub type ListOfStyleDefinitionHeaders = ListOfStyleDefinitionHeadersWith<()>;
+
+impl Eq for ListOfStyleDefinitionHeadersWith<()> {}
+
 /// The `dgm:chMax` element, Maximum Children (ECMA-376 Part 1, section 21.4.6.4). Its schema type
 /// is `CT_ChildMax`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MaximumChildren {
+pub struct MaximumChildrenWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramMaximumChildren,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<NumberOfNodesDefinition>,
 }
+
+/// The `dgm:chMax` element of the tree a read gives: [`MaximumChildrenWith`] holding nothing in
+/// `extra`.
+pub type MaximumChildren = MaximumChildrenWith<()>;
+
+impl Eq for MaximumChildrenWith<()> {}
 
 /// Model Identifier, the simple type `ST_ModelId` (ECMA-376 Part 1, section 21.4.7.43), kept as the
 /// text the file carried.
@@ -3348,19 +3357,22 @@ pub enum OffsetMember {
 
 /// The `dgm:animOne` element, One by One Animation String (ECMA-376 Part 1, section 21.4.6.2). Its
 /// schema type is `CT_AnimOne`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct OneByOneAnimationString {
+pub struct OneByOneAnimationStringWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramOneByOneAnimationString,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<OneByOneAnimationValueDefinition>,
 }
+
+/// The `dgm:animOne` element of the tree a read gives: [`OneByOneAnimationStringWith`] holding
+/// nothing in `extra`.
+pub type OneByOneAnimationString = OneByOneAnimationStringWith<()>;
+
+impl Eq for OneByOneAnimationStringWith<()> {}
 
 /// One by One Animation Value Definition, the simple type `ST_AnimOneStr` (ECMA-376 Part 1, section
 /// 21.4.7.3), kept as the text the file carried.
@@ -3390,19 +3402,22 @@ pub enum OneByOneAnimationValueDefinitionMember {
 
 /// The `dgm:hierBranch` element, Organization Chart Branch Style (ECMA-376 Part 1, section
 /// 21.4.6.7). Its schema type is `CT_HierBranchStyle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct OrganizationChartBranchStyle {
+pub struct OrganizationChartBranchStyleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramOrganizationChartBranchStyle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<HierarchyBranchStyleDefinition>,
 }
+
+/// The `dgm:hierBranch` element of the tree a read gives: [`OrganizationChartBranchStyleWith`]
+/// holding nothing in `extra`.
+pub type OrganizationChartBranchStyle = OrganizationChartBranchStyleWith<()>;
+
+impl Eq for OrganizationChartBranchStyleWith<()> {}
 
 /// Output Shape Type, the simple type `ST_OutputShapeType` (ECMA-376 Part 1, section 21.4.7.48),
 /// kept as the text the file carried.
@@ -3430,14 +3445,11 @@ pub enum OutputShapeTypeMember {
 
 /// The `dgm:param` element, Parameter (ECMA-376 Part 1, section 21.4.2.20). Its schema type is
 /// `CT_Parameter`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Parameter {
+pub struct ParameterWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramParameter,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<ParameterIdentifier>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -3445,6 +3457,11 @@ pub struct Parameter {
     /// The attribute `val`, when the element has it.
     pub val: Option<ParameterValues>,
 }
+
+/// The `dgm:param` element of the tree a read gives: [`ParameterWith`] holding nothing in `extra`.
+pub type Parameter = ParameterWith<()>;
+
+impl Eq for ParameterWith<()> {}
 
 /// Parameter Identifier, the simple type `ST_ParameterId` (ECMA-376 Part 1, section 21.4.7.49),
 /// kept as the text the file carried.
@@ -3669,57 +3686,51 @@ pub enum ParameterValuesMember {
 }
 
 /// The `dgm:pt` element, Point (ECMA-376 Part 1, section 21.4.3.5). Its schema type is `CT_Pt`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Point {
+pub struct PointWith<X: NodeExtra> {
     /// The attribute `cxnId`, when the element has it.
     pub cxn_id: Option<ModelIdentifier>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramPoint,
     /// The attribute `modelId`, when the element has it.
     pub model_id: Option<ModelIdentifier>,
     /// The child that is `PropertySet`, when there is one.
-    pub property_set: Option<Box<PropertySet>>,
+    pub property_set: Option<Box<PropertySetWith<X>>>,
     /// The child that is `ShapeProperties`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub shape_properties: Option<Box<ShapeProperties>>,
+    pub shape_properties: Option<Box<ShapePropertiesWith<X>>>,
     /// The child that is `TextBody`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub text_body: Option<Box<TextBody>>,
+    pub text_body: Option<Box<TextBodyWith<X>>>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<PointType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:pt` element of the tree a read gives: [`PointWith`] holding nothing in `extra`.
+pub type Point = PointWith<()>;
+
+impl Eq for PointWith<()> {}
+
 /// The `dgm:ptLst` element, Point List (ECMA-376 Part 1, section 21.4.3.6). Its schema type is
 /// `CT_PtList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PointList {
+pub struct PointListWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramPointList,
     /// The children that are `Point`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub point: Vec<Point>,
+    pub point: Vec<PointWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:ptLst` element of the tree a read gives: [`PointListWith`] holding nothing in `extra`.
+pub type PointList = PointListWith<()>;
+
+impl Eq for PointListWith<()> {}
 
 /// Point Type, the simple type `ST_PtType` (ECMA-376 Part 1, section 21.4.7.51), kept as the text
 /// the file carried.
@@ -3755,72 +3766,72 @@ pub enum PointTypeMember {
 
 /// The `dgm:chPref` element, Preferred Number of Children (ECMA-376 Part 1, section 21.4.6.5). Its
 /// schema type is `CT_ChildPref`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PreferredNumberOfChildren {
+pub struct PreferredNumberOfChildrenWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramPreferredNumberOfChildren,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<NumberOfNodesDefinition>,
 }
 
+/// The `dgm:chPref` element of the tree a read gives: [`PreferredNumberOfChildrenWith`] holding
+/// nothing in `extra`.
+pub type PreferredNumberOfChildren = PreferredNumberOfChildrenWith<()>;
+
+impl Eq for PreferredNumberOfChildrenWith<()> {}
+
 /// The `dgm:presLayoutVars` element, Presentation Layout Variables (ECMA-376 Part 1, section
 /// 21.4.5.4). Its schema type is `CT_LayoutVariablePropertySet`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PresentationLayoutVariables {
+pub struct PresentationLayoutVariablesWith<X: NodeExtra> {
     /// The child that is `DiagramDirection`, when there is one.
-    pub diagram_direction: Option<Box<DiagramDirection>>,
+    pub diagram_direction: Option<Box<DiagramDirectionWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramPresentationLayoutVariables,
     /// The child that is `LevelAnimation`, when there is one.
-    pub level_animation: Option<Box<LevelAnimation>>,
+    pub level_animation: Option<Box<LevelAnimationWith<X>>>,
     /// The child that is `MaximumChildren`, when there is one.
-    pub maximum_children: Option<Box<MaximumChildren>>,
+    pub maximum_children: Option<Box<MaximumChildrenWith<X>>>,
     /// The child that is `OneByOneAnimationString`, when there is one.
-    pub one_by_one_animation_string: Option<Box<OneByOneAnimationString>>,
+    pub one_by_one_animation_string: Option<Box<OneByOneAnimationStringWith<X>>>,
     /// The child that is `OrganizationChartBranchStyle`, when there is one.
-    pub organization_chart_branch_style: Option<Box<OrganizationChartBranchStyle>>,
+    pub organization_chart_branch_style: Option<Box<OrganizationChartBranchStyleWith<X>>>,
     /// The child that is `PreferredNumberOfChildren`, when there is one.
-    pub preferred_number_of_children: Option<Box<PreferredNumberOfChildren>>,
+    pub preferred_number_of_children: Option<Box<PreferredNumberOfChildrenWith<X>>>,
     /// The child that is `ShapeResizeStyle`, when there is one.
-    pub shape_resize_style: Option<Box<ShapeResizeStyle>>,
+    pub shape_resize_style: Option<Box<ShapeResizeStyleWith<X>>>,
     /// The child that is `ShowInsertNode`, when there is one.
-    pub show_insert_node: Option<Box<ShowInsertNode>>,
+    pub show_insert_node: Option<Box<ShowInsertNodeWith<X>>>,
     /// The child that is `ShowOrganizationChartUserInterface`, when there is one.
-    pub show_organization_chart_user_interface: Option<Box<ShowOrganizationChartUserInterface>>,
+    pub show_organization_chart_user_interface:
+        Option<Box<ShowOrganizationChartUserInterfaceWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:presLayoutVars` element of the tree a read gives: [`PresentationLayoutVariablesWith`]
+/// holding nothing in `extra`.
+pub type PresentationLayoutVariables = PresentationLayoutVariablesWith<()>;
+
+impl Eq for PresentationLayoutVariablesWith<()> {}
+
 /// The `dgm:presOf` element, Presentation Of (ECMA-376 Part 1, section 21.4.2.21). Its schema type
 /// is `CT_PresentationOf`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PresentationOf {
+pub struct PresentationOfWith<X: NodeExtra> {
     /// The attribute `axis`, when the element has it.
     pub axis: Option<AxisTypeList>,
     /// The attribute `cnt`, when the element has it.
     pub cnt: Option<UnsignedIntegerList>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramPresentationOf,
     /// The attribute `hideLastTrans`, when the element has it.
     pub hide_last_trans: Option<BooleanList>,
     /// The attribute `ptType`, when the element has it.
@@ -3833,16 +3844,17 @@ pub struct PresentationOf {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:presOf` element of the tree a read gives: [`PresentationOfWith`] holding nothing in
+/// `extra`.
+pub type PresentationOf = PresentationOfWith<()>;
+
+impl Eq for PresentationOfWith<()> {}
+
 /// The `dgm:prSet` element, Property Set (ECMA-376 Part 1, section 21.4.3.4). Its schema type is
 /// `CT_ElemPropSet`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PropertySet {
+pub struct PropertySetWith<X: NodeExtra> {
     /// The attribute `coherent3DOff`, when the element has it.
     pub coherent3_d_off: Option<String>,
     /// The attribute `csCatId`, when the element has it.
@@ -3877,6 +3889,8 @@ pub struct PropertySet {
     pub cust_sz_y: Option<String>,
     /// The attribute `custT`, when the element has it.
     pub cust_t: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramPropertySet,
     /// The attribute `loCatId`, when the element has it.
     pub lo_cat_id: Option<String>,
     /// The attribute `loTypeId`, when the element has it.
@@ -3896,16 +3910,22 @@ pub struct PropertySet {
     /// The attribute `presStyleLbl`, when the element has it.
     pub pres_style_lbl: Option<String>,
     /// The child that is `PresentationLayoutVariables`, when there is one.
-    pub presentation_layout_variables: Option<Box<PresentationLayoutVariables>>,
+    pub presentation_layout_variables: Option<Box<PresentationLayoutVariablesWith<X>>>,
     /// The attribute `qsCatId`, when the element has it.
     pub qs_cat_id: Option<String>,
     /// The attribute `qsTypeId`, when the element has it.
     pub qs_type_id: Option<String>,
     /// The child that is `ShapeStyle`, when there is one.
-    pub shape_style: Option<Box<ShapeStyle>>,
+    pub shape_style: Option<Box<ShapeStyleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:prSet` element of the tree a read gives: [`PropertySetWith`] holding nothing in
+/// `extra`.
+pub type PropertySet = PropertySetWith<()>;
+
+impl Eq for PropertySetWith<()> {}
 
 /// Property Set Customized Value, the simple type `ST_PrSetCustVal` (ECMA-376 Part 1, section
 /// 21.4.7.66), kept as the text the file carried.
@@ -4029,20 +4049,13 @@ pub enum RotationPathMember {
 
 /// The `dgm:rule` element, Rule (ECMA-376 Part 1, section 21.4.2.24). Its schema type is
 /// `CT_NumericRule`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Rule {
+pub struct RuleWith<X: NodeExtra> {
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramRule,
     /// The attribute `fact`, when the element has it.
     pub fact: Option<String>,
     /// The attribute `for`, when the element has it.
@@ -4061,73 +4074,72 @@ pub struct Rule {
     pub val: Option<String>,
 }
 
+/// The `dgm:rule` element of the tree a read gives: [`RuleWith`] holding nothing in `extra`.
+pub type Rule = RuleWith<()>;
+
+impl Eq for RuleWith<()> {}
+
 /// The `dgm:ruleLst` element, Rule List (ECMA-376 Part 1, section 21.4.2.25). Its schema type is
 /// `CT_Rules`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RuleList {
+pub struct RuleListWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramRuleList,
     /// The children that are `Rule`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub rule: Vec<Rule>,
+    pub rule: Vec<RuleWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:ruleLst` element of the tree a read gives: [`RuleListWith`] holding nothing in `extra`.
+pub type RuleList = RuleListWith<()>;
+
+impl Eq for RuleListWith<()> {}
+
 /// The `dgm:sampData` element, Sample Data (ECMA-376 Part 1, section 21.4.2.26). Its schema type is
 /// `CT_SampleData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SampleData {
+pub struct SampleDataWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramSampleData,
     /// The child that is `DataModel`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub model: Option<Box<DataModel>>,
+    pub model: Option<Box<DataModelWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `useDef`, when the element has it.
     pub use_def: Option<String>,
 }
 
+/// The `dgm:sampData` element of the tree a read gives: [`SampleDataWith`] holding nothing in
+/// `extra`.
+pub type SampleData = SampleDataWith<()>;
+
+impl Eq for SampleDataWith<()> {}
+
 /// The `dgm:scene3d` element. Its schema type is `CT_Scene3D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Scene3d {
+pub struct Scene3dWith<X: NodeExtra> {
     /// The child that is `super::drawing::BackdropPlane`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub backdrop_plane: Option<Box<super::drawing::BackdropPlane>>,
+    pub backdrop_plane: Option<Box<super::drawing::BackdropPlaneWith<X>>>,
     /// The child that is `super::drawing::Camera`, which the schema requires.
-    pub camera: Box<super::drawing::Camera>,
+    pub camera: Box<super::drawing::CameraWith<X>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramScene3d,
     /// The child that is `super::drawing::LightRig`, which the schema requires.
-    pub light_rig: Box<super::drawing::LightRig>,
+    pub light_rig: Box<super::drawing::LightRigWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:scene3d` element of the tree a read gives: [`Scene3dWith`] holding nothing in `extra`.
+pub type Scene3d = Scene3dWith<()>;
+
+impl Eq for Scene3dWith<()> {}
 
 /// Secondary Child Alignment, the simple type `ST_SecondaryChildAlignment` (ECMA-376 Part 1,
 /// section 21.4.7.56), kept as the text the file carried.
@@ -4191,26 +4203,19 @@ pub enum SecondaryLinearDirectionMember {
 
 /// The `dgm:shape` element, Shape (ECMA-376 Part 1, section 21.4.2.27). Its schema type is
 /// `CT_Shape`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Shape {
+pub struct ShapeWith<X: NodeExtra> {
     /// The child that is `ShapeAdjustList`, when there is one.
-    pub adjust_list: Option<Box<ShapeAdjustList>>,
+    pub adjust_list: Option<Box<ShapeAdjustListWith<X>>>,
     /// The attribute `r:blip`, when the element has it.
     pub blip: Option<String>,
     /// The attribute `blipPhldr`, when the element has it.
     pub blip_phldr: Option<String>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramShape,
     /// The attribute `hideGeom`, when the element has it.
     pub hide_geom: Option<String>,
     /// The attribute `lkTxEntry`, when the element has it.
@@ -4225,16 +4230,18 @@ pub struct Shape {
     pub z_order_off: Option<String>,
 }
 
+/// The `dgm:shape` element of the tree a read gives: [`ShapeWith`] holding nothing in `extra`.
+pub type Shape = ShapeWith<()>;
+
+impl Eq for ShapeWith<()> {}
+
 /// The `dgm:adj` element, Shape Adjust (ECMA-376 Part 1, section 21.4.2.1). Its schema type is
 /// `CT_Adj`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeAdjust {
+pub struct ShapeAdjustWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramShapeAdjust,
     /// The attribute `idx`, when the element has it.
     pub idx: Option<Index1>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -4243,167 +4250,178 @@ pub struct ShapeAdjust {
     pub val: Option<String>,
 }
 
+/// The `dgm:adj` element of the tree a read gives: [`ShapeAdjustWith`] holding nothing in `extra`.
+pub type ShapeAdjust = ShapeAdjustWith<()>;
+
+impl Eq for ShapeAdjustWith<()> {}
+
 /// The `dgm:adjLst` element, Shape Adjust List (ECMA-376 Part 1, section 21.4.2.2). Its schema type
 /// is `CT_AdjLst`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeAdjustList {
+pub struct ShapeAdjustListWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramShapeAdjustList,
     /// The children that are `ShapeAdjust`, in order.
-    pub shape_adjust: Vec<ShapeAdjust>,
+    pub shape_adjust: Vec<ShapeAdjustWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:adjLst` element of the tree a read gives: [`ShapeAdjustListWith`] holding nothing in
+/// `extra`.
+pub type ShapeAdjustList = ShapeAdjustListWith<()>;
+
+impl Eq for ShapeAdjustListWith<()> {}
 
 /// The `dgm:spPr` element, Shape Properties (ECMA-376 Part 1, section 21.4.3.7). Its schema type is
 /// `CT_ShapeProperties`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeProperties {
+pub struct ShapePropertiesWith<X: NodeExtra> {
     /// The child that is `super::drawing::Apply3DShapeProperties`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub apply_3d: Option<Box<super::drawing::Apply3DShapeProperties>>,
+    pub apply_3d: Option<Box<super::drawing::Apply3DShapePropertiesWith<X>>>,
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
     /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramShapeProperties,
     /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContent>>,
+    pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContentWith<X>>>,
     /// The child that is an item of `super::drawing::GeometryContent`, when there is one.
-    pub geometry_content: Option<Box<super::drawing::GeometryContent>>,
+    pub geometry_content: Option<Box<super::drawing::GeometryContentWith<X>>>,
     /// The child that is `super::drawing::Outline`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub outline: Option<Box<super::drawing::Outline>>,
+    pub outline: Option<Box<super::drawing::OutlineWith<X>>>,
     /// The child that is `super::drawing::Scene3d`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub scene3d: Option<Box<super::drawing::Scene3d>>,
+    pub scene3d: Option<Box<super::drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The child that is `super::drawing::XfrmTransform2D`, when there is one.
-    pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2D>>,
+    pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2DWith<X>>>,
 }
+
+/// The `dgm:spPr` element of the tree a read gives: [`ShapePropertiesWith`] holding nothing in
+/// `extra`.
+pub type ShapeProperties = ShapePropertiesWith<()>;
+
+impl Eq for ShapePropertiesWith<()> {}
 
 /// The `dgm:resizeHandles` element, Shape Resize Style (ECMA-376 Part 1, section 21.4.2.23). Its
 /// schema type is `CT_ResizeHandles`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeResizeStyle {
+pub struct ShapeResizeStyleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramShapeResizeStyle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<ResizeHandle>,
 }
 
+/// The `dgm:resizeHandles` element of the tree a read gives: [`ShapeResizeStyleWith`] holding
+/// nothing in `extra`.
+pub type ShapeResizeStyle = ShapeResizeStyleWith<()>;
+
+impl Eq for ShapeResizeStyleWith<()> {}
+
 /// The `dgm:style` element, Shape Style (ECMA-376 Part 1, section 21.4.2.28). Its schema type is
 /// `CT_ShapeStyle`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeStyle {
+pub struct ShapeStyleWith<X: NodeExtra> {
     /// The child that is `super::drawing::EffectReference`, which the schema requires.
-    pub effect_reference: Box<super::drawing::EffectReference>,
+    pub effect_reference: Box<super::drawing::EffectReferenceWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramShapeStyle,
     /// The child that is `super::drawing::FillReference`, which the schema requires.
-    pub fill_reference: Box<super::drawing::FillReference>,
+    pub fill_reference: Box<super::drawing::FillReferenceWith<X>>,
     /// The child that is `super::drawing::FontReference`, which the schema requires.
-    pub font_reference: Box<super::drawing::FontReference>,
+    pub font_reference: Box<super::drawing::FontReferenceWith<X>>,
     /// The child that is `super::drawing::LineReference`, which the schema requires.
-    pub line_reference: Box<super::drawing::LineReference>,
+    pub line_reference: Box<super::drawing::LineReferenceWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:style` element of the tree a read gives: [`ShapeStyleWith`] holding nothing in `extra`.
+pub type ShapeStyle = ShapeStyleWith<()>;
+
+impl Eq for ShapeStyleWith<()> {}
 
 /// The `dgm:bulletEnabled` element, Show Insert Node (ECMA-376 Part 1, section 21.4.6.3). Its
 /// schema type is `CT_BulletEnabled`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShowInsertNode {
+pub struct ShowInsertNodeWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramShowInsertNode,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
+
+/// The `dgm:bulletEnabled` element of the tree a read gives: [`ShowInsertNodeWith`] holding nothing
+/// in `extra`.
+pub type ShowInsertNode = ShowInsertNodeWith<()>;
+
+impl Eq for ShowInsertNodeWith<()> {}
 
 /// The `dgm:orgChart` element, Show Organization Chart User Interface (ECMA-376 Part 1, section
 /// 21.4.6.8). Its schema type is `CT_OrgChart`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShowOrganizationChartUserInterface {
+pub struct ShowOrganizationChartUserInterfaceWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramShowOrganizationChartUserInterface,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
+/// The `dgm:orgChart` element of the tree a read gives: [`ShowOrganizationChartUserInterfaceWith`]
+/// holding nothing in `extra`.
+pub type ShowOrganizationChartUserInterface = ShowOrganizationChartUserInterfaceWith<()>;
+
+impl Eq for ShowOrganizationChartUserInterfaceWith<()> {}
+
 /// The `dgm:sp3d` element. Its schema type is `CT_Shape3D`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Sp3d {
+pub struct Sp3dWith<X: NodeExtra> {
     /// The child that is `super::drawing::BottomBevel`, when there is one.
-    pub bottom_bevel: Option<Box<super::drawing::BottomBevel>>,
+    pub bottom_bevel: Option<Box<super::drawing::BottomBevelWith<X>>>,
     /// The child that is `super::drawing::ContourColor`, when there is one.
-    pub contour_color: Option<Box<super::drawing::ContourColor>>,
+    pub contour_color: Option<Box<super::drawing::ContourColorWith<X>>>,
     /// The attribute `contourW`, when the element has it.
     pub contour_w: Option<super::drawing::PositiveCoordinate>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<super::drawing::ExtensionList>>,
+    pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramSp3d,
     /// The child that is `super::drawing::ExtrusionColor`, when there is one.
-    pub extrusion_color: Option<Box<super::drawing::ExtrusionColor>>,
+    pub extrusion_color: Option<Box<super::drawing::ExtrusionColorWith<X>>>,
     /// The attribute `extrusionH`, when the element has it.
     pub extrusion_h: Option<super::drawing::PositiveCoordinate>,
     /// The attribute `prstMaterial`, when the element has it.
     pub prst_material: Option<super::drawing::PresetMaterialType>,
     /// The child that is `super::drawing::TopBevel`, when there is one.
-    pub top_bevel: Option<Box<super::drawing::TopBevel>>,
+    pub top_bevel: Option<Box<super::drawing::TopBevelWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `z`, when the element has it.
     pub z: Option<super::drawing::Coordinate>,
 }
+
+/// The `dgm:sp3d` element of the tree a read gives: [`Sp3dWith`] holding nothing in `extra`.
+pub type Sp3d = Sp3dWith<()>;
+
+impl Eq for Sp3dWith<()> {}
 
 /// Starting Element, the simple type `ST_StartingElement` (ECMA-376 Part 1, section 21.4.7.58),
 /// kept as the text the file carried.
@@ -4431,138 +4449,129 @@ pub enum StartingElementMember {
 
 /// The `dgm:styleData` element, Style Data (ECMA-376 Part 1, section 21.4.2.29). Its schema type is
 /// `CT_SampleData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StyleData {
+pub struct StyleDataWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramStyleData,
     /// The child that is `DataModel`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub model: Option<Box<DataModel>>,
+    pub model: Option<Box<DataModelWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `useDef`, when the element has it.
     pub use_def: Option<String>,
 }
 
+/// The `dgm:styleData` element of the tree a read gives: [`StyleDataWith`] holding nothing in
+/// `extra`.
+pub type StyleData = StyleDataWith<()>;
+
+impl Eq for StyleDataWith<()> {}
+
 /// The `dgm:styleDef` element, Style Definition (ECMA-376 Part 1, section 21.4.5.7). Its schema
 /// type is `CT_StyleDefinition`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StyleDefinition {
+pub struct StyleDefinitionWith<X: NodeExtra> {
     /// The child that is `CategoryListSDCategories`, when there is one.
-    pub category_list_sd_categories: Option<Box<CategoryListSDCategories>>,
+    pub category_list_sd_categories: Option<Box<CategoryListSDCategoriesWith<X>>>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramStyleDefinition,
     /// The attribute `minVer`, when the element has it.
     pub min_ver: Option<String>,
     /// The child that is `Scene3d`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub scene3d: Option<Box<Scene3d>>,
+    pub scene3d: Option<Box<Scene3dWith<X>>>,
     /// The children that are `StyleLabelDescription`, in order.
-    pub style_label_description: Vec<StyleLabelDescription>,
+    pub style_label_description: Vec<StyleLabelDescriptionWith<X>>,
     /// The children that are `StyleLabelStyleLabel`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub style_label_style_label: Vec<StyleLabelStyleLabel>,
+    pub style_label_style_label: Vec<StyleLabelStyleLabelWith<X>>,
     /// The children that are `TitleSDName`, in order.
-    pub title_sd_name: Vec<TitleSDName>,
+    pub title_sd_name: Vec<TitleSDNameWith<X>>,
     /// The attribute `uniqueId`, when the element has it.
     pub unique_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:styleDef` element of the tree a read gives: [`StyleDefinitionWith`] holding nothing in
+/// `extra`.
+pub type StyleDefinition = StyleDefinitionWith<()>;
+
+impl Eq for StyleDefinitionWith<()> {}
+
 /// The `dgm:styleDefHdr` element, Style Definition Header (ECMA-376 Part 1, section 21.4.5.8). Its
 /// schema type is `CT_StyleDefinitionHeader`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StyleDefinitionHeader {
+pub struct StyleDefinitionHeaderWith<X: NodeExtra> {
     /// The child that is `CategoryListSDCategories`, when there is one.
-    pub category_list_sd_categories: Option<Box<CategoryListSDCategories>>,
+    pub category_list_sd_categories: Option<Box<CategoryListSDCategoriesWith<X>>>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramStyleDefinitionHeader,
     /// The attribute `minVer`, when the element has it.
     pub min_ver: Option<String>,
     /// The attribute `resId`, when the element has it.
     pub res_id: Option<String>,
     /// The children that are `StyleLabelDescription`, in order.
-    pub style_label_description: Vec<StyleLabelDescription>,
+    pub style_label_description: Vec<StyleLabelDescriptionWith<X>>,
     /// The children that are `TitleSDName`, in order.
-    pub title_sd_name: Vec<TitleSDName>,
+    pub title_sd_name: Vec<TitleSDNameWith<X>>,
     /// The attribute `uniqueId`, when the element has it.
     pub unique_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:styleDefHdr` element of the tree a read gives: [`StyleDefinitionHeaderWith`] holding
+/// nothing in `extra`.
+pub type StyleDefinitionHeader = StyleDefinitionHeaderWith<()>;
+
+impl Eq for StyleDefinitionHeaderWith<()> {}
+
 /// The `dgm:styleLbl` element, Style Label (ECMA-376 Part 1, section 21.4.4.10). Its schema type is
 /// `CT_CTStyleLabel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StyleLabel {
+pub struct StyleLabelWith<X: NodeExtra> {
     /// The child that is `EffectColorList`, when there is one.
-    pub effect_color_list: Option<Box<EffectColorList>>,
+    pub effect_color_list: Option<Box<EffectColorListWith<X>>>,
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramStyleLabel,
     /// The child that is `FillColorList`, when there is one.
-    pub fill_color_list: Option<Box<FillColorList>>,
+    pub fill_color_list: Option<Box<FillColorListWith<X>>>,
     /// The child that is `LineColorList`, when there is one.
-    pub line_color_list: Option<Box<LineColorList>>,
+    pub line_color_list: Option<Box<LineColorListWith<X>>>,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// The child that is `TextEffectColorList`, when there is one.
-    pub text_effect_color_list: Option<Box<TextEffectColorList>>,
+    pub text_effect_color_list: Option<Box<TextEffectColorListWith<X>>>,
     /// The child that is `TextFillColorList`, when there is one.
-    pub text_fill_color_list: Option<Box<TextFillColorList>>,
+    pub text_fill_color_list: Option<Box<TextFillColorListWith<X>>>,
     /// The child that is `TextLineColorList`, when there is one.
-    pub text_line_color_list: Option<Box<TextLineColorList>>,
+    pub text_line_color_list: Option<Box<TextLineColorListWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:styleLbl` element of the tree a read gives: [`StyleLabelWith`] holding nothing in
+/// `extra`.
+pub type StyleLabel = StyleLabelWith<()>;
+
+impl Eq for StyleLabelWith<()> {}
+
 /// The `dgm:desc` element, Style Label Description (ECMA-376 Part 1, section 21.4.5.3). Its schema
 /// type is `CT_SDDescription`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StyleLabelDescription {
+pub struct StyleLabelDescriptionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramStyleLabelDescription,
     /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -4571,38 +4580,40 @@ pub struct StyleLabelDescription {
     pub val: Option<String>,
 }
 
+/// The `dgm:desc` element of the tree a read gives: [`StyleLabelDescriptionWith`] holding nothing
+/// in `extra`.
+pub type StyleLabelDescription = StyleLabelDescriptionWith<()>;
+
+impl Eq for StyleLabelDescriptionWith<()> {}
+
 /// The `dgm:styleLbl` element, Style Label (ECMA-376 Part 1, section 21.4.5.10). Its schema type is
 /// `CT_StyleLabel`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StyleLabelStyleLabel {
+pub struct StyleLabelStyleLabelWith<X: NodeExtra> {
     /// The child that is `ExtensionList`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub extension_list: Option<Box<ExtensionList>>,
+    pub extension_list: Option<Box<ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramStyleLabelStyleLabel,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// The child that is `Scene3d`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub scene3d: Option<Box<Scene3d>>,
+    pub scene3d: Option<Box<Scene3dWith<X>>>,
     /// The child that is `ShapeStyle`, when there is one.
-    pub shape_style: Option<Box<ShapeStyle>>,
+    pub shape_style: Option<Box<ShapeStyleWith<X>>>,
     /// The child that is `Sp3d`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub sp3d: Option<Box<Sp3d>>,
+    pub sp3d: Option<Box<Sp3dWith<X>>>,
     /// The child that is `TextProperties`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub text_properties: Option<Box<TextProperties>>,
+    pub text_properties: Option<Box<TextPropertiesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:styleLbl` element of the tree a read gives: [`StyleLabelStyleLabelWith`] holding
+/// nothing in `extra`.
+pub type StyleLabelStyleLabel = StyleLabelStyleLabelWith<()>;
+
+impl Eq for StyleLabelStyleLabelWith<()> {}
 
 /// Text Alignment, the simple type `ST_DiagramTextAlignment` (ECMA-376 Part 1, section 21.4.7.25),
 /// kept as the text the file carried.
@@ -4706,29 +4717,25 @@ pub enum TextBlockDirectionMember {
 
 /// The `dgm:t` element, Text Body (ECMA-376 Part 1, section 21.4.3.8). Its schema type is
 /// `CT_TextBody`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextBody {
+pub struct TextBodyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramTextBody,
     /// The child that is `super::drawing::BodyProperties`, which the schema requires.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub properties: Box<super::drawing::BodyProperties>,
+    pub properties: Box<super::drawing::BodyPropertiesWith<X>>,
     /// The child that is `super::drawing::TextListStyles`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub text_list_styles: Option<Box<super::drawing::TextListStyles>>,
+    pub text_list_styles: Option<Box<super::drawing::TextListStylesWith<X>>>,
     /// The children that are `super::drawing::TextParagraphs`, in order.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub text_paragraphs: Vec<super::drawing::TextParagraphs>,
+    pub text_paragraphs: Vec<super::drawing::TextParagraphsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:t` element of the tree a read gives: [`TextBodyWith`] holding nothing in `extra`.
+pub type TextBody = TextBodyWith<()>;
+
+impl Eq for TextBodyWith<()> {}
 
 /// Text Direction, the simple type `ST_TextDirection` (ECMA-376 Part 1, section 21.4.7.62), kept as
 /// the text the file carried.
@@ -4756,16 +4763,13 @@ pub enum TextDirectionMember {
 
 /// The `dgm:txEffectClrLst` element, Text Effect Color List (ECMA-376 Part 1, section 21.4.4.12).
 /// Its schema type is `CT_Colors`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextEffectColorList {
+pub struct TextEffectColorListWith<X: NodeExtra> {
     /// The children that are an item of `super::drawing::ColorContent`, in order.
-    pub content: Vec<super::drawing::ColorContent>,
+    pub content: Vec<super::drawing::ColorContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramTextEffectColorList,
     /// The attribute `hueDir`, when the element has it.
     pub hue_dir: Option<HueDirection>,
     /// The attribute `meth`, when the element has it.
@@ -4773,19 +4777,22 @@ pub struct TextEffectColorList {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:txEffectClrLst` element of the tree a read gives: [`TextEffectColorListWith`] holding
+/// nothing in `extra`.
+pub type TextEffectColorList = TextEffectColorListWith<()>;
+
+impl Eq for TextEffectColorListWith<()> {}
 
 /// The `dgm:txFillClrLst` element, Text Fill Color List (ECMA-376 Part 1, section 21.4.4.13). Its
 /// schema type is `CT_Colors`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextFillColorList {
+pub struct TextFillColorListWith<X: NodeExtra> {
     /// The children that are an item of `super::drawing::ColorContent`, in order.
-    pub content: Vec<super::drawing::ColorContent>,
+    pub content: Vec<super::drawing::ColorContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramTextFillColorList,
     /// The attribute `hueDir`, when the element has it.
     pub hue_dir: Option<HueDirection>,
     /// The attribute `meth`, when the element has it.
@@ -4793,19 +4800,22 @@ pub struct TextFillColorList {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:txFillClrLst` element of the tree a read gives: [`TextFillColorListWith`] holding
+/// nothing in `extra`.
+pub type TextFillColorList = TextFillColorListWith<()>;
+
+impl Eq for TextFillColorListWith<()> {}
 
 /// The `dgm:txLinClrLst` element, Text Line Color List (ECMA-376 Part 1, section 21.4.4.14). Its
 /// schema type is `CT_Colors`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextLineColorList {
+pub struct TextLineColorListWith<X: NodeExtra> {
     /// The children that are an item of `super::drawing::ColorContent`, in order.
-    pub content: Vec<super::drawing::ColorContent>,
+    pub content: Vec<super::drawing::ColorContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramTextLineColorList,
     /// The attribute `hueDir`, when the element has it.
     pub hue_dir: Option<HueDirection>,
     /// The attribute `meth`, when the element has it.
@@ -4814,36 +4824,38 @@ pub struct TextLineColorList {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `dgm:txLinClrLst` element of the tree a read gives: [`TextLineColorListWith`] holding
+/// nothing in `extra`.
+pub type TextLineColorList = TextLineColorListWith<()>;
+
+impl Eq for TextLineColorListWith<()> {}
+
 /// The `dgm:txPr` element, Text Properties (ECMA-376 Part 1, section 21.4.5.12). Its schema type is
 /// `CT_TextProps`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextProperties {
+pub struct TextPropertiesWith<X: NodeExtra> {
     /// The child that is an item of `super::drawing::Text3DContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Option<Box<super::drawing::Text3DContent>>,
+    pub content: Option<Box<super::drawing::Text3DContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramTextProperties,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:txPr` element of the tree a read gives: [`TextPropertiesWith`] holding nothing in
+/// `extra`.
+pub type TextProperties = TextPropertiesWith<()>;
+
+impl Eq for TextPropertiesWith<()> {}
 
 /// The `dgm:title` element, Title (ECMA-376 Part 1, section 21.4.2.30). Its schema type is
 /// `CT_Name`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Title {
+pub struct TitleWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramTitle,
     /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -4851,17 +4863,19 @@ pub struct Title {
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
+
+/// The `dgm:title` element of the tree a read gives: [`TitleWith`] holding nothing in `extra`.
+pub type Title = TitleWith<()>;
+
+impl Eq for TitleWith<()> {}
 
 /// The `dgm:title` element, Title (ECMA-376 Part 1, section 21.4.4.11). Its schema type is
 /// `CT_CTName`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TitleCTName {
+pub struct TitleCTNameWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramTitleCTName,
     /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -4870,16 +4884,19 @@ pub struct TitleCTName {
     pub val: Option<String>,
 }
 
+/// The `dgm:title` element of the tree a read gives: [`TitleCTNameWith`] holding nothing in
+/// `extra`.
+pub type TitleCTName = TitleCTNameWith<()>;
+
+impl Eq for TitleCTNameWith<()> {}
+
 /// The `dgm:title` element, Title (ECMA-376 Part 1, section 21.4.5.11). Its schema type is
 /// `CT_SDName`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TitleSDName {
+pub struct TitleSDNameWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramTitleSDName,
     /// The attribute `lang`, when the element has it.
     pub lang: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -4887,6 +4904,12 @@ pub struct TitleSDName {
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
+
+/// The `dgm:title` element of the tree a read gives: [`TitleSDNameWith`] holding nothing in
+/// `extra`.
+pub type TitleSDName = TitleSDNameWith<()>;
+
+impl Eq for TitleSDNameWith<()> {}
 
 /// Unsigned Integer List, the simple type `ST_UnsignedInts` (ECMA-376 Part 1, section 21.4.7.63),
 /// kept as the text the file carried.
@@ -4904,35 +4927,39 @@ pub struct UnsignedIntegerList(pub String);
 
 /// The `dgm:varLst` element, Variable List (ECMA-376 Part 1, section 21.4.2.31). Its schema type is
 /// `CT_LayoutVariablePropertySet`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VariableList {
+pub struct VariableListWith<X: NodeExtra> {
     /// The child that is `DiagramDirection`, when there is one.
-    pub diagram_direction: Option<Box<DiagramDirection>>,
+    pub diagram_direction: Option<Box<DiagramDirectionWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramVariableList,
     /// The child that is `LevelAnimation`, when there is one.
-    pub level_animation: Option<Box<LevelAnimation>>,
+    pub level_animation: Option<Box<LevelAnimationWith<X>>>,
     /// The child that is `MaximumChildren`, when there is one.
-    pub maximum_children: Option<Box<MaximumChildren>>,
+    pub maximum_children: Option<Box<MaximumChildrenWith<X>>>,
     /// The child that is `OneByOneAnimationString`, when there is one.
-    pub one_by_one_animation_string: Option<Box<OneByOneAnimationString>>,
+    pub one_by_one_animation_string: Option<Box<OneByOneAnimationStringWith<X>>>,
     /// The child that is `OrganizationChartBranchStyle`, when there is one.
-    pub organization_chart_branch_style: Option<Box<OrganizationChartBranchStyle>>,
+    pub organization_chart_branch_style: Option<Box<OrganizationChartBranchStyleWith<X>>>,
     /// The child that is `PreferredNumberOfChildren`, when there is one.
-    pub preferred_number_of_children: Option<Box<PreferredNumberOfChildren>>,
+    pub preferred_number_of_children: Option<Box<PreferredNumberOfChildrenWith<X>>>,
     /// The child that is `ShapeResizeStyle`, when there is one.
-    pub shape_resize_style: Option<Box<ShapeResizeStyle>>,
+    pub shape_resize_style: Option<Box<ShapeResizeStyleWith<X>>>,
     /// The child that is `ShowInsertNode`, when there is one.
-    pub show_insert_node: Option<Box<ShowInsertNode>>,
+    pub show_insert_node: Option<Box<ShowInsertNodeWith<X>>>,
     /// The child that is `ShowOrganizationChartUserInterface`, when there is one.
-    pub show_organization_chart_user_interface: Option<Box<ShowOrganizationChartUserInterface>>,
+    pub show_organization_chart_user_interface:
+        Option<Box<ShowOrganizationChartUserInterfaceWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `dgm:varLst` element of the tree a read gives: [`VariableListWith`] holding nothing in
+/// `extra`.
+pub type VariableList = VariableListWith<()>;
+
+impl Eq for VariableListWith<()> {}
 
 /// Variable Type, the simple type `ST_VariableType` (ECMA-376 Part 1, section 21.4.7.64), kept as
 /// the text the file carried.
@@ -5004,28 +5031,49 @@ pub enum VerticalAlignmentMember {
 
 /// The `dgm:whole` element, Whole E2O Formatting (ECMA-376 Part 1, section 21.4.3.9). Its schema
 /// type is `CT_WholeE2oFormatting`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(serialize_bounds(__S: Allocator + Sharing + Writer, __S::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(deserialize_bounds(__D: Pooling, __D::Error: Source)))]
-#[cfg_attr(feature = "binary-format", rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: Source))))]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WholeE2OFormatting {
+pub struct WholeE2OFormattingWith<X: NodeExtra> {
     /// The child that is an item of `super::drawing::EffectPropertiesContent`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub content: Option<Box<super::drawing::EffectPropertiesContent>>,
+    pub content: Option<Box<super::drawing::EffectPropertiesContentWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::DiagramWholeE2OFormatting,
     /// The child that is `super::drawing::Outline`, when there is one.
-    #[cfg_attr(feature = "binary-format", rkyv(omit_bounds))]
-    pub outline: Option<Box<super::drawing::Outline>>,
+    pub outline: Option<Box<super::drawing::OutlineWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-impl Algorithm {
+/// The `dgm:whole` element of the tree a read gives: [`WholeE2OFormattingWith`] holding nothing in
+/// `extra`.
+pub type WholeE2OFormatting = WholeE2OFormattingWith<()>;
+
+impl Eq for WholeE2OFormattingWith<()> {}
+
+impl<X: NodeExtra> AlgorithmWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> AlgorithmWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AlgorithmWith {
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            parameter: officekit_markup_base::into_extra_list(
+                self.parameter,
+                ParameterWith::into_extra,
+            ),
+            rev: self.rev,
+            r#type: self.r#type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5354,7 +5402,28 @@ impl AxisTypeList {
     }
 }
 
-impl BackgroundFormatting {
+impl<X: NodeExtra> BackgroundFormattingWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> BackgroundFormattingWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BackgroundFormattingWith {
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                super::drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                super::drawing::FillPropertiesContentWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5549,7 +5618,22 @@ impl Breakpoint {
     }
 }
 
-impl Category {
+impl<X: NodeExtra> CategoryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CategoryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CategoryWith {
+            extra: Default::default(),
+            pri: self.pri,
+            r#type: self.r#type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5574,7 +5658,24 @@ impl officekit_markup_base::Write for Category {
     }
 }
 
-impl CategoryList {
+impl<X: NodeExtra> CategoryListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CategoryListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CategoryListWith {
+            category: officekit_markup_base::into_extra_list(
+                self.category,
+                CategoryWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5595,7 +5696,24 @@ impl officekit_markup_base::Write for CategoryList {
     }
 }
 
-impl CategoryListSDCategories {
+impl<X: NodeExtra> CategoryListSDCategoriesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CategoryListSDCategoriesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CategoryListSDCategoriesWith {
+            category_sd_category: officekit_markup_base::into_extra_list(
+                self.category_sd_category,
+                CategorySDCategoryWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5616,7 +5734,22 @@ impl officekit_markup_base::Write for CategoryListSDCategories {
     }
 }
 
-impl CategorySDCategory {
+impl<X: NodeExtra> CategorySDCategoryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CategorySDCategoryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CategorySDCategoryWith {
+            extra: Default::default(),
+            pri: self.pri,
+            r#type: self.r#type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5837,7 +5970,26 @@ impl ChildOrder {
     }
 }
 
-impl ChooseElement {
+impl<X: NodeExtra> ChooseElementWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ChooseElementWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ChooseElementWith {
+            r#else: officekit_markup_base::into_extra_optional(
+                &mut self.r#else,
+                ElseWith::into_extra,
+            ),
+            extra: Default::default(),
+            r#if: officekit_markup_base::into_extra_list(self.r#if, IfWith::into_extra),
+            name: self.name,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5915,7 +6067,22 @@ impl ColorApplicationMethodType {
     }
 }
 
-impl ColorTransformCategory {
+impl<X: NodeExtra> ColorTransformCategoryWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ColorTransformCategoryWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ColorTransformCategoryWith {
+            extra: Default::default(),
+            pri: self.pri,
+            r#type: self.r#type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5940,7 +6107,24 @@ impl officekit_markup_base::Write for ColorTransformCategory {
     }
 }
 
-impl ColorTransformCategoryList {
+impl<X: NodeExtra> ColorTransformCategoryListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ColorTransformCategoryListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ColorTransformCategoryListWith {
+            color_transform_category: officekit_markup_base::into_extra_list(
+                self.color_transform_category,
+                ColorTransformCategoryWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5961,7 +6145,39 @@ impl officekit_markup_base::Write for ColorTransformCategoryList {
     }
 }
 
-impl ColorTransformDefinitionHeader {
+impl<X: NodeExtra> ColorTransformDefinitionHeaderWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ColorTransformDefinitionHeaderWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ColorTransformDefinitionHeaderWith {
+            color_transform_category_list: officekit_markup_base::into_extra_optional(
+                &mut self.color_transform_category_list,
+                ColorTransformCategoryListWith::into_extra,
+            ),
+            description_ct_description: officekit_markup_base::into_extra_list(
+                self.description_ct_description,
+                DescriptionCTDescriptionWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            min_ver: self.min_ver,
+            res_id: self.res_id,
+            title_ct_name: officekit_markup_base::into_extra_list(
+                self.title_ct_name,
+                TitleCTNameWith::into_extra,
+            ),
+            unique_id: self.unique_id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -5987,7 +6203,42 @@ impl officekit_markup_base::Write for ColorTransformDefinitionHeader {
     }
 }
 
-impl ColorTransformDefinitions {
+impl<X: NodeExtra> ColorTransformDefinitionsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ColorTransformDefinitionsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ColorTransformDefinitionsWith {
+            color_transform_category_list: officekit_markup_base::into_extra_optional(
+                &mut self.color_transform_category_list,
+                ColorTransformCategoryListWith::into_extra,
+            ),
+            description_ct_description: officekit_markup_base::into_extra_list(
+                self.description_ct_description,
+                DescriptionCTDescriptionWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            min_ver: self.min_ver,
+            style_label: officekit_markup_base::into_extra_list(
+                self.style_label,
+                StyleLabelWith::into_extra,
+            ),
+            title_ct_name: officekit_markup_base::into_extra_list(
+                self.title_ct_name,
+                TitleCTNameWith::into_extra,
+            ),
+            unique_id: self.unique_id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6012,7 +6263,24 @@ impl officekit_markup_base::Write for ColorTransformDefinitions {
     }
 }
 
-impl ColorTransformHeaderList {
+impl<X: NodeExtra> ColorTransformHeaderListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ColorTransformHeaderListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ColorTransformHeaderListWith {
+            color_transform_definition_header: officekit_markup_base::into_extra_list(
+                self.color_transform_definition_header,
+                ColorTransformDefinitionHeaderWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6033,7 +6301,25 @@ impl officekit_markup_base::Write for ColorTransformHeaderList {
     }
 }
 
-impl ColorTransformSampleData {
+impl<X: NodeExtra> ColorTransformSampleDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ColorTransformSampleDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ColorTransformSampleDataWith {
+            extra: Default::default(),
+            model: officekit_markup_base::into_extra_optional(
+                &mut self.model,
+                DataModelWith::into_extra,
+            ),
+            unknown: self.unknown,
+            use_def: self.use_def,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6057,7 +6343,33 @@ impl officekit_markup_base::Write for ColorTransformSampleData {
     }
 }
 
-impl Connection {
+impl<X: NodeExtra> ConnectionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ConnectionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ConnectionWith {
+            dest_id: self.dest_id,
+            dest_ord: self.dest_ord,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            model_id: self.model_id,
+            par_trans_id: self.par_trans_id,
+            pres_id: self.pres_id,
+            sib_trans_id: self.sib_trans_id,
+            src_id: self.src_id,
+            src_ord: self.src_ord,
+            r#type: self.r#type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6089,7 +6401,24 @@ impl officekit_markup_base::Write for Connection {
     }
 }
 
-impl ConnectionList {
+impl<X: NodeExtra> ConnectionListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ConnectionListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ConnectionListWith {
+            connection: officekit_markup_base::into_extra_list(
+                self.connection,
+                ConnectionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6328,7 +6657,35 @@ impl ConnectorRouting {
     }
 }
 
-impl Constraint {
+impl<X: NodeExtra> ConstraintWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ConstraintWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ConstraintWith {
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fact: self.fact,
+            r#for: self.r#for,
+            for_name: self.for_name,
+            op: self.op,
+            pt_type: self.pt_type,
+            ref_for: self.ref_for,
+            ref_for_name: self.ref_for_name,
+            ref_pt_type: self.ref_pt_type,
+            ref_type: self.ref_type,
+            r#type: self.r#type,
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6362,7 +6719,24 @@ impl officekit_markup_base::Write for Constraint {
     }
 }
 
-impl ConstraintList {
+impl<X: NodeExtra> ConstraintListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ConstraintListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ConstraintListWith {
+            constraint: officekit_markup_base::into_extra_list(
+                self.constraint,
+                ConstraintWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6601,7 +6975,40 @@ impl ContinueDirection {
     }
 }
 
-impl DataModel {
+impl<X: NodeExtra> DataModelWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DataModelWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataModelWith {
+            background_formatting: officekit_markup_base::into_extra_optional(
+                &mut self.background_formatting,
+                BackgroundFormattingWith::into_extra,
+            ),
+            connection_list: officekit_markup_base::into_extra_optional(
+                &mut self.connection_list,
+                ConnectionListWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            point_list: officekit_markup_base::into_extra_required(
+                *self.point_list,
+                PointListWith::into_extra,
+            ),
+            unknown: self.unknown,
+            whole_e2o_formatting: officekit_markup_base::into_extra_optional(
+                &mut self.whole_e2o_formatting,
+                WholeE2OFormattingWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6679,7 +7086,22 @@ impl DataPointType {
     }
 }
 
-impl Description {
+impl<X: NodeExtra> DescriptionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DescriptionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DescriptionWith {
+            extra: Default::default(),
+            lang: self.lang,
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6704,7 +7126,22 @@ impl officekit_markup_base::Write for Description {
     }
 }
 
-impl DescriptionCTDescription {
+impl<X: NodeExtra> DescriptionCTDescriptionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DescriptionCTDescriptionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DescriptionCTDescriptionWith {
+            extra: Default::default(),
+            lang: self.lang,
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6729,7 +7166,21 @@ impl officekit_markup_base::Write for DescriptionCTDescription {
     }
 }
 
-impl DiagramDirection {
+impl<X: NodeExtra> DiagramDirectionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DiagramDirectionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DiagramDirectionWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6804,7 +7255,24 @@ impl DiagramDirectionDefinition {
     }
 }
 
-impl DiagramLayoutHeaderList {
+impl<X: NodeExtra> DiagramLayoutHeaderListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DiagramLayoutHeaderListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DiagramLayoutHeaderListWith {
+            extra: Default::default(),
+            layout_definition_header: officekit_markup_base::into_extra_list(
+                self.layout_definition_header,
+                LayoutDefinitionHeaderWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6854,7 +7322,26 @@ impl DiagreamLayoutNodeTypeList {
     }
 }
 
-impl EffectColorList {
+impl<X: NodeExtra> EffectColorListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> EffectColorListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        EffectColorListWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                super::drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            hue_dir: self.hue_dir,
+            meth: self.meth,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6879,7 +7366,25 @@ impl officekit_markup_base::Write for EffectColorList {
     }
 }
 
-impl Else {
+impl<X: NodeExtra> ElseWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ElseWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ElseWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                LayoutElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            name: self.name,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6903,7 +7408,24 @@ impl officekit_markup_base::Write for Else {
     }
 }
 
-impl ExplicitRelationshipsToDiagramParts {
+impl<X: NodeExtra> ExplicitRelationshipsToDiagramPartsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExplicitRelationshipsToDiagramPartsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExplicitRelationshipsToDiagramPartsWith {
+            cs: self.cs,
+            dm: self.dm,
+            extra: Default::default(),
+            lo: self.lo,
+            qs: self.qs,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -6930,7 +7452,24 @@ impl officekit_markup_base::Write for ExplicitRelationshipsToDiagramParts {
     }
 }
 
-impl ExtensionList {
+impl<X: NodeExtra> ExtensionListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtensionListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtensionListWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                super::drawing::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7002,7 +7541,26 @@ impl FallbackDimension {
     }
 }
 
-impl FillColorList {
+impl<X: NodeExtra> FillColorListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> FillColorListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        FillColorListWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                super::drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            hue_dir: self.hue_dir,
+            meth: self.meth,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7074,7 +7632,32 @@ impl FlowDirection {
     }
 }
 
-impl ForEach {
+impl<X: NodeExtra> ForEachWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ForEachWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ForEachWith {
+            axis: self.axis,
+            cnt: self.cnt,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                LayoutElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            hide_last_trans: self.hide_last_trans,
+            name: self.name,
+            pt_type: self.pt_type,
+            r#ref: self.r#ref,
+            st: self.st,
+            step: self.step,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7575,7 +8158,35 @@ impl HueDirection {
     }
 }
 
-impl If {
+impl<X: NodeExtra> IfWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> IfWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        IfWith {
+            arg: self.arg,
+            axis: self.axis,
+            cnt: self.cnt,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                LayoutElementContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            func: self.func,
+            hide_last_trans: self.hide_last_trans,
+            name: self.name,
+            op: self.op,
+            pt_type: self.pt_type,
+            st: self.st,
+            step: self.step,
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7655,7 +8266,52 @@ impl IntegerList {
     }
 }
 
-impl LayoutDefinition {
+impl<X: NodeExtra> LayoutDefinitionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> LayoutDefinitionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LayoutDefinitionWith {
+            category_list: officekit_markup_base::into_extra_optional(
+                &mut self.category_list,
+                CategoryListWith::into_extra,
+            ),
+            color_transform_sample_data: officekit_markup_base::into_extra_optional(
+                &mut self.color_transform_sample_data,
+                ColorTransformSampleDataWith::into_extra,
+            ),
+            def_style: self.def_style,
+            description: officekit_markup_base::into_extra_list(
+                self.description,
+                DescriptionWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            layout_node: officekit_markup_base::into_extra_required(
+                *self.layout_node,
+                LayoutNodeWith::into_extra,
+            ),
+            min_ver: self.min_ver,
+            sample_data: officekit_markup_base::into_extra_optional(
+                &mut self.sample_data,
+                SampleDataWith::into_extra,
+            ),
+            style_data: officekit_markup_base::into_extra_optional(
+                &mut self.style_data,
+                StyleDataWith::into_extra,
+            ),
+            title: officekit_markup_base::into_extra_list(self.title, TitleWith::into_extra),
+            unique_id: self.unique_id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7681,7 +8337,37 @@ impl officekit_markup_base::Write for LayoutDefinition {
     }
 }
 
-impl LayoutDefinitionHeader {
+impl<X: NodeExtra> LayoutDefinitionHeaderWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> LayoutDefinitionHeaderWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LayoutDefinitionHeaderWith {
+            category_list: officekit_markup_base::into_extra_optional(
+                &mut self.category_list,
+                CategoryListWith::into_extra,
+            ),
+            def_style: self.def_style,
+            description: officekit_markup_base::into_extra_list(
+                self.description,
+                DescriptionWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            min_ver: self.min_ver,
+            res_id: self.res_id,
+            title: officekit_markup_base::into_extra_list(self.title, TitleWith::into_extra),
+            unique_id: self.unique_id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7705,6 +8391,32 @@ impl officekit_markup_base::Write for LayoutDefinitionHeader {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::layout_definition_header(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> LayoutElementContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LayoutElementContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::Algorithm(node) => LayoutElementContentWith::Algorithm(node.into_extra()),
+            Self::ChooseElement(node) => LayoutElementContentWith::ChooseElement(node.into_extra()),
+            Self::ConstraintList(node) => {
+                LayoutElementContentWith::ConstraintList(node.into_extra())
+            }
+            Self::ExtensionList(node) => LayoutElementContentWith::ExtensionList(node.into_extra()),
+            Self::ForEach(node) => LayoutElementContentWith::ForEach(node.into_extra()),
+            Self::LayoutNode(node) => LayoutElementContentWith::LayoutNode(node.into_extra()),
+            Self::Other(node) => LayoutElementContentWith::Other(node),
+            Self::PresentationOf(node) => {
+                LayoutElementContentWith::PresentationOf(node.into_extra())
+            }
+            Self::RuleList(node) => LayoutElementContentWith::RuleList(node.into_extra()),
+            Self::Shape(node) => LayoutElementContentWith::Shape(node.into_extra()),
+        }
     }
 }
 
@@ -7748,7 +8460,28 @@ impl officekit_markup_base::Write for LayoutElementContent {
     }
 }
 
-impl LayoutNode {
+impl<X: NodeExtra> LayoutNodeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LayoutNodeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LayoutNodeWith {
+            ch_order: self.ch_order,
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                LayoutNodeContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            move_with: self.move_with,
+            name: self.name,
+            style_lbl: self.style_lbl,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7772,6 +8505,29 @@ impl officekit_markup_base::Write for LayoutNode {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         let element = write::layout_node(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl<X: NodeExtra> LayoutNodeContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LayoutNodeContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::Algorithm(node) => LayoutNodeContentWith::Algorithm(node.into_extra()),
+            Self::ChooseElement(node) => LayoutNodeContentWith::ChooseElement(node.into_extra()),
+            Self::ConstraintList(node) => LayoutNodeContentWith::ConstraintList(node.into_extra()),
+            Self::ExtensionList(node) => LayoutNodeContentWith::ExtensionList(node.into_extra()),
+            Self::ForEach(node) => LayoutNodeContentWith::ForEach(node.into_extra()),
+            Self::LayoutNode(node) => LayoutNodeContentWith::LayoutNode(node.into_extra()),
+            Self::Other(node) => LayoutNodeContentWith::Other(node),
+            Self::PresentationOf(node) => LayoutNodeContentWith::PresentationOf(node.into_extra()),
+            Self::RuleList(node) => LayoutNodeContentWith::RuleList(node.into_extra()),
+            Self::Shape(node) => LayoutNodeContentWith::Shape(node.into_extra()),
+            Self::VariableList(node) => LayoutNodeContentWith::VariableList(node.into_extra()),
+        }
     }
 }
 
@@ -7888,7 +8644,21 @@ impl LayoutShapeType {
     }
 }
 
-impl LevelAnimation {
+impl<X: NodeExtra> LevelAnimationWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LevelAnimationWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LevelAnimationWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7912,7 +8682,26 @@ impl officekit_markup_base::Write for LevelAnimation {
     }
 }
 
-impl LineColorList {
+impl<X: NodeExtra> LineColorListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> LineColorListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        LineColorListWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                super::drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            hue_dir: self.hue_dir,
+            meth: self.meth,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -7992,7 +8781,24 @@ impl LinearDirection {
     }
 }
 
-impl ListOfStyleDefinitionHeaders {
+impl<X: NodeExtra> ListOfStyleDefinitionHeadersWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ListOfStyleDefinitionHeadersWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ListOfStyleDefinitionHeadersWith {
+            extra: Default::default(),
+            style_definition_header: officekit_markup_base::into_extra_list(
+                self.style_definition_header,
+                StyleDefinitionHeaderWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8013,7 +8819,21 @@ impl officekit_markup_base::Write for ListOfStyleDefinitionHeaders {
     }
 }
 
-impl MaximumChildren {
+impl<X: NodeExtra> MaximumChildrenWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> MaximumChildrenWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        MaximumChildrenWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8247,7 +9067,21 @@ impl Offset {
     }
 }
 
-impl OneByOneAnimationString {
+impl<X: NodeExtra> OneByOneAnimationStringWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> OneByOneAnimationStringWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        OneByOneAnimationStringWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8325,7 +9159,21 @@ impl OneByOneAnimationValueDefinition {
     }
 }
 
-impl OrganizationChartBranchStyle {
+impl<X: NodeExtra> OrganizationChartBranchStyleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> OrganizationChartBranchStyleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        OrganizationChartBranchStyleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8400,7 +9248,22 @@ impl OutputShapeType {
     }
 }
 
-impl Parameter {
+impl<X: NodeExtra> ParameterWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ParameterWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ParameterWith {
+            extra: Default::default(),
+            r#type: self.r#type,
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8717,7 +9580,39 @@ impl ParameterValues {
     }
 }
 
-impl Point {
+impl<X: NodeExtra> PointWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PointWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PointWith {
+            cxn_id: self.cxn_id,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            model_id: self.model_id,
+            property_set: officekit_markup_base::into_extra_optional(
+                &mut self.property_set,
+                PropertySetWith::into_extra,
+            ),
+            shape_properties: officekit_markup_base::into_extra_optional(
+                &mut self.shape_properties,
+                ShapePropertiesWith::into_extra,
+            ),
+            text_body: officekit_markup_base::into_extra_optional(
+                &mut self.text_body,
+                TextBodyWith::into_extra,
+            ),
+            r#type: self.r#type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8743,7 +9638,21 @@ impl officekit_markup_base::Write for Point {
     }
 }
 
-impl PointList {
+impl<X: NodeExtra> PointListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PointListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PointListWith {
+            extra: Default::default(),
+            point: officekit_markup_base::into_extra_list(self.point, PointWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8817,7 +9726,21 @@ impl PointType {
     }
 }
 
-impl PreferredNumberOfChildren {
+impl<X: NodeExtra> PreferredNumberOfChildrenWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PreferredNumberOfChildrenWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PreferredNumberOfChildrenWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8841,7 +9764,56 @@ impl officekit_markup_base::Write for PreferredNumberOfChildren {
     }
 }
 
-impl PresentationLayoutVariables {
+impl<X: NodeExtra> PresentationLayoutVariablesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PresentationLayoutVariablesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PresentationLayoutVariablesWith {
+            diagram_direction: officekit_markup_base::into_extra_optional(
+                &mut self.diagram_direction,
+                DiagramDirectionWith::into_extra,
+            ),
+            extra: Default::default(),
+            level_animation: officekit_markup_base::into_extra_optional(
+                &mut self.level_animation,
+                LevelAnimationWith::into_extra,
+            ),
+            maximum_children: officekit_markup_base::into_extra_optional(
+                &mut self.maximum_children,
+                MaximumChildrenWith::into_extra,
+            ),
+            one_by_one_animation_string: officekit_markup_base::into_extra_optional(
+                &mut self.one_by_one_animation_string,
+                OneByOneAnimationStringWith::into_extra,
+            ),
+            organization_chart_branch_style: officekit_markup_base::into_extra_optional(
+                &mut self.organization_chart_branch_style,
+                OrganizationChartBranchStyleWith::into_extra,
+            ),
+            preferred_number_of_children: officekit_markup_base::into_extra_optional(
+                &mut self.preferred_number_of_children,
+                PreferredNumberOfChildrenWith::into_extra,
+            ),
+            shape_resize_style: officekit_markup_base::into_extra_optional(
+                &mut self.shape_resize_style,
+                ShapeResizeStyleWith::into_extra,
+            ),
+            show_insert_node: officekit_markup_base::into_extra_optional(
+                &mut self.show_insert_node,
+                ShowInsertNodeWith::into_extra,
+            ),
+            show_organization_chart_user_interface: officekit_markup_base::into_extra_optional(
+                &mut self.show_organization_chart_user_interface,
+                ShowOrganizationChartUserInterfaceWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8862,7 +9834,30 @@ impl officekit_markup_base::Write for PresentationLayoutVariables {
     }
 }
 
-impl PresentationOf {
+impl<X: NodeExtra> PresentationOfWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PresentationOfWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PresentationOfWith {
+            axis: self.axis,
+            cnt: self.cnt,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            hide_last_trans: self.hide_last_trans,
+            pt_type: self.pt_type,
+            st: self.st,
+            step: self.step,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -8891,7 +9886,56 @@ impl officekit_markup_base::Write for PresentationOf {
     }
 }
 
-impl PropertySet {
+impl<X: NodeExtra> PropertySetWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> PropertySetWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PropertySetWith {
+            coherent3_d_off: self.coherent3_d_off,
+            cs_cat_id: self.cs_cat_id,
+            cs_type_id: self.cs_type_id,
+            cust_ang: self.cust_ang,
+            cust_flip_hor: self.cust_flip_hor,
+            cust_flip_vert: self.cust_flip_vert,
+            cust_lin_fact_neighbor_x: self.cust_lin_fact_neighbor_x,
+            cust_lin_fact_neighbor_y: self.cust_lin_fact_neighbor_y,
+            cust_lin_fact_x: self.cust_lin_fact_x,
+            cust_lin_fact_y: self.cust_lin_fact_y,
+            cust_rad_scale_inc: self.cust_rad_scale_inc,
+            cust_rad_scale_rad: self.cust_rad_scale_rad,
+            cust_scale_x: self.cust_scale_x,
+            cust_scale_y: self.cust_scale_y,
+            cust_sz_x: self.cust_sz_x,
+            cust_sz_y: self.cust_sz_y,
+            cust_t: self.cust_t,
+            extra: Default::default(),
+            lo_cat_id: self.lo_cat_id,
+            lo_type_id: self.lo_type_id,
+            phldr: self.phldr,
+            phldr_t: self.phldr_t,
+            pres_assoc_id: self.pres_assoc_id,
+            pres_name: self.pres_name,
+            pres_style_cnt: self.pres_style_cnt,
+            pres_style_idx: self.pres_style_idx,
+            pres_style_lbl: self.pres_style_lbl,
+            presentation_layout_variables: officekit_markup_base::into_extra_optional(
+                &mut self.presentation_layout_variables,
+                PresentationLayoutVariablesWith::into_extra,
+            ),
+            qs_cat_id: self.qs_cat_id,
+            qs_type_id: self.qs_type_id,
+            shape_style: officekit_markup_base::into_extra_optional(
+                &mut self.shape_style,
+                ShapeStyleWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9174,7 +10218,31 @@ impl RotationPath {
     }
 }
 
-impl Rule {
+impl<X: NodeExtra> RuleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> RuleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RuleWith {
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fact: self.fact,
+            r#for: self.r#for,
+            for_name: self.for_name,
+            max: self.max,
+            pt_type: self.pt_type,
+            r#type: self.r#type,
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9204,7 +10272,21 @@ impl officekit_markup_base::Write for Rule {
     }
 }
 
-impl RuleList {
+impl<X: NodeExtra> RuleListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> RuleListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        RuleListWith {
+            extra: Default::default(),
+            rule: officekit_markup_base::into_extra_list(self.rule, RuleWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9225,7 +10307,25 @@ impl officekit_markup_base::Write for RuleList {
     }
 }
 
-impl SampleData {
+impl<X: NodeExtra> SampleDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SampleDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SampleDataWith {
+            extra: Default::default(),
+            model: officekit_markup_base::into_extra_optional(
+                &mut self.model,
+                DataModelWith::into_extra,
+            ),
+            unknown: self.unknown,
+            use_def: self.use_def,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9249,7 +10349,36 @@ impl officekit_markup_base::Write for SampleData {
     }
 }
 
-impl Scene3d {
+impl<X: NodeExtra> Scene3dWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> Scene3dWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        Scene3dWith {
+            backdrop_plane: officekit_markup_base::into_extra_optional(
+                &mut self.backdrop_plane,
+                super::drawing::BackdropPlaneWith::into_extra,
+            ),
+            camera: officekit_markup_base::into_extra_required(
+                *self.camera,
+                super::drawing::CameraWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            light_rig: officekit_markup_base::into_extra_required(
+                *self.light_rig,
+                super::drawing::LightRigWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9382,7 +10511,35 @@ impl SecondaryLinearDirection {
     }
 }
 
-impl Shape {
+impl<X: NodeExtra> ShapeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ShapeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapeWith {
+            adjust_list: officekit_markup_base::into_extra_optional(
+                &mut self.adjust_list,
+                ShapeAdjustListWith::into_extra,
+            ),
+            blip: self.blip,
+            blip_phldr: self.blip_phldr,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            hide_geom: self.hide_geom,
+            lk_tx_entry: self.lk_tx_entry,
+            rot: self.rot,
+            r#type: self.r#type,
+            unknown: self.unknown,
+            z_order_off: self.z_order_off,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9412,7 +10569,22 @@ impl officekit_markup_base::Write for Shape {
     }
 }
 
-impl ShapeAdjust {
+impl<X: NodeExtra> ShapeAdjustWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShapeAdjustWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapeAdjustWith {
+            extra: Default::default(),
+            idx: self.idx,
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9437,7 +10609,24 @@ impl officekit_markup_base::Write for ShapeAdjust {
     }
 }
 
-impl ShapeAdjustList {
+impl<X: NodeExtra> ShapeAdjustListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShapeAdjustListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapeAdjustListWith {
+            extra: Default::default(),
+            shape_adjust: officekit_markup_base::into_extra_list(
+                self.shape_adjust,
+                ShapeAdjustWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9458,7 +10647,53 @@ impl officekit_markup_base::Write for ShapeAdjustList {
     }
 }
 
-impl ShapeProperties {
+impl<X: NodeExtra> ShapePropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ShapePropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapePropertiesWith {
+            apply_3d: officekit_markup_base::into_extra_optional(
+                &mut self.apply_3d,
+                super::drawing::Apply3DShapePropertiesWith::into_extra,
+            ),
+            bw_mode: self.bw_mode,
+            effect_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.effect_properties_content,
+                super::drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_properties_content: officekit_markup_base::into_extra_optional(
+                &mut self.fill_properties_content,
+                super::drawing::FillPropertiesContentWith::into_extra,
+            ),
+            geometry_content: officekit_markup_base::into_extra_optional(
+                &mut self.geometry_content,
+                super::drawing::GeometryContentWith::into_extra,
+            ),
+            outline: officekit_markup_base::into_extra_optional(
+                &mut self.outline,
+                super::drawing::OutlineWith::into_extra,
+            ),
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                super::drawing::Scene3dWith::into_extra,
+            ),
+            unknown: self.unknown,
+            xfrm_transform2d: officekit_markup_base::into_extra_optional(
+                &mut self.xfrm_transform2d,
+                super::drawing::XfrmTransform2DWith::into_extra,
+            ),
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9482,7 +10717,21 @@ impl officekit_markup_base::Write for ShapeProperties {
     }
 }
 
-impl ShapeResizeStyle {
+impl<X: NodeExtra> ShapeResizeStyleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShapeResizeStyleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapeResizeStyleWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9506,7 +10755,36 @@ impl officekit_markup_base::Write for ShapeResizeStyle {
     }
 }
 
-impl ShapeStyle {
+impl<X: NodeExtra> ShapeStyleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShapeStyleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShapeStyleWith {
+            effect_reference: officekit_markup_base::into_extra_required(
+                *self.effect_reference,
+                super::drawing::EffectReferenceWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_reference: officekit_markup_base::into_extra_required(
+                *self.fill_reference,
+                super::drawing::FillReferenceWith::into_extra,
+            ),
+            font_reference: officekit_markup_base::into_extra_required(
+                *self.font_reference,
+                super::drawing::FontReferenceWith::into_extra,
+            ),
+            line_reference: officekit_markup_base::into_extra_required(
+                *self.line_reference,
+                super::drawing::LineReferenceWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9527,7 +10805,21 @@ impl officekit_markup_base::Write for ShapeStyle {
     }
 }
 
-impl ShowInsertNode {
+impl<X: NodeExtra> ShowInsertNodeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShowInsertNodeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShowInsertNodeWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9551,7 +10843,21 @@ impl officekit_markup_base::Write for ShowInsertNode {
     }
 }
 
-impl ShowOrganizationChartUserInterface {
+impl<X: NodeExtra> ShowOrganizationChartUserInterfaceWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ShowOrganizationChartUserInterfaceWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ShowOrganizationChartUserInterfaceWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9575,7 +10881,44 @@ impl officekit_markup_base::Write for ShowOrganizationChartUserInterface {
     }
 }
 
-impl Sp3d {
+impl<X: NodeExtra> Sp3dWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> Sp3dWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        Sp3dWith {
+            bottom_bevel: officekit_markup_base::into_extra_optional(
+                &mut self.bottom_bevel,
+                super::drawing::BottomBevelWith::into_extra,
+            ),
+            contour_color: officekit_markup_base::into_extra_optional(
+                &mut self.contour_color,
+                super::drawing::ContourColorWith::into_extra,
+            ),
+            contour_w: self.contour_w,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                super::drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            extrusion_color: officekit_markup_base::into_extra_optional(
+                &mut self.extrusion_color,
+                super::drawing::ExtrusionColorWith::into_extra,
+            ),
+            extrusion_h: self.extrusion_h,
+            prst_material: self.prst_material,
+            top_bevel: officekit_markup_base::into_extra_optional(
+                &mut self.top_bevel,
+                super::drawing::TopBevelWith::into_extra,
+            ),
+            unknown: self.unknown,
+            z: self.z,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9653,7 +10996,25 @@ impl StartingElement {
     }
 }
 
-impl StyleData {
+impl<X: NodeExtra> StyleDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> StyleDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StyleDataWith {
+            extra: Default::default(),
+            model: officekit_markup_base::into_extra_optional(
+                &mut self.model,
+                DataModelWith::into_extra,
+            ),
+            unknown: self.unknown,
+            use_def: self.use_def,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9677,7 +11038,46 @@ impl officekit_markup_base::Write for StyleData {
     }
 }
 
-impl StyleDefinition {
+impl<X: NodeExtra> StyleDefinitionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> StyleDefinitionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StyleDefinitionWith {
+            category_list_sd_categories: officekit_markup_base::into_extra_optional(
+                &mut self.category_list_sd_categories,
+                CategoryListSDCategoriesWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            min_ver: self.min_ver,
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                Scene3dWith::into_extra,
+            ),
+            style_label_description: officekit_markup_base::into_extra_list(
+                self.style_label_description,
+                StyleLabelDescriptionWith::into_extra,
+            ),
+            style_label_style_label: officekit_markup_base::into_extra_list(
+                self.style_label_style_label,
+                StyleLabelStyleLabelWith::into_extra,
+            ),
+            title_sd_name: officekit_markup_base::into_extra_list(
+                self.title_sd_name,
+                TitleSDNameWith::into_extra,
+            ),
+            unique_id: self.unique_id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9702,7 +11102,39 @@ impl officekit_markup_base::Write for StyleDefinition {
     }
 }
 
-impl StyleDefinitionHeader {
+impl<X: NodeExtra> StyleDefinitionHeaderWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> StyleDefinitionHeaderWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StyleDefinitionHeaderWith {
+            category_list_sd_categories: officekit_markup_base::into_extra_optional(
+                &mut self.category_list_sd_categories,
+                CategoryListSDCategoriesWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            min_ver: self.min_ver,
+            res_id: self.res_id,
+            style_label_description: officekit_markup_base::into_extra_list(
+                self.style_label_description,
+                StyleLabelDescriptionWith::into_extra,
+            ),
+            title_sd_name: officekit_markup_base::into_extra_list(
+                self.title_sd_name,
+                TitleSDNameWith::into_extra,
+            ),
+            unique_id: self.unique_id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9728,7 +11160,49 @@ impl officekit_markup_base::Write for StyleDefinitionHeader {
     }
 }
 
-impl StyleLabel {
+impl<X: NodeExtra> StyleLabelWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> StyleLabelWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StyleLabelWith {
+            effect_color_list: officekit_markup_base::into_extra_optional(
+                &mut self.effect_color_list,
+                EffectColorListWith::into_extra,
+            ),
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            fill_color_list: officekit_markup_base::into_extra_optional(
+                &mut self.fill_color_list,
+                FillColorListWith::into_extra,
+            ),
+            line_color_list: officekit_markup_base::into_extra_optional(
+                &mut self.line_color_list,
+                LineColorListWith::into_extra,
+            ),
+            name: self.name,
+            text_effect_color_list: officekit_markup_base::into_extra_optional(
+                &mut self.text_effect_color_list,
+                TextEffectColorListWith::into_extra,
+            ),
+            text_fill_color_list: officekit_markup_base::into_extra_optional(
+                &mut self.text_fill_color_list,
+                TextFillColorListWith::into_extra,
+            ),
+            text_line_color_list: officekit_markup_base::into_extra_optional(
+                &mut self.text_line_color_list,
+                TextLineColorListWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9752,7 +11226,22 @@ impl officekit_markup_base::Write for StyleLabel {
     }
 }
 
-impl StyleLabelDescription {
+impl<X: NodeExtra> StyleLabelDescriptionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> StyleLabelDescriptionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StyleLabelDescriptionWith {
+            extra: Default::default(),
+            lang: self.lang,
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -9777,7 +11266,38 @@ impl officekit_markup_base::Write for StyleLabelDescription {
     }
 }
 
-impl StyleLabelStyleLabel {
+impl<X: NodeExtra> StyleLabelStyleLabelWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> StyleLabelStyleLabelWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        StyleLabelStyleLabelWith {
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            name: self.name,
+            scene3d: officekit_markup_base::into_extra_optional(
+                &mut self.scene3d,
+                Scene3dWith::into_extra,
+            ),
+            shape_style: officekit_markup_base::into_extra_optional(
+                &mut self.shape_style,
+                ShapeStyleWith::into_extra,
+            ),
+            sp3d: officekit_markup_base::into_extra_optional(&mut self.sp3d, Sp3dWith::into_extra),
+            text_properties: officekit_markup_base::into_extra_optional(
+                &mut self.text_properties,
+                TextPropertiesWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10011,7 +11531,32 @@ impl TextBlockDirection {
     }
 }
 
-impl TextBody {
+impl<X: NodeExtra> TextBodyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TextBodyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TextBodyWith {
+            extra: Default::default(),
+            properties: officekit_markup_base::into_extra_required(
+                *self.properties,
+                super::drawing::BodyPropertiesWith::into_extra,
+            ),
+            text_list_styles: officekit_markup_base::into_extra_optional(
+                &mut self.text_list_styles,
+                super::drawing::TextListStylesWith::into_extra,
+            ),
+            text_paragraphs: officekit_markup_base::into_extra_list(
+                self.text_paragraphs,
+                super::drawing::TextParagraphsWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10079,7 +11624,26 @@ impl TextDirection {
     }
 }
 
-impl TextEffectColorList {
+impl<X: NodeExtra> TextEffectColorListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TextEffectColorListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TextEffectColorListWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                super::drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            hue_dir: self.hue_dir,
+            meth: self.meth,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10104,7 +11668,26 @@ impl officekit_markup_base::Write for TextEffectColorList {
     }
 }
 
-impl TextFillColorList {
+impl<X: NodeExtra> TextFillColorListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TextFillColorListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TextFillColorListWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                super::drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            hue_dir: self.hue_dir,
+            meth: self.meth,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10129,7 +11712,26 @@ impl officekit_markup_base::Write for TextFillColorList {
     }
 }
 
-impl TextLineColorList {
+impl<X: NodeExtra> TextLineColorListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TextLineColorListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TextLineColorListWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                super::drawing::ColorContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            hue_dir: self.hue_dir,
+            meth: self.meth,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10154,7 +11756,24 @@ impl officekit_markup_base::Write for TextLineColorList {
     }
 }
 
-impl TextProperties {
+impl<X: NodeExtra> TextPropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> TextPropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TextPropertiesWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                super::drawing::Text3DContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10175,7 +11794,22 @@ impl officekit_markup_base::Write for TextProperties {
     }
 }
 
-impl Title {
+impl<X: NodeExtra> TitleWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TitleWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TitleWith {
+            extra: Default::default(),
+            lang: self.lang,
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10200,7 +11834,22 @@ impl officekit_markup_base::Write for Title {
     }
 }
 
-impl TitleCTName {
+impl<X: NodeExtra> TitleCTNameWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TitleCTNameWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TitleCTNameWith {
+            extra: Default::default(),
+            lang: self.lang,
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10225,7 +11874,22 @@ impl officekit_markup_base::Write for TitleCTName {
     }
 }
 
-impl TitleSDName {
+impl<X: NodeExtra> TitleSDNameWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TitleSDNameWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TitleSDNameWith {
+            extra: Default::default(),
+            lang: self.lang,
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10273,7 +11937,56 @@ impl UnsignedIntegerList {
     }
 }
 
-impl VariableList {
+impl<X: NodeExtra> VariableListWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> VariableListWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        VariableListWith {
+            diagram_direction: officekit_markup_base::into_extra_optional(
+                &mut self.diagram_direction,
+                DiagramDirectionWith::into_extra,
+            ),
+            extra: Default::default(),
+            level_animation: officekit_markup_base::into_extra_optional(
+                &mut self.level_animation,
+                LevelAnimationWith::into_extra,
+            ),
+            maximum_children: officekit_markup_base::into_extra_optional(
+                &mut self.maximum_children,
+                MaximumChildrenWith::into_extra,
+            ),
+            one_by_one_animation_string: officekit_markup_base::into_extra_optional(
+                &mut self.one_by_one_animation_string,
+                OneByOneAnimationStringWith::into_extra,
+            ),
+            organization_chart_branch_style: officekit_markup_base::into_extra_optional(
+                &mut self.organization_chart_branch_style,
+                OrganizationChartBranchStyleWith::into_extra,
+            ),
+            preferred_number_of_children: officekit_markup_base::into_extra_optional(
+                &mut self.preferred_number_of_children,
+                PreferredNumberOfChildrenWith::into_extra,
+            ),
+            shape_resize_style: officekit_markup_base::into_extra_optional(
+                &mut self.shape_resize_style,
+                ShapeResizeStyleWith::into_extra,
+            ),
+            show_insert_node: officekit_markup_base::into_extra_optional(
+                &mut self.show_insert_node,
+                ShowInsertNodeWith::into_extra,
+            ),
+            show_organization_chart_user_interface: officekit_markup_base::into_extra_optional(
+                &mut self.show_organization_chart_user_interface,
+                ShowOrganizationChartUserInterfaceWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -10406,7 +12119,28 @@ impl VerticalAlignment {
     }
 }
 
-impl WholeE2OFormatting {
+impl<X: NodeExtra> WholeE2OFormattingWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> WholeE2OFormattingWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WholeE2OFormattingWith {
+            content: officekit_markup_base::into_extra_optional(
+                &mut self.content,
+                super::drawing::EffectPropertiesContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            outline: officekit_markup_base::into_extra_optional(
+                &mut self.outline,
+                super::drawing::OutlineWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

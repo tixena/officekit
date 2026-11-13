@@ -827,7 +827,6 @@ pub fn render(
     let mut declared = layout::doc(0, &simple.doc);
     declared.push_str(&super::archive::attributes(
         "Clone, Debug, Default, Eq, PartialEq",
-        false,
     ));
     let _ = writeln!(declared, "pub struct {}(pub String);", simple.name);
     let conversions = format!(

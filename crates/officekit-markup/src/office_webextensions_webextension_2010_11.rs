@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -320,34 +323,34 @@ pub static WEBEXTENSIONREF_SHAPE: officekit_markup_base::Shape = officekit_marku
 
 /// The `we:alternateReferences` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_OsfWebExtensionReferenceList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AlternateReferences {
+pub struct AlternateReferencesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWebextensionsWebextension201011AlternateReferences,
     /// The children that are `Reference`, in order.
-    pub reference: Vec<Reference>,
+    pub reference: Vec<ReferenceWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `we:alternateReferences` element of the tree a read gives: [`AlternateReferencesWith`]
+/// holding nothing in `extra`.
+pub type AlternateReferences = AlternateReferencesWith<()>;
+
+impl Eq for AlternateReferencesWith<()> {}
+
 /// The `we:binding` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_OsfWebExtensionBinding`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Binding {
+pub struct BindingWith<X: NodeExtra> {
     /// The attribute `appref`, when the element has it.
     pub appref: Option<String>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWebextensionsWebextension201011Binding,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `type`, when the element has it.
@@ -356,21 +359,28 @@ pub struct Binding {
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `we:binding` element of the tree a read gives: [`BindingWith`] holding nothing in `extra`.
+pub type Binding = BindingWith<()>;
+
+impl Eq for BindingWith<()> {}
+
 /// The `we:bindings` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_OsfWebExtensionBindingList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Bindings {
+pub struct BindingsWith<X: NodeExtra> {
     /// The children that are `Binding`, in order.
-    pub binding: Vec<Binding>,
+    pub binding: Vec<BindingWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWebextensionsWebextension201011Bindings,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `we:bindings` element of the tree a read gives: [`BindingsWith`] holding nothing in `extra`.
+pub type Bindings = BindingsWith<()>;
+
+impl Eq for BindingsWith<()> {}
 
 /// The hooks of a context for the `we` namespace.
 ///
@@ -577,46 +587,48 @@ pub trait Context: crate::Context {
 
 /// The `we:extLst` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_OfficeArtExtensionList`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLst {
+pub struct ExtLstWith<X: NodeExtra> {
     /// The children that are `drawing::Extension`, in order.
-    pub extension: Vec<drawing::Extension>,
+    pub extension: Vec<drawing::ExtensionWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWebextensionsWebextension201011ExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `we:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+pub type ExtLst = ExtLstWith<()>;
+
+impl Eq for ExtLstWith<()> {}
 
 /// The `we:properties` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_OsfWebExtensionPropertyBag`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Properties {
+pub struct PropertiesWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWebextensionsWebextension201011Properties,
     /// The children that are `Property`, in order.
-    pub property: Vec<Property>,
+    pub property: Vec<PropertyWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `we:properties` element of the tree a read gives: [`PropertiesWith`] holding nothing in
+/// `extra`.
+pub type Properties = PropertiesWith<()>;
+
+impl Eq for PropertiesWith<()> {}
+
 /// The `we:property` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_OsfWebExtensionProperty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Property {
+pub struct PropertyWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWebextensionsWebextension201011Property,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -625,18 +637,20 @@ pub struct Property {
     pub value: Option<String>,
 }
 
+/// The `we:property` element of the tree a read gives: [`PropertyWith`] holding nothing in `extra`.
+pub type Property = PropertyWith<()>;
+
+impl Eq for PropertyWith<()> {}
+
 /// The `we:reference` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_OsfWebExtensionReference`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Reference {
+pub struct ReferenceWith<X: NodeExtra> {
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWebextensionsWebextension201011Reference,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `store`, when the element has it.
@@ -649,29 +663,37 @@ pub struct Reference {
     pub version: Option<String>,
 }
 
+/// The `we:reference` element of the tree a read gives: [`ReferenceWith`] holding nothing in
+/// `extra`.
+pub type Reference = ReferenceWith<()>;
+
+impl Eq for ReferenceWith<()> {}
+
 /// The `we:snapshot` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Blip`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Snapshot {
+pub struct SnapshotWith<X: NodeExtra> {
     /// The children that are an item of `drawing::BlipContent`, in order.
-    pub content: Vec<drawing::BlipContent>,
+    pub content: Vec<drawing::BlipContentWith<X>>,
     /// The attribute `cstate`, when the element has it.
     pub cstate: Option<drawing::BlipCompressionType>,
     /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
     /// The child that is `drawing::ExtensionList`, when there is one.
-    pub extension_list: Option<Box<drawing::ExtensionList>>,
+    pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWebextensionsWebextension201011Snapshot,
     /// The attribute `r:link`, when the element has it.
     pub link: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `we:snapshot` element of the tree a read gives: [`SnapshotWith`] holding nothing in `extra`.
+pub type Snapshot = SnapshotWith<()>;
+
+impl Eq for SnapshotWith<()> {}
 
 /// The hooks of a visitor for the `we` namespace.
 ///
@@ -740,51 +762,74 @@ pub trait Visitor: crate::Visitor {
 
 /// The `we:webextension` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_OsfWebExtension`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Webextension {
+pub struct WebextensionWith<X: NodeExtra> {
     /// The child that is `AlternateReferences`, when there is one.
-    pub alternate_references: Option<Box<AlternateReferences>>,
+    pub alternate_references: Option<Box<AlternateReferencesWith<X>>>,
     /// The child that is `Bindings`, which the schema requires.
-    pub bindings: Box<Bindings>,
+    pub bindings: Box<BindingsWith<X>>,
     /// The child that is `ExtLst`, when there is one.
-    pub ext_lst: Option<Box<ExtLst>>,
+    pub ext_lst: Option<Box<ExtLstWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWebextensionsWebextension201011Webextension,
     /// The attribute `frozen`, when the element has it.
     pub frozen: Option<String>,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The child that is `Properties`, which the schema requires.
-    pub properties: Box<Properties>,
+    pub properties: Box<PropertiesWith<X>>,
     /// The child that is `Reference`, which the schema requires.
-    pub reference: Box<Reference>,
+    pub reference: Box<ReferenceWith<X>>,
     /// The child that is `Snapshot`, when there is one.
-    pub snapshot: Option<Box<Snapshot>>,
+    pub snapshot: Option<Box<SnapshotWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `we:webextension` element of the tree a read gives: [`WebextensionWith`] holding nothing in
+/// `extra`.
+pub type Webextension = WebextensionWith<()>;
+
+impl Eq for WebextensionWith<()> {}
+
 /// The `we:webextensionref` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_WebExtensionPartRef`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Webextensionref {
+pub struct WebextensionrefWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeWebextensionsWebextension201011Webextensionref,
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
-impl AlternateReferences {
+/// The `we:webextensionref` element of the tree a read gives: [`WebextensionrefWith`] holding
+/// nothing in `extra`.
+pub type Webextensionref = WebextensionrefWith<()>;
+
+impl Eq for WebextensionrefWith<()> {}
+
+impl<X: NodeExtra> AlternateReferencesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> AlternateReferencesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        AlternateReferencesWith {
+            extra: Default::default(),
+            reference: officekit_markup_base::into_extra_list(
+                self.reference,
+                ReferenceWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -805,7 +850,27 @@ impl officekit_markup_base::Write for AlternateReferences {
     }
 }
 
-impl Binding {
+impl<X: NodeExtra> BindingWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> BindingWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BindingWith {
+            appref: self.appref,
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            id: self.id,
+            r#type: self.r#type,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -831,7 +896,21 @@ impl officekit_markup_base::Write for Binding {
     }
 }
 
-impl Bindings {
+impl<X: NodeExtra> BindingsWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> BindingsWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        BindingsWith {
+            binding: officekit_markup_base::into_extra_list(self.binding, BindingWith::into_extra),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -852,7 +931,24 @@ impl officekit_markup_base::Write for Bindings {
     }
 }
 
-impl ExtLst {
+impl<X: NodeExtra> ExtLstWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ExtLstWith {
+            extension: officekit_markup_base::into_extra_list(
+                self.extension,
+                drawing::ExtensionWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -873,7 +969,24 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl Properties {
+impl<X: NodeExtra> PropertiesWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PropertiesWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PropertiesWith {
+            extra: Default::default(),
+            property: officekit_markup_base::into_extra_list(
+                self.property,
+                PropertyWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -894,7 +1007,22 @@ impl officekit_markup_base::Write for Properties {
     }
 }
 
-impl Property {
+impl<X: NodeExtra> PropertyWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PropertyWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PropertyWith {
+            extra: Default::default(),
+            name: self.name,
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -919,7 +1047,28 @@ impl officekit_markup_base::Write for Property {
     }
 }
 
-impl Reference {
+impl<X: NodeExtra> ReferenceWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> ReferenceWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ReferenceWith {
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            id: self.id,
+            store: self.store,
+            store_type: self.store_type,
+            unknown: self.unknown,
+            version: self.version,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -946,7 +1095,31 @@ impl officekit_markup_base::Write for Reference {
     }
 }
 
-impl Snapshot {
+impl<X: NodeExtra> SnapshotWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> SnapshotWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        SnapshotWith {
+            content: officekit_markup_base::into_extra_list(
+                self.content,
+                drawing::BlipContentWith::into_extra,
+            ),
+            cstate: self.cstate,
+            embed: self.embed,
+            extension_list: officekit_markup_base::into_extra_optional(
+                &mut self.extension_list,
+                drawing::ExtensionListWith::into_extra,
+            ),
+            extra: Default::default(),
+            link: self.link,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -972,7 +1145,46 @@ impl officekit_markup_base::Write for Snapshot {
     }
 }
 
-impl Webextension {
+impl<X: NodeExtra> WebextensionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> WebextensionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WebextensionWith {
+            alternate_references: officekit_markup_base::into_extra_optional(
+                &mut self.alternate_references,
+                AlternateReferencesWith::into_extra,
+            ),
+            bindings: officekit_markup_base::into_extra_required(
+                *self.bindings,
+                BindingsWith::into_extra,
+            ),
+            ext_lst: officekit_markup_base::into_extra_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_extra,
+            ),
+            extra: Default::default(),
+            frozen: self.frozen,
+            id: self.id,
+            properties: officekit_markup_base::into_extra_required(
+                *self.properties,
+                PropertiesWith::into_extra,
+            ),
+            reference: officekit_markup_base::into_extra_required(
+                *self.reference,
+                ReferenceWith::into_extra,
+            ),
+            snapshot: officekit_markup_base::into_extra_optional(
+                &mut self.snapshot,
+                SnapshotWith::into_extra,
+            ),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -997,7 +1209,21 @@ impl officekit_markup_base::Write for Webextension {
     }
 }
 
-impl Webextensionref {
+impl<X: NodeExtra> WebextensionrefWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> WebextensionrefWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        WebextensionrefWith {
+            extra: Default::default(),
+            id: self.id,
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

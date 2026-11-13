@@ -223,6 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
@@ -269,17 +270,19 @@ pub static PLACEHOLDER_TYPE_CONTENT_TAGS: officekit_markup_base::Accept =
 
 /// The `p232:cameo` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Cameo {
+pub struct CameoWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint202302MainCameo,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `p232:cameo` element of the tree a read gives: [`CameoWith`] holding nothing in `extra`.
+pub type Cameo = CameoWith<()>;
+
+impl Eq for CameoWith<()> {}
 
 /// The hooks of a context for the `p232` namespace.
 ///
@@ -384,65 +387,78 @@ pub trait Context: crate::Context {
 
 /// The `p232:phTypeExt` element, declared by the schema data of the Open XML SDK, version 3.5.1.
 /// Its schema type is `CT_PlaceholderTypeExtension`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PhTypeExt {
+pub struct PhTypeExtWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint202302MainPhTypeExt,
     /// The child that is `Type`, which the schema requires.
-    pub r#type: Box<Type>,
+    pub r#type: Box<TypeWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `p232:phTypeExt` element of the tree a read gives: [`PhTypeExtWith`] holding nothing in
+/// `extra`.
+pub type PhTypeExt = PhTypeExtWith<()>;
+
+impl Eq for PhTypeExtWith<()> {}
 
 /// One child element of a choice: choice in `CT_PlaceholderTypeACB`.
 ///
 /// The schema types that hold it: `CT_PlaceholderTypeACB`.
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum PlaceholderTypeContent {
+pub enum PlaceholderTypeContentWith<X: NodeExtra> {
     /// The element `p232:cameo`, a `Cameo`.
-    Cameo(Cameo),
+    Cameo(CameoWith<X>),
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `p232:unknown`, a `Unknown`.
-    Unknown(Unknown),
+    Unknown(UnknownWith<X>),
 }
+
+/// [`PlaceholderTypeContentWith`] of the tree a read gives, where no node holds anything in
+/// `extra`.
+pub type PlaceholderTypeContent = PlaceholderTypeContentWith<()>;
+
+impl Eq for PlaceholderTypeContentWith<()> {}
 
 /// The `p232:type` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_PlaceholderTypeACB`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Type {
+pub struct TypeWith<X: NodeExtra> {
     /// The child that is an item of `PlaceholderTypeContent`, which the schema requires.
-    pub content: Box<PlaceholderTypeContent>,
+    pub content: Box<PlaceholderTypeContentWith<X>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint202302MainType,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `p232:type` element of the tree a read gives: [`TypeWith`] holding nothing in `extra`.
+pub type Type = TypeWith<()>;
+
+impl Eq for TypeWith<()> {}
+
 /// The `p232:unknown` element, declared by the schema data of the Open XML SDK, version 3.5.1. Its
 /// schema type is `CT_Empty`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Unknown {
+pub struct UnknownWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficePowerpoint202302MainUnknown,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
+
+/// The `p232:unknown` element of the tree a read gives: [`UnknownWith`] holding nothing in `extra`.
+pub type Unknown = UnknownWith<()>;
+
+impl Eq for UnknownWith<()> {}
 
 /// The hooks of a visitor for the `p232` namespace.
 ///
@@ -481,7 +497,20 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl Cameo {
+impl<X: NodeExtra> CameoWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> CameoWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        CameoWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -502,7 +531,21 @@ impl officekit_markup_base::Write for Cameo {
     }
 }
 
-impl PhTypeExt {
+impl<X: NodeExtra> PhTypeExtWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PhTypeExtWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        PhTypeExtWith {
+            extra: Default::default(),
+            r#type: officekit_markup_base::into_extra_required(*self.r#type, TypeWith::into_extra),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -523,9 +566,24 @@ impl officekit_markup_base::Write for PhTypeExt {
     }
 }
 
-impl Default for PlaceholderTypeContent {
+impl<X: NodeExtra> PlaceholderTypeContentWith<X> {
+    /// This item and every node under it with each `extra` at `Y`'s default.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> PlaceholderTypeContentWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        match self {
+            Self::Cameo(node) => PlaceholderTypeContentWith::Cameo(node.into_extra()),
+            Self::Other(node) => PlaceholderTypeContentWith::Other(node),
+            Self::Unknown(node) => PlaceholderTypeContentWith::Unknown(node.into_extra()),
+        }
+    }
+}
+
+impl<X: NodeExtra> Default for PlaceholderTypeContentWith<X> {
     fn default() -> Self {
-        Self::Cameo(Cameo::default())
+        Self::Cameo(CameoWith::default())
     }
 }
 
@@ -553,7 +611,24 @@ impl officekit_markup_base::Write for PlaceholderTypeContent {
     }
 }
 
-impl Type {
+impl<X: NodeExtra> TypeWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> TypeWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        TypeWith {
+            content: officekit_markup_base::into_extra_required(
+                *self.content,
+                PlaceholderTypeContentWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -574,7 +649,20 @@ impl officekit_markup_base::Write for Type {
     }
 }
 
-impl Unknown {
+impl<X: NodeExtra> UnknownWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> UnknownWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        UnknownWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

@@ -561,6 +561,7 @@ pub fn inline_drawing_ml_object(element: &Element) -> super::InlineDrawingMLObje
 pub fn no_text_wrapping(element: &Element) -> super::NoTextWrapping {
     let reader = officekit_markup_base::Reader::new(element, &super::NO_TEXT_WRAPPING_SHAPE);
     super::NoTextWrapping {
+        extra: (),
         unknown: reader.finish(),
     }
 }

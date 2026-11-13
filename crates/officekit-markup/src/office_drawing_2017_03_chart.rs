@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -302,35 +305,41 @@ pub trait Context: crate::Context {
 
 /// The `c16r3:dataDisplayOptions16` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_DataDisplayOptions16`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataDisplayOptions16 {
+pub struct DataDisplayOptions16With<X: NodeExtra> {
     /// The child that is `DispNaAsBlank`, when there is one.
-    pub disp_na_as_blank: Option<Box<DispNaAsBlank>>,
+    pub disp_na_as_blank: Option<Box<DispNaAsBlankWith<X>>>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing201703ChartDataDisplayOptions16,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
 }
 
+/// The `c16r3:dataDisplayOptions16` element of the tree a read gives: [`DataDisplayOptions16With`]
+/// holding nothing in `extra`.
+pub type DataDisplayOptions16 = DataDisplayOptions16With<()>;
+
+impl Eq for DataDisplayOptions16With<()> {}
+
 /// The `c16r3:dispNaAsBlank` element, declared by the schema data of the Open XML SDK, version
 /// 3.5.1. Its schema type is `CT_BooleanFalse`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DispNaAsBlank {
+pub struct DispNaAsBlankWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeDrawing201703ChartDispNaAsBlank,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
+
+/// The `c16r3:dispNaAsBlank` element of the tree a read gives: [`DispNaAsBlankWith`] holding
+/// nothing in `extra`.
+pub type DispNaAsBlank = DispNaAsBlankWith<()>;
+
+impl Eq for DispNaAsBlankWith<()> {}
 
 /// The hooks of a visitor for the `c16r3` namespace.
 ///
@@ -354,7 +363,24 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl DataDisplayOptions16 {
+impl<X: NodeExtra> DataDisplayOptions16With<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(mut self) -> DataDisplayOptions16With<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataDisplayOptions16With {
+            disp_na_as_blank: officekit_markup_base::into_extra_optional(
+                &mut self.disp_na_as_blank,
+                DispNaAsBlankWith::into_extra,
+            ),
+            extra: Default::default(),
+            unknown: self.unknown,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -375,7 +401,21 @@ impl officekit_markup_base::Write for DataDisplayOptions16 {
     }
 }
 
-impl DispNaAsBlank {
+impl<X: NodeExtra> DispNaAsBlankWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DispNaAsBlankWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DispNaAsBlankWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            val: self.val,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

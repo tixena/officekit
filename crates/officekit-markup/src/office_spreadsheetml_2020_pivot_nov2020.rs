@@ -218,9 +218,12 @@
 //!
 //! `Context` and `Visitor` hold the hooks that replace or look at each node.
 
+#[cfg(feature = "binary-format")]
+mod archive;
 pub mod read;
 pub mod write;
 
+use officekit_markup_base::NodeExtra;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -334,14 +337,11 @@ pub trait Context: crate::Context {
 
 /// The `xxpim:dataFieldFutureData` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_DataFieldFutureData`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataFieldFutureData {
+pub struct DataFieldFutureDataWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2020PivotNov2020DataFieldFutureData,
     /// The attribute `sourceField`, when the element has it.
     pub source_field: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
@@ -350,37 +350,49 @@ pub struct DataFieldFutureData {
     pub version: Option<String>,
 }
 
+/// The `xxpim:dataFieldFutureData` element of the tree a read gives: [`DataFieldFutureDataWith`]
+/// holding nothing in `extra`.
+pub type DataFieldFutureData = DataFieldFutureDataWith<()>;
+
+impl Eq for DataFieldFutureDataWith<()> {}
+
 /// The `xxpim:ignorableAfterVersion` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `CT_Ignorable`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IgnorableAfterVersion {
+pub struct IgnorableAfterVersionWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2020PivotNov2020IgnorableAfterVersion,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `version`, when the element has it.
     pub version: Option<String>,
 }
 
+/// The `xxpim:ignorableAfterVersion` element of the tree a read gives:
+/// [`IgnorableAfterVersionWith`] holding nothing in `extra`.
+pub type IgnorableAfterVersion = IgnorableAfterVersionWith<()>;
+
+impl Eq for IgnorableAfterVersionWith<()> {}
+
 /// The `xxpim:implicitMeasureSupport` element, declared by the schema data of the Open XML SDK,
 /// version 3.5.1. Its schema type is `boolean`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ImplicitMeasureSupport {
+pub struct ImplicitMeasureSupportWith<X: NodeExtra> {
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub extra: X::OfficeSpreadsheetml2020PivotNov2020ImplicitMeasureSupport,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The element's text.
     pub value: String,
 }
+
+/// The `xxpim:implicitMeasureSupport` element of the tree a read gives:
+/// [`ImplicitMeasureSupportWith`] holding nothing in `extra`.
+pub type ImplicitMeasureSupport = ImplicitMeasureSupportWith<()>;
+
+impl Eq for ImplicitMeasureSupportWith<()> {}
 
 /// The hooks of a visitor for the `xxpim` namespace.
 ///
@@ -416,7 +428,22 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl DataFieldFutureData {
+impl<X: NodeExtra> DataFieldFutureDataWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> DataFieldFutureDataWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        DataFieldFutureDataWith {
+            extra: Default::default(),
+            source_field: self.source_field,
+            unknown: self.unknown,
+            version: self.version,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -441,7 +468,21 @@ impl officekit_markup_base::Write for DataFieldFutureData {
     }
 }
 
-impl IgnorableAfterVersion {
+impl<X: NodeExtra> IgnorableAfterVersionWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> IgnorableAfterVersionWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        IgnorableAfterVersionWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            version: self.version,
+        }
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -465,7 +506,21 @@ impl officekit_markup_base::Write for IgnorableAfterVersion {
     }
 }
 
-impl ImplicitMeasureSupport {
+impl<X: NodeExtra> ImplicitMeasureSupportWith<X> {
+    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+    /// moves as it is.
+    #[must_use]
+    pub fn into_extra<Y>(self) -> ImplicitMeasureSupportWith<Y>
+    where
+        Y: NodeExtra,
+    {
+        ImplicitMeasureSupportWith {
+            extra: Default::default(),
+            unknown: self.unknown,
+            value: self.value,
+        }
+    }
+
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {

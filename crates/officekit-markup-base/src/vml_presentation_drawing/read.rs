@@ -223,6 +223,7 @@ use officekit_xml::element::Element;
 pub fn ink_annotation_flag(element: &Element) -> super::InkAnnotationFlag {
     let reader = crate::Reader::new(element, &super::INK_ANNOTATION_FLAG_SHAPE);
     super::InkAnnotationFlag {
+        extra: (),
         unknown: reader.finish(),
     }
 }
