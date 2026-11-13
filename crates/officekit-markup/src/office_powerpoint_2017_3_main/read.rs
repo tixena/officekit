@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `p173:track` into a `Track`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn track(element: &Element) -> super::Track {
     let mut node = super::Track::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TRACK_SHAPE);
@@ -238,7 +238,7 @@ pub fn track(element: &Element) -> super::Track {
 }
 
 /// Read `p173:trackLst` into a `TrackLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn track_lst(element: &Element) -> super::TrackLst {
     let mut node = super::TrackLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TRACK_LST_SHAPE);
@@ -252,7 +252,7 @@ pub fn track_lst(element: &Element) -> super::TrackLst {
 }
 
 /// Read `p173:tracksInfo` into a `TracksInfo`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tracks_info(element: &Element) -> super::TracksInfo {
     let mut node = super::TracksInfo::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TRACKS_INFO_SHAPE);

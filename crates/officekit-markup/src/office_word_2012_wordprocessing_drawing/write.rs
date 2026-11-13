@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `WebVideoPr` as its element, `wp15:webVideoPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn web_video_pr(node: &super::WebVideoPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::WEB_VIDEO_PR_SHAPE, &node.unknown);

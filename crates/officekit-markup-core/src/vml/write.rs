@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `ArcSegment` as its element, `v:arc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn arc_segment(node: &super::ArcSegment, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ARC_SEGMENT_SHAPE, &node.unknown);
@@ -285,7 +285,7 @@ pub fn arc_segment(node: &super::ArcSegment, scope: &mut Scope) -> Element {
 }
 
 /// Write a `BezierCurve` as its element, `v:curve`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bezier_curve(node: &super::BezierCurve, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::BEZIER_CURVE_SHAPE, &node.unknown);
@@ -351,7 +351,7 @@ pub fn bezier_curve(node: &super::BezierCurve, scope: &mut Scope) -> Element {
 }
 
 /// Write a `DocumentBackground` as its element, `v:background`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_background(node: &super::DocumentBackground, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DOCUMENT_BACKGROUND_SHAPE, &node.unknown);
@@ -367,7 +367,7 @@ pub fn document_background(node: &super::DocumentBackground, scope: &mut Scope) 
 }
 
 /// Write a `ImageData` as its element, `v:imagedata`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn image_data(node: &super::ImageData, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::IMAGE_DATA_SHAPE, &node.unknown);
@@ -399,7 +399,7 @@ pub fn image_data(node: &super::ImageData, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ImageFile` as its element, `v:image`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn image_file(node: &super::ImageFile, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::IMAGE_FILE_SHAPE, &node.unknown);
@@ -471,7 +471,7 @@ pub fn image_file(node: &super::ImageFile, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Line` as its element, `v:line`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn line(node: &super::Line, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::LINE_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
@@ -534,7 +534,7 @@ pub fn line(node: &super::Line, scope: &mut Scope) -> Element {
 }
 
 /// Write a `LineStrokeSettings` as its element, `v:stroke`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn line_stroke_settings(node: &super::LineStrokeSettings, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -579,7 +579,7 @@ pub fn line_stroke_settings(node: &super::LineStrokeSettings, scope: &mut Scope)
 }
 
 /// Write a `MultiplePathLine` as its element, `v:polyline`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn multiple_path_line(node: &super::MultiplePathLine, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::MULTIPLE_PATH_LINE_SHAPE, &node.unknown);
@@ -650,7 +650,7 @@ pub fn multiple_path_line_content(
 }
 
 /// Write a `Oval` as its element, `v:oval`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn oval(node: &super::Oval, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::OVAL_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
@@ -711,7 +711,7 @@ pub fn oval(node: &super::Oval, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Rectangle` as its element, `v:rect`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rectangle(node: &super::Rectangle, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::RECTANGLE_SHAPE, &node.unknown);
@@ -773,7 +773,7 @@ pub fn rectangle(node: &super::Rectangle, scope: &mut Scope) -> Element {
 }
 
 /// Write a `RoundedRectangle` as its element, `v:roundrect`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rounded_rectangle(node: &super::RoundedRectangle, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ROUNDED_RECTANGLE_SHAPE, &node.unknown);
@@ -836,7 +836,7 @@ pub fn rounded_rectangle(node: &super::RoundedRectangle, scope: &mut Scope) -> E
 }
 
 /// Write a `SetOfFormulas` as its element, `v:formulas`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn set_of_formulas(node: &super::SetOfFormulas, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SET_OF_FORMULAS_SHAPE, &node.unknown);
@@ -845,7 +845,7 @@ pub fn set_of_formulas(node: &super::SetOfFormulas, scope: &mut Scope) -> Elemen
 }
 
 /// Write a `SetOfHandles` as its element, `v:handles`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn set_of_handles(node: &super::SetOfHandles, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SET_OF_HANDLES_SHAPE, &node.unknown);
@@ -854,7 +854,7 @@ pub fn set_of_handles(node: &super::SetOfHandles, scope: &mut Scope) -> Element 
 }
 
 /// Write a `ShadowEffect` as its element, `v:shadow`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shadow_effect(node: &super::ShadowEffect, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHADOW_EFFECT_SHAPE, &node.unknown);
@@ -873,7 +873,7 @@ pub fn shadow_effect(node: &super::ShadowEffect, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ShapeDefinition` as its element, `v:shape`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_definition(node: &super::ShapeDefinition, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_DEFINITION_SHAPE, &node.unknown);
@@ -956,7 +956,7 @@ pub fn shape_element(
 }
 
 /// Write a `ShapeFillProperties` as its element, `v:fill`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_fill_properties(node: &super::ShapeFillProperties, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -995,7 +995,7 @@ pub fn shape_fill_properties(node: &super::ShapeFillProperties, scope: &mut Scop
 }
 
 /// Write a `ShapeGroup` as its element, `v:group`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_group(node: &super::ShapeGroup, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_GROUP_SHAPE, &node.unknown);
@@ -1051,7 +1051,7 @@ pub fn shape_group_content(
 }
 
 /// Write a `ShapeHandle` as its element, `v:h`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_handle(node: &super::ShapeHandle, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_HANDLE_SHAPE, &node.unknown);
@@ -1068,7 +1068,7 @@ pub fn shape_handle(node: &super::ShapeHandle, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ShapePath` as its element, `v:path`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_path(node: &super::ShapePath, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_PATH_SHAPE, &node.unknown);
@@ -1091,7 +1091,7 @@ pub fn shape_path(node: &super::ShapePath, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ShapeTemplate` as its element, `v:shapetype`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_template(node: &super::ShapeTemplate, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_TEMPLATE_SHAPE, &node.unknown);
@@ -1157,7 +1157,7 @@ pub fn shape_template(node: &super::ShapeTemplate, scope: &mut Scope) -> Element
 }
 
 /// Write a `SingleFormula` as its element, `v:f`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn single_formula(node: &super::SingleFormula, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SINGLE_FORMULA_SHAPE, &node.unknown);
@@ -1166,7 +1166,7 @@ pub fn single_formula(node: &super::SingleFormula, scope: &mut Scope) -> Element
 }
 
 /// Write a `TextBox` as its element, `v:textbox`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_box(node: &super::TextBox, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TEXT_BOX_SHAPE, &node.unknown);
@@ -1188,7 +1188,7 @@ pub fn text_box_content(
 }
 
 /// Write a `TextLayoutPath` as its element, `v:textpath`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_layout_path(node: &super::TextLayoutPath, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TEXT_LAYOUT_PATH_SHAPE, &node.unknown);

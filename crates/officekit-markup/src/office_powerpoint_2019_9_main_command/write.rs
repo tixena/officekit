@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `CmMK` as its element, `pc2:cmMK`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cm_mk(node: &super::CmMK, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::CM_MK_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
@@ -228,7 +228,7 @@ pub fn cm_mk(node: &super::CmMK, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CmMkLst` as its element, `pc2:cmMkLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cm_mk_lst(node: &super::CmMkLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CM_MK_LST_SHAPE, &node.unknown);
@@ -238,7 +238,7 @@ pub fn cm_mk_lst(node: &super::CmMkLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CmRplyMk` as its element, `pc2:cmRplyMk`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cm_rply_mk(node: &super::CmRplyMk, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CM_RPLY_MK_SHAPE, &node.unknown);
@@ -247,7 +247,7 @@ pub fn cm_rply_mk(node: &super::CmRplyMk, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CmRplyMkLst` as its element, `pc2:cmRplyMkLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cm_rply_mk_lst(node: &super::CmRplyMkLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CM_RPLY_MK_LST_SHAPE, &node.unknown);

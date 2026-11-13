@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `PivotTableDefinition16` as its element, `xpdl:pivotTableDefinition16`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pivot_table_definition16(
     node: &super::PivotTableDefinition16,
     scope: &mut Scope,

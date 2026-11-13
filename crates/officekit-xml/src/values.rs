@@ -67,7 +67,7 @@ pub enum MeasureUnit {
 impl DateTime {
     /// A date and time from its `(year, month, day)`, its
     /// `(hour, minute, second, nanosecond)`, and its zone.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn new(
         (year, month, day): (i32, u8, u8),
         (hour, minute, second, nanosecond): (u8, u8, u8, u32),
@@ -88,7 +88,7 @@ impl DateTime {
 
 impl Measure {
     /// A measure of `value` in `unit`.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn new(unit: MeasureUnit, value: f64) -> Self {
         Self { unit, value }
     }
@@ -96,7 +96,7 @@ impl Measure {
 
 impl ValueError {
     /// The error for `text` that is no value of `simple_type`.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn new(simple_type: &'static str, text: String) -> Self {
         Self { simple_type, text }
     }

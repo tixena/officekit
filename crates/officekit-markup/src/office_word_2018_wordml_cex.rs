@@ -422,7 +422,7 @@ pub trait Visitor: crate::Visitor {
 impl<X: NodeExtra> CommentExtensibleWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> CommentExtensibleWith<Y>
     where
         Y: NodeExtra,
@@ -441,7 +441,7 @@ impl<X: NodeExtra> CommentExtensibleWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             date_utc: self.date_utc.clone(),
@@ -468,7 +468,7 @@ impl officekit_markup_base::Write for CommentExtensible {
 impl<X: NodeExtra> CommentsExtensibleWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> CommentsExtensibleWith<Y>
     where
         Y: NodeExtra,
@@ -488,7 +488,7 @@ impl<X: NodeExtra> CommentsExtensibleWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -510,7 +510,7 @@ impl officekit_markup_base::Write for CommentsExtensible {
 impl<X: NodeExtra> ExtLstWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ExtLstWith<Y>
     where
         Y: NodeExtra,
@@ -526,7 +526,7 @@ impl<X: NodeExtra> ExtLstWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }

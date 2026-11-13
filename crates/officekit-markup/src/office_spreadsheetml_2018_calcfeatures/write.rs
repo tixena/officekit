@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `CalcFeatures` as its element, `xcalcf:calcFeatures`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn calc_features(node: &super::CalcFeatures, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CALC_FEATURES_SHAPE, &node.unknown);
@@ -229,7 +229,7 @@ pub fn calc_features(node: &super::CalcFeatures, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Feature` as its element, `xcalcf:feature`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn feature(node: &super::Feature, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FEATURE_SHAPE, &node.unknown);

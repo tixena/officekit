@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `Ext` as its element, `clbl:ext`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext(node: &super::Ext, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::EXT_SHAPE, &node.unknown);
     writer.attribute(0, &node.uri);
@@ -229,7 +229,7 @@ pub fn ext(node: &super::Ext, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ExtLst` as its element, `clbl:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -238,7 +238,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Label` as its element, `clbl:label`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn label(node: &super::Label, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::LABEL_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
@@ -254,7 +254,7 @@ pub fn label(node: &super::Label, scope: &mut Scope) -> Element {
 }
 
 /// Write a `LabelList` as its element, `clbl:labelList`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn label_list(node: &super::LabelList, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::LABEL_LIST_SHAPE, &node.unknown);

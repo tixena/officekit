@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `c16ac:multiLvlStrLit` into a `MultiLvlStrLit`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn multi_lvl_str_lit(element: &Element) -> super::MultiLvlStrLit {
     let mut node = super::MultiLvlStrLit::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MULTI_LVL_STR_LIT_SHAPE);

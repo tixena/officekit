@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `pRoam:key` into a `Key`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn key(element: &Element) -> super::Key {
     let mut node = super::Key::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::KEY_SHAPE);
@@ -233,7 +233,7 @@ pub fn key(element: &Element) -> super::Key {
 }
 
 /// Read `pRoam:props` into a `Props`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn props(element: &Element) -> super::Props {
     let mut node = super::Props::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PROPS_SHAPE);
@@ -249,7 +249,7 @@ pub fn props(element: &Element) -> super::Props {
 }
 
 /// Read `pRoam:value` into a `Value`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn value(element: &Element) -> super::Value {
     let mut node = super::Value::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::VALUE_SHAPE);

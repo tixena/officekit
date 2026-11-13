@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `w16cex:commentExtensible` into a `CommentExtensible`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_extensible(element: &Element) -> super::CommentExtensible {
     let mut node = super::CommentExtensible::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENT_EXTENSIBLE_SHAPE);
@@ -237,7 +237,7 @@ pub fn comment_extensible(element: &Element) -> super::CommentExtensible {
 }
 
 /// Read `w16cex:commentsExtensible` into a `CommentsExtensible`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comments_extensible(element: &Element) -> super::CommentsExtensible {
     let mut node = super::CommentsExtensible::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENTS_EXTENSIBLE_SHAPE);
@@ -253,7 +253,7 @@ pub fn comments_extensible(element: &Element) -> super::CommentsExtensible {
 }
 
 /// Read `w16cex:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);

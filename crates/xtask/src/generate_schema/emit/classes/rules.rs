@@ -1059,7 +1059,7 @@ fn children(set: &SchemaSet, content: &Content) -> Vec<Name> {
 }
 
 /// The name of the static holding a code table: the table's key, upper case.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn codes_name(codes: &Codes) -> String {
     match codes {
         Codes::Byte(_) => "CHARSET".to_owned(),
@@ -1160,7 +1160,7 @@ fn spellings_name(spellings: &[Spelling]) -> Option<String> {
 }
 
 /// `S_ST_ON_OFF`: a type's prefix and local name in upper snake case.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn static_name(prefix: &str, local: &str) -> String {
     let mut out = String::new();
     let mut previous: Option<char> = None;

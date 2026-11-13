@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `PivotCacheDynamicArray` as its element, `xlpda:pivotCacheDynamicArray`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pivot_cache_dynamic_array(
     node: &super::PivotCacheDynamicArray,
     scope: &mut Scope,

@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xlmsforms:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -233,7 +233,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `xlmsforms:msForm` into a `MsForm`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ms_form(element: &Element) -> super::MsForm {
     let mut node = super::MsForm::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MS_FORM_SHAPE);
@@ -253,7 +253,7 @@ pub fn ms_form(element: &Element) -> super::MsForm {
 }
 
 /// Read `xlmsforms:question` into a `Question`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn question(element: &Element) -> super::Question {
     let mut node = super::Question::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::QUESTION_SHAPE);
@@ -269,7 +269,7 @@ pub fn question(element: &Element) -> super::Question {
 }
 
 /// Read `xlmsforms:syncedQuestionId` into a `SyncedQuestionId`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn synced_question_id(element: &Element) -> super::SyncedQuestionId {
     let mut node = super::SyncedQuestionId::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SYNCED_QUESTION_ID_SHAPE);

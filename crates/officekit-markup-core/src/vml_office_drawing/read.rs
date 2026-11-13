@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `o:callout` into a `Callout`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn callout(element: &Element) -> super::Callout {
     let mut node = super::Callout::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CALLOUT_SHAPE);
@@ -247,7 +247,7 @@ pub fn callout(element: &Element) -> super::Callout {
 }
 
 /// Read `o:complex` into a `Complex`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn complex(element: &Element) -> super::Complex {
     let mut node = super::Complex::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMPLEX_SHAPE);
@@ -261,7 +261,7 @@ pub fn complex(element: &Element) -> super::Complex {
 }
 
 /// Read `o:rel` into a `DiagramRelationship`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn diagram_relationship(element: &Element) -> super::DiagramRelationship {
     let mut node = super::DiagramRelationship::default();
     let mut reader =
@@ -280,7 +280,7 @@ pub fn diagram_relationship(element: &Element) -> super::DiagramRelationship {
 }
 
 /// Read `o:relationtable` into a `DiagramRelationshipTable`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn diagram_relationship_table(element: &Element) -> super::DiagramRelationshipTable {
     let mut node = super::DiagramRelationshipTable::default();
     let mut reader =
@@ -297,7 +297,7 @@ pub fn diagram_relationship_table(element: &Element) -> super::DiagramRelationsh
 }
 
 /// Read `o:signatureline` into a `DigitalSignatureLine`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn digital_signature_line(element: &Element) -> super::DigitalSignatureLine {
     let mut node = super::DigitalSignatureLine::default();
     let mut reader =
@@ -325,7 +325,7 @@ pub fn digital_signature_line(element: &Element) -> super::DigitalSignatureLine 
 }
 
 /// Read `o:LinkType` into a `EmbeddedObjectAlternateImageRequest`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_object_alternate_image_request(
     element: &Element,
 ) -> super::EmbeddedObjectAlternateImageRequest {
@@ -344,7 +344,7 @@ pub fn embedded_object_alternate_image_request(
 }
 
 /// Read `o:LockedField` into a `EmbeddedObjectCannotBeRefreshed`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_object_cannot_be_refreshed(
     element: &Element,
 ) -> super::EmbeddedObjectCannotBeRefreshed {
@@ -363,7 +363,7 @@ pub fn embedded_object_cannot_be_refreshed(
 }
 
 /// Read `o:OLEObject` into a `EmbeddedOLEObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_ole_object(element: &Element) -> super::EmbeddedOLEObject {
     let mut node = super::EmbeddedOLEObject::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EMBEDDED_OLE_OBJECT_SHAPE);
@@ -387,7 +387,7 @@ pub fn embedded_ole_object(element: &Element) -> super::EmbeddedOLEObject {
 }
 
 /// Read `o:extrusion` into a `Extrusion`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn extrusion(element: &Element) -> super::Extrusion {
     let mut node = super::Extrusion::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXTRUSION_SHAPE);
@@ -434,7 +434,7 @@ pub fn extrusion(element: &Element) -> super::Extrusion {
 }
 
 /// Read `o:ink` into a `Ink`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ink(element: &Element) -> super::Ink {
     let mut node = super::Ink::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::INK_SHAPE);
@@ -451,7 +451,7 @@ pub fn ink(element: &Element) -> super::Ink {
 }
 
 /// Read `o:colormru` into a `MostRecentlyUsedColors`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn most_recently_used_colors(element: &Element) -> super::MostRecentlyUsedColors {
     let mut node = super::MostRecentlyUsedColors::default();
     let mut reader =
@@ -468,7 +468,7 @@ pub fn most_recently_used_colors(element: &Element) -> super::MostRecentlyUsedCo
 }
 
 /// Read `o:shapedefaults` into a `NewShapeDefaults`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn new_shape_defaults(element: &Element) -> super::NewShapeDefaults {
     let mut node = super::NewShapeDefaults::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NEW_SHAPE_DEFAULTS_SHAPE);
@@ -491,13 +491,13 @@ pub fn new_shape_defaults(element: &Element) -> super::NewShapeDefaults {
 }
 
 /// Read one item of `NewShapeDefaultsContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn new_shape_defaults_content(element: &Element) -> super::NewShapeDefaultsContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `o:entry` into a `RegroupEntry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn regroup_entry(element: &Element) -> super::RegroupEntry {
     let mut node = super::RegroupEntry::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::REGROUP_ENTRY_SHAPE);
@@ -513,7 +513,7 @@ pub fn regroup_entry(element: &Element) -> super::RegroupEntry {
 }
 
 /// Read `o:r` into a `Rule`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rule(element: &Element) -> super::Rule {
     let mut node = super::Rule::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RULE_SHAPE);
@@ -532,7 +532,7 @@ pub fn rule(element: &Element) -> super::Rule {
 }
 
 /// Read `o:rules` into a `RuleSet`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rule_set(element: &Element) -> super::RuleSet {
     let mut node = super::RuleSet::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RULE_SET_SHAPE);
@@ -548,7 +548,7 @@ pub fn rule_set(element: &Element) -> super::RuleSet {
 }
 
 /// Read `o:clippath` into a `ShapeClippingPath`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_clipping_path(element: &Element) -> super::ShapeClippingPath {
     let mut node = super::ShapeClippingPath::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_CLIPPING_PATH_SHAPE);
@@ -562,7 +562,7 @@ pub fn shape_clipping_path(element: &Element) -> super::ShapeClippingPath {
 }
 
 /// Read `o:fill` into a `ShapeFillExtendedProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_fill_extended_properties(element: &Element) -> super::ShapeFillExtendedProperties {
     let mut node = super::ShapeFillExtendedProperties::default();
     let mut reader =
@@ -579,7 +579,7 @@ pub fn shape_fill_extended_properties(element: &Element) -> super::ShapeFillExte
 }
 
 /// Read `o:regrouptable` into a `ShapeGroupingHistory`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_grouping_history(element: &Element) -> super::ShapeGroupingHistory {
     let mut node = super::ShapeGroupingHistory::default();
     let mut reader =
@@ -596,7 +596,7 @@ pub fn shape_grouping_history(element: &Element) -> super::ShapeGroupingHistory 
 }
 
 /// Read `o:idmap` into a `ShapeIDMap`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_id_map(element: &Element) -> super::ShapeIDMap {
     let mut node = super::ShapeIDMap::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_ID_MAP_SHAPE);
@@ -612,7 +612,7 @@ pub fn shape_id_map(element: &Element) -> super::ShapeIDMap {
 }
 
 /// Read `o:shapelayout` into a `ShapeLayoutProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_layout_properties(element: &Element) -> super::ShapeLayoutProperties {
     let mut node = super::ShapeLayoutProperties::default();
     let mut reader =
@@ -630,13 +630,13 @@ pub fn shape_layout_properties(element: &Element) -> super::ShapeLayoutPropertie
 
 /// Read one item of `ShapeLayoutPropertiesContent` from its element: the arm of its tag, or
 /// `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn shape_layout_properties_content(element: &Element) -> super::ShapeLayoutPropertiesContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `o:lock` into a `ShapeProtections`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_protections(element: &Element) -> super::ShapeProtections {
     let mut node = super::ShapeProtections::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_PROTECTIONS_SHAPE);
@@ -662,7 +662,7 @@ pub fn shape_protections(element: &Element) -> super::ShapeProtections {
 }
 
 /// Read `o:proxy` into a `ShapeReference`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_reference(element: &Element) -> super::ShapeReference {
     let mut node = super::ShapeReference::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_REFERENCE_SHAPE);
@@ -680,7 +680,7 @@ pub fn shape_reference(element: &Element) -> super::ShapeReference {
 }
 
 /// Read `o:skew` into a `SkewTransform`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn skew_transform(element: &Element) -> super::SkewTransform {
     let mut node = super::SkewTransform::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SKEW_TRANSFORM_SHAPE);
@@ -700,7 +700,7 @@ pub fn skew_transform(element: &Element) -> super::SkewTransform {
 }
 
 /// Read `o:equationxml` into a `StorageForAlternateMathContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn storage_for_alternate_math_content(
     element: &Element,
 ) -> super::StorageForAlternateMathContent {
@@ -721,7 +721,7 @@ pub fn storage_for_alternate_math_content(
 }
 
 /// Read `o:bottom` into a `TextBoxBottomStroke`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_box_bottom_stroke(element: &Element) -> super::TextBoxBottomStroke {
     let mut node = super::TextBoxBottomStroke::default();
     let mut reader =
@@ -763,7 +763,7 @@ pub fn text_box_bottom_stroke(element: &Element) -> super::TextBoxBottomStroke {
 }
 
 /// Read `o:column` into a `TextBoxInteriorStroke`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_box_interior_stroke(element: &Element) -> super::TextBoxInteriorStroke {
     let mut node = super::TextBoxInteriorStroke::default();
     let mut reader =
@@ -805,7 +805,7 @@ pub fn text_box_interior_stroke(element: &Element) -> super::TextBoxInteriorStro
 }
 
 /// Read `o:left` into a `TextBoxLeftStroke`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_box_left_stroke(element: &Element) -> super::TextBoxLeftStroke {
     let mut node = super::TextBoxLeftStroke::default();
     let mut reader =
@@ -847,7 +847,7 @@ pub fn text_box_left_stroke(element: &Element) -> super::TextBoxLeftStroke {
 }
 
 /// Read `o:right` into a `TextBoxRightStroke`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_box_right_stroke(element: &Element) -> super::TextBoxRightStroke {
     let mut node = super::TextBoxRightStroke::default();
     let mut reader =
@@ -889,7 +889,7 @@ pub fn text_box_right_stroke(element: &Element) -> super::TextBoxRightStroke {
 }
 
 /// Read `o:top` into a `TextBoxTopStroke`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_box_top_stroke(element: &Element) -> super::TextBoxTopStroke {
     let mut node = super::TextBoxTopStroke::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TEXT_BOX_TOP_STROKE_SHAPE);
@@ -930,7 +930,7 @@ pub fn text_box_top_stroke(element: &Element) -> super::TextBoxTopStroke {
 }
 
 /// Read `o:colormenu` into a `UIDefaultColors`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ui_default_colors(element: &Element) -> super::UIDefaultColors {
     let mut node = super::UIDefaultColors::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::UI_DEFAULT_COLORS_SHAPE);
@@ -949,7 +949,7 @@ pub fn ui_default_colors(element: &Element) -> super::UIDefaultColors {
 }
 
 /// Read `o:diagram` into a `VMLDiagram`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn vml_diagram(element: &Element) -> super::VMLDiagram {
     let mut node = super::VMLDiagram::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::VML_DIAGRAM_SHAPE);
@@ -974,7 +974,7 @@ pub fn vml_diagram(element: &Element) -> super::VMLDiagram {
 }
 
 /// Read `o:FieldCodes` into a `WordprocessingMLFieldSwitches`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wordprocessing_ml_field_switches(element: &Element) -> super::WordprocessingMLFieldSwitches {
     let mut node = super::WordprocessingMLFieldSwitches::default();
     let mut reader =

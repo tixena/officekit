@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `lc:lockedCanvas` into a `LockedCanvasContainer`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn locked_canvas_container(element: &Element) -> super::LockedCanvasContainer {
     let mut node = super::LockedCanvasContainer::default();
     let mut reader =

@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `wp:posOffset` into a `AbsolutePositionOffset`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn absolute_position_offset(element: &Element) -> super::AbsolutePositionOffset {
     let mut node = super::AbsolutePositionOffset::default();
     let mut reader =
@@ -234,13 +234,13 @@ pub fn absolute_position_offset(element: &Element) -> super::AbsolutePositionOff
 }
 
 /// Read one item of `AnchorContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn anchor(element: &Element) -> super::AnchorContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `wp:anchor` into a `AnchorForFloatingDrawingMLObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn anchor_for_floating_drawing_ml_object(
     element: &Element,
 ) -> super::AnchorForFloatingDrawingMLObject {
@@ -283,7 +283,7 @@ pub fn anchor_for_floating_drawing_ml_object(
 }
 
 /// Read `wp:bg` into a `BackgroundFormatting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn background_formatting(element: &Element) -> super::BackgroundFormatting {
     let mut node = super::BackgroundFormatting::default();
     let mut reader =
@@ -300,7 +300,7 @@ pub fn background_formatting(element: &Element) -> super::BackgroundFormatting {
 }
 
 /// Read `wp:bodyPr` into a `BodyProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn body_properties(element: &Element) -> super::BodyProperties {
     let mut node = super::BodyProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BODY_PROPERTIES_SHAPE);
@@ -338,7 +338,7 @@ pub fn body_properties(element: &Element) -> super::BodyProperties {
 }
 
 /// Read `wp:cNvGraphicFramePr` into a `CommonDrawingMLNonVisualProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn common_drawing_ml_non_visual_properties(
     element: &Element,
 ) -> super::CommonDrawingMLNonVisualProperties {
@@ -359,7 +359,7 @@ pub fn common_drawing_ml_non_visual_properties(
 }
 
 /// Read `wp:contentPart` into a `ContentPart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn content_part(element: &Element) -> super::ContentPart {
     let mut node = super::ContentPart::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONTENT_PART_SHAPE);
@@ -378,13 +378,13 @@ pub fn content_part(element: &Element) -> super::ContentPart {
 }
 
 /// Read one item of `DrawingCanvasContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn drawing_canvas(element: &Element) -> super::DrawingCanvasContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `wp:docPr` into a `DrawingObjectNonVisualProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drawing_object_non_visual_properties(
     element: &Element,
 ) -> super::DrawingObjectNonVisualProperties {
@@ -411,7 +411,7 @@ pub fn drawing_object_non_visual_properties(
 }
 
 /// Read `wp:extent` into a `DrawingObjectSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drawing_object_size(element: &Element) -> super::DrawingObjectSize {
     let mut node = super::DrawingObjectSize::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DRAWING_OBJECT_SIZE_SHAPE);
@@ -427,7 +427,7 @@ pub fn drawing_object_size(element: &Element) -> super::DrawingObjectSize {
 }
 
 /// Read `wp:extLst` into a `ExtensionList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn extension_list(element: &Element) -> super::ExtensionList {
     let mut node = super::ExtensionList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXTENSION_LIST_SHAPE);
@@ -441,7 +441,7 @@ pub fn extension_list(element: &Element) -> super::ExtensionList {
 }
 
 /// Read `wp:graphicFrame` into a `GraphicalObjectContainer`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn graphical_object_container(element: &Element) -> super::GraphicalObjectContainer {
     let mut node = super::GraphicalObjectContainer::default();
     let mut reader =
@@ -461,7 +461,7 @@ pub fn graphical_object_container(element: &Element) -> super::GraphicalObjectCo
 }
 
 /// Read `wp:grpSp` into a `GroupShape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_shape(element: &Element) -> super::GroupShape {
     let mut node = super::GroupShape::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GROUP_SHAPE_SHAPE);
@@ -480,13 +480,13 @@ pub fn group_shape(element: &Element) -> super::GroupShape {
 }
 
 /// Read one item of `GroupShapeContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn group_shape_content(element: &Element) -> super::GroupShapeContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `wp:grpSpPr` into a `GroupShapeProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_shape_properties(element: &Element) -> super::GroupShapeProperties {
     let mut node = super::GroupShapeProperties::default();
     let mut reader =
@@ -507,7 +507,7 @@ pub fn group_shape_properties(element: &Element) -> super::GroupShapeProperties 
 }
 
 /// Read `wp:positionH` into a `HorizontalPositioning`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn horizontal_positioning(element: &Element) -> super::HorizontalPositioning {
     let mut node = super::HorizontalPositioning::default();
     let mut reader =
@@ -525,13 +525,13 @@ pub fn horizontal_positioning(element: &Element) -> super::HorizontalPositioning
 
 /// Read one item of `HorizontalPositioningContent` from its element: the arm of its tag, or
 /// `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn horizontal_positioning_content(element: &Element) -> super::HorizontalPositioningContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `wp:inline` into a `InlineDrawingMLObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn inline_drawing_ml_object(element: &Element) -> super::InlineDrawingMLObject {
     let mut node = super::InlineDrawingMLObject::default();
     let mut reader =
@@ -557,7 +557,7 @@ pub fn inline_drawing_ml_object(element: &Element) -> super::InlineDrawingMLObje
 }
 
 /// Read `wp:wrapNone` into a `NoTextWrapping`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn no_text_wrapping(element: &Element) -> super::NoTextWrapping {
     let reader = officekit_markup_base::Reader::new(element, &super::NO_TEXT_WRAPPING_SHAPE);
     super::NoTextWrapping {
@@ -567,7 +567,7 @@ pub fn no_text_wrapping(element: &Element) -> super::NoTextWrapping {
 }
 
 /// Read `wp:cNvCnPr` into a `NonVisualConnectorShapeDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_connector_shape_drawing_properties(
     element: &Element,
 ) -> super::NonVisualConnectorShapeDrawingProperties {
@@ -590,7 +590,7 @@ pub fn non_visual_connector_shape_drawing_properties(
 }
 
 /// Read `wp:cNvContentPartPr` into a `NonVisualContentPartDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_content_part_drawing_properties(
     element: &Element,
 ) -> super::NonVisualContentPartDrawingProperties {
@@ -612,7 +612,7 @@ pub fn non_visual_content_part_drawing_properties(
 }
 
 /// Read `wp:cNvPr` into a `NonVisualDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawingProperties {
     let mut node = super::NonVisualDrawingProperties::default();
     let mut reader =
@@ -635,7 +635,7 @@ pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawi
 }
 
 /// Read `wp:cNvSpPr` into a `NonVisualDrawingPropertiesForAShape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_drawing_properties_for_a_shape(
     element: &Element,
 ) -> super::NonVisualDrawingPropertiesForAShape {
@@ -657,7 +657,7 @@ pub fn non_visual_drawing_properties_for_a_shape(
 }
 
 /// Read `wp:cNvFrPr` into a `NonVisualGraphicFrameDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_graphic_frame_drawing_properties(
     element: &Element,
 ) -> super::NonVisualGraphicFrameDrawingProperties {
@@ -678,7 +678,7 @@ pub fn non_visual_graphic_frame_drawing_properties(
 }
 
 /// Read `wp:cNvGrpSpPr` into a `NonVisualGroupShapeDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_group_shape_drawing_properties(
     element: &Element,
 ) -> super::NonVisualGroupShapeDrawingProperties {
@@ -699,7 +699,7 @@ pub fn non_visual_group_shape_drawing_properties(
 }
 
 /// Read `wp:nvContentPartPr` into a `NvContentPartPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nv_content_part_pr(element: &Element) -> super::NvContentPartPr {
     let mut node = super::NvContentPartPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NV_CONTENT_PART_PR_SHAPE);
@@ -715,7 +715,7 @@ pub fn nv_content_part_pr(element: &Element) -> super::NvContentPartPr {
 }
 
 /// Read `wp:effectExtent` into a `ObjectExtentsIncludingEffects`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn object_extents_including_effects(element: &Element) -> super::ObjectExtentsIncludingEffects {
     let mut node = super::ObjectExtentsIncludingEffects::default();
     let mut reader =
@@ -734,7 +734,7 @@ pub fn object_extents_including_effects(element: &Element) -> super::ObjectExten
 }
 
 /// Read `wp:align` into a `RelativeHorizontalAlignment`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn relative_horizontal_alignment(element: &Element) -> super::RelativeHorizontalAlignment {
     let mut node = super::RelativeHorizontalAlignment::default();
     let mut reader =
@@ -749,7 +749,7 @@ pub fn relative_horizontal_alignment(element: &Element) -> super::RelativeHorizo
 }
 
 /// Read `wp:align` into a `RelativeVerticalAlignment`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn relative_vertical_alignment(element: &Element) -> super::RelativeVerticalAlignment {
     let mut node = super::RelativeVerticalAlignment::default();
     let mut reader =
@@ -764,7 +764,7 @@ pub fn relative_vertical_alignment(element: &Element) -> super::RelativeVertical
 }
 
 /// Read `wp:txbxContent` into a `RichTextBoxContentContainer`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_text_box_content_container(element: &Element) -> super::RichTextBoxContentContainer {
     let mut node = super::RichTextBoxContentContainer::default();
     let mut reader =
@@ -780,13 +780,13 @@ pub fn rich_text_box_content_container(element: &Element) -> super::RichTextBoxC
 
 /// Read one item of `ShapeNonVisualPropertiesContent` from its element: the arm of its tag, or
 /// `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn shape_non_visual_properties(element: &Element) -> super::ShapeNonVisualPropertiesContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `wp:spPr` into a `ShapeProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_properties(element: &Element) -> super::ShapeProperties {
     let mut node = super::ShapeProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_PROPERTIES_SHAPE);
@@ -809,7 +809,7 @@ pub fn shape_properties(element: &Element) -> super::ShapeProperties {
 }
 
 /// Read `wp:style` into a `ShapeStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_style(element: &Element) -> super::ShapeStyle {
     let mut node = super::ShapeStyle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_STYLE_SHAPE);
@@ -827,13 +827,13 @@ pub fn shape_style(element: &Element) -> super::ShapeStyle {
 }
 
 /// Read one item of `ShapeTextContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn shape_text(element: &Element) -> super::ShapeTextContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `wp:simplePos` into a `SimplePositioningCoordinates`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn simple_positioning_coordinates(element: &Element) -> super::SimplePositioningCoordinates {
     let mut node = super::SimplePositioningCoordinates::default();
     let mut reader =
@@ -850,7 +850,7 @@ pub fn simple_positioning_coordinates(element: &Element) -> super::SimplePositio
 }
 
 /// Read `wp:wrapSquare` into a `SquareWrapping`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn square_wrapping(element: &Element) -> super::SquareWrapping {
     let mut node = super::SquareWrapping::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SQUARE_WRAPPING_SHAPE);
@@ -870,7 +870,7 @@ pub fn square_wrapping(element: &Element) -> super::SquareWrapping {
 }
 
 /// Read `wp:linkedTxbx` into a `TextualContentsOfShapeLinkedTxbx`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn textual_contents_of_shape_linked_txbx(
     element: &Element,
 ) -> super::TextualContentsOfShapeLinkedTxbx {
@@ -892,7 +892,7 @@ pub fn textual_contents_of_shape_linked_txbx(
 }
 
 /// Read `wp:txbx` into a `TextualContentsOfShapeTxbx`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn textual_contents_of_shape_txbx(element: &Element) -> super::TextualContentsOfShapeTxbx {
     let mut node = super::TextualContentsOfShapeTxbx::default();
     let mut reader =
@@ -910,7 +910,7 @@ pub fn textual_contents_of_shape_txbx(element: &Element) -> super::TextualConten
 }
 
 /// Read `wp:wrapThrough` into a `ThroughWrapping`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn through_wrapping(element: &Element) -> super::ThroughWrapping {
     let mut node = super::ThroughWrapping::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::THROUGH_WRAPPING_SHAPE);
@@ -928,7 +928,7 @@ pub fn through_wrapping(element: &Element) -> super::ThroughWrapping {
 }
 
 /// Read `wp:wrapTight` into a `TightWrapping`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tight_wrapping(element: &Element) -> super::TightWrapping {
     let mut node = super::TightWrapping::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TIGHT_WRAPPING_SHAPE);
@@ -946,7 +946,7 @@ pub fn tight_wrapping(element: &Element) -> super::TightWrapping {
 }
 
 /// Read `wp:wrapTopAndBottom` into a `TopAndBottomWrapping`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn top_and_bottom_wrapping(element: &Element) -> super::TopAndBottomWrapping {
     let mut node = super::TopAndBottomWrapping::default();
     let mut reader =
@@ -964,7 +964,7 @@ pub fn top_and_bottom_wrapping(element: &Element) -> super::TopAndBottomWrapping
 }
 
 /// Read `wp:positionV` into a `VerticalPositioning`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn vertical_positioning(element: &Element) -> super::VerticalPositioning {
     let mut node = super::VerticalPositioning::default();
     let mut reader =
@@ -981,13 +981,13 @@ pub fn vertical_positioning(element: &Element) -> super::VerticalPositioning {
 }
 
 /// Read one item of `VerticalPositioningContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn vertical_positioning_content(element: &Element) -> super::VerticalPositioningContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `wp:whole` into a `WholeE2OFormatting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn whole_e2o_formatting(element: &Element) -> super::WholeE2OFormatting {
     let mut node = super::WholeE2OFormatting::default();
     let mut reader =
@@ -1004,7 +1004,7 @@ pub fn whole_e2o_formatting(element: &Element) -> super::WholeE2OFormatting {
 }
 
 /// Read `wp:wpc` into a `WordprocessingMLDrawingCanvas`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wordprocessing_ml_drawing_canvas(element: &Element) -> super::WordprocessingMLDrawingCanvas {
     let mut node = super::WordprocessingMLDrawingCanvas::default();
     let mut reader =
@@ -1023,7 +1023,7 @@ pub fn wordprocessing_ml_drawing_canvas(element: &Element) -> super::Wordprocess
 }
 
 /// Read `wp:wsp` into a `WordprocessingMLShape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wordprocessing_ml_shape(element: &Element) -> super::WordprocessingMLShape {
     let mut node = super::WordprocessingMLShape::default();
     let mut reader =
@@ -1046,7 +1046,7 @@ pub fn wordprocessing_ml_shape(element: &Element) -> super::WordprocessingMLShap
 }
 
 /// Read `wp:wgp` into a `WordprocessingMLShapeGroup`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wordprocessing_ml_shape_group(element: &Element) -> super::WordprocessingMLShapeGroup {
     let mut node = super::WordprocessingMLShapeGroup::default();
     let mut reader =
@@ -1066,7 +1066,7 @@ pub fn wordprocessing_ml_shape_group(element: &Element) -> super::Wordprocessing
 }
 
 /// Read `wp:wrapPolygon` into a `WrappingPolygon`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wrapping_polygon(element: &Element) -> super::WrappingPolygon {
     let mut node = super::WrappingPolygon::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WRAPPING_POLYGON_SHAPE);
@@ -1083,7 +1083,7 @@ pub fn wrapping_polygon(element: &Element) -> super::WrappingPolygon {
 }
 
 /// Read `wp:lineTo` into a `WrappingPolygonLineEndPosition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wrapping_polygon_line_end_position(
     element: &Element,
 ) -> super::WrappingPolygonLineEndPosition {
@@ -1104,7 +1104,7 @@ pub fn wrapping_polygon_line_end_position(
 }
 
 /// Read `wp:start` into a `WrappingPolygonStart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wrapping_polygon_start(element: &Element) -> super::WrappingPolygonStart {
     let mut node = super::WrappingPolygonStart::default();
     let mut reader =
@@ -1121,7 +1121,7 @@ pub fn wrapping_polygon_start(element: &Element) -> super::WrappingPolygonStart 
 }
 
 /// Read `wp:xfrm` into a `Xfrm`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn xfrm(element: &Element) -> super::Xfrm {
     let mut node = super::Xfrm::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::XFRM_SHAPE);

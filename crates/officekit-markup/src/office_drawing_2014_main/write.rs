@@ -220,13 +220,13 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `ColId` as its element, `a16:colId`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn col_id(node: &super::ColId, scope: &mut Scope) -> Element {
     officekit_markup_base::Writer::new(scope, &super::COL_ID_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `CreationId` as its element, `a16:creationId`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn creation_id(node: &super::CreationId, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CREATION_ID_SHAPE, &node.unknown);
@@ -235,7 +235,7 @@ pub fn creation_id(node: &super::CreationId, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CxnDERefs` as its element, `a16:cxnDERefs`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cxn_de_refs(node: &super::CxnDERefs, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CXN_DE_REFS_SHAPE, &node.unknown);
@@ -245,7 +245,7 @@ pub fn cxn_de_refs(node: &super::CxnDERefs, scope: &mut Scope) -> Element {
 }
 
 /// Write a `PredDERef` as its element, `a16:predDERef`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pred_de_ref(node: &super::PredDERef, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PRED_DE_REF_SHAPE, &node.unknown);
@@ -254,7 +254,7 @@ pub fn pred_de_ref(node: &super::PredDERef, scope: &mut Scope) -> Element {
 }
 
 /// Write a `RowId` as its element, `a16:rowId`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn row_id(node: &super::RowId, scope: &mut Scope) -> Element {
     officekit_markup_base::Writer::new(scope, &super::ROW_ID_SHAPE, &node.unknown).finish()
 }

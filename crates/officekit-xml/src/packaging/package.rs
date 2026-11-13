@@ -271,7 +271,7 @@ impl Package {
     }
 
     /// Whether the archive holds the part called `name`, compared case-folded.
-    #[must_use]
+    #[must_use = "this only answers the question"]
     pub fn contains(&self, name: &PartName) -> bool {
         matches!(self.locate(name.as_str()), Ok(Some(_)))
     }
@@ -279,7 +279,7 @@ impl Package {
     /// The content type of a part the package holds: its `Override`, else its extension's
     /// `Default`. `None` for a part the package does not hold, whatever the extension's
     /// `Default` says.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn content_type(&self, name: &PartName) -> Option<&str> {
         if self.contains(name) {
             self.content_types.of(name)
@@ -290,20 +290,20 @@ impl Package {
 
     /// The `Default` entries of `[Content_Types].xml`, extension and content
     /// type, in the order the package has them.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn content_type_defaults(&self) -> &[(String, String)] {
         self.content_types.defaults()
     }
 
     /// The `Override` entries of `[Content_Types].xml`, part and content type,
     /// in the order the package has them.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn content_type_overrides(&self) -> &[(PartName, String)] {
         self.content_types.overrides()
     }
 
     /// `[Content_Types].xml`'s entries, in the order the package has them.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn content_types(&self) -> &ContentTypes {
         &self.content_types
     }
@@ -508,7 +508,7 @@ impl Package {
     }
 
     /// A package with no parts: its `[Content_Types].xml` holds no entry.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn new() -> Self {
         let package = Self {
             content_types: ContentTypes::default(),
@@ -667,7 +667,7 @@ impl Package {
 
     /// Every relationship part's entries as written, by source (`None`: the
     /// package).
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn relationship_sets(&self) -> Vec<(Option<PartName>, Vec<Relationship>)> {
         self.relationships
             .values()
@@ -678,7 +678,7 @@ impl Package {
     /// Each relationship of a source (`None`: the package), in the order the
     /// relationship part has them, its target resolved against the source's
     /// folder, or the error that target gives.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn relationships_of(
         &self,
         source: Option<&PartName>,

@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `cs:axisTitle` into a `AxisTitle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn axis_title(element: &Element) -> super::AxisTitle {
     let mut node = super::AxisTitle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::AXIS_TITLE_SHAPE);
@@ -242,7 +242,7 @@ pub fn axis_title(element: &Element) -> super::AxisTitle {
 }
 
 /// Read `cs:bodyPr` into a `BodyPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn body_pr(element: &Element) -> super::BodyPr {
     let mut node = super::BodyPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BODY_PR_SHAPE);
@@ -280,7 +280,7 @@ pub fn body_pr(element: &Element) -> super::BodyPr {
 }
 
 /// Read `cs:categoryAxis` into a `CategoryAxisAxisProps`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn category_axis_axis_props(element: &Element) -> super::CategoryAxisAxisProps {
     let reader =
         officekit_markup_base::Reader::new(element, &super::CATEGORY_AXIS_AXIS_PROPS_SHAPE);
@@ -291,7 +291,7 @@ pub fn category_axis_axis_props(element: &Element) -> super::CategoryAxisAxisPro
 }
 
 /// Read `cs:categoryAxis` into a `CategoryAxisStyleEntry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn category_axis_style_entry(element: &Element) -> super::CategoryAxisStyleEntry {
     let mut node = super::CategoryAxisStyleEntry::default();
     let mut reader =
@@ -315,7 +315,7 @@ pub fn category_axis_style_entry(element: &Element) -> super::CategoryAxisStyleE
 }
 
 /// Read `cs:chartArea` into a `ChartArea`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn chart_area(element: &Element) -> super::ChartArea {
     let mut node = super::ChartArea::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CHART_AREA_SHAPE);
@@ -338,7 +338,7 @@ pub fn chart_area(element: &Element) -> super::ChartArea {
 }
 
 /// Read `cs:chartStyle` into a `ChartStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn chart_style(element: &Element) -> super::ChartStyle {
     let mut node = super::ChartStyle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CHART_STYLE_SHAPE);
@@ -385,7 +385,7 @@ pub fn chart_style(element: &Element) -> super::ChartStyle {
 }
 
 /// Read `cs:colorStyle` into a `ColorStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color_style(element: &Element) -> super::ColorStyle {
     let mut node = super::ColorStyle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COLOR_STYLE_SHAPE);
@@ -404,7 +404,7 @@ pub fn color_style(element: &Element) -> super::ColorStyle {
 }
 
 /// Read `cs:dataLabel` into a `DataLabel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_label(element: &Element) -> super::DataLabel {
     let mut node = super::DataLabel::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_LABEL_SHAPE);
@@ -427,7 +427,7 @@ pub fn data_label(element: &Element) -> super::DataLabel {
 }
 
 /// Read `cs:dataLabelCallout` into a `DataLabelCallout`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_label_callout(element: &Element) -> super::DataLabelCallout {
     let mut node = super::DataLabelCallout::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_LABEL_CALLOUT_SHAPE);
@@ -450,7 +450,7 @@ pub fn data_label_callout(element: &Element) -> super::DataLabelCallout {
 }
 
 /// Read `cs:dataLabels` into a `DataLabels`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_labels(element: &Element) -> super::DataLabels {
     let mut node = super::DataLabels::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_LABELS_SHAPE);
@@ -470,7 +470,7 @@ pub fn data_labels(element: &Element) -> super::DataLabels {
 }
 
 /// Read `cs:dataPoint` into a `DataPoint`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_point(element: &Element) -> super::DataPoint {
     let mut node = super::DataPoint::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_POINT_SHAPE);
@@ -493,7 +493,7 @@ pub fn data_point(element: &Element) -> super::DataPoint {
 }
 
 /// Read `cs:dataPoint3D` into a `DataPoint3D`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_point3d(element: &Element) -> super::DataPoint3D {
     let mut node = super::DataPoint3D::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_POINT3D_SHAPE);
@@ -516,7 +516,7 @@ pub fn data_point3d(element: &Element) -> super::DataPoint3D {
 }
 
 /// Read `cs:dataPointLine` into a `DataPointLine`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_point_line(element: &Element) -> super::DataPointLine {
     let mut node = super::DataPointLine::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_POINT_LINE_SHAPE);
@@ -539,7 +539,7 @@ pub fn data_point_line(element: &Element) -> super::DataPointLine {
 }
 
 /// Read `cs:dataPointMarker` into a `DataPointMarker`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_point_marker(element: &Element) -> super::DataPointMarker {
     let mut node = super::DataPointMarker::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_POINT_MARKER_SHAPE);
@@ -562,7 +562,7 @@ pub fn data_point_marker(element: &Element) -> super::DataPointMarker {
 }
 
 /// Read `cs:dataPointMarkerLayout` into a `DataPointMarkerLayout`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_point_marker_layout(element: &Element) -> super::DataPointMarkerLayout {
     let mut node = super::DataPointMarkerLayout::default();
     let mut reader =
@@ -579,7 +579,7 @@ pub fn data_point_marker_layout(element: &Element) -> super::DataPointMarkerLayo
 }
 
 /// Read `cs:dataPointWireframe` into a `DataPointWireframe`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_point_wireframe(element: &Element) -> super::DataPointWireframe {
     let mut node = super::DataPointWireframe::default();
     let mut reader =
@@ -603,7 +603,7 @@ pub fn data_point_wireframe(element: &Element) -> super::DataPointWireframe {
 }
 
 /// Read `cs:dataSeries` into a `DataSeries`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_series(element: &Element) -> super::DataSeries {
     let mut node = super::DataSeries::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_SERIES_SHAPE);
@@ -625,7 +625,7 @@ pub fn data_series(element: &Element) -> super::DataSeries {
 }
 
 /// Read `cs:dataTable` into a `DataTableDataTableProps`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_table_data_table_props(element: &Element) -> super::DataTableDataTableProps {
     let mut node = super::DataTableDataTableProps::default();
     let mut reader =
@@ -644,7 +644,7 @@ pub fn data_table_data_table_props(element: &Element) -> super::DataTableDataTab
 }
 
 /// Read `cs:dataTable` into a `DataTableStyleEntry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_table_style_entry(element: &Element) -> super::DataTableStyleEntry {
     let mut node = super::DataTableStyleEntry::default();
     let mut reader =
@@ -668,7 +668,7 @@ pub fn data_table_style_entry(element: &Element) -> super::DataTableStyleEntry {
 }
 
 /// Read `cs:defRPr` into a `DefRPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn def_r_pr(element: &Element) -> super::DefRPr {
     let mut node = super::DefRPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DEF_R_PR_SHAPE);
@@ -715,7 +715,7 @@ pub fn def_r_pr(element: &Element) -> super::DefRPr {
 }
 
 /// Read `cs:downBar` into a `DownBar`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn down_bar(element: &Element) -> super::DownBar {
     let mut node = super::DownBar::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DOWN_BAR_SHAPE);
@@ -738,7 +738,7 @@ pub fn down_bar(element: &Element) -> super::DownBar {
 }
 
 /// Read `cs:dropLine` into a `DropLine`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drop_line(element: &Element) -> super::DropLine {
     let mut node = super::DropLine::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DROP_LINE_SHAPE);
@@ -761,7 +761,7 @@ pub fn drop_line(element: &Element) -> super::DropLine {
 }
 
 /// Read `cs:effectRef` into a `EffectRef`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn effect_ref(element: &Element) -> super::EffectRef {
     let mut node = super::EffectRef::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EFFECT_REF_SHAPE);
@@ -777,7 +777,7 @@ pub fn effect_ref(element: &Element) -> super::EffectRef {
 }
 
 /// Read `cs:errorBar` into a `ErrorBar`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn error_bar(element: &Element) -> super::ErrorBar {
     let mut node = super::ErrorBar::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ERROR_BAR_SHAPE);
@@ -800,7 +800,7 @@ pub fn error_bar(element: &Element) -> super::ErrorBar {
 }
 
 /// Read `cs:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -814,7 +814,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `cs:fillRef` into a `FillRef`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn fill_ref(element: &Element) -> super::FillRef {
     let mut node = super::FillRef::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FILL_REF_SHAPE);
@@ -830,7 +830,7 @@ pub fn fill_ref(element: &Element) -> super::FillRef {
 }
 
 /// Read `cs:floor` into a `Floor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn floor(element: &Element) -> super::Floor {
     let mut node = super::Floor::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FLOOR_SHAPE);
@@ -853,7 +853,7 @@ pub fn floor(element: &Element) -> super::Floor {
 }
 
 /// Read `cs:fontRef` into a `FontRef`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn font_ref(element: &Element) -> super::FontRef {
     let mut node = super::FontRef::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FONT_REF_SHAPE);
@@ -871,7 +871,7 @@ pub fn font_ref(element: &Element) -> super::FontRef {
 }
 
 /// Read `cs:gridlineMajor` into a `GridlineMajor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn gridline_major(element: &Element) -> super::GridlineMajor {
     let mut node = super::GridlineMajor::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GRIDLINE_MAJOR_SHAPE);
@@ -894,7 +894,7 @@ pub fn gridline_major(element: &Element) -> super::GridlineMajor {
 }
 
 /// Read `cs:gridlineMinor` into a `GridlineMinor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn gridline_minor(element: &Element) -> super::GridlineMinor {
     let mut node = super::GridlineMinor::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GRIDLINE_MINOR_SHAPE);
@@ -917,7 +917,7 @@ pub fn gridline_minor(element: &Element) -> super::GridlineMinor {
 }
 
 /// Read `cs:hiLoLine` into a `HiLoLine`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hi_lo_line(element: &Element) -> super::HiLoLine {
     let mut node = super::HiLoLine::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HI_LO_LINE_SHAPE);
@@ -940,7 +940,7 @@ pub fn hi_lo_line(element: &Element) -> super::HiLoLine {
 }
 
 /// Read `cs:leaderLine` into a `LeaderLine`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn leader_line(element: &Element) -> super::LeaderLine {
     let mut node = super::LeaderLine::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LEADER_LINE_SHAPE);
@@ -963,7 +963,7 @@ pub fn leader_line(element: &Element) -> super::LeaderLine {
 }
 
 /// Read `cs:legend` into a `LegendLegendProps`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn legend_legend_props(element: &Element) -> super::LegendLegendProps {
     let mut node = super::LegendLegendProps::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LEGEND_LEGEND_PROPS_SHAPE);
@@ -980,7 +980,7 @@ pub fn legend_legend_props(element: &Element) -> super::LegendLegendProps {
 }
 
 /// Read `cs:legend` into a `LegendStyleEntry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn legend_style_entry(element: &Element) -> super::LegendStyleEntry {
     let mut node = super::LegendStyleEntry::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LEGEND_STYLE_ENTRY_SHAPE);
@@ -1003,7 +1003,7 @@ pub fn legend_style_entry(element: &Element) -> super::LegendStyleEntry {
 }
 
 /// Read `cs:lineWidthScale` into a `LineWidthScale`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line_width_scale(element: &Element) -> super::LineWidthScale {
     let mut node = super::LineWidthScale::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LINE_WIDTH_SCALE_SHAPE);
@@ -1017,7 +1017,7 @@ pub fn line_width_scale(element: &Element) -> super::LineWidthScale {
 }
 
 /// Read `cs:lnRef` into a `LnRef`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ln_ref(element: &Element) -> super::LnRef {
     let mut node = super::LnRef::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LN_REF_SHAPE);
@@ -1033,7 +1033,7 @@ pub fn ln_ref(element: &Element) -> super::LnRef {
 }
 
 /// Read `cs:plotArea` into a `PlotArea`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn plot_area(element: &Element) -> super::PlotArea {
     let mut node = super::PlotArea::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PLOT_AREA_SHAPE);
@@ -1056,7 +1056,7 @@ pub fn plot_area(element: &Element) -> super::PlotArea {
 }
 
 /// Read `cs:plotArea3D` into a `PlotArea3D`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn plot_area3d(element: &Element) -> super::PlotArea3D {
     let mut node = super::PlotArea3D::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PLOT_AREA3D_SHAPE);
@@ -1079,7 +1079,7 @@ pub fn plot_area3d(element: &Element) -> super::PlotArea3D {
 }
 
 /// Read `cs:seriesAxis` into a `SeriesAxisAxisProps`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn series_axis_axis_props(element: &Element) -> super::SeriesAxisAxisProps {
     let reader = officekit_markup_base::Reader::new(element, &super::SERIES_AXIS_AXIS_PROPS_SHAPE);
     super::SeriesAxisAxisProps {
@@ -1089,7 +1089,7 @@ pub fn series_axis_axis_props(element: &Element) -> super::SeriesAxisAxisProps {
 }
 
 /// Read `cs:seriesAxis` into a `SeriesAxisStyleEntry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn series_axis_style_entry(element: &Element) -> super::SeriesAxisStyleEntry {
     let mut node = super::SeriesAxisStyleEntry::default();
     let mut reader =
@@ -1113,7 +1113,7 @@ pub fn series_axis_style_entry(element: &Element) -> super::SeriesAxisStyleEntry
 }
 
 /// Read `cs:seriesLine` into a `SeriesLine`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn series_line(element: &Element) -> super::SeriesLine {
     let mut node = super::SeriesLine::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SERIES_LINE_SHAPE);
@@ -1136,7 +1136,7 @@ pub fn series_line(element: &Element) -> super::SeriesLine {
 }
 
 /// Read `cs:spPr` into a `SpPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sp_pr(element: &Element) -> super::SpPr {
     let mut node = super::SpPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SP_PR_SHAPE);
@@ -1159,7 +1159,7 @@ pub fn sp_pr(element: &Element) -> super::SpPr {
 }
 
 /// Read `cs:styleClr` into a `StyleClr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style_clr(element: &Element) -> super::StyleClr {
     let mut node = super::StyleClr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::STYLE_CLR_SHAPE);
@@ -1175,7 +1175,7 @@ pub fn style_clr(element: &Element) -> super::StyleClr {
 }
 
 /// Read `cs:title` into a `TitleStyleEntry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn title_style_entry(element: &Element) -> super::TitleStyleEntry {
     let mut node = super::TitleStyleEntry::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TITLE_STYLE_ENTRY_SHAPE);
@@ -1198,7 +1198,7 @@ pub fn title_style_entry(element: &Element) -> super::TitleStyleEntry {
 }
 
 /// Read `cs:title` into a `TitleTitleProps`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn title_title_props(element: &Element) -> super::TitleTitleProps {
     let mut node = super::TitleTitleProps::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TITLE_TITLE_PROPS_SHAPE);
@@ -1212,7 +1212,7 @@ pub fn title_title_props(element: &Element) -> super::TitleTitleProps {
 }
 
 /// Read `cs:trendlineLabel` into a `TrendlineLabel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn trendline_label(element: &Element) -> super::TrendlineLabel {
     let mut node = super::TrendlineLabel::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TRENDLINE_LABEL_SHAPE);
@@ -1235,7 +1235,7 @@ pub fn trendline_label(element: &Element) -> super::TrendlineLabel {
 }
 
 /// Read `cs:trendline` into a `TrendlineStyleEntry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn trendline_style_entry(element: &Element) -> super::TrendlineStyleEntry {
     let mut node = super::TrendlineStyleEntry::default();
     let mut reader =
@@ -1259,7 +1259,7 @@ pub fn trendline_style_entry(element: &Element) -> super::TrendlineStyleEntry {
 }
 
 /// Read `cs:trendline` into a `TrendlineTrendlineProps`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn trendline_trendline_props(element: &Element) -> super::TrendlineTrendlineProps {
     let mut node = super::TrendlineTrendlineProps::default();
     let mut reader =
@@ -1277,7 +1277,7 @@ pub fn trendline_trendline_props(element: &Element) -> super::TrendlineTrendline
 }
 
 /// Read `cs:upBar` into a `UpBar`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn up_bar(element: &Element) -> super::UpBar {
     let mut node = super::UpBar::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::UP_BAR_SHAPE);
@@ -1300,7 +1300,7 @@ pub fn up_bar(element: &Element) -> super::UpBar {
 }
 
 /// Read `cs:valueAxis` into a `ValueAxisAxisProps`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn value_axis_axis_props(element: &Element) -> super::ValueAxisAxisProps {
     let reader = officekit_markup_base::Reader::new(element, &super::VALUE_AXIS_AXIS_PROPS_SHAPE);
     super::ValueAxisAxisProps {
@@ -1310,7 +1310,7 @@ pub fn value_axis_axis_props(element: &Element) -> super::ValueAxisAxisProps {
 }
 
 /// Read `cs:valueAxis` into a `ValueAxisStyleEntry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn value_axis_style_entry(element: &Element) -> super::ValueAxisStyleEntry {
     let mut node = super::ValueAxisStyleEntry::default();
     let mut reader =
@@ -1334,7 +1334,7 @@ pub fn value_axis_style_entry(element: &Element) -> super::ValueAxisStyleEntry {
 }
 
 /// Read `cs:variation` into a `Variation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn variation(element: &Element) -> super::Variation {
     let mut node = super::Variation::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::VARIATION_SHAPE);
@@ -1348,7 +1348,7 @@ pub fn variation(element: &Element) -> super::Variation {
 }
 
 /// Read `cs:view3D` into a `View3D`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn view3d(element: &Element) -> super::View3D {
     let mut node = super::View3D::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::VIEW3D_SHAPE);
@@ -1368,7 +1368,7 @@ pub fn view3d(element: &Element) -> super::View3D {
 }
 
 /// Read `cs:wall` into a `Wall`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wall(element: &Element) -> super::Wall {
     let mut node = super::Wall::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WALL_SHAPE);

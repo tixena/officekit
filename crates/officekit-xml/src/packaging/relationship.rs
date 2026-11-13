@@ -97,7 +97,7 @@ pub enum TargetMode {
 impl Relationship {
     /// A relationship of type `type_uri` to `target`, relative to the source's
     /// folder when internal, with no id yet.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn new(type_uri: &str, target: &str, target_mode: TargetMode) -> Self {
         Self {
             id: String::new(),
@@ -119,7 +119,7 @@ impl Relationship {
 
 /// The class a package declares through the type of its relationship to its main part: either
 /// spelling of the `officeDocument` type; `None` for any other type.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn class_of_office_document(type_uri: &str) -> Option<ConformanceClass> {
     let office_document = RelationshipType::OFFICE_DOCUMENT;
     if type_uri == office_document.strict {

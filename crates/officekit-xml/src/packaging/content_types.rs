@@ -59,7 +59,7 @@ impl ContentTypes {
     }
 
     /// The part's `Override`, else the `Default` of its extension.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn of(&self, name: &PartName) -> Option<&str> {
         let folded = name.folded();
         self.overrides

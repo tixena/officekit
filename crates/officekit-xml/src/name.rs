@@ -70,7 +70,7 @@ pub struct QName {
 impl Namespace {
     /// The table's id for a Transitional or a Strict URI, else the URI itself;
     /// the empty URI is `None`.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn from_uri(uri: &str) -> Self {
         if uri.is_empty() {
             return Self::None;
@@ -84,7 +84,7 @@ impl Namespace {
 
     /// The URI to write in `class`: the Strict URI of a known namespace that
     /// has one, else its Transitional URI.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn uri(&self, class: ConformanceClass) -> &str {
         match self {
             Self::Known(id) => NAMESPACES
@@ -101,7 +101,7 @@ impl Namespace {
 
 impl OfficeVersion {
     /// The release order: Office 2010 is 0, Microsoft 365 is 5.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn rank(self) -> u8 {
         match self {
             Self::Office2010 => 0,
@@ -116,7 +116,7 @@ impl OfficeVersion {
 
 impl QName {
     /// A name from its three parts, as they are.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn new(prefix: String, local: String, namespace: Namespace) -> Self {
         Self {
             local,
@@ -127,7 +127,7 @@ impl QName {
 
     /// A name written as `prefix:local`, in the namespace `uri`. A known URI of either class
     /// gives `Namespace::Known`.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn prefixed(prefix: &str, local: &str, uri: &str) -> Self {
         Self {
             local: local.to_owned(),
@@ -137,7 +137,7 @@ impl QName {
     }
 
     /// A name with no prefix, in the namespace `uri`; an empty `uri` gives `Namespace::None`.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn unprefixed(local: &str, uri: &str) -> Self {
         Self::prefixed("", local, uri)
     }
@@ -145,7 +145,7 @@ impl QName {
 
 /// The tag of a name in the namespace table: the namespace id (`None` for no namespace) and the
 /// local name. Returns `None` for a namespace the table does not know.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub const fn tag_of(name: &QName) -> Option<(Option<NamespaceId>, &str)> {
     let local = name.local.as_str();
     match name.namespace {

@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `p16:designElem` into a `DesignElem`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn design_elem(element: &Element) -> super::DesignElem {
     let mut node = super::DesignElem::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DESIGN_ELEM_SHAPE);

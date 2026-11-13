@@ -40,19 +40,19 @@ pub struct Cycles {
 
 impl Cycles {
     /// Whether an enum's arm holding struct `arm` closes a cycle.
-    #[must_use]
+    #[must_use = "this only answers the question"]
     pub fn arm(&self, found: usize, arm: usize) -> bool {
         self.components[self.nodes + found] == self.components[arm]
     }
 
     /// Whether a struct's child field holding `target` closes a cycle.
-    #[must_use]
+    #[must_use = "this only answers the question"]
     pub fn child(&self, node: usize, target: Target) -> bool {
         self.components[node] == self.components[vertex(self.nodes, target)]
     }
 
     /// The components of `catalog`'s types.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn new(catalog: &Catalog) -> Self {
         let nodes = catalog.nodes.len();
         let mut edges: Vec<Vec<usize>> = vec![Vec::new(); nodes + catalog.enums.len()];
@@ -81,7 +81,7 @@ pub struct MirrorArm {
 
 /// The derive and rkyv attributes of a newtype deriving `own`, the rkyv ones
 /// under the `binary-format` feature.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn attributes(own: &str) -> String {
     let mut out = if own.len() + "#[derive()]".len() <= DERIVE_WIDTH {
         format!("#[derive({own})]\n")
@@ -100,7 +100,7 @@ pub fn attributes(own: &str) -> String {
 /// The text of a namespace's `archive.rs`, `None` when it has no struct and
 /// no enum. `names` has given no path yet: the modules of other crates its
 /// mirrors name are the file's imports.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn text(header: &str, names: &Names<'_>, cycles: &Cycles) -> Option<String> {
     let catalog = names.catalog;
     let mut enums: Vec<(usize, &EnumDef)> = catalog
@@ -287,7 +287,7 @@ fn mirror_arms(
 }
 
 /// The mirror enum of the enum `name`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn mirror(name: &str, arms: &[MirrorArm], recursive: bool) -> String {
     let mut out = String::from("#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]\n");
     let _ = writeln!(out, "#[rkyv(remote = super::{name})]");
@@ -305,7 +305,7 @@ pub fn mirror(name: &str, arms: &[MirrorArm], recursive: bool) -> String {
 
 /// One variant of an enum, as rustfmt lays it out: on its own line, or its
 /// field on a line of its own when the variant is too wide for one.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn variant(arm: &MirrorArm) -> String {
     let field = if arm.recursive {
         format!("{OMIT_BOUNDS} {}", arm.shown)
@@ -328,7 +328,7 @@ pub fn variant(arm: &MirrorArm) -> String {
 /// `From` the mirror for the enum `name`, which rkyv's remote `Deserialize`
 /// calls; a match longer than `BODY_LINES` is the runtime's `mirror_into!`
 /// called with every variant, which expands to the match.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn from(runtime: &str, name: &str, arms: &[MirrorArm]) -> String {
     let mut out = String::from("\n");
     out.push_str(&layout::impl_header(
@@ -383,7 +383,7 @@ fn from_arm(name: &str, arm: &MirrorArm) -> String {
 
 /// The `Archive`, `Serialize` and `Deserialize` of the type `name`, each
 /// handing the work to its mirror `mirror`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn handoffs(name: &str, mirror: &str) -> String {
     let mut out = String::from("\n");
     out.push_str(&layout::impl_header(

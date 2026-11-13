@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `a15:backgroundPr` into a `BackgroundPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn background_pr(element: &Element) -> super::BackgroundPr {
     let mut node = super::BackgroundPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BACKGROUND_PR_SHAPE);
@@ -237,7 +237,7 @@ pub fn background_pr(element: &Element) -> super::BackgroundPr {
 }
 
 /// Read `a15:nonVisualGroupProps` into a `NonVisualGroupProps`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_group_props(element: &Element) -> super::NonVisualGroupProps {
     let mut node = super::NonVisualGroupProps::default();
     let mut reader =
@@ -252,7 +252,7 @@ pub fn non_visual_group_props(element: &Element) -> super::NonVisualGroupProps {
 }
 
 /// Read `a15:objectPr` into a `ObjectPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn object_pr(element: &Element) -> super::ObjectPr {
     let mut node = super::ObjectPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::OBJECT_PR_SHAPE);
@@ -269,7 +269,7 @@ pub fn object_pr(element: &Element) -> super::ObjectPr {
 }
 
 /// Read `a15:signatureLine` into a `SignatureLine`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn signature_line(element: &Element) -> super::SignatureLine {
     let mut node = super::SignatureLine::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SIGNATURE_LINE_SHAPE);

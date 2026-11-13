@@ -798,7 +798,7 @@ fn holds_word_shape(element: &Element) -> bool {
 /// );
 /// assert_eq!(iso_date_time("today", false), None);
 /// ```
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn iso_date_time(serial: &str, date1904: bool) -> Option<String> {
     let milliseconds = serial_milliseconds(serial)?;
     let days = i64::try_from(milliseconds.div_euclid(DAY)).ok()?;
@@ -927,7 +927,7 @@ fn protection_with_no_password(element: &mut Element) {
 
 /// Every refusal a Strict write of `element` meets, in the order the walk meets them: the first is
 /// the one [`Strict::to_strict`] names. A refused element counts once, its content unwalked.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn refusals(mut element: Element) -> Vec<Refusal> {
     let mut found = Vec::new();
     convert(&mut element, None, &mut Vec::new(), &mut found);

@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `AutoBuNodeInfo` as its element, `dgm1611:autoBuNodeInfo`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn auto_bu_node_info(node: &super::AutoBuNodeInfo, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::AUTO_BU_NODE_INFO_SHAPE, &node.unknown);
@@ -231,7 +231,7 @@ pub fn auto_bu_node_info(node: &super::AutoBuNodeInfo, scope: &mut Scope) -> Ele
 }
 
 /// Write a `AutoBuNodeInfoLst` as its element, `dgm1611:autoBuNodeInfoLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn auto_bu_node_info_lst(node: &super::AutoBuNodeInfoLst, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -243,7 +243,7 @@ pub fn auto_bu_node_info_lst(node: &super::AutoBuNodeInfoLst, scope: &mut Scope)
 }
 
 /// Write a `BuPr` as its element, `dgm1611:buPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bu_pr(node: &super::BuPr, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::BU_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.prefix);

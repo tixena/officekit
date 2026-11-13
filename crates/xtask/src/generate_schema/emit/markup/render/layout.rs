@@ -70,13 +70,13 @@ struct Shape {
 
 impl Expr {
     /// An atom.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn atom(text: &str) -> Self {
         Self::Atom(text.to_owned())
     }
 
     /// A call of `name`, a method call when `name` is `receiver.method`.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn call(name: &str, arguments: Vec<Self>) -> Self {
         if name.contains('.') {
             Self::Method(name.to_owned(), arguments)
@@ -153,7 +153,7 @@ impl Expr {
     }
 
     /// The expression on one line, whatever its width.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn one_line(&self) -> String {
         let joined = |items: &[Self]| {
             items
@@ -183,13 +183,13 @@ impl Expr {
     }
 
     /// A tuple struct pattern binding one name, `path(binding)`.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn pattern(path: &str, binding: &str) -> Self {
         Self::Pattern(path.to_owned(), vec![Self::atom(binding)])
     }
 
     /// A `&inner` expression.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn reference(inner: Self) -> Self {
         Self::Prefix("&".to_owned(), Box::new(inner))
     }
@@ -607,7 +607,7 @@ fn field_value(nested: Shape, name: &str, value: &Expr) -> Option<String> {
 /// A method chain ending a block at `indent`: `root` and its `calls`, on one
 /// line when it fits there, within `CHAIN_WIDTH` when it has more than one
 /// call; else each call on its own line one step in.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn chain(indent: usize, root: &str, calls: &[String]) -> String {
     let joined = format!("{root}{}", calls.concat());
     let limit = if calls.len() > 1 {
@@ -640,7 +640,7 @@ pub fn pad(width: usize, out: &mut String) {
 /// The start of `pub static name: shown = `, for `statement`: the type on a
 /// line of its own one step in when it does not fit after the name, as
 /// rustfmt's `rewrite_static` puts it.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn static_start(name: &str, shown: &str) -> String {
     let flat = format!("pub static {name}: {shown} = ");
     if flat.len() - 1 <= MAX_WIDTH {
@@ -684,7 +684,7 @@ pub fn line(start: &str, expr: &Expr, end: &str, out: &mut String) {
 
 /// Whether rustfmt lays the expression out on one line at `indent`, with
 /// `after` columns following it.
-#[must_use]
+#[must_use = "this only answers the question"]
 pub fn fits_one_line(indent: usize, expr: &Expr, after: usize) -> bool {
     Shape::indented(indent)
         .sub_width(after)
@@ -695,7 +695,7 @@ pub fn fits_one_line(indent: usize, expr: &Expr, after: usize) -> bool {
 /// `if let pattern = expr {` at `indent`, as rustfmt lays out the condition
 /// and the brace after it: the brace on a line of its own when the condition
 /// takes more than one line or leaves no room for it.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn if_let(indent: usize, pattern: &Expr, expr: &str) -> String {
     let shape = Shape::indented(indent);
     let rewritten = shape.offset_left("if ".len()).and_then(|cond_shape| {
@@ -777,7 +777,7 @@ fn prefer_next_line(same: &str, next: &str) -> bool {
 }
 
 /// A string literal, every character outside printable ASCII escaped.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn string(text: &str) -> String {
     let mut out = String::with_capacity(text.len() + 2);
     out.push('"');
@@ -796,7 +796,7 @@ pub fn string(text: &str) -> String {
 }
 
 /// Decimal digits grouped by three from the right when there are more than five.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn grouped(digits: &str) -> String {
     if digits.len() <= 5 {
         return digits.to_owned();
@@ -812,7 +812,7 @@ pub fn grouped(digits: &str) -> String {
 }
 
 /// A whole number as a literal, its digits grouped as `grouped` does.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn integer(value: i128) -> String {
     if value == i128::from(i64::MIN) {
         return "i64::MIN".to_owned();
@@ -852,7 +852,7 @@ fn reads_better_in_hex(digits: &str) -> bool {
 
 /// A number as an `f64` literal: Rust's shortest form of it, the whole part
 /// grouped as `grouped` does, with the `f64` suffix.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn real(value: f64) -> String {
     if value.is_infinite() {
         return if value.is_sign_positive() {
@@ -874,7 +874,7 @@ pub fn real(value: f64) -> String {
 
 /// A function's signature: `head(parameters) -> output {` on one line when it
 /// fits, else each parameter on a line of its own.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn signature(indent: usize, head: &str, parameters: &[String], output: &str) -> String {
     let arrow = if output.is_empty() {
         String::new()
@@ -917,7 +917,7 @@ pub fn signature(indent: usize, head: &str, parameters: &[String], output: &str)
 }
 
 /// `signature`, its `{` moved after a `where` clause of `bounds`, one on each line.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn signature_where(
     indent: usize,
     head: &str,
@@ -986,13 +986,13 @@ fn broken_type(indent: usize, shown: &str) -> String {
 
 /// An `impl` header: `impl trait for target {` on one line when it fits, else
 /// `for target` on a line of its own and `{` after it.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn impl_header(trait_part: &str, target: &str) -> String {
     generic_impl_header("", trait_part, target)
 }
 
 /// `impl_header` of an `impl` that declares `generics`, `<X: NodeExtra>`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn generic_impl_header(generics: &str, trait_part: &str, target: &str) -> String {
     let flat = format!("impl{generics} {trait_part} for {target} {{\n");
     if flat.len() - 1 <= MAX_WIDTH {
@@ -1005,7 +1005,7 @@ pub fn generic_impl_header(generics: &str, trait_part: &str, target: &str) -> St
 /// `statement` body, a call returning nothing, that does not fit goes in a
 /// block ending in `;`; another body goes where rustfmt's
 /// `rewrite_match_body` puts it.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn arm(indent: usize, pattern: &Expr, body: &Expr, statement: bool) -> String {
     let shape = Shape::indented(indent);
     let pattern_text = shape
@@ -1071,7 +1071,7 @@ pub fn arm(indent: usize, pattern: &Expr, body: &Expr, statement: bool) -> Strin
 
 /// Doc comment lines: each paragraph's words filled to the line width, words
 /// clippy's `doc_markdown` would take for code put between backticks.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn doc(indent: usize, text: &str) -> String {
     let mut out = String::new();
     for (index, paragraph) in text.split("\n\n").enumerate() {

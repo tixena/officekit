@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `p188:author` into a `Author`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn author(element: &Element) -> super::Author {
     let mut node = super::Author::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::AUTHOR_SHAPE);
@@ -239,7 +239,7 @@ pub fn author(element: &Element) -> super::Author {
 }
 
 /// Read `p188:authorLst` into a `AuthorLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn author_lst(element: &Element) -> super::AuthorLst {
     let mut node = super::AuthorLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::AUTHOR_LST_SHAPE);
@@ -253,7 +253,7 @@ pub fn author_lst(element: &Element) -> super::AuthorLst {
 }
 
 /// Read `p188:cm` into a `Cm`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cm(element: &Element) -> super::Cm {
     let mut node = super::Cm::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CM_SHAPE);
@@ -284,7 +284,7 @@ pub fn cm(element: &Element) -> super::Cm {
 }
 
 /// Read `p188:cmLst` into a `CmLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cm_lst(element: &Element) -> super::CmLst {
     let mut node = super::CmLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CM_LST_SHAPE);
@@ -298,13 +298,13 @@ pub fn cm_lst(element: &Element) -> super::CmLst {
 }
 
 /// Read one item of `CommentContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn comment(element: &Element) -> super::CommentContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p188:commentRel` into a `CommentRel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_rel(element: &Element) -> super::CommentRel {
     let mut node = super::CommentRel::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENT_REL_SHAPE);
@@ -318,7 +318,7 @@ pub fn comment_rel(element: &Element) -> super::CommentRel {
 }
 
 /// Read `p188:extLst` into a `ExtLstCommentPropertiesExtensionList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst_comment_properties_extension_list(
     element: &Element,
 ) -> super::ExtLstCommentPropertiesExtensionList {
@@ -337,7 +337,7 @@ pub fn ext_lst_comment_properties_extension_list(
 }
 
 /// Read `p188:extLst` into a `ExtLstExtensionList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst_extension_list(element: &Element) -> super::ExtLstExtensionList {
     let mut node = super::ExtLstExtensionList::default();
     let mut reader =
@@ -352,7 +352,7 @@ pub fn ext_lst_extension_list(element: &Element) -> super::ExtLstExtensionList {
 }
 
 /// Read `p188:pos` into a `Pos`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pos(element: &Element) -> super::Pos {
     let mut node = super::Pos::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::POS_SHAPE);
@@ -368,7 +368,7 @@ pub fn pos(element: &Element) -> super::Pos {
 }
 
 /// Read `p188:reply` into a `Reply`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn reply(element: &Element) -> super::Reply {
     let mut node = super::Reply::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::REPLY_SHAPE);
@@ -390,7 +390,7 @@ pub fn reply(element: &Element) -> super::Reply {
 }
 
 /// Read `p188:replyLst` into a `ReplyLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn reply_lst(element: &Element) -> super::ReplyLst {
     let mut node = super::ReplyLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::REPLY_LST_SHAPE);
@@ -404,7 +404,7 @@ pub fn reply_lst(element: &Element) -> super::ReplyLst {
 }
 
 /// Read `p188:txBody` into a `TxBody`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tx_body(element: &Element) -> super::TxBody {
     let mut node = super::TxBody::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TX_BODY_SHAPE);
@@ -421,7 +421,7 @@ pub fn tx_body(element: &Element) -> super::TxBody {
 }
 
 /// Read `p188:unknownAnchor` into a `UnknownAnchor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn unknown_anchor(element: &Element) -> super::UnknownAnchor {
     let reader = officekit_markup_base::Reader::new(element, &super::UNKNOWN_ANCHOR_SHAPE);
     super::UnknownAnchor {

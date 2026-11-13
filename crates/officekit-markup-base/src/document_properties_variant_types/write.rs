@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `Array` as its element, `vt:array`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn array(node: &super::Array, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::ARRAY_SHAPE, &node.unknown);
     writer.attribute(0, &node.l_bounds);
@@ -237,7 +237,7 @@ pub fn array_content(node: &super::ArrayContent, writer: &mut crate::Writer<'_, 
 }
 
 /// Write a `BasicString` as its element, `vt:bstr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn basic_string(node: &super::BasicString, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::BASIC_STRING_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -245,7 +245,7 @@ pub fn basic_string(node: &super::BasicString, scope: &mut Scope) -> Element {
 }
 
 /// Write a `BinaryBlob` as its element, `vt:blob`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn binary_blob(node: &super::BinaryBlob, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::BINARY_BLOB_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -253,7 +253,7 @@ pub fn binary_blob(node: &super::BinaryBlob, scope: &mut Scope) -> Element {
 }
 
 /// Write a `BinaryBlobObject` as its element, `vt:oblob`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn binary_blob_object(node: &super::BinaryBlobObject, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::BINARY_BLOB_OBJECT_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -261,7 +261,7 @@ pub fn binary_blob_object(node: &super::BinaryBlobObject, scope: &mut Scope) -> 
 }
 
 /// Write a `BinaryStorage` as its element, `vt:storage`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn binary_storage(node: &super::BinaryStorage, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::BINARY_STORAGE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -269,7 +269,7 @@ pub fn binary_storage(node: &super::BinaryStorage, scope: &mut Scope) -> Element
 }
 
 /// Write a `BinaryStorageObject` as its element, `vt:ostorage`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn binary_storage_object(node: &super::BinaryStorageObject, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::BINARY_STORAGE_OBJECT_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -277,7 +277,7 @@ pub fn binary_storage_object(node: &super::BinaryStorageObject, scope: &mut Scop
 }
 
 /// Write a `BinaryStream` as its element, `vt:stream`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn binary_stream(node: &super::BinaryStream, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::BINARY_STREAM_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -285,7 +285,7 @@ pub fn binary_stream(node: &super::BinaryStream, scope: &mut Scope) -> Element {
 }
 
 /// Write a `BinaryStreamObject` as its element, `vt:ostream`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn binary_stream_object(node: &super::BinaryStreamObject, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::BINARY_STREAM_OBJECT_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -293,7 +293,7 @@ pub fn binary_stream_object(node: &super::BinaryStreamObject, scope: &mut Scope)
 }
 
 /// Write a `BinaryVersionedStream` as its element, `vt:vstream`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn binary_versioned_stream(node: &super::BinaryVersionedStream, scope: &mut Scope) -> Element {
     let mut writer =
         crate::Writer::new(scope, &super::BINARY_VERSIONED_STREAM_SHAPE, &node.unknown);
@@ -303,7 +303,7 @@ pub fn binary_versioned_stream(node: &super::BinaryVersionedStream, scope: &mut 
 }
 
 /// Write a `Boolean` as its element, `vt:bool`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn boolean(node: &super::Boolean, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::BOOLEAN_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -311,7 +311,7 @@ pub fn boolean(node: &super::Boolean, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ClassID` as its element, `vt:clsid`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn class_id(node: &super::ClassID, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::CLASS_ID_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -319,7 +319,7 @@ pub fn class_id(node: &super::ClassID, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Currency` as its element, `vt:cy`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn currency(node: &super::Currency, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::CURRENCY_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -327,7 +327,7 @@ pub fn currency(node: &super::Currency, scope: &mut Scope) -> Element {
 }
 
 /// Write a `DateAndTime` as its element, `vt:date`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn date_and_time(node: &super::DateAndTime, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::DATE_AND_TIME_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -335,7 +335,7 @@ pub fn date_and_time(node: &super::DateAndTime, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Decimal` as its element, `vt:decimal`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn decimal(node: &super::Decimal, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::DECIMAL_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -343,13 +343,13 @@ pub fn decimal(node: &super::Decimal, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Empty` as its element, `vt:empty`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn empty(node: &super::Empty, scope: &mut Scope) -> Element {
     crate::Writer::new(scope, &super::EMPTY_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `ErrorStatusCode` as its element, `vt:error`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn error_status_code(node: &super::ErrorStatusCode, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::ERROR_STATUS_CODE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -357,7 +357,7 @@ pub fn error_status_code(node: &super::ErrorStatusCode, scope: &mut Scope) -> El
 }
 
 /// Write a `FileTime` as its element, `vt:filetime`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn file_time(node: &super::FileTime, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::FILE_TIME_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -365,7 +365,7 @@ pub fn file_time(node: &super::FileTime, scope: &mut Scope) -> Element {
 }
 
 /// Write a `I1` as its element, `vt:i1`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn i1(node: &super::I1, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::I1_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -373,7 +373,7 @@ pub fn i1(node: &super::I1, scope: &mut Scope) -> Element {
 }
 
 /// Write a `I2` as its element, `vt:i2`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn i2(node: &super::I2, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::I2_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -381,7 +381,7 @@ pub fn i2(node: &super::I2, scope: &mut Scope) -> Element {
 }
 
 /// Write a `I4` as its element, `vt:i4`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn i4(node: &super::I4, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::I4_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -389,7 +389,7 @@ pub fn i4(node: &super::I4, scope: &mut Scope) -> Element {
 }
 
 /// Write a `I8` as its element, `vt:i8`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn i8(node: &super::I8, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::I8_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -397,7 +397,7 @@ pub fn i8(node: &super::I8, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Integer` as its element, `vt:int`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn integer(node: &super::Integer, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::INTEGER_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -405,7 +405,7 @@ pub fn integer(node: &super::Integer, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Lpstr` as its element, `vt:lpstr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn lpstr(node: &super::Lpstr, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::LPSTR_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -413,7 +413,7 @@ pub fn lpstr(node: &super::Lpstr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Lpwstr` as its element, `vt:lpwstr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn lpwstr(node: &super::Lpwstr, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::LPWSTR_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -421,13 +421,13 @@ pub fn lpwstr(node: &super::Lpwstr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Null` as its element, `vt:null`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn null(node: &super::Null, scope: &mut Scope) -> Element {
     crate::Writer::new(scope, &super::NULL_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `R4` as its element, `vt:r4`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn r4(node: &super::R4, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::R4_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -435,7 +435,7 @@ pub fn r4(node: &super::R4, scope: &mut Scope) -> Element {
 }
 
 /// Write a `R8` as its element, `vt:r8`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn r8(node: &super::R8, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::R8_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -443,7 +443,7 @@ pub fn r8(node: &super::R8, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Ui1` as its element, `vt:ui1`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ui1(node: &super::Ui1, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::UI1_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -451,7 +451,7 @@ pub fn ui1(node: &super::Ui1, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Ui2` as its element, `vt:ui2`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ui2(node: &super::Ui2, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::UI2_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -459,7 +459,7 @@ pub fn ui2(node: &super::Ui2, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Ui4` as its element, `vt:ui4`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ui4(node: &super::Ui4, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::UI4_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -467,7 +467,7 @@ pub fn ui4(node: &super::Ui4, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Ui8` as its element, `vt:ui8`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ui8(node: &super::Ui8, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::UI8_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -475,7 +475,7 @@ pub fn ui8(node: &super::Ui8, scope: &mut Scope) -> Element {
 }
 
 /// Write a `UnsignedInteger` as its element, `vt:uint`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn unsigned_integer(node: &super::UnsignedInteger, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::UNSIGNED_INTEGER_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -483,7 +483,7 @@ pub fn unsigned_integer(node: &super::UnsignedInteger, scope: &mut Scope) -> Ele
 }
 
 /// Write a `Variant` as its element, `vt:variant`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn variant(node: &super::Variant, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::VARIANT_SHAPE, &node.unknown);
     writer.child(&node.content);
@@ -496,7 +496,7 @@ pub fn variant_content(node: &super::VariantContent, writer: &mut crate::Writer<
 }
 
 /// Write a `Vector` as its element, `vt:vector`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn vector(node: &super::Vector, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::VECTOR_SHAPE, &node.unknown);
     writer.attribute(0, &node.base_type);

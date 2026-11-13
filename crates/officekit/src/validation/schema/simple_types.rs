@@ -157,7 +157,7 @@ fn describe(class: &ValueClass, bounds: &Bounds, target: OfficeVersion) -> Strin
 }
 
 /// The enumeration of a simple type, `w:ST_Jc`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn enumeration(simple_type: &str) -> Option<&'static Enumeration> {
     let index = ENUMERATIONS
         .binary_search_by(|row| row.simple_type.cmp(simple_type))
@@ -171,7 +171,7 @@ pub fn enumeration(simple_type: &str) -> Option<&'static Enumeration> {
 /// check with no class reads the value as it. One check can fail more than
 /// once, as SDK 3.5.1 raises an error per failed bound and one for a string's
 /// form besides its length. A present value passes `Required` and `OfficeVersion`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn failures(
     check: &Check,
     own: &ValueClass,
@@ -250,7 +250,7 @@ pub fn failures(
 /// Whether the file's text is a value of the class, as SDK 3.5.1's `HasValue`
 /// says: a string always is, a list when it has an item, any other class when
 /// the text reads as it.
-#[must_use]
+#[must_use = "this only answers the question"]
 pub fn has_value(class: &ValueClass, text: &str, target: OfficeVersion) -> bool {
     match class {
         ValueClass::Base64Binary | ValueClass::HexBinary | ValueClass::String => true,

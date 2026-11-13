@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `p223:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -233,7 +233,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `p223:instance` into a `Instance`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn instance(element: &Element) -> super::Instance {
     let mut node = super::Instance::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::INSTANCE_SHAPE);
@@ -250,7 +250,7 @@ pub fn instance(element: &Element) -> super::Instance {
 }
 
 /// Read `p223:reactions` into a `Reactions`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn reactions(element: &Element) -> super::Reactions {
     let mut node = super::Reactions::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::REACTIONS_SHAPE);
@@ -264,7 +264,7 @@ pub fn reactions(element: &Element) -> super::Reactions {
 }
 
 /// Read `p223:rxn` into a `Rxn`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rxn(element: &Element) -> super::Rxn {
     let mut node = super::Rxn::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RXN_SHAPE);

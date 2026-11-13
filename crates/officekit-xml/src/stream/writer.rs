@@ -118,7 +118,7 @@ impl<'sink> PartWriter<'sink> {
     }
 
     /// A writer into `sink`, in `layout`, before anything is written.
-    #[must_use]
+    #[must_use = "the result is returned and kept nowhere else"]
     pub fn new(sink: &'sink mut dyn Write, layout: Layout) -> Self {
         let writer = match layout {
             Layout::Compact => Writer::new(sink),

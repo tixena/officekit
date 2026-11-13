@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `A` as its element, `xfpb:a`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn a(node: &super::A, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::A_SHAPE, &node.unknown);
     writer.attribute(0, &node.k);
@@ -239,7 +239,7 @@ pub fn array_feature_property(
 }
 
 /// Write a `BBoolFeatureProperty` as its element, `xfpb:b`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn b_bool_feature_property(node: &super::BBoolFeatureProperty, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -252,7 +252,7 @@ pub fn b_bool_feature_property(node: &super::BBoolFeatureProperty, scope: &mut S
 }
 
 /// Write a `BBoolean` as its element, `xfpb:b`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn b_boolean(node: &super::BBoolean, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::B_BOOLEAN_SHAPE, &node.unknown);
@@ -261,7 +261,7 @@ pub fn b_boolean(node: &super::BBoolean, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Bag` as its element, `xfpb:bag`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bag(node: &super::Bag, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::BAG_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#type);
@@ -273,7 +273,7 @@ pub fn bag(node: &super::Bag, scope: &mut Scope) -> Element {
 }
 
 /// Write a `BagExt` as its element, `xfpb:bagExt`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bag_ext(node: &super::BagExt, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::BAG_EXT_SHAPE, &node.unknown);
@@ -282,7 +282,7 @@ pub fn bag_ext(node: &super::BagExt, scope: &mut Scope) -> Element {
 }
 
 /// Write a `BagIdBagFeatureProperty` as its element, `xfpb:bagId`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bag_id_bag_feature_property(
     node: &super::BagIdBagFeatureProperty,
     scope: &mut Scope,
@@ -298,7 +298,7 @@ pub fn bag_id_bag_feature_property(
 }
 
 /// Write a `BagIdUnsignedInt` as its element, `xfpb:bagId`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bag_id_unsigned_int(node: &super::BagIdUnsignedInt, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::BAG_ID_UNSIGNED_INT_SHAPE, &node.unknown);
@@ -307,7 +307,7 @@ pub fn bag_id_unsigned_int(node: &super::BagIdUnsignedInt, scope: &mut Scope) ->
 }
 
 /// Write a `ColumnBodyRevDxf` as its element, `xfpb:columnBodyRevDxf`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn column_body_rev_dxf(node: &super::ColumnBodyRevDxf, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::COLUMN_BODY_REV_DXF_SHAPE, &node.unknown);
@@ -317,7 +317,7 @@ pub fn column_body_rev_dxf(node: &super::ColumnBodyRevDxf, scope: &mut Scope) ->
 }
 
 /// Write a `ColumnHeaderRevDxf` as its element, `xfpb:columnHeaderRevDxf`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn column_header_rev_dxf(node: &super::ColumnHeaderRevDxf, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -330,7 +330,7 @@ pub fn column_header_rev_dxf(node: &super::ColumnHeaderRevDxf, scope: &mut Scope
 }
 
 /// Write a `ColumnTotalsRevDxf` as its element, `xfpb:columnTotalsRevDxf`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn column_totals_rev_dxf(node: &super::ColumnTotalsRevDxf, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -343,7 +343,7 @@ pub fn column_totals_rev_dxf(node: &super::ColumnTotalsRevDxf, scope: &mut Scope
 }
 
 /// Write a `DDecimalFeatureProperty` as its element, `xfpb:d`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn d_decimal_feature_property(
     node: &super::DDecimalFeatureProperty,
     scope: &mut Scope,
@@ -359,7 +359,7 @@ pub fn d_decimal_feature_property(
 }
 
 /// Write a `DDouble` as its element, `xfpb:d`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn d_double(node: &super::DDouble, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::D_DOUBLE_SHAPE, &node.unknown);
@@ -368,7 +368,7 @@ pub fn d_double(node: &super::DDouble, scope: &mut Scope) -> Element {
 }
 
 /// Write a `DataRevDxf` as its element, `xfpb:dataRevDxf`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_rev_dxf(node: &super::DataRevDxf, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DATA_REV_DXF_SHAPE, &node.unknown);
@@ -378,7 +378,7 @@ pub fn data_rev_dxf(node: &super::DataRevDxf, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Dxf` as its element, `xfpb:dxf`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dxf(node: &super::Dxf, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::DXF_SHAPE, &node.unknown);
     writer.child(&node.font);
@@ -392,7 +392,7 @@ pub fn dxf(node: &super::Dxf, scope: &mut Scope) -> Element {
 }
 
 /// Write a `DXFComplement` as its element, `xfpb:DXFComplement`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dxf_complement(node: &super::DXFComplement, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DXF_COMPLEMENT_SHAPE, &node.unknown);
@@ -401,7 +401,7 @@ pub fn dxf_complement(node: &super::DXFComplement, scope: &mut Scope) -> Element
 }
 
 /// Write a `ExtLst` as its element, `xfpb:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -419,7 +419,7 @@ pub fn feature_property_bag(
 }
 
 /// Write a `FeaturePropertyBags` as its element, `xfpb:FeaturePropertyBags`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn feature_property_bags(node: &super::FeaturePropertyBags, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -434,7 +434,7 @@ pub fn feature_property_bags(node: &super::FeaturePropertyBags, scope: &mut Scop
 }
 
 /// Write a `Fpbs` as its element, `xfpb:fpbs`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn fpbs(node: &super::Fpbs, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::FPBS_SHAPE, &node.unknown);
     writer.child(&node.bag_ext);
@@ -444,7 +444,7 @@ pub fn fpbs(node: &super::Fpbs, scope: &mut Scope) -> Element {
 }
 
 /// Write a `HeaderRowBorderRevDxf` as its element, `xfpb:headerRowBorderRevDxf`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn header_row_border_rev_dxf(
     node: &super::HeaderRowBorderRevDxf,
     scope: &mut Scope,
@@ -460,7 +460,7 @@ pub fn header_row_border_rev_dxf(
 }
 
 /// Write a `HeaderRowRevDxf` as its element, `xfpb:headerRowRevDxf`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn header_row_rev_dxf(node: &super::HeaderRowRevDxf, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::HEADER_ROW_REV_DXF_SHAPE, &node.unknown);
@@ -470,7 +470,7 @@ pub fn header_row_rev_dxf(node: &super::HeaderRowRevDxf, scope: &mut Scope) -> E
 }
 
 /// Write a `IIntFeatureProperty` as its element, `xfpb:i`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn i_int_feature_property(node: &super::IIntFeatureProperty, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -483,7 +483,7 @@ pub fn i_int_feature_property(node: &super::IIntFeatureProperty, scope: &mut Sco
 }
 
 /// Write a `IInteger` as its element, `xfpb:i`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn i_integer(node: &super::IInteger, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::I_INTEGER_SHAPE, &node.unknown);
@@ -492,7 +492,7 @@ pub fn i_integer(node: &super::IInteger, scope: &mut Scope) -> Element {
 }
 
 /// Write a `RelRelFeatureProperty` as its element, `xfpb:rel`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rel_rel_feature_property(node: &super::RelRelFeatureProperty, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -505,7 +505,7 @@ pub fn rel_rel_feature_property(node: &super::RelRelFeatureProperty, scope: &mut
 }
 
 /// Write a `RelString` as its element, `xfpb:rel`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rel_string(node: &super::RelString, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::REL_STRING_SHAPE, &node.unknown);
@@ -514,7 +514,7 @@ pub fn rel_string(node: &super::RelString, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Revdxf` as its element, `xfpb:revdxf`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn revdxf(node: &super::Revdxf, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::REVDXF_SHAPE, &node.unknown);
     writer.child(&node.fpbs);
@@ -523,7 +523,7 @@ pub fn revdxf(node: &super::Revdxf, scope: &mut Scope) -> Element {
 }
 
 /// Write a `SString` as its element, `xfpb:s`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn s_string(node: &super::SString, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::S_STRING_SHAPE, &node.unknown);
@@ -532,7 +532,7 @@ pub fn s_string(node: &super::SString, scope: &mut Scope) -> Element {
 }
 
 /// Write a `SStringFeatureProperty` as its element, `xfpb:s`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn s_string_feature_property(
     node: &super::SStringFeatureProperty,
     scope: &mut Scope,
@@ -548,7 +548,7 @@ pub fn s_string_feature_property(
 }
 
 /// Write a `TableBorderRevDxf` as its element, `xfpb:tableBorderRevDxf`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_border_rev_dxf(node: &super::TableBorderRevDxf, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -561,7 +561,7 @@ pub fn table_border_rev_dxf(node: &super::TableBorderRevDxf, scope: &mut Scope) 
 }
 
 /// Write a `TotalsRowBorderRevDxf` as its element, `xfpb:totalsRowBorderRevDxf`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn totals_row_border_rev_dxf(
     node: &super::TotalsRowBorderRevDxf,
     scope: &mut Scope,
@@ -577,7 +577,7 @@ pub fn totals_row_border_rev_dxf(
 }
 
 /// Write a `TotalsRowRevDxf` as its element, `xfpb:totalsRowRevDxf`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn totals_row_rev_dxf(node: &super::TotalsRowRevDxf, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TOTALS_ROW_REV_DXF_SHAPE, &node.unknown);
@@ -587,7 +587,7 @@ pub fn totals_row_rev_dxf(node: &super::TotalsRowRevDxf, scope: &mut Scope) -> E
 }
 
 /// Write a `XfComplement` as its element, `xfpb:xfComplement`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn xf_complement(node: &super::XfComplement, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::XF_COMPLEMENT_SHAPE, &node.unknown);

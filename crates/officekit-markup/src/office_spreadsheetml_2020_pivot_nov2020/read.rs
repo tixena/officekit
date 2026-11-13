@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xxpim:dataFieldFutureData` into a `DataFieldFutureData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_field_future_data(element: &Element) -> super::DataFieldFutureData {
     let mut node = super::DataFieldFutureData::default();
     let mut reader =
@@ -236,7 +236,7 @@ pub fn data_field_future_data(element: &Element) -> super::DataFieldFutureData {
 }
 
 /// Read `xxpim:ignorableAfterVersion` into a `IgnorableAfterVersion`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ignorable_after_version(element: &Element) -> super::IgnorableAfterVersion {
     let mut node = super::IgnorableAfterVersion::default();
     let mut reader =
@@ -251,7 +251,7 @@ pub fn ignorable_after_version(element: &Element) -> super::IgnorableAfterVersio
 }
 
 /// Read `xxpim:implicitMeasureSupport` into a `ImplicitMeasureSupport`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn implicit_measure_support(element: &Element) -> super::ImplicitMeasureSupport {
     let mut node = super::ImplicitMeasureSupport::default();
     let mut reader =

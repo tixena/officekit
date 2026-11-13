@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `wp15:webVideoPr` into a `WebVideoPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn web_video_pr(element: &Element) -> super::WebVideoPr {
     let mut node = super::WebVideoPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WEB_VIDEO_PR_SHAPE);

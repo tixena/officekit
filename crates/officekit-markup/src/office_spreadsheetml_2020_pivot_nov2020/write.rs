@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `DataFieldFutureData` as its element, `xxpim:dataFieldFutureData`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_field_future_data(node: &super::DataFieldFutureData, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -233,7 +233,7 @@ pub fn data_field_future_data(node: &super::DataFieldFutureData, scope: &mut Sco
 }
 
 /// Write a `IgnorableAfterVersion` as its element, `xxpim:ignorableAfterVersion`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ignorable_after_version(node: &super::IgnorableAfterVersion, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -245,7 +245,7 @@ pub fn ignorable_after_version(node: &super::IgnorableAfterVersion, scope: &mut 
 }
 
 /// Write a `ImplicitMeasureSupport` as its element, `xxpim:implicitMeasureSupport`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn implicit_measure_support(
     node: &super::ImplicitMeasureSupport,
     scope: &mut Scope,

@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xdr14:cNvContentPartPr` into a `CNvContentPartPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_content_part_pr(element: &Element) -> super::CNvContentPartPr {
     let mut node = super::CNvContentPartPr::default();
     let mut reader =
@@ -237,7 +237,7 @@ pub fn c_nv_content_part_pr(element: &Element) -> super::CNvContentPartPr {
 }
 
 /// Read `xdr14:cNvPr` into a `CNvPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_pr(element: &Element) -> super::CNvPr {
     let mut node = super::CNvPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_PR_SHAPE);
@@ -259,7 +259,7 @@ pub fn c_nv_pr(element: &Element) -> super::CNvPr {
 }
 
 /// Read `xdr14:contentPart` into a `ContentPart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn content_part(element: &Element) -> super::ContentPart {
     let mut node = super::ContentPart::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONTENT_PART_SHAPE);
@@ -279,7 +279,7 @@ pub fn content_part(element: &Element) -> super::ContentPart {
 }
 
 /// Read `xdr14:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -293,7 +293,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `xdr14:nvContentPartPr` into a `NvContentPartPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nv_content_part_pr(element: &Element) -> super::NvContentPartPr {
     let mut node = super::NvContentPartPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NV_CONTENT_PART_PR_SHAPE);
@@ -309,7 +309,7 @@ pub fn nv_content_part_pr(element: &Element) -> super::NvContentPartPr {
 }
 
 /// Read `xdr14:nvPr` into a `NvPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nv_pr(element: &Element) -> super::NvPr {
     let mut node = super::NvPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NV_PR_SHAPE);
@@ -325,7 +325,7 @@ pub fn nv_pr(element: &Element) -> super::NvPr {
 }
 
 /// Read `xdr14:xfrm` into a `Xfrm`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn xfrm(element: &Element) -> super::Xfrm {
     let mut node = super::Xfrm::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::XFRM_SHAPE);

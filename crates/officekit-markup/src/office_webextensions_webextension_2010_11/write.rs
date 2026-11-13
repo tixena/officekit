@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `AlternateReferences` as its element, `we:alternateReferences`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn alternate_references(node: &super::AlternateReferences, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -232,7 +232,7 @@ pub fn alternate_references(node: &super::AlternateReferences, scope: &mut Scope
 }
 
 /// Write a `Binding` as its element, `we:binding`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn binding(node: &super::Binding, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::BINDING_SHAPE, &node.unknown);
@@ -244,7 +244,7 @@ pub fn binding(node: &super::Binding, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Bindings` as its element, `we:bindings`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bindings(node: &super::Bindings, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::BINDINGS_SHAPE, &node.unknown);
@@ -253,7 +253,7 @@ pub fn bindings(node: &super::Bindings, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ExtLst` as its element, `we:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -262,7 +262,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Properties` as its element, `we:properties`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn properties(node: &super::Properties, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PROPERTIES_SHAPE, &node.unknown);
@@ -271,7 +271,7 @@ pub fn properties(node: &super::Properties, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Property` as its element, `we:property`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn property(node: &super::Property, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PROPERTY_SHAPE, &node.unknown);
@@ -281,7 +281,7 @@ pub fn property(node: &super::Property, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Reference` as its element, `we:reference`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn reference(node: &super::Reference, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::REFERENCE_SHAPE, &node.unknown);
@@ -294,7 +294,7 @@ pub fn reference(node: &super::Reference, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Snapshot` as its element, `we:snapshot`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn snapshot(node: &super::Snapshot, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SNAPSHOT_SHAPE, &node.unknown);
@@ -307,7 +307,7 @@ pub fn snapshot(node: &super::Snapshot, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Webextension` as its element, `we:webextension`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn webextension(node: &super::Webextension, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::WEBEXTENSION_SHAPE, &node.unknown);
@@ -323,7 +323,7 @@ pub fn webextension(node: &super::Webextension, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Webextensionref` as its element, `we:webextensionref`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn webextensionref(node: &super::Webextensionref, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::WEBEXTENSIONREF_SHAPE, &node.unknown);

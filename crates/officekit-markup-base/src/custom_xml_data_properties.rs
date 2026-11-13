@@ -310,7 +310,7 @@ impl Eq for SetOfAssociatedXMLSchemasWith<()> {}
 impl<X: NodeExtra> AssociatedXMLSchemaWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> AssociatedXMLSchemaWith<Y>
     where
         Y: NodeExtra,
@@ -323,7 +323,7 @@ impl<X: NodeExtra> AssociatedXMLSchemaWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             uri: self.uri.clone(),
@@ -348,7 +348,7 @@ impl crate::Write for AssociatedXMLSchema {
 impl<X: NodeExtra> CustomXMLDataPropertiesWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> CustomXMLDataPropertiesWith<Y>
     where
         Y: NodeExtra,
@@ -365,7 +365,7 @@ impl<X: NodeExtra> CustomXMLDataPropertiesWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             item_id: self.item_id.clone(),
@@ -390,7 +390,7 @@ impl crate::Write for CustomXMLDataProperties {
 impl<X: NodeExtra> SetOfAssociatedXMLSchemasWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SetOfAssociatedXMLSchemasWith<Y>
     where
         Y: NodeExtra,
@@ -406,7 +406,7 @@ impl<X: NodeExtra> SetOfAssociatedXMLSchemasWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }

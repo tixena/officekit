@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `ExtLst` as its element, `thm15:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -229,7 +229,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ThemeFamily` as its element, `thm15:themeFamily`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn theme_family(node: &super::ThemeFamily, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::THEME_FAMILY_SHAPE, &node.unknown);
@@ -241,7 +241,7 @@ pub fn theme_family(node: &super::ThemeFamily, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ThemeVariant` as its element, `thm15:themeVariant`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn theme_variant(node: &super::ThemeVariant, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::THEME_VARIANT_SHAPE, &node.unknown);
@@ -255,7 +255,7 @@ pub fn theme_variant(node: &super::ThemeVariant, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ThemeVariantLst` as its element, `thm15:themeVariantLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn theme_variant_lst(node: &super::ThemeVariantLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::THEME_VARIANT_LST_SHAPE, &node.unknown);

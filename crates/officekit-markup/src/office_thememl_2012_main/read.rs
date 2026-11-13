@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `thm15:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -233,7 +233,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `thm15:themeFamily` into a `ThemeFamily`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn theme_family(element: &Element) -> super::ThemeFamily {
     let mut node = super::ThemeFamily::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::THEME_FAMILY_SHAPE);
@@ -251,7 +251,7 @@ pub fn theme_family(element: &Element) -> super::ThemeFamily {
 }
 
 /// Read `thm15:themeVariant` into a `ThemeVariant`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn theme_variant(element: &Element) -> super::ThemeVariant {
     let mut node = super::ThemeVariant::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::THEME_VARIANT_SHAPE);
@@ -271,7 +271,7 @@ pub fn theme_variant(element: &Element) -> super::ThemeVariant {
 }
 
 /// Read `thm15:themeVariantLst` into a `ThemeVariantLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn theme_variant_lst(element: &Element) -> super::ThemeVariantLst {
     let mut node = super::ThemeVariantLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::THEME_VARIANT_LST_SHAPE);

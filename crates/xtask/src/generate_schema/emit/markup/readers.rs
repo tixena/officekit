@@ -14,7 +14,7 @@ const FIELDS: usize = 85;
 
 /// The text of `read.rs`.
 ///
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn text(header: &str, names: &Names<'_>) -> String {
     let catalog = names.catalog;
     let module = &catalog.modules[names.module];
@@ -41,7 +41,7 @@ pub fn text(header: &str, names: &Names<'_>) -> String {
                 found.name
             ),
         );
-        text.push_str("#[must_use]\n");
+        text.push_str("#[must_use = \"the item read is returned; nothing else keeps it\"]\n");
         text.push_str(&layout::signature(
             0,
             &format!("pub fn {function}"),
@@ -94,7 +94,7 @@ fn node_reader(names: &Names<'_>, index: usize, function: &str) -> String {
             catalog.modules[node.module].prefix, node.key.tag.local, node.name
         ),
     );
-    out.push_str("#[must_use]\n");
+    out.push_str("#[must_use = \"the node read is returned; nothing else keeps it\"]\n");
     out.push_str(&layout::signature(
         0,
         &format!("pub fn {function}"),

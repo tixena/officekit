@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `woe:oembed` into a `Oembed`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn oembed(element: &Element) -> super::Oembed {
     let mut node = super::Oembed::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::OEMBED_SHAPE);

@@ -3,7 +3,7 @@
 use super::{DateTime, Measure, MeasureUnit};
 
 /// `xsd:boolean`: `true`, `false`, `1`, `0`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn boolean(text: &str) -> Option<bool> {
     match text {
         "true" | "1" => Some(true),
@@ -13,13 +13,13 @@ pub fn boolean(text: &str) -> Option<bool> {
 }
 
 /// `xsd:integer`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn integer(text: &str) -> Option<i64> {
     text.parse().ok()
 }
 
 /// `-?[0-9]+(\.[0-9]+)?` followed by `suffix`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn decimal_with_suffix(text: &str, suffix: &str) -> Option<f64> {
     let number = text.strip_suffix(suffix)?;
     let digits = number.strip_prefix('-').unwrap_or(number);
@@ -34,7 +34,7 @@ pub fn decimal_with_suffix(text: &str, suffix: &str) -> Option<f64> {
 }
 
 /// `ST_UniversalMeasure`: `-?[0-9]+(\.[0-9]+)?(mm|cm|in|pt|pc|pi)`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn measure(text: &str) -> Option<Measure> {
     let unit_text = text.get(text.len().checked_sub(2)?..)?;
     let unit = match unit_text {
@@ -58,7 +58,7 @@ pub fn list(text: &str) -> impl Iterator<Item = &str> {
 }
 
 /// `xsd:dateTime`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn date_time(text: &str) -> Option<DateTime> {
     let (negative, rest) = text
         .strip_prefix('-')

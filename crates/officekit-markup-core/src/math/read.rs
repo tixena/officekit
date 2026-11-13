@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `m:acc` into a `Accent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn accent(element: &Element) -> super::Accent {
     let mut node = super::Accent::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ACCENT_SHAPE);
@@ -235,7 +235,7 @@ pub fn accent(element: &Element) -> super::Accent {
 }
 
 /// Read `m:accPr` into a `AccentProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn accent_properties(element: &Element) -> super::AccentProperties {
     let mut node = super::AccentProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ACCENT_PROPERTIES_SHAPE);
@@ -251,7 +251,7 @@ pub fn accent_properties(element: &Element) -> super::AccentProperties {
 }
 
 /// Read `m:alnScr` into a `AlignScripts`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn align_scripts(element: &Element) -> super::AlignScripts {
     let mut node = super::AlignScripts::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ALIGN_SCRIPTS_SHAPE);
@@ -265,7 +265,7 @@ pub fn align_scripts(element: &Element) -> super::AlignScripts {
 }
 
 /// Read `m:aln` into a `Alignment`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn alignment(element: &Element) -> super::Alignment {
     let mut node = super::Alignment::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ALIGNMENT_SHAPE);
@@ -279,7 +279,7 @@ pub fn alignment(element: &Element) -> super::Alignment {
 }
 
 /// Read `m:argPr` into a `ArgumentProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn argument_properties(element: &Element) -> super::ArgumentProperties {
     let mut node = super::ArgumentProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ARGUMENT_PROPERTIES_SHAPE);
@@ -293,7 +293,7 @@ pub fn argument_properties(element: &Element) -> super::ArgumentProperties {
 }
 
 /// Read `m:argSz` into a `ArgumentSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn argument_size(element: &Element) -> super::ArgumentSize {
     let mut node = super::ArgumentSize::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ARGUMENT_SIZE_SHAPE);
@@ -307,7 +307,7 @@ pub fn argument_size(element: &Element) -> super::ArgumentSize {
 }
 
 /// Read `m:eqArr` into a `ArrayObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn array_object(element: &Element) -> super::ArrayObject {
     let mut node = super::ArrayObject::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ARRAY_OBJECT_SHAPE);
@@ -323,7 +323,7 @@ pub fn array_object(element: &Element) -> super::ArrayObject {
 }
 
 /// Read `m:eqArrPr` into a `ArrayProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn array_properties(element: &Element) -> super::ArrayProperties {
     let mut node = super::ArrayProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ARRAY_PROPERTIES_SHAPE);
@@ -343,7 +343,7 @@ pub fn array_properties(element: &Element) -> super::ArrayProperties {
 }
 
 /// Read `m:bar` into a `Bar`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bar(element: &Element) -> super::Bar {
     let mut node = super::Bar::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BAR_SHAPE);
@@ -359,7 +359,7 @@ pub fn bar(element: &Element) -> super::Bar {
 }
 
 /// Read `m:barPr` into a `BarProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bar_properties(element: &Element) -> super::BarProperties {
     let mut node = super::BarProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BAR_PROPERTIES_SHAPE);
@@ -375,7 +375,7 @@ pub fn bar_properties(element: &Element) -> super::BarProperties {
 }
 
 /// Read `m:borderBox` into a `BorderBoxObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn border_box_object(element: &Element) -> super::BorderBoxObject {
     let mut node = super::BorderBoxObject::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BORDER_BOX_OBJECT_SHAPE);
@@ -391,7 +391,7 @@ pub fn border_box_object(element: &Element) -> super::BorderBoxObject {
 }
 
 /// Read `m:borderBoxPr` into a `BorderBoxProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn border_box_properties(element: &Element) -> super::BorderBoxProperties {
     let mut node = super::BorderBoxProperties::default();
     let mut reader =
@@ -415,7 +415,7 @@ pub fn border_box_properties(element: &Element) -> super::BorderBoxProperties {
 }
 
 /// Read `m:strikeBLTR` into a `BorderBoxStrikethroughBottomLeftToTopRight`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn border_box_strikethrough_bottom_left_to_top_right(
     element: &Element,
 ) -> super::BorderBoxStrikethroughBottomLeftToTopRight {
@@ -434,7 +434,7 @@ pub fn border_box_strikethrough_bottom_left_to_top_right(
 }
 
 /// Read `m:strikeH` into a `BorderBoxStrikethroughHorizontal`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn border_box_strikethrough_horizontal(
     element: &Element,
 ) -> super::BorderBoxStrikethroughHorizontal {
@@ -453,7 +453,7 @@ pub fn border_box_strikethrough_horizontal(
 }
 
 /// Read `m:strikeTLBR` into a `BorderBoxStrikethroughTopLeftToBottomRight`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn border_box_strikethrough_top_left_to_bottom_right(
     element: &Element,
 ) -> super::BorderBoxStrikethroughTopLeftToBottomRight {
@@ -472,7 +472,7 @@ pub fn border_box_strikethrough_top_left_to_bottom_right(
 }
 
 /// Read `m:strikeV` into a `BorderBoxStrikethroughVertical`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn border_box_strikethrough_vertical(
     element: &Element,
 ) -> super::BorderBoxStrikethroughVertical {
@@ -491,7 +491,7 @@ pub fn border_box_strikethrough_vertical(
 }
 
 /// Read `m:box` into a `BoxObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn box_object(element: &Element) -> super::BoxObject {
     let mut node = super::BoxObject::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BOX_OBJECT_SHAPE);
@@ -507,7 +507,7 @@ pub fn box_object(element: &Element) -> super::BoxObject {
 }
 
 /// Read `m:boxPr` into a `BoxProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn box_properties(element: &Element) -> super::BoxProperties {
     let mut node = super::BoxProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BOX_PROPERTIES_SHAPE);
@@ -527,7 +527,7 @@ pub fn box_properties(element: &Element) -> super::BoxProperties {
 }
 
 /// Read `m:brk` into a `Break`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r#break(element: &Element) -> super::Break {
     let mut node = super::Break::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BREAK_SHAPE);
@@ -541,7 +541,7 @@ pub fn r#break(element: &Element) -> super::Break {
 }
 
 /// Read `m:brkBin` into a `BreakOnBinaryOperators`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn break_on_binary_operators(element: &Element) -> super::BreakOnBinaryOperators {
     let mut node = super::BreakOnBinaryOperators::default();
     let mut reader =
@@ -556,7 +556,7 @@ pub fn break_on_binary_operators(element: &Element) -> super::BreakOnBinaryOpera
 }
 
 /// Read `m:brkBinSub` into a `BreakOnBinarySubtraction`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn break_on_binary_subtraction(element: &Element) -> super::BreakOnBinarySubtraction {
     let mut node = super::BreakOnBinarySubtraction::default();
     let mut reader =
@@ -571,7 +571,7 @@ pub fn break_on_binary_subtraction(element: &Element) -> super::BreakOnBinarySub
 }
 
 /// Read `m:chr` into a `Character`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn character(element: &Element) -> super::Character {
     let mut node = super::Character::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CHARACTER_SHAPE);
@@ -585,7 +585,7 @@ pub fn character(element: &Element) -> super::Character {
 }
 
 /// Read `m:ctrlPr` into a `ControlProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn control_properties(element: &Element) -> super::ControlProperties {
     let mut node = super::ControlProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONTROL_PROPERTIES_SHAPE);
@@ -599,13 +599,13 @@ pub fn control_properties(element: &Element) -> super::ControlProperties {
 }
 
 /// Read one item of `ControlPropertiesContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn control_properties_content(element: &Element) -> super::ControlPropertiesContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `m:defJc` into a `DefaultJustification`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn default_justification(element: &Element) -> super::DefaultJustification {
     let mut node = super::DefaultJustification::default();
     let mut reader =
@@ -620,7 +620,7 @@ pub fn default_justification(element: &Element) -> super::DefaultJustification {
 }
 
 /// Read `m:deg` into a `Degree`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn degree(element: &Element) -> super::Degree {
     let mut node = super::Degree::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DEGREE_SHAPE);
@@ -637,7 +637,7 @@ pub fn degree(element: &Element) -> super::Degree {
 }
 
 /// Read `m:begChr` into a `DelimiterBeginningCharacter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn delimiter_beginning_character(element: &Element) -> super::DelimiterBeginningCharacter {
     let mut node = super::DelimiterBeginningCharacter::default();
     let mut reader =
@@ -652,7 +652,7 @@ pub fn delimiter_beginning_character(element: &Element) -> super::DelimiterBegin
 }
 
 /// Read `m:endChr` into a `DelimiterEndingCharacter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn delimiter_ending_character(element: &Element) -> super::DelimiterEndingCharacter {
     let mut node = super::DelimiterEndingCharacter::default();
     let mut reader =
@@ -667,7 +667,7 @@ pub fn delimiter_ending_character(element: &Element) -> super::DelimiterEndingCh
 }
 
 /// Read `m:d` into a `DelimiterObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn delimiter_object(element: &Element) -> super::DelimiterObject {
     let mut node = super::DelimiterObject::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DELIMITER_OBJECT_SHAPE);
@@ -683,7 +683,7 @@ pub fn delimiter_object(element: &Element) -> super::DelimiterObject {
 }
 
 /// Read `m:dPr` into a `DelimiterProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn delimiter_properties(element: &Element) -> super::DelimiterProperties {
     let mut node = super::DelimiterProperties::default();
     let mut reader =
@@ -704,7 +704,7 @@ pub fn delimiter_properties(element: &Element) -> super::DelimiterProperties {
 }
 
 /// Read `m:sepChr` into a `DelimiterSeparatorCharacter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn delimiter_separator_character(element: &Element) -> super::DelimiterSeparatorCharacter {
     let mut node = super::DelimiterSeparatorCharacter::default();
     let mut reader =
@@ -719,7 +719,7 @@ pub fn delimiter_separator_character(element: &Element) -> super::DelimiterSepar
 }
 
 /// Read `m:den` into a `Denominator`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn denominator(element: &Element) -> super::Denominator {
     let mut node = super::Denominator::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DENOMINATOR_SHAPE);
@@ -736,7 +736,7 @@ pub fn denominator(element: &Element) -> super::Denominator {
 }
 
 /// Read `m:diff` into a `Differential`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn differential(element: &Element) -> super::Differential {
     let mut node = super::Differential::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DIFFERENTIAL_SHAPE);
@@ -750,7 +750,7 @@ pub fn differential(element: &Element) -> super::Differential {
 }
 
 /// Read `m:e` into a `E`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn e(element: &Element) -> super::E {
     let mut node = super::E::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::E_SHAPE);
@@ -767,7 +767,7 @@ pub fn e(element: &Element) -> super::E {
 }
 
 /// Read `m:f` into a `FractionObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn fraction_object(element: &Element) -> super::FractionObject {
     let mut node = super::FractionObject::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FRACTION_OBJECT_SHAPE);
@@ -784,7 +784,7 @@ pub fn fraction_object(element: &Element) -> super::FractionObject {
 }
 
 /// Read `m:fPr` into a `FractionProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn fraction_properties(element: &Element) -> super::FractionProperties {
     let mut node = super::FractionProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FRACTION_PROPERTIES_SHAPE);
@@ -800,7 +800,7 @@ pub fn fraction_properties(element: &Element) -> super::FractionProperties {
 }
 
 /// Read `m:type` into a `FractionType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn fraction_type(element: &Element) -> super::FractionType {
     let mut node = super::FractionType::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FRACTION_TYPE_SHAPE);
@@ -814,7 +814,7 @@ pub fn fraction_type(element: &Element) -> super::FractionType {
 }
 
 /// Read `m:func` into a `FunctionApplyObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn function_apply_object(element: &Element) -> super::FunctionApplyObject {
     let mut node = super::FunctionApplyObject::default();
     let mut reader =
@@ -832,7 +832,7 @@ pub fn function_apply_object(element: &Element) -> super::FunctionApplyObject {
 }
 
 /// Read `m:fName` into a `FunctionName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn function_name(element: &Element) -> super::FunctionName {
     let mut node = super::FunctionName::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FUNCTION_NAME_SHAPE);
@@ -849,7 +849,7 @@ pub fn function_name(element: &Element) -> super::FunctionName {
 }
 
 /// Read `m:funcPr` into a `FunctionProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn function_properties(element: &Element) -> super::FunctionProperties {
     let mut node = super::FunctionProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FUNCTION_PROPERTIES_SHAPE);
@@ -863,7 +863,7 @@ pub fn function_properties(element: &Element) -> super::FunctionProperties {
 }
 
 /// Read `m:groupChr` into a `GroupCharacterObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_character_object(element: &Element) -> super::GroupCharacterObject {
     let mut node = super::GroupCharacterObject::default();
     let mut reader =
@@ -880,7 +880,7 @@ pub fn group_character_object(element: &Element) -> super::GroupCharacterObject 
 }
 
 /// Read `m:groupChrPr` into a `GroupCharacterProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_character_properties(element: &Element) -> super::GroupCharacterProperties {
     let mut node = super::GroupCharacterProperties::default();
     let mut reader =
@@ -899,7 +899,7 @@ pub fn group_character_properties(element: &Element) -> super::GroupCharacterPro
 }
 
 /// Read `m:grow` into a `Grow`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn grow(element: &Element) -> super::Grow {
     let mut node = super::Grow::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GROW_SHAPE);
@@ -913,7 +913,7 @@ pub fn grow(element: &Element) -> super::Grow {
 }
 
 /// Read `m:hideBot` into a `HideBottomEdge`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hide_bottom_edge(element: &Element) -> super::HideBottomEdge {
     let mut node = super::HideBottomEdge::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HIDE_BOTTOM_EDGE_SHAPE);
@@ -927,7 +927,7 @@ pub fn hide_bottom_edge(element: &Element) -> super::HideBottomEdge {
 }
 
 /// Read `m:degHide` into a `HideDegree`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hide_degree(element: &Element) -> super::HideDegree {
     let mut node = super::HideDegree::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HIDE_DEGREE_SHAPE);
@@ -941,7 +941,7 @@ pub fn hide_degree(element: &Element) -> super::HideDegree {
 }
 
 /// Read `m:hideLeft` into a `HideLeftEdge`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hide_left_edge(element: &Element) -> super::HideLeftEdge {
     let mut node = super::HideLeftEdge::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HIDE_LEFT_EDGE_SHAPE);
@@ -955,7 +955,7 @@ pub fn hide_left_edge(element: &Element) -> super::HideLeftEdge {
 }
 
 /// Read `m:hideRight` into a `HideRightEdge`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hide_right_edge(element: &Element) -> super::HideRightEdge {
     let mut node = super::HideRightEdge::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HIDE_RIGHT_EDGE_SHAPE);
@@ -969,7 +969,7 @@ pub fn hide_right_edge(element: &Element) -> super::HideRightEdge {
 }
 
 /// Read `m:hideTop` into a `HideTopEdge`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hide_top_edge(element: &Element) -> super::HideTopEdge {
     let mut node = super::HideTopEdge::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HIDE_TOP_EDGE_SHAPE);
@@ -983,7 +983,7 @@ pub fn hide_top_edge(element: &Element) -> super::HideTopEdge {
 }
 
 /// Read `m:intLim` into a `IntegralLimitLocations`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn integral_limit_locations(element: &Element) -> super::IntegralLimitLocations {
     let mut node = super::IntegralLimitLocations::default();
     let mut reader =
@@ -998,7 +998,7 @@ pub fn integral_limit_locations(element: &Element) -> super::IntegralLimitLocati
 }
 
 /// Read `m:interSp` into a `InterEquationSpacing`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn inter_equation_spacing(element: &Element) -> super::InterEquationSpacing {
     let mut node = super::InterEquationSpacing::default();
     let mut reader =
@@ -1013,7 +1013,7 @@ pub fn inter_equation_spacing(element: &Element) -> super::InterEquationSpacing 
 }
 
 /// Read `m:intraSp` into a `IntraEquationSpacing`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn intra_equation_spacing(element: &Element) -> super::IntraEquationSpacing {
     let mut node = super::IntraEquationSpacing::default();
     let mut reader =
@@ -1028,7 +1028,7 @@ pub fn intra_equation_spacing(element: &Element) -> super::IntraEquationSpacing 
 }
 
 /// Read `m:jc` into a `Justification`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn justification(element: &Element) -> super::Justification {
     let mut node = super::Justification::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::JUSTIFICATION_SHAPE);
@@ -1042,7 +1042,7 @@ pub fn justification(element: &Element) -> super::Justification {
 }
 
 /// Read `m:lMargin` into a `LeftMargin`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn left_margin(element: &Element) -> super::LeftMargin {
     let mut node = super::LeftMargin::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LEFT_MARGIN_SHAPE);
@@ -1056,7 +1056,7 @@ pub fn left_margin(element: &Element) -> super::LeftMargin {
 }
 
 /// Read `m:limLoc` into a `LimLoc`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn lim_loc(element: &Element) -> super::LimLoc {
     let mut node = super::LimLoc::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LIM_LOC_SHAPE);
@@ -1070,7 +1070,7 @@ pub fn lim_loc(element: &Element) -> super::LimLoc {
 }
 
 /// Read `m:lim` into a `Limit`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn limit(element: &Element) -> super::Limit {
     let mut node = super::Limit::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LIMIT_SHAPE);
@@ -1087,7 +1087,7 @@ pub fn limit(element: &Element) -> super::Limit {
 }
 
 /// Read `m:lit` into a `Literal`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn literal(element: &Element) -> super::Literal {
     let mut node = super::Literal::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LITERAL_SHAPE);
@@ -1101,7 +1101,7 @@ pub fn literal(element: &Element) -> super::Literal {
 }
 
 /// Read `m:limLow` into a `LowerLimitObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn lower_limit_object(element: &Element) -> super::LowerLimitObject {
     let mut node = super::LowerLimitObject::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LOWER_LIMIT_OBJECT_SHAPE);
@@ -1118,7 +1118,7 @@ pub fn lower_limit_object(element: &Element) -> super::LowerLimitObject {
 }
 
 /// Read `m:limLowPr` into a `LowerLimitProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn lower_limit_properties(element: &Element) -> super::LowerLimitProperties {
     let mut node = super::LowerLimitProperties::default();
     let mut reader =
@@ -1133,7 +1133,7 @@ pub fn lower_limit_properties(element: &Element) -> super::LowerLimitProperties 
 }
 
 /// Read `m:mathFont` into a `MathFont`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn math_font(element: &Element) -> super::MathFont {
     let mut node = super::MathFont::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MATH_FONT_SHAPE);
@@ -1147,7 +1147,7 @@ pub fn math_font(element: &Element) -> super::MathFont {
 }
 
 /// Read `m:mathPr` into a `MathProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn math_properties(element: &Element) -> super::MathProperties {
     let mut node = super::MathProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MATH_PROPERTIES_SHAPE);
@@ -1176,13 +1176,13 @@ pub fn math_properties(element: &Element) -> super::MathProperties {
 }
 
 /// Read one item of `MathPropertiesContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn math_properties_content(element: &Element) -> super::MathPropertiesContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `m:baseJc` into a `MatrixBaseJustification`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn matrix_base_justification(element: &Element) -> super::MatrixBaseJustification {
     let mut node = super::MatrixBaseJustification::default();
     let mut reader =
@@ -1197,7 +1197,7 @@ pub fn matrix_base_justification(element: &Element) -> super::MatrixBaseJustific
 }
 
 /// Read `m:mc` into a `MatrixColumn`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn matrix_column(element: &Element) -> super::MatrixColumn {
     let mut node = super::MatrixColumn::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MATRIX_COLUMN_SHAPE);
@@ -1211,7 +1211,7 @@ pub fn matrix_column(element: &Element) -> super::MatrixColumn {
 }
 
 /// Read `m:count` into a `MatrixColumnCount`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn matrix_column_count(element: &Element) -> super::MatrixColumnCount {
     let mut node = super::MatrixColumnCount::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MATRIX_COLUMN_COUNT_SHAPE);
@@ -1225,7 +1225,7 @@ pub fn matrix_column_count(element: &Element) -> super::MatrixColumnCount {
 }
 
 /// Read `m:cGp` into a `MatrixColumnGap`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn matrix_column_gap(element: &Element) -> super::MatrixColumnGap {
     let mut node = super::MatrixColumnGap::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MATRIX_COLUMN_GAP_SHAPE);
@@ -1239,7 +1239,7 @@ pub fn matrix_column_gap(element: &Element) -> super::MatrixColumnGap {
 }
 
 /// Read `m:cGpRule` into a `MatrixColumnGapRule`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn matrix_column_gap_rule(element: &Element) -> super::MatrixColumnGapRule {
     let mut node = super::MatrixColumnGapRule::default();
     let mut reader =
@@ -1254,7 +1254,7 @@ pub fn matrix_column_gap_rule(element: &Element) -> super::MatrixColumnGapRule {
 }
 
 /// Read `m:mcJc` into a `MatrixColumnJustification`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn matrix_column_justification(element: &Element) -> super::MatrixColumnJustification {
     let mut node = super::MatrixColumnJustification::default();
     let mut reader =
@@ -1269,7 +1269,7 @@ pub fn matrix_column_justification(element: &Element) -> super::MatrixColumnJust
 }
 
 /// Read `m:mcPr` into a `MatrixColumnProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn matrix_column_properties(element: &Element) -> super::MatrixColumnProperties {
     let mut node = super::MatrixColumnProperties::default();
     let mut reader =
@@ -1286,7 +1286,7 @@ pub fn matrix_column_properties(element: &Element) -> super::MatrixColumnPropert
 }
 
 /// Read `m:mcs` into a `MatrixColumns`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn matrix_columns(element: &Element) -> super::MatrixColumns {
     let mut node = super::MatrixColumns::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MATRIX_COLUMNS_SHAPE);
@@ -1300,7 +1300,7 @@ pub fn matrix_columns(element: &Element) -> super::MatrixColumns {
 }
 
 /// Read `m:m` into a `MatrixObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn matrix_object(element: &Element) -> super::MatrixObject {
     let mut node = super::MatrixObject::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MATRIX_OBJECT_SHAPE);
@@ -1316,7 +1316,7 @@ pub fn matrix_object(element: &Element) -> super::MatrixObject {
 }
 
 /// Read `m:mPr` into a `MatrixProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn matrix_properties(element: &Element) -> super::MatrixProperties {
     let mut node = super::MatrixProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MATRIX_PROPERTIES_SHAPE);
@@ -1339,7 +1339,7 @@ pub fn matrix_properties(element: &Element) -> super::MatrixProperties {
 }
 
 /// Read `m:mr` into a `MatrixRow`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn matrix_row(element: &Element) -> super::MatrixRow {
     let mut node = super::MatrixRow::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MATRIX_ROW_SHAPE);
@@ -1353,7 +1353,7 @@ pub fn matrix_row(element: &Element) -> super::MatrixRow {
 }
 
 /// Read `m:maxDist` into a `MaximumDistribution`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn maximum_distribution(element: &Element) -> super::MaximumDistribution {
     let mut node = super::MaximumDistribution::default();
     let mut reader =
@@ -1368,7 +1368,7 @@ pub fn maximum_distribution(element: &Element) -> super::MaximumDistribution {
 }
 
 /// Read `m:cSp` into a `MinimumMatrixColumnWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn minimum_matrix_column_width(element: &Element) -> super::MinimumMatrixColumnWidth {
     let mut node = super::MinimumMatrixColumnWidth::default();
     let mut reader =
@@ -1383,7 +1383,7 @@ pub fn minimum_matrix_column_width(element: &Element) -> super::MinimumMatrixCol
 }
 
 /// Read `m:nary` into a `Nary`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nary(element: &Element) -> super::Nary {
     let mut node = super::Nary::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NARY_SHAPE);
@@ -1401,7 +1401,7 @@ pub fn nary(element: &Element) -> super::Nary {
 }
 
 /// Read `m:naryLim` into a `NaryLim`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nary_lim(element: &Element) -> super::NaryLim {
     let mut node = super::NaryLim::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NARY_LIM_SHAPE);
@@ -1415,7 +1415,7 @@ pub fn nary_lim(element: &Element) -> super::NaryLim {
 }
 
 /// Read `m:naryPr` into a `NaryPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nary_pr(element: &Element) -> super::NaryPr {
     let mut node = super::NaryPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NARY_PR_SHAPE);
@@ -1435,7 +1435,7 @@ pub fn nary_pr(element: &Element) -> super::NaryPr {
 }
 
 /// Read `m:noBreak` into a `NoBreak`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn no_break(element: &Element) -> super::NoBreak {
     let mut node = super::NoBreak::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NO_BREAK_SHAPE);
@@ -1449,7 +1449,7 @@ pub fn no_break(element: &Element) -> super::NoBreak {
 }
 
 /// Read `m:nor` into a `NormalText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn normal_text(element: &Element) -> super::NormalText {
     let mut node = super::NormalText::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NORMAL_TEXT_SHAPE);
@@ -1463,7 +1463,7 @@ pub fn normal_text(element: &Element) -> super::NormalText {
 }
 
 /// Read `m:num` into a `Numerator`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn numerator(element: &Element) -> super::Numerator {
     let mut node = super::Numerator::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NUMERATOR_SHAPE);
@@ -1480,7 +1480,7 @@ pub fn numerator(element: &Element) -> super::Numerator {
 }
 
 /// Read `m:objDist` into a `ObjectDistribution`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn object_distribution(element: &Element) -> super::ObjectDistribution {
     let mut node = super::ObjectDistribution::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::OBJECT_DISTRIBUTION_SHAPE);
@@ -1494,7 +1494,7 @@ pub fn object_distribution(element: &Element) -> super::ObjectDistribution {
 }
 
 /// Read `m:oMath` into a `OfficeMath`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn office_math(element: &Element) -> super::OfficeMath {
     let mut node = super::OfficeMath::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::OFFICE_MATH_SHAPE);
@@ -1508,13 +1508,13 @@ pub fn office_math(element: &Element) -> super::OfficeMath {
 }
 
 /// Read one item of `OfficeMathContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn office_math_content(element: &Element) -> super::OfficeMathContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `m:oMathPara` into a `OfficeMathParagraph`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn office_math_paragraph(element: &Element) -> super::OfficeMathParagraph {
     let mut node = super::OfficeMathParagraph::default();
     let mut reader =
@@ -1537,7 +1537,7 @@ pub fn office_math_paragraph(element: &Element) -> super::OfficeMathParagraph {
 }
 
 /// Read `m:oMathParaPr` into a `OfficeMathParagraphProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn office_math_paragraph_properties(element: &Element) -> super::OfficeMathParagraphProperties {
     let mut node = super::OfficeMathParagraphProperties::default();
     let mut reader =
@@ -1552,7 +1552,7 @@ pub fn office_math_paragraph_properties(element: &Element) -> super::OfficeMathP
 }
 
 /// Read `m:opEmu` into a `OperatorEmulator`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn operator_emulator(element: &Element) -> super::OperatorEmulator {
     let mut node = super::OperatorEmulator::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::OPERATOR_EMULATOR_SHAPE);
@@ -1566,7 +1566,7 @@ pub fn operator_emulator(element: &Element) -> super::OperatorEmulator {
 }
 
 /// Read `m:phant` into a `PhantomObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn phantom_object(element: &Element) -> super::PhantomObject {
     let mut node = super::PhantomObject::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PHANTOM_OBJECT_SHAPE);
@@ -1582,7 +1582,7 @@ pub fn phantom_object(element: &Element) -> super::PhantomObject {
 }
 
 /// Read `m:phantPr` into a `PhantomProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn phantom_properties(element: &Element) -> super::PhantomProperties {
     let mut node = super::PhantomProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PHANTOM_PROPERTIES_SHAPE);
@@ -1602,7 +1602,7 @@ pub fn phantom_properties(element: &Element) -> super::PhantomProperties {
 }
 
 /// Read `m:show` into a `PhantomShow`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn phantom_show(element: &Element) -> super::PhantomShow {
     let mut node = super::PhantomShow::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PHANTOM_SHOW_SHAPE);
@@ -1616,7 +1616,7 @@ pub fn phantom_show(element: &Element) -> super::PhantomShow {
 }
 
 /// Read `m:zeroAsc` into a `PhantomZeroAscent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn phantom_zero_ascent(element: &Element) -> super::PhantomZeroAscent {
     let mut node = super::PhantomZeroAscent::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PHANTOM_ZERO_ASCENT_SHAPE);
@@ -1630,7 +1630,7 @@ pub fn phantom_zero_ascent(element: &Element) -> super::PhantomZeroAscent {
 }
 
 /// Read `m:zeroDesc` into a `PhantomZeroDescent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn phantom_zero_descent(element: &Element) -> super::PhantomZeroDescent {
     let mut node = super::PhantomZeroDescent::default();
     let mut reader =
@@ -1645,7 +1645,7 @@ pub fn phantom_zero_descent(element: &Element) -> super::PhantomZeroDescent {
 }
 
 /// Read `m:zeroWid` into a `PhantomZeroWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn phantom_zero_width(element: &Element) -> super::PhantomZeroWidth {
     let mut node = super::PhantomZeroWidth::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PHANTOM_ZERO_WIDTH_SHAPE);
@@ -1659,7 +1659,7 @@ pub fn phantom_zero_width(element: &Element) -> super::PhantomZeroWidth {
 }
 
 /// Read `m:plcHide` into a `PlcHide`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn plc_hide(element: &Element) -> super::PlcHide {
     let mut node = super::PlcHide::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PLC_HIDE_SHAPE);
@@ -1673,7 +1673,7 @@ pub fn plc_hide(element: &Element) -> super::PlcHide {
 }
 
 /// Read `m:pos` into a `Position`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn position(element: &Element) -> super::Position {
     let mut node = super::Position::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::POSITION_SHAPE);
@@ -1687,7 +1687,7 @@ pub fn position(element: &Element) -> super::Position {
 }
 
 /// Read `m:postSp` into a `PostParagraphSpacing`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn post_paragraph_spacing(element: &Element) -> super::PostParagraphSpacing {
     let mut node = super::PostParagraphSpacing::default();
     let mut reader =
@@ -1702,7 +1702,7 @@ pub fn post_paragraph_spacing(element: &Element) -> super::PostParagraphSpacing 
 }
 
 /// Read `m:preSp` into a `PreParagraphSpacing`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pre_paragraph_spacing(element: &Element) -> super::PreParagraphSpacing {
     let mut node = super::PreParagraphSpacing::default();
     let mut reader =
@@ -1717,7 +1717,7 @@ pub fn pre_paragraph_spacing(element: &Element) -> super::PreParagraphSpacing {
 }
 
 /// Read `m:sPre` into a `PreSubSuperscriptObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pre_sub_superscript_object(element: &Element) -> super::PreSubSuperscriptObject {
     let mut node = super::PreSubSuperscriptObject::default();
     let mut reader =
@@ -1736,7 +1736,7 @@ pub fn pre_sub_superscript_object(element: &Element) -> super::PreSubSuperscript
 }
 
 /// Read `m:sPrePr` into a `PreSubSuperscriptProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pre_sub_superscript_properties(element: &Element) -> super::PreSubSuperscriptProperties {
     let mut node = super::PreSubSuperscriptProperties::default();
     let mut reader =
@@ -1751,7 +1751,7 @@ pub fn pre_sub_superscript_properties(element: &Element) -> super::PreSubSupersc
 }
 
 /// Read `m:rSp` into a `RSp`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r_sp(element: &Element) -> super::RSp {
     let mut node = super::RSp::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::R_SP_SHAPE);
@@ -1765,7 +1765,7 @@ pub fn r_sp(element: &Element) -> super::RSp {
 }
 
 /// Read `m:rad` into a `RadicalObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn radical_object(element: &Element) -> super::RadicalObject {
     let mut node = super::RadicalObject::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RADICAL_OBJECT_SHAPE);
@@ -1782,7 +1782,7 @@ pub fn radical_object(element: &Element) -> super::RadicalObject {
 }
 
 /// Read `m:radPr` into a `RadicalProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn radical_properties(element: &Element) -> super::RadicalProperties {
     let mut node = super::RadicalProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RADICAL_PROPERTIES_SHAPE);
@@ -1798,7 +1798,7 @@ pub fn radical_properties(element: &Element) -> super::RadicalProperties {
 }
 
 /// Read `m:rMargin` into a `RightMargin`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn right_margin(element: &Element) -> super::RightMargin {
     let mut node = super::RightMargin::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RIGHT_MARGIN_SHAPE);
@@ -1812,7 +1812,7 @@ pub fn right_margin(element: &Element) -> super::RightMargin {
 }
 
 /// Read `m:rSpRule` into a `RowSpacingRule`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn row_spacing_rule(element: &Element) -> super::RowSpacingRule {
     let mut node = super::RowSpacingRule::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ROW_SPACING_RULE_SHAPE);
@@ -1826,7 +1826,7 @@ pub fn row_spacing_rule(element: &Element) -> super::RowSpacingRule {
 }
 
 /// Read `m:r` into a `Run`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn run(element: &Element) -> super::Run {
     let mut node = super::Run::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RUN_SHAPE);
@@ -1843,13 +1843,13 @@ pub fn run(element: &Element) -> super::Run {
 }
 
 /// Read one item of `RunContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn run_content(element: &Element) -> super::RunContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `m:rPr` into a `RunProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn run_properties(element: &Element) -> super::RunProperties {
     let mut node = super::RunProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RUN_PROPERTIES_SHAPE);
@@ -1867,13 +1867,13 @@ pub fn run_properties(element: &Element) -> super::RunProperties {
 }
 
 /// Read one item of `RunPropertiesContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn run_properties_content(element: &Element) -> super::RunPropertiesContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `m:scr` into a `Script`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn script(element: &Element) -> super::Script {
     let mut node = super::Script::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SCRIPT_SHAPE);
@@ -1887,7 +1887,7 @@ pub fn script(element: &Element) -> super::Script {
 }
 
 /// Read `m:shp` into a `Shp`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shp(element: &Element) -> super::Shp {
     let mut node = super::Shp::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHP_SHAPE);
@@ -1901,7 +1901,7 @@ pub fn shp(element: &Element) -> super::Shp {
 }
 
 /// Read `m:smallFrac` into a `SmallFraction`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn small_fraction(element: &Element) -> super::SmallFraction {
     let mut node = super::SmallFraction::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SMALL_FRACTION_SHAPE);
@@ -1915,7 +1915,7 @@ pub fn small_fraction(element: &Element) -> super::SmallFraction {
 }
 
 /// Read `m:sty` into a `Sty`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sty(element: &Element) -> super::Sty {
     let mut node = super::Sty::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::STY_SHAPE);
@@ -1929,7 +1929,7 @@ pub fn sty(element: &Element) -> super::Sty {
 }
 
 /// Read `m:sub` into a `Sub`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sub(element: &Element) -> super::Sub {
     let mut node = super::Sub::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SUB_SHAPE);
@@ -1946,7 +1946,7 @@ pub fn sub(element: &Element) -> super::Sub {
 }
 
 /// Read `m:subHide` into a `SubHide`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sub_hide(element: &Element) -> super::SubHide {
     let mut node = super::SubHide::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SUB_HIDE_SHAPE);
@@ -1960,7 +1960,7 @@ pub fn sub_hide(element: &Element) -> super::SubHide {
 }
 
 /// Read `m:sSubSup` into a `SubSuperscriptObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sub_superscript_object(element: &Element) -> super::SubSuperscriptObject {
     let mut node = super::SubSuperscriptObject::default();
     let mut reader =
@@ -1979,7 +1979,7 @@ pub fn sub_superscript_object(element: &Element) -> super::SubSuperscriptObject 
 }
 
 /// Read `m:sSubSupPr` into a `SubSuperscriptProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sub_superscript_properties(element: &Element) -> super::SubSuperscriptProperties {
     let mut node = super::SubSuperscriptProperties::default();
     let mut reader =
@@ -1996,7 +1996,7 @@ pub fn sub_superscript_properties(element: &Element) -> super::SubSuperscriptPro
 }
 
 /// Read `m:sSub` into a `SubscriptObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn subscript_object(element: &Element) -> super::SubscriptObject {
     let mut node = super::SubscriptObject::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SUBSCRIPT_OBJECT_SHAPE);
@@ -2013,7 +2013,7 @@ pub fn subscript_object(element: &Element) -> super::SubscriptObject {
 }
 
 /// Read `m:sSubPr` into a `SubscriptProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn subscript_properties(element: &Element) -> super::SubscriptProperties {
     let mut node = super::SubscriptProperties::default();
     let mut reader =
@@ -2028,7 +2028,7 @@ pub fn subscript_properties(element: &Element) -> super::SubscriptProperties {
 }
 
 /// Read `m:sup` into a `Sup`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sup(element: &Element) -> super::Sup {
     let mut node = super::Sup::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SUP_SHAPE);
@@ -2045,7 +2045,7 @@ pub fn sup(element: &Element) -> super::Sup {
 }
 
 /// Read `m:supHide` into a `SupHide`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sup_hide(element: &Element) -> super::SupHide {
     let mut node = super::SupHide::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SUP_HIDE_SHAPE);
@@ -2059,7 +2059,7 @@ pub fn sup_hide(element: &Element) -> super::SupHide {
 }
 
 /// Read `m:sSup` into a `SuperscriptObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn superscript_object(element: &Element) -> super::SuperscriptObject {
     let mut node = super::SuperscriptObject::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SUPERSCRIPT_OBJECT_SHAPE);
@@ -2076,7 +2076,7 @@ pub fn superscript_object(element: &Element) -> super::SuperscriptObject {
 }
 
 /// Read `m:sSupPr` into a `SuperscriptProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn superscript_properties(element: &Element) -> super::SuperscriptProperties {
     let mut node = super::SuperscriptProperties::default();
     let mut reader =
@@ -2091,7 +2091,7 @@ pub fn superscript_properties(element: &Element) -> super::SuperscriptProperties
 }
 
 /// Read `m:t` into a `Text`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text(element: &Element) -> super::Text {
     let mut node = super::Text::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TEXT_SHAPE);
@@ -2107,7 +2107,7 @@ pub fn text(element: &Element) -> super::Text {
 }
 
 /// Read `m:transp` into a `Transp`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn transp(element: &Element) -> super::Transp {
     let mut node = super::Transp::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TRANSP_SHAPE);
@@ -2121,7 +2121,7 @@ pub fn transp(element: &Element) -> super::Transp {
 }
 
 /// Read `m:limUpp` into a `UpperLimitObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn upper_limit_object(element: &Element) -> super::UpperLimitObject {
     let mut node = super::UpperLimitObject::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::UPPER_LIMIT_OBJECT_SHAPE);
@@ -2138,7 +2138,7 @@ pub fn upper_limit_object(element: &Element) -> super::UpperLimitObject {
 }
 
 /// Read `m:limUppPr` into a `UpperLimitProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn upper_limit_properties(element: &Element) -> super::UpperLimitProperties {
     let mut node = super::UpperLimitProperties::default();
     let mut reader =
@@ -2153,7 +2153,7 @@ pub fn upper_limit_properties(element: &Element) -> super::UpperLimitProperties 
 }
 
 /// Read `m:dispDef` into a `UseDisplayMathDefaults`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn use_display_math_defaults(element: &Element) -> super::UseDisplayMathDefaults {
     let mut node = super::UseDisplayMathDefaults::default();
     let mut reader =
@@ -2168,7 +2168,7 @@ pub fn use_display_math_defaults(element: &Element) -> super::UseDisplayMathDefa
 }
 
 /// Read `m:vertJc` into a `VerticalJustification`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn vertical_justification(element: &Element) -> super::VerticalJustification {
     let mut node = super::VerticalJustification::default();
     let mut reader =
@@ -2183,7 +2183,7 @@ pub fn vertical_justification(element: &Element) -> super::VerticalJustification
 }
 
 /// Read `m:wrapIndent` into a `WrapIndent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wrap_indent(element: &Element) -> super::WrapIndent {
     let mut node = super::WrapIndent::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WRAP_INDENT_SHAPE);
@@ -2197,7 +2197,7 @@ pub fn wrap_indent(element: &Element) -> super::WrapIndent {
 }
 
 /// Read `m:wrapRight` into a `WrapRight`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wrap_right(element: &Element) -> super::WrapRight {
     let mut node = super::WrapRight::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WRAP_RIGHT_SHAPE);

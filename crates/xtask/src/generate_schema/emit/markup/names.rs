@@ -175,7 +175,7 @@ impl Overrides {
 
 impl Titles {
     /// Read the element and simple-type headings of both texts.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn read(part_1: &str, part_4: &str) -> Self {
         let mut titles = Self::default();
         for (part, text, sections) in [
@@ -230,7 +230,7 @@ fn describe(
 }
 
 /// The order of two section numbers, level by level.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn section_order(left: &str, right: &str) -> Ordering {
     let levels = |section: &str| -> Vec<u32> {
         section
@@ -243,7 +243,7 @@ pub fn section_order(left: &str, right: &str) -> Ordering {
 
 /// The module of an ECMA-376 schema file: `wml` is `wordprocessing`,
 /// `vml-officeDrawing` is `vml_office_drawing`, `dml-chart` is `chart`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn ecma_module(file_stem: &str) -> String {
     match file_stem {
         "wml" => "wordprocessing".to_owned(),
@@ -264,7 +264,7 @@ pub fn ecma_module(file_stem: &str) -> String {
 
 /// The module of a Microsoft extension namespace: its URI's path after
 /// `http://schemas.microsoft.com/` in snake case.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn extension_module(uri: &str) -> Option<String> {
     let path = uri.strip_prefix(MICROSOFT)?;
     let parts: Vec<String> = path
@@ -277,7 +277,7 @@ pub fn extension_module(uri: &str) -> Option<String> {
 
 /// A camel-case or hyphenated name in snake case: `rsidRPr` is `rsid_r_pr`,
 /// `wordprocessingDrawing` is `wordprocessing_drawing`, `ID` is `id`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn snake(name: &str) -> String {
     let characters: Vec<char> = name.chars().collect();
     let mut out = String::with_capacity(name.len() + 4);
@@ -308,7 +308,7 @@ pub fn snake(name: &str) -> String {
 
 /// The words of a title: split on spaces, hyphens, and slashes, every
 /// character other than a letter or a digit dropped (`Don't` is `Dont`).
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn title_words(title: &str) -> Vec<String> {
     title
         .split(|c: char| c.is_whitespace() || c == '-' || c == '/')
@@ -323,7 +323,7 @@ pub fn title_words(title: &str) -> Vec<String> {
 
 /// The words of a `PascalCase` name: `XMLMappingDataBinding` is `XML`,
 /// `Mapping`, `Data`, `Binding`; a digit stays with the word before it.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn name_words(name: &str) -> Vec<String> {
     let characters: Vec<char> = name.chars().collect();
     let mut words: Vec<String> = Vec::new();
@@ -346,7 +346,7 @@ pub fn name_words(name: &str) -> Vec<String> {
 }
 
 /// Words in `PascalCase`: each word's first letter upper-cased, the rest kept.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn pascal(words: &[String]) -> String {
     words
         .iter()
@@ -362,7 +362,7 @@ pub fn pascal(words: &[String]) -> String {
 }
 
 /// Words in snake case.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn snake_words(words: &[String]) -> String {
     words
         .iter()
@@ -395,7 +395,7 @@ pub fn identifier(name: &str) -> Result<String> {
 /// the parent's and start the child's (`Text Run` and `Run Properties` give
 /// `Properties`). The connecting words the cut leaves go with it (`Non-Visual
 /// Properties for a Picture` under `Picture` gives `Non Visual Properties`).
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn field_words(parent: &[String], child: &[String]) -> Vec<String> {
     if parent.is_empty() {
         return child.to_vec();
@@ -452,7 +452,7 @@ fn without_trailing_connector(words: &[String]) -> &[String] {
 /// An enumeration value as a `PascalCase` variant: `mediumKashida` is
 /// `MediumKashida`, `0000` is `Value0000`, `--` is `MinusMinus`, the empty
 /// text is `Empty`; a word written all in capitals keeps only its first.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn variant(value: &str) -> String {
     let spelled: String = value
         .chars()
@@ -495,7 +495,7 @@ pub fn variant(value: &str) -> String {
 /// The words of a local name: its parts apart by any character other than a
 /// letter or a digit, each split where its case changes (`openxmlsdk_49BECFFA`
 /// is `Openxmlsdk`, `49BECFFA`; `cNvPr` is `C`, `Nv`, `Pr`).
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn local_words(local: &str) -> Vec<String> {
     local
         .split(|c: char| !c.is_ascii_alphanumeric())
@@ -505,7 +505,7 @@ pub fn local_words(local: &str) -> Vec<String> {
 }
 
 /// `SCREAMING_SNAKE_CASE` of a `PascalCase` name.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn screaming(name: &str) -> String {
     snake_words(&name_words(name)).to_ascii_uppercase()
 }

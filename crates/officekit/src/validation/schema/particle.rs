@@ -33,7 +33,7 @@ pub struct Child<'element> {
 
 impl<'element> Child<'element> {
     /// A child called `name`, in an element of `parent_namespace`, whose type is `type_id`.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn new(
         name: &'element QName,
         parent_namespace: &'element Namespace,
@@ -257,7 +257,7 @@ fn can_contain(parent: &SchemaType, child: &Child<'_>) -> bool {
 /// `None` when they follow it, else the one error SDK 3.5.1 reports: a
 /// required child missing, a child the parent does not allow there, or a
 /// child of an `xsd:all` repeated.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn check(
     particle: &Particle,
     children: &[Child<'_>],

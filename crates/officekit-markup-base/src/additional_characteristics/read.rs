@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `ac:additionalCharacteristics` into a `SetOfAdditionalCharacteristics`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn set_of_additional_characteristics(
     element: &Element,
 ) -> super::SetOfAdditionalCharacteristics {
@@ -235,7 +235,7 @@ pub fn set_of_additional_characteristics(
 }
 
 /// Read `ac:characteristic` into a `SingleCharacteristic`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn single_characteristic(element: &Element) -> super::SingleCharacteristic {
     let mut node = super::SingleCharacteristic::default();
     let mut reader = crate::Reader::new(element, &super::SINGLE_CHARACTERISTIC_SHAPE);

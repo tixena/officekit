@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `DynamicArrayProperties` as its element, `xda:dynamicArrayProperties`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dynamic_array_properties(
     node: &super::DynamicArrayProperties,
     scope: &mut Scope,
@@ -237,7 +237,7 @@ pub fn dynamic_array_properties(
 }
 
 /// Write a `ExtLst` as its element, `xda:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);

@@ -196,7 +196,7 @@ pub struct Summary {
 
 impl PartType {
     /// The Part 1 definition, when the part has one.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn part_1(&self) -> Option<&Part1Definition> {
         match &self.definition {
             Definition::Part1(definition) => Some(definition),
@@ -205,7 +205,7 @@ impl PartType {
     }
 
     /// Whether Part 1 states the part's fields itself.
-    #[must_use]
+    #[must_use = "this only answers the question"]
     pub fn stated_in_part_1(&self) -> bool {
         self.part_1().is_some_and(|definition| !definition.part_2)
     }

@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xlrdwi:address` into a `Address`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn address(element: &Element) -> super::Address {
     let reader = officekit_markup_base::Reader::new(element, &super::ADDRESS_SHAPE);
     super::Address {
@@ -229,7 +229,7 @@ pub fn address(element: &Element) -> super::Address {
 }
 
 /// Read `xlrdwi:blip` into a `Blip`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn blip(element: &Element) -> super::Blip {
     let reader = officekit_markup_base::Reader::new(element, &super::BLIP_SHAPE);
     super::Blip {
@@ -239,7 +239,7 @@ pub fn blip(element: &Element) -> super::Blip {
 }
 
 /// Read `xlrdwi:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -253,7 +253,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `xlrdwi:moreImagesAddress` into a `MoreImagesAddress`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn more_images_address(element: &Element) -> super::MoreImagesAddress {
     let reader = officekit_markup_base::Reader::new(element, &super::MORE_IMAGES_ADDRESS_SHAPE);
     super::MoreImagesAddress {
@@ -263,7 +263,7 @@ pub fn more_images_address(element: &Element) -> super::MoreImagesAddress {
 }
 
 /// Read `xlrdwi:webImageSrd` into a `WebImageSrd`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn web_image_srd(element: &Element) -> super::WebImageSrd {
     let mut node = super::WebImageSrd::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WEB_IMAGE_SRD_SHAPE);
@@ -280,7 +280,7 @@ pub fn web_image_srd(element: &Element) -> super::WebImageSrd {
 }
 
 /// Read `xlrdwi:webImagesSrd` into a `WebImagesSrd`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn web_images_srd(element: &Element) -> super::WebImagesSrd {
     let mut node = super::WebImagesSrd::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WEB_IMAGES_SRD_SHAPE);

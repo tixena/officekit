@@ -1891,7 +1891,7 @@ impl Eq for XfrmWith<()> {}
 impl<X: NodeExtra> BmkWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> BmkWith<Y>
     where
         Y: NodeExtra,
@@ -1905,7 +1905,7 @@ impl<X: NodeExtra> BmkWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             name: self.name.clone(),
@@ -1931,7 +1931,7 @@ impl officekit_markup_base::Write for Bmk {
 impl<X: NodeExtra> BmkLstWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> BmkLstWith<Y>
     where
         Y: NodeExtra,
@@ -1944,7 +1944,7 @@ impl<X: NodeExtra> BmkLstWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -1966,7 +1966,7 @@ impl officekit_markup_base::Write for BmkLst {
 impl<X: NodeExtra> BmkTgtWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> BmkTgtWith<Y>
     where
         Y: NodeExtra,
@@ -1980,7 +1980,7 @@ impl<X: NodeExtra> BmkTgtWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             bmk_name: self.bmk_name.clone(),
@@ -2006,7 +2006,7 @@ impl officekit_markup_base::Write for BmkTgt {
 impl<X: NodeExtra> BrowseModeWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> BrowseModeWith<Y>
     where
         Y: NodeExtra,
@@ -2019,7 +2019,7 @@ impl<X: NodeExtra> BrowseModeWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             show_status: self.show_status.clone(),
@@ -2044,7 +2044,7 @@ impl officekit_markup_base::Write for BrowseMode {
 impl<X: NodeExtra> CNvContentPartPrWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> CNvContentPartPrWith<Y>
     where
         Y: NodeExtra,
@@ -2065,7 +2065,7 @@ impl<X: NodeExtra> CNvContentPartPrWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             is_comment: self.is_comment.clone(),
@@ -2090,7 +2090,7 @@ impl officekit_markup_base::Write for CNvContentPartPr {
 impl<X: NodeExtra> CNvPrWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> CNvPrWith<Y>
     where
         Y: NodeExtra,
@@ -2119,7 +2119,7 @@ impl<X: NodeExtra> CNvPrWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             descr: self.descr.clone(),
@@ -2148,7 +2148,7 @@ impl officekit_markup_base::Write for CNvPr {
 impl<X: NodeExtra> ConveyorWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ConveyorWith<Y>
     where
         Y: NodeExtra,
@@ -2160,7 +2160,7 @@ impl<X: NodeExtra> ConveyorWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -2182,7 +2182,7 @@ impl officekit_markup_base::Write for Conveyor {
 impl<X: NodeExtra> CreationIdWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CreationIdWith<Y>
     where
         Y: NodeExtra,
@@ -2194,7 +2194,7 @@ impl<X: NodeExtra> CreationIdWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -2216,7 +2216,7 @@ impl officekit_markup_base::Write for CreationId {
 impl<X: NodeExtra> DefaultImageDpiWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> DefaultImageDpiWith<Y>
     where
         Y: NodeExtra,
@@ -2229,7 +2229,7 @@ impl<X: NodeExtra> DefaultImageDpiWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             val: self.val.clone(),
@@ -2254,7 +2254,7 @@ impl officekit_markup_base::Write for DefaultImageDpi {
 impl<X: NodeExtra> DiscardImageEditDataWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> DiscardImageEditDataWith<Y>
     where
         Y: NodeExtra,
@@ -2267,7 +2267,7 @@ impl<X: NodeExtra> DiscardImageEditDataWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             val: self.val.clone(),
@@ -2292,7 +2292,7 @@ impl officekit_markup_base::Write for DiscardImageEditData {
 impl<X: NodeExtra> DoorsWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> DoorsWith<Y>
     where
         Y: NodeExtra,
@@ -2305,7 +2305,7 @@ impl<X: NodeExtra> DoorsWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             dir: self.dir.clone(),
@@ -2330,7 +2330,7 @@ impl officekit_markup_base::Write for Doors {
 impl<X: NodeExtra> ExtLstExtensionListWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ExtLstExtensionListWith<Y>
     where
         Y: NodeExtra,
@@ -2346,7 +2346,7 @@ impl<X: NodeExtra> ExtLstExtensionListWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -2368,7 +2368,7 @@ impl officekit_markup_base::Write for ExtLstExtensionList {
 impl<X: NodeExtra> ExtLstExtensionListModifyWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ExtLstExtensionListModifyWith<Y>
     where
         Y: NodeExtra,
@@ -2385,7 +2385,7 @@ impl<X: NodeExtra> ExtLstExtensionListModifyWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             r#mod: self.r#mod.clone(),
@@ -2410,7 +2410,7 @@ impl officekit_markup_base::Write for ExtLstExtensionListModify {
 impl<X: NodeExtra> FadeWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> FadeWith<Y>
     where
         Y: NodeExtra,
@@ -2424,7 +2424,7 @@ impl<X: NodeExtra> FadeWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             r#in: self.r#in.clone(),
@@ -2450,7 +2450,7 @@ impl officekit_markup_base::Write for Fade {
 impl<X: NodeExtra> FerrisWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> FerrisWith<Y>
     where
         Y: NodeExtra,
@@ -2462,7 +2462,7 @@ impl<X: NodeExtra> FerrisWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -2484,7 +2484,7 @@ impl officekit_markup_base::Write for Ferris {
 impl<X: NodeExtra> FlashWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> FlashWith<Y>
     where
         Y: NodeExtra,
@@ -2496,7 +2496,7 @@ impl<X: NodeExtra> FlashWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -2518,7 +2518,7 @@ impl officekit_markup_base::Write for Flash {
 impl<X: NodeExtra> FlipWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> FlipWith<Y>
     where
         Y: NodeExtra,
@@ -2530,7 +2530,7 @@ impl<X: NodeExtra> FlipWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -2552,7 +2552,7 @@ impl officekit_markup_base::Write for Flip {
 impl<X: NodeExtra> FlythroughWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> FlythroughWith<Y>
     where
         Y: NodeExtra,
@@ -2566,7 +2566,7 @@ impl<X: NodeExtra> FlythroughWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             dir: self.dir.clone(),
@@ -2592,7 +2592,7 @@ impl officekit_markup_base::Write for Flythrough {
 impl<X: NodeExtra> GalleryWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> GalleryWith<Y>
     where
         Y: NodeExtra,
@@ -2604,7 +2604,7 @@ impl<X: NodeExtra> GalleryWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -2626,7 +2626,7 @@ impl officekit_markup_base::Write for Gallery {
 impl<X: NodeExtra> GlitterWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> GlitterWith<Y>
     where
         Y: NodeExtra,
@@ -2640,7 +2640,7 @@ impl<X: NodeExtra> GlitterWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             dir: self.dir.clone(),
@@ -2666,7 +2666,7 @@ impl officekit_markup_base::Write for Glitter {
 impl<X: NodeExtra> HoneycombWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> HoneycombWith<Y>
     where
         Y: NodeExtra,
@@ -2678,7 +2678,7 @@ impl<X: NodeExtra> HoneycombWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -2700,7 +2700,7 @@ impl officekit_markup_base::Write for Honeycomb {
 impl<X: NodeExtra> LaserClrWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> LaserClrWith<Y>
     where
         Y: NodeExtra,
@@ -2716,7 +2716,7 @@ impl<X: NodeExtra> LaserClrWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -2738,7 +2738,7 @@ impl officekit_markup_base::Write for LaserClr {
 impl<X: NodeExtra> LaserTraceLstWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> LaserTraceLstWith<Y>
     where
         Y: NodeExtra,
@@ -2754,7 +2754,7 @@ impl<X: NodeExtra> LaserTraceLstWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -2776,7 +2776,7 @@ impl officekit_markup_base::Write for LaserTraceLst {
 impl<X: NodeExtra> MediaWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> MediaWith<Y>
     where
         Y: NodeExtra,
@@ -2800,7 +2800,7 @@ impl<X: NodeExtra> MediaWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             embed: self.embed.clone(),
@@ -2826,7 +2826,7 @@ impl officekit_markup_base::Write for Media {
 impl<X: NodeExtra> ModIdWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ModIdWith<Y>
     where
         Y: NodeExtra,
@@ -2838,7 +2838,7 @@ impl<X: NodeExtra> ModIdWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -2860,7 +2860,7 @@ impl officekit_markup_base::Write for ModId {
 impl<X: NodeExtra> NullEvtWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> NullEvtWith<Y>
     where
         Y: NodeExtra,
@@ -2874,7 +2874,7 @@ impl<X: NodeExtra> NullEvtWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             obj_id: self.obj_id.clone(),
@@ -2900,7 +2900,7 @@ impl officekit_markup_base::Write for NullEvt {
 impl<X: NodeExtra> NvContentPartPrWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> NvContentPartPrWith<Y>
     where
         Y: NodeExtra,
@@ -2921,7 +2921,7 @@ impl<X: NodeExtra> NvContentPartPrWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -2943,7 +2943,7 @@ impl officekit_markup_base::Write for NvContentPartPr {
 impl<X: NodeExtra> NvPrWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> NvPrWith<Y>
     where
         Y: NodeExtra,
@@ -2973,7 +2973,7 @@ impl<X: NodeExtra> NvPrWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             is_photo: self.is_photo.clone(),
@@ -2999,7 +2999,7 @@ impl officekit_markup_base::Write for NvPr {
 impl<X: NodeExtra> PanWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PanWith<Y>
     where
         Y: NodeExtra,
@@ -3012,7 +3012,7 @@ impl<X: NodeExtra> PanWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             dir: self.dir.clone(),
@@ -3037,7 +3037,7 @@ impl officekit_markup_base::Write for Pan {
 impl<X: NodeExtra> PauseEvtWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PauseEvtWith<Y>
     where
         Y: NodeExtra,
@@ -3049,7 +3049,7 @@ impl<X: NodeExtra> PauseEvtWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3071,7 +3071,7 @@ impl officekit_markup_base::Write for PauseEvt {
 impl<X: NodeExtra> PlayEvtWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PlayEvtWith<Y>
     where
         Y: NodeExtra,
@@ -3083,7 +3083,7 @@ impl<X: NodeExtra> PlayEvtWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3105,7 +3105,7 @@ impl officekit_markup_base::Write for PlayEvt {
 impl<X: NodeExtra> PrismWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PrismWith<Y>
     where
         Y: NodeExtra,
@@ -3120,7 +3120,7 @@ impl<X: NodeExtra> PrismWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             dir: self.dir.clone(),
@@ -3147,7 +3147,7 @@ impl officekit_markup_base::Write for Prism {
 impl<X: NodeExtra> ResumeEvtWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ResumeEvtWith<Y>
     where
         Y: NodeExtra,
@@ -3159,7 +3159,7 @@ impl<X: NodeExtra> ResumeEvtWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3181,7 +3181,7 @@ impl officekit_markup_base::Write for ResumeEvt {
 impl<X: NodeExtra> RevealWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> RevealWith<Y>
     where
         Y: NodeExtra,
@@ -3195,7 +3195,7 @@ impl<X: NodeExtra> RevealWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             dir: self.dir.clone(),
@@ -3221,7 +3221,7 @@ impl officekit_markup_base::Write for Reveal {
 impl<X: NodeExtra> RippleWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> RippleWith<Y>
     where
         Y: NodeExtra,
@@ -3234,7 +3234,7 @@ impl<X: NodeExtra> RippleWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             dir: self.dir.clone(),
@@ -3259,7 +3259,7 @@ impl officekit_markup_base::Write for Ripple {
 impl<X: NodeExtra> SectionLstWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SectionLstWith<Y>
     where
         Y: NodeExtra,
@@ -3275,7 +3275,7 @@ impl<X: NodeExtra> SectionLstWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3297,7 +3297,7 @@ impl officekit_markup_base::Write for SectionLst {
 impl<X: NodeExtra> SectionPrWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SectionPrWith<Y>
     where
         Y: NodeExtra,
@@ -3313,7 +3313,7 @@ impl<X: NodeExtra> SectionPrWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3335,7 +3335,7 @@ impl officekit_markup_base::Write for SectionPr {
 impl<X: NodeExtra> SectionSectionWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> SectionSectionWith<Y>
     where
         Y: NodeExtra,
@@ -3357,7 +3357,7 @@ impl<X: NodeExtra> SectionSectionWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             id: self.id.clone(),
@@ -3383,7 +3383,7 @@ impl officekit_markup_base::Write for SectionSection {
 impl<X: NodeExtra> SectionSectionOldWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> SectionSectionOldWith<Y>
     where
         Y: NodeExtra,
@@ -3402,7 +3402,7 @@ impl<X: NodeExtra> SectionSectionOldWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             id: self.id.clone(),
@@ -3429,7 +3429,7 @@ impl officekit_markup_base::Write for SectionSectionOld {
 impl<X: NodeExtra> SeekEvtWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SeekEvtWith<Y>
     where
         Y: NodeExtra,
@@ -3444,7 +3444,7 @@ impl<X: NodeExtra> SeekEvtWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             obj_id: self.obj_id.clone(),
@@ -3470,7 +3470,7 @@ impl officekit_markup_base::Write for SeekEvt {
 
 impl<X: NodeExtra> ShowEventRecordListContentWith<X> {
     /// This item and every node under it with each `extra` at `Y`'s default.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ShowEventRecordListContentWith<Y>
     where
         Y: NodeExtra,
@@ -3525,7 +3525,7 @@ impl officekit_markup_base::Write for ShowEventRecordListContent {
 impl<X: NodeExtra> ShowEvtLstWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ShowEvtLstWith<Y>
     where
         Y: NodeExtra,
@@ -3541,7 +3541,7 @@ impl<X: NodeExtra> ShowEvtLstWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3563,7 +3563,7 @@ impl officekit_markup_base::Write for ShowEvtLst {
 impl<X: NodeExtra> ShowMediaCtrlsWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ShowMediaCtrlsWith<Y>
     where
         Y: NodeExtra,
@@ -3576,7 +3576,7 @@ impl<X: NodeExtra> ShowMediaCtrlsWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             val: self.val.clone(),
@@ -3601,7 +3601,7 @@ impl officekit_markup_base::Write for ShowMediaCtrls {
 impl<X: NodeExtra> ShredWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ShredWith<Y>
     where
         Y: NodeExtra,
@@ -3615,7 +3615,7 @@ impl<X: NodeExtra> ShredWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             dir: self.dir.clone(),
@@ -3641,7 +3641,7 @@ impl officekit_markup_base::Write for Shred {
 impl<X: NodeExtra> SldIdWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SldIdWith<Y>
     where
         Y: NodeExtra,
@@ -3654,7 +3654,7 @@ impl<X: NodeExtra> SldIdWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             id: self.id.clone(),
@@ -3679,7 +3679,7 @@ impl officekit_markup_base::Write for SldId {
 impl<X: NodeExtra> SldIdLstWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SldIdLstWith<Y>
     where
         Y: NodeExtra,
@@ -3692,7 +3692,7 @@ impl<X: NodeExtra> SldIdLstWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3714,7 +3714,7 @@ impl officekit_markup_base::Write for SldIdLst {
 impl<X: NodeExtra> StopEvtWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> StopEvtWith<Y>
     where
         Y: NodeExtra,
@@ -3726,7 +3726,7 @@ impl<X: NodeExtra> StopEvtWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3748,7 +3748,7 @@ impl officekit_markup_base::Write for StopEvt {
 impl<X: NodeExtra> SwitchWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SwitchWith<Y>
     where
         Y: NodeExtra,
@@ -3760,7 +3760,7 @@ impl<X: NodeExtra> SwitchWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3782,7 +3782,7 @@ impl officekit_markup_base::Write for Switch {
 impl<X: NodeExtra> TracePtWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> TracePtWith<Y>
     where
         Y: NodeExtra,
@@ -3797,7 +3797,7 @@ impl<X: NodeExtra> TracePtWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             t: self.t.clone(),
@@ -3824,7 +3824,7 @@ impl officekit_markup_base::Write for TracePt {
 impl<X: NodeExtra> TracePtLstWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> TracePtLstWith<Y>
     where
         Y: NodeExtra,
@@ -3840,7 +3840,7 @@ impl<X: NodeExtra> TracePtLstWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3884,14 +3884,14 @@ impl TransitionLeftRightDirectionTypeMember {
     ];
 
     /// The text the member stands for.
-    #[must_use]
+    #[must_use = "this only returns the text of the member"]
     pub fn as_str(self) -> &'static str {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
     /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
-    #[must_use]
+    #[must_use = "this only returns the Office version of the member"]
     pub fn introduced(self) -> Option<OfficeVersion> {
         officekit_markup_base::member_version(Self::MEMBERS, self)
     }
@@ -3937,14 +3937,14 @@ impl TransitionPatternMember {
     ];
 
     /// The text the member stands for.
-    #[must_use]
+    #[must_use = "this only returns the text of the member"]
     pub fn as_str(self) -> &'static str {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
     /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
-    #[must_use]
+    #[must_use = "this only returns the Office version of the member"]
     pub fn introduced(self) -> Option<OfficeVersion> {
         officekit_markup_base::member_version(Self::MEMBERS, self)
     }
@@ -3994,14 +3994,14 @@ impl TransitionShredPatternMember {
     ];
 
     /// The text the member stands for.
-    #[must_use]
+    #[must_use = "this only returns the text of the member"]
     pub fn as_str(self) -> &'static str {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
     /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
-    #[must_use]
+    #[must_use = "this only returns the Office version of the member"]
     pub fn introduced(self) -> Option<OfficeVersion> {
         officekit_markup_base::member_version(Self::MEMBERS, self)
     }
@@ -4025,7 +4025,7 @@ impl TransitionShredPattern {
 impl<X: NodeExtra> TriggerEvtWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> TriggerEvtWith<Y>
     where
         Y: NodeExtra,
@@ -4040,7 +4040,7 @@ impl<X: NodeExtra> TriggerEvtWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             obj_id: self.obj_id.clone(),
@@ -4067,7 +4067,7 @@ impl officekit_markup_base::Write for TriggerEvt {
 impl<X: NodeExtra> TrimWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> TrimWith<Y>
     where
         Y: NodeExtra,
@@ -4081,7 +4081,7 @@ impl<X: NodeExtra> TrimWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             end: self.end.clone(),
@@ -4107,7 +4107,7 @@ impl officekit_markup_base::Write for Trim {
 impl<X: NodeExtra> VortexWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> VortexWith<Y>
     where
         Y: NodeExtra,
@@ -4120,7 +4120,7 @@ impl<X: NodeExtra> VortexWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             dir: self.dir.clone(),
@@ -4145,7 +4145,7 @@ impl officekit_markup_base::Write for Vortex {
 impl<X: NodeExtra> WarpWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> WarpWith<Y>
     where
         Y: NodeExtra,
@@ -4158,7 +4158,7 @@ impl<X: NodeExtra> WarpWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             dir: self.dir.clone(),
@@ -4183,7 +4183,7 @@ impl officekit_markup_base::Write for Warp {
 impl<X: NodeExtra> WheelReverseWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> WheelReverseWith<Y>
     where
         Y: NodeExtra,
@@ -4196,7 +4196,7 @@ impl<X: NodeExtra> WheelReverseWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             spokes: self.spokes.clone(),
@@ -4221,7 +4221,7 @@ impl officekit_markup_base::Write for WheelReverse {
 impl<X: NodeExtra> WindowWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> WindowWith<Y>
     where
         Y: NodeExtra,
@@ -4234,7 +4234,7 @@ impl<X: NodeExtra> WindowWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             dir: self.dir.clone(),
@@ -4259,7 +4259,7 @@ impl officekit_markup_base::Write for Window {
 impl<X: NodeExtra> XfrmWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> XfrmWith<Y>
     where
         Y: NodeExtra,
@@ -4282,7 +4282,7 @@ impl<X: NodeExtra> XfrmWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             flip_h: self.flip_h.clone(),

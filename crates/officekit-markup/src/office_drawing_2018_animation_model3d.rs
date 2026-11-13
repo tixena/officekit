@@ -484,7 +484,7 @@ pub trait Visitor: crate::Visitor {
 impl<X: NodeExtra> AnimPrWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> AnimPrWith<Y>
     where
         Y: NodeExtra,
@@ -507,7 +507,7 @@ impl<X: NodeExtra> AnimPrWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             auto: self.auto.clone(),
@@ -538,7 +538,7 @@ impl officekit_markup_base::Write for AnimPr {
 impl<X: NodeExtra> EmbedAnimWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> EmbedAnimWith<Y>
     where
         Y: NodeExtra,
@@ -556,7 +556,7 @@ impl<X: NodeExtra> EmbedAnimWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             anim_id: self.anim_id.clone(),
@@ -581,7 +581,7 @@ impl officekit_markup_base::Write for EmbedAnim {
 impl<X: NodeExtra> ExtLstWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ExtLstWith<Y>
     where
         Y: NodeExtra,
@@ -597,7 +597,7 @@ impl<X: NodeExtra> ExtLstWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -619,7 +619,7 @@ impl officekit_markup_base::Write for ExtLst {
 impl<X: NodeExtra> PosterFrameWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PosterFrameWith<Y>
     where
         Y: NodeExtra,
@@ -633,7 +633,7 @@ impl<X: NodeExtra> PosterFrameWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             anim_id: self.anim_id.clone(),

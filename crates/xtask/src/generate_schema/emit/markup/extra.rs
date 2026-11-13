@@ -18,7 +18,7 @@ const FIELD: &str = "extra";
 
 /// The associated type of a struct: the namespace module's name and the struct's, both in
 /// `UpperCamelCase`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn name(catalog: &Catalog, node: &Node) -> String {
     let words: Vec<String> = catalog.modules[node.module]
         .name

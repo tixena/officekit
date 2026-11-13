@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `b:AbbreviatedCaseNumber` into a `AbbreviatedCaseNumber`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn abbreviated_case_number(element: &Element) -> super::AbbreviatedCaseNumber {
     let mut node = super::AbbreviatedCaseNumber::default();
     let mut reader = crate::Reader::new(element, &super::ABBREVIATED_CASE_NUMBER_SHAPE);
@@ -233,7 +233,7 @@ pub fn abbreviated_case_number(element: &Element) -> super::AbbreviatedCaseNumbe
 }
 
 /// Read `b:AlbumTitle` into a `AlbumTitle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn album_title(element: &Element) -> super::AlbumTitle {
     let mut node = super::AlbumTitle::default();
     let mut reader = crate::Reader::new(element, &super::ALBUM_TITLE_SHAPE);
@@ -247,7 +247,7 @@ pub fn album_title(element: &Element) -> super::AlbumTitle {
 }
 
 /// Read `b:Artist` into a `Artist`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artist(element: &Element) -> super::Artist {
     let mut node = super::Artist::default();
     let mut reader = crate::Reader::new(element, &super::ARTIST_SHAPE);
@@ -261,7 +261,7 @@ pub fn artist(element: &Element) -> super::Artist {
 }
 
 /// Read `b:Author` into a `Author`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn author(element: &Element) -> super::Author {
     let mut node = super::Author::default();
     let mut reader = crate::Reader::new(element, &super::AUTHOR_SHAPE);
@@ -275,7 +275,7 @@ pub fn author(element: &Element) -> super::Author {
 }
 
 /// Read `b:BookAuthor` into a `BookAuthor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn book_author(element: &Element) -> super::BookAuthor {
     let mut node = super::BookAuthor::default();
     let mut reader = crate::Reader::new(element, &super::BOOK_AUTHOR_SHAPE);
@@ -289,7 +289,7 @@ pub fn book_author(element: &Element) -> super::BookAuthor {
 }
 
 /// Read `b:BookTitle` into a `BookTitle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn book_title(element: &Element) -> super::BookTitle {
     let mut node = super::BookTitle::default();
     let mut reader = crate::Reader::new(element, &super::BOOK_TITLE_SHAPE);
@@ -303,7 +303,7 @@ pub fn book_title(element: &Element) -> super::BookTitle {
 }
 
 /// Read `b:BroadcastTitle` into a `BroadcastTitle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn broadcast_title(element: &Element) -> super::BroadcastTitle {
     let mut node = super::BroadcastTitle::default();
     let mut reader = crate::Reader::new(element, &super::BROADCAST_TITLE_SHAPE);
@@ -317,7 +317,7 @@ pub fn broadcast_title(element: &Element) -> super::BroadcastTitle {
 }
 
 /// Read `b:Broadcaster` into a `Broadcaster`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn broadcaster(element: &Element) -> super::Broadcaster {
     let mut node = super::Broadcaster::default();
     let mut reader = crate::Reader::new(element, &super::BROADCASTER_SHAPE);
@@ -331,7 +331,7 @@ pub fn broadcaster(element: &Element) -> super::Broadcaster {
 }
 
 /// Read `b:CaseNumber` into a `CaseNumber`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn case_number(element: &Element) -> super::CaseNumber {
     let mut node = super::CaseNumber::default();
     let mut reader = crate::Reader::new(element, &super::CASE_NUMBER_SHAPE);
@@ -345,7 +345,7 @@ pub fn case_number(element: &Element) -> super::CaseNumber {
 }
 
 /// Read `b:ChapterNumber` into a `ChapterNumber`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn chapter_number(element: &Element) -> super::ChapterNumber {
     let mut node = super::ChapterNumber::default();
     let mut reader = crate::Reader::new(element, &super::CHAPTER_NUMBER_SHAPE);
@@ -359,7 +359,7 @@ pub fn chapter_number(element: &Element) -> super::ChapterNumber {
 }
 
 /// Read `b:City` into a `City`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn city(element: &Element) -> super::City {
     let mut node = super::City::default();
     let mut reader = crate::Reader::new(element, &super::CITY_SHAPE);
@@ -373,7 +373,7 @@ pub fn city(element: &Element) -> super::City {
 }
 
 /// Read `b:Comments` into a `Comments`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comments(element: &Element) -> super::Comments {
     let mut node = super::Comments::default();
     let mut reader = crate::Reader::new(element, &super::COMMENTS_SHAPE);
@@ -387,7 +387,7 @@ pub fn comments(element: &Element) -> super::Comments {
 }
 
 /// Read `b:Compiler` into a `Compiler`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn compiler(element: &Element) -> super::Compiler {
     let mut node = super::Compiler::default();
     let mut reader = crate::Reader::new(element, &super::COMPILER_SHAPE);
@@ -401,7 +401,7 @@ pub fn compiler(element: &Element) -> super::Compiler {
 }
 
 /// Read `b:Composer` into a `Composer`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn composer(element: &Element) -> super::Composer {
     let mut node = super::Composer::default();
     let mut reader = crate::Reader::new(element, &super::COMPOSER_SHAPE);
@@ -415,7 +415,7 @@ pub fn composer(element: &Element) -> super::Composer {
 }
 
 /// Read `b:Conductor` into a `Conductor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn conductor(element: &Element) -> super::Conductor {
     let mut node = super::Conductor::default();
     let mut reader = crate::Reader::new(element, &super::CONDUCTOR_SHAPE);
@@ -429,7 +429,7 @@ pub fn conductor(element: &Element) -> super::Conductor {
 }
 
 /// Read `b:ConferenceName` into a `ConferenceOrProceedingsName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn conference_or_proceedings_name(element: &Element) -> super::ConferenceOrProceedingsName {
     let mut node = super::ConferenceOrProceedingsName::default();
     let mut reader = crate::Reader::new(element, &super::CONFERENCE_OR_PROCEEDINGS_NAME_SHAPE);
@@ -443,7 +443,7 @@ pub fn conference_or_proceedings_name(element: &Element) -> super::ConferenceOrP
 }
 
 /// Read `b:Author` into a `ContributorsList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn contributors_list(element: &Element) -> super::ContributorsList {
     let mut node = super::ContributorsList::default();
     let mut reader = crate::Reader::new(element, &super::CONTRIBUTORS_LIST_SHAPE);
@@ -457,13 +457,13 @@ pub fn contributors_list(element: &Element) -> super::ContributorsList {
 }
 
 /// Read one item of `ContributorsListContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn contributors_list_content(element: &Element) -> super::ContributorsListContent {
     crate::read(element)
 }
 
 /// Read `b:Corporate` into a `CorporateAuthor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn corporate_author(element: &Element) -> super::CorporateAuthor {
     let mut node = super::CorporateAuthor::default();
     let mut reader = crate::Reader::new(element, &super::CORPORATE_AUTHOR_SHAPE);
@@ -477,7 +477,7 @@ pub fn corporate_author(element: &Element) -> super::CorporateAuthor {
 }
 
 /// Read `b:Counsel` into a `Counsel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn counsel(element: &Element) -> super::Counsel {
     let mut node = super::Counsel::default();
     let mut reader = crate::Reader::new(element, &super::COUNSEL_SHAPE);
@@ -491,7 +491,7 @@ pub fn counsel(element: &Element) -> super::Counsel {
 }
 
 /// Read `b:CountryRegion` into a `CountryOrRegion`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn country_or_region(element: &Element) -> super::CountryOrRegion {
     let mut node = super::CountryOrRegion::default();
     let mut reader = crate::Reader::new(element, &super::COUNTRY_OR_REGION_SHAPE);
@@ -505,7 +505,7 @@ pub fn country_or_region(element: &Element) -> super::CountryOrRegion {
 }
 
 /// Read `b:Court` into a `Court`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn court(element: &Element) -> super::Court {
     let mut node = super::Court::default();
     let mut reader = crate::Reader::new(element, &super::COURT_SHAPE);
@@ -519,7 +519,7 @@ pub fn court(element: &Element) -> super::Court {
 }
 
 /// Read `b:Day` into a `Day`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn day(element: &Element) -> super::Day {
     let mut node = super::Day::default();
     let mut reader = crate::Reader::new(element, &super::DAY_SHAPE);
@@ -533,7 +533,7 @@ pub fn day(element: &Element) -> super::Day {
 }
 
 /// Read `b:DayAccessed` into a `DayAccessed`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn day_accessed(element: &Element) -> super::DayAccessed {
     let mut node = super::DayAccessed::default();
     let mut reader = crate::Reader::new(element, &super::DAY_ACCESSED_SHAPE);
@@ -547,7 +547,7 @@ pub fn day_accessed(element: &Element) -> super::DayAccessed {
 }
 
 /// Read `b:Department` into a `Department`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn department(element: &Element) -> super::Department {
     let mut node = super::Department::default();
     let mut reader = crate::Reader::new(element, &super::DEPARTMENT_SHAPE);
@@ -561,7 +561,7 @@ pub fn department(element: &Element) -> super::Department {
 }
 
 /// Read `b:Director` into a `Director`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn director(element: &Element) -> super::Director {
     let mut node = super::Director::default();
     let mut reader = crate::Reader::new(element, &super::DIRECTOR_SHAPE);
@@ -575,7 +575,7 @@ pub fn director(element: &Element) -> super::Director {
 }
 
 /// Read `b:Distributor` into a `Distributor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn distributor(element: &Element) -> super::Distributor {
     let mut node = super::Distributor::default();
     let mut reader = crate::Reader::new(element, &super::DISTRIBUTOR_SHAPE);
@@ -589,7 +589,7 @@ pub fn distributor(element: &Element) -> super::Distributor {
 }
 
 /// Read `b:Editor` into a `Editor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn editor(element: &Element) -> super::Editor {
     let mut node = super::Editor::default();
     let mut reader = crate::Reader::new(element, &super::EDITOR_SHAPE);
@@ -603,7 +603,7 @@ pub fn editor(element: &Element) -> super::Editor {
 }
 
 /// Read `b:Edition` into a `EditorEdition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn editor_edition(element: &Element) -> super::EditorEdition {
     let mut node = super::EditorEdition::default();
     let mut reader = crate::Reader::new(element, &super::EDITOR_EDITION_SHAPE);
@@ -617,7 +617,7 @@ pub fn editor_edition(element: &Element) -> super::EditorEdition {
 }
 
 /// Read `b:Guid` into a `Guid`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn guid(element: &Element) -> super::Guid {
     let mut node = super::Guid::default();
     let mut reader = crate::Reader::new(element, &super::GUID_SHAPE);
@@ -631,7 +631,7 @@ pub fn guid(element: &Element) -> super::Guid {
 }
 
 /// Read `b:Institution` into a `Institution`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn institution(element: &Element) -> super::Institution {
     let mut node = super::Institution::default();
     let mut reader = crate::Reader::new(element, &super::INSTITUTION_SHAPE);
@@ -645,7 +645,7 @@ pub fn institution(element: &Element) -> super::Institution {
 }
 
 /// Read `b:InternetSiteTitle` into a `InternetSiteTitle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn internet_site_title(element: &Element) -> super::InternetSiteTitle {
     let mut node = super::InternetSiteTitle::default();
     let mut reader = crate::Reader::new(element, &super::INTERNET_SITE_TITLE_SHAPE);
@@ -659,7 +659,7 @@ pub fn internet_site_title(element: &Element) -> super::InternetSiteTitle {
 }
 
 /// Read `b:Interviewee` into a `Interviewee`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn interviewee(element: &Element) -> super::Interviewee {
     let mut node = super::Interviewee::default();
     let mut reader = crate::Reader::new(element, &super::INTERVIEWEE_SHAPE);
@@ -673,7 +673,7 @@ pub fn interviewee(element: &Element) -> super::Interviewee {
 }
 
 /// Read `b:Interviewer` into a `Interviewer`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn interviewer(element: &Element) -> super::Interviewer {
     let mut node = super::Interviewer::default();
     let mut reader = crate::Reader::new(element, &super::INTERVIEWER_SHAPE);
@@ -687,7 +687,7 @@ pub fn interviewer(element: &Element) -> super::Interviewer {
 }
 
 /// Read `b:Inventor` into a `Inventor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn inventor(element: &Element) -> super::Inventor {
     let mut node = super::Inventor::default();
     let mut reader = crate::Reader::new(element, &super::INVENTOR_SHAPE);
@@ -701,7 +701,7 @@ pub fn inventor(element: &Element) -> super::Inventor {
 }
 
 /// Read `b:Issue` into a `Issue`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn issue(element: &Element) -> super::Issue {
     let mut node = super::Issue::default();
     let mut reader = crate::Reader::new(element, &super::ISSUE_SHAPE);
@@ -715,7 +715,7 @@ pub fn issue(element: &Element) -> super::Issue {
 }
 
 /// Read `b:JournalName` into a `JournalName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn journal_name(element: &Element) -> super::JournalName {
     let mut node = super::JournalName::default();
     let mut reader = crate::Reader::new(element, &super::JOURNAL_NAME_SHAPE);
@@ -729,7 +729,7 @@ pub fn journal_name(element: &Element) -> super::JournalName {
 }
 
 /// Read `b:LCID` into a `LocaleID`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn locale_id(element: &Element) -> super::LocaleID {
     let mut node = super::LocaleID::default();
     let mut reader = crate::Reader::new(element, &super::LOCALE_ID_SHAPE);
@@ -743,7 +743,7 @@ pub fn locale_id(element: &Element) -> super::LocaleID {
 }
 
 /// Read `b:Medium` into a `Medium`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn medium(element: &Element) -> super::Medium {
     let mut node = super::Medium::default();
     let mut reader = crate::Reader::new(element, &super::MEDIUM_SHAPE);
@@ -757,7 +757,7 @@ pub fn medium(element: &Element) -> super::Medium {
 }
 
 /// Read `b:Month` into a `Month`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn month(element: &Element) -> super::Month {
     let mut node = super::Month::default();
     let mut reader = crate::Reader::new(element, &super::MONTH_SHAPE);
@@ -771,7 +771,7 @@ pub fn month(element: &Element) -> super::Month {
 }
 
 /// Read `b:MonthAccessed` into a `MonthAccessed`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn month_accessed(element: &Element) -> super::MonthAccessed {
     let mut node = super::MonthAccessed::default();
     let mut reader = crate::Reader::new(element, &super::MONTH_ACCESSED_SHAPE);
@@ -785,7 +785,7 @@ pub fn month_accessed(element: &Element) -> super::MonthAccessed {
 }
 
 /// Read `b:NameList` into a `NameList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn name_list(element: &Element) -> super::NameList {
     let mut node = super::NameList::default();
     let mut reader = crate::Reader::new(element, &super::NAME_LIST_SHAPE);
@@ -799,13 +799,13 @@ pub fn name_list(element: &Element) -> super::NameList {
 }
 
 /// Read one item of `NameOrCorporateContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn name_or_corporate(element: &Element) -> super::NameOrCorporateContent {
     crate::read(element)
 }
 
 /// Read `b:NumberVolumes` into a `NumberOfVolumes`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn number_of_volumes(element: &Element) -> super::NumberOfVolumes {
     let mut node = super::NumberOfVolumes::default();
     let mut reader = crate::Reader::new(element, &super::NUMBER_OF_VOLUMES_SHAPE);
@@ -819,7 +819,7 @@ pub fn number_of_volumes(element: &Element) -> super::NumberOfVolumes {
 }
 
 /// Read `b:Pages` into a `Pages`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pages(element: &Element) -> super::Pages {
     let mut node = super::Pages::default();
     let mut reader = crate::Reader::new(element, &super::PAGES_SHAPE);
@@ -833,7 +833,7 @@ pub fn pages(element: &Element) -> super::Pages {
 }
 
 /// Read `b:PatentNumber` into a `PatentNumber`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn patent_number(element: &Element) -> super::PatentNumber {
     let mut node = super::PatentNumber::default();
     let mut reader = crate::Reader::new(element, &super::PATENT_NUMBER_SHAPE);
@@ -847,7 +847,7 @@ pub fn patent_number(element: &Element) -> super::PatentNumber {
 }
 
 /// Read `b:Type` into a `PatentType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn patent_type(element: &Element) -> super::PatentType {
     let mut node = super::PatentType::default();
     let mut reader = crate::Reader::new(element, &super::PATENT_TYPE_SHAPE);
@@ -861,7 +861,7 @@ pub fn patent_type(element: &Element) -> super::PatentType {
 }
 
 /// Read `b:Performer` into a `Performer`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn performer(element: &Element) -> super::Performer {
     let mut node = super::Performer::default();
     let mut reader = crate::Reader::new(element, &super::PERFORMER_SHAPE);
@@ -875,7 +875,7 @@ pub fn performer(element: &Element) -> super::Performer {
 }
 
 /// Read `b:PeriodicalTitle` into a `PeriodicalTitle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn periodical_title(element: &Element) -> super::PeriodicalTitle {
     let mut node = super::PeriodicalTitle::default();
     let mut reader = crate::Reader::new(element, &super::PERIODICAL_TITLE_SHAPE);
@@ -889,7 +889,7 @@ pub fn periodical_title(element: &Element) -> super::PeriodicalTitle {
 }
 
 /// Read `b:Person` into a `Person`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn person(element: &Element) -> super::Person {
     let mut node = super::Person::default();
     let mut reader = crate::Reader::new(element, &super::PERSON_SHAPE);
@@ -906,7 +906,7 @@ pub fn person(element: &Element) -> super::Person {
 }
 
 /// Read `b:First` into a `PersonsFirstOrGivenName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn persons_first_or_given_name(element: &Element) -> super::PersonsFirstOrGivenName {
     let mut node = super::PersonsFirstOrGivenName::default();
     let mut reader = crate::Reader::new(element, &super::PERSONS_FIRST_OR_GIVEN_NAME_SHAPE);
@@ -920,7 +920,7 @@ pub fn persons_first_or_given_name(element: &Element) -> super::PersonsFirstOrGi
 }
 
 /// Read `b:Last` into a `PersonsLastOrFamilyName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn persons_last_or_family_name(element: &Element) -> super::PersonsLastOrFamilyName {
     let mut node = super::PersonsLastOrFamilyName::default();
     let mut reader = crate::Reader::new(element, &super::PERSONS_LAST_OR_FAMILY_NAME_SHAPE);
@@ -934,7 +934,7 @@ pub fn persons_last_or_family_name(element: &Element) -> super::PersonsLastOrFam
 }
 
 /// Read `b:Middle` into a `PersonsMiddleOrOtherName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn persons_middle_or_other_name(element: &Element) -> super::PersonsMiddleOrOtherName {
     let mut node = super::PersonsMiddleOrOtherName::default();
     let mut reader = crate::Reader::new(element, &super::PERSONS_MIDDLE_OR_OTHER_NAME_SHAPE);
@@ -948,7 +948,7 @@ pub fn persons_middle_or_other_name(element: &Element) -> super::PersonsMiddleOr
 }
 
 /// Read `b:ProducerName` into a `ProducerName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn producer_name(element: &Element) -> super::ProducerName {
     let mut node = super::ProducerName::default();
     let mut reader = crate::Reader::new(element, &super::PRODUCER_NAME_SHAPE);
@@ -962,7 +962,7 @@ pub fn producer_name(element: &Element) -> super::ProducerName {
 }
 
 /// Read `b:ProductionCompany` into a `ProductionCompany`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn production_company(element: &Element) -> super::ProductionCompany {
     let mut node = super::ProductionCompany::default();
     let mut reader = crate::Reader::new(element, &super::PRODUCTION_COMPANY_SHAPE);
@@ -976,7 +976,7 @@ pub fn production_company(element: &Element) -> super::ProductionCompany {
 }
 
 /// Read `b:PublicationTitle` into a `PublicationTitle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn publication_title(element: &Element) -> super::PublicationTitle {
     let mut node = super::PublicationTitle::default();
     let mut reader = crate::Reader::new(element, &super::PUBLICATION_TITLE_SHAPE);
@@ -990,7 +990,7 @@ pub fn publication_title(element: &Element) -> super::PublicationTitle {
 }
 
 /// Read `b:Publisher` into a `Publisher`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn publisher(element: &Element) -> super::Publisher {
     let mut node = super::Publisher::default();
     let mut reader = crate::Reader::new(element, &super::PUBLISHER_SHAPE);
@@ -1004,7 +1004,7 @@ pub fn publisher(element: &Element) -> super::Publisher {
 }
 
 /// Read `b:RecordingNumber` into a `RecordingNumber`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn recording_number(element: &Element) -> super::RecordingNumber {
     let mut node = super::RecordingNumber::default();
     let mut reader = crate::Reader::new(element, &super::RECORDING_NUMBER_SHAPE);
@@ -1018,7 +1018,7 @@ pub fn recording_number(element: &Element) -> super::RecordingNumber {
 }
 
 /// Read `b:RefOrder` into a `ReferenceOrder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn reference_order(element: &Element) -> super::ReferenceOrder {
     let mut node = super::ReferenceOrder::default();
     let mut reader = crate::Reader::new(element, &super::REFERENCE_ORDER_SHAPE);
@@ -1032,7 +1032,7 @@ pub fn reference_order(element: &Element) -> super::ReferenceOrder {
 }
 
 /// Read `b:Reporter` into a `Reporter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn reporter(element: &Element) -> super::Reporter {
     let mut node = super::Reporter::default();
     let mut reader = crate::Reader::new(element, &super::REPORTER_SHAPE);
@@ -1046,7 +1046,7 @@ pub fn reporter(element: &Element) -> super::Reporter {
 }
 
 /// Read `b:ShortTitle` into a `ShortTitle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn short_title(element: &Element) -> super::ShortTitle {
     let mut node = super::ShortTitle::default();
     let mut reader = crate::Reader::new(element, &super::SHORT_TITLE_SHAPE);
@@ -1060,7 +1060,7 @@ pub fn short_title(element: &Element) -> super::ShortTitle {
 }
 
 /// Read `b:Source` into a `Source`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn source(element: &Element) -> super::Source {
     let mut node = super::Source::default();
     let mut reader = crate::Reader::new(element, &super::SOURCE_SHAPE);
@@ -1074,13 +1074,13 @@ pub fn source(element: &Element) -> super::Source {
 }
 
 /// Read one item of `SourceContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn source_content(element: &Element) -> super::SourceContent {
     crate::read(element)
 }
 
 /// Read `b:SourceType` into a `SourceType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn source_type(element: &Element) -> super::SourceType {
     let mut node = super::SourceType::default();
     let mut reader = crate::Reader::new(element, &super::SOURCE_TYPE_SHAPE);
@@ -1094,7 +1094,7 @@ pub fn source_type(element: &Element) -> super::SourceType {
 }
 
 /// Read `b:Sources` into a `Sources`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sources(element: &Element) -> super::Sources {
     let mut node = super::Sources::default();
     let mut reader = crate::Reader::new(element, &super::SOURCES_SHAPE);
@@ -1112,7 +1112,7 @@ pub fn sources(element: &Element) -> super::Sources {
 }
 
 /// Read `b:StandardNumber` into a `StandardNumber`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn standard_number(element: &Element) -> super::StandardNumber {
     let mut node = super::StandardNumber::default();
     let mut reader = crate::Reader::new(element, &super::STANDARD_NUMBER_SHAPE);
@@ -1126,7 +1126,7 @@ pub fn standard_number(element: &Element) -> super::StandardNumber {
 }
 
 /// Read `b:StateProvince` into a `StateOrProvince`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn state_or_province(element: &Element) -> super::StateOrProvince {
     let mut node = super::StateOrProvince::default();
     let mut reader = crate::Reader::new(element, &super::STATE_OR_PROVINCE_SHAPE);
@@ -1140,7 +1140,7 @@ pub fn state_or_province(element: &Element) -> super::StateOrProvince {
 }
 
 /// Read `b:Station` into a `Station`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn station(element: &Element) -> super::Station {
     let mut node = super::Station::default();
     let mut reader = crate::Reader::new(element, &super::STATION_SHAPE);
@@ -1154,7 +1154,7 @@ pub fn station(element: &Element) -> super::Station {
 }
 
 /// Read `b:Tag` into a `Tag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tag(element: &Element) -> super::Tag {
     let mut node = super::Tag::default();
     let mut reader = crate::Reader::new(element, &super::TAG_SHAPE);
@@ -1168,7 +1168,7 @@ pub fn tag(element: &Element) -> super::Tag {
 }
 
 /// Read `b:Theater` into a `Theater`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn theater(element: &Element) -> super::Theater {
     let mut node = super::Theater::default();
     let mut reader = crate::Reader::new(element, &super::THEATER_SHAPE);
@@ -1182,7 +1182,7 @@ pub fn theater(element: &Element) -> super::Theater {
 }
 
 /// Read `b:ThesisType` into a `ThesisType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn thesis_type(element: &Element) -> super::ThesisType {
     let mut node = super::ThesisType::default();
     let mut reader = crate::Reader::new(element, &super::THESIS_TYPE_SHAPE);
@@ -1196,7 +1196,7 @@ pub fn thesis_type(element: &Element) -> super::ThesisType {
 }
 
 /// Read `b:Title` into a `Title`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn title(element: &Element) -> super::Title {
     let mut node = super::Title::default();
     let mut reader = crate::Reader::new(element, &super::TITLE_SHAPE);
@@ -1210,7 +1210,7 @@ pub fn title(element: &Element) -> super::Title {
 }
 
 /// Read `b:Translator` into a `Translator`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn translator(element: &Element) -> super::Translator {
     let mut node = super::Translator::default();
     let mut reader = crate::Reader::new(element, &super::TRANSLATOR_SHAPE);
@@ -1224,7 +1224,7 @@ pub fn translator(element: &Element) -> super::Translator {
 }
 
 /// Read `b:URL` into a `Url`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn url(element: &Element) -> super::Url {
     let mut node = super::Url::default();
     let mut reader = crate::Reader::new(element, &super::URL_SHAPE);
@@ -1238,7 +1238,7 @@ pub fn url(element: &Element) -> super::Url {
 }
 
 /// Read `b:Version` into a `Version`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn version(element: &Element) -> super::Version {
     let mut node = super::Version::default();
     let mut reader = crate::Reader::new(element, &super::VERSION_SHAPE);
@@ -1252,7 +1252,7 @@ pub fn version(element: &Element) -> super::Version {
 }
 
 /// Read `b:Volume` into a `Volume`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn volume(element: &Element) -> super::Volume {
     let mut node = super::Volume::default();
     let mut reader = crate::Reader::new(element, &super::VOLUME_SHAPE);
@@ -1266,7 +1266,7 @@ pub fn volume(element: &Element) -> super::Volume {
 }
 
 /// Read `b:Writer` into a `Writer`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn writer(element: &Element) -> super::Writer {
     let mut node = super::Writer::default();
     let mut reader = crate::Reader::new(element, &super::WRITER_SHAPE);
@@ -1280,7 +1280,7 @@ pub fn writer(element: &Element) -> super::Writer {
 }
 
 /// Read `b:Year` into a `Year`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn year(element: &Element) -> super::Year {
     let mut node = super::Year::default();
     let mut reader = crate::Reader::new(element, &super::YEAR_SHAPE);
@@ -1294,7 +1294,7 @@ pub fn year(element: &Element) -> super::Year {
 }
 
 /// Read `b:YearAccessed` into a `YearAccessed`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn year_accessed(element: &Element) -> super::YearAccessed {
     let mut node = super::YearAccessed::default();
     let mut reader = crate::Reader::new(element, &super::YEAR_ACCESSED_SHAPE);

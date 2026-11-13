@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xlecs2:externalCodeServiceImageAsInput` into a `ExternalCodeServiceImageAsInput`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn external_code_service_image_as_input(
     element: &Element,
 ) -> super::ExternalCodeServiceImageAsInput {

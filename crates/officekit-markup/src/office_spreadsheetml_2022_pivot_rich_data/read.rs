@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xprd:richInfo` into a `RichInfo`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_info(element: &Element) -> super::RichInfo {
     let mut node = super::RichInfo::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RICH_INFO_SHAPE);

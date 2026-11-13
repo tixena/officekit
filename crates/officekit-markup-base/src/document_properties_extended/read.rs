@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `ap:Application` into a `ApplicationName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn application_name(element: &Element) -> super::ApplicationName {
     let mut node = super::ApplicationName::default();
     let mut reader = crate::Reader::new(element, &super::APPLICATION_NAME_SHAPE);
@@ -233,7 +233,7 @@ pub fn application_name(element: &Element) -> super::ApplicationName {
 }
 
 /// Read `ap:Properties` into a `ApplicationSpecificFileProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn application_specific_file_properties(
     element: &Element,
 ) -> super::ApplicationSpecificFileProperties {
@@ -251,7 +251,7 @@ pub fn application_specific_file_properties(
 
 /// Read one item of `ApplicationSpecificFilePropertiesContent` from its element: the arm of its
 /// tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn application_specific_file_properties_content(
     element: &Element,
 ) -> super::ApplicationSpecificFilePropertiesContent {
@@ -259,7 +259,7 @@ pub fn application_specific_file_properties_content(
 }
 
 /// Read `ap:AppVersion` into a `ApplicationVersion`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn application_version(element: &Element) -> super::ApplicationVersion {
     let mut node = super::ApplicationVersion::default();
     let mut reader = crate::Reader::new(element, &super::APPLICATION_VERSION_SHAPE);
@@ -273,7 +273,7 @@ pub fn application_version(element: &Element) -> super::ApplicationVersion {
 }
 
 /// Read `ap:CharactersWithSpaces` into a `CharactersWithSpaces`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn characters_with_spaces(element: &Element) -> super::CharactersWithSpaces {
     let mut node = super::CharactersWithSpaces::default();
     let mut reader = crate::Reader::new(element, &super::CHARACTERS_WITH_SPACES_SHAPE);
@@ -287,7 +287,7 @@ pub fn characters_with_spaces(element: &Element) -> super::CharactersWithSpaces 
 }
 
 /// Read `ap:DigSig` into a `DigitalSignature`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn digital_signature(element: &Element) -> super::DigitalSignature {
     let mut node = super::DigitalSignature::default();
     let mut reader = crate::Reader::new(element, &super::DIGITAL_SIGNATURE_SHAPE);
@@ -301,7 +301,7 @@ pub fn digital_signature(element: &Element) -> super::DigitalSignature {
 }
 
 /// Read `ap:DocSecurity` into a `DocumentSecurity`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_security(element: &Element) -> super::DocumentSecurity {
     let mut node = super::DocumentSecurity::default();
     let mut reader = crate::Reader::new(element, &super::DOCUMENT_SECURITY_SHAPE);
@@ -315,7 +315,7 @@ pub fn document_security(element: &Element) -> super::DocumentSecurity {
 }
 
 /// Read `ap:HeadingPairs` into a `HeadingPairs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn heading_pairs(element: &Element) -> super::HeadingPairs {
     let mut node = super::HeadingPairs::default();
     let mut reader = crate::Reader::new(element, &super::HEADING_PAIRS_SHAPE);
@@ -329,7 +329,7 @@ pub fn heading_pairs(element: &Element) -> super::HeadingPairs {
 }
 
 /// Read `ap:HLinks` into a `HyperlinkList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hyperlink_list(element: &Element) -> super::HyperlinkList {
     let mut node = super::HyperlinkList::default();
     let mut reader = crate::Reader::new(element, &super::HYPERLINK_LIST_SHAPE);
@@ -343,7 +343,7 @@ pub fn hyperlink_list(element: &Element) -> super::HyperlinkList {
 }
 
 /// Read `ap:HyperlinksChanged` into a `HyperlinksChanged`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hyperlinks_changed(element: &Element) -> super::HyperlinksChanged {
     let mut node = super::HyperlinksChanged::default();
     let mut reader = crate::Reader::new(element, &super::HYPERLINKS_CHANGED_SHAPE);
@@ -357,7 +357,7 @@ pub fn hyperlinks_changed(element: &Element) -> super::HyperlinksChanged {
 }
 
 /// Read `ap:PresentationFormat` into a `IntendedFormatOfPresentation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn intended_format_of_presentation(element: &Element) -> super::IntendedFormatOfPresentation {
     let mut node = super::IntendedFormatOfPresentation::default();
     let mut reader = crate::Reader::new(element, &super::INTENDED_FORMAT_OF_PRESENTATION_SHAPE);
@@ -371,7 +371,7 @@ pub fn intended_format_of_presentation(element: &Element) -> super::IntendedForm
 }
 
 /// Read `ap:LinksUpToDate` into a `LinksUpToDate`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn links_up_to_date(element: &Element) -> super::LinksUpToDate {
     let mut node = super::LinksUpToDate::default();
     let mut reader = crate::Reader::new(element, &super::LINKS_UP_TO_DATE_SHAPE);
@@ -385,7 +385,7 @@ pub fn links_up_to_date(element: &Element) -> super::LinksUpToDate {
 }
 
 /// Read `ap:Company` into a `NameOfCompany`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn name_of_company(element: &Element) -> super::NameOfCompany {
     let mut node = super::NameOfCompany::default();
     let mut reader = crate::Reader::new(element, &super::NAME_OF_COMPANY_SHAPE);
@@ -399,7 +399,7 @@ pub fn name_of_company(element: &Element) -> super::NameOfCompany {
 }
 
 /// Read `ap:Template` into a `NameOfDocumentTemplate`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn name_of_document_template(element: &Element) -> super::NameOfDocumentTemplate {
     let mut node = super::NameOfDocumentTemplate::default();
     let mut reader = crate::Reader::new(element, &super::NAME_OF_DOCUMENT_TEMPLATE_SHAPE);
@@ -413,7 +413,7 @@ pub fn name_of_document_template(element: &Element) -> super::NameOfDocumentTemp
 }
 
 /// Read `ap:Manager` into a `NameOfManager`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn name_of_manager(element: &Element) -> super::NameOfManager {
     let mut node = super::NameOfManager::default();
     let mut reader = crate::Reader::new(element, &super::NAME_OF_MANAGER_SHAPE);
@@ -427,7 +427,7 @@ pub fn name_of_manager(element: &Element) -> super::NameOfManager {
 }
 
 /// Read `ap:HiddenSlides` into a `NumberOfHiddenSlides`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn number_of_hidden_slides(element: &Element) -> super::NumberOfHiddenSlides {
     let mut node = super::NumberOfHiddenSlides::default();
     let mut reader = crate::Reader::new(element, &super::NUMBER_OF_HIDDEN_SLIDES_SHAPE);
@@ -441,7 +441,7 @@ pub fn number_of_hidden_slides(element: &Element) -> super::NumberOfHiddenSlides
 }
 
 /// Read `ap:Lines` into a `NumberOfLines`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn number_of_lines(element: &Element) -> super::NumberOfLines {
     let mut node = super::NumberOfLines::default();
     let mut reader = crate::Reader::new(element, &super::NUMBER_OF_LINES_SHAPE);
@@ -455,7 +455,7 @@ pub fn number_of_lines(element: &Element) -> super::NumberOfLines {
 }
 
 /// Read `ap:Notes` into a `NumberOfSlidesContainingNotes`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn number_of_slides_containing_notes(
     element: &Element,
 ) -> super::NumberOfSlidesContainingNotes {
@@ -471,7 +471,7 @@ pub fn number_of_slides_containing_notes(
 }
 
 /// Read `ap:TitlesOfParts` into a `PartTitles`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn part_titles(element: &Element) -> super::PartTitles {
     let mut node = super::PartTitles::default();
     let mut reader = crate::Reader::new(element, &super::PART_TITLES_SHAPE);
@@ -485,7 +485,7 @@ pub fn part_titles(element: &Element) -> super::PartTitles {
 }
 
 /// Read `ap:HyperlinkBase` into a `RelativeHyperlinkBase`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn relative_hyperlink_base(element: &Element) -> super::RelativeHyperlinkBase {
     let mut node = super::RelativeHyperlinkBase::default();
     let mut reader = crate::Reader::new(element, &super::RELATIVE_HYPERLINK_BASE_SHAPE);
@@ -499,7 +499,7 @@ pub fn relative_hyperlink_base(element: &Element) -> super::RelativeHyperlinkBas
 }
 
 /// Read `ap:SharedDoc` into a `SharedDocument`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shared_document(element: &Element) -> super::SharedDocument {
     let mut node = super::SharedDocument::default();
     let mut reader = crate::Reader::new(element, &super::SHARED_DOCUMENT_SHAPE);
@@ -513,7 +513,7 @@ pub fn shared_document(element: &Element) -> super::SharedDocument {
 }
 
 /// Read `ap:Slides` into a `SlidesMetadataElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slides_metadata_element(element: &Element) -> super::SlidesMetadataElement {
     let mut node = super::SlidesMetadataElement::default();
     let mut reader = crate::Reader::new(element, &super::SLIDES_METADATA_ELEMENT_SHAPE);
@@ -527,7 +527,7 @@ pub fn slides_metadata_element(element: &Element) -> super::SlidesMetadataElemen
 }
 
 /// Read `ap:ScaleCrop` into a `ThumbnailDisplayMode`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn thumbnail_display_mode(element: &Element) -> super::ThumbnailDisplayMode {
     let mut node = super::ThumbnailDisplayMode::default();
     let mut reader = crate::Reader::new(element, &super::THUMBNAIL_DISPLAY_MODE_SHAPE);
@@ -541,7 +541,7 @@ pub fn thumbnail_display_mode(element: &Element) -> super::ThumbnailDisplayMode 
 }
 
 /// Read `ap:TotalTime` into a `TotalEditTimeMetadataElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn total_edit_time_metadata_element(element: &Element) -> super::TotalEditTimeMetadataElement {
     let mut node = super::TotalEditTimeMetadataElement::default();
     let mut reader = crate::Reader::new(element, &super::TOTAL_EDIT_TIME_METADATA_ELEMENT_SHAPE);
@@ -555,7 +555,7 @@ pub fn total_edit_time_metadata_element(element: &Element) -> super::TotalEditTi
 }
 
 /// Read `ap:Characters` into a `TotalNumberOfCharacters`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn total_number_of_characters(element: &Element) -> super::TotalNumberOfCharacters {
     let mut node = super::TotalNumberOfCharacters::default();
     let mut reader = crate::Reader::new(element, &super::TOTAL_NUMBER_OF_CHARACTERS_SHAPE);
@@ -569,7 +569,7 @@ pub fn total_number_of_characters(element: &Element) -> super::TotalNumberOfChar
 }
 
 /// Read `ap:MMClips` into a `TotalNumberOfMultimediaClips`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn total_number_of_multimedia_clips(element: &Element) -> super::TotalNumberOfMultimediaClips {
     let mut node = super::TotalNumberOfMultimediaClips::default();
     let mut reader = crate::Reader::new(element, &super::TOTAL_NUMBER_OF_MULTIMEDIA_CLIPS_SHAPE);
@@ -583,7 +583,7 @@ pub fn total_number_of_multimedia_clips(element: &Element) -> super::TotalNumber
 }
 
 /// Read `ap:Pages` into a `TotalNumberOfPages`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn total_number_of_pages(element: &Element) -> super::TotalNumberOfPages {
     let mut node = super::TotalNumberOfPages::default();
     let mut reader = crate::Reader::new(element, &super::TOTAL_NUMBER_OF_PAGES_SHAPE);
@@ -597,7 +597,7 @@ pub fn total_number_of_pages(element: &Element) -> super::TotalNumberOfPages {
 }
 
 /// Read `ap:Paragraphs` into a `TotalNumberOfParagraphs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn total_number_of_paragraphs(element: &Element) -> super::TotalNumberOfParagraphs {
     let mut node = super::TotalNumberOfParagraphs::default();
     let mut reader = crate::Reader::new(element, &super::TOTAL_NUMBER_OF_PARAGRAPHS_SHAPE);
@@ -611,7 +611,7 @@ pub fn total_number_of_paragraphs(element: &Element) -> super::TotalNumberOfPara
 }
 
 /// Read `ap:Words` into a `WordCount`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn word_count(element: &Element) -> super::WordCount {
     let mut node = super::WordCount::default();
     let mut reader = crate::Reader::new(element, &super::WORD_COUNT_SHAPE);

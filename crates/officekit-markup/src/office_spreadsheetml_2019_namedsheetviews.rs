@@ -995,7 +995,7 @@ pub trait Visitor: crate::Visitor {
 impl<X: NodeExtra> ColumnFilterWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> ColumnFilterWith<Y>
     where
         Y: NodeExtra,
@@ -1015,7 +1015,7 @@ impl<X: NodeExtra> ColumnFilterWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             col_id: self.col_id.clone(),
@@ -1041,7 +1041,7 @@ impl officekit_markup_base::Write for ColumnFilter {
 impl<X: NodeExtra> DxfWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> DxfWith<Y>
     where
         Y: NodeExtra,
@@ -1081,7 +1081,7 @@ impl<X: NodeExtra> DxfWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -1103,7 +1103,7 @@ impl officekit_markup_base::Write for Dxf {
 impl<X: NodeExtra> ExtLstWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ExtLstWith<Y>
     where
         Y: NodeExtra,
@@ -1119,7 +1119,7 @@ impl<X: NodeExtra> ExtLstWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -1141,7 +1141,7 @@ impl officekit_markup_base::Write for ExtLst {
 impl<X: NodeExtra> FilterWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> FilterWith<Y>
     where
         Y: NodeExtra,
@@ -1160,7 +1160,7 @@ impl<X: NodeExtra> FilterWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             col_id: self.col_id.clone(),
@@ -1187,7 +1187,7 @@ impl officekit_markup_base::Write for Filter {
 impl<X: NodeExtra> NamedSheetViewWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> NamedSheetViewWith<Y>
     where
         Y: NodeExtra,
@@ -1209,7 +1209,7 @@ impl<X: NodeExtra> NamedSheetViewWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             id: self.id.clone(),
@@ -1235,7 +1235,7 @@ impl officekit_markup_base::Write for NamedSheetView {
 impl<X: NodeExtra> NamedSheetViewsWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> NamedSheetViewsWith<Y>
     where
         Y: NodeExtra,
@@ -1255,7 +1255,7 @@ impl<X: NodeExtra> NamedSheetViewsWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -1277,7 +1277,7 @@ impl officekit_markup_base::Write for NamedSheetViews {
 impl<X: NodeExtra> NsvFilterWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> NsvFilterWith<Y>
     where
         Y: NodeExtra,
@@ -1304,7 +1304,7 @@ impl<X: NodeExtra> NsvFilterWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             filter_id: self.filter_id.clone(),
@@ -1331,7 +1331,7 @@ impl officekit_markup_base::Write for NsvFilter {
 impl<X: NodeExtra> RichSortConditionWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> RichSortConditionWith<Y>
     where
         Y: NodeExtra,
@@ -1351,7 +1351,7 @@ impl<X: NodeExtra> RichSortConditionWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             custom_list: self.custom_list.clone(),
@@ -1383,7 +1383,7 @@ impl officekit_markup_base::Write for RichSortCondition {
 impl<X: NodeExtra> SortConditionWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SortConditionWith<Y>
     where
         Y: NodeExtra,
@@ -1402,7 +1402,7 @@ impl<X: NodeExtra> SortConditionWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             custom_list: self.custom_list.clone(),
@@ -1433,7 +1433,7 @@ impl officekit_markup_base::Write for SortCondition {
 impl<X: NodeExtra> SortRuleWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> SortRuleWith<Y>
     where
         Y: NodeExtra,
@@ -1452,7 +1452,7 @@ impl<X: NodeExtra> SortRuleWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             col_id: self.col_id.clone(),
@@ -1477,7 +1477,7 @@ impl officekit_markup_base::Write for SortRule {
 
 impl<X: NodeExtra> SortRuleContentWith<X> {
     /// This item and every node under it with each `extra` at `Y`'s default.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SortRuleContentWith<Y>
     where
         Y: NodeExtra,
@@ -1523,7 +1523,7 @@ impl officekit_markup_base::Write for SortRuleContent {
 impl<X: NodeExtra> SortRulesWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> SortRulesWith<Y>
     where
         Y: NodeExtra,
@@ -1545,7 +1545,7 @@ impl<X: NodeExtra> SortRulesWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             case_sensitive: self.case_sensitive.clone(),

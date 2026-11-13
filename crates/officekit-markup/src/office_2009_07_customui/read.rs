@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `mso14:backstage` into a `Backstage`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn backstage(element: &Element) -> super::Backstage {
     let mut node = super::Backstage::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BACKSTAGE_SHAPE);
@@ -236,25 +236,25 @@ pub fn backstage(element: &Element) -> super::Backstage {
 }
 
 /// Read one item of `BackstageContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn backstage_content(element: &Element) -> super::BackstageContent {
     officekit_markup_base::read(element)
 }
 
 /// Read one item of `BackstageGroupsContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn backstage_groups(element: &Element) -> super::BackstageGroupsContent {
     officekit_markup_base::read(element)
 }
 
 /// Read one item of `BackstageMenuGroupContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn backstage_menu_group(element: &Element) -> super::BackstageMenuGroupContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `mso14:bottomItems` into a `BottomItems`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bottom_items(element: &Element) -> super::BottomItems {
     let mut node = super::BottomItems::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BOTTOM_ITEMS_SHAPE);
@@ -268,13 +268,13 @@ pub fn bottom_items(element: &Element) -> super::BottomItems {
 }
 
 /// Read one item of `BoxContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn r#box(element: &Element) -> super::BoxContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `mso14:box` into a `BoxBox`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn box_box(element: &Element) -> super::BoxBox {
     let mut node = super::BoxBox::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BOX_BOX_SHAPE);
@@ -299,7 +299,7 @@ pub fn box_box(element: &Element) -> super::BoxBox {
 }
 
 /// Read `mso14:button` into a `ButtonBackstageFastCommandButton`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn button_backstage_fast_command_button(
     element: &Element,
 ) -> super::ButtonBackstageFastCommandButton {
@@ -339,7 +339,7 @@ pub fn button_backstage_fast_command_button(
 }
 
 /// Read `mso14:button` into a `ButtonBackstageGroupButton`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn button_backstage_group_button(element: &Element) -> super::ButtonBackstageGroupButton {
     let mut node = super::ButtonBackstageGroupButton::default();
     let mut reader =
@@ -376,7 +376,7 @@ pub fn button_backstage_group_button(element: &Element) -> super::ButtonBackstag
 }
 
 /// Read `mso14:button` into a `ButtonBackstageMenuButton`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn button_backstage_menu_button(element: &Element) -> super::ButtonBackstageMenuButton {
     let mut node = super::ButtonBackstageMenuButton::default();
     let mut reader =
@@ -409,7 +409,7 @@ pub fn button_backstage_menu_button(element: &Element) -> super::ButtonBackstage
 }
 
 /// Read `mso14:button` into a `ButtonBackstageRegularButton`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn button_backstage_regular_button(element: &Element) -> super::ButtonBackstageRegularButton {
     let mut node = super::ButtonBackstageRegularButton::default();
     let mut reader =
@@ -444,7 +444,7 @@ pub fn button_backstage_regular_button(element: &Element) -> super::ButtonBackst
 }
 
 /// Read `mso14:button` into a `ButtonButton`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn button_button(element: &Element) -> super::ButtonButton {
     let mut node = super::ButtonButton::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BUTTON_BUTTON_SHAPE);
@@ -490,7 +490,7 @@ pub fn button_button(element: &Element) -> super::ButtonButton {
 }
 
 /// Read `mso14:button` into a `ButtonButtonRegular`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn button_button_regular(element: &Element) -> super::ButtonButtonRegular {
     let mut node = super::ButtonButtonRegular::default();
     let mut reader =
@@ -535,7 +535,7 @@ pub fn button_button_regular(element: &Element) -> super::ButtonButtonRegular {
 }
 
 /// Read `mso14:buttonGroup` into a `ButtonGroup`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn button_group(element: &Element) -> super::ButtonGroup {
     let mut node = super::ButtonGroup::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BUTTON_GROUP_SHAPE);
@@ -559,13 +559,13 @@ pub fn button_group(element: &Element) -> super::ButtonGroup {
 }
 
 /// Read one item of `ButtonGroupContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn button_group_content(element: &Element) -> super::ButtonGroupContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `mso14:button` into a `ButtonVisibleButton`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn button_visible_button(element: &Element) -> super::ButtonVisibleButton {
     let mut node = super::ButtonVisibleButton::default();
     let mut reader =
@@ -608,7 +608,7 @@ pub fn button_visible_button(element: &Element) -> super::ButtonVisibleButton {
 }
 
 /// Read `mso14:category` into a `CategoryTaskFormGroupCategory`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn category_task_form_group_category(
     element: &Element,
 ) -> super::CategoryTaskFormGroupCategory {
@@ -640,7 +640,7 @@ pub fn category_task_form_group_category(
 }
 
 /// Read `mso14:category` into a `CategoryTaskGroupCategory`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn category_task_group_category(element: &Element) -> super::CategoryTaskGroupCategory {
     let mut node = super::CategoryTaskGroupCategory::default();
     let mut reader =
@@ -668,7 +668,7 @@ pub fn category_task_group_category(element: &Element) -> super::CategoryTaskGro
 }
 
 /// Read `mso14:checkBox` into a `CheckBoxBackstageCheckBox`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn check_box_backstage_check_box(element: &Element) -> super::CheckBoxBackstageCheckBox {
     let mut node = super::CheckBoxBackstageCheckBox::default();
     let mut reader =
@@ -703,7 +703,7 @@ pub fn check_box_backstage_check_box(element: &Element) -> super::CheckBoxBackst
 }
 
 /// Read `mso14:checkBox` into a `CheckBoxBackstageMenuCheckBox`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn check_box_backstage_menu_check_box(
     element: &Element,
 ) -> super::CheckBoxBackstageMenuCheckBox {
@@ -737,7 +737,7 @@ pub fn check_box_backstage_menu_check_box(
 }
 
 /// Read `mso14:checkBox` into a `CheckBoxCheckBox`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn check_box_check_box(element: &Element) -> super::CheckBoxCheckBox {
     let mut node = super::CheckBoxCheckBox::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CHECK_BOX_CHECK_BOX_SHAPE);
@@ -775,7 +775,7 @@ pub fn check_box_check_box(element: &Element) -> super::CheckBoxCheckBox {
 }
 
 /// Read `mso14:comboBox` into a `ComboBoxBackstageComboBox`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn combo_box_backstage_combo_box(element: &Element) -> super::ComboBoxBackstageComboBox {
     let mut node = super::ComboBoxBackstageComboBox::default();
     let mut reader =
@@ -810,7 +810,7 @@ pub fn combo_box_backstage_combo_box(element: &Element) -> super::ComboBoxBackst
 }
 
 /// Read `mso14:comboBox` into a `ComboBoxComboBox`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn combo_box_combo_box(element: &Element) -> super::ComboBoxComboBox {
     let mut node = super::ComboBoxComboBox::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMBO_BOX_COMBO_BOX_SHAPE);
@@ -864,7 +864,7 @@ pub fn combo_box_combo_box(element: &Element) -> super::ComboBoxComboBox {
 }
 
 /// Read `mso14:command` into a `Command`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn command(element: &Element) -> super::Command {
     let mut node = super::Command::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMAND_SHAPE);
@@ -882,7 +882,7 @@ pub fn command(element: &Element) -> super::Command {
 }
 
 /// Read `mso14:commands` into a `Commands`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn commands(element: &Element) -> super::Commands {
     let mut node = super::Commands::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMANDS_SHAPE);
@@ -896,7 +896,7 @@ pub fn commands(element: &Element) -> super::Commands {
 }
 
 /// Read `mso14:contextMenu` into a `ContextMenu`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn context_menu(element: &Element) -> super::ContextMenu {
     let mut node = super::ContextMenu::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONTEXT_MENU_SHAPE);
@@ -912,13 +912,13 @@ pub fn context_menu(element: &Element) -> super::ContextMenu {
 }
 
 /// Read one item of `ContextMenuContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn context_menu_content(element: &Element) -> super::ContextMenuContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `mso14:contextMenus` into a `ContextMenus`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn context_menus(element: &Element) -> super::ContextMenus {
     let mut node = super::ContextMenus::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONTEXT_MENUS_SHAPE);
@@ -932,7 +932,7 @@ pub fn context_menus(element: &Element) -> super::ContextMenus {
 }
 
 /// Read `mso14:contextualTabs` into a `ContextualTabs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn contextual_tabs(element: &Element) -> super::ContextualTabs {
     let mut node = super::ContextualTabs::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONTEXTUAL_TABS_SHAPE);
@@ -946,7 +946,7 @@ pub fn contextual_tabs(element: &Element) -> super::ContextualTabs {
 }
 
 /// Read `mso14:control` into a `ControlControlClone`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn control_control_clone(element: &Element) -> super::ControlControlClone {
     let mut node = super::ControlControlClone::default();
     let mut reader =
@@ -991,7 +991,7 @@ pub fn control_control_clone(element: &Element) -> super::ControlControlClone {
 }
 
 /// Read `mso14:control` into a `ControlControlCloneQat`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn control_control_clone_qat(element: &Element) -> super::ControlControlCloneQat {
     let mut node = super::ControlControlCloneQat::default();
     let mut reader =
@@ -1036,7 +1036,7 @@ pub fn control_control_clone_qat(element: &Element) -> super::ControlControlClon
 }
 
 /// Read `mso14:control` into a `ControlControlCloneRegular`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn control_control_clone_regular(element: &Element) -> super::ControlControlCloneRegular {
     let mut node = super::ControlControlCloneRegular::default();
     let mut reader =
@@ -1077,7 +1077,7 @@ pub fn control_control_clone_regular(element: &Element) -> super::ControlControl
 }
 
 /// Read `mso14:customUI` into a `CustomUI`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_ui(element: &Element) -> super::CustomUI {
     let mut node = super::CustomUI::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOM_UI_SHAPE);
@@ -1097,7 +1097,7 @@ pub fn custom_ui(element: &Element) -> super::CustomUI {
 }
 
 /// Read `mso14:dialogBoxLauncher` into a `DialogBoxLauncher`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dialog_box_launcher(element: &Element) -> super::DialogBoxLauncher {
     let mut node = super::DialogBoxLauncher::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DIALOG_BOX_LAUNCHER_SHAPE);
@@ -1111,7 +1111,7 @@ pub fn dialog_box_launcher(element: &Element) -> super::DialogBoxLauncher {
 }
 
 /// Read `mso14:documentControls` into a `DocumentControls`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_controls(element: &Element) -> super::DocumentControls {
     let mut node = super::DocumentControls::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DOCUMENT_CONTROLS_SHAPE);
@@ -1125,7 +1125,7 @@ pub fn document_controls(element: &Element) -> super::DocumentControls {
 }
 
 /// Read `mso14:dropDown` into a `DropDownBackstageDropDown`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drop_down_backstage_drop_down(element: &Element) -> super::DropDownBackstageDropDown {
     let mut node = super::DropDownBackstageDropDown::default();
     let mut reader =
@@ -1164,7 +1164,7 @@ pub fn drop_down_backstage_drop_down(element: &Element) -> super::DropDownBackst
 }
 
 /// Read `mso14:dropDown` into a `DropDownDropDownRegular`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drop_down_drop_down_regular(element: &Element) -> super::DropDownDropDownRegular {
     let mut node = super::DropDownDropDownRegular::default();
     let mut reader =
@@ -1220,7 +1220,7 @@ pub fn drop_down_drop_down_regular(element: &Element) -> super::DropDownDropDown
 }
 
 /// Read `mso14:dynamicMenu` into a `DynamicMenuDynamicMenu`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dynamic_menu_dynamic_menu(element: &Element) -> super::DynamicMenuDynamicMenu {
     let mut node = super::DynamicMenuDynamicMenu::default();
     let mut reader =
@@ -1268,7 +1268,7 @@ pub fn dynamic_menu_dynamic_menu(element: &Element) -> super::DynamicMenuDynamic
 }
 
 /// Read `mso14:dynamicMenu` into a `DynamicMenuDynamicMenuRegular`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dynamic_menu_dynamic_menu_regular(
     element: &Element,
 ) -> super::DynamicMenuDynamicMenuRegular {
@@ -1318,7 +1318,7 @@ pub fn dynamic_menu_dynamic_menu_regular(
 }
 
 /// Read `mso14:editBox` into a `EditBoxBackstageEditBox`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn edit_box_backstage_edit_box(element: &Element) -> super::EditBoxBackstageEditBox {
     let mut node = super::EditBoxBackstageEditBox::default();
     let mut reader =
@@ -1350,7 +1350,7 @@ pub fn edit_box_backstage_edit_box(element: &Element) -> super::EditBoxBackstage
 }
 
 /// Read `mso14:editBox` into a `EditBoxEditBox`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn edit_box_edit_box(element: &Element) -> super::EditBoxEditBox {
     let mut node = super::EditBoxEditBox::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EDIT_BOX_EDIT_BOX_SHAPE);
@@ -1395,7 +1395,7 @@ pub fn edit_box_edit_box(element: &Element) -> super::EditBoxEditBox {
 }
 
 /// Read `mso14:firstColumn` into a `FirstColumn`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn first_column(element: &Element) -> super::FirstColumn {
     let mut node = super::FirstColumn::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FIRST_COLUMN_SHAPE);
@@ -1409,7 +1409,7 @@ pub fn first_column(element: &Element) -> super::FirstColumn {
 }
 
 /// Read `mso14:gallery` into a `GalleryGallery`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn gallery_gallery(element: &Element) -> super::GalleryGallery {
     let mut node = super::GalleryGallery::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GALLERY_GALLERY_SHAPE);
@@ -1476,7 +1476,7 @@ pub fn gallery_gallery(element: &Element) -> super::GalleryGallery {
 }
 
 /// Read `mso14:gallery` into a `GalleryGalleryRegular`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn gallery_gallery_regular(element: &Element) -> super::GalleryGalleryRegular {
     let mut node = super::GalleryGalleryRegular::default();
     let mut reader =
@@ -1542,13 +1542,13 @@ pub fn gallery_gallery_regular(element: &Element) -> super::GalleryGalleryRegula
 }
 
 /// Read one item of `GroupContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn group(element: &Element) -> super::GroupContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `mso14:group` into a `GroupBackstageGroup`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_backstage_group(element: &Element) -> super::GroupBackstageGroup {
     let mut node = super::GroupBackstageGroup::default();
     let mut reader =
@@ -1584,7 +1584,7 @@ pub fn group_backstage_group(element: &Element) -> super::GroupBackstageGroup {
 }
 
 /// Read `mso14:groupBox` into a `GroupBox`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_box(element: &Element) -> super::GroupBox {
     let mut node = super::GroupBox::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GROUP_BOX_SHAPE);
@@ -1605,13 +1605,13 @@ pub fn group_box(element: &Element) -> super::GroupBox {
 }
 
 /// Read one item of `GroupControlsContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn group_controls(element: &Element) -> super::GroupControlsContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `mso14:group` into a `GroupGroup`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_group(element: &Element) -> super::GroupGroup {
     let mut node = super::GroupGroup::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GROUP_GROUP_SHAPE);
@@ -1650,7 +1650,7 @@ pub fn group_group(element: &Element) -> super::GroupGroup {
 }
 
 /// Read `mso14:hyperlink` into a `Hyperlink`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hyperlink(element: &Element) -> super::Hyperlink {
     let mut node = super::Hyperlink::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HYPERLINK_SHAPE);
@@ -1687,7 +1687,7 @@ pub fn hyperlink(element: &Element) -> super::Hyperlink {
 }
 
 /// Read `mso14:imageControl` into a `ImageControl`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn image_control(element: &Element) -> super::ImageControl {
     let mut node = super::ImageControl::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::IMAGE_CONTROL_SHAPE);
@@ -1713,7 +1713,7 @@ pub fn image_control(element: &Element) -> super::ImageControl {
 }
 
 /// Read `mso14:item` into a `ItemBackstageItem`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn item_backstage_item(element: &Element) -> super::ItemBackstageItem {
     let reader = officekit_markup_base::Reader::new(element, &super::ITEM_BACKSTAGE_ITEM_SHAPE);
     super::ItemBackstageItem {
@@ -1723,7 +1723,7 @@ pub fn item_backstage_item(element: &Element) -> super::ItemBackstageItem {
 }
 
 /// Read `mso14:item` into a `ItemItem`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn item_item(element: &Element) -> super::ItemItem {
     let mut node = super::ItemItem::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ITEM_ITEM_SHAPE);
@@ -1743,7 +1743,7 @@ pub fn item_item(element: &Element) -> super::ItemItem {
 }
 
 /// Read `mso14:labelControl` into a `LabelControlBackstageLabelControl`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn label_control_backstage_label_control(
     element: &Element,
 ) -> super::LabelControlBackstageLabelControl {
@@ -1774,7 +1774,7 @@ pub fn label_control_backstage_label_control(
 }
 
 /// Read `mso14:labelControl` into a `LabelControlLabelControl`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn label_control_label_control(element: &Element) -> super::LabelControlLabelControl {
     let mut node = super::LabelControlLabelControl::default();
     let mut reader =
@@ -1809,7 +1809,7 @@ pub fn label_control_label_control(element: &Element) -> super::LabelControlLabe
 }
 
 /// Read `mso14:layoutContainer` into a `LayoutContainer`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn layout_container(element: &Element) -> super::LayoutContainer {
     let mut node = super::LayoutContainer::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LAYOUT_CONTAINER_SHAPE);
@@ -1830,13 +1830,13 @@ pub fn layout_container(element: &Element) -> super::LayoutContainer {
 }
 
 /// Read one item of `MenuContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn menu(element: &Element) -> super::MenuContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `mso14:menu` into a `MenuBackstagePrimaryMenu`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_backstage_primary_menu(element: &Element) -> super::MenuBackstagePrimaryMenu {
     let mut node = super::MenuBackstagePrimaryMenu::default();
     let mut reader =
@@ -1870,7 +1870,7 @@ pub fn menu_backstage_primary_menu(element: &Element) -> super::MenuBackstagePri
 }
 
 /// Read `mso14:menu` into a `MenuBackstageSubMenu`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_backstage_sub_menu(element: &Element) -> super::MenuBackstageSubMenu {
     let mut node = super::MenuBackstageSubMenu::default();
     let mut reader =
@@ -1902,7 +1902,7 @@ pub fn menu_backstage_sub_menu(element: &Element) -> super::MenuBackstageSubMenu
 }
 
 /// Read `mso14:menuGroup` into a `MenuGroup`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_group(element: &Element) -> super::MenuGroup {
     let mut node = super::MenuGroup::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MENU_GROUP_SHAPE);
@@ -1923,7 +1923,7 @@ pub fn menu_group(element: &Element) -> super::MenuGroup {
 }
 
 /// Read `mso14:menu` into a `MenuMenu`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_menu(element: &Element) -> super::MenuMenu {
     let mut node = super::MenuMenu::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MENU_MENU_SHAPE);
@@ -1970,7 +1970,7 @@ pub fn menu_menu(element: &Element) -> super::MenuMenu {
 }
 
 /// Read `mso14:menu` into a `MenuMenuRegular`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_menu_regular(element: &Element) -> super::MenuMenuRegular {
     let mut node = super::MenuMenuRegular::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MENU_MENU_REGULAR_SHAPE);
@@ -2015,7 +2015,7 @@ pub fn menu_menu_regular(element: &Element) -> super::MenuMenuRegular {
 }
 
 /// Read `mso14:menu` into a `MenuMenuRoot`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_menu_root(element: &Element) -> super::MenuMenuRoot {
     let mut node = super::MenuMenuRoot::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MENU_MENU_ROOT_SHAPE);
@@ -2033,7 +2033,7 @@ pub fn menu_menu_root(element: &Element) -> super::MenuMenuRoot {
 }
 
 /// Read `mso14:menu` into a `MenuMenuWithTitle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_menu_with_title(element: &Element) -> super::MenuMenuWithTitle {
     let mut node = super::MenuMenuWithTitle::default();
     let mut reader =
@@ -2079,7 +2079,7 @@ pub fn menu_menu_with_title(element: &Element) -> super::MenuMenuWithTitle {
 }
 
 /// Read `mso14:menuSeparator` into a `MenuSeparatorMenuSeparator`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_separator_menu_separator(element: &Element) -> super::MenuSeparatorMenuSeparator {
     let mut node = super::MenuSeparatorMenuSeparator::default();
     let mut reader =
@@ -2103,7 +2103,7 @@ pub fn menu_separator_menu_separator(element: &Element) -> super::MenuSeparatorM
 }
 
 /// Read `mso14:menuSeparator` into a `MenuSeparatorMenuSeparatorNoTitle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn menu_separator_menu_separator_no_title(
     element: &Element,
 ) -> super::MenuSeparatorMenuSeparatorNoTitle {
@@ -2129,13 +2129,13 @@ pub fn menu_separator_menu_separator_no_title(
 }
 
 /// Read one item of `MenuWithTitleContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn menu_with_title(element: &Element) -> super::MenuWithTitleContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `mso14:primaryItem` into a `PrimaryItem`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn primary_item(element: &Element) -> super::PrimaryItem {
     let mut node = super::PrimaryItem::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PRIMARY_ITEM_SHAPE);
@@ -2149,13 +2149,13 @@ pub fn primary_item(element: &Element) -> super::PrimaryItem {
 }
 
 /// Read one item of `PrimaryItemContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn primary_item_content(element: &Element) -> super::PrimaryItemContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `mso14:qat` into a `Qat`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn qat(element: &Element) -> super::Qat {
     let mut node = super::Qat::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::QAT_SHAPE);
@@ -2172,13 +2172,13 @@ pub fn qat(element: &Element) -> super::Qat {
 
 /// Read one item of `QuickAccessToolbarItemsContent` from its element: the arm of its tag, or
 /// `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn quick_access_toolbar_items(element: &Element) -> super::QuickAccessToolbarItemsContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `mso14:radioButton` into a `RadioButton`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn radio_button(element: &Element) -> super::RadioButton {
     let reader = officekit_markup_base::Reader::new(element, &super::RADIO_BUTTON_SHAPE);
     super::RadioButton {
@@ -2188,7 +2188,7 @@ pub fn radio_button(element: &Element) -> super::RadioButton {
 }
 
 /// Read `mso14:radioGroup` into a `RadioGroup`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn radio_group(element: &Element) -> super::RadioGroup {
     let mut node = super::RadioGroup::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RADIO_GROUP_SHAPE);
@@ -2221,7 +2221,7 @@ pub fn radio_group(element: &Element) -> super::RadioGroup {
 }
 
 /// Read `mso14:ribbon` into a `Ribbon`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ribbon(element: &Element) -> super::Ribbon {
     let mut node = super::Ribbon::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RIBBON_SHAPE);
@@ -2237,13 +2237,13 @@ pub fn ribbon(element: &Element) -> super::Ribbon {
 }
 
 /// Read one item of `RibbonContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn ribbon_content(element: &Element) -> super::RibbonContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `mso14:secondColumn` into a `SecondColumn`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn second_column(element: &Element) -> super::SecondColumn {
     let mut node = super::SecondColumn::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SECOND_COLUMN_SHAPE);
@@ -2257,7 +2257,7 @@ pub fn second_column(element: &Element) -> super::SecondColumn {
 }
 
 /// Read `mso14:separator` into a `Separator`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn separator(element: &Element) -> super::Separator {
     let mut node = super::Separator::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SEPARATOR_SHAPE);
@@ -2280,7 +2280,7 @@ pub fn separator(element: &Element) -> super::Separator {
 }
 
 /// Read `mso14:sharedControls` into a `SharedControls`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shared_controls(element: &Element) -> super::SharedControls {
     let mut node = super::SharedControls::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHARED_CONTROLS_SHAPE);
@@ -2294,19 +2294,19 @@ pub fn shared_controls(element: &Element) -> super::SharedControls {
 }
 
 /// Read one item of `SimpleGroupsContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn simple_groups(element: &Element) -> super::SimpleGroupsContent {
     officekit_markup_base::read(element)
 }
 
 /// Read one item of `SplitButtonContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn split_button(element: &Element) -> super::SplitButtonContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `mso14:splitButton` into a `SplitButtonSplitButton`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn split_button_split_button(element: &Element) -> super::SplitButtonSplitButton {
     let mut node = super::SplitButtonSplitButton::default();
     let mut reader =
@@ -2341,7 +2341,7 @@ pub fn split_button_split_button(element: &Element) -> super::SplitButtonSplitBu
 }
 
 /// Read `mso14:splitButton` into a `SplitButtonSplitButtonRegular`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn split_button_split_button_regular(
     element: &Element,
 ) -> super::SplitButtonSplitButtonRegular {
@@ -2378,7 +2378,7 @@ pub fn split_button_split_button_regular(
 }
 
 /// Read `mso14:splitButton` into a `SplitButtonSplitButtonWithTitle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn split_button_split_button_with_title(
     element: &Element,
 ) -> super::SplitButtonSplitButtonWithTitle {
@@ -2415,7 +2415,7 @@ pub fn split_button_split_button_with_title(
 }
 
 /// Read `mso14:tab` into a `TabBackstageTab`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tab_backstage_tab(element: &Element) -> super::TabBackstageTab {
     let mut node = super::TabBackstageTab::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TAB_BACKSTAGE_TAB_SHAPE);
@@ -2454,7 +2454,7 @@ pub fn tab_backstage_tab(element: &Element) -> super::TabBackstageTab {
 }
 
 /// Read `mso14:tabSet` into a `TabSet`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tab_set(element: &Element) -> super::TabSet {
     let mut node = super::TabSet::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TAB_SET_SHAPE);
@@ -2472,7 +2472,7 @@ pub fn tab_set(element: &Element) -> super::TabSet {
 }
 
 /// Read `mso14:tab` into a `TabTab`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tab_tab(element: &Element) -> super::TabTab {
     let mut node = super::TabTab::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TAB_TAB_SHAPE);
@@ -2501,7 +2501,7 @@ pub fn tab_tab(element: &Element) -> super::TabTab {
 }
 
 /// Read `mso14:tabs` into a `Tabs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tabs(element: &Element) -> super::Tabs {
     let mut node = super::Tabs::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TABS_SHAPE);
@@ -2515,7 +2515,7 @@ pub fn tabs(element: &Element) -> super::Tabs {
 }
 
 /// Read `mso14:taskFormGroup` into a `TaskFormGroup`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn task_form_group(element: &Element) -> super::TaskFormGroup {
     let mut node = super::TaskFormGroup::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TASK_FORM_GROUP_SHAPE);
@@ -2543,7 +2543,7 @@ pub fn task_form_group(element: &Element) -> super::TaskFormGroup {
 }
 
 /// Read `mso14:taskGroup` into a `TaskGroup`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn task_group(element: &Element) -> super::TaskGroup {
     let mut node = super::TaskGroup::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TASK_GROUP_SHAPE);
@@ -2575,7 +2575,7 @@ pub fn task_group(element: &Element) -> super::TaskGroup {
 }
 
 /// Read `mso14:task` into a `TaskTaskFormGroupTask`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn task_task_form_group_task(element: &Element) -> super::TaskTaskFormGroupTask {
     let mut node = super::TaskTaskFormGroupTask::default();
     let mut reader =
@@ -2612,7 +2612,7 @@ pub fn task_task_form_group_task(element: &Element) -> super::TaskTaskFormGroupT
 }
 
 /// Read `mso14:task` into a `TaskTaskGroupTask`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn task_task_group_task(element: &Element) -> super::TaskTaskGroupTask {
     let mut node = super::TaskTaskGroupTask::default();
     let mut reader =
@@ -2650,7 +2650,7 @@ pub fn task_task_group_task(element: &Element) -> super::TaskTaskGroupTask {
 }
 
 /// Read `mso14:toggleButton` into a `ToggleButtonBackstageMenuToggleButton`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn toggle_button_backstage_menu_toggle_button(
     element: &Element,
 ) -> super::ToggleButtonBackstageMenuToggleButton {
@@ -2687,7 +2687,7 @@ pub fn toggle_button_backstage_menu_toggle_button(
 }
 
 /// Read `mso14:toggleButton` into a `ToggleButtonToggleButton`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn toggle_button_toggle_button(element: &Element) -> super::ToggleButtonToggleButton {
     let mut node = super::ToggleButtonToggleButton::default();
     let mut reader =
@@ -2735,7 +2735,7 @@ pub fn toggle_button_toggle_button(element: &Element) -> super::ToggleButtonTogg
 }
 
 /// Read `mso14:toggleButton` into a `ToggleButtonToggleButtonRegular`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn toggle_button_toggle_button_regular(
     element: &Element,
 ) -> super::ToggleButtonToggleButtonRegular {
@@ -2785,7 +2785,7 @@ pub fn toggle_button_toggle_button_regular(
 }
 
 /// Read `mso14:toggleButton` into a `ToggleButtonVisibleToggleButton`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn toggle_button_visible_toggle_button(
     element: &Element,
 ) -> super::ToggleButtonVisibleToggleButton {
@@ -2833,7 +2833,7 @@ pub fn toggle_button_visible_toggle_button(
 }
 
 /// Read `mso14:topItems` into a `TopItems`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn top_items(element: &Element) -> super::TopItems {
     let mut node = super::TopItems::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TOP_ITEMS_SHAPE);

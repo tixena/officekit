@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xlrvr:refreshInterval` into a `RefreshInterval`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn refresh_interval(element: &Element) -> super::RefreshInterval {
     let mut node = super::RefreshInterval::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::REFRESH_INTERVAL_SHAPE);
@@ -236,7 +236,7 @@ pub fn refresh_interval(element: &Element) -> super::RefreshInterval {
 }
 
 /// Read `xlrvr:refreshIntervals` into a `RefreshIntervals`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn refresh_intervals(element: &Element) -> super::RefreshIntervals {
     let mut node = super::RefreshIntervals::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::REFRESH_INTERVALS_SHAPE);

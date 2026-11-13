@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xlrd:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -233,7 +233,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `xlrd:fb` into a `Fb`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn fb(element: &Element) -> super::Fb {
     let mut node = super::Fb::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FB_SHAPE);
@@ -249,7 +249,7 @@ pub fn fb(element: &Element) -> super::Fb {
 }
 
 /// Read `xlrd:k` into a `K`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn k(element: &Element) -> super::K {
     let mut node = super::K::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::K_SHAPE);
@@ -265,7 +265,7 @@ pub fn k(element: &Element) -> super::K {
 }
 
 /// Read `xlrd:rv` into a `Rv`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rv(element: &Element) -> super::Rv {
     let mut node = super::Rv::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RV_SHAPE);
@@ -282,7 +282,7 @@ pub fn rv(element: &Element) -> super::Rv {
 }
 
 /// Read `xlrd:rvData` into a `RvData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rv_data(element: &Element) -> super::RvData {
     let mut node = super::RvData::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RV_DATA_SHAPE);
@@ -299,7 +299,7 @@ pub fn rv_data(element: &Element) -> super::RvData {
 }
 
 /// Read `xlrd:rvStructures` into a `RvStructures`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rv_structures(element: &Element) -> super::RvStructures {
     let mut node = super::RvStructures::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RV_STRUCTURES_SHAPE);
@@ -316,7 +316,7 @@ pub fn rv_structures(element: &Element) -> super::RvStructures {
 }
 
 /// Read `xlrd:rvb` into a `Rvb`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rvb(element: &Element) -> super::Rvb {
     let mut node = super::Rvb::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RVB_SHAPE);
@@ -330,7 +330,7 @@ pub fn rvb(element: &Element) -> super::Rvb {
 }
 
 /// Read `xlrd:s` into a `S`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn s(element: &Element) -> super::S {
     let mut node = super::S::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::S_SHAPE);
@@ -346,7 +346,7 @@ pub fn s(element: &Element) -> super::S {
 }
 
 /// Read `xlrd:v` into a `V`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn v(element: &Element) -> super::V {
     let mut node = super::V::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::V_SHAPE);

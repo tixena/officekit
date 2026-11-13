@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `c16:bubble3D` into a `Bubble3D`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bubble3d(element: &Element) -> super::Bubble3D {
     let mut node = super::Bubble3D::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BUBBLE3D_SHAPE);
@@ -233,7 +233,7 @@ pub fn bubble3d(element: &Element) -> super::Bubble3D {
 }
 
 /// Read `c16:categoryFilterException` into a `CategoryFilterException`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn category_filter_exception(element: &Element) -> super::CategoryFilterException {
     let mut node = super::CategoryFilterException::default();
     let mut reader =
@@ -255,7 +255,7 @@ pub fn category_filter_exception(element: &Element) -> super::CategoryFilterExce
 }
 
 /// Read `c16:categoryFilterExceptions` into a `CategoryFilterExceptions`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn category_filter_exceptions(element: &Element) -> super::CategoryFilterExceptions {
     let mut node = super::CategoryFilterExceptions::default();
     let mut reader =
@@ -270,7 +270,7 @@ pub fn category_filter_exceptions(element: &Element) -> super::CategoryFilterExc
 }
 
 /// Read `c16:dLbl` into a `DLbl`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn d_lbl(element: &Element) -> super::DLbl {
     let mut node = super::DLbl::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::D_LBL_SHAPE);
@@ -287,7 +287,7 @@ pub fn d_lbl(element: &Element) -> super::DLbl {
 }
 
 /// Read `c16:datapointuniqueidmap` into a `Datapointuniqueidmap`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn datapointuniqueidmap(element: &Element) -> super::Datapointuniqueidmap {
     let mut node = super::Datapointuniqueidmap::default();
     let mut reader =
@@ -302,7 +302,7 @@ pub fn datapointuniqueidmap(element: &Element) -> super::Datapointuniqueidmap {
 }
 
 /// Read `c16:explosion` into a `Explosion`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn explosion(element: &Element) -> super::Explosion {
     let mut node = super::Explosion::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXPLOSION_SHAPE);
@@ -316,7 +316,7 @@ pub fn explosion(element: &Element) -> super::Explosion {
 }
 
 /// Read `c16:filteredLitCache` into a `FilteredLitCacheMultiLvlStrFilteredLiteralCache`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn filtered_lit_cache_multi_lvl_str_filtered_literal_cache(
     element: &Element,
 ) -> super::FilteredLitCacheMultiLvlStrFilteredLiteralCache {
@@ -335,7 +335,7 @@ pub fn filtered_lit_cache_multi_lvl_str_filtered_literal_cache(
 }
 
 /// Read `c16:filteredLitCache` into a `FilteredLitCacheNumFilteredLiteralCache`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn filtered_lit_cache_num_filtered_literal_cache(
     element: &Element,
 ) -> super::FilteredLitCacheNumFilteredLiteralCache {
@@ -354,7 +354,7 @@ pub fn filtered_lit_cache_num_filtered_literal_cache(
 }
 
 /// Read `c16:filteredLitCache` into a `FilteredLitCacheStrFilteredLiteralCache`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn filtered_lit_cache_str_filtered_literal_cache(
     element: &Element,
 ) -> super::FilteredLitCacheStrFilteredLiteralCache {
@@ -373,7 +373,7 @@ pub fn filtered_lit_cache_str_filtered_literal_cache(
 }
 
 /// Read `c16:invertIfNegative` into a `InvertIfNegative`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn invert_if_negative(element: &Element) -> super::InvertIfNegative {
     let mut node = super::InvertIfNegative::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::INVERT_IF_NEGATIVE_SHAPE);
@@ -387,7 +387,7 @@ pub fn invert_if_negative(element: &Element) -> super::InvertIfNegative {
 }
 
 /// Read `c16:literalDataChart` into a `LiteralDataChart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn literal_data_chart(element: &Element) -> super::LiteralDataChart {
     let mut node = super::LiteralDataChart::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LITERAL_DATA_CHART_SHAPE);
@@ -401,7 +401,7 @@ pub fn literal_data_chart(element: &Element) -> super::LiteralDataChart {
 }
 
 /// Read `c16:marker` into a `Marker`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn marker(element: &Element) -> super::Marker {
     let mut node = super::Marker::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MARKER_SHAPE);
@@ -419,7 +419,7 @@ pub fn marker(element: &Element) -> super::Marker {
 }
 
 /// Read `c16:multiLvlStrCache` into a `MultiLvlStrCache`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn multi_lvl_str_cache(element: &Element) -> super::MultiLvlStrCache {
     let mut node = super::MultiLvlStrCache::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MULTI_LVL_STR_CACHE_SHAPE);
@@ -436,7 +436,7 @@ pub fn multi_lvl_str_cache(element: &Element) -> super::MultiLvlStrCache {
 }
 
 /// Read `c16:numCache` into a `NumCache`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn num_cache(element: &Element) -> super::NumCache {
     let mut node = super::NumCache::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NUM_CACHE_SHAPE);
@@ -454,7 +454,7 @@ pub fn num_cache(element: &Element) -> super::NumCache {
 }
 
 /// Read `c16:pivotOptions16` into a `PivotOptions16`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_options16(element: &Element) -> super::PivotOptions16 {
     let mut node = super::PivotOptions16::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PIVOT_OPTIONS16_SHAPE);
@@ -468,7 +468,7 @@ pub fn pivot_options16(element: &Element) -> super::PivotOptions16 {
 }
 
 /// Read `c16:ptentry` into a `Ptentry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ptentry(element: &Element) -> super::Ptentry {
     let mut node = super::Ptentry::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PTENTRY_SHAPE);
@@ -484,7 +484,7 @@ pub fn ptentry(element: &Element) -> super::Ptentry {
 }
 
 /// Read `c16:ptidx` into a `Ptidx`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ptidx(element: &Element) -> super::Ptidx {
     let mut node = super::Ptidx::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PTIDX_SHAPE);
@@ -498,7 +498,7 @@ pub fn ptidx(element: &Element) -> super::Ptidx {
 }
 
 /// Read `c16:showExpandCollapseFieldButtons` into a `ShowExpandCollapseFieldButtons`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn show_expand_collapse_field_buttons(
     element: &Element,
 ) -> super::ShowExpandCollapseFieldButtons {
@@ -517,7 +517,7 @@ pub fn show_expand_collapse_field_buttons(
 }
 
 /// Read `c16:spPr` into a `SpPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sp_pr(element: &Element) -> super::SpPr {
     let mut node = super::SpPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SP_PR_SHAPE);
@@ -540,7 +540,7 @@ pub fn sp_pr(element: &Element) -> super::SpPr {
 }
 
 /// Read `c16:strCache` into a `StrCache`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn str_cache(element: &Element) -> super::StrCache {
     let mut node = super::StrCache::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::STR_CACHE_SHAPE);
@@ -557,7 +557,7 @@ pub fn str_cache(element: &Element) -> super::StrCache {
 }
 
 /// Read `c16:uniqueID` into a `UniqueID`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn unique_id(element: &Element) -> super::UniqueID {
     let reader = officekit_markup_base::Reader::new(element, &super::UNIQUE_ID_SHAPE);
     super::UniqueID {
@@ -567,7 +567,7 @@ pub fn unique_id(element: &Element) -> super::UniqueID {
 }
 
 /// Read `c16:uniqueId` into a `UniqueId`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn unique_id_2(element: &Element) -> super::UniqueId {
     let reader = officekit_markup_base::Reader::new(element, &super::UNIQUE_ID_2_SHAPE);
     super::UniqueId {

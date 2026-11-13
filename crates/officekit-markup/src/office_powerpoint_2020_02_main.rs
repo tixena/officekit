@@ -464,7 +464,7 @@ pub trait Visitor: crate::Visitor {
 impl<X: NodeExtra> DesignPrWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> DesignPrWith<Y>
     where
         Y: NodeExtra,
@@ -485,7 +485,7 @@ impl<X: NodeExtra> DesignPrWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             edt_design_elem: self.edt_design_elem.clone(),
@@ -510,7 +510,7 @@ impl officekit_markup_base::Write for DesignPr {
 impl<X: NodeExtra> DesignTagWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> DesignTagWith<Y>
     where
         Y: NodeExtra,
@@ -524,7 +524,7 @@ impl<X: NodeExtra> DesignTagWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             name: self.name.clone(),
@@ -550,7 +550,7 @@ impl officekit_markup_base::Write for DesignTag {
 impl<X: NodeExtra> DesignTagLstWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> DesignTagLstWith<Y>
     where
         Y: NodeExtra,
@@ -566,7 +566,7 @@ impl<X: NodeExtra> DesignTagLstWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -588,7 +588,7 @@ impl officekit_markup_base::Write for DesignTagLst {
 impl<X: NodeExtra> ExtLstWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ExtLstWith<Y>
     where
         Y: NodeExtra,
@@ -604,7 +604,7 @@ impl<X: NodeExtra> ExtLstWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }

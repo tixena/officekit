@@ -527,7 +527,7 @@ pub trait Visitor: crate::Visitor {
 impl<X: NodeExtra> CacheVersionInfoWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CacheVersionInfoWith<Y>
     where
         Y: NodeExtra,
@@ -547,7 +547,7 @@ impl<X: NodeExtra> CacheVersionInfoWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -569,7 +569,7 @@ impl officekit_markup_base::Write for CacheVersionInfo {
 impl<X: NodeExtra> LastRefreshFeatureWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> LastRefreshFeatureWith<Y>
     where
         Y: NodeExtra,
@@ -582,7 +582,7 @@ impl<X: NodeExtra> LastRefreshFeatureWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -607,7 +607,7 @@ impl officekit_markup_base::Write for LastRefreshFeature {
 impl<X: NodeExtra> LastUpdateFeatureWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> LastUpdateFeatureWith<Y>
     where
         Y: NodeExtra,
@@ -620,7 +620,7 @@ impl<X: NodeExtra> LastUpdateFeatureWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -645,7 +645,7 @@ impl officekit_markup_base::Write for LastUpdateFeature {
 impl<X: NodeExtra> PivotVersionInfoWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PivotVersionInfoWith<Y>
     where
         Y: NodeExtra,
@@ -665,7 +665,7 @@ impl<X: NodeExtra> PivotVersionInfoWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -687,7 +687,7 @@ impl officekit_markup_base::Write for PivotVersionInfo {
 impl<X: NodeExtra> RequiredFeatureWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> RequiredFeatureWith<Y>
     where
         Y: NodeExtra,
@@ -700,7 +700,7 @@ impl<X: NodeExtra> RequiredFeatureWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),

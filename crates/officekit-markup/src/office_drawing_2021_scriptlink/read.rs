@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `asl:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -233,7 +233,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `asl:scriptLink` into a `ScriptLink`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn script_link(element: &Element) -> super::ScriptLink {
     let mut node = super::ScriptLink::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SCRIPT_LINK_SHAPE);

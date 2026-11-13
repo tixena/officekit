@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `CommentId` as its element, `w16cid:commentId`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comment_id(node: &super::CommentId, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::COMMENT_ID_SHAPE, &node.unknown);
@@ -230,7 +230,7 @@ pub fn comment_id(node: &super::CommentId, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CommentsIds` as its element, `w16cid:commentsIds`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comments_ids(node: &super::CommentsIds, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::COMMENTS_IDS_SHAPE, &node.unknown);

@@ -150,7 +150,7 @@ impl Docx {
     }
 
     /// The class the file was read in, the class every store through it writes.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn conformance_class(&self) -> ConformanceClass {
         self.class
     }
@@ -263,7 +263,7 @@ impl Docx {
     }
 
     /// The kind its main part's content type names.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn kind(&self) -> WordprocessingKind {
         self.kind
     }
@@ -278,7 +278,7 @@ impl Docx {
     }
 
     /// The main document part, the one the `officeDocument` relationship names.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn main_document_part(&self) -> &PartName {
         &self.main
     }
@@ -318,13 +318,13 @@ impl Docx {
     }
 
     /// The options every typed read of this file applies.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn options(&self) -> OpenOptions {
         self.options
     }
 
     /// The package, whose parts the generated part modules' `load` and `store_*` read and write.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn package(&self) -> &Package {
         &self.package
     }

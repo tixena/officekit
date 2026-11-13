@@ -221,7 +221,7 @@ use officekit_xml::write::Scope;
 
 /// Write a `ExternalCodeServiceImageAsInput` as its element,
 /// `xlecs2:externalCodeServiceImageAsInput`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn external_code_service_image_as_input(
     node: &super::ExternalCodeServiceImageAsInput,
     scope: &mut Scope,

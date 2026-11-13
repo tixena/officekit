@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `w15:appearance` into a `Appearance`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn appearance(element: &Element) -> super::Appearance {
     let mut node = super::Appearance::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::APPEARANCE_SHAPE);
@@ -233,7 +233,7 @@ pub fn appearance(element: &Element) -> super::Appearance {
 }
 
 /// Read `w15:chartTrackingRefBased` into a `ChartTrackingRefBased`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn chart_tracking_ref_based(element: &Element) -> super::ChartTrackingRefBased {
     let mut node = super::ChartTrackingRefBased::default();
     let mut reader =
@@ -248,7 +248,7 @@ pub fn chart_tracking_ref_based(element: &Element) -> super::ChartTrackingRefBas
 }
 
 /// Read `w15:collapsed` into a `Collapsed`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn collapsed(element: &Element) -> super::Collapsed {
     let mut node = super::Collapsed::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COLLAPSED_SHAPE);
@@ -262,7 +262,7 @@ pub fn collapsed(element: &Element) -> super::Collapsed {
 }
 
 /// Read `w15:color` into a `Color`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color(element: &Element) -> super::Color {
     let mut node = super::Color::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COLOR_SHAPE);
@@ -280,7 +280,7 @@ pub fn color(element: &Element) -> super::Color {
 }
 
 /// Read `w15:commentEx` into a `CommentEx`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_ex(element: &Element) -> super::CommentEx {
     let mut node = super::CommentEx::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENT_EX_SHAPE);
@@ -297,7 +297,7 @@ pub fn comment_ex(element: &Element) -> super::CommentEx {
 }
 
 /// Read `w15:commentsEx` into a `CommentsEx`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comments_ex(element: &Element) -> super::CommentsEx {
     let mut node = super::CommentsEx::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENTS_EX_SHAPE);
@@ -311,7 +311,7 @@ pub fn comments_ex(element: &Element) -> super::CommentsEx {
 }
 
 /// Read `w15:dataBinding` into a `DataBinding`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_binding(element: &Element) -> super::DataBinding {
     let mut node = super::DataBinding::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_BINDING_SHAPE);
@@ -328,7 +328,7 @@ pub fn data_binding(element: &Element) -> super::DataBinding {
 }
 
 /// Read `w15:doNotAllowInsertDeleteSection` into a `DoNotAllowInsertDeleteSection`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_allow_insert_delete_section(
     element: &Element,
 ) -> super::DoNotAllowInsertDeleteSection {
@@ -347,7 +347,7 @@ pub fn do_not_allow_insert_delete_section(
 }
 
 /// Read `w15:docId` into a `DocId`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn doc_id(element: &Element) -> super::DocId {
     let mut node = super::DocId::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DOC_ID_SHAPE);
@@ -361,7 +361,7 @@ pub fn doc_id(element: &Element) -> super::DocId {
 }
 
 /// Read `w15:footnoteColumns` into a `FootnoteColumns`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn footnote_columns(element: &Element) -> super::FootnoteColumns {
     let mut node = super::FootnoteColumns::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FOOTNOTE_COLUMNS_SHAPE);
@@ -375,7 +375,7 @@ pub fn footnote_columns(element: &Element) -> super::FootnoteColumns {
 }
 
 /// Read `w15:people` into a `People`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn people(element: &Element) -> super::People {
     let mut node = super::People::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PEOPLE_SHAPE);
@@ -389,7 +389,7 @@ pub fn people(element: &Element) -> super::People {
 }
 
 /// Read `w15:person` into a `Person`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn person(element: &Element) -> super::Person {
     let mut node = super::Person::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PERSON_SHAPE);
@@ -405,7 +405,7 @@ pub fn person(element: &Element) -> super::Person {
 }
 
 /// Read `w15:presenceInfo` into a `PresenceInfo`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presence_info(element: &Element) -> super::PresenceInfo {
     let mut node = super::PresenceInfo::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PRESENCE_INFO_SHAPE);
@@ -421,7 +421,7 @@ pub fn presence_info(element: &Element) -> super::PresenceInfo {
 }
 
 /// Read `w15:repeatingSection` into a `RepeatingSection`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn repeating_section(element: &Element) -> super::RepeatingSection {
     let mut node = super::RepeatingSection::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::REPEATING_SECTION_SHAPE);
@@ -437,7 +437,7 @@ pub fn repeating_section(element: &Element) -> super::RepeatingSection {
 }
 
 /// Read `w15:repeatingSectionItem` into a `RepeatingSectionItem`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn repeating_section_item(element: &Element) -> super::RepeatingSectionItem {
     let reader = officekit_markup_base::Reader::new(element, &super::REPEATING_SECTION_ITEM_SHAPE);
     super::RepeatingSectionItem {
@@ -447,7 +447,7 @@ pub fn repeating_section_item(element: &Element) -> super::RepeatingSectionItem 
 }
 
 /// Read `w15:sectionTitle` into a `SectionTitle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn section_title(element: &Element) -> super::SectionTitle {
     let mut node = super::SectionTitle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SECTION_TITLE_SHAPE);
@@ -461,7 +461,7 @@ pub fn section_title(element: &Element) -> super::SectionTitle {
 }
 
 /// Read `w15:webExtensionCreated` into a `WebExtensionCreated`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn web_extension_created(element: &Element) -> super::WebExtensionCreated {
     let mut node = super::WebExtensionCreated::default();
     let mut reader =
@@ -476,7 +476,7 @@ pub fn web_extension_created(element: &Element) -> super::WebExtensionCreated {
 }
 
 /// Read `w15:webExtensionLinked` into a `WebExtensionLinked`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn web_extension_linked(element: &Element) -> super::WebExtensionLinked {
     let mut node = super::WebExtensionLinked::default();
     let mut reader =

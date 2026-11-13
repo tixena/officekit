@@ -463,7 +463,7 @@ pub trait Visitor: crate::Visitor {
 impl<X: NodeExtra> CmMKWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CmMKWith<Y>
     where
         Y: NodeExtra,
@@ -476,7 +476,7 @@ impl<X: NodeExtra> CmMKWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             id: self.id.clone(),
@@ -501,7 +501,7 @@ impl officekit_markup_base::Write for CmMK {
 impl<X: NodeExtra> CmMkLstWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CmMkLstWith<Y>
     where
         Y: NodeExtra,
@@ -518,7 +518,7 @@ impl<X: NodeExtra> CmMkLstWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -540,7 +540,7 @@ impl officekit_markup_base::Write for CmMkLst {
 impl<X: NodeExtra> CmRplyMkWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CmRplyMkWith<Y>
     where
         Y: NodeExtra,
@@ -553,7 +553,7 @@ impl<X: NodeExtra> CmRplyMkWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             id: self.id.clone(),
@@ -578,7 +578,7 @@ impl officekit_markup_base::Write for CmRplyMk {
 impl<X: NodeExtra> CmRplyMkLstWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CmRplyMkLstWith<Y>
     where
         Y: NodeExtra,
@@ -598,7 +598,7 @@ impl<X: NodeExtra> CmRplyMkLstWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }

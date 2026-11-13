@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `NonVisualDrawingProperties` as its element, `pic:cNvPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_drawing_properties(
     node: &super::NonVisualDrawingProperties,
     scope: &mut Scope,
@@ -242,7 +242,7 @@ pub fn non_visual_drawing_properties(
 }
 
 /// Write a `NonVisualPictureDrawingProperties` as its element, `pic:cNvPicPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_picture_drawing_properties(
     node: &super::NonVisualPictureDrawingProperties,
     scope: &mut Scope,
@@ -259,7 +259,7 @@ pub fn non_visual_picture_drawing_properties(
 }
 
 /// Write a `NonVisualPictureProperties` as its element, `pic:nvPicPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_picture_properties(
     node: &super::NonVisualPictureProperties,
     scope: &mut Scope,
@@ -275,7 +275,7 @@ pub fn non_visual_picture_properties(
 }
 
 /// Write a `Picture` as its element, `pic:pic`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn picture(node: &super::Picture, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PICTURE_SHAPE, &node.unknown);
@@ -288,7 +288,7 @@ pub fn picture(node: &super::Picture, scope: &mut Scope) -> Element {
 }
 
 /// Write a `PictureFill` as its element, `pic:blipFill`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn picture_fill(node: &super::PictureFill, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PICTURE_FILL_SHAPE, &node.unknown);
@@ -301,7 +301,7 @@ pub fn picture_fill(node: &super::PictureFill, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ShapeProperties` as its element, `pic:spPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_properties(node: &super::ShapeProperties, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_PROPERTIES_SHAPE, &node.unknown);

@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `AbsolutePositionTabCharacter` as its element, `w:ptab`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn absolute_position_tab_character(
     node: &super::AbsolutePositionTabCharacter,
     scope: &mut Scope,
@@ -238,7 +238,7 @@ pub fn absolute_position_tab_character(
 }
 
 /// Write a `AbstractNumberingDefinition` as its element, `w:abstractNum`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn abstract_numbering_definition(
     node: &super::AbstractNumberingDefinition,
     scope: &mut Scope,
@@ -260,7 +260,7 @@ pub fn abstract_numbering_definition(
 }
 
 /// Write a `AbstractNumberingDefinitionIdentifier` as its element, `w:nsid`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn abstract_numbering_definition_identifier(
     node: &super::AbstractNumberingDefinitionIdentifier,
     scope: &mut Scope,
@@ -275,7 +275,7 @@ pub fn abstract_numbering_definition_identifier(
 }
 
 /// Write a `AbstractNumberingDefinitionReference` as its element, `w:abstractNumId`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn abstract_numbering_definition_reference(
     node: &super::AbstractNumberingDefinitionReference,
     scope: &mut Scope,
@@ -290,7 +290,7 @@ pub fn abstract_numbering_definition_reference(
 }
 
 /// Write a `AbstractNumberingDefinitionType` as its element, `w:multiLevelType`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn abstract_numbering_definition_type(
     node: &super::AbstractNumberingDefinitionType,
     scope: &mut Scope,
@@ -305,7 +305,7 @@ pub fn abstract_numbering_definition_type(
 }
 
 /// Write a `AddDocumentGridLinePitch` as its element, `w:adjustLineHeightInTable`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn add_document_grid_line_pitch(
     node: &super::AddDocumentGridLinePitch,
     scope: &mut Scope,
@@ -320,7 +320,7 @@ pub fn add_document_grid_line_pitch(
 }
 
 /// Write a `AddSpaceBelowUnderlinedText` as its element, `w:spaceForUL`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn add_space_below_underlined_text(
     node: &super::AddSpaceBelowUnderlinedText,
     scope: &mut Scope,
@@ -335,7 +335,7 @@ pub fn add_space_below_underlined_text(
 }
 
 /// Write a `AdjustSpacingEastAsianTextNumbers` as its element, `w:autoSpaceDN`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn adjust_spacing_east_asian_text_numbers(
     node: &super::AdjustSpacingEastAsianTextNumbers,
     scope: &mut Scope,
@@ -350,7 +350,7 @@ pub fn adjust_spacing_east_asian_text_numbers(
 }
 
 /// Write a `AdjustSpacingLatinEastAsianText` as its element, `w:autoSpaceDE`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn adjust_spacing_latin_east_asian_text(
     node: &super::AdjustSpacingLatinEastAsianText,
     scope: &mut Scope,
@@ -365,7 +365,7 @@ pub fn adjust_spacing_latin_east_asian_text(
 }
 
 /// Write a `AlignParagraphAndTableBorders` as its element, `w:alignBordersAndEdges`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn align_paragraph_and_table_borders(
     node: &super::AlignParagraphAndTableBorders,
     scope: &mut Scope,
@@ -380,7 +380,7 @@ pub fn align_paragraph_and_table_borders(
 }
 
 /// Write a `AlignTableRowsIndependently` as its element, `w:alignTablesRowByRow`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn align_table_rows_independently(
     node: &super::AlignTableRowsIndependently,
     scope: &mut Scope,
@@ -395,7 +395,7 @@ pub fn align_table_rows_independently(
 }
 
 /// Write a `AllowAutomaticFormattingOverride` as its element, `w:autoFormatOverride`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn allow_automatic_formatting_override(
     node: &super::AllowAutomaticFormattingOverride,
     scope: &mut Scope,
@@ -411,7 +411,7 @@ pub fn allow_automatic_formatting_override(
 
 /// Write a `AllowContextualSpacingOfParagraphsInTables` as its element,
 /// `w:allowSpaceOfSameStyleInTable`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn allow_contextual_spacing_of_paragraphs_in_tables(
     node: &super::AllowContextualSpacingOfParagraphsInTables,
     scope: &mut Scope,
@@ -426,7 +426,7 @@ pub fn allow_contextual_spacing_of_paragraphs_in_tables(
 }
 
 /// Write a `AllowFirstLastLineDisplay` as its element, `w:widowControl`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn allow_first_last_line_display(
     node: &super::AllowFirstLastLineDisplay,
     scope: &mut Scope,
@@ -441,7 +441,7 @@ pub fn allow_first_last_line_display(
 }
 
 /// Write a `AllowLineBreakingAtCharacterLevel` as its element, `w:wordWrap`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn allow_line_breaking_at_character_level(
     node: &super::AllowLineBreakingAtCharacterLevel,
     scope: &mut Scope,
@@ -456,7 +456,7 @@ pub fn allow_line_breaking_at_character_level(
 }
 
 /// Write a `AllowPNGAsGraphicFormat` as its element, `w:allowPNG`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn allow_png_as_graphic_format(
     node: &super::AllowPNGAsGraphicFormat,
     scope: &mut Scope,
@@ -471,7 +471,7 @@ pub fn allow_png_as_graphic_format(
 }
 
 /// Write a `AllowPunctuationExtendPastTextExtents` as its element, `w:overflowPunct`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn allow_punctuation_extend_past_text_extents(
     node: &super::AllowPunctuationExtendPastTextExtents,
     scope: &mut Scope,
@@ -486,7 +486,7 @@ pub fn allow_punctuation_extend_past_text_extents(
 }
 
 /// Write a `AllowSavingDocumentAsXMLFile` as its element, `w:saveInvalidXml`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn allow_saving_document_as_xml_file(
     node: &super::AllowSavingDocumentAsXMLFile,
     scope: &mut Scope,
@@ -502,7 +502,7 @@ pub fn allow_saving_document_as_xml_file(
 
 /// Write a `AllowTableRowsToWrapInlineObjectsIndependently` as its element,
 /// `w:layoutTableRowsApart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn allow_table_rows_to_wrap_inline_objects_independently(
     node: &super::AllowTableRowsToWrapInlineObjectsIndependently,
     scope: &mut Scope,
@@ -517,7 +517,7 @@ pub fn allow_table_rows_to_wrap_inline_objects_independently(
 }
 
 /// Write a `AllowTablesToAutoFitIntoPageMargins` as its element, `w:growAutofit`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn allow_tables_to_auto_fit_into_page_margins(
     node: &super::AllowTablesToAutoFitIntoPageMargins,
     scope: &mut Scope,
@@ -532,7 +532,7 @@ pub fn allow_tables_to_auto_fit_into_page_margins(
 }
 
 /// Write a `AlternateNamesForFont` as its element, `w:altName`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn alternate_names_for_font(node: &super::AlternateNamesForFont, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -544,7 +544,7 @@ pub fn alternate_names_for_font(node: &super::AlternateNamesForFont, scope: &mut
 }
 
 /// Write a `AlternateStyleNames` as its element, `w:aliases`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn alternate_style_names(node: &super::AlternateStyleNames, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -556,7 +556,7 @@ pub fn alternate_style_names(node: &super::AlternateStyleNames, scope: &mut Scop
 }
 
 /// Write a `AlwaysMergeEmptyNamespace` as its element, `w:alwaysMergeEmptyNamespace`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn always_merge_empty_namespace(
     node: &super::AlwaysMergeEmptyNamespace,
     scope: &mut Scope,
@@ -571,7 +571,7 @@ pub fn always_merge_empty_namespace(
 }
 
 /// Write a `AlwaysShowPlaceholderText` as its element, `w:alwaysShowPlaceholderText`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn always_show_placeholder_text(
     node: &super::AlwaysShowPlaceholderText,
     scope: &mut Scope,
@@ -586,7 +586,7 @@ pub fn always_show_placeholder_text(
 }
 
 /// Write a `AlwaysUseFixedWidthForHangulCharacters` as its element, `w:displayHangulFixedWidth`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn always_use_fixed_width_for_hangul_characters(
     node: &super::AlwaysUseFixedWidthForHangulCharacters,
     scope: &mut Scope,
@@ -601,7 +601,7 @@ pub fn always_use_fixed_width_for_hangul_characters(
 }
 
 /// Write a `AnchorForImportedExternalContent` as its element, `w:altChunk`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn anchor_for_imported_external_content(
     node: &super::AnchorForImportedExternalContent,
     scope: &mut Scope,
@@ -617,7 +617,7 @@ pub fn anchor_for_imported_external_content(
 }
 
 /// Write a `AnchorForSubdocumentLocation` as its element, `w:subDoc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn anchor_for_subdocument_location(
     node: &super::AnchorForSubdocumentLocation,
     scope: &mut Scope,
@@ -632,7 +632,7 @@ pub fn anchor_for_subdocument_location(
 }
 
 /// Write a `AnimatedTextEffect` as its element, `w:effect`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn animated_text_effect(node: &super::AnimatedTextEffect, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -644,7 +644,7 @@ pub fn animated_text_effect(node: &super::AnimatedTextEffect, scope: &mut Scope)
 }
 
 /// Write a `AssociatedHelpText` as its element, `w:helpText`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn associated_help_text(node: &super::AssociatedHelpText, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -657,7 +657,7 @@ pub fn associated_help_text(node: &super::AssociatedHelpText, scope: &mut Scope)
 }
 
 /// Write a `AssociatedHTMLDivID` as its element, `w:divId`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn associated_html_div_id(node: &super::AssociatedHTMLDivID, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -669,7 +669,7 @@ pub fn associated_html_div_id(node: &super::AssociatedHTMLDivID, scope: &mut Sco
 }
 
 /// Write a `AssociatedOutlineLevel` as its element, `w:outlineLvl`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn associated_outline_level(
     node: &super::AssociatedOutlineLevel,
     scope: &mut Scope,
@@ -684,7 +684,7 @@ pub fn associated_outline_level(
 }
 
 /// Write a `AssociatedParagraphStyleName` as its element, `w:style`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn associated_paragraph_style_name(
     node: &super::AssociatedParagraphStyleName,
     scope: &mut Scope,
@@ -699,7 +699,7 @@ pub fn associated_paragraph_style_name(
 }
 
 /// Write a `AssociatedStatusText` as its element, `w:statusText`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn associated_status_text(node: &super::AssociatedStatusText, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -712,7 +712,7 @@ pub fn associated_status_text(node: &super::AssociatedStatusText, scope: &mut Sc
 }
 
 /// Write a `AttachedCustomXMLSchema` as its element, `w:attachedSchema`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn attached_custom_xml_schema(
     node: &super::AttachedCustomXMLSchema,
     scope: &mut Scope,
@@ -727,7 +727,7 @@ pub fn attached_custom_xml_schema(
 }
 
 /// Write a `AttachedDocumentTemplate` as its element, `w:attachedTemplate`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn attached_document_template(
     node: &super::AttachedDocumentTemplate,
     scope: &mut Scope,
@@ -742,7 +742,7 @@ pub fn attached_document_template(
 }
 
 /// Write a `AutoSpaceLikeWord95` as its element, `w:autoSpaceLikeWord95`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn auto_space_like_word95(node: &super::AutoSpaceLikeWord95, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -754,7 +754,7 @@ pub fn auto_space_like_word95(node: &super::AutoSpaceLikeWord95, scope: &mut Sco
 }
 
 /// Write a `AutofitToFirstFixedWidthCell` as its element, `w:autofitToFirstFixedWidthCell`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn autofit_to_first_fixed_width_cell(
     node: &super::AutofitToFirstFixedWidthCell,
     scope: &mut Scope,
@@ -769,7 +769,7 @@ pub fn autofit_to_first_fixed_width_cell(
 }
 
 /// Write a `AutomaticCaptioningSettings` as its element, `w:autoCaptions`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn automatic_captioning_settings(
     node: &super::AutomaticCaptioningSettings,
     scope: &mut Scope,
@@ -784,7 +784,7 @@ pub fn automatic_captioning_settings(
 }
 
 /// Write a `AutomaticallyAdjustRightIndent` as its element, `w:adjustRightInd`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn automatically_adjust_right_indent(
     node: &super::AutomaticallyAdjustRightIndent,
     scope: &mut Scope,
@@ -800,7 +800,7 @@ pub fn automatically_adjust_right_indent(
 
 /// Write a `AutomaticallyHyphenateDocumentContentsWhenDisplayed` as its element,
 /// `w:autoHyphenation`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn automatically_hyphenate_document_contents_when_displayed(
     node: &super::AutomaticallyHyphenateDocumentContentsWhenDisplayed,
     scope: &mut Scope,
@@ -815,7 +815,7 @@ pub fn automatically_hyphenate_document_contents_when_displayed(
 }
 
 /// Write a `AutomaticallyMergeUserFormatting` as its element, `w:autoRedefine`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn automatically_merge_user_formatting(
     node: &super::AutomaticallyMergeUserFormatting,
     scope: &mut Scope,
@@ -830,7 +830,7 @@ pub fn automatically_merge_user_formatting(
 }
 
 /// Write a `AutomaticallyRecalculateFieldsOnOpen` as its element, `w:updateFields`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn automatically_recalculate_fields_on_open(
     node: &super::AutomaticallyRecalculateFieldsOnOpen,
     scope: &mut Scope,
@@ -845,7 +845,7 @@ pub fn automatically_recalculate_fields_on_open(
 }
 
 /// Write a `AutomaticallySizeFormField` as its element, `w:sizeAuto`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn automatically_size_form_field(
     node: &super::AutomaticallySizeFormField,
     scope: &mut Scope,
@@ -860,7 +860,7 @@ pub fn automatically_size_form_field(
 }
 
 /// Write a `AutomaticallyUpdateStylesFromDocumentTemplate` as its element, `w:linkStyles`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn automatically_update_styles_from_document_template(
     node: &super::AutomaticallyUpdateStylesFromDocumentTemplate,
     scope: &mut Scope,
@@ -875,7 +875,7 @@ pub fn automatically_update_styles_from_document_template(
 }
 
 /// Write a `BalanceSingleByteDoubleByteWidth` as its element, `w:balanceSingleByteDoubleByteWidth`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn balance_single_byte_double_byte_width(
     node: &super::BalanceSingleByteDoubleByteWidth,
     scope: &mut Scope,
@@ -890,7 +890,7 @@ pub fn balance_single_byte_double_byte_width(
 }
 
 /// Write a `BibliographyStructuredDocumentTag` as its element, `w:bibliography`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bibliography_structured_document_tag(
     node: &super::BibliographyStructuredDocumentTag,
     scope: &mut Scope,
@@ -904,7 +904,7 @@ pub fn bibliography_structured_document_tag(
 }
 
 /// Write a `BidirectionalEmbeddingLevel` as its element, `w:dir`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bidirectional_embedding_level(
     node: &super::BidirectionalEmbeddingLevel,
     scope: &mut Scope,
@@ -920,7 +920,7 @@ pub fn bidirectional_embedding_level(
 }
 
 /// Write a `BidirectionalOverride` as its element, `w:bdo`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bidirectional_override(node: &super::BidirectionalOverride, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -938,7 +938,7 @@ pub fn block(node: &super::BlockContent, writer: &mut officekit_markup_base::Wri
 }
 
 /// Write a `BlockLevelCustomXMLElement` as its element, `w:customXml`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn block_level_custom_xml_element(
     node: &super::BlockLevelCustomXMLElement,
     scope: &mut Scope,
@@ -956,7 +956,7 @@ pub fn block_level_custom_xml_element(
 }
 
 /// Write a `BlockLevelStructuredDocumentTag` as its element, `w:sdt`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn block_level_structured_document_tag(
     node: &super::BlockLevelStructuredDocumentTag,
     scope: &mut Scope,
@@ -977,7 +977,7 @@ pub fn block_level_structured_document_tag(
 }
 
 /// Write a `BlockLevelStructuredDocumentTagContent` as its element, `w:sdtContent`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn block_level_structured_document_tag_content(
     node: &super::BlockLevelStructuredDocumentTagContent,
     scope: &mut Scope,
@@ -992,7 +992,7 @@ pub fn block_level_structured_document_tag_content(
 }
 
 /// Write a `Bold` as its element, `w:b`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bold(node: &super::Bold, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::BOLD_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
@@ -1000,7 +1000,7 @@ pub fn bold(node: &super::Bold, scope: &mut Scope) -> Element {
 }
 
 /// Write a `BoldItalicFontStyleEmbedding` as its element, `w:embedBoldItalic`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bold_italic_font_style_embedding(
     node: &super::BoldItalicFontStyleEmbedding,
     scope: &mut Scope,
@@ -1017,7 +1017,7 @@ pub fn bold_italic_font_style_embedding(
 }
 
 /// Write a `BoldStyleFontStyleEmbedding` as its element, `w:embedBold`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bold_style_font_style_embedding(
     node: &super::BoldStyleFontStyleEmbedding,
     scope: &mut Scope,
@@ -1034,7 +1034,7 @@ pub fn bold_style_font_style_embedding(
 }
 
 /// Write a `BookFoldPrinting` as its element, `w:bookFoldPrinting`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn book_fold_printing(node: &super::BookFoldPrinting, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::BOOK_FOLD_PRINTING_SHAPE, &node.unknown);
@@ -1043,7 +1043,7 @@ pub fn book_fold_printing(node: &super::BookFoldPrinting, scope: &mut Scope) -> 
 }
 
 /// Write a `BookmarkEnd` as its element, `w:bookmarkEnd`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bookmark_end(node: &super::BookmarkEnd, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::BOOKMARK_END_SHAPE, &node.unknown);
@@ -1053,7 +1053,7 @@ pub fn bookmark_end(node: &super::BookmarkEnd, scope: &mut Scope) -> Element {
 }
 
 /// Write a `BookmarkStart` as its element, `w:bookmarkStart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bookmark_start(node: &super::BookmarkStart, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::BOOKMARK_START_SHAPE, &node.unknown);
@@ -1066,7 +1066,7 @@ pub fn bookmark_start(node: &super::BookmarkStart, scope: &mut Scope) -> Element
 }
 
 /// Write a `BottomBorder` as its element, `w:bottom`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bottom_border(node: &super::BottomBorder, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::BOTTOM_BORDER_SHAPE, &node.unknown);
@@ -1086,7 +1086,7 @@ pub fn bottom_border(node: &super::BottomBorder, scope: &mut Scope) -> Element {
 }
 
 /// Write a `BottomMarginForHTMLDiv` as its element, `w:marBottom`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bottom_margin_for_html_div(
     node: &super::BottomMarginForHTMLDiv,
     scope: &mut Scope,
@@ -1101,7 +1101,7 @@ pub fn bottom_margin_for_html_div(
 }
 
 /// Write a `Break` as its element, `w:br`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn r#break(node: &super::Break, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::BREAK_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#type);
@@ -1110,7 +1110,7 @@ pub fn r#break(node: &super::Break, scope: &mut Scope) -> Element {
 }
 
 /// Write a `BuiltInDocumentPart` as its element, `w:docPartUnique`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn built_in_document_part(node: &super::BuiltInDocumentPart, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -1122,7 +1122,7 @@ pub fn built_in_document_part(node: &super::BuiltInDocumentPart, scope: &mut Sco
 }
 
 /// Write a `BuiltInDocumentPartStructuredDocumentTag` as its element, `w:docPartObj`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn built_in_document_part_structured_document_tag(
     node: &super::BuiltInDocumentPartStructuredDocumentTag,
     scope: &mut Scope,
@@ -1139,7 +1139,7 @@ pub fn built_in_document_part_structured_document_tag(
 }
 
 /// Write a `CaptionSettings` as its element, `w:captions`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn caption_settings(node: &super::CaptionSettings, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CAPTION_SETTINGS_SHAPE, &node.unknown);
@@ -1149,13 +1149,13 @@ pub fn caption_settings(node: &super::CaptionSettings, scope: &mut Scope) -> Ele
 }
 
 /// Write a `CarriageReturn` as its element, `w:cr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn carriage_return(node: &super::CarriageReturn, scope: &mut Scope) -> Element {
     officekit_markup_base::Writer::new(scope, &super::CARRIAGE_RETURN_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `CellLevelCustomXMLElement` as its element, `w:customXml`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cell_level_custom_xml_element(
     node: &super::CellLevelCustomXMLElement,
     scope: &mut Scope,
@@ -1173,7 +1173,7 @@ pub fn cell_level_custom_xml_element(
 }
 
 /// Write a `CellLevelStructuredDocumentTag` as its element, `w:sdt`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cell_level_structured_document_tag(
     node: &super::CellLevelStructuredDocumentTag,
     scope: &mut Scope,
@@ -1194,7 +1194,7 @@ pub fn cell_level_structured_document_tag(
 }
 
 /// Write a `CellLevelStructuredDocumentTagContent` as its element, `w:sdtContent`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cell_level_structured_document_tag_content(
     node: &super::CellLevelStructuredDocumentTagContent,
     scope: &mut Scope,
@@ -1217,7 +1217,7 @@ pub fn cell_markup(
 }
 
 /// Write a `CharacterLevelWhitespaceCompression` as its element, `w:characterSpacingControl`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn character_level_whitespace_compression(
     node: &super::CharacterLevelWhitespaceCompression,
     scope: &mut Scope,
@@ -1232,7 +1232,7 @@ pub fn character_level_whitespace_compression(
 }
 
 /// Write a `CharacterSetSupportedByFont` as its element, `w:charset`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn character_set_supported_by_font(
     node: &super::CharacterSetSupportedByFont,
     scope: &mut Scope,
@@ -1248,7 +1248,7 @@ pub fn character_set_supported_by_font(
 }
 
 /// Write a `CharacterSpacingAdjustment` as its element, `w:spacing`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn character_spacing_adjustment(
     node: &super::CharacterSpacingAdjustment,
     scope: &mut Scope,
@@ -1263,7 +1263,7 @@ pub fn character_spacing_adjustment(
 }
 
 /// Write a `CharactersWhichCannotBeginALine` as its element, `w:noLineBreaksBefore`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn characters_which_cannot_begin_a_line(
     node: &super::CharactersWhichCannotBeginALine,
     scope: &mut Scope,
@@ -1279,7 +1279,7 @@ pub fn characters_which_cannot_begin_a_line(
 }
 
 /// Write a `CharactersWhichCannotEndALine` as its element, `w:noLineBreaksAfter`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn characters_which_cannot_end_a_line(
     node: &super::CharactersWhichCannotEndALine,
     scope: &mut Scope,
@@ -1295,7 +1295,7 @@ pub fn characters_which_cannot_end_a_line(
 }
 
 /// Write a `CheckboxFormFieldProperties` as its element, `w:checkBox`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn checkbox_form_field_properties(
     node: &super::CheckboxFormFieldProperties,
     scope: &mut Scope,
@@ -1321,7 +1321,7 @@ pub fn checkbox_form_field_properties_content(
 }
 
 /// Write a `CheckboxFormFieldSize` as its element, `w:size`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn checkbox_form_field_size(node: &super::CheckboxFormFieldSize, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -1333,7 +1333,7 @@ pub fn checkbox_form_field_size(node: &super::CheckboxFormFieldSize, scope: &mut
 }
 
 /// Write a `CheckboxFormFieldState` as its element, `w:checked`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn checkbox_form_field_state(
     node: &super::CheckboxFormFieldState,
     scope: &mut Scope,
@@ -1348,7 +1348,7 @@ pub fn checkbox_form_field_state(
 }
 
 /// Write a `ChildDivElements` as its element, `w:divsChild`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn child_div_elements(node: &super::ChildDivElements, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CHILD_DIV_ELEMENTS_SHAPE, &node.unknown);
@@ -1357,7 +1357,7 @@ pub fn child_div_elements(node: &super::ChildDivElements, scope: &mut Scope) -> 
 }
 
 /// Write a `CitationStructuredDocumentTag` as its element, `w:citation`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn citation_structured_document_tag(
     node: &super::CitationStructuredDocumentTag,
     scope: &mut Scope,
@@ -1371,7 +1371,7 @@ pub fn citation_structured_document_tag(
 }
 
 /// Write a `ClickAndTypeStyle` as its element, `w:clickAndTypeStyle`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn click_and_type_style(node: &super::ClickAndTypeStyle, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -1383,7 +1383,7 @@ pub fn click_and_type_style(node: &super::ClickAndTypeStyle, scope: &mut Scope) 
 }
 
 /// Write a `ColumnContainingEMailAddress` as its element, `w:addressFieldName`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn column_containing_e_mail_address(
     node: &super::ColumnContainingEMailAddress,
     scope: &mut Scope,
@@ -1398,7 +1398,7 @@ pub fn column_containing_e_mail_address(
 }
 
 /// Write a `ColumnDefinitions` as its element, `w:cols`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn column_definitions(node: &super::ColumnDefinitions, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::COLUMN_DEFINITIONS_SHAPE, &node.unknown);
@@ -1411,7 +1411,7 @@ pub fn column_definitions(node: &super::ColumnDefinitions, scope: &mut Scope) ->
 }
 
 /// Write a `ColumnDelimiterForDataSource` as its element, `w:colDelim`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn column_delimiter_for_data_source(
     node: &super::ColumnDelimiterForDataSource,
     scope: &mut Scope,
@@ -1426,7 +1426,7 @@ pub fn column_delimiter_for_data_source(
 }
 
 /// Write a `ComboBoxListItem` as its element, `w:listItem`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn combo_box_list_item(node: &super::ComboBoxListItem, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::COMBO_BOX_LIST_ITEM_SHAPE, &node.unknown);
@@ -1436,7 +1436,7 @@ pub fn combo_box_list_item(node: &super::ComboBoxListItem, scope: &mut Scope) ->
 }
 
 /// Write a `ComboBoxStructuredDocumentTag` as its element, `w:comboBox`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn combo_box_structured_document_tag(
     node: &super::ComboBoxStructuredDocumentTag,
     scope: &mut Scope,
@@ -1452,7 +1452,7 @@ pub fn combo_box_structured_document_tag(
 }
 
 /// Write a `CommentAnchorRangeEnd` as its element, `w:commentRangeEnd`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comment_anchor_range_end(node: &super::CommentAnchorRangeEnd, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -1465,7 +1465,7 @@ pub fn comment_anchor_range_end(node: &super::CommentAnchorRangeEnd, scope: &mut
 }
 
 /// Write a `CommentAnchorRangeStart` as its element, `w:commentRangeStart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comment_anchor_range_start(
     node: &super::CommentAnchorRangeStart,
     scope: &mut Scope,
@@ -1481,7 +1481,7 @@ pub fn comment_anchor_range_start(
 }
 
 /// Write a `CommentContent` as its element, `w:comment`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comment_content(node: &super::CommentContent, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::COMMENT_CONTENT_SHAPE, &node.unknown);
@@ -1495,7 +1495,7 @@ pub fn comment_content(node: &super::CommentContent, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `CommentContentReferenceMark` as its element, `w:commentReference`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comment_content_reference_mark(
     node: &super::CommentContentReferenceMark,
     scope: &mut Scope,
@@ -1510,7 +1510,7 @@ pub fn comment_content_reference_mark(
 }
 
 /// Write a `CommentInformationBlock` as its element, `w:annotationRef`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comment_information_block(
     node: &super::CommentInformationBlock,
     scope: &mut Scope,
@@ -1524,7 +1524,7 @@ pub fn comment_information_block(
 }
 
 /// Write a `CommentsCollection` as its element, `w:comments`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comments_collection(node: &super::CommentsCollection, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::COMMENTS_COLLECTION_SHAPE, &node.unknown);
@@ -1533,7 +1533,7 @@ pub fn comments_collection(node: &super::CommentsCollection, scope: &mut Scope) 
 }
 
 /// Write a `CompatibilitySettings` as its element, `w:compat`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn compatibility_settings(node: &super::CompatibilitySettings, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -1610,7 +1610,7 @@ pub fn compatibility_settings(node: &super::CompatibilitySettings, scope: &mut S
 }
 
 /// Write a `ComplexFieldCharacter` as its element, `w:fldChar`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn complex_field_character(node: &super::ComplexFieldCharacter, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -1634,7 +1634,7 @@ pub fn complex_field_character_content(
 }
 
 /// Write a `ComplexScriptBold` as its element, `w:bCs`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn complex_script_bold(node: &super::ComplexScriptBold, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::COMPLEX_SCRIPT_BOLD_SHAPE, &node.unknown);
@@ -1643,7 +1643,7 @@ pub fn complex_script_bold(node: &super::ComplexScriptBold, scope: &mut Scope) -
 }
 
 /// Write a `ComplexScriptFontSize` as its element, `w:szCs`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn complex_script_font_size(node: &super::ComplexScriptFontSize, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -1655,7 +1655,7 @@ pub fn complex_script_font_size(node: &super::ComplexScriptFontSize, scope: &mut
 }
 
 /// Write a `ComplexScriptItalics` as its element, `w:iCs`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn complex_script_italics(node: &super::ComplexScriptItalics, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -1667,7 +1667,7 @@ pub fn complex_script_italics(node: &super::ComplexScriptItalics, scope: &mut Sc
 }
 
 /// Write a `CompressPunctuationAtStartOfLine` as its element, `w:topLinePunct`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn compress_punctuation_at_start_of_line(
     node: &super::CompressPunctuationAtStartOfLine,
     scope: &mut Scope,
@@ -1690,7 +1690,7 @@ pub fn conflict_change(
 }
 
 /// Write a `ContentBetweenNumberingSymbolAndText` as its element, `w:suff`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn content_between_numbering_symbol_and_text(
     node: &super::ContentBetweenNumberingSymbolAndText,
     scope: &mut Scope,
@@ -1721,7 +1721,7 @@ pub fn content_cell(
 }
 
 /// Write a `ContentPart` as its element, `w:contentPart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn content_part(node: &super::ContentPart, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CONTENT_PART_SHAPE, &node.unknown);
@@ -1738,7 +1738,7 @@ pub fn content_row(
 }
 
 /// Write a `ContentsOfGlossaryDocumentEntry` as its element, `w:docPartBody`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn contents_of_glossary_document_entry(
     node: &super::ContentsOfGlossaryDocumentEntry,
     scope: &mut Scope,
@@ -1754,7 +1754,7 @@ pub fn contents_of_glossary_document_entry(
 }
 
 /// Write a `ContinuationSeparatorMark` as its element, `w:continuationSeparator`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn continuation_separator_mark(
     node: &super::ContinuationSeparatorMark,
     scope: &mut Scope,
@@ -1768,7 +1768,7 @@ pub fn continuation_separator_mark(
 }
 
 /// Write a `CurrentContentsArePlaceholderText` as its element, `w:showingPlcHdr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn current_contents_are_placeholder_text(
     node: &super::CurrentContentsArePlaceholderText,
     scope: &mut Scope,
@@ -1783,7 +1783,7 @@ pub fn current_contents_are_placeholder_text(
 }
 
 /// Write a `CustomCompatibilitySetting` as its element, `w:compatSetting`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_compatibility_setting(
     node: &super::CustomCompatibilitySetting,
     scope: &mut Scope,
@@ -1800,7 +1800,7 @@ pub fn custom_compatibility_setting(
 }
 
 /// Write a `CustomFieldData` as its element, `w:fldData`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_field_data(node: &super::CustomFieldData, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CUSTOM_FIELD_DATA_SHAPE, &node.unknown);
@@ -1810,7 +1810,7 @@ pub fn custom_field_data(node: &super::CustomFieldData, scope: &mut Scope) -> El
 }
 
 /// Write a `CustomTabStop` as its element, `w:tab`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_tab_stop(node: &super::CustomTabStop, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CUSTOM_TAB_STOP_SHAPE, &node.unknown);
@@ -1821,7 +1821,7 @@ pub fn custom_tab_stop(node: &super::CustomTabStop, scope: &mut Scope) -> Elemen
 }
 
 /// Write a `CustomXMLAttribute` as its element, `w:attr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_xml_attribute(node: &super::CustomXMLAttribute, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -1835,7 +1835,7 @@ pub fn custom_xml_attribute(node: &super::CustomXMLAttribute, scope: &mut Scope)
 }
 
 /// Write a `CustomXMLDataDateStorageFormat` as its element, `w:storeMappedDataAs`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_xml_data_date_storage_format(
     node: &super::CustomXMLDataDateStorageFormat,
     scope: &mut Scope,
@@ -1850,7 +1850,7 @@ pub fn custom_xml_data_date_storage_format(
 }
 
 /// Write a `CustomXMLElementPlaceholderText` as its element, `w:placeholder`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_xml_element_placeholder_text(
     node: &super::CustomXMLElementPlaceholderText,
     scope: &mut Scope,
@@ -1865,7 +1865,7 @@ pub fn custom_xml_element_placeholder_text(
 }
 
 /// Write a `CustomXMLElementProperties` as its element, `w:customXmlPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_xml_element_properties(
     node: &super::CustomXMLElementProperties,
     scope: &mut Scope,
@@ -1881,7 +1881,7 @@ pub fn custom_xml_element_properties(
 }
 
 /// Write a `CustomXMLMarkupDeletionEnd` as its element, `w:customXmlDelRangeEnd`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_xml_markup_deletion_end(
     node: &super::CustomXMLMarkupDeletionEnd,
     scope: &mut Scope,
@@ -1896,7 +1896,7 @@ pub fn custom_xml_markup_deletion_end(
 }
 
 /// Write a `CustomXMLMarkupDeletionStart` as its element, `w:customXmlDelRangeStart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_xml_markup_deletion_start(
     node: &super::CustomXMLMarkupDeletionStart,
     scope: &mut Scope,
@@ -1913,7 +1913,7 @@ pub fn custom_xml_markup_deletion_start(
 }
 
 /// Write a `CustomXMLMarkupInsertionEnd` as its element, `w:customXmlInsRangeEnd`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_xml_markup_insertion_end(
     node: &super::CustomXMLMarkupInsertionEnd,
     scope: &mut Scope,
@@ -1928,7 +1928,7 @@ pub fn custom_xml_markup_insertion_end(
 }
 
 /// Write a `CustomXMLMarkupInsertionStart` as its element, `w:customXmlInsRangeStart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_xml_markup_insertion_start(
     node: &super::CustomXMLMarkupInsertionStart,
     scope: &mut Scope,
@@ -1945,7 +1945,7 @@ pub fn custom_xml_markup_insertion_start(
 }
 
 /// Write a `CustomXMLMarkupMoveSourceEnd` as its element, `w:customXmlMoveFromRangeEnd`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_xml_markup_move_source_end(
     node: &super::CustomXMLMarkupMoveSourceEnd,
     scope: &mut Scope,
@@ -1960,7 +1960,7 @@ pub fn custom_xml_markup_move_source_end(
 }
 
 /// Write a `CustomXMLMarkupMoveSourceStart` as its element, `w:customXmlMoveFromRangeStart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_xml_markup_move_source_start(
     node: &super::CustomXMLMarkupMoveSourceStart,
     scope: &mut Scope,
@@ -1977,7 +1977,7 @@ pub fn custom_xml_markup_move_source_start(
 }
 
 /// Write a `CustomXmlMoveToRangeEnd` as its element, `w:customXmlMoveToRangeEnd`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_xml_move_to_range_end(
     node: &super::CustomXmlMoveToRangeEnd,
     scope: &mut Scope,
@@ -1992,7 +1992,7 @@ pub fn custom_xml_move_to_range_end(
 }
 
 /// Write a `CustomXmlMoveToRangeStart` as its element, `w:customXmlMoveToRangeStart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_xml_move_to_range_start(
     node: &super::CustomXmlMoveToRangeStart,
     scope: &mut Scope,
@@ -2009,7 +2009,7 @@ pub fn custom_xml_move_to_range_start(
 }
 
 /// Write a `CustomXSLTransform` as its element, `w:saveThroughXslt`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_xsl_transform(node: &super::CustomXSLTransform, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -2022,7 +2022,7 @@ pub fn custom_xsl_transform(node: &super::CustomXSLTransform, scope: &mut Scope)
 }
 
 /// Write a `DataAboutSingleDataSourceRecord` as its element, `w:recipientData`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_about_single_data_source_record(
     node: &super::DataAboutSingleDataSourceRecord,
     scope: &mut Scope,
@@ -2039,7 +2039,7 @@ pub fn data_about_single_data_source_record(
 }
 
 /// Write a `DataForHTMLBlockquoteElement` as its element, `w:blockQuote`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_for_html_blockquote_element(
     node: &super::DataForHTMLBlockquoteElement,
     scope: &mut Scope,
@@ -2054,7 +2054,7 @@ pub fn data_for_html_blockquote_element(
 }
 
 /// Write a `DataForHTMLBodyElement` as its element, `w:bodyDiv`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_for_html_body_element(
     node: &super::DataForHTMLBodyElement,
     scope: &mut Scope,
@@ -2069,7 +2069,7 @@ pub fn data_for_html_body_element(
 }
 
 /// Write a `DataSourceConnectionString` as its element, `w:connectString`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_source_connection_string(
     node: &super::DataSourceConnectionString,
     scope: &mut Scope,
@@ -2084,7 +2084,7 @@ pub fn data_source_connection_string(
 }
 
 /// Write a `DataSourceFilePath` as its element, `w:dataSource`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_source_file_path(node: &super::DataSourceFilePath, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -2096,7 +2096,7 @@ pub fn data_source_file_path(node: &super::DataSourceFilePath, scope: &mut Scope
 }
 
 /// Write a `DataSourceTableName` as its element, `w:table`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_source_table_name(node: &super::DataSourceTableName, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -2108,7 +2108,7 @@ pub fn data_source_table_name(node: &super::DataSourceTableName, scope: &mut Sco
 }
 
 /// Write a `DataSourceType` as its element, `w:dataType`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_source_type(node: &super::DataSourceType, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DATA_SOURCE_TYPE_SHAPE, &node.unknown);
@@ -2117,7 +2117,7 @@ pub fn data_source_type(node: &super::DataSourceType, scope: &mut Scope) -> Elem
 }
 
 /// Write a `DateBlockLongDayFormat` as its element, `w:dayLong`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn date_block_long_day_format(
     node: &super::DateBlockLongDayFormat,
     scope: &mut Scope,
@@ -2131,7 +2131,7 @@ pub fn date_block_long_day_format(
 }
 
 /// Write a `DateBlockLongMonthFormat` as its element, `w:monthLong`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn date_block_long_month_format(
     node: &super::DateBlockLongMonthFormat,
     scope: &mut Scope,
@@ -2145,7 +2145,7 @@ pub fn date_block_long_month_format(
 }
 
 /// Write a `DateBlockLongYearFormat` as its element, `w:yearLong`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn date_block_long_year_format(
     node: &super::DateBlockLongYearFormat,
     scope: &mut Scope,
@@ -2159,7 +2159,7 @@ pub fn date_block_long_year_format(
 }
 
 /// Write a `DateBlockShortDayFormat` as its element, `w:dayShort`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn date_block_short_day_format(
     node: &super::DateBlockShortDayFormat,
     scope: &mut Scope,
@@ -2173,7 +2173,7 @@ pub fn date_block_short_day_format(
 }
 
 /// Write a `DateBlockShortMonthFormat` as its element, `w:monthShort`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn date_block_short_month_format(
     node: &super::DateBlockShortMonthFormat,
     scope: &mut Scope,
@@ -2187,7 +2187,7 @@ pub fn date_block_short_month_format(
 }
 
 /// Write a `DateBlockShortYearFormat` as its element, `w:yearShort`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn date_block_short_year_format(
     node: &super::DateBlockShortYearFormat,
     scope: &mut Scope,
@@ -2201,7 +2201,7 @@ pub fn date_block_short_year_format(
 }
 
 /// Write a `DateDisplayMask` as its element, `w:dateFormat`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn date_display_mask(node: &super::DateDisplayMask, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DATE_DISPLAY_MASK_SHAPE, &node.unknown);
@@ -2210,7 +2210,7 @@ pub fn date_display_mask(node: &super::DateDisplayMask, scope: &mut Scope) -> El
 }
 
 /// Write a `DatePickerCalendarType` as its element, `w:calendar`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn date_picker_calendar_type(
     node: &super::DatePickerCalendarType,
     scope: &mut Scope,
@@ -2225,7 +2225,7 @@ pub fn date_picker_calendar_type(
 }
 
 /// Write a `DateStructuredDocumentTag` as its element, `w:date`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn date_structured_document_tag(
     node: &super::DateStructuredDocumentTag,
     scope: &mut Scope,
@@ -2244,7 +2244,7 @@ pub fn date_structured_document_tag(
 }
 
 /// Write a `DefaultCheckboxFormFieldState` as its element, `w:default`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn default_checkbox_form_field_state(
     node: &super::DefaultCheckboxFormFieldState,
     scope: &mut Scope,
@@ -2259,7 +2259,7 @@ pub fn default_checkbox_form_field_state(
 }
 
 /// Write a `DefaultDropDownListItemIndex` as its element, `w:default`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn default_drop_down_list_item_index(
     node: &super::DefaultDropDownListItemIndex,
     scope: &mut Scope,
@@ -2274,7 +2274,7 @@ pub fn default_drop_down_list_item_index(
 }
 
 /// Write a `DefaultParagraphProperties` as its element, `w:pPrDefault`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn default_paragraph_properties(
     node: &super::DefaultParagraphProperties,
     scope: &mut Scope,
@@ -2289,7 +2289,7 @@ pub fn default_paragraph_properties(
 }
 
 /// Write a `DefaultPropertiesForVMLObjectsInHeaderAndFooter` as its element, `w:hdrShapeDefaults`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn default_properties_for_vml_objects_in_header_and_footer(
     node: &super::DefaultPropertiesForVMLObjectsInHeaderAndFooter,
     scope: &mut Scope,
@@ -2304,7 +2304,7 @@ pub fn default_properties_for_vml_objects_in_header_and_footer(
 }
 
 /// Write a `DefaultPropertiesForVMLObjectsInMainDocument` as its element, `w:shapeDefaults`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn default_properties_for_vml_objects_in_main_document(
     node: &super::DefaultPropertiesForVMLObjectsInMainDocument,
     scope: &mut Scope,
@@ -2319,7 +2319,7 @@ pub fn default_properties_for_vml_objects_in_main_document(
 }
 
 /// Write a `DefaultRunProperties` as its element, `w:rPrDefault`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn default_run_properties(node: &super::DefaultRunProperties, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -2331,7 +2331,7 @@ pub fn default_run_properties(node: &super::DefaultRunProperties, scope: &mut Sc
 }
 
 /// Write a `DefaultTableStyle` as its element, `w:defaultTableStyle`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn default_table_style(node: &super::DefaultTableStyle, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DEFAULT_TABLE_STYLE_SHAPE, &node.unknown);
@@ -2340,7 +2340,7 @@ pub fn default_table_style(node: &super::DefaultTableStyle, scope: &mut Scope) -
 }
 
 /// Write a `DefaultTextBoxFormFieldString` as its element, `w:default`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn default_text_box_form_field_string(
     node: &super::DefaultTextBoxFormFieldString,
     scope: &mut Scope,
@@ -2355,7 +2355,7 @@ pub fn default_text_box_form_field_string(
 }
 
 /// Write a `Del` as its element, `w:del`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn del(node: &super::Del, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::DEL_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
@@ -2366,7 +2366,7 @@ pub fn del(node: &super::Del, scope: &mut Scope) -> Element {
 }
 
 /// Write a `DeletedFieldCode` as its element, `w:delInstrText`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn deleted_field_code(node: &super::DeletedFieldCode, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DELETED_FIELD_CODE_SHAPE, &node.unknown);
@@ -2376,7 +2376,7 @@ pub fn deleted_field_code(node: &super::DeletedFieldCode, scope: &mut Scope) -> 
 }
 
 /// Write a `DeletedMathControlCharacter` as its element, `w:del`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn deleted_math_control_character(
     node: &super::DeletedMathControlCharacter,
     scope: &mut Scope,
@@ -2395,7 +2395,7 @@ pub fn deleted_math_control_character(
 }
 
 /// Write a `DeletedRunContent` as its element, `w:del`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn deleted_run_content(node: &super::DeletedRunContent, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DELETED_RUN_CONTENT_SHAPE, &node.unknown);
@@ -2407,7 +2407,7 @@ pub fn deleted_run_content(node: &super::DeletedRunContent, scope: &mut Scope) -
 }
 
 /// Write a `DeletedTableRow` as its element, `w:del`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn deleted_table_row(node: &super::DeletedTableRow, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DELETED_TABLE_ROW_SHAPE, &node.unknown);
@@ -2418,7 +2418,7 @@ pub fn deleted_table_row(node: &super::DeletedTableRow, scope: &mut Scope) -> El
 }
 
 /// Write a `DeletedText` as its element, `w:delText`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn deleted_text(node: &super::DeletedText, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DELETED_TEXT_SHAPE, &node.unknown);
@@ -2428,7 +2428,7 @@ pub fn deleted_text(node: &super::DeletedText, scope: &mut Scope) -> Element {
 }
 
 /// Write a `DescriptionForEntry` as its element, `w:description`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn description_for_entry(node: &super::DescriptionForEntry, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -2440,7 +2440,7 @@ pub fn description_for_entry(node: &super::DescriptionForEntry, scope: &mut Scop
 }
 
 /// Write a `DifferentEvenOddPageHeadersAndFooters` as its element, `w:evenAndOddHeaders`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn different_even_odd_page_headers_and_footers(
     node: &super::DifferentEvenOddPageHeadersAndFooters,
     scope: &mut Scope,
@@ -2455,7 +2455,7 @@ pub fn different_even_odd_page_headers_and_footers(
 }
 
 /// Write a `DifferentFirstPageHeadersAndFooters` as its element, `w:titlePg`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn different_first_page_headers_and_footers(
     node: &super::DifferentFirstPageHeadersAndFooters,
     scope: &mut Scope,
@@ -2470,7 +2470,7 @@ pub fn different_first_page_headers_and_footers(
 }
 
 /// Write a `DisableFeaturesNotSupported` as its element, `w:optimizeForBrowser`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn disable_features_not_supported(
     node: &super::DisableFeaturesNotSupported,
     scope: &mut Scope,
@@ -2486,7 +2486,7 @@ pub fn disable_features_not_supported(
 }
 
 /// Write a `DisplayAllCharactersAsCapitalLetters` as its element, `w:caps`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn display_all_characters_as_capital_letters(
     node: &super::DisplayAllCharactersAsCapitalLetters,
     scope: &mut Scope,
@@ -2501,7 +2501,7 @@ pub fn display_all_characters_as_capital_letters(
 }
 
 /// Write a `DisplayAllLevelsUsingArabicNumerals` as its element, `w:isLgl`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn display_all_levels_using_arabic_numerals(
     node: &super::DisplayAllLevelsUsingArabicNumerals,
     scope: &mut Scope,
@@ -2516,7 +2516,7 @@ pub fn display_all_levels_using_arabic_numerals(
 }
 
 /// Write a `DisplayBackgroundShape` as its element, `w:displayBackgroundShape`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn display_background_shape(
     node: &super::DisplayBackgroundShape,
     scope: &mut Scope,
@@ -2531,7 +2531,7 @@ pub fn display_background_shape(
 }
 
 /// Write a `DisplayBackslashAsYenSign` as its element, `w:doNotLeaveBackslashAlone`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn display_backslash_as_yen_sign(
     node: &super::DisplayBackslashAsYenSign,
     scope: &mut Scope,
@@ -2546,7 +2546,7 @@ pub fn display_backslash_as_yen_sign(
 }
 
 /// Write a `DisplayCharacterOutline` as its element, `w:outline`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn display_character_outline(
     node: &super::DisplayCharacterOutline,
     scope: &mut Scope,
@@ -2561,7 +2561,7 @@ pub fn display_character_outline(
 }
 
 /// Write a `DisplayPageColumnBreaksPresentInFrames` as its element, `w:showBreaksInFrames`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn display_page_column_breaks_present_in_frames(
     node: &super::DisplayPageColumnBreaksPresentInFrames,
     scope: &mut Scope,
@@ -2576,7 +2576,7 @@ pub fn display_page_column_breaks_present_in_frames(
 }
 
 /// Write a `DistanceBetweenAutomaticTabStops` as its element, `w:defaultTabStop`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn distance_between_automatic_tab_stops(
     node: &super::DistanceBetweenAutomaticTabStops,
     scope: &mut Scope,
@@ -2592,7 +2592,7 @@ pub fn distance_between_automatic_tab_stops(
 
 /// Write a `DistanceBetweenHorizontalGridlines` as its element,
 /// `w:displayHorizontalDrawingGridEvery`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn distance_between_horizontal_gridlines(
     node: &super::DistanceBetweenHorizontalGridlines,
     scope: &mut Scope,
@@ -2607,7 +2607,7 @@ pub fn distance_between_horizontal_gridlines(
 }
 
 /// Write a `DistanceBetweenPhoneticGuideText` as its element, `w:hpsRaise`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn distance_between_phonetic_guide_text(
     node: &super::DistanceBetweenPhoneticGuideText,
     scope: &mut Scope,
@@ -2622,7 +2622,7 @@ pub fn distance_between_phonetic_guide_text(
 }
 
 /// Write a `DistanceBetweenVerticalGridlines` as its element, `w:displayVerticalDrawingGridEvery`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn distance_between_vertical_gridlines(
     node: &super::DistanceBetweenVerticalGridlines,
     scope: &mut Scope,
@@ -2637,7 +2637,7 @@ pub fn distance_between_vertical_gridlines(
 }
 
 /// Write a `DoNotAddLeadingBetweenLinesOfText` as its element, `w:noLeading`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_add_leading_between_lines_of_text(
     node: &super::DoNotAddLeadingBetweenLinesOfText,
     scope: &mut Scope,
@@ -2653,7 +2653,7 @@ pub fn do_not_add_leading_between_lines_of_text(
 
 /// Write a `DoNotAllowFloatingTablesToBreakAcrossPages` as its element,
 /// `w:doNotBreakWrappedTables`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_allow_floating_tables_to_break_across_pages(
     node: &super::DoNotAllowFloatingTablesToBreakAcrossPages,
     scope: &mut Scope,
@@ -2668,7 +2668,7 @@ pub fn do_not_allow_floating_tables_to_break_across_pages(
 }
 
 /// Write a `DoNotAutofitConstrainedTables` as its element, `w:doNotAutofitConstrainedTables`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_autofit_constrained_tables(
     node: &super::DoNotAutofitConstrainedTables,
     scope: &mut Scope,
@@ -2683,7 +2683,7 @@ pub fn do_not_autofit_constrained_tables(
 }
 
 /// Write a `DoNotAutomaticallyCompressImages` as its element, `w:doNotAutoCompressPictures`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_automatically_compress_images(
     node: &super::DoNotAutomaticallyCompressImages,
     scope: &mut Scope,
@@ -2698,7 +2698,7 @@ pub fn do_not_automatically_compress_images(
 }
 
 /// Write a `DoNotBalanceTextColumnsWithinASection` as its element, `w:noColumnBalance`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_balance_text_columns_within_a_section(
     node: &super::DoNotBalanceTextColumnsWithinASection,
     scope: &mut Scope,
@@ -2713,7 +2713,7 @@ pub fn do_not_balance_text_columns_within_a_section(
 }
 
 /// Write a `DoNotBreakConstrainedForcedTable` as its element, `w:doNotBreakConstrainedForcedTable`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_break_constrained_forced_table(
     node: &super::DoNotBreakConstrainedForcedTable,
     scope: &mut Scope,
@@ -2728,7 +2728,7 @@ pub fn do_not_break_constrained_forced_table(
 }
 
 /// Write a `DoNotBypassEastAsianComplexScriptLayoutCode` as its element, `w:useFELayout`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_bypass_east_asian_complex_script_layout_code(
     node: &super::DoNotBypassEastAsianComplexScriptLayoutCode,
     scope: &mut Scope,
@@ -2743,7 +2743,7 @@ pub fn do_not_bypass_east_asian_complex_script_layout_code(
 }
 
 /// Write a `DoNotCenterContentOnLinesWithExactLineHeight` as its element, `w:noExtraLineSpacing`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_center_content_on_lines_with_exact_line_height(
     node: &super::DoNotCenterContentOnLinesWithExactLineHeight,
     scope: &mut Scope,
@@ -2758,7 +2758,7 @@ pub fn do_not_center_content_on_lines_with_exact_line_height(
 }
 
 /// Write a `DoNotCheckSpellingOrGrammar` as its element, `w:noProof`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_check_spelling_or_grammar(
     node: &super::DoNotCheckSpellingOrGrammar,
     scope: &mut Scope,
@@ -2773,7 +2773,7 @@ pub fn do_not_check_spelling_or_grammar(
 }
 
 /// Write a `DoNotCreateCustomTabStopForHangingIndent` as its element, `w:noTabHangInd`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_create_custom_tab_stop_for_hanging_indent(
     node: &super::DoNotCreateCustomTabStopForHangingIndent,
     scope: &mut Scope,
@@ -2788,7 +2788,7 @@ pub fn do_not_create_custom_tab_stop_for_hanging_indent(
 }
 
 /// Write a `DoNotDisplayFramesetSplitters` as its element, `w:noBorder`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_display_frameset_splitters(
     node: &super::DoNotDisplayFramesetSplitters,
     scope: &mut Scope,
@@ -2803,7 +2803,7 @@ pub fn do_not_display_frameset_splitters(
 }
 
 /// Write a `DoNotDisplayGrammaticalErrors` as its element, `w:hideGrammaticalErrors`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_display_grammatical_errors(
     node: &super::DoNotDisplayGrammaticalErrors,
     scope: &mut Scope,
@@ -2818,7 +2818,7 @@ pub fn do_not_display_grammatical_errors(
 }
 
 /// Write a `DoNotDisplayPageBoundaries` as its element, `w:doNotDisplayPageBoundaries`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_display_page_boundaries(
     node: &super::DoNotDisplayPageBoundaries,
     scope: &mut Scope,
@@ -2833,7 +2833,7 @@ pub fn do_not_display_page_boundaries(
 }
 
 /// Write a `DoNotDisplaySpellingErrors` as its element, `w:hideSpellingErrors`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_display_spelling_errors(
     node: &super::DoNotDisplaySpellingErrors,
     scope: &mut Scope,
@@ -2848,7 +2848,7 @@ pub fn do_not_display_spelling_errors(
 }
 
 /// Write a `DoNotHyphenateCapitalLetters` as its element, `w:doNotHyphenateCaps`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_hyphenate_capital_letters(
     node: &super::DoNotHyphenateCapitalLetters,
     scope: &mut Scope,
@@ -2863,7 +2863,7 @@ pub fn do_not_hyphenate_capital_letters(
 }
 
 /// Write a `DoNotIncludeSubdocsInStats` as its element, `w:doNotIncludeSubdocsInStats`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_include_subdocs_in_stats(
     node: &super::DoNotIncludeSubdocsInStats,
     scope: &mut Scope,
@@ -2878,7 +2878,7 @@ pub fn do_not_include_subdocs_in_stats(
 }
 
 /// Write a `DoNotIncreaseLineHeightForRaisedLoweredText` as its element, `w:noSpaceRaiseLower`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_increase_line_height_for_raised_lowered_text(
     node: &super::DoNotIncreaseLineHeightForRaisedLoweredText,
     scope: &mut Scope,
@@ -2893,7 +2893,7 @@ pub fn do_not_increase_line_height_for_raised_lowered_text(
 }
 
 /// Write a `DoNotPlaceSupportingFiles` as its element, `w:doNotOrganizeInFolder`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_place_supporting_files(
     node: &super::DoNotPlaceSupportingFiles,
     scope: &mut Scope,
@@ -2908,7 +2908,7 @@ pub fn do_not_place_supporting_files(
 }
 
 /// Write a `DoNotRelyOnCSS` as its element, `w:doNotRelyOnCSS`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_rely_on_css(node: &super::DoNotRelyOnCSS, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DO_NOT_RELY_ON_CSS_SHAPE, &node.unknown);
@@ -2917,7 +2917,7 @@ pub fn do_not_rely_on_css(node: &super::DoNotRelyOnCSS, scope: &mut Scope) -> El
 }
 
 /// Write a `DoNotShowFormFieldIndicator` as its element, `w:doNotShadeFormData`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_show_form_field_indicator(
     node: &super::DoNotShowFormFieldIndicator,
     scope: &mut Scope,
@@ -2932,7 +2932,7 @@ pub fn do_not_show_form_field_indicator(
 }
 
 /// Write a `DoNotShowInvalidMarkupIndicator` as its element, `w:doNotDemarcateInvalidXml`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_show_invalid_markup_indicator(
     node: &super::DoNotShowInvalidMarkupIndicator,
     scope: &mut Scope,
@@ -2948,7 +2948,7 @@ pub fn do_not_show_invalid_markup_indicator(
 
 /// Write a `DoNotSnapToDocumentGridInTableCellsWithObjects` as its element,
 /// `w:doNotSnapToGridInCell`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_snap_to_document_grid_in_table_cells_with_objects(
     node: &super::DoNotSnapToDocumentGridInTableCellsWithObjects,
     scope: &mut Scope,
@@ -2963,7 +2963,7 @@ pub fn do_not_snap_to_document_grid_in_table_cells_with_objects(
 }
 
 /// Write a `DoNotSuppressBlankLines` as its element, `w:doNotSuppressBlankLines`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_suppress_blank_lines(
     node: &super::DoNotSuppressBlankLines,
     scope: &mut Scope,
@@ -2978,7 +2978,7 @@ pub fn do_not_suppress_blank_lines(
 }
 
 /// Write a `DoNotSuppressIndentation` as its element, `w:doNotSuppressIndentation`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_suppress_indentation(
     node: &super::DoNotSuppressIndentation,
     scope: &mut Scope,
@@ -2993,7 +2993,7 @@ pub fn do_not_suppress_indentation(
 }
 
 /// Write a `DoNotSuppressParagraphBorders` as its element, `w:doNotSuppressParagraphBorders`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_suppress_paragraph_borders(
     node: &super::DoNotSuppressParagraphBorders,
     scope: &mut Scope,
@@ -3008,7 +3008,7 @@ pub fn do_not_suppress_paragraph_borders(
 }
 
 /// Write a `DoNotTrackFormatting` as its element, `w:doNotTrackFormatting`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_track_formatting(node: &super::DoNotTrackFormatting, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -3020,7 +3020,7 @@ pub fn do_not_track_formatting(node: &super::DoNotTrackFormatting, scope: &mut S
 }
 
 /// Write a `DoNotUseEastAsianBreakRules` as its element, `w:doNotUseEastAsianBreakRules`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_use_east_asian_break_rules(
     node: &super::DoNotUseEastAsianBreakRules,
     scope: &mut Scope,
@@ -3035,7 +3035,7 @@ pub fn do_not_use_east_asian_break_rules(
 }
 
 /// Write a `DoNotUseFileNames` as its element, `w:doNotUseLongFileNames`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_use_file_names(node: &super::DoNotUseFileNames, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -3047,7 +3047,7 @@ pub fn do_not_use_file_names(node: &super::DoNotUseFileNames, scope: &mut Scope)
 }
 
 /// Write a `DoNotUseHTMLParagraphAutoSpacing` as its element, `w:doNotUseHTMLParagraphAutoSpacing`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_use_html_paragraph_auto_spacing(
     node: &super::DoNotUseHTMLParagraphAutoSpacing,
     scope: &mut Scope,
@@ -3062,7 +3062,7 @@ pub fn do_not_use_html_paragraph_auto_spacing(
 }
 
 /// Write a `DoNotUseIndentAsNumberingTabStop` as its element, `w:doNotUseIndentAsNumberingTabStop`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_use_indent_as_numbering_tab_stop(
     node: &super::DoNotUseIndentAsNumberingTabStop,
     scope: &mut Scope,
@@ -3078,7 +3078,7 @@ pub fn do_not_use_indent_as_numbering_tab_stop(
 
 /// Write a `DoNotUseMarginsForDrawingGridOrigin` as its element,
 /// `w:doNotUseMarginsForDrawingGridOrigin`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_use_margins_for_drawing_grid_origin(
     node: &super::DoNotUseMarginsForDrawingGridOrigin,
     scope: &mut Scope,
@@ -3093,7 +3093,7 @@ pub fn do_not_use_margins_for_drawing_grid_origin(
 }
 
 /// Write a `DoNotUseMoveSyntax` as its element, `w:doNotTrackMoves`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_use_move_syntax(node: &super::DoNotUseMoveSyntax, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -3105,7 +3105,7 @@ pub fn do_not_use_move_syntax(node: &super::DoNotUseMoveSyntax, scope: &mut Scop
 }
 
 /// Write a `DoNotValidateAgainstSchema` as its element, `w:doNotValidateAgainstSchema`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_validate_against_schema(
     node: &super::DoNotValidateAgainstSchema,
     scope: &mut Scope,
@@ -3120,7 +3120,7 @@ pub fn do_not_validate_against_schema(
 }
 
 /// Write a `DoNotVertAlignCellWithSp` as its element, `w:doNotVertAlignCellWithSp`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_vert_align_cell_with_sp(
     node: &super::DoNotVertAlignCellWithSp,
     scope: &mut Scope,
@@ -3135,7 +3135,7 @@ pub fn do_not_vert_align_cell_with_sp(
 }
 
 /// Write a `DoNotWrapTextWithPunct` as its element, `w:doNotWrapTextWithPunct`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn do_not_wrap_text_with_punct(
     node: &super::DoNotWrapTextWithPunct,
     scope: &mut Scope,
@@ -3150,7 +3150,7 @@ pub fn do_not_wrap_text_with_punct(
 }
 
 /// Write a `Document` as its element, `w:document`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document(node: &super::Document, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DOCUMENT_SHAPE, &node.unknown);
@@ -3161,7 +3161,7 @@ pub fn document(node: &super::Document, scope: &mut Scope) -> Element {
 }
 
 /// Write a `DocumentBackground` as its element, `w:background`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_background(node: &super::DocumentBackground, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DOCUMENT_BACKGROUND_SHAPE, &node.unknown);
@@ -3175,7 +3175,7 @@ pub fn document_background(node: &super::DocumentBackground, scope: &mut Scope) 
 }
 
 /// Write a `DocumentBody` as its element, `w:body`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_body(node: &super::DocumentBody, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DOCUMENT_BODY_SHAPE, &node.unknown);
@@ -3185,7 +3185,7 @@ pub fn document_body(node: &super::DocumentBody, scope: &mut Scope) -> Element {
 }
 
 /// Write a `DocumentClassification` as its element, `w:documentType`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_classification(node: &super::DocumentClassification, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -3197,7 +3197,7 @@ pub fn document_classification(node: &super::DocumentClassification, scope: &mut
 }
 
 /// Write a `DocumentDefaultParagraphAndRunProperties` as its element, `w:docDefaults`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_default_paragraph_and_run_properties(
     node: &super::DocumentDefaultParagraphAndRunProperties,
     scope: &mut Scope,
@@ -3213,7 +3213,7 @@ pub fn document_default_paragraph_and_run_properties(
 }
 
 /// Write a `DocumentEditingRestrictions` as its element, `w:documentProtection`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_editing_restrictions(
     node: &super::DocumentEditingRestrictions,
     scope: &mut Scope,
@@ -3246,7 +3246,7 @@ pub fn document_editing_restrictions(
 }
 
 /// Write a `DocumentEndnotes` as its element, `w:endnotes`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_endnotes(node: &super::DocumentEndnotes, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DOCUMENT_ENDNOTES_SHAPE, &node.unknown);
@@ -3255,7 +3255,7 @@ pub fn document_endnotes(node: &super::DocumentEndnotes, scope: &mut Scope) -> E
 }
 
 /// Write a `DocumentFinalSectionProperties` as its element, `w:sectPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_final_section_properties(
     node: &super::DocumentFinalSectionProperties,
     scope: &mut Scope,
@@ -3295,7 +3295,7 @@ pub fn document_final_section_properties(
 }
 
 /// Write a `DocumentFootnotes` as its element, `w:footnotes`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_footnotes(node: &super::DocumentFootnotes, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DOCUMENT_FOOTNOTES_SHAPE, &node.unknown);
@@ -3304,7 +3304,7 @@ pub fn document_footnotes(node: &super::DocumentFootnotes, scope: &mut Scope) ->
 }
 
 /// Write a `DocumentGrid` as its element, `w:docGrid`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_grid(node: &super::DocumentGrid, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DOCUMENT_GRID_SHAPE, &node.unknown);
@@ -3315,7 +3315,7 @@ pub fn document_grid(node: &super::DocumentGrid, scope: &mut Scope) -> Element {
 }
 
 /// Write a `DocumentGridInterLineParagraphSpacing` as its element, `w:snapToGrid`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_grid_inter_line_paragraph_spacing(
     node: &super::DocumentGridInterLineParagraphSpacing,
     scope: &mut Scope,
@@ -3330,7 +3330,7 @@ pub fn document_grid_inter_line_paragraph_spacing(
 }
 
 /// Write a `DocumentPartCategoryFilter` as its element, `w:docPartCategory`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_part_category_filter(
     node: &super::DocumentPartCategoryFilter,
     scope: &mut Scope,
@@ -3345,7 +3345,7 @@ pub fn document_part_category_filter(
 }
 
 /// Write a `DocumentPartGalleryFilter` as its element, `w:docPartGallery`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_part_gallery_filter(
     node: &super::DocumentPartGalleryFilter,
     scope: &mut Scope,
@@ -3360,7 +3360,7 @@ pub fn document_part_gallery_filter(
 }
 
 /// Write a `DocumentPartGalleryStructuredDocumentTag` as its element, `w:docPartList`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_part_gallery_structured_document_tag(
     node: &super::DocumentPartGalleryStructuredDocumentTag,
     scope: &mut Scope,
@@ -3377,7 +3377,7 @@ pub fn document_part_gallery_structured_document_tag(
 }
 
 /// Write a `DocumentPartReference` as its element, `w:docPart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_part_reference(node: &super::DocumentPartReference, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -3389,7 +3389,7 @@ pub fn document_part_reference(node: &super::DocumentPartReference, scope: &mut 
 }
 
 /// Write a `DocumentSettings` as its element, `w:settings`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_settings(node: &super::DocumentSettings, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DOCUMENT_SETTINGS_SHAPE, &node.unknown);
@@ -3515,7 +3515,7 @@ fn document_settings_2(
 }
 
 /// Write a `DocumentVariables` as its element, `w:docVars`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_variables(node: &super::DocumentVariables, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DOCUMENT_VARIABLES_SHAPE, &node.unknown);
@@ -3524,7 +3524,7 @@ pub fn document_variables(node: &super::DocumentVariables, scope: &mut Scope) ->
 }
 
 /// Write a `DocumentViewSetting` as its element, `w:view`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_view_setting(node: &super::DocumentViewSetting, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -3536,7 +3536,7 @@ pub fn document_view_setting(node: &super::DocumentViewSetting, scope: &mut Scop
 }
 
 /// Write a `DocumentWideEndnoteProperties` as its element, `w:endnotePr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_wide_endnote_properties(
     node: &super::DocumentWideEndnoteProperties,
     scope: &mut Scope,
@@ -3555,7 +3555,7 @@ pub fn document_wide_endnote_properties(
 }
 
 /// Write a `DocumentWideFootnoteProperties` as its element, `w:footnotePr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_wide_footnote_properties(
     node: &super::DocumentWideFootnoteProperties,
     scope: &mut Scope,
@@ -3574,7 +3574,7 @@ pub fn document_wide_footnote_properties(
 }
 
 /// Write a `DontJustifySoftLineBreakLines` as its element, `w:doNotExpandShiftReturn`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dont_justify_soft_line_break_lines(
     node: &super::DontJustifySoftLineBreakLines,
     scope: &mut Scope,
@@ -3589,7 +3589,7 @@ pub fn dont_justify_soft_line_break_lines(
 }
 
 /// Write a `DontWrapCellContent` as its element, `w:noWrap`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dont_wrap_cell_content(node: &super::DontWrapCellContent, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -3601,7 +3601,7 @@ pub fn dont_wrap_cell_content(node: &super::DontWrapCellContent, scope: &mut Sco
 }
 
 /// Write a `DoubleStrikethrough` as its element, `w:dstrike`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn double_strikethrough(node: &super::DoubleStrikethrough, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -3613,7 +3613,7 @@ pub fn double_strikethrough(node: &super::DoubleStrikethrough, scope: &mut Scope
 }
 
 /// Write a `DrawingGridHorizontalGridUnitSize` as its element, `w:drawingGridHorizontalSpacing`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drawing_grid_horizontal_grid_unit_size(
     node: &super::DrawingGridHorizontalGridUnitSize,
     scope: &mut Scope,
@@ -3628,7 +3628,7 @@ pub fn drawing_grid_horizontal_grid_unit_size(
 }
 
 /// Write a `DrawingGridHorizontalOriginPoint` as its element, `w:drawingGridHorizontalOrigin`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drawing_grid_horizontal_origin_point(
     node: &super::DrawingGridHorizontalOriginPoint,
     scope: &mut Scope,
@@ -3643,7 +3643,7 @@ pub fn drawing_grid_horizontal_origin_point(
 }
 
 /// Write a `DrawingGridVerticalGridUnitSize` as its element, `w:drawingGridVerticalSpacing`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drawing_grid_vertical_grid_unit_size(
     node: &super::DrawingGridVerticalGridUnitSize,
     scope: &mut Scope,
@@ -3658,7 +3658,7 @@ pub fn drawing_grid_vertical_grid_unit_size(
 }
 
 /// Write a `DrawingGridVerticalOriginPoint` as its element, `w:drawingGridVerticalOrigin`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drawing_grid_vertical_origin_point(
     node: &super::DrawingGridVerticalOriginPoint,
     scope: &mut Scope,
@@ -3673,7 +3673,7 @@ pub fn drawing_grid_vertical_origin_point(
 }
 
 /// Write a `DrawingMLObject` as its element, `w:drawing`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drawing_ml_object(node: &super::DrawingMLObject, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DRAWING_ML_OBJECT_SHAPE, &node.unknown);
@@ -3690,7 +3690,7 @@ pub fn drawing_object(
 }
 
 /// Write a `DropDownListEntry` as its element, `w:listEntry`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drop_down_list_entry(node: &super::DropDownListEntry, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -3702,7 +3702,7 @@ pub fn drop_down_list_entry(node: &super::DropDownListEntry, scope: &mut Scope) 
 }
 
 /// Write a `DropDownListFormFieldProperties` as its element, `w:ddList`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drop_down_list_form_field_properties(
     node: &super::DropDownListFormFieldProperties,
     scope: &mut Scope,
@@ -3719,7 +3719,7 @@ pub fn drop_down_list_form_field_properties(
 }
 
 /// Write a `DropDownListSelection` as its element, `w:result`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drop_down_list_selection(node: &super::DropDownListSelection, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -3731,7 +3731,7 @@ pub fn drop_down_list_selection(node: &super::DropDownListSelection, scope: &mut
 }
 
 /// Write a `DropDownListStructuredDocumentTag` as its element, `w:dropDownList`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drop_down_list_structured_document_tag(
     node: &super::DropDownListStructuredDocumentTag,
     scope: &mut Scope,
@@ -3747,7 +3747,7 @@ pub fn drop_down_list_structured_document_tag(
 }
 
 /// Write a `EMailMessageCompositionStyle` as its element, `w:personalCompose`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn e_mail_message_composition_style(
     node: &super::EMailMessageCompositionStyle,
     scope: &mut Scope,
@@ -3762,7 +3762,7 @@ pub fn e_mail_message_composition_style(
 }
 
 /// Write a `EMailMessageReplyStyle` as its element, `w:personalReply`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn e_mail_message_reply_style(
     node: &super::EMailMessageReplyStyle,
     scope: &mut Scope,
@@ -3777,7 +3777,7 @@ pub fn e_mail_message_reply_style(
 }
 
 /// Write a `EMailMessageTextStyle` as its element, `w:personal`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn e_mail_message_text_style(
     node: &super::EMailMessageTextStyle,
     scope: &mut Scope,
@@ -3792,7 +3792,7 @@ pub fn e_mail_message_text_style(
 }
 
 /// Write a `EastAsianTypographyRules` as its element, `w:kinsoku`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn east_asian_typography_rules(
     node: &super::EastAsianTypographyRules,
     scope: &mut Scope,
@@ -3807,7 +3807,7 @@ pub fn east_asian_typography_rules(
 }
 
 /// Write a `EastAsianTypographySettings` as its element, `w:eastAsianLayout`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn east_asian_typography_settings(
     node: &super::EastAsianTypographySettings,
     scope: &mut Scope,
@@ -3826,7 +3826,7 @@ pub fn east_asian_typography_settings(
 }
 
 /// Write a `EmbedCommonSystemFonts` as its element, `w:embedSystemFonts`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn embed_common_system_fonts(
     node: &super::EmbedCommonSystemFonts,
     scope: &mut Scope,
@@ -3841,7 +3841,7 @@ pub fn embed_common_system_fonts(
 }
 
 /// Write a `EmbedTrueTypeFonts` as its element, `w:embedTrueTypeFonts`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn embed_true_type_fonts(node: &super::EmbedTrueTypeFonts, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -3853,7 +3853,7 @@ pub fn embed_true_type_fonts(node: &super::EmbedTrueTypeFonts, scope: &mut Scope
 }
 
 /// Write a `EmbeddedControl` as its element, `w:control`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn embedded_control(node: &super::EmbeddedControl, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EMBEDDED_CONTROL_SHAPE, &node.unknown);
@@ -3864,7 +3864,7 @@ pub fn embedded_control(node: &super::EmbeddedControl, scope: &mut Scope) -> Ele
 }
 
 /// Write a `EmbeddedObject` as its element, `w:object`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn embedded_object(node: &super::EmbeddedObject, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EMBEDDED_OBJECT_SHAPE, &node.unknown);
@@ -3886,7 +3886,7 @@ pub fn embedded_object_content(
 }
 
 /// Write a `EmbeddedObjectProperties` as its element, `w:objectEmbed`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn embedded_object_properties(
     node: &super::EmbeddedObjectProperties,
     scope: &mut Scope,
@@ -3905,7 +3905,7 @@ pub fn embedded_object_properties(
 }
 
 /// Write a `EmbeddedVideo` as its element, `w:movie`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn embedded_video(node: &super::EmbeddedVideo, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EMBEDDED_VIDEO_SHAPE, &node.unknown);
@@ -3914,7 +3914,7 @@ pub fn embedded_video(node: &super::EmbeddedVideo, scope: &mut Scope) -> Element
 }
 
 /// Write a `Embossing` as its element, `w:emboss`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn embossing(node: &super::Embossing, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EMBOSSING_SHAPE, &node.unknown);
@@ -3923,7 +3923,7 @@ pub fn embossing(node: &super::Embossing, scope: &mut Scope) -> Element {
 }
 
 /// Write a `EmphasisMark` as its element, `w:em`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn emphasis_mark(node: &super::EmphasisMark, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EMPHASIS_MARK_SHAPE, &node.unknown);
@@ -3932,7 +3932,7 @@ pub fn emphasis_mark(node: &super::EmphasisMark, scope: &mut Scope) -> Element {
 }
 
 /// Write a `EndnoteContent` as its element, `w:endnote`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn endnote_content(node: &super::EndnoteContent, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ENDNOTE_CONTENT_SHAPE, &node.unknown);
@@ -3943,7 +3943,7 @@ pub fn endnote_content(node: &super::EndnoteContent, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `EndnotePlacement` as its element, `w:pos`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn endnote_placement(node: &super::EndnotePlacement, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ENDNOTE_PLACEMENT_SHAPE, &node.unknown);
@@ -3952,7 +3952,7 @@ pub fn endnote_placement(node: &super::EndnotePlacement, scope: &mut Scope) -> E
 }
 
 /// Write a `EndnoteReference` as its element, `w:endnoteReference`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn endnote_reference(node: &super::EndnoteReference, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ENDNOTE_REFERENCE_SHAPE, &node.unknown);
@@ -3962,7 +3962,7 @@ pub fn endnote_reference(node: &super::EndnoteReference, scope: &mut Scope) -> E
 }
 
 /// Write a `EndnoteReferenceMark` as its element, `w:endnoteRef`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn endnote_reference_mark(node: &super::EndnoteReferenceMark, scope: &mut Scope) -> Element {
     let writer = officekit_markup_base::Writer::new(
         scope,
@@ -3973,7 +3973,7 @@ pub fn endnote_reference_mark(node: &super::EndnoteReferenceMark, scope: &mut Sc
 }
 
 /// Write a `EntryCategorization` as its element, `w:category`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn entry_categorization(node: &super::EntryCategorization, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -3986,7 +3986,7 @@ pub fn entry_categorization(node: &super::EntryCategorization, scope: &mut Scope
 }
 
 /// Write a `EntryID` as its element, `w:guid`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn entry_id(node: &super::EntryID, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ENTRY_ID_SHAPE, &node.unknown);
@@ -3995,7 +3995,7 @@ pub fn entry_id(node: &super::EntryID, scope: &mut Scope) -> Element {
 }
 
 /// Write a `EntryInsertionBehavior` as its element, `w:behavior`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn entry_insertion_behavior(
     node: &super::EntryInsertionBehavior,
     scope: &mut Scope,
@@ -4010,7 +4010,7 @@ pub fn entry_insertion_behavior(
 }
 
 /// Write a `EntryInsertionBehaviors` as its element, `w:behaviors`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn entry_insertion_behaviors(
     node: &super::EntryInsertionBehaviors,
     scope: &mut Scope,
@@ -4025,7 +4025,7 @@ pub fn entry_insertion_behaviors(
 }
 
 /// Write a `EntryName` as its element, `w:name`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn entry_name(node: &super::EntryName, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ENTRY_NAME_SHAPE, &node.unknown);
@@ -4035,7 +4035,7 @@ pub fn entry_name(node: &super::EntryName, scope: &mut Scope) -> Element {
 }
 
 /// Write a `EntryType` as its element, `w:type`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn entry_type(node: &super::EntryType, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ENTRY_TYPE_SHAPE, &node.unknown);
@@ -4044,7 +4044,7 @@ pub fn entry_type(node: &super::EntryType, scope: &mut Scope) -> Element {
 }
 
 /// Write a `EntryTypes` as its element, `w:types`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn entry_types(node: &super::EntryTypes, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ENTRY_TYPES_SHAPE, &node.unknown);
@@ -4054,7 +4054,7 @@ pub fn entry_types(node: &super::EntryTypes, scope: &mut Scope) -> Element {
 }
 
 /// Write a `EquationStructuredDocumentTag` as its element, `w:equation`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn equation_structured_document_tag(
     node: &super::EquationStructuredDocumentTag,
     scope: &mut Scope,
@@ -4068,7 +4068,7 @@ pub fn equation_structured_document_tag(
 }
 
 /// Write a `ExecuteOnFormFieldEntry` as its element, `w:entryMacro`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn execute_on_form_field_entry(
     node: &super::ExecuteOnFormFieldEntry,
     scope: &mut Scope,
@@ -4083,7 +4083,7 @@ pub fn execute_on_form_field_entry(
 }
 
 /// Write a `ExecuteOnFormFieldExit` as its element, `w:exitMacro`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn execute_on_form_field_exit(
     node: &super::ExecuteOnFormFieldExit,
     scope: &mut Scope,
@@ -4098,7 +4098,7 @@ pub fn execute_on_form_field_exit(
 }
 
 /// Write a `ExpandedCompressedText` as its element, `w:w`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn expanded_compressed_text(
     node: &super::ExpandedCompressedText,
     scope: &mut Scope,
@@ -4113,7 +4113,7 @@ pub fn expanded_compressed_text(
 }
 
 /// Write a `ExternalContentImportProperties` as its element, `w:altChunkPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn external_content_import_properties(
     node: &super::ExternalContentImportProperties,
     scope: &mut Scope,
@@ -4128,7 +4128,7 @@ pub fn external_content_import_properties(
 }
 
 /// Write a `ExternalDataSourceMergeFieldMapping` as its element, `w:fieldMapData`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn external_data_source_merge_field_mapping(
     node: &super::ExternalDataSourceMergeFieldMapping,
     scope: &mut Scope,
@@ -4148,7 +4148,7 @@ pub fn external_data_source_merge_field_mapping(
 }
 
 /// Write a `FieldCode` as its element, `w:instrText`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn field_code(node: &super::FieldCode, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FIELD_CODE_SHAPE, &node.unknown);
@@ -4158,7 +4158,7 @@ pub fn field_code(node: &super::FieldCode, scope: &mut Scope) -> Element {
 }
 
 /// Write a `FirstRowContainsColumnNames` as its element, `w:fHdr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn first_row_contains_column_names(
     node: &super::FirstRowContainsColumnNames,
     scope: &mut Scope,
@@ -4173,7 +4173,7 @@ pub fn first_row_contains_column_names(
 }
 
 /// Write a `FitTextWithinCell` as its element, `w:tcFitText`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn fit_text_within_cell(node: &super::FitTextWithinCell, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -4185,7 +4185,7 @@ pub fn fit_text_within_cell(node: &super::FitTextWithinCell, scope: &mut Scope) 
 }
 
 /// Write a `FitToExpandedWidthWhenPerformingFullJustification` as its element, `w:wpJustification`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn fit_to_expanded_width_when_performing_full_justification(
     node: &super::FitToExpandedWidthWhenPerformingFullJustification,
     scope: &mut Scope,
@@ -4200,7 +4200,7 @@ pub fn fit_to_expanded_width_when_performing_full_justification(
 }
 
 /// Write a `FloatingTableAllowsOverlap` as its element, `w:tblOverlap`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn floating_table_allows_overlap(
     node: &super::FloatingTableAllowsOverlap,
     scope: &mut Scope,
@@ -4215,7 +4215,7 @@ pub fn floating_table_allows_overlap(
 }
 
 /// Write a `FloatingTablePositioning` as its element, `w:tblpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn floating_table_positioning(
     node: &super::FloatingTablePositioning,
     scope: &mut Scope,
@@ -4239,7 +4239,7 @@ pub fn floating_table_positioning(
 }
 
 /// Write a `FontFamily` as its element, `w:family`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn font_family(node: &super::FontFamily, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FONT_FAMILY_SHAPE, &node.unknown);
@@ -4248,7 +4248,7 @@ pub fn font_family(node: &super::FontFamily, scope: &mut Scope) -> Element {
 }
 
 /// Write a `FontKerning` as its element, `w:kern`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn font_kerning(node: &super::FontKerning, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FONT_KERNING_SHAPE, &node.unknown);
@@ -4257,7 +4257,7 @@ pub fn font_kerning(node: &super::FontKerning, scope: &mut Scope) -> Element {
 }
 
 /// Write a `FontPitch` as its element, `w:pitch`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn font_pitch(node: &super::FontPitch, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FONT_PITCH_SHAPE, &node.unknown);
@@ -4266,7 +4266,7 @@ pub fn font_pitch(node: &super::FontPitch, scope: &mut Scope) -> Element {
 }
 
 /// Write a `FontTableRootElement` as its element, `w:fonts`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn font_table_root_element(node: &super::FontTableRootElement, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -4278,7 +4278,7 @@ pub fn font_table_root_element(node: &super::FontTableRootElement, scope: &mut S
 }
 
 /// Write a `Footer` as its element, `w:ftr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn footer(node: &super::Footer, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::FOOTER_SHAPE, &node.unknown);
     writer.child(&node.content);
@@ -4286,7 +4286,7 @@ pub fn footer(node: &super::Footer, scope: &mut Scope) -> Element {
 }
 
 /// Write a `FooterReference` as its element, `w:footerReference`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn footer_reference(node: &super::FooterReference, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FOOTER_REFERENCE_SHAPE, &node.unknown);
@@ -4296,7 +4296,7 @@ pub fn footer_reference(node: &super::FooterReference, scope: &mut Scope) -> Ele
 }
 
 /// Write a `FootnoteAndEndnoteNumberingRestartLocation` as its element, `w:numRestart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn footnote_and_endnote_numbering_restart_location(
     node: &super::FootnoteAndEndnoteNumberingRestartLocation,
     scope: &mut Scope,
@@ -4311,7 +4311,7 @@ pub fn footnote_and_endnote_numbering_restart_location(
 }
 
 /// Write a `FootnoteAndEndnoteNumberingStartingValue` as its element, `w:numStart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn footnote_and_endnote_numbering_starting_value(
     node: &super::FootnoteAndEndnoteNumberingStartingValue,
     scope: &mut Scope,
@@ -4326,7 +4326,7 @@ pub fn footnote_and_endnote_numbering_starting_value(
 }
 
 /// Write a `FootnoteContent` as its element, `w:footnote`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn footnote_content(node: &super::FootnoteContent, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FOOTNOTE_CONTENT_SHAPE, &node.unknown);
@@ -4337,7 +4337,7 @@ pub fn footnote_content(node: &super::FootnoteContent, scope: &mut Scope) -> Ele
 }
 
 /// Write a `FootnoteEndnoteSeparatorMark` as its element, `w:separator`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn footnote_endnote_separator_mark(
     node: &super::FootnoteEndnoteSeparatorMark,
     scope: &mut Scope,
@@ -4351,7 +4351,7 @@ pub fn footnote_endnote_separator_mark(
 }
 
 /// Write a `FootnotePlacement` as its element, `w:pos`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn footnote_placement(node: &super::FootnotePlacement, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FOOTNOTE_PLACEMENT_SHAPE, &node.unknown);
@@ -4360,7 +4360,7 @@ pub fn footnote_placement(node: &super::FootnotePlacement, scope: &mut Scope) ->
 }
 
 /// Write a `FootnoteReference` as its element, `w:footnoteReference`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn footnote_reference(node: &super::FootnoteReference, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FOOTNOTE_REFERENCE_SHAPE, &node.unknown);
@@ -4370,7 +4370,7 @@ pub fn footnote_reference(node: &super::FootnoteReference, scope: &mut Scope) ->
 }
 
 /// Write a `FootnoteReferenceMark` as its element, `w:footnoteRef`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn footnote_reference_mark(node: &super::FootnoteReferenceMark, scope: &mut Scope) -> Element {
     let writer = officekit_markup_base::Writer::new(
         scope,
@@ -4381,7 +4381,7 @@ pub fn footnote_reference_mark(node: &super::FootnoteReferenceMark, scope: &mut 
 }
 
 /// Write a `ForgetLastTabAlignment` as its element, `w:forgetLastTabAlignment`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn forget_last_tab_alignment(
     node: &super::ForgetLastTabAlignment,
     scope: &mut Scope,
@@ -4396,7 +4396,7 @@ pub fn forget_last_tab_alignment(
 }
 
 /// Write a `FormFieldEnabled` as its element, `w:enabled`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn form_field_enabled(node: &super::FormFieldEnabled, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FORM_FIELD_ENABLED_SHAPE, &node.unknown);
@@ -4405,7 +4405,7 @@ pub fn form_field_enabled(node: &super::FormFieldEnabled, scope: &mut Scope) -> 
 }
 
 /// Write a `FormFieldName` as its element, `w:name`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn form_field_name(node: &super::FormFieldName, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FORM_FIELD_NAME_SHAPE, &node.unknown);
@@ -4414,7 +4414,7 @@ pub fn form_field_name(node: &super::FormFieldName, scope: &mut Scope) -> Elemen
 }
 
 /// Write a `FormFieldProperties` as its element, `w:ffData`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn form_field_properties(node: &super::FormFieldProperties, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -4435,7 +4435,7 @@ pub fn form_field_properties_content(
 }
 
 /// Write a `FrameCannotBeResized` as its element, `w:noResizeAllowed`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn frame_cannot_be_resized(node: &super::FrameCannotBeResized, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -4447,7 +4447,7 @@ pub fn frame_cannot_be_resized(node: &super::FrameCannotBeResized, scope: &mut S
 }
 
 /// Write a `FrameLongDescription` as its element, `w:longDesc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn frame_long_description(node: &super::FrameLongDescription, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -4459,7 +4459,7 @@ pub fn frame_long_description(node: &super::FrameLongDescription, scope: &mut Sc
 }
 
 /// Write a `FrameOrFramesetTitle` as its element, `w:title`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn frame_or_frameset_title(node: &super::FrameOrFramesetTitle, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -4471,7 +4471,7 @@ pub fn frame_or_frameset_title(node: &super::FrameOrFramesetTitle, scope: &mut S
 }
 
 /// Write a `FrameSize` as its element, `w:sz`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn frame_size(node: &super::FrameSize, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FRAME_SIZE_SHAPE, &node.unknown);
@@ -4489,7 +4489,7 @@ pub fn frameset_definition(
 }
 
 /// Write a `FramesetLayout` as its element, `w:frameLayout`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn frameset_layout(node: &super::FramesetLayout, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FRAMESET_LAYOUT_SHAPE, &node.unknown);
@@ -4498,7 +4498,7 @@ pub fn frameset_layout(node: &super::FramesetLayout, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `FramesetSplitterBorderStyle` as its element, `w:flatBorders`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn frameset_splitter_border_style(
     node: &super::FramesetSplitterBorderStyle,
     scope: &mut Scope,
@@ -4513,7 +4513,7 @@ pub fn frameset_splitter_border_style(
 }
 
 /// Write a `FramesetSplitterProperties` as its element, `w:framesetSplitbar`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn frameset_splitter_properties(
     node: &super::FramesetSplitterProperties,
     scope: &mut Scope,
@@ -4531,7 +4531,7 @@ pub fn frameset_splitter_properties(
 }
 
 /// Write a `FramesetSplitterWidth` as its element, `w:w`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn frameset_splitter_width(node: &super::FramesetSplitterWidth, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -4543,7 +4543,7 @@ pub fn frameset_splitter_width(node: &super::FramesetSplitterWidth, scope: &mut 
 }
 
 /// Write a `FreezeDocumentLayout` as its element, `w:readModeInkLockDown`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn freeze_document_layout(node: &super::FreezeDocumentLayout, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -4558,7 +4558,7 @@ pub fn freeze_document_layout(node: &super::FreezeDocumentLayout, scope: &mut Sc
 }
 
 /// Write a `FriendlyName` as its element, `w:alias`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn friendly_name(node: &super::FriendlyName, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FRIENDLY_NAME_SHAPE, &node.unknown);
@@ -4567,7 +4567,7 @@ pub fn friendly_name(node: &super::FriendlyName, scope: &mut Scope) -> Element {
 }
 
 /// Write a `GalleryAssociatedWithEntry` as its element, `w:gallery`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn gallery_associated_with_entry(
     node: &super::GalleryAssociatedWithEntry,
     scope: &mut Scope,
@@ -4582,7 +4582,7 @@ pub fn gallery_associated_with_entry(
 }
 
 /// Write a `GenerateThumbnailForDocumentOnSave` as its element, `w:savePreviewPicture`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn generate_thumbnail_for_document_on_save(
     node: &super::GenerateThumbnailForDocumentOnSave,
     scope: &mut Scope,
@@ -4597,7 +4597,7 @@ pub fn generate_thumbnail_for_document_on_save(
 }
 
 /// Write a `GlossaryDocumentEntry` as its element, `w:docPart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn glossary_document_entry(node: &super::GlossaryDocumentEntry, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -4610,7 +4610,7 @@ pub fn glossary_document_entry(node: &super::GlossaryDocumentEntry, scope: &mut 
 }
 
 /// Write a `GlossaryDocumentEntryProperties` as its element, `w:docPartPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn glossary_document_entry_properties(
     node: &super::GlossaryDocumentEntryProperties,
     scope: &mut Scope,
@@ -4634,7 +4634,7 @@ pub fn glossary_document_entry_properties_content(
 }
 
 /// Write a `GlossaryDocumentRootElement` as its element, `w:glossaryDocument`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn glossary_document_root_element(
     node: &super::GlossaryDocumentRootElement,
     scope: &mut Scope,
@@ -4650,7 +4650,7 @@ pub fn glossary_document_root_element(
 }
 
 /// Write a `GrammarCheckingSettings` as its element, `w:activeWritingStyle`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn grammar_checking_settings(
     node: &super::GrammarCheckingSettings,
     scope: &mut Scope,
@@ -4670,7 +4670,7 @@ pub fn grammar_checking_settings(
 }
 
 /// Write a `GridColumnDefinition` as its element, `w:gridCol`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn grid_column_definition(node: &super::GridColumnDefinition, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -4682,7 +4682,7 @@ pub fn grid_column_definition(node: &super::GridColumnDefinition, scope: &mut Sc
 }
 
 /// Write a `GridColumnsAfterLastCell` as its element, `w:gridAfter`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn grid_columns_after_last_cell(
     node: &super::GridColumnsAfterLastCell,
     scope: &mut Scope,
@@ -4697,7 +4697,7 @@ pub fn grid_columns_after_last_cell(
 }
 
 /// Write a `GridColumnsBeforeFirstCell` as its element, `w:gridBefore`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn grid_columns_before_first_cell(
     node: &super::GridColumnsBeforeFirstCell,
     scope: &mut Scope,
@@ -4712,7 +4712,7 @@ pub fn grid_columns_before_first_cell(
 }
 
 /// Write a `GridColumnsSpanned` as its element, `w:gridSpan`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn grid_columns_spanned(node: &super::GridColumnsSpanned, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -4724,7 +4724,7 @@ pub fn grid_columns_spanned(node: &super::GridColumnsSpanned, scope: &mut Scope)
 }
 
 /// Write a `GroupStructuredDocumentTag` as its element, `w:group`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn group_structured_document_tag(
     node: &super::GroupStructuredDocumentTag,
     scope: &mut Scope,
@@ -4738,7 +4738,7 @@ pub fn group_structured_document_tag(
 }
 
 /// Write a `GutterOnRightSideOfPage` as its element, `w:rtlGutter`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn gutter_on_right_side_of_page(
     node: &super::GutterOnRightSideOfPage,
     scope: &mut Scope,
@@ -4753,7 +4753,7 @@ pub fn gutter_on_right_side_of_page(
 }
 
 /// Write a `Header` as its element, `w:hdr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn header(node: &super::Header, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::HEADER_SHAPE, &node.unknown);
     writer.child(&node.content);
@@ -4761,7 +4761,7 @@ pub fn header(node: &super::Header, scope: &mut Scope) -> Element {
 }
 
 /// Write a `HeaderCellReference` as its element, `w:header`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn header_cell_reference(node: &super::HeaderCellReference, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -4773,7 +4773,7 @@ pub fn header_cell_reference(node: &super::HeaderCellReference, scope: &mut Scop
 }
 
 /// Write a `HeaderCellsAssociatedWithTableCell` as its element, `w:headers`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn header_cells_associated_with_table_cell(
     node: &super::HeaderCellsAssociatedWithTableCell,
     scope: &mut Scope,
@@ -4788,7 +4788,7 @@ pub fn header_cells_associated_with_table_cell(
 }
 
 /// Write a `HeaderDefinitionFilePath` as its element, `w:headerSource`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn header_definition_file_path(
     node: &super::HeaderDefinitionFilePath,
     scope: &mut Scope,
@@ -4803,7 +4803,7 @@ pub fn header_definition_file_path(
 }
 
 /// Write a `HeaderReference` as its element, `w:headerReference`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn header_reference(node: &super::HeaderReference, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::HEADER_REFERENCE_SHAPE, &node.unknown);
@@ -4813,7 +4813,7 @@ pub fn header_reference(node: &super::HeaderReference, scope: &mut Scope) -> Ele
 }
 
 /// Write a `HiddenTableRowMarker` as its element, `w:hidden`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hidden_table_row_marker(node: &super::HiddenTableRowMarker, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -4825,7 +4825,7 @@ pub fn hidden_table_row_marker(node: &super::HiddenTableRowMarker, scope: &mut S
 }
 
 /// Write a `HiddenText` as its element, `w:vanish`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hidden_text(node: &super::HiddenText, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::HIDDEN_TEXT_SHAPE, &node.unknown);
@@ -4834,7 +4834,7 @@ pub fn hidden_text(node: &super::HiddenText, scope: &mut Scope) -> Element {
 }
 
 /// Write a `HideStyleFromMainUserInterface` as its element, `w:semiHidden`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hide_style_from_main_user_interface(
     node: &super::HideStyleFromMainUserInterface,
     scope: &mut Scope,
@@ -4849,7 +4849,7 @@ pub fn hide_style_from_main_user_interface(
 }
 
 /// Write a `HorizontallyMergedCell` as its element, `w:hMerge`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn horizontally_merged_cell(
     node: &super::HorizontallyMergedCell,
     scope: &mut Scope,
@@ -4864,7 +4864,7 @@ pub fn horizontally_merged_cell(
 }
 
 /// Write a `Hyperlink` as its element, `w:hyperlink`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hyperlink(node: &super::Hyperlink, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::HYPERLINK_SHAPE, &node.unknown);
@@ -4879,7 +4879,7 @@ pub fn hyperlink(node: &super::Hyperlink, scope: &mut Scope) -> Element {
 }
 
 /// Write a `HyphenationZone` as its element, `w:hyphenationZone`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hyphenation_zone(node: &super::HyphenationZone, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::HYPHENATION_ZONE_SHAPE, &node.unknown);
@@ -4888,7 +4888,7 @@ pub fn hyphenation_zone(node: &super::HyphenationZone, scope: &mut Scope) -> Ele
 }
 
 /// Write a `IgnoreEndOfCellMarker` as its element, `w:hideMark`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ignore_end_of_cell_marker(
     node: &super::IgnoreEndOfCellMarker,
     scope: &mut Scope,
@@ -4903,7 +4903,7 @@ pub fn ignore_end_of_cell_marker(
 }
 
 /// Write a `IgnoreExactLineHeightForLastLineOnPage` as its element, `w:suppressBottomSpacing`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ignore_exact_line_height_for_last_line_on_page(
     node: &super::IgnoreExactLineHeightForLastLineOnPage,
     scope: &mut Scope,
@@ -4919,7 +4919,7 @@ pub fn ignore_exact_line_height_for_last_line_on_page(
 
 /// Write a `IgnoreMinimumLineHeightForFirstLineOnPage` as its element,
 /// `w:suppressSpacingAtTopOfPage`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ignore_minimum_line_height_for_first_line_on_page(
     node: &super::IgnoreMinimumLineHeightForFirstLineOnPage,
     scope: &mut Scope,
@@ -4934,7 +4934,7 @@ pub fn ignore_minimum_line_height_for_first_line_on_page(
 }
 
 /// Write a `IgnoreMixedContent` as its element, `w:ignoreMixedContent`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ignore_mixed_content(node: &super::IgnoreMixedContent, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -4946,7 +4946,7 @@ pub fn ignore_mixed_content(node: &super::IgnoreMixedContent, scope: &mut Scope)
 }
 
 /// Write a `IgnorePageBreakFromContinuousSectionBreak` as its element, `w:footnoteLayoutLikeWW8`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ignore_page_break_from_continuous_section_break(
     node: &super::IgnorePageBreakFromContinuousSectionBreak,
     scope: &mut Scope,
@@ -4961,7 +4961,7 @@ pub fn ignore_page_break_from_continuous_section_break(
 }
 
 /// Write a `IgnoreSpacingAboveAndBelow` as its element, `w:contextualSpacing`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ignore_spacing_above_and_below(
     node: &super::IgnoreSpacingAboveAndBelow,
     scope: &mut Scope,
@@ -4976,7 +4976,7 @@ pub fn ignore_spacing_above_and_below(
 }
 
 /// Write a `IgnoreTextWrappingAroundObjectsAtBottomOfPage` as its element, `w:shapeLayoutLikeWW8`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ignore_text_wrapping_around_objects_at_bottom_of_page(
     node: &super::IgnoreTextWrappingAroundObjectsAtBottomOfPage,
     scope: &mut Scope,
@@ -4991,7 +4991,7 @@ pub fn ignore_text_wrapping_around_objects_at_bottom_of_page(
 }
 
 /// Write a `IgnoreVerticalAlignmentInTextboxes` as its element, `w:doNotVertAlignInTxbx`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ignore_vertical_alignment_in_textboxes(
     node: &super::IgnoreVerticalAlignmentInTextboxes,
     scope: &mut Scope,
@@ -5006,7 +5006,7 @@ pub fn ignore_vertical_alignment_in_textboxes(
 }
 
 /// Write a `Imprinting` as its element, `w:imprint`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn imprinting(node: &super::Imprinting, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::IMPRINTING_SHAPE, &node.unknown);
@@ -5015,7 +5015,7 @@ pub fn imprinting(node: &super::Imprinting, scope: &mut Scope) -> Element {
 }
 
 /// Write a `InclusionExclusionDataForDataSource` as its element, `w:recipients`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn inclusion_exclusion_data_for_data_source(
     node: &super::InclusionExclusionDataForDataSource,
     scope: &mut Scope,
@@ -5030,7 +5030,7 @@ pub fn inclusion_exclusion_data_for_data_source(
 }
 
 /// Write a `IndexOfColumnBeingMapped` as its element, `w:column`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn index_of_column_being_mapped(
     node: &super::IndexOfColumnBeingMapped,
     scope: &mut Scope,
@@ -5045,7 +5045,7 @@ pub fn index_of_column_being_mapped(
 }
 
 /// Write a `InformationAboutHTMLDivElements` as its element, `w:divs`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn information_about_html_div_elements(
     node: &super::InformationAboutHTMLDivElements,
     scope: &mut Scope,
@@ -5060,7 +5060,7 @@ pub fn information_about_html_div_elements(
 }
 
 /// Write a `InformationAboutSingleHTMLDivElement` as its element, `w:div`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn information_about_single_html_div_element(
     node: &super::InformationAboutSingleHTMLDivElement,
     scope: &mut Scope,
@@ -5083,7 +5083,7 @@ pub fn information_about_single_html_div_element(
 }
 
 /// Write a `InlineLevelCustomXMLElement` as its element, `w:customXml`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn inline_level_custom_xml_element(
     node: &super::InlineLevelCustomXMLElement,
     scope: &mut Scope,
@@ -5101,7 +5101,7 @@ pub fn inline_level_custom_xml_element(
 }
 
 /// Write a `InlineLevelSmartTag` as its element, `w:smartTag`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn inline_level_smart_tag(node: &super::InlineLevelSmartTag, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -5116,7 +5116,7 @@ pub fn inline_level_smart_tag(node: &super::InlineLevelSmartTag, scope: &mut Sco
 }
 
 /// Write a `InlineLevelStructuredDocumentTag` as its element, `w:sdt`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn inline_level_structured_document_tag(
     node: &super::InlineLevelStructuredDocumentTag,
     scope: &mut Scope,
@@ -5137,7 +5137,7 @@ pub fn inline_level_structured_document_tag(
 }
 
 /// Write a `InlineLevelStructuredDocumentTagContent` as its element, `w:sdtContent`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn inline_level_structured_document_tag_content(
     node: &super::InlineLevelStructuredDocumentTagContent,
     scope: &mut Scope,
@@ -5152,7 +5152,7 @@ pub fn inline_level_structured_document_tag_content(
 }
 
 /// Write a `InsertedMathControlCharacter` as its element, `w:ins`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn inserted_math_control_character(
     node: &super::InsertedMathControlCharacter,
     scope: &mut Scope,
@@ -5180,7 +5180,7 @@ pub fn inserted_math_control_character_content(
 }
 
 /// Write a `InsertedRunContent` as its element, `w:ins`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn inserted_run_content(node: &super::InsertedRunContent, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -5195,7 +5195,7 @@ pub fn inserted_run_content(node: &super::InsertedRunContent, scope: &mut Scope)
 }
 
 /// Write a `InsertedTableRow` as its element, `w:ins`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn inserted_table_row(node: &super::InsertedTableRow, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::INSERTED_TABLE_ROW_SHAPE, &node.unknown);
@@ -5206,7 +5206,7 @@ pub fn inserted_table_row(node: &super::InsertedTableRow, scope: &mut Scope) -> 
 }
 
 /// Write a `InvalidatedFieldCache` as its element, `w:dirty`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn invalidated_field_cache(node: &super::InvalidatedFieldCache, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -5218,7 +5218,7 @@ pub fn invalidated_field_cache(node: &super::InvalidatedFieldCache, scope: &mut 
 }
 
 /// Write a `ItalicFontStyleEmbedding` as its element, `w:embedItalic`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn italic_font_style_embedding(
     node: &super::ItalicFontStyleEmbedding,
     scope: &mut Scope,
@@ -5235,7 +5235,7 @@ pub fn italic_font_style_embedding(
 }
 
 /// Write a `Italics` as its element, `w:i`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn italics(node: &super::Italics, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ITALICS_SHAPE, &node.unknown);
@@ -5244,7 +5244,7 @@ pub fn italics(node: &super::Italics, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Justification` as its element, `w:lvlJc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn justification(node: &super::Justification, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::JUSTIFICATION_SHAPE, &node.unknown);
@@ -5253,7 +5253,7 @@ pub fn justification(node: &super::Justification, scope: &mut Scope) -> Element 
 }
 
 /// Write a `KeepAllLinesOnOnePage` as its element, `w:keepLines`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn keep_all_lines_on_one_page(
     node: &super::KeepAllLinesOnOnePage,
     scope: &mut Scope,
@@ -5268,7 +5268,7 @@ pub fn keep_all_lines_on_one_page(
 }
 
 /// Write a `KeepParagraphWithNextParagraph` as its element, `w:keepNext`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn keep_paragraph_with_next_paragraph(
     node: &super::KeepParagraphWithNextParagraph,
     scope: &mut Scope,
@@ -5283,7 +5283,7 @@ pub fn keep_paragraph_with_next_paragraph(
 }
 
 /// Write a `KeepSourceFormattingOnImport` as its element, `w:matchSrc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn keep_source_formatting_on_import(
     node: &super::KeepSourceFormattingOnImport,
     scope: &mut Scope,
@@ -5298,7 +5298,7 @@ pub fn keep_source_formatting_on_import(
 }
 
 /// Write a `LanguageIDForPhoneticGuide` as its element, `w:lid`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn language_id_for_phonetic_guide(
     node: &super::LanguageIDForPhoneticGuide,
     scope: &mut Scope,
@@ -5313,7 +5313,7 @@ pub fn language_id_for_phonetic_guide(
 }
 
 /// Write a `LanguagesForRunContent` as its element, `w:lang`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn languages_for_run_content(
     node: &super::LanguagesForRunContent,
     scope: &mut Scope,
@@ -5330,7 +5330,7 @@ pub fn languages_for_run_content(
 }
 
 /// Write a `LastReviewedAbstractNumberingDefinition` as its element, `w:numIdMacAtCleanup`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn last_reviewed_abstract_numbering_definition(
     node: &super::LastReviewedAbstractNumberingDefinition,
     scope: &mut Scope,
@@ -5345,7 +5345,7 @@ pub fn last_reviewed_abstract_numbering_definition(
 }
 
 /// Write a `LatentStyleException` as its element, `w:lsdException`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn latent_style_exception(node: &super::LatentStyleException, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -5362,7 +5362,7 @@ pub fn latent_style_exception(node: &super::LatentStyleException, scope: &mut Sc
 }
 
 /// Write a `LatentStyleInformation` as its element, `w:latentStyles`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn latent_style_information(
     node: &super::LatentStyleInformation,
     scope: &mut Scope,
@@ -5383,7 +5383,7 @@ pub fn latent_style_information(
 }
 
 /// Write a `LayoutRawTableWidth` as its element, `w:layoutRawTableWidth`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn layout_raw_table_width(node: &super::LayoutRawTableWidth, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -5395,7 +5395,7 @@ pub fn layout_raw_table_width(node: &super::LayoutRawTableWidth, scope: &mut Sco
 }
 
 /// Write a `LeftAndRightMarginForFrame` as its element, `w:marW`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn left_and_right_margin_for_frame(
     node: &super::LeftAndRightMarginForFrame,
     scope: &mut Scope,
@@ -5410,7 +5410,7 @@ pub fn left_and_right_margin_for_frame(
 }
 
 /// Write a `LeftBorder` as its element, `w:left`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn left_border(node: &super::LeftBorder, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::LEFT_BORDER_SHAPE, &node.unknown);
@@ -5428,7 +5428,7 @@ pub fn left_border(node: &super::LeftBorder, scope: &mut Scope) -> Element {
 }
 
 /// Write a `LeftMarginForHTMLDiv` as its element, `w:marLeft`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn left_margin_for_html_div(node: &super::LeftMarginForHTMLDiv, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -5440,7 +5440,7 @@ pub fn left_margin_for_html_div(node: &super::LeftMarginForHTMLDiv, scope: &mut 
 }
 
 /// Write a `LeftParagraphBorder` as its element, `w:left`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn left_paragraph_border(node: &super::LeftParagraphBorder, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -5460,7 +5460,7 @@ pub fn left_paragraph_border(node: &super::LeftParagraphBorder, scope: &mut Scop
 }
 
 /// Write a `LeftParagraphBorderTblWidth` as its element, `w:left`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn left_paragraph_border_tbl_width(
     node: &super::LeftParagraphBorderTblWidth,
     scope: &mut Scope,
@@ -5476,7 +5476,7 @@ pub fn left_paragraph_border_tbl_width(
 }
 
 /// Write a `LegacyEthiopicAmharicLineBreakingRules` as its element, `w:applyBreakingRules`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn legacy_ethiopic_amharic_line_breaking_rules(
     node: &super::LegacyEthiopicAmharicLineBreakingRules,
     scope: &mut Scope,
@@ -5491,7 +5491,7 @@ pub fn legacy_ethiopic_amharic_line_breaking_rules(
 }
 
 /// Write a `LegacyNumberingLevelProperties` as its element, `w:legacy`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn legacy_numbering_level_properties(
     node: &super::LegacyNumberingLevelProperties,
     scope: &mut Scope,
@@ -5508,7 +5508,7 @@ pub fn legacy_numbering_level_properties(
 }
 
 /// Write a `LineNumberingSettings` as its element, `w:lnNumType`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn line_numbering_settings(node: &super::LineNumberingSettings, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -5523,7 +5523,7 @@ pub fn line_numbering_settings(node: &super::LineNumberingSettings, scope: &mut 
 }
 
 /// Write a `LineWrapLikeWord6` as its element, `w:lineWrapLikeWord6`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn line_wrap_like_word6(node: &super::LineWrapLikeWord6, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -5535,7 +5535,7 @@ pub fn line_wrap_like_word6(node: &super::LineWrapLikeWord6, scope: &mut Scope) 
 }
 
 /// Write a `LineWrapTrailingSpaces` as its element, `w:wrapTrailSpaces`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn line_wrap_trailing_spaces(
     node: &super::LineWrapTrailingSpaces,
     scope: &mut Scope,
@@ -5550,7 +5550,7 @@ pub fn line_wrap_trailing_spaces(
 }
 
 /// Write a `LinkToExternalQueryFile` as its element, `w:linkToQuery`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn link_to_external_query_file(
     node: &super::LinkToExternalQueryFile,
     scope: &mut Scope,
@@ -5565,7 +5565,7 @@ pub fn link_to_external_query_file(
 }
 
 /// Write a `LinkedObjectProperties` as its element, `w:objectLink`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn linked_object_properties(
     node: &super::LinkedObjectProperties,
     scope: &mut Scope,
@@ -5586,7 +5586,7 @@ pub fn linked_object_properties(
 }
 
 /// Write a `LinkedStyleReference` as its element, `w:link`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn linked_style_reference(node: &super::LinkedStyleReference, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -5598,7 +5598,7 @@ pub fn linked_style_reference(node: &super::LinkedStyleReference, scope: &mut Sc
 }
 
 /// Write a `ListOfGlossaryDocumentEntries` as its element, `w:docParts`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn list_of_glossary_document_entries(
     node: &super::ListOfGlossaryDocumentEntries,
     scope: &mut Scope,
@@ -5613,7 +5613,7 @@ pub fn list_of_glossary_document_entries(
 }
 
 /// Write a `ListSeparatorForFieldCodeEvaluation` as its element, `w:listSeparator`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn list_separator_for_field_code_evaluation(
     node: &super::ListSeparatorForFieldCodeEvaluation,
     scope: &mut Scope,
@@ -5628,7 +5628,7 @@ pub fn list_separator_for_field_code_evaluation(
 }
 
 /// Write a `LockingSetting` as its element, `w:lock`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn locking_setting(node: &super::LockingSetting, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::LOCKING_SETTING_SHAPE, &node.unknown);
@@ -5637,7 +5637,7 @@ pub fn locking_setting(node: &super::LockingSetting, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `MagnificationSetting` as its element, `w:zoom`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn magnification_setting(node: &super::MagnificationSetting, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -5650,7 +5650,7 @@ pub fn magnification_setting(node: &super::MagnificationSetting, scope: &mut Sco
 }
 
 /// Write a `MailMergeErrorReportingSetting` as its element, `w:checkErrors`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn mail_merge_error_reporting_setting(
     node: &super::MailMergeErrorReportingSetting,
     scope: &mut Scope,
@@ -5665,7 +5665,7 @@ pub fn mail_merge_error_reporting_setting(
 }
 
 /// Write a `MailMergeSettings` as its element, `w:mailMerge`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn mail_merge_settings(node: &super::MailMergeSettings, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::MAIL_MERGE_SETTINGS_SHAPE, &node.unknown);
@@ -5689,7 +5689,7 @@ pub fn mail_merge_settings(node: &super::MailMergeSettings, scope: &mut Scope) -
 }
 
 /// Write a `MaintainLinkToExistingFile` as its element, `w:linkedToFile`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn maintain_link_to_existing_file(
     node: &super::MaintainLinkToExistingFile,
     scope: &mut Scope,
@@ -5704,7 +5704,7 @@ pub fn maintain_link_to_existing_file(
 }
 
 /// Write a `ManualRunWidth` as its element, `w:fitText`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn manual_run_width(node: &super::ManualRunWidth, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::MANUAL_RUN_WIDTH_SHAPE, &node.unknown);
@@ -5715,7 +5715,7 @@ pub fn manual_run_width(node: &super::ManualRunWidth, scope: &mut Scope) -> Elem
 
 /// Write a `MaximumNumberOfConsecutivelyHyphenatedLines` as its element,
 /// `w:consecutiveHyphenLimit`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn maximum_number_of_consecutively_hyphenated_lines(
     node: &super::MaximumNumberOfConsecutivelyHyphenatedLines,
     scope: &mut Scope,
@@ -5730,7 +5730,7 @@ pub fn maximum_number_of_consecutively_hyphenated_lines(
 }
 
 /// Write a `MergeFieldMapping` as its element, `w:type`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn merge_field_mapping(node: &super::MergeFieldMapping, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::MERGE_FIELD_MAPPING_SHAPE, &node.unknown);
@@ -5739,7 +5739,7 @@ pub fn merge_field_mapping(node: &super::MergeFieldMapping, scope: &mut Scope) -
 }
 
 /// Write a `MergedDocumentDestination` as its element, `w:destination`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn merged_document_destination(
     node: &super::MergedDocumentDestination,
     scope: &mut Scope,
@@ -5754,7 +5754,7 @@ pub fn merged_document_destination(
 }
 
 /// Write a `MergedDocumentToEMailAttachment` as its element, `w:mailAsAttachment`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn merged_document_to_e_mail_attachment(
     node: &super::MergedDocumentToEMailAttachment,
     scope: &mut Scope,
@@ -5769,7 +5769,7 @@ pub fn merged_document_to_e_mail_attachment(
 }
 
 /// Write a `MergedEMailOrFaxSubjectLine` as its element, `w:mailSubject`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn merged_e_mail_or_fax_subject_line(
     node: &super::MergedEMailOrFaxSubjectLine,
     scope: &mut Scope,
@@ -5784,7 +5784,7 @@ pub fn merged_e_mail_or_fax_subject_line(
 }
 
 /// Write a `MirrorPageMargins` as its element, `w:mirrorMargins`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn mirror_page_margins(node: &super::MirrorPageMargins, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::MIRROR_PAGE_MARGINS_SHAPE, &node.unknown);
@@ -5793,7 +5793,7 @@ pub fn mirror_page_margins(node: &super::MirrorPageMargins, scope: &mut Scope) -
 }
 
 /// Write a `MoveDestinationLocationContainerEnd` as its element, `w:moveToRangeEnd`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn move_destination_location_container_end(
     node: &super::MoveDestinationLocationContainerEnd,
     scope: &mut Scope,
@@ -5809,7 +5809,7 @@ pub fn move_destination_location_container_end(
 }
 
 /// Write a `MoveDestinationLocationContainerStart` as its element, `w:moveToRangeStart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn move_destination_location_container_start(
     node: &super::MoveDestinationLocationContainerStart,
     scope: &mut Scope,
@@ -5830,7 +5830,7 @@ pub fn move_destination_location_container_start(
 }
 
 /// Write a `MoveDestinationParagraph` as its element, `w:moveTo`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn move_destination_paragraph(
     node: &super::MoveDestinationParagraph,
     scope: &mut Scope,
@@ -5847,7 +5847,7 @@ pub fn move_destination_paragraph(
 }
 
 /// Write a `MoveDestinationRunContent` as its element, `w:moveTo`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn move_destination_run_content(
     node: &super::MoveDestinationRunContent,
     scope: &mut Scope,
@@ -5865,7 +5865,7 @@ pub fn move_destination_run_content(
 }
 
 /// Write a `MoveSourceLocationContainerEnd` as its element, `w:moveFromRangeEnd`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn move_source_location_container_end(
     node: &super::MoveSourceLocationContainerEnd,
     scope: &mut Scope,
@@ -5881,7 +5881,7 @@ pub fn move_source_location_container_end(
 }
 
 /// Write a `MoveSourceLocationContainerStart` as its element, `w:moveFromRangeStart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn move_source_location_container_start(
     node: &super::MoveSourceLocationContainerStart,
     scope: &mut Scope,
@@ -5902,7 +5902,7 @@ pub fn move_source_location_container_start(
 }
 
 /// Write a `MoveSourceParagraph` as its element, `w:moveFrom`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn move_source_paragraph(node: &super::MoveSourceParagraph, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -5916,7 +5916,7 @@ pub fn move_source_paragraph(node: &super::MoveSourceParagraph, scope: &mut Scop
 }
 
 /// Write a `MoveSourceRunContent` as its element, `w:moveFrom`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn move_source_run_content(node: &super::MoveSourceRunContent, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -5931,7 +5931,7 @@ pub fn move_source_run_content(node: &super::MoveSourceRunContent, scope: &mut S
 }
 
 /// Write a `NestedFramesetDefinition` as its element, `w:frameset`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn nested_frameset_definition(
     node: &super::NestedFramesetDefinition,
     scope: &mut Scope,
@@ -5950,7 +5950,7 @@ pub fn nested_frameset_definition(
 }
 
 /// Write a `NeverKernPunctuationCharacters` as its element, `w:noPunctuationKerning`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn never_kern_punctuation_characters(
     node: &super::NeverKernPunctuationCharacters,
     scope: &mut Scope,
@@ -5965,7 +5965,7 @@ pub fn never_kern_punctuation_characters(
 }
 
 /// Write a `NonBreakingHyphenCharacter` as its element, `w:noBreakHyphen`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_breaking_hyphen_character(
     node: &super::NonBreakingHyphenCharacter,
     scope: &mut Scope,
@@ -5979,7 +5979,7 @@ pub fn non_breaking_hyphen_character(
 }
 
 /// Write a `NonComplexScriptFontSize` as its element, `w:sz`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_complex_script_font_size(
     node: &super::NonComplexScriptFontSize,
     scope: &mut Scope,
@@ -5994,7 +5994,7 @@ pub fn non_complex_script_font_size(
 }
 
 /// Write a `NotATrueTypeOutlineFont` as its element, `w:notTrueType`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn not_a_true_type_outline_font(
     node: &super::NotATrueTypeOutlineFont,
     scope: &mut Scope,
@@ -6009,7 +6009,7 @@ pub fn not_a_true_type_outline_font(
 }
 
 /// Write a `NumberOfColumnsInColumnBand` as its element, `w:tblStyleColBandSize`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn number_of_columns_in_column_band(
     node: &super::NumberOfColumnsInColumnBand,
     scope: &mut Scope,
@@ -6024,7 +6024,7 @@ pub fn number_of_columns_in_column_band(
 }
 
 /// Write a `NumberOfPagesPerBooklet` as its element, `w:bookFoldPrintingSheets`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn number_of_pages_per_booklet(
     node: &super::NumberOfPagesPerBooklet,
     scope: &mut Scope,
@@ -6039,7 +6039,7 @@ pub fn number_of_pages_per_booklet(
 }
 
 /// Write a `NumberOfRowsInRowBand` as its element, `w:tblStyleRowBandSize`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn number_of_rows_in_row_band(
     node: &super::NumberOfRowsInRowBand,
     scope: &mut Scope,
@@ -6054,7 +6054,7 @@ pub fn number_of_rows_in_row_band(
 }
 
 /// Write a `NumberingDefinitionInstance` as its element, `w:num`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn numbering_definition_instance(
     node: &super::NumberingDefinitionInstance,
     scope: &mut Scope,
@@ -6071,7 +6071,7 @@ pub fn numbering_definition_instance(
 }
 
 /// Write a `NumberingDefinitionInstanceReferenceNumId` as its element, `w:numId`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn numbering_definition_instance_reference_num_id(
     node: &super::NumberingDefinitionInstanceReferenceNumId,
     scope: &mut Scope,
@@ -6086,7 +6086,7 @@ pub fn numbering_definition_instance_reference_num_id(
 }
 
 /// Write a `NumberingDefinitionInstanceReferenceNumPr` as its element, `w:numPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn numbering_definition_instance_reference_num_pr(
     node: &super::NumberingDefinitionInstanceReferenceNumPr,
     scope: &mut Scope,
@@ -6104,7 +6104,7 @@ pub fn numbering_definition_instance_reference_num_pr(
 }
 
 /// Write a `NumberingDefinitions` as its element, `w:numbering`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn numbering_definitions(node: &super::NumberingDefinitions, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -6119,7 +6119,7 @@ pub fn numbering_definitions(node: &super::NumberingDefinitions, scope: &mut Sco
 }
 
 /// Write a `NumberingFormat` as its element, `w:numFmt`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn numbering_format(node: &super::NumberingFormat, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::NUMBERING_FORMAT_SHAPE, &node.unknown);
@@ -6129,7 +6129,7 @@ pub fn numbering_format(node: &super::NumberingFormat, scope: &mut Scope) -> Ele
 }
 
 /// Write a `NumberingLevelDefinitionOverride` as its element, `w:lvlOverride`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn numbering_level_definition_override(
     node: &super::NumberingLevelDefinitionOverride,
     scope: &mut Scope,
@@ -6146,7 +6146,7 @@ pub fn numbering_level_definition_override(
 }
 
 /// Write a `NumberingLevelOverrideDefinition` as its element, `w:lvl`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn numbering_level_override_definition(
     node: &super::NumberingLevelOverrideDefinition,
     scope: &mut Scope,
@@ -6175,7 +6175,7 @@ pub fn numbering_level_override_definition(
 }
 
 /// Write a `NumberingLevelReference` as its element, `w:ilvl`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn numbering_level_reference(
     node: &super::NumberingLevelReference,
     scope: &mut Scope,
@@ -6190,7 +6190,7 @@ pub fn numbering_level_reference(
 }
 
 /// Write a `NumberingLevelStartingValueOverride` as its element, `w:startOverride`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn numbering_level_starting_value_override(
     node: &super::NumberingLevelStartingValueOverride,
     scope: &mut Scope,
@@ -6205,7 +6205,7 @@ pub fn numbering_level_starting_value_override(
 }
 
 /// Write a `NumberingLevelText` as its element, `w:lvlText`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn numbering_level_text(node: &super::NumberingLevelText, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -6218,7 +6218,7 @@ pub fn numbering_level_text(node: &super::NumberingLevelText, scope: &mut Scope)
 }
 
 /// Write a `NumberingStyleDefinition` as its element, `w:styleLink`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn numbering_style_definition(
     node: &super::NumberingStyleDefinition,
     scope: &mut Scope,
@@ -6233,7 +6233,7 @@ pub fn numbering_style_definition(
 }
 
 /// Write a `NumberingStyleReference` as its element, `w:numStyleLink`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn numbering_style_reference(
     node: &super::NumberingStyleReference,
     scope: &mut Scope,
@@ -6248,7 +6248,7 @@ pub fn numbering_style_reference(
 }
 
 /// Write a `NumberingTemplateCode` as its element, `w:tmpl`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn numbering_template_code(node: &super::NumberingTemplateCode, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -6260,7 +6260,7 @@ pub fn numbering_template_code(node: &super::NumberingTemplateCode, scope: &mut 
 }
 
 /// Write a `ODSODataSourceFilePath` as its element, `w:src`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn odso_data_source_file_path(
     node: &super::ODSODataSourceFilePath,
     scope: &mut Scope,
@@ -6275,7 +6275,7 @@ pub fn odso_data_source_file_path(
 }
 
 /// Write a `ODSODataSourceType` as its element, `w:type`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn odso_data_source_type(node: &super::ODSODataSourceType, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -6287,7 +6287,7 @@ pub fn odso_data_source_type(node: &super::ODSODataSourceType, scope: &mut Scope
 }
 
 /// Write a `OfficeDataSourceObjectSettings` as its element, `w:odso`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn office_data_source_object_settings(
     node: &super::OfficeDataSourceObjectSettings,
     scope: &mut Scope,
@@ -6309,7 +6309,7 @@ pub fn office_data_source_object_settings(
 }
 
 /// Write a `OfficeOpenXMLMath` as its element, `w:oMath`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn office_open_xml_math(node: &super::OfficeOpenXMLMath, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -6321,7 +6321,7 @@ pub fn office_open_xml_math(node: &super::OfficeOpenXMLMath, scope: &mut Scope) 
 }
 
 /// Write a `OnlyAllowEditingOfFormFields` as its element, `w:formProt`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn only_allow_editing_of_form_fields(
     node: &super::OnlyAllowEditingOfFormFields,
     scope: &mut Scope,
@@ -6336,7 +6336,7 @@ pub fn only_allow_editing_of_form_fields(
 }
 
 /// Write a `OnlyExpandCondenseTextByWholePoints` as its element, `w:spacingInWholePoints`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn only_expand_condense_text_by_whole_points(
     node: &super::OnlyExpandCondenseTextByWholePoints,
     scope: &mut Scope,
@@ -6351,7 +6351,7 @@ pub fn only_expand_condense_text_by_whole_points(
 }
 
 /// Write a `OnlyPrintFormFieldContent` as its element, `w:printFormsData`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn only_print_form_field_content(
     node: &super::OnlyPrintFormFieldContent,
     scope: &mut Scope,
@@ -6366,7 +6366,7 @@ pub fn only_print_form_field_content(
 }
 
 /// Write a `OnlySaveCustomXMLMarkup` as its element, `w:saveXmlDataOnly`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn only_save_custom_xml_markup(
     node: &super::OnlySaveCustomXMLMarkup,
     scope: &mut Scope,
@@ -6381,7 +6381,7 @@ pub fn only_save_custom_xml_markup(
 }
 
 /// Write a `OnlySaveFormFieldContent` as its element, `w:saveFormsData`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn only_save_form_field_content(
     node: &super::OnlySaveFormFieldContent,
     scope: &mut Scope,
@@ -6396,7 +6396,7 @@ pub fn only_save_form_field_content(
 }
 
 /// Write a `OptionalHyphenCharacter` as its element, `w:softHyphen`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn optional_hyphen_character(
     node: &super::OptionalHyphenCharacter,
     scope: &mut Scope,
@@ -6410,7 +6410,7 @@ pub fn optional_hyphen_character(
 }
 
 /// Write a `OptionalUserInterfaceSortingOrder` as its element, `w:uiPriority`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn optional_user_interface_sorting_order(
     node: &super::OptionalUserInterfaceSortingOrder,
     scope: &mut Scope,
@@ -6425,7 +6425,7 @@ pub fn optional_user_interface_sorting_order(
 }
 
 /// Write a `OriginalDocumentRevisionSaveID` as its element, `w:rsidRoot`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn original_document_revision_save_id(
     node: &super::OriginalDocumentRevisionSaveID,
     scope: &mut Scope,
@@ -6440,7 +6440,7 @@ pub fn original_document_revision_save_id(
 }
 
 /// Write a `OutputEncoding` as its element, `w:encoding`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn output_encoding(node: &super::OutputEncoding, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::OUTPUT_ENCODING_SHAPE, &node.unknown);
@@ -6449,7 +6449,7 @@ pub fn output_encoding(node: &super::OutputEncoding, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `PageBorderExcludesFooter` as its element, `w:bordersDoNotSurroundFooter`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn page_border_excludes_footer(
     node: &super::PageBorderExcludesFooter,
     scope: &mut Scope,
@@ -6464,7 +6464,7 @@ pub fn page_border_excludes_footer(
 }
 
 /// Write a `PageBorderExcludesHeader` as its element, `w:bordersDoNotSurroundHeader`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn page_border_excludes_header(
     node: &super::PageBorderExcludesHeader,
     scope: &mut Scope,
@@ -6479,7 +6479,7 @@ pub fn page_border_excludes_header(
 }
 
 /// Write a `PageBorders` as its element, `w:pgBorders`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn page_borders(node: &super::PageBorders, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PAGE_BORDERS_SHAPE, &node.unknown);
@@ -6494,7 +6494,7 @@ pub fn page_borders(node: &super::PageBorders, scope: &mut Scope) -> Element {
 }
 
 /// Write a `PageMargins` as its element, `w:pgMar`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn page_margins(node: &super::PageMargins, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PAGE_MARGINS_SHAPE, &node.unknown);
@@ -6509,7 +6509,7 @@ pub fn page_margins(node: &super::PageMargins, scope: &mut Scope) -> Element {
 }
 
 /// Write a `PageNumberBlock` as its element, `w:pgNum`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn page_number_block(node: &super::PageNumberBlock, scope: &mut Scope) -> Element {
     let writer =
         officekit_markup_base::Writer::new(scope, &super::PAGE_NUMBER_BLOCK_SHAPE, &node.unknown);
@@ -6517,7 +6517,7 @@ pub fn page_number_block(node: &super::PageNumberBlock, scope: &mut Scope) -> El
 }
 
 /// Write a `PageNumberingSettings` as its element, `w:pgNumType`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn page_numbering_settings(node: &super::PageNumberingSettings, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -6532,7 +6532,7 @@ pub fn page_numbering_settings(node: &super::PageNumberingSettings, scope: &mut 
 }
 
 /// Write a `PageSize` as its element, `w:pgSz`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn page_size(node: &super::PageSize, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PAGE_SIZE_SHAPE, &node.unknown);
@@ -6544,7 +6544,7 @@ pub fn page_size(node: &super::PageSize, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Panose1TypefaceClassificationNumber` as its element, `w:panose1`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn panose1typeface_classification_number(
     node: &super::Panose1TypefaceClassificationNumber,
     scope: &mut Scope,
@@ -6559,7 +6559,7 @@ pub fn panose1typeface_classification_number(
 }
 
 /// Write a `PaperSourceInformation` as its element, `w:paperSrc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paper_source_information(
     node: &super::PaperSourceInformation,
     scope: &mut Scope,
@@ -6575,7 +6575,7 @@ pub fn paper_source_information(
 }
 
 /// Write a `Paragraph` as its element, `w:p`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph(node: &super::Paragraph, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PARAGRAPH_SHAPE, &node.unknown);
@@ -6593,7 +6593,7 @@ pub fn paragraph(node: &super::Paragraph, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ParagraphAlignment` as its element, `w:jc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph_alignment(node: &super::ParagraphAlignment, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PARAGRAPH_ALIGNMENT_SHAPE, &node.unknown);
@@ -6602,7 +6602,7 @@ pub fn paragraph_alignment(node: &super::ParagraphAlignment, scope: &mut Scope) 
 }
 
 /// Write a `ParagraphBorderAboveIdenticalParagraphs` as its element, `w:top`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph_border_above_identical_paragraphs(
     node: &super::ParagraphBorderAboveIdenticalParagraphs,
     scope: &mut Scope,
@@ -6625,7 +6625,7 @@ pub fn paragraph_border_above_identical_paragraphs(
 }
 
 /// Write a `ParagraphBorderAboveIdenticalParagraphsTblWidth` as its element, `w:top`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph_border_above_identical_paragraphs_tbl_width(
     node: &super::ParagraphBorderAboveIdenticalParagraphsTblWidth,
     scope: &mut Scope,
@@ -6641,7 +6641,7 @@ pub fn paragraph_border_above_identical_paragraphs_tbl_width(
 }
 
 /// Write a `ParagraphBorderBelowIdenticalParagraphs` as its element, `w:bottom`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph_border_below_identical_paragraphs(
     node: &super::ParagraphBorderBelowIdenticalParagraphs,
     scope: &mut Scope,
@@ -6664,7 +6664,7 @@ pub fn paragraph_border_below_identical_paragraphs(
 }
 
 /// Write a `ParagraphBorderBelowIdenticalParagraphsTblWidth` as its element, `w:bottom`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph_border_below_identical_paragraphs_tbl_width(
     node: &super::ParagraphBorderBelowIdenticalParagraphsTblWidth,
     scope: &mut Scope,
@@ -6680,7 +6680,7 @@ pub fn paragraph_border_below_identical_paragraphs_tbl_width(
 }
 
 /// Write a `ParagraphBorderBetweenFacingPages` as its element, `w:bar`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph_border_between_facing_pages(
     node: &super::ParagraphBorderBetweenFacingPages,
     scope: &mut Scope,
@@ -6703,7 +6703,7 @@ pub fn paragraph_border_between_facing_pages(
 }
 
 /// Write a `ParagraphBorderBetweenIdenticalParagraphs` as its element, `w:between`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph_border_between_identical_paragraphs(
     node: &super::ParagraphBorderBetweenIdenticalParagraphs,
     scope: &mut Scope,
@@ -6726,7 +6726,7 @@ pub fn paragraph_border_between_identical_paragraphs(
 }
 
 /// Write a `ParagraphBorders` as its element, `w:pBdr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph_borders(node: &super::ParagraphBorders, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PARAGRAPH_BORDERS_SHAPE, &node.unknown);
@@ -6740,7 +6740,7 @@ pub fn paragraph_borders(node: &super::ParagraphBorders, scope: &mut Scope) -> E
 }
 
 /// Write a `ParagraphConditionalFormatting` as its element, `w:cnfStyle`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph_conditional_formatting(
     node: &super::ParagraphConditionalFormatting,
     scope: &mut Scope,
@@ -6775,7 +6775,7 @@ pub fn paragraph_content(
 }
 
 /// Write a `ParagraphIndentation` as its element, `w:ind`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph_indentation(node: &super::ParagraphIndentation, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -6798,7 +6798,7 @@ pub fn paragraph_indentation(node: &super::ParagraphIndentation, scope: &mut Sco
 }
 
 /// Write a `ParagraphMarkIsAlwaysHidden` as its element, `w:specVanish`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph_mark_is_always_hidden(
     node: &super::ParagraphMarkIsAlwaysHidden,
     scope: &mut Scope,
@@ -6813,7 +6813,7 @@ pub fn paragraph_mark_is_always_hidden(
 }
 
 /// Write a `ParagraphMarkRunPropertiesRevision` as its element, `w:rPrChange`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph_mark_run_properties_revision(
     node: &super::ParagraphMarkRunPropertiesRevision,
     scope: &mut Scope,
@@ -6832,7 +6832,7 @@ pub fn paragraph_mark_run_properties_revision(
 }
 
 /// Write a `ParagraphProperties` as its element, `w:pPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph_properties(node: &super::ParagraphProperties, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -6879,7 +6879,7 @@ pub fn paragraph_properties(node: &super::ParagraphProperties, scope: &mut Scope
 }
 
 /// Write a `ParagraphPropertiesPPrGeneral` as its element, `w:pPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph_properties_p_pr_general(
     node: &super::ParagraphPropertiesPPrGeneral,
     scope: &mut Scope,
@@ -6927,7 +6927,7 @@ pub fn paragraph_properties_p_pr_general(
 }
 
 /// Write a `ParagraphShading` as its element, `w:shd`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph_shading(node: &super::ParagraphShading, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PARAGRAPH_SHADING_SHAPE, &node.unknown);
@@ -6944,7 +6944,7 @@ pub fn paragraph_shading(node: &super::ParagraphShading, scope: &mut Scope) -> E
 }
 
 /// Write a `ParagraphTextFlowDirection` as its element, `w:textDirection`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn paragraph_text_flow_direction(
     node: &super::ParagraphTextFlowDirection,
     scope: &mut Scope,
@@ -6959,7 +6959,7 @@ pub fn paragraph_text_flow_direction(
 }
 
 /// Write a `ParentStyleID` as its element, `w:basedOn`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn parent_style_id(node: &super::ParentStyleID, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PARENT_STYLE_ID_SHAPE, &node.unknown);
@@ -6968,7 +6968,7 @@ pub fn parent_style_id(node: &super::ParentStyleID, scope: &mut Scope) -> Elemen
 }
 
 /// Write a `PercentageOfDocumentToUse` as its element, `w:summaryLength`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn percentage_of_document_to_use(
     node: &super::PercentageOfDocumentToUse,
     scope: &mut Scope,
@@ -6983,7 +6983,7 @@ pub fn percentage_of_document_to_use(
 }
 
 /// Write a `PhoneticGuide` as its element, `w:ruby`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn phonetic_guide(node: &super::PhoneticGuide, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PHONETIC_GUIDE_SHAPE, &node.unknown);
@@ -6994,7 +6994,7 @@ pub fn phonetic_guide(node: &super::PhoneticGuide, scope: &mut Scope) -> Element
 }
 
 /// Write a `PhoneticGuideBaseText` as its element, `w:rubyBase`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn phonetic_guide_base_text(node: &super::PhoneticGuideBaseText, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -7006,7 +7006,7 @@ pub fn phonetic_guide_base_text(node: &super::PhoneticGuideBaseText, scope: &mut
 }
 
 /// Write a `PhoneticGuideBaseTextFontSize` as its element, `w:hpsBaseText`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn phonetic_guide_base_text_font_size(
     node: &super::PhoneticGuideBaseTextFontSize,
     scope: &mut Scope,
@@ -7029,7 +7029,7 @@ pub fn phonetic_guide_content(
 }
 
 /// Write a `PhoneticGuideProperties` as its element, `w:rubyPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn phonetic_guide_properties(
     node: &super::PhoneticGuideProperties,
     scope: &mut Scope,
@@ -7049,7 +7049,7 @@ pub fn phonetic_guide_properties(
 }
 
 /// Write a `PhoneticGuideText` as its element, `w:rt`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn phonetic_guide_text(node: &super::PhoneticGuideText, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PHONETIC_GUIDE_TEXT_SHAPE, &node.unknown);
@@ -7058,7 +7058,7 @@ pub fn phonetic_guide_text(node: &super::PhoneticGuideText, scope: &mut Scope) -
 }
 
 /// Write a `PhoneticGuideTextAlignment` as its element, `w:rubyAlign`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn phonetic_guide_text_alignment(
     node: &super::PhoneticGuideTextAlignment,
     scope: &mut Scope,
@@ -7073,7 +7073,7 @@ pub fn phonetic_guide_text_alignment(
 }
 
 /// Write a `PhoneticGuideTextFontSize` as its element, `w:hps`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn phonetic_guide_text_font_size(
     node: &super::PhoneticGuideTextFontSize,
     scope: &mut Scope,
@@ -7088,7 +7088,7 @@ pub fn phonetic_guide_text_font_size(
 }
 
 /// Write a `PictureNumberingSymbolDefinition` as its element, `w:numPicBullet`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn picture_numbering_symbol_definition(
     node: &super::PictureNumberingSymbolDefinition,
     scope: &mut Scope,
@@ -7113,7 +7113,7 @@ pub fn picture_numbering_symbol_definition_content(
 }
 
 /// Write a `PictureNumberingSymbolDefinitionReference` as its element, `w:lvlPicBulletId`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn picture_numbering_symbol_definition_reference(
     node: &super::PictureNumberingSymbolDefinitionReference,
     scope: &mut Scope,
@@ -7128,7 +7128,7 @@ pub fn picture_numbering_symbol_definition_reference(
 }
 
 /// Write a `PictureStructuredDocumentTag` as its element, `w:picture`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn picture_structured_document_tag(
     node: &super::PictureStructuredDocumentTag,
     scope: &mut Scope,
@@ -7142,7 +7142,7 @@ pub fn picture_structured_document_tag(
 }
 
 /// Write a `PixelsPerInchForGraphicsImages` as its element, `w:pixelsPerInch`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pixels_per_inch_for_graphics_images(
     node: &super::PixelsPerInchForGraphicsImages,
     scope: &mut Scope,
@@ -7157,7 +7157,7 @@ pub fn pixels_per_inch_for_graphics_images(
 }
 
 /// Write a `PlaceholderTextShouldBeResaved` as its element, `w:formsDesign`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn placeholder_text_should_be_resaved(
     node: &super::PlaceholderTextShouldBeResaved,
     scope: &mut Scope,
@@ -7172,7 +7172,7 @@ pub fn placeholder_text_should_be_resaved(
 }
 
 /// Write a `PlainTextStructuredDocumentTag` as its element, `w:text`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn plain_text_structured_document_tag(
     node: &super::PlainTextStructuredDocumentTag,
     scope: &mut Scope,
@@ -7187,7 +7187,7 @@ pub fn plain_text_structured_document_tag(
 }
 
 /// Write a `PositionGutterAtTopOfPage` as its element, `w:gutterAtTop`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn position_gutter_at_top_of_page(
     node: &super::PositionGutterAtTopOfPage,
     scope: &mut Scope,
@@ -7202,7 +7202,7 @@ pub fn position_gutter_at_top_of_page(
 }
 
 /// Write a `PositionOfLastCalculatedPageBreak` as its element, `w:lastRenderedPageBreak`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn position_of_last_calculated_page_break(
     node: &super::PositionOfLastCalculatedPageBreak,
     scope: &mut Scope,
@@ -7216,7 +7216,7 @@ pub fn position_of_last_calculated_page_break(
 }
 
 /// Write a `PredefinedMergeFieldName` as its element, `w:mappedName`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn predefined_merge_field_name(
     node: &super::PredefinedMergeFieldName,
     scope: &mut Scope,
@@ -7231,7 +7231,7 @@ pub fn predefined_merge_field_name(
 }
 
 /// Write a `PreferredTableCellWidth` as its element, `w:tcW`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn preferred_table_cell_width(
     node: &super::PreferredTableCellWidth,
     scope: &mut Scope,
@@ -7247,7 +7247,7 @@ pub fn preferred_table_cell_width(
 }
 
 /// Write a `PreferredTableWidth` as its element, `w:tblW`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn preferred_table_width(node: &super::PreferredTableWidth, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -7260,7 +7260,7 @@ pub fn preferred_table_width(node: &super::PreferredTableWidth, scope: &mut Scop
 }
 
 /// Write a `PreferredWidthAfterTableRow` as its element, `w:wAfter`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn preferred_width_after_table_row(
     node: &super::PreferredWidthAfterTableRow,
     scope: &mut Scope,
@@ -7276,7 +7276,7 @@ pub fn preferred_width_after_table_row(
 }
 
 /// Write a `PreferredWidthBeforeTableRow` as its element, `w:wBefore`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn preferred_width_before_table_row(
     node: &super::PreferredWidthBeforeTableRow,
     scope: &mut Scope,
@@ -7292,7 +7292,7 @@ pub fn preferred_width_before_table_row(
 }
 
 /// Write a `PreventModificationOfThemesPart` as its element, `w:styleLockTheme`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn prevent_modification_of_themes_part(
     node: &super::PreventModificationOfThemesPart,
     scope: &mut Scope,
@@ -7307,7 +7307,7 @@ pub fn prevent_modification_of_themes_part(
 }
 
 /// Write a `PreventReplacementOfStylesPart` as its element, `w:styleLockQFSet`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn prevent_replacement_of_styles_part(
     node: &super::PreventReplacementOfStylesPart,
     scope: &mut Scope,
@@ -7322,7 +7322,7 @@ pub fn prevent_replacement_of_styles_part(
 }
 
 /// Write a `PreventTextFramesFromOverlapping` as its element, `w:suppressOverlap`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn prevent_text_frames_from_overlapping(
     node: &super::PreventTextFramesFromOverlapping,
     scope: &mut Scope,
@@ -7337,7 +7337,7 @@ pub fn prevent_text_frames_from_overlapping(
 }
 
 /// Write a `PreviousNumberingFieldProperties` as its element, `w:numberingChange`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn previous_numbering_field_properties(
     node: &super::PreviousNumberingFieldProperties,
     scope: &mut Scope,
@@ -7356,7 +7356,7 @@ pub fn previous_numbering_field_properties(
 }
 
 /// Write a `PreviousParagraphMarkRunProperties` as its element, `w:rPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn previous_paragraph_mark_run_properties(
     node: &super::PreviousParagraphMarkRunProperties,
     scope: &mut Scope,
@@ -7388,7 +7388,7 @@ pub fn previous_paragraph_mark_run_properties(
 }
 
 /// Write a `PreviousParagraphProperties` as its element, `w:pPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn previous_paragraph_properties(
     node: &super::PreviousParagraphProperties,
     scope: &mut Scope,
@@ -7435,7 +7435,7 @@ pub fn previous_paragraph_properties(
 }
 
 /// Write a `PreviousRunProperties` as its element, `w:rPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn previous_run_properties(node: &super::PreviousRunProperties, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -7459,7 +7459,7 @@ pub fn previous_run_properties(node: &super::PreviousRunProperties, scope: &mut 
 }
 
 /// Write a `PreviousSectionProperties` as its element, `w:sectPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn previous_section_properties(
     node: &super::PreviousSectionProperties,
     scope: &mut Scope,
@@ -7497,7 +7497,7 @@ pub fn previous_section_properties(
 }
 
 /// Write a `PreviousTableCellProperties` as its element, `w:tcPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn previous_table_cell_properties(
     node: &super::PreviousTableCellProperties,
     scope: &mut Scope,
@@ -7526,7 +7526,7 @@ pub fn previous_table_cell_properties(
 }
 
 /// Write a `PreviousTableGrid` as its element, `w:tblGrid`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn previous_table_grid(node: &super::PreviousTableGrid, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PREVIOUS_TABLE_GRID_SHAPE, &node.unknown);
@@ -7535,7 +7535,7 @@ pub fn previous_table_grid(node: &super::PreviousTableGrid, scope: &mut Scope) -
 }
 
 /// Write a `PreviousTableLevelPropertyExceptions` as its element, `w:tblPrEx`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn previous_table_level_property_exceptions(
     node: &super::PreviousTableLevelPropertyExceptions,
     scope: &mut Scope,
@@ -7558,7 +7558,7 @@ pub fn previous_table_level_property_exceptions(
 }
 
 /// Write a `PreviousTableProperties` as its element, `w:tblPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn previous_table_properties(
     node: &super::PreviousTableProperties,
     scope: &mut Scope,
@@ -7589,7 +7589,7 @@ pub fn previous_table_properties(
 }
 
 /// Write a `PreviousTableRowProperties` as its element, `w:trPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn previous_table_row_properties(
     node: &super::PreviousTableRowProperties,
     scope: &mut Scope,
@@ -7604,7 +7604,7 @@ pub fn previous_table_row_properties(
 }
 
 /// Write a `PrimaryStyle` as its element, `w:qFormat`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn primary_style(node: &super::PrimaryStyle, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PRIMARY_STYLE_SHAPE, &node.unknown);
@@ -7613,7 +7613,7 @@ pub fn primary_style(node: &super::PrimaryStyle, scope: &mut Scope) -> Element {
 }
 
 /// Write a `PrimaryStyleName` as its element, `w:name`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn primary_style_name(node: &super::PrimaryStyleName, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PRIMARY_STYLE_NAME_SHAPE, &node.unknown);
@@ -7622,7 +7622,7 @@ pub fn primary_style_name(node: &super::PrimaryStyleName, scope: &mut Scope) -> 
 }
 
 /// Write a `PrintBodyTextBeforeHeaderFooterContents` as its element, `w:printBodyTextBeforeHeader`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn print_body_text_before_header_footer_contents(
     node: &super::PrintBodyTextBeforeHeaderFooterContents,
     scope: &mut Scope,
@@ -7637,7 +7637,7 @@ pub fn print_body_text_before_header_footer_contents(
 }
 
 /// Write a `PrintColorsAsBlackAndWhiteWithoutDithering` as its element, `w:printColBlack`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn print_colors_as_black_and_white_without_dithering(
     node: &super::PrintColorsAsBlackAndWhiteWithoutDithering,
     scope: &mut Scope,
@@ -7652,7 +7652,7 @@ pub fn print_colors_as_black_and_white_without_dithering(
 }
 
 /// Write a `PrintFractionalCharacterWidths` as its element, `w:printFractionalCharacterWidth`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn print_fractional_character_widths(
     node: &super::PrintFractionalCharacterWidths,
     scope: &mut Scope,
@@ -7667,7 +7667,7 @@ pub fn print_fractional_character_widths(
 }
 
 /// Write a `PrintPostScriptCodesWithDocumentText` as its element, `w:printPostScriptOverText`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn print_post_script_codes_with_document_text(
     node: &super::PrintPostScriptCodesWithDocumentText,
     scope: &mut Scope,
@@ -7682,7 +7682,7 @@ pub fn print_post_script_codes_with_document_text(
 }
 
 /// Write a `PrintTwoPagesPerSheet` as its element, `w:printTwoOnOne`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn print_two_pages_per_sheet(
     node: &super::PrintTwoPagesPerSheet,
     scope: &mut Scope,
@@ -7697,7 +7697,7 @@ pub fn print_two_pages_per_sheet(
 }
 
 /// Write a `ProgrammaticTag` as its element, `w:tag`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn programmatic_tag(node: &super::ProgrammaticTag, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PROGRAMMATIC_TAG_SHAPE, &node.unknown);
@@ -7706,7 +7706,7 @@ pub fn programmatic_tag(node: &super::ProgrammaticTag, scope: &mut Scope) -> Ele
 }
 
 /// Write a `ProofingErrorAnchor` as its element, `w:proofErr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn proofing_error_anchor(node: &super::ProofingErrorAnchor, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -7718,7 +7718,7 @@ pub fn proofing_error_anchor(node: &super::ProofingErrorAnchor, scope: &mut Scop
 }
 
 /// Write a `PropertiesForASingleFont` as its element, `w:font`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn properties_for_a_single_font(
     node: &super::PropertiesForASingleFont,
     scope: &mut Scope,
@@ -7744,7 +7744,7 @@ pub fn properties_for_a_single_font(
 }
 
 /// Write a `QueryForDataSourceRecords` as its element, `w:query`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn query_for_data_source_records(
     node: &super::QueryForDataSourceRecords,
     scope: &mut Scope,
@@ -7759,7 +7759,7 @@ pub fn query_for_data_source_records(
 }
 
 /// Write a `RadixPointForFieldCodeEvaluation` as its element, `w:decimalSymbol`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn radix_point_for_field_code_evaluation(
     node: &super::RadixPointForFieldCodeEvaluation,
     scope: &mut Scope,
@@ -7782,7 +7782,7 @@ pub fn range_markup(
 }
 
 /// Write a `RangePermissionEnd` as its element, `w:permEnd`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn range_permission_end(node: &super::RangePermissionEnd, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -7795,7 +7795,7 @@ pub fn range_permission_end(node: &super::RangePermissionEnd, scope: &mut Scope)
 }
 
 /// Write a `RangePermissionStart` as its element, `w:permStart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn range_permission_start(node: &super::RangePermissionStart, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -7812,7 +7812,7 @@ pub fn range_permission_start(node: &super::RangePermissionStart, scope: &mut Sc
 }
 
 /// Write a `RecalculateFieldsWhenModified` as its element, `w:calcOnExit`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn recalculate_fields_when_modified(
     node: &super::RecalculateFieldsWhenModified,
     scope: &mut Scope,
@@ -7827,7 +7827,7 @@ pub fn recalculate_fields_when_modified(
 }
 
 /// Write a `RecommendWebPageFormat` as its element, `w:doNotSaveAsSingleFile`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn recommend_web_page_format(
     node: &super::RecommendWebPageFormat,
     scope: &mut Scope,
@@ -7842,7 +7842,7 @@ pub fn recommend_web_page_format(
 }
 
 /// Write a `RecordCurrentlyDisplayedInMergedDocument` as its element, `w:activeRecord`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn record_currently_displayed_in_merged_document(
     node: &super::RecordCurrentlyDisplayedInMergedDocument,
     scope: &mut Scope,
@@ -7857,7 +7857,7 @@ pub fn record_currently_displayed_in_merged_document(
 }
 
 /// Write a `RecordIsIncludedInMailMerge` as its element, `w:active`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn record_is_included_in_mail_merge(
     node: &super::RecordIsIncludedInMailMerge,
     scope: &mut Scope,
@@ -7872,7 +7872,7 @@ pub fn record_is_included_in_mail_merge(
 }
 
 /// Write a `ReferenceToInclusionExclusionData` as its element, `w:recipientData`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn reference_to_inclusion_exclusion_data(
     node: &super::ReferenceToInclusionExclusionData,
     scope: &mut Scope,
@@ -7887,7 +7887,7 @@ pub fn reference_to_inclusion_exclusion_data(
 }
 
 /// Write a `ReferenceToPrinterSettingsData` as its element, `w:printerSettings`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn reference_to_printer_settings_data(
     node: &super::ReferenceToPrinterSettingsData,
     scope: &mut Scope,
@@ -7902,7 +7902,7 @@ pub fn reference_to_printer_settings_data(
 }
 
 /// Write a `ReferencedCharacterStyle` as its element, `w:rStyle`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn referenced_character_style(
     node: &super::ReferencedCharacterStyle,
     scope: &mut Scope,
@@ -7917,7 +7917,7 @@ pub fn referenced_character_style(
 }
 
 /// Write a `ReferencedParagraphStyle` as its element, `w:pStyle`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn referenced_paragraph_style(
     node: &super::ReferencedParagraphStyle,
     scope: &mut Scope,
@@ -7932,7 +7932,7 @@ pub fn referenced_paragraph_style(
 }
 
 /// Write a `ReferencedTableStyle` as its element, `w:tblStyle`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn referenced_table_style(node: &super::ReferencedTableStyle, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -7944,7 +7944,7 @@ pub fn referenced_table_style(node: &super::ReferencedTableStyle, scope: &mut Sc
 }
 
 /// Write a `RegularFontStyleEmbedding` as its element, `w:embedRegular`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn regular_font_style_embedding(
     node: &super::RegularFontStyleEmbedding,
     scope: &mut Scope,
@@ -7961,7 +7961,7 @@ pub fn regular_font_style_embedding(
 }
 
 /// Write a `RemoveDateAndTimeFromAnnotations` as its element, `w:removeDateAndTime`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn remove_date_and_time_from_annotations(
     node: &super::RemoveDateAndTimeFromAnnotations,
     scope: &mut Scope,
@@ -7976,7 +7976,7 @@ pub fn remove_date_and_time_from_annotations(
 }
 
 /// Write a `RemovePersonalInformation` as its element, `w:removePersonalInformation`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn remove_personal_information(
     node: &super::RemovePersonalInformation,
     scope: &mut Scope,
@@ -7991,7 +7991,7 @@ pub fn remove_personal_information(
 }
 
 /// Write a `RemoveSemiHiddenProperty` as its element, `w:unhideWhenUsed`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn remove_semi_hidden_property(
     node: &super::RemoveSemiHiddenProperty,
     scope: &mut Scope,
@@ -8006,7 +8006,7 @@ pub fn remove_semi_hidden_property(
 }
 
 /// Write a `RemoveSmartTagsWhenSaving` as its element, `w:doNotEmbedSmartTags`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn remove_smart_tags_when_saving(
     node: &super::RemoveSmartTagsWhenSaving,
     scope: &mut Scope,
@@ -8021,7 +8021,7 @@ pub fn remove_smart_tags_when_saving(
 }
 
 /// Write a `RemoveStructuredDocumentTagWhenEdited` as its element, `w:temporary`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn remove_structured_document_tag_when_edited(
     node: &super::RemoveStructuredDocumentTagWhenEdited,
     scope: &mut Scope,
@@ -8036,7 +8036,7 @@ pub fn remove_structured_document_tag_when_edited(
 }
 
 /// Write a `RepeatTableRow` as its element, `w:tblHeader`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn repeat_table_row(node: &super::RepeatTableRow, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::REPEAT_TABLE_ROW_SHAPE, &node.unknown);
@@ -8045,7 +8045,7 @@ pub fn repeat_table_row(node: &super::RepeatTableRow, scope: &mut Scope) -> Elem
 }
 
 /// Write a `RequireExactSizeDuringFontSubstitution` as its element, `w:subFontBySize`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn require_exact_size_during_font_substitution(
     node: &super::RequireExactSizeDuringFontSubstitution,
     scope: &mut Scope,
@@ -8060,7 +8060,7 @@ pub fn require_exact_size_during_font_substitution(
 }
 
 /// Write a `RestartNumberingLevelSymbol` as its element, `w:lvlRestart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn restart_numbering_level_symbol(
     node: &super::RestartNumberingLevelSymbol,
     scope: &mut Scope,
@@ -8075,7 +8075,7 @@ pub fn restart_numbering_level_symbol(
 }
 
 /// Write a `ReverseBookFoldPrinting` as its element, `w:bookFoldRevPrinting`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn reverse_book_fold_printing(
     node: &super::ReverseBookFoldPrinting,
     scope: &mut Scope,
@@ -8090,7 +8090,7 @@ pub fn reverse_book_fold_printing(
 }
 
 /// Write a `RevisionIdentifierForStyleDefinition` as its element, `w:rsid`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn revision_identifier_for_style_definition(
     node: &super::RevisionIdentifierForStyleDefinition,
     scope: &mut Scope,
@@ -8105,7 +8105,7 @@ pub fn revision_identifier_for_style_definition(
 }
 
 /// Write a `RevisionInformationForParagraphProperties` as its element, `w:pPrChange`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn revision_information_for_paragraph_properties(
     node: &super::RevisionInformationForParagraphProperties,
     scope: &mut Scope,
@@ -8124,7 +8124,7 @@ pub fn revision_information_for_paragraph_properties(
 }
 
 /// Write a `RevisionInformationForRunProperties` as its element, `w:rPrChange`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn revision_information_for_run_properties(
     node: &super::RevisionInformationForRunProperties,
     scope: &mut Scope,
@@ -8143,7 +8143,7 @@ pub fn revision_information_for_run_properties(
 }
 
 /// Write a `RevisionInformationForSectionProperties` as its element, `w:sectPrChange`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn revision_information_for_section_properties(
     node: &super::RevisionInformationForSectionProperties,
     scope: &mut Scope,
@@ -8162,7 +8162,7 @@ pub fn revision_information_for_section_properties(
 }
 
 /// Write a `RevisionInformationForTableCellProperties` as its element, `w:tcPrChange`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn revision_information_for_table_cell_properties(
     node: &super::RevisionInformationForTableCellProperties,
     scope: &mut Scope,
@@ -8181,7 +8181,7 @@ pub fn revision_information_for_table_cell_properties(
 }
 
 /// Write a `RevisionInformationForTableLevelPropertyExceptions` as its element, `w:tblPrExChange`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn revision_information_for_table_level_property_exceptions(
     node: &super::RevisionInformationForTableLevelPropertyExceptions,
     scope: &mut Scope,
@@ -8200,7 +8200,7 @@ pub fn revision_information_for_table_level_property_exceptions(
 }
 
 /// Write a `RevisionInformationForTableProperties` as its element, `w:tblPrChange`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn revision_information_for_table_properties(
     node: &super::RevisionInformationForTableProperties,
     scope: &mut Scope,
@@ -8219,7 +8219,7 @@ pub fn revision_information_for_table_properties(
 }
 
 /// Write a `RevisionInformationForTableRowProperties` as its element, `w:trPrChange`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn revision_information_for_table_row_properties(
     node: &super::RevisionInformationForTableRowProperties,
     scope: &mut Scope,
@@ -8238,7 +8238,7 @@ pub fn revision_information_for_table_row_properties(
 }
 
 /// Write a `RevisionSaveIDValues` as its element, `w:rsids`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn revision_save_id_values(node: &super::RevisionSaveIDValues, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -8251,7 +8251,7 @@ pub fn revision_save_id_values(node: &super::RevisionSaveIDValues, scope: &mut S
 }
 
 /// Write a `RichTextBoxContentContainer` as its element, `w:txbxContent`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rich_text_box_content_container(
     node: &super::RichTextBoxContentContainer,
     scope: &mut Scope,
@@ -8266,7 +8266,7 @@ pub fn rich_text_box_content_container(
 }
 
 /// Write a `RichTextStructuredDocumentTag` as its element, `w:richText`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rich_text_structured_document_tag(
     node: &super::RichTextStructuredDocumentTag,
     scope: &mut Scope,
@@ -8280,7 +8280,7 @@ pub fn rich_text_structured_document_tag(
 }
 
 /// Write a `RightBorder` as its element, `w:right`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn right_border(node: &super::RightBorder, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::RIGHT_BORDER_SHAPE, &node.unknown);
@@ -8298,7 +8298,7 @@ pub fn right_border(node: &super::RightBorder, scope: &mut Scope) -> Element {
 }
 
 /// Write a `RightMarginForHTMLDiv` as its element, `w:marRight`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn right_margin_for_html_div(
     node: &super::RightMarginForHTMLDiv,
     scope: &mut Scope,
@@ -8313,7 +8313,7 @@ pub fn right_margin_for_html_div(
 }
 
 /// Write a `RightParagraphBorder` as its element, `w:right`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn right_paragraph_border(node: &super::RightParagraphBorder, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -8333,7 +8333,7 @@ pub fn right_paragraph_border(node: &super::RightParagraphBorder, scope: &mut Sc
 }
 
 /// Write a `RightParagraphBorderTblWidth` as its element, `w:right`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn right_paragraph_border_tbl_width(
     node: &super::RightParagraphBorderTblWidth,
     scope: &mut Scope,
@@ -8349,7 +8349,7 @@ pub fn right_paragraph_border_tbl_width(
 }
 
 /// Write a `RightToLeftParagraphLayout` as its element, `w:bidi`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn right_to_left_paragraph_layout(
     node: &super::RightToLeftParagraphLayout,
     scope: &mut Scope,
@@ -8364,7 +8364,7 @@ pub fn right_to_left_paragraph_layout(
 }
 
 /// Write a `RightToLeftText` as its element, `w:rtl`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn right_to_left_text(node: &super::RightToLeftText, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::RIGHT_TO_LEFT_TEXT_SHAPE, &node.unknown);
@@ -8373,7 +8373,7 @@ pub fn right_to_left_text(node: &super::RightToLeftText, scope: &mut Scope) -> E
 }
 
 /// Write a `RowLevelCustomXMLElement` as its element, `w:customXml`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn row_level_custom_xml_element(
     node: &super::RowLevelCustomXMLElement,
     scope: &mut Scope,
@@ -8391,7 +8391,7 @@ pub fn row_level_custom_xml_element(
 }
 
 /// Write a `RowLevelStructuredDocumentTag` as its element, `w:sdt`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn row_level_structured_document_tag(
     node: &super::RowLevelStructuredDocumentTag,
     scope: &mut Scope,
@@ -8412,7 +8412,7 @@ pub fn row_level_structured_document_tag(
 }
 
 /// Write a `RowLevelStructuredDocumentTagContent` as its element, `w:sdtContent`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn row_level_structured_document_tag_content(
     node: &super::RowLevelStructuredDocumentTagContent,
     scope: &mut Scope,
@@ -8427,7 +8427,7 @@ pub fn row_level_structured_document_tag_content(
 }
 
 /// Write a `RunContentColor` as its element, `w:color`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn run_content_color(node: &super::RunContentColor, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::RUN_CONTENT_COLOR_SHAPE, &node.unknown);
@@ -8439,7 +8439,7 @@ pub fn run_content_color(node: &super::RunContentColor, scope: &mut Scope) -> El
 }
 
 /// Write a `RunFonts` as its element, `w:rFonts`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn run_fonts(node: &super::RunFonts, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::RUN_FONTS_SHAPE, &node.unknown);
@@ -8456,7 +8456,7 @@ pub fn run_fonts(node: &super::RunFonts, scope: &mut Scope) -> Element {
 }
 
 /// Write a `RunProperties` as its element, `w:rPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn run_properties(node: &super::RunProperties, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::RUN_PROPERTIES_SHAPE, &node.unknown);
@@ -8486,7 +8486,7 @@ pub fn run_properties_content(
 }
 
 /// Write a `RunPropertiesForTheParagraphMark` as its element, `w:rPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn run_properties_for_the_paragraph_mark(
     node: &super::RunPropertiesForTheParagraphMark,
     scope: &mut Scope,
@@ -8519,7 +8519,7 @@ pub fn run_properties_for_the_paragraph_mark(
 }
 
 /// Write a `SaveSmartTagData` as its element, `w:saveSmartTagsAsXml`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn save_smart_tag_data(node: &super::SaveSmartTagData, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SAVE_SMART_TAG_DATA_SHAPE, &node.unknown);
@@ -8528,7 +8528,7 @@ pub fn save_smart_tag_data(node: &super::SaveSmartTagData, scope: &mut Scope) ->
 }
 
 /// Write a `SaveThroughCustomXSLTransform` as its element, `w:useXSLTWhenSaving`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn save_through_custom_xsl_transform(
     node: &super::SaveThroughCustomXSLTransform,
     scope: &mut Scope,
@@ -8543,7 +8543,7 @@ pub fn save_through_custom_xsl_transform(
 }
 
 /// Write a `ScrollbarDisplayOption` as its element, `w:scrollbar`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn scrollbar_display_option(
     node: &super::ScrollbarDisplayOption,
     scope: &mut Scope,
@@ -8566,7 +8566,7 @@ pub fn section_properties(
 }
 
 /// Write a `SectionType` as its element, `w:type`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn section_type(node: &super::SectionType, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SECTION_TYPE_SHAPE, &node.unknown);
@@ -8575,7 +8575,7 @@ pub fn section_type(node: &super::SectionType, scope: &mut Scope) -> Element {
 }
 
 /// Write a `SectionWideEndnoteProperties` as its element, `w:endnotePr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn section_wide_endnote_properties(
     node: &super::SectionWideEndnoteProperties,
     scope: &mut Scope,
@@ -8593,7 +8593,7 @@ pub fn section_wide_endnote_properties(
 }
 
 /// Write a `SectionWideFootnoteProperties` as its element, `w:footnotePr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn section_wide_footnote_properties(
     node: &super::SectionWideFootnoteProperties,
     scope: &mut Scope,
@@ -8611,7 +8611,7 @@ pub fn section_wide_footnote_properties(
 }
 
 /// Write a `SelectFldWithFirstOrLastChar` as its element, `w:selectFldWithFirstOrLastChar`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn select_fld_with_first_or_last_char(
     node: &super::SelectFldWithFirstOrLastChar,
     scope: &mut Scope,
@@ -8626,7 +8626,7 @@ pub fn select_fld_with_first_or_last_char(
 }
 
 /// Write a `SetOfBordersForHTMLDiv` as its element, `w:divBdr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn set_of_borders_for_html_div(
     node: &super::SetOfBordersForHTMLDiv,
     scope: &mut Scope,
@@ -8644,7 +8644,7 @@ pub fn set_of_borders_for_html_div(
 }
 
 /// Write a `SetOfCustomTabStops` as its element, `w:tabs`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn set_of_custom_tab_stops(node: &super::SetOfCustomTabStops, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -8656,7 +8656,7 @@ pub fn set_of_custom_tab_stops(node: &super::SetOfCustomTabStops, scope: &mut Sc
 }
 
 /// Write a `Shadow` as its element, `w:shadow`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shadow(node: &super::Shadow, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::SHADOW_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
@@ -8664,7 +8664,7 @@ pub fn shadow(node: &super::Shadow, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ShowEMailMessageHeader` as its element, `w:showEnvelope`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn show_e_mail_message_header(
     node: &super::ShowEMailMessageHeader,
     scope: &mut Scope,
@@ -8679,7 +8679,7 @@ pub fn show_e_mail_message_header(
 }
 
 /// Write a `ShowXMLTags` as its element, `w:showXMLTags`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn show_xml_tags(node: &super::ShowXMLTags, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHOW_XML_TAGS_SHAPE, &node.unknown);
@@ -8688,7 +8688,7 @@ pub fn show_xml_tags(node: &super::ShowXMLTags, scope: &mut Scope) -> Element {
 }
 
 /// Write a `SimpleField` as its element, `w:fldSimple`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn simple_field(node: &super::SimpleField, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SIMPLE_FIELD_SHAPE, &node.unknown);
@@ -8701,7 +8701,7 @@ pub fn simple_field(node: &super::SimpleField, scope: &mut Scope) -> Element {
 }
 
 /// Write a `SingleAutomaticCaptioningSetting` as its element, `w:autoCaption`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn single_automatic_captioning_setting(
     node: &super::SingleAutomaticCaptioningSetting,
     scope: &mut Scope,
@@ -8717,7 +8717,7 @@ pub fn single_automatic_captioning_setting(
 }
 
 /// Write a `SingleCaptionTypeDefinition` as its element, `w:caption`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn single_caption_type_definition(
     node: &super::SingleCaptionTypeDefinition,
     scope: &mut Scope,
@@ -8738,7 +8738,7 @@ pub fn single_caption_type_definition(
 }
 
 /// Write a `SingleColumnDefinition` as its element, `w:col`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn single_column_definition(
     node: &super::SingleColumnDefinition,
     scope: &mut Scope,
@@ -8754,7 +8754,7 @@ pub fn single_column_definition(
 }
 
 /// Write a `SingleDocumentVariable` as its element, `w:docVar`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn single_document_variable(
     node: &super::SingleDocumentVariable,
     scope: &mut Scope,
@@ -8770,7 +8770,7 @@ pub fn single_document_variable(
 }
 
 /// Write a `SingleFrameProperties` as its element, `w:frame`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn single_frame_properties(node: &super::SingleFrameProperties, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -8791,7 +8791,7 @@ pub fn single_frame_properties(node: &super::SingleFrameProperties, scope: &mut 
 }
 
 /// Write a `SingleStrikethrough` as its element, `w:strike`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn single_strikethrough(node: &super::SingleStrikethrough, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -8803,7 +8803,7 @@ pub fn single_strikethrough(node: &super::SingleStrikethrough, scope: &mut Scope
 }
 
 /// Write a `SingleTableCellMargins` as its element, `w:tcMar`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn single_table_cell_margins(
     node: &super::SingleTableCellMargins,
     scope: &mut Scope,
@@ -8823,7 +8823,7 @@ pub fn single_table_cell_margins(
 }
 
 /// Write a `SmallCaps` as its element, `w:smallCaps`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn small_caps(node: &super::SmallCaps, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SMALL_CAPS_SHAPE, &node.unknown);
@@ -8832,7 +8832,7 @@ pub fn small_caps(node: &super::SmallCaps, scope: &mut Scope) -> Element {
 }
 
 /// Write a `SmartTagProperties` as its element, `w:smartTagPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn smart_tag_properties(node: &super::SmartTagProperties, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -8844,7 +8844,7 @@ pub fn smart_tag_properties(node: &super::SmartTagProperties, scope: &mut Scope)
 }
 
 /// Write a `SourceDocumentType` as its element, `w:mainDocumentType`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn source_document_type(node: &super::SourceDocumentType, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -8856,7 +8856,7 @@ pub fn source_document_type(node: &super::SourceDocumentType, scope: &mut Scope)
 }
 
 /// Write a `SourceFileForFrame` as its element, `w:sourceFileName`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn source_file_for_frame(node: &super::SourceFileForFrame, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -8868,7 +8868,7 @@ pub fn source_file_for_frame(node: &super::SourceFileForFrame, scope: &mut Scope
 }
 
 /// Write a `SpacingBetweenLinesAndAboveBelowParagraph` as its element, `w:spacing`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn spacing_between_lines_and_above_below_paragraph(
     node: &super::SpacingBetweenLinesAndAboveBelowParagraph,
     scope: &mut Scope,
@@ -8890,7 +8890,7 @@ pub fn spacing_between_lines_and_above_below_paragraph(
 }
 
 /// Write a `SpecialEndnoteList` as its element, `w:endnote`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn special_endnote_list(node: &super::SpecialEndnoteList, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -8902,7 +8902,7 @@ pub fn special_endnote_list(node: &super::SpecialEndnoteList, scope: &mut Scope)
 }
 
 /// Write a `SpecialFootnoteList` as its element, `w:footnote`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn special_footnote_list(node: &super::SpecialFootnoteList, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -8914,7 +8914,7 @@ pub fn special_footnote_list(node: &super::SpecialFootnoteList, scope: &mut Scop
 }
 
 /// Write a `SpellingAndGrammaticalCheckingState` as its element, `w:proofState`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn spelling_and_grammatical_checking_state(
     node: &super::SpellingAndGrammaticalCheckingState,
     scope: &mut Scope,
@@ -8930,7 +8930,7 @@ pub fn spelling_and_grammatical_checking_state(
 }
 
 /// Write a `SplitPgBreakAndParaMark` as its element, `w:splitPgBreakAndParaMark`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn split_pg_break_and_para_mark(
     node: &super::SplitPgBreakAndParaMark,
     scope: &mut Scope,
@@ -8945,7 +8945,7 @@ pub fn split_pg_break_and_para_mark(
 }
 
 /// Write a `StartParagraphOnNextPage` as its element, `w:pageBreakBefore`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn start_paragraph_on_next_page(
     node: &super::StartParagraphOnNextPage,
     scope: &mut Scope,
@@ -8960,7 +8960,7 @@ pub fn start_paragraph_on_next_page(
 }
 
 /// Write a `StartingValue` as its element, `w:start`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn starting_value(node: &super::StartingValue, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::STARTING_VALUE_SHAPE, &node.unknown);
@@ -8969,7 +8969,7 @@ pub fn starting_value(node: &super::StartingValue, scope: &mut Scope) -> Element
 }
 
 /// Write a `StrictKinsokuRules` as its element, `w:strictFirstAndLastChars`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn strict_kinsoku_rules(node: &super::StrictKinsokuRules, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -8981,7 +8981,7 @@ pub fn strict_kinsoku_rules(node: &super::StrictKinsokuRules, scope: &mut Scope)
 }
 
 /// Write a `StructuredDocumentTagEndCharacterProperties` as its element, `w:sdtEndPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn structured_document_tag_end_character_properties(
     node: &super::StructuredDocumentTagEndCharacterProperties,
     scope: &mut Scope,
@@ -8996,7 +8996,7 @@ pub fn structured_document_tag_end_character_properties(
 }
 
 /// Write a `StructuredDocumentTagLabel` as its element, `w:label`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn structured_document_tag_label(
     node: &super::StructuredDocumentTagLabel,
     scope: &mut Scope,
@@ -9011,7 +9011,7 @@ pub fn structured_document_tag_label(
 }
 
 /// Write a `StructuredDocumentTagNavigationOrderIndex` as its element, `w:tabIndex`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn structured_document_tag_navigation_order_index(
     node: &super::StructuredDocumentTagNavigationOrderIndex,
     scope: &mut Scope,
@@ -9026,7 +9026,7 @@ pub fn structured_document_tag_navigation_order_index(
 }
 
 /// Write a `StructuredDocumentTagPlaceholderText` as its element, `w:placeholder`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn structured_document_tag_placeholder_text(
     node: &super::StructuredDocumentTagPlaceholderText,
     scope: &mut Scope,
@@ -9041,7 +9041,7 @@ pub fn structured_document_tag_placeholder_text(
 }
 
 /// Write a `StructuredDocumentTagProperties` as its element, `w:sdtPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn structured_document_tag_properties(
     node: &super::StructuredDocumentTagProperties,
     scope: &mut Scope,
@@ -9081,7 +9081,7 @@ pub fn structured_document_tag_properties_content(
 }
 
 /// Write a `StyleCannotBeApplied` as its element, `w:locked`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn style_cannot_be_applied(node: &super::StyleCannotBeApplied, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -9093,7 +9093,7 @@ pub fn style_cannot_be_applied(node: &super::StyleCannotBeApplied, scope: &mut S
 }
 
 /// Write a `StyleConditionalTableFormattingProperties` as its element, `w:tblStylePr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn style_conditional_table_formatting_properties(
     node: &super::StyleConditionalTableFormattingProperties,
     scope: &mut Scope,
@@ -9113,7 +9113,7 @@ pub fn style_conditional_table_formatting_properties(
 }
 
 /// Write a `StyleDefinition` as its element, `w:style`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn style_definition(node: &super::StyleDefinition, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::STYLE_DEFINITION_SHAPE, &node.unknown);
@@ -9147,7 +9147,7 @@ pub fn style_definition(node: &super::StyleDefinition, scope: &mut Scope) -> Ele
 }
 
 /// Write a `StyleDefinitions` as its element, `w:styles`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn style_definitions(node: &super::StyleDefinitions, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::STYLE_DEFINITIONS_SHAPE, &node.unknown);
@@ -9158,7 +9158,7 @@ pub fn style_definitions(node: &super::StyleDefinitions, scope: &mut Scope) -> E
 }
 
 /// Write a `StyleForNextParagraph` as its element, `w:next`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn style_for_next_paragraph(node: &super::StyleForNextParagraph, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -9170,7 +9170,7 @@ pub fn style_for_next_paragraph(node: &super::StyleForNextParagraph, scope: &mut
 }
 
 /// Write a `SubscriptSuperscriptText` as its element, `w:vertAlign`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn subscript_superscript_text(
     node: &super::SubscriptSuperscriptText,
     scope: &mut Scope,
@@ -9185,7 +9185,7 @@ pub fn subscript_superscript_text(
 }
 
 /// Write a `SubsetFontsWhenEmbedding` as its element, `w:saveSubsetFonts`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn subset_fonts_when_embedding(
     node: &super::SubsetFontsWhenEmbedding,
     scope: &mut Scope,
@@ -9200,7 +9200,7 @@ pub fn subset_fonts_when_embedding(
 }
 
 /// Write a `SuggestedFiltering` as its element, `w:stylePaneFormatFilter`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn suggested_filtering(node: &super::SuggestedFiltering, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SUGGESTED_FILTERING_SHAPE, &node.unknown);
@@ -9224,7 +9224,7 @@ pub fn suggested_filtering(node: &super::SuggestedFiltering, scope: &mut Scope) 
 }
 
 /// Write a `SuggestedSorting` as its element, `w:stylePaneSortMethod`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn suggested_sorting(node: &super::SuggestedSorting, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SUGGESTED_SORTING_SHAPE, &node.unknown);
@@ -9233,7 +9233,7 @@ pub fn suggested_sorting(node: &super::SuggestedSorting, scope: &mut Scope) -> E
 }
 
 /// Write a `SupplementarySmartTagInformation` as its element, `w:smartTagType`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn supplementary_smart_tag_information(
     node: &super::SupplementarySmartTagInformation,
     scope: &mut Scope,
@@ -9250,7 +9250,7 @@ pub fn supplementary_smart_tag_information(
 }
 
 /// Write a `SupportedUnicodeSubrangesAndCodePages` as its element, `w:sig`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn supported_unicode_subranges_and_code_pages(
     node: &super::SupportedUnicodeSubrangesAndCodePages,
     scope: &mut Scope,
@@ -9270,7 +9270,7 @@ pub fn supported_unicode_subranges_and_code_pages(
 }
 
 /// Write a `SuppressEndnotesInDocument` as its element, `w:noEndnote`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn suppress_endnotes_in_document(
     node: &super::SuppressEndnotesInDocument,
     scope: &mut Scope,
@@ -9285,7 +9285,7 @@ pub fn suppress_endnotes_in_document(
 }
 
 /// Write a `SuppressHyphenationForParagraph` as its element, `w:suppressAutoHyphens`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn suppress_hyphenation_for_paragraph(
     node: &super::SuppressHyphenationForParagraph,
     scope: &mut Scope,
@@ -9300,7 +9300,7 @@ pub fn suppress_hyphenation_for_paragraph(
 }
 
 /// Write a `SuppressLineNumbersForParagraph` as its element, `w:suppressLineNumbers`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn suppress_line_numbers_for_paragraph(
     node: &super::SuppressLineNumbersForParagraph,
     scope: &mut Scope,
@@ -9315,7 +9315,7 @@ pub fn suppress_line_numbers_for_paragraph(
 }
 
 /// Write a `SuppressSpBfAfterPgBrk` as its element, `w:suppressSpBfAfterPgBrk`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn suppress_sp_bf_after_pg_brk(
     node: &super::SuppressSpBfAfterPgBrk,
     scope: &mut Scope,
@@ -9330,7 +9330,7 @@ pub fn suppress_sp_bf_after_pg_brk(
 }
 
 /// Write a `SuppressTopSpacing` as its element, `w:suppressTopSpacing`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn suppress_top_spacing(node: &super::SuppressTopSpacing, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -9342,7 +9342,7 @@ pub fn suppress_top_spacing(node: &super::SuppressTopSpacing, scope: &mut Scope)
 }
 
 /// Write a `SwapParagraphBordersOnOddNumberedPages` as its element, `w:swapBordersFacingPages`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn swap_paragraph_borders_on_odd_numbered_pages(
     node: &super::SwapParagraphBordersOnOddNumberedPages,
     scope: &mut Scope,
@@ -9357,7 +9357,7 @@ pub fn swap_paragraph_borders_on_odd_numbered_pages(
 }
 
 /// Write a `SymbolCharacter` as its element, `w:sym`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn symbol_character(node: &super::SymbolCharacter, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SYMBOL_CHARACTER_SHAPE, &node.unknown);
@@ -9367,13 +9367,13 @@ pub fn symbol_character(node: &super::SymbolCharacter, scope: &mut Scope) -> Ele
 }
 
 /// Write a `TabCharacter` as its element, `w:tab`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tab_character(node: &super::TabCharacter, scope: &mut Scope) -> Element {
     officekit_markup_base::Writer::new(scope, &super::TAB_CHARACTER_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Table` as its element, `w:tbl`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table(node: &super::Table, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::TABLE_SHAPE, &node.unknown);
     writer.child(&node.range_markup_content);
@@ -9384,7 +9384,7 @@ pub fn table(node: &super::Table, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TableAlignmentException` as its element, `w:jc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_alignment_exception(
     node: &super::TableAlignmentException,
     scope: &mut Scope,
@@ -9399,7 +9399,7 @@ pub fn table_alignment_exception(
 }
 
 /// Write a `TableBorders` as its element, `w:tblBorders`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_borders(node: &super::TableBorders, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TABLE_BORDERS_SHAPE, &node.unknown);
@@ -9415,7 +9415,7 @@ pub fn table_borders(node: &super::TableBorders, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TableCaption` as its element, `w:tblCaption`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_caption(node: &super::TableCaption, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TABLE_CAPTION_SHAPE, &node.unknown);
@@ -9424,7 +9424,7 @@ pub fn table_caption(node: &super::TableCaption, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TableCell` as its element, `w:tc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_cell(node: &super::TableCell, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TABLE_CELL_SHAPE, &node.unknown);
@@ -9435,7 +9435,7 @@ pub fn table_cell(node: &super::TableCell, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TableCellBorders` as its element, `w:tcBorders`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_cell_borders(node: &super::TableCellBorders, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TABLE_CELL_BORDERS_SHAPE, &node.unknown);
@@ -9453,7 +9453,7 @@ pub fn table_cell_borders(node: &super::TableCellBorders, scope: &mut Scope) -> 
 }
 
 /// Write a `TableCellDeletion` as its element, `w:cellDel`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_cell_deletion(node: &super::TableCellDeletion, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TABLE_CELL_DELETION_SHAPE, &node.unknown);
@@ -9464,7 +9464,7 @@ pub fn table_cell_deletion(node: &super::TableCellDeletion, scope: &mut Scope) -
 }
 
 /// Write a `TableCellInsertion` as its element, `w:cellIns`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_cell_insertion(node: &super::TableCellInsertion, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -9478,7 +9478,7 @@ pub fn table_cell_insertion(node: &super::TableCellInsertion, scope: &mut Scope)
 }
 
 /// Write a `TableCellLeadingEdgeBorder` as its element, `w:start`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_cell_leading_edge_border(
     node: &super::TableCellLeadingEdgeBorder,
     scope: &mut Scope,
@@ -9501,7 +9501,7 @@ pub fn table_cell_leading_edge_border(
 }
 
 /// Write a `TableCellLeadingEdgeBorderTblWidth` as its element, `w:start`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_cell_leading_edge_border_tbl_width(
     node: &super::TableCellLeadingEdgeBorderTblWidth,
     scope: &mut Scope,
@@ -9517,7 +9517,7 @@ pub fn table_cell_leading_edge_border_tbl_width(
 }
 
 /// Write a `TableCellMarginExceptions` as its element, `w:tblCellMar`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_cell_margin_exceptions(
     node: &super::TableCellMarginExceptions,
     scope: &mut Scope,
@@ -9537,7 +9537,7 @@ pub fn table_cell_margin_exceptions(
 }
 
 /// Write a `TableCellProperties` as its element, `w:tcPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_cell_properties(node: &super::TableCellProperties, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -9564,7 +9564,7 @@ pub fn table_cell_properties(node: &super::TableCellProperties, scope: &mut Scop
 }
 
 /// Write a `TableCellTrailingMarginException` as its element, `w:end`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_cell_trailing_margin_exception(
     node: &super::TableCellTrailingMarginException,
     scope: &mut Scope,
@@ -9587,7 +9587,7 @@ pub fn table_cell_trailing_margin_exception(
 }
 
 /// Write a `TableCellTrailingMarginExceptionTblWidth` as its element, `w:end`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_cell_trailing_margin_exception_tbl_width(
     node: &super::TableCellTrailingMarginExceptionTblWidth,
     scope: &mut Scope,
@@ -9603,7 +9603,7 @@ pub fn table_cell_trailing_margin_exception_tbl_width(
 }
 
 /// Write a `TableCellVerticalAlignment` as its element, `w:vAlign`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_cell_vertical_alignment(
     node: &super::TableCellVerticalAlignment,
     scope: &mut Scope,
@@ -9618,7 +9618,7 @@ pub fn table_cell_vertical_alignment(
 }
 
 /// Write a `TableDescription` as its element, `w:tblDescription`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_description(node: &super::TableDescription, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TABLE_DESCRIPTION_SHAPE, &node.unknown);
@@ -9627,7 +9627,7 @@ pub fn table_description(node: &super::TableDescription, scope: &mut Scope) -> E
 }
 
 /// Write a `TableGrid` as its element, `w:tblGrid`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_grid(node: &super::TableGrid, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TABLE_GRID_SHAPE, &node.unknown);
@@ -9637,7 +9637,7 @@ pub fn table_grid(node: &super::TableGrid, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TableGridColumnRevisionInformation` as its element, `w:tblGridChange`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_grid_column_revision_information(
     node: &super::TableGridColumnRevisionInformation,
     scope: &mut Scope,
@@ -9653,7 +9653,7 @@ pub fn table_grid_column_revision_information(
 }
 
 /// Write a `TableIndentFromLeadingMargin` as its element, `w:tblInd`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_indent_from_leading_margin(
     node: &super::TableIndentFromLeadingMargin,
     scope: &mut Scope,
@@ -9669,7 +9669,7 @@ pub fn table_indent_from_leading_margin(
 }
 
 /// Write a `TableInsideHorizontalEdgesBorder` as its element, `w:insideH`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_inside_horizontal_edges_border(
     node: &super::TableInsideHorizontalEdgesBorder,
     scope: &mut Scope,
@@ -9692,7 +9692,7 @@ pub fn table_inside_horizontal_edges_border(
 }
 
 /// Write a `TableInsideVerticalEdgesBorder` as its element, `w:insideV`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_inside_vertical_edges_border(
     node: &super::TableInsideVerticalEdgesBorder,
     scope: &mut Scope,
@@ -9715,7 +9715,7 @@ pub fn table_inside_vertical_edges_border(
 }
 
 /// Write a `TableLayout` as its element, `w:tblLayout`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_layout(node: &super::TableLayout, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TABLE_LAYOUT_SHAPE, &node.unknown);
@@ -9724,7 +9724,7 @@ pub fn table_layout(node: &super::TableLayout, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TableLevelPropertyExceptions` as its element, `w:tblPrEx`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_level_property_exceptions(
     node: &super::TableLevelPropertyExceptions,
     scope: &mut Scope,
@@ -9748,7 +9748,7 @@ pub fn table_level_property_exceptions(
 }
 
 /// Write a `TableProperties` as its element, `w:tblPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_properties(node: &super::TableProperties, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TABLE_PROPERTIES_SHAPE, &node.unknown);
@@ -9774,7 +9774,7 @@ pub fn table_properties(node: &super::TableProperties, scope: &mut Scope) -> Ele
 }
 
 /// Write a `TableRow` as its element, `w:tr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_row(node: &super::TableRow, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TABLE_ROW_SHAPE, &node.unknown);
@@ -9791,7 +9791,7 @@ pub fn table_row(node: &super::TableRow, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TableRowCannotBreakAcrossPages` as its element, `w:cantSplit`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_row_cannot_break_across_pages(
     node: &super::TableRowCannotBreakAcrossPages,
     scope: &mut Scope,
@@ -9806,7 +9806,7 @@ pub fn table_row_cannot_break_across_pages(
 }
 
 /// Write a `TableRowCellSpacing` as its element, `w:tblCellSpacing`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_row_cell_spacing(node: &super::TableRowCellSpacing, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -9819,7 +9819,7 @@ pub fn table_row_cell_spacing(node: &super::TableRowCellSpacing, scope: &mut Sco
 }
 
 /// Write a `TableRowHeight` as its element, `w:trHeight`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_row_height(node: &super::TableRowHeight, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TABLE_ROW_HEIGHT_SHAPE, &node.unknown);
@@ -9829,7 +9829,7 @@ pub fn table_row_height(node: &super::TableRowHeight, scope: &mut Scope) -> Elem
 }
 
 /// Write a `TableRowProperties` as its element, `w:trPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_row_properties(node: &super::TableRowProperties, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -9854,7 +9854,7 @@ pub fn table_row_properties_content(
 }
 
 /// Write a `TableStyleConditionalFormattingSettingsException` as its element, `w:tblLook`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn table_style_conditional_formatting_settings_exception(
     node: &super::TableStyleConditionalFormattingSettingsException,
     scope: &mut Scope,
@@ -9875,7 +9875,7 @@ pub fn table_style_conditional_formatting_settings_exception(
 }
 
 /// Write a `TargetScreenSizeForWebPage` as its element, `w:targetScreenSz`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn target_screen_size_for_web_page(
     node: &super::TargetScreenSizeForWebPage,
     scope: &mut Scope,
@@ -9890,7 +9890,7 @@ pub fn target_screen_size_for_web_page(
 }
 
 /// Write a `Text` as its element, `w:t`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text(node: &super::Text, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::TEXT_SHAPE, &node.unknown);
     writer.attribute(0, &node.space);
@@ -9899,7 +9899,7 @@ pub fn text(node: &super::Text, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TextBorder` as its element, `w:bdr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_border(node: &super::TextBorder, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TEXT_BORDER_SHAPE, &node.unknown);
@@ -9916,7 +9916,7 @@ pub fn text_border(node: &super::TextBorder, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TextBoxFormFieldFormatting` as its element, `w:format`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_box_form_field_formatting(
     node: &super::TextBoxFormFieldFormatting,
     scope: &mut Scope,
@@ -9931,7 +9931,7 @@ pub fn text_box_form_field_formatting(
 }
 
 /// Write a `TextBoxFormFieldMaximumLength` as its element, `w:maxLength`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_box_form_field_maximum_length(
     node: &super::TextBoxFormFieldMaximumLength,
     scope: &mut Scope,
@@ -9946,7 +9946,7 @@ pub fn text_box_form_field_maximum_length(
 }
 
 /// Write a `TextBoxFormFieldProperties` as its element, `w:textInput`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_box_form_field_properties(
     node: &super::TextBoxFormFieldProperties,
     scope: &mut Scope,
@@ -9964,7 +9964,7 @@ pub fn text_box_form_field_properties(
 }
 
 /// Write a `TextBoxFormFieldType` as its element, `w:type`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_box_form_field_type(node: &super::TextBoxFormFieldType, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -9976,7 +9976,7 @@ pub fn text_box_form_field_type(node: &super::TextBoxFormFieldType, scope: &mut 
 }
 
 /// Write a `TextFrameProperties` as its element, `w:framePr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_frame_properties(node: &super::TextFrameProperties, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -10002,7 +10002,7 @@ pub fn text_frame_properties(node: &super::TextFrameProperties, scope: &mut Scop
 }
 
 /// Write a `TextHighlighting` as its element, `w:highlight`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_highlighting(node: &super::TextHighlighting, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TEXT_HIGHLIGHTING_SHAPE, &node.unknown);
@@ -10011,7 +10011,7 @@ pub fn text_highlighting(node: &super::TextHighlighting, scope: &mut Scope) -> E
 }
 
 /// Write a `TextRun` as its element, `w:r`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_run(node: &super::TextRun, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TEXT_RUN_SHAPE, &node.unknown);
@@ -10032,7 +10032,7 @@ pub fn text_run_content(
 }
 
 /// Write a `TextboxTightWrap` as its element, `w:textboxTightWrap`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn textbox_tight_wrap(node: &super::TextboxTightWrap, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TEXTBOX_TIGHT_WRAP_SHAPE, &node.unknown);
@@ -10041,7 +10041,7 @@ pub fn textbox_tight_wrap(node: &super::TextboxTightWrap, scope: &mut Scope) -> 
 }
 
 /// Write a `ThemeColorMappings` as its element, `w:clrSchemeMapping`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn theme_color_mappings(node: &super::ThemeColorMappings, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -10064,7 +10064,7 @@ pub fn theme_color_mappings(node: &super::ThemeColorMappings, scope: &mut Scope)
 }
 
 /// Write a `ThemeFontLanguages` as its element, `w:themeFontLang`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn theme_font_languages(node: &super::ThemeFontLanguages, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -10078,7 +10078,7 @@ pub fn theme_font_languages(node: &super::ThemeFontLanguages, scope: &mut Scope)
 }
 
 /// Write a `TopAndBottomMarginForFrame` as its element, `w:marH`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn top_and_bottom_margin_for_frame(
     node: &super::TopAndBottomMarginForFrame,
     scope: &mut Scope,
@@ -10093,7 +10093,7 @@ pub fn top_and_bottom_margin_for_frame(
 }
 
 /// Write a `TopBorder` as its element, `w:top`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn top_border(node: &super::TopBorder, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TOP_BORDER_SHAPE, &node.unknown);
@@ -10113,7 +10113,7 @@ pub fn top_border(node: &super::TopBorder, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TopLeftBottomRightDiagonalBorder` as its element, `w:tl2br`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn top_left_bottom_right_diagonal_border(
     node: &super::TopLeftBottomRightDiagonalBorder,
     scope: &mut Scope,
@@ -10136,7 +10136,7 @@ pub fn top_left_bottom_right_diagonal_border(
 }
 
 /// Write a `TopMarginForHTMLDiv` as its element, `w:marTop`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn top_margin_for_html_div(node: &super::TopMarginForHTMLDiv, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -10148,7 +10148,7 @@ pub fn top_margin_for_html_div(node: &super::TopMarginForHTMLDiv, scope: &mut Sc
 }
 
 /// Write a `TopRightBottomLeftDiagonalBorder` as its element, `w:tr2bl`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn top_right_bottom_left_diagonal_border(
     node: &super::TopRightBottomLeftDiagonalBorder,
     scope: &mut Scope,
@@ -10171,7 +10171,7 @@ pub fn top_right_bottom_left_diagonal_border(
 }
 
 /// Write a `TrackRevisionsToDocument` as its element, `w:trackRevisions`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn track_revisions_to_document(
     node: &super::TrackRevisionsToDocument,
     scope: &mut Scope,
@@ -10195,7 +10195,7 @@ pub fn tracked_run(
 
 /// Write a `TreatBackslashQuotationDelimiterAsTwoQuotationMarks` as its element,
 /// `w:convMailMergeEsc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn treat_backslash_quotation_delimiter_as_two_quotation_marks(
     node: &super::TreatBackslashQuotationDelimiterAsTwoQuotationMarks,
     scope: &mut Scope,
@@ -10210,7 +10210,7 @@ pub fn treat_backslash_quotation_delimiter_as_two_quotation_marks(
 }
 
 /// Write a `TruncateFontHeightsLikeWP6` as its element, `w:truncateFontHeightsLikeWP6`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn truncate_font_heights_like_wp6(
     node: &super::TruncateFontHeightsLikeWP6,
     scope: &mut Scope,
@@ -10225,7 +10225,7 @@ pub fn truncate_font_heights_like_wp6(
 }
 
 /// Write a `UDLConnectionString` as its element, `w:udl`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn udl_connection_string(node: &super::UDLConnectionString, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -10237,7 +10237,7 @@ pub fn udl_connection_string(node: &super::UDLConnectionString, scope: &mut Scop
 }
 
 /// Write a `Underline` as its element, `w:u`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn underline(node: &super::Underline, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::UNDERLINE_SHAPE, &node.unknown);
@@ -10250,7 +10250,7 @@ pub fn underline(node: &super::Underline, scope: &mut Scope) -> Element {
 }
 
 /// Write a `UnderlineAllTrailingSpaces` as its element, `w:ulTrailSpace`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn underline_all_trailing_spaces(
     node: &super::UnderlineAllTrailingSpaces,
     scope: &mut Scope,
@@ -10266,7 +10266,7 @@ pub fn underline_all_trailing_spaces(
 
 /// Write a `UnderlineFollowingCharacterFollowingNumbering` as its element,
 /// `w:underlineTabInNumList`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn underline_following_character_following_numbering(
     node: &super::UnderlineFollowingCharacterFollowingNumbering,
     scope: &mut Scope,
@@ -10281,7 +10281,7 @@ pub fn underline_following_character_following_numbering(
 }
 
 /// Write a `UniqueID` as its element, `w:id`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn unique_id(node: &super::UniqueID, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::UNIQUE_ID_SHAPE, &node.unknown);
@@ -10290,7 +10290,7 @@ pub fn unique_id(node: &super::UniqueID, scope: &mut Scope) -> Element {
 }
 
 /// Write a `UniqueValueForRecord` as its element, `w:uniqueTag`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn unique_value_for_record(node: &super::UniqueValueForRecord, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -10302,7 +10302,7 @@ pub fn unique_value_for_record(node: &super::UniqueValueForRecord, scope: &mut S
 }
 
 /// Write a `UpgradeDocumentOnOpen` as its element, `w:forceUpgrade`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn upgrade_document_on_open(node: &super::UpgradeDocumentOnOpen, scope: &mut Scope) -> Element {
     let writer = officekit_markup_base::Writer::new(
         scope,
@@ -10313,7 +10313,7 @@ pub fn upgrade_document_on_open(node: &super::UpgradeDocumentOnOpen, scope: &mut
 }
 
 /// Write a `UseAltKinsokuLineBreakRules` as its element, `w:useAltKinsokuLineBreakRules`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn use_alt_kinsoku_line_break_rules(
     node: &super::UseAltKinsokuLineBreakRules,
     scope: &mut Scope,
@@ -10328,7 +10328,7 @@ pub fn use_alt_kinsoku_line_break_rules(
 }
 
 /// Write a `UseANSIKerningPairsFromFonts` as its element, `w:useAnsiKerningPairs`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn use_ansi_kerning_pairs_from_fonts(
     node: &super::UseANSIKerningPairsFromFonts,
     scope: &mut Scope,
@@ -10343,7 +10343,7 @@ pub fn use_ansi_kerning_pairs_from_fonts(
 }
 
 /// Write a `UseCachedParagraphInformationForColumnBalancing` as its element, `w:cachedColBalance`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn use_cached_paragraph_information_for_column_balancing(
     node: &super::UseCachedParagraphInformationForColumnBalancing,
     scope: &mut Scope,
@@ -10358,7 +10358,7 @@ pub fn use_cached_paragraph_information_for_column_balancing(
 }
 
 /// Write a `UseComplexScriptFormattingOnRun` as its element, `w:cs`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn use_complex_script_formatting_on_run(
     node: &super::UseComplexScriptFormattingOnRun,
     scope: &mut Scope,
@@ -10373,7 +10373,7 @@ pub fn use_complex_script_formatting_on_run(
 }
 
 /// Write a `UseCountryBasedAddressFieldOrdering` as its element, `w:dynamicAddress`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn use_country_based_address_field_ordering(
     node: &super::UseCountryBasedAddressFieldOrdering,
     scope: &mut Scope,
@@ -10388,7 +10388,7 @@ pub fn use_country_based_address_field_ordering(
 }
 
 /// Write a `UseIncorrectInterCharacterSpacingRules` as its element, `w:useWord97LineBreakRules`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn use_incorrect_inter_character_spacing_rules(
     node: &super::UseIncorrectInterCharacterSpacingRules,
     scope: &mut Scope,
@@ -10403,7 +10403,7 @@ pub fn use_incorrect_inter_character_spacing_rules(
 }
 
 /// Write a `UseLeftRightIndentsAsInsideOutsideIndents` as its element, `w:mirrorIndents`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn use_left_right_indents_as_inside_outside_indents(
     node: &super::UseLeftRightIndentsAsInsideOutsideIndents,
     scope: &mut Scope,
@@ -10418,7 +10418,7 @@ pub fn use_left_right_indents_as_inside_outside_indents(
 }
 
 /// Write a `UseNormalStyleForList` as its element, `w:useNormalStyleForList`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn use_normal_style_for_list(
     node: &super::UseNormalStyleForList,
     scope: &mut Scope,
@@ -10433,7 +10433,7 @@ pub fn use_normal_style_for_list(
 }
 
 /// Write a `UsePrinterMetricsToDisplayDocuments` as its element, `w:usePrinterMetrics`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn use_printer_metrics_to_display_documents(
     node: &super::UsePrinterMetricsToDisplayDocuments,
     scope: &mut Scope,
@@ -10449,7 +10449,7 @@ pub fn use_printer_metrics_to_display_documents(
 
 /// Write a `UseSingleBorderforContiguousCells` as its element,
 /// `w:useSingleBorderforContiguousCells`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn use_single_borderfor_contiguous_cells(
     node: &super::UseSingleBorderforContiguousCells,
     scope: &mut Scope,
@@ -10464,7 +10464,7 @@ pub fn use_single_borderfor_contiguous_cells(
 }
 
 /// Write a `UseSpecificSmallCapsAlgorithm` as its element, `w:mwSmallCaps`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn use_specific_small_caps_algorithm(
     node: &super::UseSpecificSmallCapsAlgorithm,
     scope: &mut Scope,
@@ -10479,7 +10479,7 @@ pub fn use_specific_small_caps_algorithm(
 }
 
 /// Write a `UseSpecificSpaceWidth` as its element, `w:wpSpaceWidth`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn use_specific_space_width(node: &super::UseSpecificSpaceWidth, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -10491,7 +10491,7 @@ pub fn use_specific_space_width(node: &super::UseSpecificSpaceWidth, scope: &mut
 }
 
 /// Write a `UseStaticTextLeading` as its element, `w:suppressTopSpacingWP`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn use_static_text_leading(node: &super::UseStaticTextLeading, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -10503,7 +10503,7 @@ pub fn use_static_text_leading(node: &super::UseStaticTextLeading, scope: &mut S
 }
 
 /// Write a `UseWord2002TableStyleRules` as its element, `w:useWord2002TableStyleRules`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn use_word2002table_style_rules(
     node: &super::UseWord2002TableStyleRules,
     scope: &mut Scope,
@@ -10518,7 +10518,7 @@ pub fn use_word2002table_style_rules(
 }
 
 /// Write a `UtilizeVMLWhenSavingAsWebPage` as its element, `w:relyOnVML`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn utilize_vml_when_saving_as_web_page(
     node: &super::UtilizeVMLWhenSavingAsWebPage,
     scope: &mut Scope,
@@ -10533,7 +10533,7 @@ pub fn utilize_vml_when_saving_as_web_page(
 }
 
 /// Write a `VerticalCharacterAlignmentOnLine` as its element, `w:textAlignment`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn vertical_character_alignment_on_line(
     node: &super::VerticalCharacterAlignmentOnLine,
     scope: &mut Scope,
@@ -10548,7 +10548,7 @@ pub fn vertical_character_alignment_on_line(
 }
 
 /// Write a `VerticallyMergedCell` as its element, `w:vMerge`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn vertically_merged_cell(node: &super::VerticallyMergedCell, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -10560,7 +10560,7 @@ pub fn vertically_merged_cell(node: &super::VerticallyMergedCell, scope: &mut Sc
 }
 
 /// Write a `VerticallyMergedSplitTableCells` as its element, `w:cellMerge`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn vertically_merged_split_table_cells(
     node: &super::VerticallyMergedSplitTableCells,
     scope: &mut Scope,
@@ -10580,7 +10580,7 @@ pub fn vertically_merged_split_table_cells(
 }
 
 /// Write a `VerticallyRaisedOrLoweredText` as its element, `w:position`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn vertically_raised_or_lowered_text(
     node: &super::VerticallyRaisedOrLoweredText,
     scope: &mut Scope,
@@ -10595,7 +10595,7 @@ pub fn vertically_raised_or_lowered_text(
 }
 
 /// Write a `ViewMergedDataWithinDocument` as its element, `w:viewMergedData`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn view_merged_data_within_document(
     node: &super::ViewMergedDataWithinDocument,
     scope: &mut Scope,
@@ -10610,7 +10610,7 @@ pub fn view_merged_data_within_document(
 }
 
 /// Write a `VisibilityOfAnnotationTypes` as its element, `w:revisionView`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn visibility_of_annotation_types(
     node: &super::VisibilityOfAnnotationTypes,
     scope: &mut Scope,
@@ -10629,7 +10629,7 @@ pub fn visibility_of_annotation_types(
 }
 
 /// Write a `VisuallyRightToLeftTable` as its element, `w:bidiVisual`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn visually_right_to_left_table(
     node: &super::VisuallyRightToLeftTable,
     scope: &mut Scope,
@@ -10652,7 +10652,7 @@ pub fn vml_element(
 }
 
 /// Write a `VMLObject` as its element, `w:pict`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn vml_object(node: &super::VMLObject, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::VML_OBJECT_SHAPE, &node.unknown);
@@ -10673,7 +10673,7 @@ pub fn vml_office_drawing_element(
 }
 
 /// Write a `WebHiddenText` as its element, `w:webHidden`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn web_hidden_text(node: &super::WebHiddenText, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::WEB_HIDDEN_TEXT_SHAPE, &node.unknown);
@@ -10682,7 +10682,7 @@ pub fn web_hidden_text(node: &super::WebHiddenText, scope: &mut Scope) -> Elemen
 }
 
 /// Write a `WebPageSettings` as its element, `w:webSettings`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn web_page_settings(node: &super::WebPageSettings, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::WEB_PAGE_SETTINGS_SHAPE, &node.unknown);
@@ -10703,7 +10703,7 @@ pub fn web_page_settings(node: &super::WebPageSettings, scope: &mut Scope) -> El
 }
 
 /// Write a `WriteProtection` as its element, `w:writeProtection`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn write_protection(node: &super::WriteProtection, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::WRITE_PROTECTION_SHAPE, &node.unknown);
@@ -10728,7 +10728,7 @@ pub fn write_protection(node: &super::WriteProtection, scope: &mut Scope) -> Ele
 }
 
 /// Write a `XMLMapping` as its element, `w:dataBinding`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn xml_mapping(node: &super::XMLMapping, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::XML_MAPPING_SHAPE, &node.unknown);

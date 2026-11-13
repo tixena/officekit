@@ -277,7 +277,7 @@ impl<'checks, 'package> PartChecks<'checks, 'package> {
     }
 
     /// The checks of the part `part`, whose part rule is `rule`, reading across parts through `run`.
-    #[must_use]
+    #[must_use = "the result is returned and kept nowhere else"]
     pub const fn new(
         run: &'checks mut Run<'package>,
         part: &'checks PartName,
@@ -576,7 +576,7 @@ impl<'package> Run<'package> {
 
     /// The checks' state for one validation of `package` at `version`;
     /// `parts` are the parts it validates, in the order it reaches them.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn new(
         package: &'package Package,
         version: OfficeVersion,
@@ -977,7 +977,7 @@ fn parse_boolean(text: &str) -> Option<bool> {
 }
 
 /// The semantic constraints registered on an element type, in SDK 3.5.1's order.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn registrations(type_id: TypeId) -> &'static [Registration] {
     let start = SEMANTIC_CONSTRAINTS.partition_point(|row| row.type_id < type_id);
     let end = SEMANTIC_CONSTRAINTS.partition_point(|row| row.type_id <= type_id);

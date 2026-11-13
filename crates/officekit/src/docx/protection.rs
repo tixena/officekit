@@ -117,7 +117,7 @@ fn spin(salt: &[u8], input: &[u8]) -> [u8; 20] {
 
 /// The `w:hash` of the Transitional form: the legacy key's four bytes, little-endian, as eight
 /// upper-case hex digits in UTF-16LE, through [`SPIN_COUNT`] rounds with the salt.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn legacy_hash(password: &str, salt: &[u8]) -> [u8; 20] {
     let input: Vec<u8> = u32_le(legacy_key(password))
         .into_iter()
@@ -131,7 +131,7 @@ pub fn legacy_hash(password: &str, salt: &[u8]) -> [u8; 20] {
 
 /// The `w:hashValue` of the Strict form: the password in UTF-16LE through [`SPIN_COUNT`] rounds
 /// with the salt, with no legacy step. ECMA-376 Part 1, 17.15.1.29, defines it.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn hash(password: &str, salt: &[u8]) -> [u8; 20] {
     let input: Vec<u8> = password.encode_utf16().flat_map(utf16_le).collect();
     spin(salt, &input)
@@ -139,7 +139,7 @@ pub fn hash(password: &str, salt: &[u8]) -> [u8; 20] {
 
 /// The `w:documentProtection` entry. An empty password gives `w:edit` and `w:enforcement` alone:
 /// the restriction, with no password to unlock it.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn entry(
     edit: DocumentProtectionTypesMember,
     password: &str,

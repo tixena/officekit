@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `aanim:animPr` into a `AnimPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn anim_pr(element: &Element) -> super::AnimPr {
     let mut node = super::AnimPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ANIM_PR_SHAPE);
@@ -241,7 +241,7 @@ pub fn anim_pr(element: &Element) -> super::AnimPr {
 }
 
 /// Read `aanim:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);

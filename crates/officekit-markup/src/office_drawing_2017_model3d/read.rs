@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `am3d:ambientLight` into a `AmbientLight`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ambient_light(element: &Element) -> super::AmbientLight {
     let mut node = super::AmbientLight::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::AMBIENT_LIGHT_SHAPE);
@@ -237,7 +237,7 @@ pub fn ambient_light(element: &Element) -> super::AmbientLight {
 }
 
 /// Read `am3d:attrSrcUrl` into a `AttrSrcUrl`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn attr_src_url(element: &Element) -> super::AttrSrcUrl {
     let mut node = super::AttrSrcUrl::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ATTR_SRC_URL_SHAPE);
@@ -251,7 +251,7 @@ pub fn attr_src_url(element: &Element) -> super::AttrSrcUrl {
 }
 
 /// Read `am3d:blip` into a `Blip`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn blip(element: &Element) -> super::Blip {
     let mut node = super::Blip::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BLIP_SHAPE);
@@ -270,7 +270,7 @@ pub fn blip(element: &Element) -> super::Blip {
 }
 
 /// Read `am3d:camera` into a `Camera`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn camera(element: &Element) -> super::Camera {
     let mut node = super::Camera::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CAMERA_SHAPE);
@@ -289,7 +289,7 @@ pub fn camera(element: &Element) -> super::Camera {
 }
 
 /// Read `am3d:clr` into a `Clr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn clr(element: &Element) -> super::Clr {
     let mut node = super::Clr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CLR_SHAPE);
@@ -303,7 +303,7 @@ pub fn clr(element: &Element) -> super::Clr {
 }
 
 /// Read `am3d:dirLight` into a `DirLight`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dir_light(element: &Element) -> super::DirLight {
     let mut node = super::DirLight::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DIR_LIGHT_SHAPE);
@@ -324,7 +324,7 @@ pub fn dir_light(element: &Element) -> super::DirLight {
 }
 
 /// Read `am3d:ext` into a `Ext`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext(element: &Element) -> super::Ext {
     let mut node = super::Ext::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_SHAPE);
@@ -340,7 +340,7 @@ pub fn ext(element: &Element) -> super::Ext {
 }
 
 /// Read `am3d:extLst` into a `ExtLstModel3DExtensionList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst_model3d_extension_list(element: &Element) -> super::ExtLstModel3DExtensionList {
     let mut node = super::ExtLstModel3DExtensionList::default();
     let mut reader =
@@ -355,7 +355,7 @@ pub fn ext_lst_model3d_extension_list(element: &Element) -> super::ExtLstModel3D
 }
 
 /// Read `am3d:extLst` into a `ExtLstOfficeArtExtensionList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst_office_art_extension_list(element: &Element) -> super::ExtLstOfficeArtExtensionList {
     let mut node = super::ExtLstOfficeArtExtensionList::default();
     let mut reader = officekit_markup_base::Reader::new(
@@ -372,7 +372,7 @@ pub fn ext_lst_office_art_extension_list(element: &Element) -> super::ExtLstOffi
 }
 
 /// Read `am3d:illuminance` into a `Illuminance`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn illuminance(element: &Element) -> super::Illuminance {
     let reader = officekit_markup_base::Reader::new(element, &super::ILLUMINANCE_SHAPE);
     super::Illuminance {
@@ -382,7 +382,7 @@ pub fn illuminance(element: &Element) -> super::Illuminance {
 }
 
 /// Read `am3d:intensity` into a `Intensity`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn intensity(element: &Element) -> super::Intensity {
     let reader = officekit_markup_base::Reader::new(element, &super::INTENSITY_SHAPE);
     super::Intensity {
@@ -392,7 +392,7 @@ pub fn intensity(element: &Element) -> super::Intensity {
 }
 
 /// Read `am3d:lookAt` into a `LookAt`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn look_at(element: &Element) -> super::LookAt {
     let mut node = super::LookAt::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LOOK_AT_SHAPE);
@@ -409,7 +409,7 @@ pub fn look_at(element: &Element) -> super::LookAt {
 }
 
 /// Read `am3d:meterPerModelUnit` into a `MeterPerModelUnit`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn meter_per_model_unit(element: &Element) -> super::MeterPerModelUnit {
     let reader = officekit_markup_base::Reader::new(element, &super::METER_PER_MODEL_UNIT_SHAPE);
     super::MeterPerModelUnit {
@@ -419,7 +419,7 @@ pub fn meter_per_model_unit(element: &Element) -> super::MeterPerModelUnit {
 }
 
 /// Read `am3d:model3d` into a `Model3d`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn model3d(element: &Element) -> super::Model3d {
     let mut node = super::Model3d::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MODEL3D_SHAPE);
@@ -444,31 +444,31 @@ pub fn model3d(element: &Element) -> super::Model3d {
 }
 
 /// Read one item of `Model3DCameraContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn model3d_camera(element: &Element) -> super::Model3DCameraContent {
     officekit_markup_base::read(element)
 }
 
 /// Read one item of `Model3DExtensionContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn model3d_extension(element: &Element) -> super::Model3DExtensionContent {
     officekit_markup_base::read(element)
 }
 
 /// Read one item of `Model3DLightContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn model3d_light(element: &Element) -> super::Model3DLightContent {
     officekit_markup_base::read(element)
 }
 
 /// Read one item of `Model3DViewportContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn model3d_viewport(element: &Element) -> super::Model3DViewportContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `am3d:objViewport` into a `ObjViewport`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn obj_viewport(element: &Element) -> super::ObjViewport {
     let mut node = super::ObjViewport::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::OBJ_VIEWPORT_SHAPE);
@@ -484,7 +484,7 @@ pub fn obj_viewport(element: &Element) -> super::ObjViewport {
 }
 
 /// Read `am3d:orthographic` into a `Orthographic`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn orthographic(element: &Element) -> super::Orthographic {
     let mut node = super::Orthographic::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ORTHOGRAPHIC_SHAPE);
@@ -500,7 +500,7 @@ pub fn orthographic(element: &Element) -> super::Orthographic {
 }
 
 /// Read `am3d:perspective` into a `Perspective`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn perspective(element: &Element) -> super::Perspective {
     let mut node = super::Perspective::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PERSPECTIVE_SHAPE);
@@ -516,7 +516,7 @@ pub fn perspective(element: &Element) -> super::Perspective {
 }
 
 /// Read `am3d:pos` into a `Pos`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pos(element: &Element) -> super::Pos {
     let mut node = super::Pos::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::POS_SHAPE);
@@ -533,7 +533,7 @@ pub fn pos(element: &Element) -> super::Pos {
 }
 
 /// Read `am3d:postTrans` into a `PostTrans`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn post_trans(element: &Element) -> super::PostTrans {
     let mut node = super::PostTrans::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::POST_TRANS_SHAPE);
@@ -550,7 +550,7 @@ pub fn post_trans(element: &Element) -> super::PostTrans {
 }
 
 /// Read `am3d:preTrans` into a `PreTrans`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pre_trans(element: &Element) -> super::PreTrans {
     let mut node = super::PreTrans::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PRE_TRANS_SHAPE);
@@ -567,7 +567,7 @@ pub fn pre_trans(element: &Element) -> super::PreTrans {
 }
 
 /// Read `am3d:ptLight` into a `PtLight`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pt_light(element: &Element) -> super::PtLight {
     let mut node = super::PtLight::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PT_LIGHT_SHAPE);
@@ -587,7 +587,7 @@ pub fn pt_light(element: &Element) -> super::PtLight {
 }
 
 /// Read `am3d:raster` into a `Raster`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn raster(element: &Element) -> super::Raster {
     let mut node = super::Raster::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RASTER_SHAPE);
@@ -604,7 +604,7 @@ pub fn raster(element: &Element) -> super::Raster {
 }
 
 /// Read `am3d:rot` into a `Rot`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rot(element: &Element) -> super::Rot {
     let mut node = super::Rot::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ROT_SHAPE);
@@ -621,7 +621,7 @@ pub fn rot(element: &Element) -> super::Rot {
 }
 
 /// Read `am3d:scale` into a `Scale`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scale(element: &Element) -> super::Scale {
     let mut node = super::Scale::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SCALE_SHAPE);
@@ -638,7 +638,7 @@ pub fn scale(element: &Element) -> super::Scale {
 }
 
 /// Read `am3d:spPr` into a `SpPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sp_pr(element: &Element) -> super::SpPr {
     let mut node = super::SpPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SP_PR_SHAPE);
@@ -661,7 +661,7 @@ pub fn sp_pr(element: &Element) -> super::SpPr {
 }
 
 /// Read `am3d:spotLight` into a `SpotLight`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn spot_light(element: &Element) -> super::SpotLight {
     let mut node = super::SpotLight::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SPOT_LIGHT_SHAPE);
@@ -683,7 +683,7 @@ pub fn spot_light(element: &Element) -> super::SpotLight {
 }
 
 /// Read `am3d:sx` into a `Sx`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sx(element: &Element) -> super::Sx {
     let mut node = super::Sx::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SX_SHAPE);
@@ -699,7 +699,7 @@ pub fn sx(element: &Element) -> super::Sx {
 }
 
 /// Read `am3d:sy` into a `Sy`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sy(element: &Element) -> super::Sy {
     let mut node = super::Sy::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SY_SHAPE);
@@ -715,7 +715,7 @@ pub fn sy(element: &Element) -> super::Sy {
 }
 
 /// Read `am3d:sz` into a `SzPositiveRatio`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sz_positive_ratio(element: &Element) -> super::SzPositiveRatio {
     let reader = officekit_markup_base::Reader::new(element, &super::SZ_POSITIVE_RATIO_SHAPE);
     super::SzPositiveRatio {
@@ -725,7 +725,7 @@ pub fn sz_positive_ratio(element: &Element) -> super::SzPositiveRatio {
 }
 
 /// Read `am3d:sz` into a `SzRatio`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sz_ratio(element: &Element) -> super::SzRatio {
     let mut node = super::SzRatio::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SZ_RATIO_SHAPE);
@@ -741,7 +741,7 @@ pub fn sz_ratio(element: &Element) -> super::SzRatio {
 }
 
 /// Read `am3d:trans` into a `Trans`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn trans(element: &Element) -> super::Trans {
     let mut node = super::Trans::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TRANS_SHAPE);
@@ -761,7 +761,7 @@ pub fn trans(element: &Element) -> super::Trans {
 }
 
 /// Read `am3d:unkLight` into a `UnkLight`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn unk_light(element: &Element) -> super::UnkLight {
     let reader = officekit_markup_base::Reader::new(element, &super::UNK_LIGHT_SHAPE);
     super::UnkLight {
@@ -771,7 +771,7 @@ pub fn unk_light(element: &Element) -> super::UnkLight {
 }
 
 /// Read `am3d:up` into a `Up`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn up(element: &Element) -> super::Up {
     let mut node = super::Up::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::UP_SHAPE);
@@ -788,7 +788,7 @@ pub fn up(element: &Element) -> super::Up {
 }
 
 /// Read `am3d:winViewport` into a `WinViewport`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn win_viewport(element: &Element) -> super::WinViewport {
     let mut node = super::WinViewport::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WIN_VIEWPORT_SHAPE);

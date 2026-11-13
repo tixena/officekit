@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `dsp:cNvGrpSpPr` into a `CNvGrpSpPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_grp_sp_pr(element: &Element) -> super::CNvGrpSpPr {
     let mut node = super::CNvGrpSpPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_GRP_SP_PR_SHAPE);
@@ -235,7 +235,7 @@ pub fn c_nv_grp_sp_pr(element: &Element) -> super::CNvGrpSpPr {
 }
 
 /// Read `dsp:cNvPr` into a `CNvPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_pr(element: &Element) -> super::CNvPr {
     let mut node = super::CNvPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_PR_SHAPE);
@@ -257,7 +257,7 @@ pub fn c_nv_pr(element: &Element) -> super::CNvPr {
 }
 
 /// Read `dsp:cNvSpPr` into a `CNvSpPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_sp_pr(element: &Element) -> super::CNvSpPr {
     let mut node = super::CNvSpPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_SP_PR_SHAPE);
@@ -274,7 +274,7 @@ pub fn c_nv_sp_pr(element: &Element) -> super::CNvSpPr {
 }
 
 /// Read `dsp:dataModelExt` into a `DataModelExt`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_model_ext(element: &Element) -> super::DataModelExt {
     let mut node = super::DataModelExt::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_MODEL_EXT_SHAPE);
@@ -290,7 +290,7 @@ pub fn data_model_ext(element: &Element) -> super::DataModelExt {
 }
 
 /// Read `dsp:drawing` into a `Drawing`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drawing(element: &Element) -> super::Drawing {
     let mut node = super::Drawing::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DRAWING_SHAPE);
@@ -304,7 +304,7 @@ pub fn drawing(element: &Element) -> super::Drawing {
 }
 
 /// Read `dsp:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -318,13 +318,13 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read one item of `GroupShapeContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn group_shape(element: &Element) -> super::GroupShapeContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `dsp:grpSp` into a `GrpSp`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn grp_sp(element: &Element) -> super::GrpSp {
     let mut node = super::GrpSp::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GRP_SP_SHAPE);
@@ -342,7 +342,7 @@ pub fn grp_sp(element: &Element) -> super::GrpSp {
 }
 
 /// Read `dsp:grpSpPr` into a `GrpSpPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn grp_sp_pr(element: &Element) -> super::GrpSpPr {
     let mut node = super::GrpSpPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GRP_SP_PR_SHAPE);
@@ -362,7 +362,7 @@ pub fn grp_sp_pr(element: &Element) -> super::GrpSpPr {
 }
 
 /// Read `dsp:nvGrpSpPr` into a `NvGrpSpPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nv_grp_sp_pr(element: &Element) -> super::NvGrpSpPr {
     let mut node = super::NvGrpSpPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NV_GRP_SP_PR_SHAPE);
@@ -378,7 +378,7 @@ pub fn nv_grp_sp_pr(element: &Element) -> super::NvGrpSpPr {
 }
 
 /// Read `dsp:nvSpPr` into a `NvSpPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nv_sp_pr(element: &Element) -> super::NvSpPr {
     let mut node = super::NvSpPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NV_SP_PR_SHAPE);
@@ -394,7 +394,7 @@ pub fn nv_sp_pr(element: &Element) -> super::NvSpPr {
 }
 
 /// Read `dsp:sp` into a `Sp`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sp(element: &Element) -> super::Sp {
     let mut node = super::Sp::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SP_SHAPE);
@@ -415,7 +415,7 @@ pub fn sp(element: &Element) -> super::Sp {
 }
 
 /// Read `dsp:spPr` into a `SpPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sp_pr(element: &Element) -> super::SpPr {
     let mut node = super::SpPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SP_PR_SHAPE);
@@ -438,7 +438,7 @@ pub fn sp_pr(element: &Element) -> super::SpPr {
 }
 
 /// Read `dsp:spTree` into a `SpTree`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sp_tree(element: &Element) -> super::SpTree {
     let mut node = super::SpTree::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SP_TREE_SHAPE);
@@ -456,7 +456,7 @@ pub fn sp_tree(element: &Element) -> super::SpTree {
 }
 
 /// Read `dsp:style` into a `Style`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style(element: &Element) -> super::Style {
     let mut node = super::Style::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::STYLE_SHAPE);
@@ -474,7 +474,7 @@ pub fn style(element: &Element) -> super::Style {
 }
 
 /// Read `dsp:txBody` into a `TxBody`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tx_body(element: &Element) -> super::TxBody {
     let mut node = super::TxBody::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TX_BODY_SHAPE);
@@ -491,7 +491,7 @@ pub fn tx_body(element: &Element) -> super::TxBody {
 }
 
 /// Read `dsp:txXfrm` into a `TxXfrm`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tx_xfrm(element: &Element) -> super::TxXfrm {
     let mut node = super::TxXfrm::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TX_XFRM_SHAPE);

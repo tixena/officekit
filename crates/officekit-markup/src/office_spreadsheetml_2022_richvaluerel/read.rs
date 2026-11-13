@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xlrvrel:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -233,7 +233,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `xlrvrel:rel` into a `Rel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rel(element: &Element) -> super::Rel {
     let mut node = super::Rel::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::REL_SHAPE);
@@ -247,7 +247,7 @@ pub fn rel(element: &Element) -> super::Rel {
 }
 
 /// Read `xlrvrel:richValueRels` into a `RichValueRels`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_value_rels(element: &Element) -> super::RichValueRels {
     let mut node = super::RichValueRels::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RICH_VALUE_RELS_SHAPE);

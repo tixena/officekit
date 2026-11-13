@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `Anchor` as its element, `xvml:Anchor`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn anchor(node: &super::Anchor, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::ANCHOR_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -229,7 +229,7 @@ pub fn anchor(node: &super::Anchor, scope: &mut Scope) -> Element {
 }
 
 /// Write a `AttachedObjectData` as its element, `xvml:ClientData`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn attached_object_data(node: &super::AttachedObjectData, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::ATTACHED_OBJECT_DATA_SHAPE, &node.unknown);
     writer.attribute(0, &node.object_type);
@@ -247,7 +247,7 @@ pub fn attached_object_data_content(
 }
 
 /// Write a `AutoFill` as its element, `xvml:AutoFill`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn auto_fill(node: &super::AutoFill, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::AUTO_FILL_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -255,7 +255,7 @@ pub fn auto_fill(node: &super::AutoFill, scope: &mut Scope) -> Element {
 }
 
 /// Write a `AutoLine` as its element, `xvml:AutoLine`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn auto_line(node: &super::AutoLine, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::AUTO_LINE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -263,7 +263,7 @@ pub fn auto_line(node: &super::AutoLine, scope: &mut Scope) -> Element {
 }
 
 /// Write a `AutomaticallySize` as its element, `xvml:AutoPict`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn automatically_size(node: &super::AutomaticallySize, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::AUTOMATICALLY_SIZE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -271,7 +271,7 @@ pub fn automatically_size(node: &super::AutomaticallySize, scope: &mut Scope) ->
 }
 
 /// Write a `CallbackType` as its element, `xvml:LCT`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn callback_type(node: &super::CallbackType, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::CALLBACK_TYPE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -279,7 +279,7 @@ pub fn callback_type(node: &super::CallbackType, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CameraSourceRange` as its element, `xvml:FmlaPict`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn camera_source_range(node: &super::CameraSourceRange, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::CAMERA_SOURCE_RANGE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -287,7 +287,7 @@ pub fn camera_source_range(node: &super::CameraSourceRange, scope: &mut Scope) -
 }
 
 /// Write a `CameraTool` as its element, `xvml:Camera`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn camera_tool(node: &super::CameraTool, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::CAMERA_TOOL_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -295,7 +295,7 @@ pub fn camera_tool(node: &super::CameraTool, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CancelButton` as its element, `xvml:Cancel`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cancel_button(node: &super::CancelButton, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::CANCEL_BUTTON_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -303,7 +303,7 @@ pub fn cancel_button(node: &super::CancelButton, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Checked` as its element, `xvml:Checked`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn checked(node: &super::Checked, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::CHECKED_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -311,7 +311,7 @@ pub fn checked(node: &super::Checked, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ClipboardFormat` as its element, `xvml:CF`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn clipboard_format(node: &super::ClipboardFormat, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::CLIPBOARD_FORMAT_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -319,7 +319,7 @@ pub fn clipboard_format(node: &super::ClipboardFormat, scope: &mut Scope) -> Ele
 }
 
 /// Write a `CommentColumnTarget` as its element, `xvml:Column`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comment_column_target(node: &super::CommentColumnTarget, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::COMMENT_COLUMN_TARGET_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -327,7 +327,7 @@ pub fn comment_column_target(node: &super::CommentColumnTarget, scope: &mut Scop
 }
 
 /// Write a `CommentRowTarget` as its element, `xvml:Row`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comment_row_target(node: &super::CommentRowTarget, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::COMMENT_ROW_TARGET_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -335,7 +335,7 @@ pub fn comment_row_target(node: &super::CommentRowTarget, scope: &mut Scope) -> 
 }
 
 /// Write a `CommentVisibilityToggle` as its element, `xvml:Visible`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comment_visibility_toggle(
     node: &super::CommentVisibilityToggle,
     scope: &mut Scope,
@@ -350,7 +350,7 @@ pub fn comment_visibility_toggle(
 }
 
 /// Write a `CommentsColumnIsHidden` as its element, `xvml:ColHidden`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comments_column_is_hidden(
     node: &super::CommentsColumnIsHidden,
     scope: &mut Scope,
@@ -365,7 +365,7 @@ pub fn comments_column_is_hidden(
 }
 
 /// Write a `CommentsRowIsHidden` as its element, `xvml:RowHidden`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comments_row_is_hidden(node: &super::CommentsRowIsHidden, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::COMMENTS_ROW_IS_HIDDEN_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -373,7 +373,7 @@ pub fn comments_row_is_hidden(node: &super::CommentsRowIsHidden, scope: &mut Sco
 }
 
 /// Write a `DefaultButton` as its element, `xvml:Default`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn default_button(node: &super::DefaultButton, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::DEFAULT_BUTTON_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -381,7 +381,7 @@ pub fn default_button(node: &super::DefaultButton, scope: &mut Scope) -> Element
 }
 
 /// Write a `DefaultSizeToggle` as its element, `xvml:DefaultSize`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn default_size_toggle(node: &super::DefaultSizeToggle, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::DEFAULT_SIZE_TOGGLE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -389,7 +389,7 @@ pub fn default_size_toggle(node: &super::DefaultSizeToggle, scope: &mut Scope) -
 }
 
 /// Write a `Disable3DNoThreeD` as its element, `xvml:NoThreeD`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn disable3d_no_three_d(node: &super::Disable3DNoThreeD, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::DISABLE3D_NO_THREE_D_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -397,7 +397,7 @@ pub fn disable3d_no_three_d(node: &super::Disable3DNoThreeD, scope: &mut Scope) 
 }
 
 /// Write a `Disable3DNoThreeD2` as its element, `xvml:NoThreeD2`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn disable3d_no_three_d2(node: &super::Disable3DNoThreeD2, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::DISABLE3D_NO_THREE_D2_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -405,7 +405,7 @@ pub fn disable3d_no_three_d2(node: &super::Disable3DNoThreeD2, scope: &mut Scope
 }
 
 /// Write a `DismissButton` as its element, `xvml:Dismiss`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dismiss_button(node: &super::DismissButton, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::DISMISS_BUTTON_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -413,7 +413,7 @@ pub fn dismiss_button(node: &super::DismissButton, scope: &mut Scope) -> Element
 }
 
 /// Write a `DropdownColorToggle` as its element, `xvml:Colored`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dropdown_color_toggle(node: &super::DropdownColorToggle, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::DROPDOWN_COLOR_TOGGLE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -421,7 +421,7 @@ pub fn dropdown_color_toggle(node: &super::DropdownColorToggle, scope: &mut Scop
 }
 
 /// Write a `DropdownMaximumLines` as its element, `xvml:DropLines`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dropdown_maximum_lines(node: &super::DropdownMaximumLines, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::DROPDOWN_MAXIMUM_LINES_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -429,7 +429,7 @@ pub fn dropdown_maximum_lines(node: &super::DropdownMaximumLines, scope: &mut Sc
 }
 
 /// Write a `DropdownStyle` as its element, `xvml:DropStyle`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dropdown_style(node: &super::DropdownStyle, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::DROPDOWN_STYLE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -437,7 +437,7 @@ pub fn dropdown_style(node: &super::DropdownStyle, scope: &mut Scope) -> Element
 }
 
 /// Write a `DynamicDataExchange` as its element, `xvml:DDE`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dynamic_data_exchange(node: &super::DynamicDataExchange, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::DYNAMIC_DATA_EXCHANGE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -445,7 +445,7 @@ pub fn dynamic_data_exchange(node: &super::DynamicDataExchange, scope: &mut Scop
 }
 
 /// Write a `EmbeddedControl` as its element, `xvml:MapOCX`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn embedded_control(node: &super::EmbeddedControl, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::EMBEDDED_CONTROL_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -453,7 +453,7 @@ pub fn embedded_control(node: &super::EmbeddedControl, scope: &mut Scope) -> Ele
 }
 
 /// Write a `FarEastAlignmentToggle` as its element, `xvml:JustLastX`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn far_east_alignment_toggle(
     node: &super::FarEastAlignmentToggle,
     scope: &mut Scope,
@@ -468,7 +468,7 @@ pub fn far_east_alignment_toggle(
 }
 
 /// Write a `FirstRadioButton` as its element, `xvml:FirstButton`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn first_radio_button(node: &super::FirstRadioButton, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::FIRST_RADIO_BUTTON_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -476,7 +476,7 @@ pub fn first_radio_button(node: &super::FirstRadioButton, scope: &mut Scope) -> 
 }
 
 /// Write a `FontAutoScale` as its element, `xvml:AutoScale`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn font_auto_scale(node: &super::FontAutoScale, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::FONT_AUTO_SCALE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -484,7 +484,7 @@ pub fn font_auto_scale(node: &super::FontAutoScale, scope: &mut Scope) -> Elemen
 }
 
 /// Write a `HelpButton` as its element, `xvml:Help`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn help_button(node: &super::HelpButton, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::HELP_BUTTON_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -492,7 +492,7 @@ pub fn help_button(node: &super::HelpButton, scope: &mut Scope) -> Element {
 }
 
 /// Write a `HorizontalTextAlignment` as its element, `xvml:TextHAlign`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn horizontal_text_alignment(
     node: &super::HorizontalTextAlignment,
     scope: &mut Scope,
@@ -507,7 +507,7 @@ pub fn horizontal_text_alignment(
 }
 
 /// Write a `HTMLScriptAttributes` as its element, `xvml:ScriptExtended`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn html_script_attributes(node: &super::HTMLScriptAttributes, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::HTML_SCRIPT_ATTRIBUTES_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -515,7 +515,7 @@ pub fn html_script_attributes(node: &super::HTMLScriptAttributes, scope: &mut Sc
 }
 
 /// Write a `HTMLScriptLanguage` as its element, `xvml:ScriptLanguage`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn html_script_language(node: &super::HTMLScriptLanguage, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::HTML_SCRIPT_LANGUAGE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -523,7 +523,7 @@ pub fn html_script_language(node: &super::HTMLScriptLanguage, scope: &mut Scope)
 }
 
 /// Write a `HTMLScriptLocation` as its element, `xvml:ScriptLocation`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn html_script_location(node: &super::HTMLScriptLocation, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::HTML_SCRIPT_LOCATION_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -531,7 +531,7 @@ pub fn html_script_location(node: &super::HTMLScriptLocation, scope: &mut Scope)
 }
 
 /// Write a `HTMLScriptText` as its element, `xvml:ScriptText`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn html_script_text(node: &super::HTMLScriptText, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::HTML_SCRIPT_TEXT_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -539,7 +539,7 @@ pub fn html_script_text(node: &super::HTMLScriptText, scope: &mut Scope) -> Elem
 }
 
 /// Write a `LinkedFormula` as its element, `xvml:FmlaLink`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn linked_formula(node: &super::LinkedFormula, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::LINKED_FORMULA_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -547,7 +547,7 @@ pub fn linked_formula(node: &super::LinkedFormula, scope: &mut Scope) -> Element
 }
 
 /// Write a `LinkedFormulaGroupBox` as its element, `xvml:FmlaGroup`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn linked_formula_group_box(node: &super::LinkedFormulaGroupBox, scope: &mut Scope) -> Element {
     let mut writer =
         crate::Writer::new(scope, &super::LINKED_FORMULA_GROUP_BOX_SHAPE, &node.unknown);
@@ -556,7 +556,7 @@ pub fn linked_formula_group_box(node: &super::LinkedFormulaGroupBox, scope: &mut
 }
 
 /// Write a `ListItemsSourceRange` as its element, `xvml:FmlaRange`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn list_items_source_range(node: &super::ListItemsSourceRange, scope: &mut Scope) -> Element {
     let mut writer =
         crate::Writer::new(scope, &super::LIST_ITEMS_SOURCE_RANGE_SHAPE, &node.unknown);
@@ -565,7 +565,7 @@ pub fn list_items_source_range(node: &super::ListItemsSourceRange, scope: &mut S
 }
 
 /// Write a `LockToggle` as its element, `xvml:Locked`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn lock_toggle(node: &super::LockToggle, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::LOCK_TOGGLE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -573,7 +573,7 @@ pub fn lock_toggle(node: &super::LockToggle, scope: &mut Scope) -> Element {
 }
 
 /// Write a `MacroDisableToggle` as its element, `xvml:Disabled`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn macro_disable_toggle(node: &super::MacroDisableToggle, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::MACRO_DISABLE_TOGGLE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -581,7 +581,7 @@ pub fn macro_disable_toggle(node: &super::MacroDisableToggle, scope: &mut Scope)
 }
 
 /// Write a `MinimumWidth` as its element, `xvml:WidthMin`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn minimum_width(node: &super::MinimumWidth, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::MINIMUM_WIDTH_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -589,7 +589,7 @@ pub fn minimum_width(node: &super::MinimumWidth, scope: &mut Scope) -> Element {
 }
 
 /// Write a `MoveWithCells` as its element, `xvml:MoveWithCells`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn move_with_cells(node: &super::MoveWithCells, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::MOVE_WITH_CELLS_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -597,7 +597,7 @@ pub fn move_with_cells(node: &super::MoveWithCells, scope: &mut Scope) -> Elemen
 }
 
 /// Write a `MultiLine` as its element, `xvml:MultiLine`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn multi_line(node: &super::MultiLine, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::MULTI_LINE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -605,7 +605,7 @@ pub fn multi_line(node: &super::MultiLine, scope: &mut Scope) -> Element {
 }
 
 /// Write a `MultipleSelections` as its element, `xvml:MultiSel`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn multiple_selections(node: &super::MultipleSelections, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::MULTIPLE_SELECTIONS_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -613,7 +613,7 @@ pub fn multiple_selections(node: &super::MultipleSelections, scope: &mut Scope) 
 }
 
 /// Write a `NonLinkedListItem` as its element, `xvml:ListItem`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_linked_list_item(node: &super::NonLinkedListItem, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::NON_LINKED_LIST_ITEM_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -621,7 +621,7 @@ pub fn non_linked_list_item(node: &super::NonLinkedListItem, scope: &mut Scope) 
 }
 
 /// Write a `PasswordEdit` as its element, `xvml:SecretEdit`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn password_edit(node: &super::PasswordEdit, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::PASSWORD_EDIT_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -629,7 +629,7 @@ pub fn password_edit(node: &super::PasswordEdit, scope: &mut Scope) -> Element {
 }
 
 /// Write a `PrimaryKeyboardAccelerator` as its element, `xvml:Accel`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn primary_keyboard_accelerator(
     node: &super::PrimaryKeyboardAccelerator,
     scope: &mut Scope,
@@ -644,7 +644,7 @@ pub fn primary_keyboard_accelerator(
 }
 
 /// Write a `PrintToggle` as its element, `xvml:PrintObject`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn print_toggle(node: &super::PrintToggle, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::PRINT_TOGGLE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -652,7 +652,7 @@ pub fn print_toggle(node: &super::PrintToggle, scope: &mut Scope) -> Element {
 }
 
 /// Write a `RecalculationToggle` as its element, `xvml:RecalcAlways`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn recalculation_toggle(node: &super::RecalculationToggle, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::RECALCULATION_TOGGLE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -660,7 +660,7 @@ pub fn recalculation_toggle(node: &super::RecalculationToggle, scope: &mut Scope
 }
 
 /// Write a `ReferenceToCustomFunction` as its element, `xvml:FmlaMacro`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn reference_to_custom_function(
     node: &super::ReferenceToCustomFunction,
     scope: &mut Scope,
@@ -675,7 +675,7 @@ pub fn reference_to_custom_function(
 }
 
 /// Write a `ResizeWithCells` as its element, `xvml:SizeWithCells`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn resize_with_cells(node: &super::ResizeWithCells, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::RESIZE_WITH_CELLS_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -683,7 +683,7 @@ pub fn resize_with_cells(node: &super::ResizeWithCells, scope: &mut Scope) -> El
 }
 
 /// Write a `ScrollBarIncrement` as its element, `xvml:Inc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn scroll_bar_increment(node: &super::ScrollBarIncrement, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::SCROLL_BAR_INCREMENT_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -691,7 +691,7 @@ pub fn scroll_bar_increment(node: &super::ScrollBarIncrement, scope: &mut Scope)
 }
 
 /// Write a `ScrollBarMaximum` as its element, `xvml:Max`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn scroll_bar_maximum(node: &super::ScrollBarMaximum, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::SCROLL_BAR_MAXIMUM_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -699,7 +699,7 @@ pub fn scroll_bar_maximum(node: &super::ScrollBarMaximum, scope: &mut Scope) -> 
 }
 
 /// Write a `ScrollBarMinimum` as its element, `xvml:Min`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn scroll_bar_minimum(node: &super::ScrollBarMinimum, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::SCROLL_BAR_MINIMUM_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -707,7 +707,7 @@ pub fn scroll_bar_minimum(node: &super::ScrollBarMinimum, scope: &mut Scope) -> 
 }
 
 /// Write a `ScrollBarOrientation` as its element, `xvml:Horiz`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn scroll_bar_orientation(node: &super::ScrollBarOrientation, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::SCROLL_BAR_ORIENTATION_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -715,7 +715,7 @@ pub fn scroll_bar_orientation(node: &super::ScrollBarOrientation, scope: &mut Sc
 }
 
 /// Write a `ScrollBarPageIncrement` as its element, `xvml:Page`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn scroll_bar_page_increment(
     node: &super::ScrollBarPageIncrement,
     scope: &mut Scope,
@@ -730,7 +730,7 @@ pub fn scroll_bar_page_increment(
 }
 
 /// Write a `ScrollBarPosition` as its element, `xvml:Val`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn scroll_bar_position(node: &super::ScrollBarPosition, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::SCROLL_BAR_POSITION_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -738,7 +738,7 @@ pub fn scroll_bar_position(node: &super::ScrollBarPosition, scope: &mut Scope) -
 }
 
 /// Write a `ScrollBarWidth` as its element, `xvml:Dx`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn scroll_bar_width(node: &super::ScrollBarWidth, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::SCROLL_BAR_WIDTH_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -746,7 +746,7 @@ pub fn scroll_bar_width(node: &super::ScrollBarWidth, scope: &mut Scope) -> Elem
 }
 
 /// Write a `SecondaryKeyboardAccelerator` as its element, `xvml:Accel2`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn secondary_keyboard_accelerator(
     node: &super::SecondaryKeyboardAccelerator,
     scope: &mut Scope,
@@ -761,7 +761,7 @@ pub fn secondary_keyboard_accelerator(
 }
 
 /// Write a `SelectedEntry` as its element, `xvml:Sel`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn selected_entry(node: &super::SelectedEntry, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::SELECTED_ENTRY_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -769,7 +769,7 @@ pub fn selected_entry(node: &super::SelectedEntry, scope: &mut Scope) -> Element
 }
 
 /// Write a `SelectionType` as its element, `xvml:SelType`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn selection_type(node: &super::SelectionType, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::SELECTION_TYPE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -777,7 +777,7 @@ pub fn selection_type(node: &super::SelectionType, scope: &mut Scope) -> Element
 }
 
 /// Write a `TextFormula` as its element, `xvml:FmlaTxbx`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_formula(node: &super::TextFormula, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::TEXT_FORMULA_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -785,7 +785,7 @@ pub fn text_formula(node: &super::TextFormula, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TextLock` as its element, `xvml:LockText`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_lock(node: &super::TextLock, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::TEXT_LOCK_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -793,7 +793,7 @@ pub fn text_lock(node: &super::TextLock, scope: &mut Scope) -> Element {
 }
 
 /// Write a `UIObjectToggle` as its element, `xvml:UIObj`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ui_object_toggle(node: &super::UIObjectToggle, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::UI_OBJECT_TOGGLE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -801,7 +801,7 @@ pub fn ui_object_toggle(node: &super::UIObjectToggle, scope: &mut Scope) -> Elem
 }
 
 /// Write a `ValidID` as its element, `xvml:ValidIds`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn valid_id(node: &super::ValidID, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::VALID_ID_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -809,7 +809,7 @@ pub fn valid_id(node: &super::ValidID, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ValidationType` as its element, `xvml:VTEdit`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn validation_type(node: &super::ValidationType, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::VALIDATION_TYPE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -817,7 +817,7 @@ pub fn validation_type(node: &super::ValidationType, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `VerticalScroll` as its element, `xvml:VScroll`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn vertical_scroll(node: &super::VerticalScroll, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::VERTICAL_SCROLL_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -825,7 +825,7 @@ pub fn vertical_scroll(node: &super::VerticalScroll, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `VerticalTextAlignment` as its element, `xvml:TextVAlign`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn vertical_text_alignment(node: &super::VerticalTextAlignment, scope: &mut Scope) -> Element {
     let mut writer =
         crate::Writer::new(scope, &super::VERTICAL_TEXT_ALIGNMENT_SHAPE, &node.unknown);

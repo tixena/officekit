@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `AnimPr` as its element, `aanim:animPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn anim_pr(node: &super::AnimPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ANIM_PR_SHAPE, &node.unknown);
@@ -236,7 +236,7 @@ pub fn anim_pr(node: &super::AnimPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ExtLst` as its element, `aanim:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);

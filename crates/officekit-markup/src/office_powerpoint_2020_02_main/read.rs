@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `p202:designPr` into a `DesignPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn design_pr(element: &Element) -> super::DesignPr {
     let mut node = super::DesignPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DESIGN_PR_SHAPE);
@@ -236,7 +236,7 @@ pub fn design_pr(element: &Element) -> super::DesignPr {
 }
 
 /// Read `p202:designTag` into a `DesignTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn design_tag(element: &Element) -> super::DesignTag {
     let mut node = super::DesignTag::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DESIGN_TAG_SHAPE);
@@ -252,7 +252,7 @@ pub fn design_tag(element: &Element) -> super::DesignTag {
 }
 
 /// Read `p202:designTagLst` into a `DesignTagLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn design_tag_lst(element: &Element) -> super::DesignTagLst {
     let mut node = super::DesignTagLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DESIGN_TAG_LST_SHAPE);
@@ -266,7 +266,7 @@ pub fn design_tag_lst(element: &Element) -> super::DesignTagLst {
 }
 
 /// Read `p202:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);

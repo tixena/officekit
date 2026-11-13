@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `DesignPr` as its element, `p202:designPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn design_pr(node: &super::DesignPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DESIGN_PR_SHAPE, &node.unknown);
@@ -231,7 +231,7 @@ pub fn design_pr(node: &super::DesignPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `DesignTag` as its element, `p202:designTag`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn design_tag(node: &super::DesignTag, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DESIGN_TAG_SHAPE, &node.unknown);
@@ -241,7 +241,7 @@ pub fn design_tag(node: &super::DesignTag, scope: &mut Scope) -> Element {
 }
 
 /// Write a `DesignTagLst` as its element, `p202:designTagLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn design_tag_lst(node: &super::DesignTagLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DESIGN_TAG_LST_SHAPE, &node.unknown);
@@ -250,7 +250,7 @@ pub fn design_tag_lst(node: &super::DesignTagLst, scope: &mut Scope) -> Element 
 }
 
 /// Write a `ExtLst` as its element, `p202:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);

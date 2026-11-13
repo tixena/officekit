@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `Author` as its element, `p188:author`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn author(node: &super::Author, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::AUTHOR_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
@@ -234,7 +234,7 @@ pub fn author(node: &super::Author, scope: &mut Scope) -> Element {
 }
 
 /// Write a `AuthorLst` as its element, `p188:authorLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn author_lst(node: &super::AuthorLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::AUTHOR_LST_SHAPE, &node.unknown);
@@ -243,7 +243,7 @@ pub fn author_lst(node: &super::AuthorLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Cm` as its element, `p188:cm`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cm(node: &super::Cm, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::CM_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
@@ -267,7 +267,7 @@ pub fn cm(node: &super::Cm, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CmLst` as its element, `p188:cmLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cm_lst(node: &super::CmLst, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::CM_LST_SHAPE, &node.unknown);
     writer.child(&node.cm);
@@ -280,7 +280,7 @@ pub fn comment(node: &super::CommentContent, writer: &mut officekit_markup_base:
 }
 
 /// Write a `CommentRel` as its element, `p188:commentRel`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comment_rel(node: &super::CommentRel, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::COMMENT_REL_SHAPE, &node.unknown);
@@ -289,7 +289,7 @@ pub fn comment_rel(node: &super::CommentRel, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ExtLstCommentPropertiesExtensionList` as its element, `p188:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst_comment_properties_extension_list(
     node: &super::ExtLstCommentPropertiesExtensionList,
     scope: &mut Scope,
@@ -304,7 +304,7 @@ pub fn ext_lst_comment_properties_extension_list(
 }
 
 /// Write a `ExtLstExtensionList` as its element, `p188:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst_extension_list(node: &super::ExtLstExtensionList, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -316,7 +316,7 @@ pub fn ext_lst_extension_list(node: &super::ExtLstExtensionList, scope: &mut Sco
 }
 
 /// Write a `Pos` as its element, `p188:pos`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pos(node: &super::Pos, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::POS_SHAPE, &node.unknown);
     writer.attribute(0, &node.x);
@@ -325,7 +325,7 @@ pub fn pos(node: &super::Pos, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Reply` as its element, `p188:reply`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn reply(node: &super::Reply, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::REPLY_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
@@ -340,7 +340,7 @@ pub fn reply(node: &super::Reply, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ReplyLst` as its element, `p188:replyLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn reply_lst(node: &super::ReplyLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::REPLY_LST_SHAPE, &node.unknown);
@@ -349,7 +349,7 @@ pub fn reply_lst(node: &super::ReplyLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TxBody` as its element, `p188:txBody`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tx_body(node: &super::TxBody, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TX_BODY_SHAPE, &node.unknown);
@@ -360,7 +360,7 @@ pub fn tx_body(node: &super::TxBody, scope: &mut Scope) -> Element {
 }
 
 /// Write a `UnknownAnchor` as its element, `p188:unknownAnchor`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn unknown_anchor(node: &super::UnknownAnchor, scope: &mut Scope) -> Element {
     officekit_markup_base::Writer::new(scope, &super::UNKNOWN_ANCHOR_SHAPE, &node.unknown).finish()
 }

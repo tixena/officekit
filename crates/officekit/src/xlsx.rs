@@ -106,7 +106,7 @@ struct IsoDates {
 
 impl Xlsx {
     /// The class the file was read in, the class every store through it writes.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn conformance_class(&self) -> ConformanceClass {
         self.class
     }
@@ -168,7 +168,7 @@ impl Xlsx {
     }
 
     /// The kind its main part's content type names.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn kind(&self) -> SpreadsheetKind {
         self.kind
     }
@@ -208,13 +208,13 @@ impl Xlsx {
     }
 
     /// The options every typed read of this file applies.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn options(&self) -> OpenOptions {
         self.options
     }
 
     /// The package, whose parts the generated part modules' `load` and `store_*` read and write.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn package(&self) -> &Package {
         &self.package
     }
@@ -415,7 +415,7 @@ impl Xlsx {
     }
 
     /// The workbook part, the one the `officeDocument` relationship names.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn workbook_part(&self) -> &PartName {
         &self.main
     }

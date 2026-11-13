@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `cx:address` into a `Address`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn address(element: &Element) -> super::Address {
     let mut node = super::Address::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ADDRESS_SHAPE);
@@ -240,7 +240,7 @@ pub fn address(element: &Element) -> super::Address {
 }
 
 /// Read `cx:aggregation` into a `Aggregation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn aggregation(element: &Element) -> super::Aggregation {
     let reader = officekit_markup_base::Reader::new(element, &super::AGGREGATION_SHAPE);
     super::Aggregation {
@@ -250,7 +250,7 @@ pub fn aggregation(element: &Element) -> super::Aggregation {
 }
 
 /// Read `cx:axis` into a `Axis`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn axis(element: &Element) -> super::Axis {
     let mut node = super::Axis::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::AXIS_SHAPE);
@@ -278,13 +278,13 @@ pub fn axis(element: &Element) -> super::Axis {
 }
 
 /// Read one item of `AxisContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn axis_content(element: &Element) -> super::AxisContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `cx:axisId` into a `AxisId`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn axis_id(element: &Element) -> super::AxisId {
     let mut node = super::AxisId::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::AXIS_ID_SHAPE);
@@ -298,7 +298,7 @@ pub fn axis_id(element: &Element) -> super::AxisId {
 }
 
 /// Read `cx:binCount` into a `BinCount`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bin_count(element: &Element) -> super::BinCount {
     let mut node = super::BinCount::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BIN_COUNT_SHAPE);
@@ -312,7 +312,7 @@ pub fn bin_count(element: &Element) -> super::BinCount {
 }
 
 /// Read `cx:binSize` into a `BinSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bin_size(element: &Element) -> super::BinSize {
     let mut node = super::BinSize::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BIN_SIZE_SHAPE);
@@ -326,7 +326,7 @@ pub fn bin_size(element: &Element) -> super::BinSize {
 }
 
 /// Read `cx:binary` into a `Binary`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn binary(element: &Element) -> super::Binary {
     let mut node = super::Binary::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BINARY_SHAPE);
@@ -340,7 +340,7 @@ pub fn binary(element: &Element) -> super::Binary {
 }
 
 /// Read `cx:binning` into a `Binning`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn binning(element: &Element) -> super::Binning {
     let mut node = super::Binning::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BINNING_SHAPE);
@@ -358,13 +358,13 @@ pub fn binning(element: &Element) -> super::Binning {
 }
 
 /// Read one item of `BinningContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn binning_content(element: &Element) -> super::BinningContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `cx:catScaling` into a `CatScaling`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cat_scaling(element: &Element) -> super::CatScaling {
     let mut node = super::CatScaling::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CAT_SCALING_SHAPE);
@@ -378,7 +378,7 @@ pub fn cat_scaling(element: &Element) -> super::CatScaling {
 }
 
 /// Read `cx:chart` into a `ChartChart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn chart_chart(element: &Element) -> super::ChartChart {
     let mut node = super::ChartChart::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CHART_CHART_SHAPE);
@@ -396,7 +396,7 @@ pub fn chart_chart(element: &Element) -> super::ChartChart {
 }
 
 /// Read `cx:chartData` into a `ChartData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn chart_data(element: &Element) -> super::ChartData {
     let mut node = super::ChartData::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CHART_DATA_SHAPE);
@@ -413,7 +413,7 @@ pub fn chart_data(element: &Element) -> super::ChartData {
 }
 
 /// Read `cx:chart` into a `ChartRelId`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn chart_rel_id(element: &Element) -> super::ChartRelId {
     let mut node = super::ChartRelId::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CHART_REL_ID_SHAPE);
@@ -427,7 +427,7 @@ pub fn chart_rel_id(element: &Element) -> super::ChartRelId {
 }
 
 /// Read `cx:chartSpace` into a `ChartSpace`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn chart_space(element: &Element) -> super::ChartSpace {
     let mut node = super::ChartSpace::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CHART_SPACE_SHAPE);
@@ -452,7 +452,7 @@ pub fn chart_space(element: &Element) -> super::ChartSpace {
 }
 
 /// Read `cx:clear` into a `Clear`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn clear(element: &Element) -> super::Clear {
     let mut node = super::Clear::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CLEAR_SHAPE);
@@ -471,7 +471,7 @@ pub fn clear(element: &Element) -> super::Clear {
 }
 
 /// Read `cx:clrMapOvr` into a `ClrMapOvr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn clr_map_ovr(element: &Element) -> super::ClrMapOvr {
     let mut node = super::ClrMapOvr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CLR_MAP_OVR_SHAPE);
@@ -498,7 +498,7 @@ pub fn clr_map_ovr(element: &Element) -> super::ClrMapOvr {
 }
 
 /// Read `cx:copyright` into a `Copyright`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn copyright(element: &Element) -> super::Copyright {
     let mut node = super::Copyright::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COPYRIGHT_SHAPE);
@@ -512,7 +512,7 @@ pub fn copyright(element: &Element) -> super::Copyright {
 }
 
 /// Read `cx:copyrights` into a `Copyrights`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn copyrights(element: &Element) -> super::Copyrights {
     let mut node = super::Copyrights::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COPYRIGHTS_SHAPE);
@@ -526,7 +526,7 @@ pub fn copyrights(element: &Element) -> super::Copyrights {
 }
 
 /// Read `cx:data` into a `Data`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data(element: &Element) -> super::Data {
     let mut node = super::Data::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_SHAPE);
@@ -543,13 +543,13 @@ pub fn data(element: &Element) -> super::Data {
 }
 
 /// Read one item of `DataContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn data_content(element: &Element) -> super::DataContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `cx:dataId` into a `DataId`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_id(element: &Element) -> super::DataId {
     let mut node = super::DataId::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_ID_SHAPE);
@@ -563,7 +563,7 @@ pub fn data_id(element: &Element) -> super::DataId {
 }
 
 /// Read `cx:dataLabel` into a `DataLabel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_label(element: &Element) -> super::DataLabel {
     let mut node = super::DataLabel::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_LABEL_SHAPE);
@@ -585,7 +585,7 @@ pub fn data_label(element: &Element) -> super::DataLabel {
 }
 
 /// Read `cx:dataLabelHidden` into a `DataLabelHidden`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_label_hidden(element: &Element) -> super::DataLabelHidden {
     let mut node = super::DataLabelHidden::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_LABEL_HIDDEN_SHAPE);
@@ -599,7 +599,7 @@ pub fn data_label_hidden(element: &Element) -> super::DataLabelHidden {
 }
 
 /// Read `cx:dataLabels` into a `DataLabels`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_labels(element: &Element) -> super::DataLabels {
     let mut node = super::DataLabels::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_LABELS_SHAPE);
@@ -622,7 +622,7 @@ pub fn data_labels(element: &Element) -> super::DataLabels {
 }
 
 /// Read `cx:dataPt` into a `DataPt`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_pt(element: &Element) -> super::DataPt {
     let mut node = super::DataPt::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_PT_SHAPE);
@@ -639,7 +639,7 @@ pub fn data_pt(element: &Element) -> super::DataPt {
 }
 
 /// Read `cx:entityType` into a `EntityType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn entity_type(element: &Element) -> super::EntityType {
     let mut node = super::EntityType::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ENTITY_TYPE_SHAPE);
@@ -653,7 +653,7 @@ pub fn entity_type(element: &Element) -> super::EntityType {
 }
 
 /// Read `cx:evenFooter` into a `EvenFooter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn even_footer(element: &Element) -> super::EvenFooter {
     let mut node = super::EvenFooter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EVEN_FOOTER_SHAPE);
@@ -667,7 +667,7 @@ pub fn even_footer(element: &Element) -> super::EvenFooter {
 }
 
 /// Read `cx:evenHeader` into a `EvenHeader`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn even_header(element: &Element) -> super::EvenHeader {
     let mut node = super::EvenHeader::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EVEN_HEADER_SHAPE);
@@ -681,7 +681,7 @@ pub fn even_header(element: &Element) -> super::EvenHeader {
 }
 
 /// Read `cx:ext` into a `Ext`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext(element: &Element) -> super::Ext {
     let mut node = super::Ext::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_SHAPE);
@@ -697,7 +697,7 @@ pub fn ext(element: &Element) -> super::Ext {
 }
 
 /// Read `cx:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -711,7 +711,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `cx:externalData` into a `ExternalData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn external_data(element: &Element) -> super::ExternalData {
     let mut node = super::ExternalData::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXTERNAL_DATA_SHAPE);
@@ -727,7 +727,7 @@ pub fn external_data(element: &Element) -> super::ExternalData {
 }
 
 /// Read `cx:extremeValue` into a `ExtremeValue`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn extreme_value(element: &Element) -> super::ExtremeValue {
     let reader = officekit_markup_base::Reader::new(element, &super::EXTREME_VALUE_SHAPE);
     super::ExtremeValue {
@@ -737,7 +737,7 @@ pub fn extreme_value(element: &Element) -> super::ExtremeValue {
 }
 
 /// Read `cx:f` into a `F`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn f(element: &Element) -> super::F {
     let mut node = super::F::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::F_SHAPE);
@@ -751,7 +751,7 @@ pub fn f(element: &Element) -> super::F {
 }
 
 /// Read `cx:firstFooter` into a `FirstFooter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn first_footer(element: &Element) -> super::FirstFooter {
     let mut node = super::FirstFooter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FIRST_FOOTER_SHAPE);
@@ -765,7 +765,7 @@ pub fn first_footer(element: &Element) -> super::FirstFooter {
 }
 
 /// Read `cx:firstHeader` into a `FirstHeader`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn first_header(element: &Element) -> super::FirstHeader {
     let mut node = super::FirstHeader::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FIRST_HEADER_SHAPE);
@@ -779,7 +779,7 @@ pub fn first_header(element: &Element) -> super::FirstHeader {
 }
 
 /// Read `cx:fmtOvr` into a `FmtOvr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn fmt_ovr(element: &Element) -> super::FmtOvr {
     let mut node = super::FmtOvr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FMT_OVR_SHAPE);
@@ -796,7 +796,7 @@ pub fn fmt_ovr(element: &Element) -> super::FmtOvr {
 }
 
 /// Read `cx:fmtOvrs` into a `FmtOvrs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn fmt_ovrs(element: &Element) -> super::FmtOvrs {
     let mut node = super::FmtOvrs::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FMT_OVRS_SHAPE);
@@ -810,7 +810,7 @@ pub fn fmt_ovrs(element: &Element) -> super::FmtOvrs {
 }
 
 /// Read `cx:geoCache` into a `GeoCache`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_cache(element: &Element) -> super::GeoCache {
     let mut node = super::GeoCache::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GEO_CACHE_SHAPE);
@@ -826,7 +826,7 @@ pub fn geo_cache(element: &Element) -> super::GeoCache {
 }
 
 /// Read `cx:geoChildEntities` into a `GeoChildEntities`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_child_entities(element: &Element) -> super::GeoChildEntities {
     let mut node = super::GeoChildEntities::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GEO_CHILD_ENTITIES_SHAPE);
@@ -840,7 +840,7 @@ pub fn geo_child_entities(element: &Element) -> super::GeoChildEntities {
 }
 
 /// Read `cx:geoChildEntitiesQuery` into a `GeoChildEntitiesQuery`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_child_entities_query(element: &Element) -> super::GeoChildEntitiesQuery {
     let mut node = super::GeoChildEntitiesQuery::default();
     let mut reader =
@@ -857,7 +857,7 @@ pub fn geo_child_entities_query(element: &Element) -> super::GeoChildEntitiesQue
 }
 
 /// Read `cx:geoChildEntitiesQueryResult` into a `GeoChildEntitiesQueryResult`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_child_entities_query_result(element: &Element) -> super::GeoChildEntitiesQueryResult {
     let mut node = super::GeoChildEntitiesQueryResult::default();
     let mut reader =
@@ -874,7 +874,7 @@ pub fn geo_child_entities_query_result(element: &Element) -> super::GeoChildEnti
 }
 
 /// Read `cx:geoChildEntitiesQueryResults` into a `GeoChildEntitiesQueryResults`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_child_entities_query_results(element: &Element) -> super::GeoChildEntitiesQueryResults {
     let mut node = super::GeoChildEntitiesQueryResults::default();
     let mut reader =
@@ -889,7 +889,7 @@ pub fn geo_child_entities_query_results(element: &Element) -> super::GeoChildEnt
 }
 
 /// Read `cx:geoChildTypes` into a `GeoChildTypes`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_child_types(element: &Element) -> super::GeoChildTypes {
     let mut node = super::GeoChildTypes::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GEO_CHILD_TYPES_SHAPE);
@@ -903,7 +903,7 @@ pub fn geo_child_types(element: &Element) -> super::GeoChildTypes {
 }
 
 /// Read `cx:geoData` into a `GeoData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_data(element: &Element) -> super::GeoData {
     let mut node = super::GeoData::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GEO_DATA_SHAPE);
@@ -925,7 +925,7 @@ pub fn geo_data(element: &Element) -> super::GeoData {
 }
 
 /// Read `cx:geoDataEntityQuery` into a `GeoDataEntityQuery`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_data_entity_query(element: &Element) -> super::GeoDataEntityQuery {
     let mut node = super::GeoDataEntityQuery::default();
     let mut reader =
@@ -942,7 +942,7 @@ pub fn geo_data_entity_query(element: &Element) -> super::GeoDataEntityQuery {
 }
 
 /// Read `cx:geoDataEntityQueryResult` into a `GeoDataEntityQueryResult`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_data_entity_query_result(element: &Element) -> super::GeoDataEntityQueryResult {
     let mut node = super::GeoDataEntityQueryResult::default();
     let mut reader =
@@ -959,7 +959,7 @@ pub fn geo_data_entity_query_result(element: &Element) -> super::GeoDataEntityQu
 }
 
 /// Read `cx:geoDataEntityQueryResults` into a `GeoDataEntityQueryResults`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_data_entity_query_results(element: &Element) -> super::GeoDataEntityQueryResults {
     let mut node = super::GeoDataEntityQueryResults::default();
     let mut reader =
@@ -974,7 +974,7 @@ pub fn geo_data_entity_query_results(element: &Element) -> super::GeoDataEntityQ
 }
 
 /// Read `cx:geoDataPointQuery` into a `GeoDataPointQuery`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_data_point_query(element: &Element) -> super::GeoDataPointQuery {
     let mut node = super::GeoDataPointQuery::default();
     let mut reader =
@@ -992,7 +992,7 @@ pub fn geo_data_point_query(element: &Element) -> super::GeoDataPointQuery {
 }
 
 /// Read `cx:geoDataPointToEntityQuery` into a `GeoDataPointToEntityQuery`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_data_point_to_entity_query(element: &Element) -> super::GeoDataPointToEntityQuery {
     let mut node = super::GeoDataPointToEntityQuery::default();
     let mut reader =
@@ -1009,7 +1009,7 @@ pub fn geo_data_point_to_entity_query(element: &Element) -> super::GeoDataPointT
 }
 
 /// Read `cx:geoDataPointToEntityQueryResult` into a `GeoDataPointToEntityQueryResult`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_data_point_to_entity_query_result(
     element: &Element,
 ) -> super::GeoDataPointToEntityQueryResult {
@@ -1030,7 +1030,7 @@ pub fn geo_data_point_to_entity_query_result(
 }
 
 /// Read `cx:geoDataPointToEntityQueryResults` into a `GeoDataPointToEntityQueryResults`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_data_point_to_entity_query_results(
     element: &Element,
 ) -> super::GeoDataPointToEntityQueryResults {
@@ -1049,7 +1049,7 @@ pub fn geo_data_point_to_entity_query_results(
 }
 
 /// Read `cx:geoEntity` into a `GeoEntity`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_entity(element: &Element) -> super::GeoEntity {
     let mut node = super::GeoEntity::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GEO_ENTITY_SHAPE);
@@ -1065,7 +1065,7 @@ pub fn geo_entity(element: &Element) -> super::GeoEntity {
 }
 
 /// Read `cx:geoHierarchyEntity` into a `GeoHierarchyEntity`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_hierarchy_entity(element: &Element) -> super::GeoHierarchyEntity {
     let mut node = super::GeoHierarchyEntity::default();
     let mut reader =
@@ -1083,7 +1083,7 @@ pub fn geo_hierarchy_entity(element: &Element) -> super::GeoHierarchyEntity {
 }
 
 /// Read `cx:geoLocation` into a `GeoLocation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_location(element: &Element) -> super::GeoLocation {
     let mut node = super::GeoLocation::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GEO_LOCATION_SHAPE);
@@ -1102,7 +1102,7 @@ pub fn geo_location(element: &Element) -> super::GeoLocation {
 }
 
 /// Read `cx:geoLocationQuery` into a `GeoLocationQuery`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_location_query(element: &Element) -> super::GeoLocationQuery {
     let mut node = super::GeoLocationQuery::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GEO_LOCATION_QUERY_SHAPE);
@@ -1121,7 +1121,7 @@ pub fn geo_location_query(element: &Element) -> super::GeoLocationQuery {
 }
 
 /// Read `cx:geoLocationQueryResult` into a `GeoLocationQueryResult`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_location_query_result(element: &Element) -> super::GeoLocationQueryResult {
     let mut node = super::GeoLocationQueryResult::default();
     let mut reader =
@@ -1138,7 +1138,7 @@ pub fn geo_location_query_result(element: &Element) -> super::GeoLocationQueryRe
 }
 
 /// Read `cx:geoLocationQueryResults` into a `GeoLocationQueryResults`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_location_query_results(element: &Element) -> super::GeoLocationQueryResults {
     let mut node = super::GeoLocationQueryResults::default();
     let mut reader =
@@ -1153,7 +1153,7 @@ pub fn geo_location_query_results(element: &Element) -> super::GeoLocationQueryR
 }
 
 /// Read `cx:geoLocations` into a `GeoLocations`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_locations(element: &Element) -> super::GeoLocations {
     let mut node = super::GeoLocations::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GEO_LOCATIONS_SHAPE);
@@ -1167,7 +1167,7 @@ pub fn geo_locations(element: &Element) -> super::GeoLocations {
 }
 
 /// Read `cx:geoParentEntitiesQuery` into a `GeoParentEntitiesQuery`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_parent_entities_query(element: &Element) -> super::GeoParentEntitiesQuery {
     let mut node = super::GeoParentEntitiesQuery::default();
     let mut reader =
@@ -1182,7 +1182,7 @@ pub fn geo_parent_entities_query(element: &Element) -> super::GeoParentEntitiesQ
 }
 
 /// Read `cx:geoParentEntitiesQueryResult` into a `GeoParentEntitiesQueryResult`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_parent_entities_query_result(element: &Element) -> super::GeoParentEntitiesQueryResult {
     let mut node = super::GeoParentEntitiesQueryResult::default();
     let mut reader =
@@ -1200,7 +1200,7 @@ pub fn geo_parent_entities_query_result(element: &Element) -> super::GeoParentEn
 }
 
 /// Read `cx:geoParentEntitiesQueryResults` into a `GeoParentEntitiesQueryResults`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_parent_entities_query_results(
     element: &Element,
 ) -> super::GeoParentEntitiesQueryResults {
@@ -1219,7 +1219,7 @@ pub fn geo_parent_entities_query_results(
 }
 
 /// Read `cx:geoParentEntity` into a `GeoParentEntity`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_parent_entity(element: &Element) -> super::GeoParentEntity {
     let mut node = super::GeoParentEntity::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GEO_PARENT_ENTITY_SHAPE);
@@ -1233,7 +1233,7 @@ pub fn geo_parent_entity(element: &Element) -> super::GeoParentEntity {
 }
 
 /// Read `cx:geoPolygon` into a `GeoPolygon`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_polygon(element: &Element) -> super::GeoPolygon {
     let mut node = super::GeoPolygon::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GEO_POLYGON_SHAPE);
@@ -1250,7 +1250,7 @@ pub fn geo_polygon(element: &Element) -> super::GeoPolygon {
 }
 
 /// Read `cx:geoPolygons` into a `GeoPolygons`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geo_polygons(element: &Element) -> super::GeoPolygons {
     let mut node = super::GeoPolygons::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GEO_POLYGONS_SHAPE);
@@ -1264,7 +1264,7 @@ pub fn geo_polygons(element: &Element) -> super::GeoPolygons {
 }
 
 /// Read `cx:geography` into a `Geography`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn geography(element: &Element) -> super::Geography {
     let mut node = super::Geography::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GEOGRAPHY_SHAPE);
@@ -1284,13 +1284,13 @@ pub fn geography(element: &Element) -> super::Geography {
 }
 
 /// Read one item of `GeographyCacheContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn geography_cache(element: &Element) -> super::GeographyCacheContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `cx:headerFooter` into a `HeaderFooter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn header_footer(element: &Element) -> super::HeaderFooter {
     let mut node = super::HeaderFooter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HEADER_FOOTER_SHAPE);
@@ -1313,7 +1313,7 @@ pub fn header_footer(element: &Element) -> super::HeaderFooter {
 }
 
 /// Read `cx:idx` into a `Idx`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn idx(element: &Element) -> super::Idx {
     let mut node = super::Idx::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::IDX_SHAPE);
@@ -1327,7 +1327,7 @@ pub fn idx(element: &Element) -> super::Idx {
 }
 
 /// Read `cx:layoutPr` into a `LayoutPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn layout_pr(element: &Element) -> super::LayoutPr {
     let mut node = super::LayoutPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LAYOUT_PR_SHAPE);
@@ -1349,7 +1349,7 @@ pub fn layout_pr(element: &Element) -> super::LayoutPr {
 }
 
 /// Read `cx:legend` into a `Legend`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn legend(element: &Element) -> super::Legend {
     let mut node = super::Legend::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LEGEND_SHAPE);
@@ -1370,7 +1370,7 @@ pub fn legend(element: &Element) -> super::Legend {
 }
 
 /// Read `cx:lvl` into a `LvlNumericLevel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn lvl_numeric_level(element: &Element) -> super::LvlNumericLevel {
     let mut node = super::LvlNumericLevel::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LVL_NUMERIC_LEVEL_SHAPE);
@@ -1388,7 +1388,7 @@ pub fn lvl_numeric_level(element: &Element) -> super::LvlNumericLevel {
 }
 
 /// Read `cx:lvl` into a `LvlStringLevel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn lvl_string_level(element: &Element) -> super::LvlStringLevel {
     let mut node = super::LvlStringLevel::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LVL_STRING_LEVEL_SHAPE);
@@ -1405,7 +1405,7 @@ pub fn lvl_string_level(element: &Element) -> super::LvlStringLevel {
 }
 
 /// Read `cx:majorGridlines` into a `MajorGridlines`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn major_gridlines(element: &Element) -> super::MajorGridlines {
     let mut node = super::MajorGridlines::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MAJOR_GRIDLINES_SHAPE);
@@ -1421,7 +1421,7 @@ pub fn major_gridlines(element: &Element) -> super::MajorGridlines {
 }
 
 /// Read `cx:majorTickMarks` into a `MajorTickMarks`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn major_tick_marks(element: &Element) -> super::MajorTickMarks {
     let mut node = super::MajorTickMarks::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MAJOR_TICK_MARKS_SHAPE);
@@ -1435,7 +1435,7 @@ pub fn major_tick_marks(element: &Element) -> super::MajorTickMarks {
 }
 
 /// Read `cx:max` into a `Max`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn max(element: &Element) -> super::Max {
     let mut node = super::Max::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MAX_SHAPE);
@@ -1449,7 +1449,7 @@ pub fn max(element: &Element) -> super::Max {
 }
 
 /// Read `cx:maxColor` into a `MaxColor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn max_color(element: &Element) -> super::MaxColor {
     let mut node = super::MaxColor::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MAX_COLOR_SHAPE);
@@ -1463,7 +1463,7 @@ pub fn max_color(element: &Element) -> super::MaxColor {
 }
 
 /// Read `cx:mid` into a `Mid`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn mid(element: &Element) -> super::Mid {
     let mut node = super::Mid::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MID_SHAPE);
@@ -1477,7 +1477,7 @@ pub fn mid(element: &Element) -> super::Mid {
 }
 
 /// Read `cx:midColor` into a `MidColor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn mid_color(element: &Element) -> super::MidColor {
     let mut node = super::MidColor::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MID_COLOR_SHAPE);
@@ -1491,7 +1491,7 @@ pub fn mid_color(element: &Element) -> super::MidColor {
 }
 
 /// Read `cx:min` into a `Min`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn min(element: &Element) -> super::Min {
     let mut node = super::Min::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MIN_SHAPE);
@@ -1505,7 +1505,7 @@ pub fn min(element: &Element) -> super::Min {
 }
 
 /// Read `cx:minColor` into a `MinColor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn min_color(element: &Element) -> super::MinColor {
     let mut node = super::MinColor::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MIN_COLOR_SHAPE);
@@ -1519,7 +1519,7 @@ pub fn min_color(element: &Element) -> super::MinColor {
 }
 
 /// Read `cx:minorGridlines` into a `MinorGridlines`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn minor_gridlines(element: &Element) -> super::MinorGridlines {
     let mut node = super::MinorGridlines::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MINOR_GRIDLINES_SHAPE);
@@ -1535,7 +1535,7 @@ pub fn minor_gridlines(element: &Element) -> super::MinorGridlines {
 }
 
 /// Read `cx:minorTickMarks` into a `MinorTickMarks`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn minor_tick_marks(element: &Element) -> super::MinorTickMarks {
     let mut node = super::MinorTickMarks::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MINOR_TICK_MARKS_SHAPE);
@@ -1549,7 +1549,7 @@ pub fn minor_tick_marks(element: &Element) -> super::MinorTickMarks {
 }
 
 /// Read `cx:nf` into a `Nf`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nf(element: &Element) -> super::Nf {
     let mut node = super::Nf::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NF_SHAPE);
@@ -1563,7 +1563,7 @@ pub fn nf(element: &Element) -> super::Nf {
 }
 
 /// Read `cx:numDim` into a `NumDim`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn num_dim(element: &Element) -> super::NumDim {
     let mut node = super::NumDim::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NUM_DIM_SHAPE);
@@ -1579,7 +1579,7 @@ pub fn num_dim(element: &Element) -> super::NumDim {
 }
 
 /// Read `cx:numFmt` into a `NumFmt`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn num_fmt(element: &Element) -> super::NumFmt {
     let mut node = super::NumFmt::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NUM_FMT_SHAPE);
@@ -1595,7 +1595,7 @@ pub fn num_fmt(element: &Element) -> super::NumFmt {
 }
 
 /// Read `cx:number` into a `Number`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn number(element: &Element) -> super::Number {
     let mut node = super::Number::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NUMBER_SHAPE);
@@ -1609,13 +1609,13 @@ pub fn number(element: &Element) -> super::Number {
 }
 
 /// Read one item of `NumericDimensionContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn numeric_dimension(element: &Element) -> super::NumericDimensionContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `cx:oddFooter` into a `OddFooter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn odd_footer(element: &Element) -> super::OddFooter {
     let mut node = super::OddFooter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ODD_FOOTER_SHAPE);
@@ -1629,7 +1629,7 @@ pub fn odd_footer(element: &Element) -> super::OddFooter {
 }
 
 /// Read `cx:oddHeader` into a `OddHeader`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn odd_header(element: &Element) -> super::OddHeader {
     let mut node = super::OddHeader::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ODD_HEADER_SHAPE);
@@ -1643,7 +1643,7 @@ pub fn odd_header(element: &Element) -> super::OddHeader {
 }
 
 /// Read `cx:offset` into a `Offset`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn offset(element: &Element) -> super::Offset {
     let mut node = super::Offset::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::OFFSET_SHAPE);
@@ -1660,7 +1660,7 @@ pub fn offset(element: &Element) -> super::Offset {
 
 /// Read `cx:openxmlsdk_49BECFFA_3B03_4D13_8272_D6CCB22579E3` into a
 /// `Openxmlsdk49BECFFA3B034D138272D6CCB22579E3`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn openxmlsdk49becffa3b034d138272d6ccb22579e3(
     element: &Element,
 ) -> super::Openxmlsdk49BECFFA3B034D138272D6CCB22579E3 {
@@ -1679,7 +1679,7 @@ pub fn openxmlsdk49becffa3b034d138272d6ccb22579e3(
 }
 
 /// Read `cx:pageMargins` into a `PageMargins`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn page_margins(element: &Element) -> super::PageMargins {
     let mut node = super::PageMargins::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PAGE_MARGINS_SHAPE);
@@ -1699,7 +1699,7 @@ pub fn page_margins(element: &Element) -> super::PageMargins {
 }
 
 /// Read `cx:pageSetup` into a `PageSetup`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn page_setup(element: &Element) -> super::PageSetup {
     let mut node = super::PageSetup::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PAGE_SETUP_SHAPE);
@@ -1722,7 +1722,7 @@ pub fn page_setup(element: &Element) -> super::PageSetup {
 }
 
 /// Read `cx:parentLabelLayout` into a `ParentLabelLayout`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn parent_label_layout(element: &Element) -> super::ParentLabelLayout {
     let mut node = super::ParentLabelLayout::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PARENT_LABEL_LAYOUT_SHAPE);
@@ -1736,7 +1736,7 @@ pub fn parent_label_layout(element: &Element) -> super::ParentLabelLayout {
 }
 
 /// Read `cx:percent` into a `Percent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn percent(element: &Element) -> super::Percent {
     let mut node = super::Percent::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PERCENT_SHAPE);
@@ -1750,7 +1750,7 @@ pub fn percent(element: &Element) -> super::Percent {
 }
 
 /// Read `cx:plotArea` into a `PlotArea`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn plot_area(element: &Element) -> super::PlotArea {
     let mut node = super::PlotArea::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PLOT_AREA_SHAPE);
@@ -1768,7 +1768,7 @@ pub fn plot_area(element: &Element) -> super::PlotArea {
 }
 
 /// Read `cx:plotAreaRegion` into a `PlotAreaRegion`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn plot_area_region(element: &Element) -> super::PlotAreaRegion {
     let mut node = super::PlotAreaRegion::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PLOT_AREA_REGION_SHAPE);
@@ -1785,7 +1785,7 @@ pub fn plot_area_region(element: &Element) -> super::PlotAreaRegion {
 }
 
 /// Read `cx:plotSurface` into a `PlotSurface`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn plot_surface(element: &Element) -> super::PlotSurface {
     let mut node = super::PlotSurface::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PLOT_SURFACE_SHAPE);
@@ -1801,7 +1801,7 @@ pub fn plot_surface(element: &Element) -> super::PlotSurface {
 }
 
 /// Read `cx:printSettings` into a `PrintSettings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn print_settings(element: &Element) -> super::PrintSettings {
     let mut node = super::PrintSettings::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PRINT_SETTINGS_SHAPE);
@@ -1818,7 +1818,7 @@ pub fn print_settings(element: &Element) -> super::PrintSettings {
 }
 
 /// Read `cx:pt` into a `PtNumericValue`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pt_numeric_value(element: &Element) -> super::PtNumericValue {
     let mut node = super::PtNumericValue::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PT_NUMERIC_VALUE_SHAPE);
@@ -1834,7 +1834,7 @@ pub fn pt_numeric_value(element: &Element) -> super::PtNumericValue {
 }
 
 /// Read `cx:pt` into a `PtStringValue`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pt_string_value(element: &Element) -> super::PtStringValue {
     let mut node = super::PtStringValue::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PT_STRING_VALUE_SHAPE);
@@ -1850,7 +1850,7 @@ pub fn pt_string_value(element: &Element) -> super::PtStringValue {
 }
 
 /// Read `cx:regionLabelLayout` into a `RegionLabelLayout`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn region_label_layout(element: &Element) -> super::RegionLabelLayout {
     let mut node = super::RegionLabelLayout::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::REGION_LABEL_LAYOUT_SHAPE);
@@ -1864,7 +1864,7 @@ pub fn region_label_layout(element: &Element) -> super::RegionLabelLayout {
 }
 
 /// Read `cx:rich` into a `Rich`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich(element: &Element) -> super::Rich {
     let mut node = super::Rich::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RICH_SHAPE);
@@ -1881,7 +1881,7 @@ pub fn rich(element: &Element) -> super::Rich {
 }
 
 /// Read `cx:separator` into a `Separator`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn separator(element: &Element) -> super::Separator {
     let mut node = super::Separator::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SEPARATOR_SHAPE);
@@ -1895,7 +1895,7 @@ pub fn separator(element: &Element) -> super::Separator {
 }
 
 /// Read `cx:series` into a `Series`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn series(element: &Element) -> super::Series {
     let mut node = super::Series::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SERIES_SHAPE);
@@ -1925,13 +1925,13 @@ pub fn series(element: &Element) -> super::Series {
 
 /// Read one item of `SeriesLayoutPropertiesContent` from its element: the arm of its tag, or
 /// `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn series_layout_properties(element: &Element) -> super::SeriesLayoutPropertiesContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `cx:spPr` into a `SpPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sp_pr(element: &Element) -> super::SpPr {
     let mut node = super::SpPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SP_PR_SHAPE);
@@ -1954,7 +1954,7 @@ pub fn sp_pr(element: &Element) -> super::SpPr {
 }
 
 /// Read `cx:statistics` into a `Statistics`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn statistics(element: &Element) -> super::Statistics {
     let mut node = super::Statistics::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::STATISTICS_SHAPE);
@@ -1968,7 +1968,7 @@ pub fn statistics(element: &Element) -> super::Statistics {
 }
 
 /// Read `cx:strDim` into a `StrDim`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn str_dim(element: &Element) -> super::StrDim {
     let mut node = super::StrDim::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::STR_DIM_SHAPE);
@@ -1984,13 +1984,13 @@ pub fn str_dim(element: &Element) -> super::StrDim {
 }
 
 /// Read one item of `StringDimensionContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn string_dimension(element: &Element) -> super::StringDimensionContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `cx:subtotals` into a `Subtotals`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn subtotals(element: &Element) -> super::Subtotals {
     let mut node = super::Subtotals::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SUBTOTALS_SHAPE);
@@ -2004,19 +2004,19 @@ pub fn subtotals(element: &Element) -> super::Subtotals {
 }
 
 /// Read one item of `TextContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn text(element: &Element) -> super::TextContent {
     officekit_markup_base::read(element)
 }
 
 /// Read one item of `TextDataContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn text_data(element: &Element) -> super::TextDataContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `cx:tickLabels` into a `TickLabels`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tick_labels(element: &Element) -> super::TickLabels {
     let mut node = super::TickLabels::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TICK_LABELS_SHAPE);
@@ -2030,7 +2030,7 @@ pub fn tick_labels(element: &Element) -> super::TickLabels {
 }
 
 /// Read `cx:title` into a `TitleAxisTitle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn title_axis_title(element: &Element) -> super::TitleAxisTitle {
     let mut node = super::TitleAxisTitle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TITLE_AXIS_TITLE_SHAPE);
@@ -2049,7 +2049,7 @@ pub fn title_axis_title(element: &Element) -> super::TitleAxisTitle {
 }
 
 /// Read `cx:title` into a `TitleChartTitle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn title_chart_title(element: &Element) -> super::TitleChartTitle {
     let mut node = super::TitleChartTitle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TITLE_CHART_TITLE_SHAPE);
@@ -2071,7 +2071,7 @@ pub fn title_chart_title(element: &Element) -> super::TitleChartTitle {
 }
 
 /// Read `cx:tx` into a `Tx`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tx(element: &Element) -> super::Tx {
     let mut node = super::Tx::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TX_SHAPE);
@@ -2085,7 +2085,7 @@ pub fn tx(element: &Element) -> super::Tx {
 }
 
 /// Read `cx:txData` into a `TxData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tx_data(element: &Element) -> super::TxData {
     let mut node = super::TxData::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TX_DATA_SHAPE);
@@ -2099,7 +2099,7 @@ pub fn tx_data(element: &Element) -> super::TxData {
 }
 
 /// Read `cx:txPr` into a `TxPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tx_pr(element: &Element) -> super::TxPr {
     let mut node = super::TxPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TX_PR_SHAPE);
@@ -2116,7 +2116,7 @@ pub fn tx_pr(element: &Element) -> super::TxPr {
 }
 
 /// Read `cx:units` into a `Units`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn units(element: &Element) -> super::Units {
     let mut node = super::Units::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::UNITS_SHAPE);
@@ -2133,7 +2133,7 @@ pub fn units(element: &Element) -> super::Units {
 }
 
 /// Read `cx:unitsLabel` into a `UnitsLabel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn units_label(element: &Element) -> super::UnitsLabel {
     let mut node = super::UnitsLabel::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::UNITS_LABEL_SHAPE);
@@ -2151,7 +2151,7 @@ pub fn units_label(element: &Element) -> super::UnitsLabel {
 }
 
 /// Read `cx:v` into a `V`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn v(element: &Element) -> super::V {
     let mut node = super::V::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::V_SHAPE);
@@ -2165,7 +2165,7 @@ pub fn v(element: &Element) -> super::V {
 }
 
 /// Read `cx:valScaling` into a `ValScaling`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn val_scaling(element: &Element) -> super::ValScaling {
     let mut node = super::ValScaling::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::VAL_SCALING_SHAPE);
@@ -2184,20 +2184,20 @@ pub fn val_scaling(element: &Element) -> super::ValScaling {
 
 /// Read one item of `ValueColorEndPositionContent` from its element: the arm of its tag, or
 /// `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn value_color_end_position(element: &Element) -> super::ValueColorEndPositionContent {
     officekit_markup_base::read(element)
 }
 
 /// Read one item of `ValueColorMiddlePositionContent` from its element: the arm of its tag, or
 /// `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn value_color_middle_position(element: &Element) -> super::ValueColorMiddlePositionContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `cx:valueColorPositions` into a `ValueColorPositions`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn value_color_positions(element: &Element) -> super::ValueColorPositions {
     let mut node = super::ValueColorPositions::default();
     let mut reader =
@@ -2216,7 +2216,7 @@ pub fn value_color_positions(element: &Element) -> super::ValueColorPositions {
 }
 
 /// Read `cx:valueColors` into a `ValueColors`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn value_colors(element: &Element) -> super::ValueColors {
     let mut node = super::ValueColors::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::VALUE_COLORS_SHAPE);
@@ -2233,7 +2233,7 @@ pub fn value_colors(element: &Element) -> super::ValueColors {
 }
 
 /// Read `cx:visibility` into a `VisibilityDataLabelVisibilities`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn visibility_data_label_visibilities(
     element: &Element,
 ) -> super::VisibilityDataLabelVisibilities {
@@ -2255,7 +2255,7 @@ pub fn visibility_data_label_visibilities(
 }
 
 /// Read `cx:visibility` into a `VisibilitySeriesElementVisibilities`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn visibility_series_element_visibilities(
     element: &Element,
 ) -> super::VisibilitySeriesElementVisibilities {

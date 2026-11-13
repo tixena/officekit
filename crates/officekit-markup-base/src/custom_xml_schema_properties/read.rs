@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `sl:schema` into a `CustomXMLSchemaReference`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xml_schema_reference(element: &Element) -> super::CustomXMLSchemaReference {
     let mut node = super::CustomXMLSchemaReference::default();
     let mut reader = crate::Reader::new(element, &super::CUSTOM_XML_SCHEMA_REFERENCE_SHAPE);
@@ -237,7 +237,7 @@ pub fn custom_xml_schema_reference(element: &Element) -> super::CustomXMLSchemaR
 }
 
 /// Read `sl:schemaLibrary` into a `EmbeddedCustomXMLSchemaSupplementaryData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_custom_xml_schema_supplementary_data(
     element: &Element,
 ) -> super::EmbeddedCustomXMLSchemaSupplementaryData {

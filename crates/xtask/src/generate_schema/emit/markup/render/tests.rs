@@ -43,7 +43,7 @@ fn without_children_copies_the_attributes_and_leaves_each_declared_child_at_its_
         without_children_text(&sample),
         "\nimpl<X: NodeExtra> SampleWith<X> {\n    \
          /// This node's attributes, copied, with no declared child and no unknown content.\n    \
-         #[must_use]\n    \
+         #[must_use = \"this returns a copy; the node is unchanged\"]\n    \
          pub fn without_children(&self) -> Self {\n        \
          Self {\n            \
          alignment: self.alignment.clone(),\n            \
@@ -60,7 +60,7 @@ fn without_children_copies_a_text_value_beside_the_attributes() {
         without_children_text(&node(Body::Text(Value::Text))),
         "\nimpl<X: NodeExtra> SampleWith<X> {\n    \
          /// This node's attributes and value, copied, with no unknown content.\n    \
-         #[must_use]\n    \
+         #[must_use = \"this returns a copy; the node is unchanged\"]\n    \
          pub fn without_children(&self) -> Self {\n        \
          Self {\n            \
          alignment: self.alignment.clone(),\n            \
@@ -132,7 +132,7 @@ fn into_extra_moves_the_fields_and_converts_each_child_by_its_occurrence() {
         "\n    \
          /// This node and every node under it with each `extra` at `Y`'s default; every other field\n    \
          /// moves as it is.\n    \
-         #[must_use]\n    \
+         #[must_use = \"the tree moves into the one returned; dropping it drops the tree\"]\n    \
          pub fn into_extra<Y>(mut self) -> SampleWith<Y>\n    \
          where\n        \
          Y: NodeExtra,\n    \
@@ -166,7 +166,7 @@ fn into_extra_of_an_enum_converts_each_arm_and_moves_other() {
         enum_into_extra(&catalog.enums[0], names.runtime()),
         "\nimpl<X: NodeExtra> SampleContentWith<X> {\n    \
          /// This item and every node under it with each `extra` at `Y`'s default.\n    \
-         #[must_use]\n    \
+         #[must_use = \"the tree moves into the one returned; dropping it drops the tree\"]\n    \
          pub fn into_extra<Y>(self) -> SampleContentWith<Y>\n    \
          where\n        \
          Y: NodeExtra,\n    \

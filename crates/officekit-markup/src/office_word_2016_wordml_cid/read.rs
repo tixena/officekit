@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `w16cid:commentId` into a `CommentId`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_id(element: &Element) -> super::CommentId {
     let mut node = super::CommentId::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENT_ID_SHAPE);
@@ -235,7 +235,7 @@ pub fn comment_id(element: &Element) -> super::CommentId {
 }
 
 /// Read `w16cid:commentsIds` into a `CommentsIds`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comments_ids(element: &Element) -> super::CommentsIds {
     let mut node = super::CommentsIds::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENTS_IDS_SHAPE);

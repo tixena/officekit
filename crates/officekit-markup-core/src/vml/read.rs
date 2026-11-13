@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `v:arc` into a `ArcSegment`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn arc_segment(element: &Element) -> super::ArcSegment {
     let mut node = super::ArcSegment::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ARC_SEGMENT_SHAPE);
@@ -289,7 +289,7 @@ pub fn arc_segment(element: &Element) -> super::ArcSegment {
 }
 
 /// Read `v:curve` into a `BezierCurve`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bezier_curve(element: &Element) -> super::BezierCurve {
     let mut node = super::BezierCurve::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BEZIER_CURVE_SHAPE);
@@ -361,7 +361,7 @@ pub fn bezier_curve(element: &Element) -> super::BezierCurve {
 }
 
 /// Read `v:background` into a `DocumentBackground`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_background(element: &Element) -> super::DocumentBackground {
     let mut node = super::DocumentBackground::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DOCUMENT_BACKGROUND_SHAPE);
@@ -383,7 +383,7 @@ pub fn document_background(element: &Element) -> super::DocumentBackground {
 }
 
 /// Read `v:imagedata` into a `ImageData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn image_data(element: &Element) -> super::ImageData {
     let mut node = super::ImageData::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::IMAGE_DATA_SHAPE);
@@ -421,7 +421,7 @@ pub fn image_data(element: &Element) -> super::ImageData {
 }
 
 /// Read `v:image` into a `ImageFile`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn image_file(element: &Element) -> super::ImageFile {
     let mut node = super::ImageFile::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::IMAGE_FILE_SHAPE);
@@ -499,7 +499,7 @@ pub fn image_file(element: &Element) -> super::ImageFile {
 }
 
 /// Read `v:line` into a `Line`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line(element: &Element) -> super::Line {
     let mut node = super::Line::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LINE_SHAPE);
@@ -569,7 +569,7 @@ pub fn line(element: &Element) -> super::Line {
 }
 
 /// Read `v:stroke` into a `LineStrokeSettings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line_stroke_settings(element: &Element) -> super::LineStrokeSettings {
     let mut node = super::LineStrokeSettings::default();
     let mut reader =
@@ -618,7 +618,7 @@ pub fn line_stroke_settings(element: &Element) -> super::LineStrokeSettings {
 }
 
 /// Read `v:polyline` into a `MultiplePathLine`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn multiple_path_line(element: &Element) -> super::MultiplePathLine {
     let mut node = super::MultiplePathLine::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MULTIPLE_PATH_LINE_SHAPE);
@@ -687,13 +687,13 @@ pub fn multiple_path_line(element: &Element) -> super::MultiplePathLine {
 }
 
 /// Read one item of `MultiplePathLineContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn multiple_path_line_content(element: &Element) -> super::MultiplePathLineContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `v:oval` into a `Oval`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn oval(element: &Element) -> super::Oval {
     let mut node = super::Oval::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::OVAL_SHAPE);
@@ -761,7 +761,7 @@ pub fn oval(element: &Element) -> super::Oval {
 }
 
 /// Read `v:rect` into a `Rectangle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rectangle(element: &Element) -> super::Rectangle {
     let mut node = super::Rectangle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RECTANGLE_SHAPE);
@@ -829,7 +829,7 @@ pub fn rectangle(element: &Element) -> super::Rectangle {
 }
 
 /// Read `v:roundrect` into a `RoundedRectangle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rounded_rectangle(element: &Element) -> super::RoundedRectangle {
     let mut node = super::RoundedRectangle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ROUNDED_RECTANGLE_SHAPE);
@@ -898,7 +898,7 @@ pub fn rounded_rectangle(element: &Element) -> super::RoundedRectangle {
 }
 
 /// Read `v:formulas` into a `SetOfFormulas`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn set_of_formulas(element: &Element) -> super::SetOfFormulas {
     let mut node = super::SetOfFormulas::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SET_OF_FORMULAS_SHAPE);
@@ -912,7 +912,7 @@ pub fn set_of_formulas(element: &Element) -> super::SetOfFormulas {
 }
 
 /// Read `v:handles` into a `SetOfHandles`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn set_of_handles(element: &Element) -> super::SetOfHandles {
     let mut node = super::SetOfHandles::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SET_OF_HANDLES_SHAPE);
@@ -926,7 +926,7 @@ pub fn set_of_handles(element: &Element) -> super::SetOfHandles {
 }
 
 /// Read `v:shadow` into a `ShadowEffect`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shadow_effect(element: &Element) -> super::ShadowEffect {
     let mut node = super::ShadowEffect::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHADOW_EFFECT_SHAPE);
@@ -951,7 +951,7 @@ pub fn shadow_effect(element: &Element) -> super::ShadowEffect {
 }
 
 /// Read `v:shape` into a `ShapeDefinition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_definition(element: &Element) -> super::ShapeDefinition {
     let mut node = super::ShapeDefinition::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_DEFINITION_SHAPE);
@@ -1024,19 +1024,19 @@ pub fn shape_definition(element: &Element) -> super::ShapeDefinition {
 }
 
 /// Read one item of `ShapeDefinitionContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn shape_definition_content(element: &Element) -> super::ShapeDefinitionContent {
     officekit_markup_base::read(element)
 }
 
 /// Read one item of `ShapeElementContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn shape_element(element: &Element) -> super::ShapeElementContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `v:fill` into a `ShapeFillProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_fill_properties(element: &Element) -> super::ShapeFillProperties {
     let mut node = super::ShapeFillProperties::default();
     let mut reader =
@@ -1079,7 +1079,7 @@ pub fn shape_fill_properties(element: &Element) -> super::ShapeFillProperties {
 }
 
 /// Read `v:group` into a `ShapeGroup`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_group(element: &Element) -> super::ShapeGroup {
     let mut node = super::ShapeGroup::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_GROUP_SHAPE);
@@ -1133,13 +1133,13 @@ pub fn shape_group(element: &Element) -> super::ShapeGroup {
 }
 
 /// Read one item of `ShapeGroupContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn shape_group_content(element: &Element) -> super::ShapeGroupContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `v:h` into a `ShapeHandle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_handle(element: &Element) -> super::ShapeHandle {
     let mut node = super::ShapeHandle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_HANDLE_SHAPE);
@@ -1162,7 +1162,7 @@ pub fn shape_handle(element: &Element) -> super::ShapeHandle {
 }
 
 /// Read `v:path` into a `ShapePath`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_path(element: &Element) -> super::ShapePath {
     let mut node = super::ShapePath::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_PATH_SHAPE);
@@ -1191,7 +1191,7 @@ pub fn shape_path(element: &Element) -> super::ShapePath {
 }
 
 /// Read `v:shapetype` into a `ShapeTemplate`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_template(element: &Element) -> super::ShapeTemplate {
     let mut node = super::ShapeTemplate::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_TEMPLATE_SHAPE);
@@ -1263,7 +1263,7 @@ pub fn shape_template(element: &Element) -> super::ShapeTemplate {
 }
 
 /// Read `v:f` into a `SingleFormula`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn single_formula(element: &Element) -> super::SingleFormula {
     let mut node = super::SingleFormula::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SINGLE_FORMULA_SHAPE);
@@ -1277,7 +1277,7 @@ pub fn single_formula(element: &Element) -> super::SingleFormula {
 }
 
 /// Read `v:textbox` into a `TextBox`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_box(element: &Element) -> super::TextBox {
     let mut node = super::TextBox::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TEXT_BOX_SHAPE);
@@ -1297,13 +1297,13 @@ pub fn text_box(element: &Element) -> super::TextBox {
 }
 
 /// Read one item of `TextBoxContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn text_box_content(element: &Element) -> super::TextBoxContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `v:textpath` into a `TextLayoutPath`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_layout_path(element: &Element) -> super::TextLayoutPath {
     let mut node = super::TextLayoutPath::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TEXT_LAYOUT_PATH_SHAPE);

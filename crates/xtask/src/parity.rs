@@ -857,13 +857,13 @@ pub struct Report {
 
 impl Report {
     /// Whether officekit's result lacks no error.
-    #[must_use]
+    #[must_use = "this only answers the question"]
     pub const fn complete(&self) -> bool {
         self.missing.is_empty()
     }
 
     /// `missing by kind: schema 0, markup-compatibility 0`.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn summary(&self) -> String {
         let counts: Vec<String> = self
             .counts
@@ -915,7 +915,7 @@ fn key(record: &Value, id: &str) -> Key {
 }
 
 /// The reason officekit lacks an oracle error on purpose, when it does.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn divergence(record: &Value) -> Option<&'static str> {
     let key = oracle_key(record);
     DIVERGENCES
@@ -945,7 +945,7 @@ pub fn divergence(record: &Value) -> Option<&'static str> {
 /// Each officekit error answers one oracle error with its key, so two SDK
 /// 3.5.1 errors with one key need two from officekit; officekit's errors left
 /// over do not count.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn missing<'oracle>(oracle: &'oracle [Value], officekit: &[Value]) -> Vec<&'oracle Value> {
     let mut available: BTreeMap<Key, usize> = BTreeMap::new();
     for record in officekit {
@@ -968,14 +968,14 @@ pub fn missing<'oracle>(oracle: &'oracle [Value], officekit: &[Value]) -> Vec<&'
 
 /// The key of an officekit record, its `code` mapped to SDK 3.5.1's id;
 /// `None` for a code SDK 3.5.1 has no id for.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn officekit_key(record: &Value) -> Option<Key> {
     let code = ErrorCode::parse(record.get("code").and_then(Value::as_str)?)?;
     Some(key(record, sdk_key(code)?))
 }
 
 /// The key of an oracle record, whose `id` is SDK 3.5.1's.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn oracle_key(record: &Value) -> Key {
     key(
         record,
@@ -1056,7 +1056,7 @@ where
 
 /// SDK 3.5.1's id for one of officekit's codes; `None` for the three codes of
 /// a file that declares Strict.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn sdk_key(code: ErrorCode) -> Option<&'static str> {
     SDK_KEYS
         .iter()

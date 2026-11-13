@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `ExtLst` as its element, `xlrd:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -229,7 +229,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Fb` as its element, `xlrd:fb`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn fb(node: &super::Fb, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::FB_SHAPE, &node.unknown);
     writer.attribute(0, &node.t);
@@ -238,7 +238,7 @@ pub fn fb(node: &super::Fb, scope: &mut Scope) -> Element {
 }
 
 /// Write a `K` as its element, `xlrd:k`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn k(node: &super::K, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::K_SHAPE, &node.unknown);
     writer.attribute(0, &node.n);
@@ -247,7 +247,7 @@ pub fn k(node: &super::K, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Rv` as its element, `xlrd:rv`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rv(node: &super::Rv, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::RV_SHAPE, &node.unknown);
     writer.attribute(0, &node.s);
@@ -257,7 +257,7 @@ pub fn rv(node: &super::Rv, scope: &mut Scope) -> Element {
 }
 
 /// Write a `RvData` as its element, `xlrd:rvData`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rv_data(node: &super::RvData, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::RV_DATA_SHAPE, &node.unknown);
@@ -268,7 +268,7 @@ pub fn rv_data(node: &super::RvData, scope: &mut Scope) -> Element {
 }
 
 /// Write a `RvStructures` as its element, `xlrd:rvStructures`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rv_structures(node: &super::RvStructures, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::RV_STRUCTURES_SHAPE, &node.unknown);
@@ -279,7 +279,7 @@ pub fn rv_structures(node: &super::RvStructures, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Rvb` as its element, `xlrd:rvb`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rvb(node: &super::Rvb, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::RVB_SHAPE, &node.unknown);
     writer.attribute(0, &node.i);
@@ -287,7 +287,7 @@ pub fn rvb(node: &super::Rvb, scope: &mut Scope) -> Element {
 }
 
 /// Write a `S` as its element, `xlrd:s`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn s(node: &super::S, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::S_SHAPE, &node.unknown);
     writer.attribute(0, &node.t);
@@ -296,7 +296,7 @@ pub fn s(node: &super::S, scope: &mut Scope) -> Element {
 }
 
 /// Write a `V` as its element, `xlrd:v`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn v(node: &super::V, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::V_SHAPE, &node.unknown);
     writer.text(&node.value);

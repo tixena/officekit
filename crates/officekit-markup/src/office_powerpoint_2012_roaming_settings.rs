@@ -395,7 +395,7 @@ pub trait Visitor: crate::Visitor {
 impl<X: NodeExtra> KeyWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> KeyWith<Y>
     where
         Y: NodeExtra,
@@ -408,7 +408,7 @@ impl<X: NodeExtra> KeyWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -433,7 +433,7 @@ impl officekit_markup_base::Write for Key {
 impl<X: NodeExtra> PropsWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PropsWith<Y>
     where
         Y: NodeExtra,
@@ -447,7 +447,7 @@ impl<X: NodeExtra> PropsWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -469,7 +469,7 @@ impl officekit_markup_base::Write for Props {
 impl<X: NodeExtra> ValueWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ValueWith<Y>
     where
         Y: NodeExtra,
@@ -482,7 +482,7 @@ impl<X: NodeExtra> ValueWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),

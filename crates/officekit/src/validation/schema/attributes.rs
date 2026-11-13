@@ -250,7 +250,7 @@ fn marked_value(class: &ValueClass, text: &str) -> bool {
 }
 
 /// A name as the file wrote it, `w:val`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn qualified(name: &QName) -> String {
     if name.prefix.is_empty() {
         name.local.clone()
@@ -264,7 +264,7 @@ pub fn qualified(name: &QName) -> String {
 /// A missing value fails only `Required`; a union passes when one member that
 /// runs at `target` passes, or none runs there; `OfficeVersion` makes an
 /// attribute undeclared before its version unless its namespace is `ignorable`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn run(
     checks: &[ValueCheck],
     class: &ValueClass,
@@ -325,7 +325,7 @@ pub fn run(
 
 /// The id of `namespace` when only Transitional has it: the namespace of a
 /// Transitional schema file with no Strict file of its name.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn transitional_only_namespace(namespace: &Namespace) -> Option<NamespaceId> {
     if let Namespace::Known(id) = *namespace {
         TRANSITIONAL_ONLY_NAMESPACES.contains(&id).then_some(id)

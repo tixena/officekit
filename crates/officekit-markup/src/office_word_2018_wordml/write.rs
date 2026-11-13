@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `Ext` as its element, `w16cur:ext`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext(node: &super::Ext, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::EXT_SHAPE, &node.unknown);
     writer.attribute(0, &node.uri);

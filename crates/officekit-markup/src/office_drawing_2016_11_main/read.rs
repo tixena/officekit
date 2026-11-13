@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `a1611:picAttrSrcUrl` into a `PicAttrSrcUrl`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pic_attr_src_url(element: &Element) -> super::PicAttrSrcUrl {
     let mut node = super::PicAttrSrcUrl::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PIC_ATTR_SRC_URL_SHAPE);

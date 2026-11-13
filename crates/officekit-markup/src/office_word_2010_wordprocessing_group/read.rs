@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `wpg:cNvFrPr` into a `CNvFrPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_fr_pr(element: &Element) -> super::CNvFrPr {
     let mut node = super::CNvFrPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_FR_PR_SHAPE);
@@ -235,7 +235,7 @@ pub fn c_nv_fr_pr(element: &Element) -> super::CNvFrPr {
 }
 
 /// Read `wpg:cNvGrpSpPr` into a `CNvGrpSpPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_grp_sp_pr(element: &Element) -> super::CNvGrpSpPr {
     let mut node = super::CNvGrpSpPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_GRP_SP_PR_SHAPE);
@@ -251,7 +251,7 @@ pub fn c_nv_grp_sp_pr(element: &Element) -> super::CNvGrpSpPr {
 }
 
 /// Read `wpg:cNvPr` into a `CNvPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_pr(element: &Element) -> super::CNvPr {
     let mut node = super::CNvPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_PR_SHAPE);
@@ -273,7 +273,7 @@ pub fn c_nv_pr(element: &Element) -> super::CNvPr {
 }
 
 /// Read `wpg:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -287,7 +287,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `wpg:graphicFrame` into a `GraphicFrame`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn graphic_frame(element: &Element) -> super::GraphicFrame {
     let mut node = super::GraphicFrame::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GRAPHIC_FRAME_SHAPE);
@@ -306,7 +306,7 @@ pub fn graphic_frame(element: &Element) -> super::GraphicFrame {
 }
 
 /// Read `wpg:grpSp` into a `GrpSp`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn grp_sp(element: &Element) -> super::GrpSp {
     let mut node = super::GrpSp::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GRP_SP_SHAPE);
@@ -325,7 +325,7 @@ pub fn grp_sp(element: &Element) -> super::GrpSp {
 }
 
 /// Read `wpg:grpSpPr` into a `GrpSpPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn grp_sp_pr(element: &Element) -> super::GrpSpPr {
     let mut node = super::GrpSpPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GRP_SP_PR_SHAPE);
@@ -345,7 +345,7 @@ pub fn grp_sp_pr(element: &Element) -> super::GrpSpPr {
 }
 
 /// Read `wpg:wgp` into a `Wgp`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wgp(element: &Element) -> super::Wgp {
     let mut node = super::Wgp::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WGP_SHAPE);
@@ -364,13 +364,13 @@ pub fn wgp(element: &Element) -> super::Wgp {
 }
 
 /// Read one item of `WordprocessingGroupContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn wordprocessing_group(element: &Element) -> super::WordprocessingGroupContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `wpg:xfrm` into a `Xfrm`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn xfrm(element: &Element) -> super::Xfrm {
     let mut node = super::Xfrm::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::XFRM_SHAPE);

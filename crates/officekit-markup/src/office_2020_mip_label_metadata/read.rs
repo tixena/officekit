@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `clbl:ext` into a `Ext`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext(element: &Element) -> super::Ext {
     let mut node = super::Ext::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_SHAPE);
@@ -235,7 +235,7 @@ pub fn ext(element: &Element) -> super::Ext {
 }
 
 /// Read `clbl:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -249,7 +249,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `clbl:label` into a `Label`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn label(element: &Element) -> super::Label {
     let mut node = super::Label::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LABEL_SHAPE);
@@ -272,7 +272,7 @@ pub fn label(element: &Element) -> super::Label {
 }
 
 /// Read `clbl:labelList` into a `LabelList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn label_list(element: &Element) -> super::LabelList {
     let mut node = super::LabelList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LABEL_LIST_SHAPE);

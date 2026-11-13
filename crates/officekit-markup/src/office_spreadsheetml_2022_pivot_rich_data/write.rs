@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `RichInfo` as its element, `xprd:richInfo`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rich_info(node: &super::RichInfo, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::RICH_INFO_SHAPE, &node.unknown);

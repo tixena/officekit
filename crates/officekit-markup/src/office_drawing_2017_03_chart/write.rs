@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `DataDisplayOptions16` as its element, `c16r3:dataDisplayOptions16`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_display_options16(node: &super::DataDisplayOptions16, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -232,7 +232,7 @@ pub fn data_display_options16(node: &super::DataDisplayOptions16, scope: &mut Sc
 }
 
 /// Write a `DispNaAsBlank` as its element, `c16r3:dispNaAsBlank`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn disp_na_as_blank(node: &super::DispNaAsBlank, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DISP_NA_AS_BLANK_SHAPE, &node.unknown);

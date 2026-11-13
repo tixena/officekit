@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `w10:anchorlock` into a `AnchorLocationIsLocked`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn anchor_location_is_locked(element: &Element) -> super::AnchorLocationIsLocked {
     let reader = crate::Reader::new(element, &super::ANCHOR_LOCATION_IS_LOCKED_SHAPE);
     super::AnchorLocationIsLocked {
@@ -229,7 +229,7 @@ pub fn anchor_location_is_locked(element: &Element) -> super::AnchorLocationIsLo
 }
 
 /// Read `w10:borderbottom` into a `BottomBorder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bottom_border(element: &Element) -> super::BottomBorder {
     let mut node = super::BottomBorder::default();
     let mut reader = crate::Reader::new(element, &super::BOTTOM_BORDER_SHAPE);
@@ -246,7 +246,7 @@ pub fn bottom_border(element: &Element) -> super::BottomBorder {
 }
 
 /// Read `w10:borderleft` into a `LeftBorder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn left_border(element: &Element) -> super::LeftBorder {
     let mut node = super::LeftBorder::default();
     let mut reader = crate::Reader::new(element, &super::LEFT_BORDER_SHAPE);
@@ -263,7 +263,7 @@ pub fn left_border(element: &Element) -> super::LeftBorder {
 }
 
 /// Read `w10:borderright` into a `RightBorder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn right_border(element: &Element) -> super::RightBorder {
     let mut node = super::RightBorder::default();
     let mut reader = crate::Reader::new(element, &super::RIGHT_BORDER_SHAPE);
@@ -280,7 +280,7 @@ pub fn right_border(element: &Element) -> super::RightBorder {
 }
 
 /// Read `w10:wrap` into a `TextWrapping`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_wrapping(element: &Element) -> super::TextWrapping {
     let mut node = super::TextWrapping::default();
     let mut reader = crate::Reader::new(element, &super::TEXT_WRAPPING_SHAPE);
@@ -298,7 +298,7 @@ pub fn text_wrapping(element: &Element) -> super::TextWrapping {
 }
 
 /// Read `w10:bordertop` into a `TopBorder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn top_border(element: &Element) -> super::TopBorder {
     let mut node = super::TopBorder::default();
     let mut reader = crate::Reader::new(element, &super::TOP_BORDER_SHAPE);

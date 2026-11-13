@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `a16:colId` into a `ColId`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn col_id(element: &Element) -> super::ColId {
     let reader = officekit_markup_base::Reader::new(element, &super::COL_ID_SHAPE);
     super::ColId {
@@ -229,7 +229,7 @@ pub fn col_id(element: &Element) -> super::ColId {
 }
 
 /// Read `a16:creationId` into a `CreationId`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn creation_id(element: &Element) -> super::CreationId {
     let mut node = super::CreationId::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CREATION_ID_SHAPE);
@@ -243,7 +243,7 @@ pub fn creation_id(element: &Element) -> super::CreationId {
 }
 
 /// Read `a16:cxnDERefs` into a `CxnDERefs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cxn_de_refs(element: &Element) -> super::CxnDERefs {
     let mut node = super::CxnDERefs::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CXN_DE_REFS_SHAPE);
@@ -259,7 +259,7 @@ pub fn cxn_de_refs(element: &Element) -> super::CxnDERefs {
 }
 
 /// Read `a16:predDERef` into a `PredDERef`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pred_de_ref(element: &Element) -> super::PredDERef {
     let mut node = super::PredDERef::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PRED_DE_REF_SHAPE);
@@ -273,7 +273,7 @@ pub fn pred_de_ref(element: &Element) -> super::PredDERef {
 }
 
 /// Read `a16:rowId` into a `RowId`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn row_id(element: &Element) -> super::RowId {
     let reader = officekit_markup_base::Reader::new(element, &super::ROW_ID_SHAPE);
     super::RowId {

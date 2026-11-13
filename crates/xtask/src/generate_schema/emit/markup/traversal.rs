@@ -12,6 +12,7 @@
 use alloc::collections::BTreeSet;
 use core::fmt::Write as _;
 use core::iter;
+use core::mem;
 use std::path::{Path, PathBuf};
 
 use anyhow::Result;
@@ -137,7 +138,7 @@ impl Step {
 }
 
 /// The enums a list holds; each has a list hook and a list write hook.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn listed(catalog: &Catalog) -> BTreeSet<usize> {
     catalog
         .nodes
@@ -157,7 +158,7 @@ pub fn listed(catalog: &Catalog) -> BTreeSet<usize> {
 
 /// Whether a namespace module has a struct or an enum, which its module of
 /// `officekit_strict::traversal` implements the traversals for.
-#[must_use]
+#[must_use = "this only answers the question"]
 pub fn has_nodes(names: &Names<'_>) -> bool {
     !names.node_functions.is_empty() || !names.enum_functions.is_empty()
 }
@@ -260,7 +261,7 @@ fn write_hook_text(name: &str, node: &str, list: bool) -> String {
 
 /// A namespace module's `Context`: one tree hook and one write hook per node
 /// kind, and one list hook and one list write hook per enum a list holds.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn context_trait(names: &Names<'_>, listed: &BTreeSet<usize>) -> String {
     let module = &names.catalog.modules[names.module];
     let mut entries = Vec::new();
@@ -336,7 +337,7 @@ fn trait_text(head: &str, entries: Vec<(String, String)>) -> String {
 }
 
 /// A namespace module's `Visitor`: one hook per node kind.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn visitor_trait(names: &Names<'_>) -> String {
     let module = &names.catalog.modules[names.module];
     let descend = format!("{}::Descend", Crate::Base.name());
@@ -387,7 +388,7 @@ pub fn hook_uses(names: &Names<'_>, uses: &mut Uses) {
 
 /// The module of `officekit-markup` that holds the hook traits of a
 /// namespace of `home`, base or core, beside its nodes, re-exported.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn hooks_text(
     header: &str,
     names: &Names<'_>,
@@ -431,7 +432,7 @@ pub fn hooks_text(
 /// The root hooks, `root.rs`: the root `Context` with its hooks for
 /// content the schemas do not declare and one accessor per namespace, and the
 /// root `Visitor` the same way, each in alphabetical order.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn root_text(catalog: &Catalog, order: &[usize]) -> String {
     let accessor = |module: &str, hooks: &str| {
         documented(
@@ -525,7 +526,7 @@ pub fn files(header: &str, catalog: &Catalog, folder: &Path) -> Result<Vec<(Path
 }
 
 /// The text of a namespace's module of `officekit_strict::traversal`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn text(header: &str, names: &Names<'_>, listed: &BTreeSet<usize>) -> String {
     let catalog = names.catalog;
     let module = &catalog.modules[names.module];
@@ -791,8 +792,7 @@ fn rebuild(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &
         let mut text = String::new();
         assigned_field("    ", name, value, &mut text);
         if !chunk.is_empty() && chunk.lines().count() + text.lines().count() >= BODY_LINES {
-            chunks.push(chunk);
-            chunk = String::new();
+            chunks.push(mem::take(&mut chunk));
         }
         chunk.push_str(&text);
     }
@@ -875,8 +875,7 @@ fn walk(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &mut
             let mut text = String::new();
             statement("node", "    ", field, *step, &mut text);
             if !chunk.is_empty() && chunk.lines().count() + text.lines().count() >= BODY_LINES {
-                chunks.push(chunk);
-                chunk = String::new();
+                chunks.push(mem::take(&mut chunk));
             }
             chunk.push_str(&text);
         }
@@ -987,8 +986,7 @@ fn through(
         let mut chunk = String::new();
         for text in through_calls(node, "node", "    ") {
             if !chunk.is_empty() && chunk.lines().count() + text.lines().count() + 1 >= BODY_LINES {
-                chunks.push(chunk);
-                chunk = String::new();
+                chunks.push(mem::take(&mut chunk));
             }
             chunk.push_str(&text);
         }
@@ -1219,8 +1217,7 @@ where
         let full = chunk.lines().count() + text.lines().count() + 1 >= BODY_LINES
             || chunk.matches("    if let ").count() == BLOCKS;
         if !chunk.is_empty() && full {
-            chunks.push(chunk);
-            chunk = String::new();
+            chunks.push(mem::take(&mut chunk));
         }
         chunk.push_str(&text);
     }

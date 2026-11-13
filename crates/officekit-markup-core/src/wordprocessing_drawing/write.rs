@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `AbsolutePositionOffset` as its element, `wp:posOffset`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn absolute_position_offset(
     node: &super::AbsolutePositionOffset,
     scope: &mut Scope,
@@ -241,7 +241,7 @@ pub fn anchor(node: &super::AnchorContent, writer: &mut officekit_markup_base::W
 }
 
 /// Write a `AnchorForFloatingDrawingMLObject` as its element, `wp:anchor`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn anchor_for_floating_drawing_ml_object(
     node: &super::AnchorForFloatingDrawingMLObject,
     scope: &mut Scope,
@@ -279,7 +279,7 @@ pub fn anchor_for_floating_drawing_ml_object(
 }
 
 /// Write a `BackgroundFormatting` as its element, `wp:bg`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn background_formatting(node: &super::BackgroundFormatting, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -292,7 +292,7 @@ pub fn background_formatting(node: &super::BackgroundFormatting, scope: &mut Sco
 }
 
 /// Write a `BodyProperties` as its element, `wp:bodyPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn body_properties(node: &super::BodyProperties, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::BODY_PROPERTIES_SHAPE, &node.unknown);
@@ -324,7 +324,7 @@ pub fn body_properties(node: &super::BodyProperties, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `CommonDrawingMLNonVisualProperties` as its element, `wp:cNvGraphicFramePr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn common_drawing_ml_non_visual_properties(
     node: &super::CommonDrawingMLNonVisualProperties,
     scope: &mut Scope,
@@ -340,7 +340,7 @@ pub fn common_drawing_ml_non_visual_properties(
 }
 
 /// Write a `ContentPart` as its element, `wp:contentPart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn content_part(node: &super::ContentPart, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CONTENT_PART_SHAPE, &node.unknown);
@@ -361,7 +361,7 @@ pub fn drawing_canvas(
 }
 
 /// Write a `DrawingObjectNonVisualProperties` as its element, `wp:docPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drawing_object_non_visual_properties(
     node: &super::DrawingObjectNonVisualProperties,
     scope: &mut Scope,
@@ -383,7 +383,7 @@ pub fn drawing_object_non_visual_properties(
 }
 
 /// Write a `DrawingObjectSize` as its element, `wp:extent`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drawing_object_size(node: &super::DrawingObjectSize, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DRAWING_OBJECT_SIZE_SHAPE, &node.unknown);
@@ -393,7 +393,7 @@ pub fn drawing_object_size(node: &super::DrawingObjectSize, scope: &mut Scope) -
 }
 
 /// Write a `ExtensionList` as its element, `wp:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn extension_list(node: &super::ExtensionList, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXTENSION_LIST_SHAPE, &node.unknown);
@@ -402,7 +402,7 @@ pub fn extension_list(node: &super::ExtensionList, scope: &mut Scope) -> Element
 }
 
 /// Write a `GraphicalObjectContainer` as its element, `wp:graphicFrame`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn graphical_object_container(
     node: &super::GraphicalObjectContainer,
     scope: &mut Scope,
@@ -421,7 +421,7 @@ pub fn graphical_object_container(
 }
 
 /// Write a `GroupShape` as its element, `wp:grpSp`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn group_shape(node: &super::GroupShape, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::GROUP_SHAPE_SHAPE, &node.unknown);
@@ -442,7 +442,7 @@ pub fn group_shape_content(
 }
 
 /// Write a `GroupShapeProperties` as its element, `wp:grpSpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn group_shape_properties(node: &super::GroupShapeProperties, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -459,7 +459,7 @@ pub fn group_shape_properties(node: &super::GroupShapeProperties, scope: &mut Sc
 }
 
 /// Write a `HorizontalPositioning` as its element, `wp:positionH`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn horizontal_positioning(node: &super::HorizontalPositioning, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -481,7 +481,7 @@ pub fn horizontal_positioning_content(
 }
 
 /// Write a `InlineDrawingMLObject` as its element, `wp:inline`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn inline_drawing_ml_object(node: &super::InlineDrawingMLObject, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -503,7 +503,7 @@ pub fn inline_drawing_ml_object(node: &super::InlineDrawingMLObject, scope: &mut
 }
 
 /// Write a `NoTextWrapping` as its element, `wp:wrapNone`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn no_text_wrapping(node: &super::NoTextWrapping, scope: &mut Scope) -> Element {
     let writer =
         officekit_markup_base::Writer::new(scope, &super::NO_TEXT_WRAPPING_SHAPE, &node.unknown);
@@ -511,7 +511,7 @@ pub fn no_text_wrapping(node: &super::NoTextWrapping, scope: &mut Scope) -> Elem
 }
 
 /// Write a `NonVisualConnectorShapeDrawingProperties` as its element, `wp:cNvCnPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_connector_shape_drawing_properties(
     node: &super::NonVisualConnectorShapeDrawingProperties,
     scope: &mut Scope,
@@ -529,7 +529,7 @@ pub fn non_visual_connector_shape_drawing_properties(
 }
 
 /// Write a `NonVisualContentPartDrawingProperties` as its element, `wp:cNvContentPartPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_content_part_drawing_properties(
     node: &super::NonVisualContentPartDrawingProperties,
     scope: &mut Scope,
@@ -546,7 +546,7 @@ pub fn non_visual_content_part_drawing_properties(
 }
 
 /// Write a `NonVisualDrawingProperties` as its element, `wp:cNvPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_drawing_properties(
     node: &super::NonVisualDrawingProperties,
     scope: &mut Scope,
@@ -568,7 +568,7 @@ pub fn non_visual_drawing_properties(
 }
 
 /// Write a `NonVisualDrawingPropertiesForAShape` as its element, `wp:cNvSpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_drawing_properties_for_a_shape(
     node: &super::NonVisualDrawingPropertiesForAShape,
     scope: &mut Scope,
@@ -585,7 +585,7 @@ pub fn non_visual_drawing_properties_for_a_shape(
 }
 
 /// Write a `NonVisualGraphicFrameDrawingProperties` as its element, `wp:cNvFrPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_graphic_frame_drawing_properties(
     node: &super::NonVisualGraphicFrameDrawingProperties,
     scope: &mut Scope,
@@ -601,7 +601,7 @@ pub fn non_visual_graphic_frame_drawing_properties(
 }
 
 /// Write a `NonVisualGroupShapeDrawingProperties` as its element, `wp:cNvGrpSpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_group_shape_drawing_properties(
     node: &super::NonVisualGroupShapeDrawingProperties,
     scope: &mut Scope,
@@ -617,7 +617,7 @@ pub fn non_visual_group_shape_drawing_properties(
 }
 
 /// Write a `NvContentPartPr` as its element, `wp:nvContentPartPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn nv_content_part_pr(node: &super::NvContentPartPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::NV_CONTENT_PART_PR_SHAPE, &node.unknown);
@@ -627,7 +627,7 @@ pub fn nv_content_part_pr(node: &super::NvContentPartPr, scope: &mut Scope) -> E
 }
 
 /// Write a `ObjectExtentsIncludingEffects` as its element, `wp:effectExtent`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn object_extents_including_effects(
     node: &super::ObjectExtentsIncludingEffects,
     scope: &mut Scope,
@@ -645,7 +645,7 @@ pub fn object_extents_including_effects(
 }
 
 /// Write a `RelativeHorizontalAlignment` as its element, `wp:align`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn relative_horizontal_alignment(
     node: &super::RelativeHorizontalAlignment,
     scope: &mut Scope,
@@ -660,7 +660,7 @@ pub fn relative_horizontal_alignment(
 }
 
 /// Write a `RelativeVerticalAlignment` as its element, `wp:align`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn relative_vertical_alignment(
     node: &super::RelativeVerticalAlignment,
     scope: &mut Scope,
@@ -675,7 +675,7 @@ pub fn relative_vertical_alignment(
 }
 
 /// Write a `RichTextBoxContentContainer` as its element, `wp:txbxContent`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rich_text_box_content_container(
     node: &super::RichTextBoxContentContainer,
     scope: &mut Scope,
@@ -699,7 +699,7 @@ pub fn shape_non_visual_properties(
 }
 
 /// Write a `ShapeProperties` as its element, `wp:spPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_properties(node: &super::ShapeProperties, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_PROPERTIES_SHAPE, &node.unknown);
@@ -716,7 +716,7 @@ pub fn shape_properties(node: &super::ShapeProperties, scope: &mut Scope) -> Ele
 }
 
 /// Write a `ShapeStyle` as its element, `wp:style`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_style(node: &super::ShapeStyle, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_STYLE_SHAPE, &node.unknown);
@@ -736,7 +736,7 @@ pub fn shape_text(
 }
 
 /// Write a `SimplePositioningCoordinates` as its element, `wp:simplePos`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn simple_positioning_coordinates(
     node: &super::SimplePositioningCoordinates,
     scope: &mut Scope,
@@ -752,7 +752,7 @@ pub fn simple_positioning_coordinates(
 }
 
 /// Write a `SquareWrapping` as its element, `wp:wrapSquare`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn square_wrapping(node: &super::SquareWrapping, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SQUARE_WRAPPING_SHAPE, &node.unknown);
@@ -766,7 +766,7 @@ pub fn square_wrapping(node: &super::SquareWrapping, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `TextualContentsOfShapeLinkedTxbx` as its element, `wp:linkedTxbx`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn textual_contents_of_shape_linked_txbx(
     node: &super::TextualContentsOfShapeLinkedTxbx,
     scope: &mut Scope,
@@ -783,7 +783,7 @@ pub fn textual_contents_of_shape_linked_txbx(
 }
 
 /// Write a `TextualContentsOfShapeTxbx` as its element, `wp:txbx`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn textual_contents_of_shape_txbx(
     node: &super::TextualContentsOfShapeTxbx,
     scope: &mut Scope,
@@ -800,7 +800,7 @@ pub fn textual_contents_of_shape_txbx(
 }
 
 /// Write a `ThroughWrapping` as its element, `wp:wrapThrough`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn through_wrapping(node: &super::ThroughWrapping, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::THROUGH_WRAPPING_SHAPE, &node.unknown);
@@ -812,7 +812,7 @@ pub fn through_wrapping(node: &super::ThroughWrapping, scope: &mut Scope) -> Ele
 }
 
 /// Write a `TightWrapping` as its element, `wp:wrapTight`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tight_wrapping(node: &super::TightWrapping, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TIGHT_WRAPPING_SHAPE, &node.unknown);
@@ -824,7 +824,7 @@ pub fn tight_wrapping(node: &super::TightWrapping, scope: &mut Scope) -> Element
 }
 
 /// Write a `TopAndBottomWrapping` as its element, `wp:wrapTopAndBottom`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn top_and_bottom_wrapping(node: &super::TopAndBottomWrapping, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -838,7 +838,7 @@ pub fn top_and_bottom_wrapping(node: &super::TopAndBottomWrapping, scope: &mut S
 }
 
 /// Write a `VerticalPositioning` as its element, `wp:positionV`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn vertical_positioning(node: &super::VerticalPositioning, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -860,7 +860,7 @@ pub fn vertical_positioning_content(
 }
 
 /// Write a `WholeE2OFormatting` as its element, `wp:whole`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn whole_e2o_formatting(node: &super::WholeE2OFormatting, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -873,7 +873,7 @@ pub fn whole_e2o_formatting(node: &super::WholeE2OFormatting, scope: &mut Scope)
 }
 
 /// Write a `WordprocessingMLDrawingCanvas` as its element, `wp:wpc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn wordprocessing_ml_drawing_canvas(
     node: &super::WordprocessingMLDrawingCanvas,
     scope: &mut Scope,
@@ -891,7 +891,7 @@ pub fn wordprocessing_ml_drawing_canvas(
 }
 
 /// Write a `WordprocessingMLShape` as its element, `wp:wsp`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn wordprocessing_ml_shape(node: &super::WordprocessingMLShape, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -910,7 +910,7 @@ pub fn wordprocessing_ml_shape(node: &super::WordprocessingMLShape, scope: &mut 
 }
 
 /// Write a `WordprocessingMLShapeGroup` as its element, `wp:wgp`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn wordprocessing_ml_shape_group(
     node: &super::WordprocessingMLShapeGroup,
     scope: &mut Scope,
@@ -929,7 +929,7 @@ pub fn wordprocessing_ml_shape_group(
 }
 
 /// Write a `WrappingPolygon` as its element, `wp:wrapPolygon`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn wrapping_polygon(node: &super::WrappingPolygon, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::WRAPPING_POLYGON_SHAPE, &node.unknown);
@@ -940,7 +940,7 @@ pub fn wrapping_polygon(node: &super::WrappingPolygon, scope: &mut Scope) -> Ele
 }
 
 /// Write a `WrappingPolygonLineEndPosition` as its element, `wp:lineTo`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn wrapping_polygon_line_end_position(
     node: &super::WrappingPolygonLineEndPosition,
     scope: &mut Scope,
@@ -956,7 +956,7 @@ pub fn wrapping_polygon_line_end_position(
 }
 
 /// Write a `WrappingPolygonStart` as its element, `wp:start`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn wrapping_polygon_start(node: &super::WrappingPolygonStart, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -969,7 +969,7 @@ pub fn wrapping_polygon_start(node: &super::WrappingPolygonStart, scope: &mut Sc
 }
 
 /// Write a `Xfrm` as its element, `wp:xfrm`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn xfrm(node: &super::Xfrm, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::XFRM_SHAPE, &node.unknown);
     writer.attribute(0, &node.rot);

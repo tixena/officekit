@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xlpar:autoRefresh` into a `AutoRefresh`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn auto_refresh(element: &Element) -> super::AutoRefresh {
     let mut node = super::AutoRefresh::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::AUTO_REFRESH_SHAPE);

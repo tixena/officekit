@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `PicAttrSrcUrl` as its element, `a1611:picAttrSrcUrl`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pic_attr_src_url(node: &super::PicAttrSrcUrl, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PIC_ATTR_SRC_URL_SHAPE, &node.unknown);

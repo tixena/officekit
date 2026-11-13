@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xxlnp:externalLinksPr` into a `ExternalLinksPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn external_links_pr(element: &Element) -> super::ExternalLinksPr {
     let mut node = super::ExternalLinksPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXTERNAL_LINKS_PR_SHAPE);

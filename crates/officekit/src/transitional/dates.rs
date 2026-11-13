@@ -122,7 +122,7 @@ pub fn convert_date_cells(
 /// assert_eq!(serial_date_time(&noon, false), Some(45292.5));
 /// assert_eq!(serial_date_time(&noon, true), Some(43830.5));
 /// ```
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn serial_date_time(date: &DateTime, date1904: bool) -> Option<f64> {
     if !(1_i32..=9999_i32).contains(&date.year) {
         return None;

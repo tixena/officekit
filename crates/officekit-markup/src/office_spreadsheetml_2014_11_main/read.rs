@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `x16:calculatedTimeColumn` into a `CalculatedTimeColumn`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn calculated_time_column(element: &Element) -> super::CalculatedTimeColumn {
     let mut node = super::CalculatedTimeColumn::default();
     let mut reader =
@@ -238,7 +238,7 @@ pub fn calculated_time_column(element: &Element) -> super::CalculatedTimeColumn 
 }
 
 /// Read `x16:modelTimeGrouping` into a `ModelTimeGrouping`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn model_time_grouping(element: &Element) -> super::ModelTimeGrouping {
     let mut node = super::ModelTimeGrouping::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MODEL_TIME_GROUPING_SHAPE);
@@ -256,7 +256,7 @@ pub fn model_time_grouping(element: &Element) -> super::ModelTimeGrouping {
 }
 
 /// Read `x16:modelTimeGroupings` into a `ModelTimeGroupings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn model_time_groupings(element: &Element) -> super::ModelTimeGroupings {
     let mut node = super::ModelTimeGroupings::default();
     let mut reader =

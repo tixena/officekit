@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `tsle:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -233,7 +233,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `tsle:timeslicer` into a `Timeslicer`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn timeslicer(element: &Element) -> super::Timeslicer {
     let mut node = super::Timeslicer::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TIMESLICER_SHAPE);

@@ -258,7 +258,7 @@ impl Catalog {
 
     /// The structs among `arms` that an enum with one variant per arm holds
     /// boxed, by the rule `box_large_arms` boxes the typed tree's arms with.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn boxed_arms(&self, arms: &[usize]) -> BTreeSet<usize> {
         large_variants(
             arms.iter()
@@ -316,13 +316,13 @@ impl Catalog {
     }
 
     /// The prefix of each namespace id.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn namespace_rows(&self) -> &[String] {
         &self.prefixes
     }
 
     /// The counts `generate-schema` prints.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn summary(&self) -> Summary {
         let ecma: Vec<&Node> = self
             .nodes

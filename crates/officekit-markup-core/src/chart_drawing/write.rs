@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `AbsoluteAnchorShapeSize` as its element, `cdr:absSizeAnchor`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn absolute_anchor_shape_size(
     node: &super::AbsoluteAnchorShapeSize,
     scope: &mut Scope,
@@ -238,7 +238,7 @@ pub fn absolute_anchor_shape_size(
 }
 
 /// Write a `ConnectionShape` as its element, `cdr:cxnSp`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn connection_shape(node: &super::ConnectionShape, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CONNECTION_SHAPE_SHAPE, &node.unknown);
@@ -251,7 +251,7 @@ pub fn connection_shape(node: &super::ConnectionShape, scope: &mut Scope) -> Ele
 }
 
 /// Write a `ConnectorNonVisualProperties` as its element, `cdr:nvCxnSpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn connector_non_visual_properties(
     node: &super::ConnectorNonVisualProperties,
     scope: &mut Scope,
@@ -267,7 +267,7 @@ pub fn connector_non_visual_properties(
 }
 
 /// Write a `EndingAnchorPoint` as its element, `cdr:to`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ending_anchor_point(node: &super::EndingAnchorPoint, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ENDING_ANCHOR_POINT_SHAPE, &node.unknown);
@@ -277,7 +277,7 @@ pub fn ending_anchor_point(node: &super::EndingAnchorPoint, scope: &mut Scope) -
 }
 
 /// Write a `GraphicFrame` as its element, `cdr:graphicFrame`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn graphic_frame(node: &super::GraphicFrame, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::GRAPHIC_FRAME_SHAPE, &node.unknown);
@@ -290,7 +290,7 @@ pub fn graphic_frame(node: &super::GraphicFrame, scope: &mut Scope) -> Element {
 }
 
 /// Write a `GraphicFrameTransform` as its element, `cdr:xfrm`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn graphic_frame_transform(node: &super::GraphicFrameTransform, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -306,7 +306,7 @@ pub fn graphic_frame_transform(node: &super::GraphicFrameTransform, scope: &mut 
 }
 
 /// Write a `GroupShape` as its element, `cdr:grpSp`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn group_shape(node: &super::GroupShape, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::GROUP_SHAPE_SHAPE, &node.unknown);
@@ -317,7 +317,7 @@ pub fn group_shape(node: &super::GroupShape, scope: &mut Scope) -> Element {
 }
 
 /// Write a `GroupShapeProperties` as its element, `cdr:grpSpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn group_shape_properties(node: &super::GroupShapeProperties, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -334,7 +334,7 @@ pub fn group_shape_properties(node: &super::GroupShapeProperties, scope: &mut Sc
 }
 
 /// Write a `NonVisualConnectionShapeDrawingProperties` as its element, `cdr:cNvCxnSpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_connection_shape_drawing_properties(
     node: &super::NonVisualConnectionShapeDrawingProperties,
     scope: &mut Scope,
@@ -352,7 +352,7 @@ pub fn non_visual_connection_shape_drawing_properties(
 }
 
 /// Write a `NonVisualDrawingProperties` as its element, `cdr:cNvPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_drawing_properties(
     node: &super::NonVisualDrawingProperties,
     scope: &mut Scope,
@@ -374,7 +374,7 @@ pub fn non_visual_drawing_properties(
 }
 
 /// Write a `NonVisualGraphicFrameDrawingProperties` as its element, `cdr:cNvGraphicFramePr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_graphic_frame_drawing_properties(
     node: &super::NonVisualGraphicFrameDrawingProperties,
     scope: &mut Scope,
@@ -390,7 +390,7 @@ pub fn non_visual_graphic_frame_drawing_properties(
 }
 
 /// Write a `NonVisualGraphicFrameProperties` as its element, `cdr:nvGraphicFramePr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_graphic_frame_properties(
     node: &super::NonVisualGraphicFrameProperties,
     scope: &mut Scope,
@@ -406,7 +406,7 @@ pub fn non_visual_graphic_frame_properties(
 }
 
 /// Write a `NonVisualGroupShapeDrawingProperties` as its element, `cdr:cNvGrpSpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_group_shape_drawing_properties(
     node: &super::NonVisualGroupShapeDrawingProperties,
     scope: &mut Scope,
@@ -422,7 +422,7 @@ pub fn non_visual_group_shape_drawing_properties(
 }
 
 /// Write a `NonVisualGroupShapeProperties` as its element, `cdr:nvGrpSpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_group_shape_properties(
     node: &super::NonVisualGroupShapeProperties,
     scope: &mut Scope,
@@ -438,7 +438,7 @@ pub fn non_visual_group_shape_properties(
 }
 
 /// Write a `NonVisualPictureDrawingProperties` as its element, `cdr:cNvPicPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_picture_drawing_properties(
     node: &super::NonVisualPictureDrawingProperties,
     scope: &mut Scope,
@@ -455,7 +455,7 @@ pub fn non_visual_picture_drawing_properties(
 }
 
 /// Write a `NonVisualPictureProperties` as its element, `cdr:nvPicPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_picture_properties(
     node: &super::NonVisualPictureProperties,
     scope: &mut Scope,
@@ -471,7 +471,7 @@ pub fn non_visual_picture_properties(
 }
 
 /// Write a `NonVisualShapeDrawingProperties` as its element, `cdr:cNvSpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_shape_drawing_properties(
     node: &super::NonVisualShapeDrawingProperties,
     scope: &mut Scope,
@@ -488,7 +488,7 @@ pub fn non_visual_shape_drawing_properties(
 }
 
 /// Write a `NonVisualShapeProperties` as its element, `cdr:nvSpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_shape_properties(
     node: &super::NonVisualShapeProperties,
     scope: &mut Scope,
@@ -509,7 +509,7 @@ pub fn object(node: &super::ObjectContent, writer: &mut officekit_markup_base::W
 }
 
 /// Write a `Picture` as its element, `cdr:pic`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn picture(node: &super::Picture, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PICTURE_SHAPE, &node.unknown);
@@ -523,7 +523,7 @@ pub fn picture(node: &super::Picture, scope: &mut Scope) -> Element {
 }
 
 /// Write a `PictureFill` as its element, `cdr:blipFill`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn picture_fill(node: &super::PictureFill, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PICTURE_FILL_SHAPE, &node.unknown);
@@ -536,7 +536,7 @@ pub fn picture_fill(node: &super::PictureFill, scope: &mut Scope) -> Element {
 }
 
 /// Write a `RelativeAnchorShapeSize` as its element, `cdr:relSizeAnchor`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn relative_anchor_shape_size(
     node: &super::RelativeAnchorShapeSize,
     scope: &mut Scope,
@@ -553,7 +553,7 @@ pub fn relative_anchor_shape_size(
 }
 
 /// Write a `RelativeXCoordinate` as its element, `cdr:x`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn relative_x_coordinate(node: &super::RelativeXCoordinate, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -565,7 +565,7 @@ pub fn relative_x_coordinate(node: &super::RelativeXCoordinate, scope: &mut Scop
 }
 
 /// Write a `RelativeYCoordinate` as its element, `cdr:y`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn relative_y_coordinate(node: &super::RelativeYCoordinate, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -577,7 +577,7 @@ pub fn relative_y_coordinate(node: &super::RelativeYCoordinate, scope: &mut Scop
 }
 
 /// Write a `Shape` as its element, `cdr:sp`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape(node: &super::Shape, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::SHAPE_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#macro);
@@ -592,7 +592,7 @@ pub fn shape(node: &super::Shape, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ShapeExtent` as its element, `cdr:ext`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_extent(node: &super::ShapeExtent, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_EXTENT_SHAPE, &node.unknown);
@@ -602,7 +602,7 @@ pub fn shape_extent(node: &super::ShapeExtent, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ShapeProperties` as its element, `cdr:spPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_properties(node: &super::ShapeProperties, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_PROPERTIES_SHAPE, &node.unknown);
@@ -619,7 +619,7 @@ pub fn shape_properties(node: &super::ShapeProperties, scope: &mut Scope) -> Ele
 }
 
 /// Write a `ShapeStyle` as its element, `cdr:style`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_style(node: &super::ShapeStyle, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_STYLE_SHAPE, &node.unknown);
@@ -631,7 +631,7 @@ pub fn shape_style(node: &super::ShapeStyle, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ShapeTextBody` as its element, `cdr:txBody`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_text_body(node: &super::ShapeTextBody, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_TEXT_BODY_SHAPE, &node.unknown);
@@ -642,7 +642,7 @@ pub fn shape_text_body(node: &super::ShapeTextBody, scope: &mut Scope) -> Elemen
 }
 
 /// Write a `StartingAnchorPoint` as its element, `cdr:from`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn starting_anchor_point(node: &super::StartingAnchorPoint, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,

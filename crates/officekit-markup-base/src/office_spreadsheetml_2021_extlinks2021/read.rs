@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xxl21:absoluteUrl` into a `AbsoluteUrl`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn absolute_url(element: &Element) -> super::AbsoluteUrl {
     let reader = crate::Reader::new(element, &super::ABSOLUTE_URL_SHAPE);
     super::AbsoluteUrl {
@@ -229,7 +229,7 @@ pub fn absolute_url(element: &Element) -> super::AbsoluteUrl {
 }
 
 /// Read `xxl21:alternateUrls` into a `AlternateUrls`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn alternate_urls(element: &Element) -> super::AlternateUrls {
     let mut node = super::AlternateUrls::default();
     let mut reader = crate::Reader::new(element, &super::ALTERNATE_URLS_SHAPE);
@@ -247,7 +247,7 @@ pub fn alternate_urls(element: &Element) -> super::AlternateUrls {
 }
 
 /// Read `xxl21:relativeUrl` into a `RelativeUrl`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn relative_url(element: &Element) -> super::RelativeUrl {
     let reader = crate::Reader::new(element, &super::RELATIVE_URL_SHAPE);
     super::RelativeUrl {

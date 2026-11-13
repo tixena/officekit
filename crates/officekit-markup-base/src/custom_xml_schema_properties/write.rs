@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `CustomXMLSchemaReference` as its element, `sl:schema`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_xml_schema_reference(
     node: &super::CustomXMLSchemaReference,
     scope: &mut Scope,
@@ -238,7 +238,7 @@ pub fn custom_xml_schema_reference(
 }
 
 /// Write a `EmbeddedCustomXMLSchemaSupplementaryData` as its element, `sl:schemaLibrary`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn embedded_custom_xml_schema_supplementary_data(
     node: &super::EmbeddedCustomXMLSchemaSupplementaryData,
     scope: &mut Scope,

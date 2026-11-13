@@ -303,7 +303,7 @@ pub trait Visitor: crate::Visitor {
 impl<X: NodeExtra> ExtWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ExtWith<Y>
     where
         Y: NodeExtra,
@@ -320,7 +320,7 @@ impl<X: NodeExtra> ExtWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             uri: self.uri.clone(),

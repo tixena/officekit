@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `oel:ext` into a `Ext`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext(element: &Element) -> super::Ext {
     let mut node = super::Ext::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_SHAPE);

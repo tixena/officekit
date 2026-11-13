@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `SvgBlip` as its element, `asvg:svgBlip`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn svg_blip(node: &super::SvgBlip, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SVG_BLIP_SHAPE, &node.unknown);

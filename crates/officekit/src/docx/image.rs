@@ -56,7 +56,7 @@ pub enum PictureSource<'id> {
 
 /// A `w:drawing` showing one picture in the line of text, `size` being its width and height in
 /// EMUs. `id` is the drawing's `wp:docPr/@id`, which a document holds once.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn inline_picture(
     source: PictureSource<'_>,
     id: u32,

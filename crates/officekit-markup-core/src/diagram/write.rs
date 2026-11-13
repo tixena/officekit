@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `Algorithm` as its element, `dgm:alg`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn algorithm(node: &super::Algorithm, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ALGORITHM_SHAPE, &node.unknown);
@@ -233,7 +233,7 @@ pub fn algorithm(node: &super::Algorithm, scope: &mut Scope) -> Element {
 }
 
 /// Write a `BackgroundFormatting` as its element, `dgm:bg`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn background_formatting(node: &super::BackgroundFormatting, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -246,7 +246,7 @@ pub fn background_formatting(node: &super::BackgroundFormatting, scope: &mut Sco
 }
 
 /// Write a `Category` as its element, `dgm:cat`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn category(node: &super::Category, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CATEGORY_SHAPE, &node.unknown);
@@ -256,7 +256,7 @@ pub fn category(node: &super::Category, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CategoryList` as its element, `dgm:catLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn category_list(node: &super::CategoryList, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CATEGORY_LIST_SHAPE, &node.unknown);
@@ -265,7 +265,7 @@ pub fn category_list(node: &super::CategoryList, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CategoryListSDCategories` as its element, `dgm:catLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn category_list_sd_categories(
     node: &super::CategoryListSDCategories,
     scope: &mut Scope,
@@ -280,7 +280,7 @@ pub fn category_list_sd_categories(
 }
 
 /// Write a `CategorySDCategory` as its element, `dgm:cat`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn category_sd_category(node: &super::CategorySDCategory, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -293,7 +293,7 @@ pub fn category_sd_category(node: &super::CategorySDCategory, scope: &mut Scope)
 }
 
 /// Write a `ChooseElement` as its element, `dgm:choose`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn choose_element(node: &super::ChooseElement, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CHOOSE_ELEMENT_SHAPE, &node.unknown);
@@ -304,7 +304,7 @@ pub fn choose_element(node: &super::ChooseElement, scope: &mut Scope) -> Element
 }
 
 /// Write a `ColorTransformCategory` as its element, `dgm:cat`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn color_transform_category(
     node: &super::ColorTransformCategory,
     scope: &mut Scope,
@@ -320,7 +320,7 @@ pub fn color_transform_category(
 }
 
 /// Write a `ColorTransformCategoryList` as its element, `dgm:catLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn color_transform_category_list(
     node: &super::ColorTransformCategoryList,
     scope: &mut Scope,
@@ -335,7 +335,7 @@ pub fn color_transform_category_list(
 }
 
 /// Write a `ColorTransformDefinitionHeader` as its element, `dgm:colorsDefHdr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn color_transform_definition_header(
     node: &super::ColorTransformDefinitionHeader,
     scope: &mut Scope,
@@ -356,7 +356,7 @@ pub fn color_transform_definition_header(
 }
 
 /// Write a `ColorTransformDefinitions` as its element, `dgm:colorsDef`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn color_transform_definitions(
     node: &super::ColorTransformDefinitions,
     scope: &mut Scope,
@@ -377,7 +377,7 @@ pub fn color_transform_definitions(
 }
 
 /// Write a `ColorTransformHeaderList` as its element, `dgm:colorsDefHdrLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn color_transform_header_list(
     node: &super::ColorTransformHeaderList,
     scope: &mut Scope,
@@ -392,7 +392,7 @@ pub fn color_transform_header_list(
 }
 
 /// Write a `ColorTransformSampleData` as its element, `dgm:clrData`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn color_transform_sample_data(
     node: &super::ColorTransformSampleData,
     scope: &mut Scope,
@@ -408,7 +408,7 @@ pub fn color_transform_sample_data(
 }
 
 /// Write a `Connection` as its element, `dgm:cxn`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn connection(node: &super::Connection, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CONNECTION_SHAPE, &node.unknown);
@@ -426,7 +426,7 @@ pub fn connection(node: &super::Connection, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ConnectionList` as its element, `dgm:cxnLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn connection_list(node: &super::ConnectionList, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CONNECTION_LIST_SHAPE, &node.unknown);
@@ -435,7 +435,7 @@ pub fn connection_list(node: &super::ConnectionList, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `Constraint` as its element, `dgm:constr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn constraint(node: &super::Constraint, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CONSTRAINT_SHAPE, &node.unknown);
@@ -455,7 +455,7 @@ pub fn constraint(node: &super::Constraint, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ConstraintList` as its element, `dgm:constrLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn constraint_list(node: &super::ConstraintList, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CONSTRAINT_LIST_SHAPE, &node.unknown);
@@ -464,7 +464,7 @@ pub fn constraint_list(node: &super::ConstraintList, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `DataModel` as its element, `dgm:dataModel`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_model(node: &super::DataModel, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DATA_MODEL_SHAPE, &node.unknown);
@@ -477,7 +477,7 @@ pub fn data_model(node: &super::DataModel, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Description` as its element, `dgm:desc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn description(node: &super::Description, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DESCRIPTION_SHAPE, &node.unknown);
@@ -487,7 +487,7 @@ pub fn description(node: &super::Description, scope: &mut Scope) -> Element {
 }
 
 /// Write a `DescriptionCTDescription` as its element, `dgm:desc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn description_ct_description(
     node: &super::DescriptionCTDescription,
     scope: &mut Scope,
@@ -503,7 +503,7 @@ pub fn description_ct_description(
 }
 
 /// Write a `DiagramDirection` as its element, `dgm:dir`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn diagram_direction(node: &super::DiagramDirection, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DIAGRAM_DIRECTION_SHAPE, &node.unknown);
@@ -512,7 +512,7 @@ pub fn diagram_direction(node: &super::DiagramDirection, scope: &mut Scope) -> E
 }
 
 /// Write a `DiagramLayoutHeaderList` as its element, `dgm:layoutDefHdrLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn diagram_layout_header_list(
     node: &super::DiagramLayoutHeaderList,
     scope: &mut Scope,
@@ -527,7 +527,7 @@ pub fn diagram_layout_header_list(
 }
 
 /// Write a `EffectColorList` as its element, `dgm:effectClrLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn effect_color_list(node: &super::EffectColorList, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EFFECT_COLOR_LIST_SHAPE, &node.unknown);
@@ -538,7 +538,7 @@ pub fn effect_color_list(node: &super::EffectColorList, scope: &mut Scope) -> El
 }
 
 /// Write a `Else` as its element, `dgm:else`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn r#else(node: &super::Else, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::ELSE_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
@@ -547,7 +547,7 @@ pub fn r#else(node: &super::Else, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ExplicitRelationshipsToDiagramParts` as its element, `dgm:relIds`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn explicit_relationships_to_diagram_parts(
     node: &super::ExplicitRelationshipsToDiagramParts,
     scope: &mut Scope,
@@ -565,7 +565,7 @@ pub fn explicit_relationships_to_diagram_parts(
 }
 
 /// Write a `ExtensionList` as its element, `dgm:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn extension_list(node: &super::ExtensionList, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXTENSION_LIST_SHAPE, &node.unknown);
@@ -574,7 +574,7 @@ pub fn extension_list(node: &super::ExtensionList, scope: &mut Scope) -> Element
 }
 
 /// Write a `FillColorList` as its element, `dgm:fillClrLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn fill_color_list(node: &super::FillColorList, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FILL_COLOR_LIST_SHAPE, &node.unknown);
@@ -585,7 +585,7 @@ pub fn fill_color_list(node: &super::FillColorList, scope: &mut Scope) -> Elemen
 }
 
 /// Write a `ForEach` as its element, `dgm:forEach`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn for_each(node: &super::ForEach, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FOR_EACH_SHAPE, &node.unknown);
@@ -602,7 +602,7 @@ pub fn for_each(node: &super::ForEach, scope: &mut Scope) -> Element {
 }
 
 /// Write a `If` as its element, `dgm:if`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn r#if(node: &super::If, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::IF_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
@@ -621,7 +621,7 @@ pub fn r#if(node: &super::If, scope: &mut Scope) -> Element {
 }
 
 /// Write a `LayoutDefinition` as its element, `dgm:layoutDef`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn layout_definition(node: &super::LayoutDefinition, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::LAYOUT_DEFINITION_SHAPE, &node.unknown);
@@ -640,7 +640,7 @@ pub fn layout_definition(node: &super::LayoutDefinition, scope: &mut Scope) -> E
 }
 
 /// Write a `LayoutDefinitionHeader` as its element, `dgm:layoutDefHdr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn layout_definition_header(
     node: &super::LayoutDefinitionHeader,
     scope: &mut Scope,
@@ -670,7 +670,7 @@ pub fn layout_element(
 }
 
 /// Write a `LayoutNode` as its element, `dgm:layoutNode`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn layout_node(node: &super::LayoutNode, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::LAYOUT_NODE_SHAPE, &node.unknown);
@@ -691,7 +691,7 @@ pub fn layout_node_content(
 }
 
 /// Write a `LevelAnimation` as its element, `dgm:animLvl`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn level_animation(node: &super::LevelAnimation, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::LEVEL_ANIMATION_SHAPE, &node.unknown);
@@ -700,7 +700,7 @@ pub fn level_animation(node: &super::LevelAnimation, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `LineColorList` as its element, `dgm:linClrLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn line_color_list(node: &super::LineColorList, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::LINE_COLOR_LIST_SHAPE, &node.unknown);
@@ -711,7 +711,7 @@ pub fn line_color_list(node: &super::LineColorList, scope: &mut Scope) -> Elemen
 }
 
 /// Write a `ListOfStyleDefinitionHeaders` as its element, `dgm:styleDefHdrLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn list_of_style_definition_headers(
     node: &super::ListOfStyleDefinitionHeaders,
     scope: &mut Scope,
@@ -726,7 +726,7 @@ pub fn list_of_style_definition_headers(
 }
 
 /// Write a `MaximumChildren` as its element, `dgm:chMax`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn maximum_children(node: &super::MaximumChildren, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::MAXIMUM_CHILDREN_SHAPE, &node.unknown);
@@ -735,7 +735,7 @@ pub fn maximum_children(node: &super::MaximumChildren, scope: &mut Scope) -> Ele
 }
 
 /// Write a `OneByOneAnimationString` as its element, `dgm:animOne`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn one_by_one_animation_string(
     node: &super::OneByOneAnimationString,
     scope: &mut Scope,
@@ -750,7 +750,7 @@ pub fn one_by_one_animation_string(
 }
 
 /// Write a `OrganizationChartBranchStyle` as its element, `dgm:hierBranch`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn organization_chart_branch_style(
     node: &super::OrganizationChartBranchStyle,
     scope: &mut Scope,
@@ -765,7 +765,7 @@ pub fn organization_chart_branch_style(
 }
 
 /// Write a `Parameter` as its element, `dgm:param`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn parameter(node: &super::Parameter, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PARAMETER_SHAPE, &node.unknown);
@@ -775,7 +775,7 @@ pub fn parameter(node: &super::Parameter, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Point` as its element, `dgm:pt`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn point(node: &super::Point, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::POINT_SHAPE, &node.unknown);
     writer.attribute(0, &node.model_id);
@@ -789,7 +789,7 @@ pub fn point(node: &super::Point, scope: &mut Scope) -> Element {
 }
 
 /// Write a `PointList` as its element, `dgm:ptLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn point_list(node: &super::PointList, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::POINT_LIST_SHAPE, &node.unknown);
@@ -798,7 +798,7 @@ pub fn point_list(node: &super::PointList, scope: &mut Scope) -> Element {
 }
 
 /// Write a `PreferredNumberOfChildren` as its element, `dgm:chPref`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn preferred_number_of_children(
     node: &super::PreferredNumberOfChildren,
     scope: &mut Scope,
@@ -813,7 +813,7 @@ pub fn preferred_number_of_children(
 }
 
 /// Write a `PresentationLayoutVariables` as its element, `dgm:presLayoutVars`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn presentation_layout_variables(
     node: &super::PresentationLayoutVariables,
     scope: &mut Scope,
@@ -836,7 +836,7 @@ pub fn presentation_layout_variables(
 }
 
 /// Write a `PresentationOf` as its element, `dgm:presOf`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn presentation_of(node: &super::PresentationOf, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PRESENTATION_OF_SHAPE, &node.unknown);
@@ -851,7 +851,7 @@ pub fn presentation_of(node: &super::PresentationOf, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `PropertySet` as its element, `dgm:prSet`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn property_set(node: &super::PropertySet, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PROPERTY_SET_SHAPE, &node.unknown);
@@ -889,7 +889,7 @@ pub fn property_set(node: &super::PropertySet, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Rule` as its element, `dgm:rule`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rule(node: &super::Rule, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::RULE_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#type);
@@ -904,7 +904,7 @@ pub fn rule(node: &super::Rule, scope: &mut Scope) -> Element {
 }
 
 /// Write a `RuleList` as its element, `dgm:ruleLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rule_list(node: &super::RuleList, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::RULE_LIST_SHAPE, &node.unknown);
@@ -913,7 +913,7 @@ pub fn rule_list(node: &super::RuleList, scope: &mut Scope) -> Element {
 }
 
 /// Write a `SampleData` as its element, `dgm:sampData`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sample_data(node: &super::SampleData, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SAMPLE_DATA_SHAPE, &node.unknown);
@@ -923,7 +923,7 @@ pub fn sample_data(node: &super::SampleData, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Scene3d` as its element, `dgm:scene3d`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn scene3d(node: &super::Scene3d, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SCENE3D_SHAPE, &node.unknown);
@@ -935,7 +935,7 @@ pub fn scene3d(node: &super::Scene3d, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Shape` as its element, `dgm:shape`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape(node: &super::Shape, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::SHAPE_SHAPE, &node.unknown);
     writer.attribute(0, &node.rot);
@@ -951,7 +951,7 @@ pub fn shape(node: &super::Shape, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ShapeAdjust` as its element, `dgm:adj`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_adjust(node: &super::ShapeAdjust, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_ADJUST_SHAPE, &node.unknown);
@@ -961,7 +961,7 @@ pub fn shape_adjust(node: &super::ShapeAdjust, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ShapeAdjustList` as its element, `dgm:adjLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_adjust_list(node: &super::ShapeAdjustList, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_ADJUST_LIST_SHAPE, &node.unknown);
@@ -970,7 +970,7 @@ pub fn shape_adjust_list(node: &super::ShapeAdjustList, scope: &mut Scope) -> El
 }
 
 /// Write a `ShapeProperties` as its element, `dgm:spPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_properties(node: &super::ShapeProperties, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_PROPERTIES_SHAPE, &node.unknown);
@@ -987,7 +987,7 @@ pub fn shape_properties(node: &super::ShapeProperties, scope: &mut Scope) -> Ele
 }
 
 /// Write a `ShapeResizeStyle` as its element, `dgm:resizeHandles`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_resize_style(node: &super::ShapeResizeStyle, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_RESIZE_STYLE_SHAPE, &node.unknown);
@@ -996,7 +996,7 @@ pub fn shape_resize_style(node: &super::ShapeResizeStyle, scope: &mut Scope) -> 
 }
 
 /// Write a `ShapeStyle` as its element, `dgm:style`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_style(node: &super::ShapeStyle, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHAPE_STYLE_SHAPE, &node.unknown);
@@ -1008,7 +1008,7 @@ pub fn shape_style(node: &super::ShapeStyle, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ShowInsertNode` as its element, `dgm:bulletEnabled`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn show_insert_node(node: &super::ShowInsertNode, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHOW_INSERT_NODE_SHAPE, &node.unknown);
@@ -1017,7 +1017,7 @@ pub fn show_insert_node(node: &super::ShowInsertNode, scope: &mut Scope) -> Elem
 }
 
 /// Write a `ShowOrganizationChartUserInterface` as its element, `dgm:orgChart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn show_organization_chart_user_interface(
     node: &super::ShowOrganizationChartUserInterface,
     scope: &mut Scope,
@@ -1032,7 +1032,7 @@ pub fn show_organization_chart_user_interface(
 }
 
 /// Write a `Sp3d` as its element, `dgm:sp3d`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sp3d(node: &super::Sp3d, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::SP3D_SHAPE, &node.unknown);
     writer.attribute(0, &node.z);
@@ -1048,7 +1048,7 @@ pub fn sp3d(node: &super::Sp3d, scope: &mut Scope) -> Element {
 }
 
 /// Write a `StyleData` as its element, `dgm:styleData`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn style_data(node: &super::StyleData, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::STYLE_DATA_SHAPE, &node.unknown);
@@ -1058,7 +1058,7 @@ pub fn style_data(node: &super::StyleData, scope: &mut Scope) -> Element {
 }
 
 /// Write a `StyleDefinition` as its element, `dgm:styleDef`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn style_definition(node: &super::StyleDefinition, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::STYLE_DEFINITION_SHAPE, &node.unknown);
@@ -1074,7 +1074,7 @@ pub fn style_definition(node: &super::StyleDefinition, scope: &mut Scope) -> Ele
 }
 
 /// Write a `StyleDefinitionHeader` as its element, `dgm:styleDefHdr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn style_definition_header(node: &super::StyleDefinitionHeader, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -1092,7 +1092,7 @@ pub fn style_definition_header(node: &super::StyleDefinitionHeader, scope: &mut 
 }
 
 /// Write a `StyleLabel` as its element, `dgm:styleLbl`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn style_label(node: &super::StyleLabel, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::STYLE_LABEL_SHAPE, &node.unknown);
@@ -1108,7 +1108,7 @@ pub fn style_label(node: &super::StyleLabel, scope: &mut Scope) -> Element {
 }
 
 /// Write a `StyleLabelDescription` as its element, `dgm:desc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn style_label_description(node: &super::StyleLabelDescription, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -1121,7 +1121,7 @@ pub fn style_label_description(node: &super::StyleLabelDescription, scope: &mut 
 }
 
 /// Write a `StyleLabelStyleLabel` as its element, `dgm:styleLbl`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn style_label_style_label(node: &super::StyleLabelStyleLabel, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -1138,7 +1138,7 @@ pub fn style_label_style_label(node: &super::StyleLabelStyleLabel, scope: &mut S
 }
 
 /// Write a `TextBody` as its element, `dgm:t`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_body(node: &super::TextBody, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TEXT_BODY_SHAPE, &node.unknown);
@@ -1149,7 +1149,7 @@ pub fn text_body(node: &super::TextBody, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TextEffectColorList` as its element, `dgm:txEffectClrLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_effect_color_list(node: &super::TextEffectColorList, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -1163,7 +1163,7 @@ pub fn text_effect_color_list(node: &super::TextEffectColorList, scope: &mut Sco
 }
 
 /// Write a `TextFillColorList` as its element, `dgm:txFillClrLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_fill_color_list(node: &super::TextFillColorList, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -1177,7 +1177,7 @@ pub fn text_fill_color_list(node: &super::TextFillColorList, scope: &mut Scope) 
 }
 
 /// Write a `TextLineColorList` as its element, `dgm:txLinClrLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_line_color_list(node: &super::TextLineColorList, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -1191,7 +1191,7 @@ pub fn text_line_color_list(node: &super::TextLineColorList, scope: &mut Scope) 
 }
 
 /// Write a `TextProperties` as its element, `dgm:txPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_properties(node: &super::TextProperties, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TEXT_PROPERTIES_SHAPE, &node.unknown);
@@ -1200,7 +1200,7 @@ pub fn text_properties(node: &super::TextProperties, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `Title` as its element, `dgm:title`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn title(node: &super::Title, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::TITLE_SHAPE, &node.unknown);
     writer.attribute(0, &node.lang);
@@ -1209,7 +1209,7 @@ pub fn title(node: &super::Title, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TitleCTName` as its element, `dgm:title`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn title_ct_name(node: &super::TitleCTName, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TITLE_CT_NAME_SHAPE, &node.unknown);
@@ -1219,7 +1219,7 @@ pub fn title_ct_name(node: &super::TitleCTName, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TitleSDName` as its element, `dgm:title`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn title_sd_name(node: &super::TitleSDName, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TITLE_SD_NAME_SHAPE, &node.unknown);
@@ -1229,7 +1229,7 @@ pub fn title_sd_name(node: &super::TitleSDName, scope: &mut Scope) -> Element {
 }
 
 /// Write a `VariableList` as its element, `dgm:varLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn variable_list(node: &super::VariableList, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::VARIABLE_LIST_SHAPE, &node.unknown);
@@ -1246,7 +1246,7 @@ pub fn variable_list(node: &super::VariableList, scope: &mut Scope) -> Element {
 }
 
 /// Write a `WholeE2OFormatting` as its element, `dgm:whole`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn whole_e2o_formatting(node: &super::WholeE2OFormatting, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,

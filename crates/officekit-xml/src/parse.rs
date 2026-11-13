@@ -178,7 +178,7 @@ pub fn parse(bytes: &[u8]) -> Result<Document, XmlError> {
 
 /// The name of the part's root element, from its bytes up to the root's start tag; what follows
 /// that tag is not read. `None` when the bytes show no root element this reader can name.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn root_name(bytes: &[u8]) -> Option<QName> {
     let utf8 = utf8_of(bytes).ok()?;
     let mut reader = Reader::from_reader(utf8.as_ref());

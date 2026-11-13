@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `Bg` as its element, `wpc:bg`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bg(node: &super::Bg, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::BG_SHAPE, &node.unknown);
     writer.child(&node.fill_properties_content);
@@ -230,7 +230,7 @@ pub fn bg(node: &super::Bg, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ExtLst` as its element, `wpc:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -239,7 +239,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `GraphicFrame` as its element, `wpc:graphicFrame`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn graphic_frame(node: &super::GraphicFrame, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::GRAPHIC_FRAME_SHAPE, &node.unknown);
@@ -252,7 +252,7 @@ pub fn graphic_frame(node: &super::GraphicFrame, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Whole` as its element, `wpc:whole`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn whole(node: &super::Whole, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::WHOLE_SHAPE, &node.unknown);
     writer.child(&node.outline);
@@ -270,7 +270,7 @@ pub fn wordprocessing_canvas(
 }
 
 /// Write a `Wpc` as its element, `wpc:wpc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn wpc(node: &super::Wpc, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::WPC_SHAPE, &node.unknown);
     writer.child(&node.bg);

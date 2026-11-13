@@ -2514,7 +2514,7 @@ impl Eq for YearAccessedWith<()> {}
 impl<X: NodeExtra> AbbreviatedCaseNumberWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> AbbreviatedCaseNumberWith<Y>
     where
         Y: NodeExtra,
@@ -2527,7 +2527,7 @@ impl<X: NodeExtra> AbbreviatedCaseNumberWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -2552,7 +2552,7 @@ impl crate::Write for AbbreviatedCaseNumber {
 impl<X: NodeExtra> AlbumTitleWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> AlbumTitleWith<Y>
     where
         Y: NodeExtra,
@@ -2565,7 +2565,7 @@ impl<X: NodeExtra> AlbumTitleWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -2590,7 +2590,7 @@ impl crate::Write for AlbumTitle {
 impl<X: NodeExtra> ArtistWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ArtistWith<Y>
     where
         Y: NodeExtra,
@@ -2603,7 +2603,7 @@ impl<X: NodeExtra> ArtistWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -2625,7 +2625,7 @@ impl crate::Write for Artist {
 impl<X: NodeExtra> AuthorWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> AuthorWith<Y>
     where
         Y: NodeExtra,
@@ -2641,7 +2641,7 @@ impl<X: NodeExtra> AuthorWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -2704,14 +2704,14 @@ impl BibliographicDataSourceTypesMember {
     ];
 
     /// The text the member stands for.
-    #[must_use]
+    #[must_use = "this only returns the text of the member"]
     pub fn as_str(self) -> &'static str {
         crate::member_text(Self::MEMBERS, self)
     }
 
     /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
-    #[must_use]
+    #[must_use = "this only returns the Office version of the member"]
     pub fn introduced(self) -> Option<OfficeVersion> {
         crate::member_version(Self::MEMBERS, self)
     }
@@ -2735,7 +2735,7 @@ impl BibliographicDataSourceTypes {
 impl<X: NodeExtra> BookAuthorWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> BookAuthorWith<Y>
     where
         Y: NodeExtra,
@@ -2748,7 +2748,7 @@ impl<X: NodeExtra> BookAuthorWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -2770,7 +2770,7 @@ impl crate::Write for BookAuthor {
 impl<X: NodeExtra> BookTitleWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> BookTitleWith<Y>
     where
         Y: NodeExtra,
@@ -2783,7 +2783,7 @@ impl<X: NodeExtra> BookTitleWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -2808,7 +2808,7 @@ impl crate::Write for BookTitle {
 impl<X: NodeExtra> BroadcastTitleWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> BroadcastTitleWith<Y>
     where
         Y: NodeExtra,
@@ -2821,7 +2821,7 @@ impl<X: NodeExtra> BroadcastTitleWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -2846,7 +2846,7 @@ impl crate::Write for BroadcastTitle {
 impl<X: NodeExtra> BroadcasterWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> BroadcasterWith<Y>
     where
         Y: NodeExtra,
@@ -2859,7 +2859,7 @@ impl<X: NodeExtra> BroadcasterWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -2884,7 +2884,7 @@ impl crate::Write for Broadcaster {
 impl<X: NodeExtra> CaseNumberWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CaseNumberWith<Y>
     where
         Y: NodeExtra,
@@ -2897,7 +2897,7 @@ impl<X: NodeExtra> CaseNumberWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -2922,7 +2922,7 @@ impl crate::Write for CaseNumber {
 impl<X: NodeExtra> ChapterNumberWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ChapterNumberWith<Y>
     where
         Y: NodeExtra,
@@ -2935,7 +2935,7 @@ impl<X: NodeExtra> ChapterNumberWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -2960,7 +2960,7 @@ impl crate::Write for ChapterNumber {
 impl<X: NodeExtra> CityWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CityWith<Y>
     where
         Y: NodeExtra,
@@ -2973,7 +2973,7 @@ impl<X: NodeExtra> CityWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -2998,7 +2998,7 @@ impl crate::Write for City {
 impl<X: NodeExtra> CommentsWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CommentsWith<Y>
     where
         Y: NodeExtra,
@@ -3011,7 +3011,7 @@ impl<X: NodeExtra> CommentsWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -3036,7 +3036,7 @@ impl crate::Write for Comments {
 impl<X: NodeExtra> CompilerWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CompilerWith<Y>
     where
         Y: NodeExtra,
@@ -3049,7 +3049,7 @@ impl<X: NodeExtra> CompilerWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3071,7 +3071,7 @@ impl crate::Write for Compiler {
 impl<X: NodeExtra> ComposerWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ComposerWith<Y>
     where
         Y: NodeExtra,
@@ -3084,7 +3084,7 @@ impl<X: NodeExtra> ComposerWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3106,7 +3106,7 @@ impl crate::Write for Composer {
 impl<X: NodeExtra> ConductorWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ConductorWith<Y>
     where
         Y: NodeExtra,
@@ -3119,7 +3119,7 @@ impl<X: NodeExtra> ConductorWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3141,7 +3141,7 @@ impl crate::Write for Conductor {
 impl<X: NodeExtra> ConferenceOrProceedingsNameWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ConferenceOrProceedingsNameWith<Y>
     where
         Y: NodeExtra,
@@ -3154,7 +3154,7 @@ impl<X: NodeExtra> ConferenceOrProceedingsNameWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -3179,7 +3179,7 @@ impl crate::Write for ConferenceOrProceedingsName {
 impl<X: NodeExtra> ContributorsListWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ContributorsListWith<Y>
     where
         Y: NodeExtra,
@@ -3192,7 +3192,7 @@ impl<X: NodeExtra> ContributorsListWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3213,7 +3213,7 @@ impl crate::Write for ContributorsList {
 
 impl<X: NodeExtra> ContributorsListContentWith<X> {
     /// This item and every node under it with each `extra` at `Y`'s default.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ContributorsListContentWith<Y>
     where
         Y: NodeExtra,
@@ -3297,7 +3297,7 @@ impl crate::Write for ContributorsListContent {
 impl<X: NodeExtra> CorporateAuthorWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CorporateAuthorWith<Y>
     where
         Y: NodeExtra,
@@ -3310,7 +3310,7 @@ impl<X: NodeExtra> CorporateAuthorWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -3335,7 +3335,7 @@ impl crate::Write for CorporateAuthor {
 impl<X: NodeExtra> CounselWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CounselWith<Y>
     where
         Y: NodeExtra,
@@ -3348,7 +3348,7 @@ impl<X: NodeExtra> CounselWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3370,7 +3370,7 @@ impl crate::Write for Counsel {
 impl<X: NodeExtra> CountryOrRegionWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CountryOrRegionWith<Y>
     where
         Y: NodeExtra,
@@ -3383,7 +3383,7 @@ impl<X: NodeExtra> CountryOrRegionWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -3408,7 +3408,7 @@ impl crate::Write for CountryOrRegion {
 impl<X: NodeExtra> CourtWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CourtWith<Y>
     where
         Y: NodeExtra,
@@ -3421,7 +3421,7 @@ impl<X: NodeExtra> CourtWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -3446,7 +3446,7 @@ impl crate::Write for Court {
 impl<X: NodeExtra> DayWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> DayWith<Y>
     where
         Y: NodeExtra,
@@ -3459,7 +3459,7 @@ impl<X: NodeExtra> DayWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -3484,7 +3484,7 @@ impl crate::Write for Day {
 impl<X: NodeExtra> DayAccessedWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> DayAccessedWith<Y>
     where
         Y: NodeExtra,
@@ -3497,7 +3497,7 @@ impl<X: NodeExtra> DayAccessedWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -3522,7 +3522,7 @@ impl crate::Write for DayAccessed {
 impl<X: NodeExtra> DepartmentWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> DepartmentWith<Y>
     where
         Y: NodeExtra,
@@ -3535,7 +3535,7 @@ impl<X: NodeExtra> DepartmentWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -3560,7 +3560,7 @@ impl crate::Write for Department {
 impl<X: NodeExtra> DirectorWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> DirectorWith<Y>
     where
         Y: NodeExtra,
@@ -3573,7 +3573,7 @@ impl<X: NodeExtra> DirectorWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3595,7 +3595,7 @@ impl crate::Write for Director {
 impl<X: NodeExtra> DistributorWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> DistributorWith<Y>
     where
         Y: NodeExtra,
@@ -3608,7 +3608,7 @@ impl<X: NodeExtra> DistributorWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -3633,7 +3633,7 @@ impl crate::Write for Distributor {
 impl<X: NodeExtra> EditorWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> EditorWith<Y>
     where
         Y: NodeExtra,
@@ -3646,7 +3646,7 @@ impl<X: NodeExtra> EditorWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3668,7 +3668,7 @@ impl crate::Write for Editor {
 impl<X: NodeExtra> EditorEditionWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> EditorEditionWith<Y>
     where
         Y: NodeExtra,
@@ -3681,7 +3681,7 @@ impl<X: NodeExtra> EditorEditionWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -3706,7 +3706,7 @@ impl crate::Write for EditorEdition {
 impl<X: NodeExtra> GuidWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> GuidWith<Y>
     where
         Y: NodeExtra,
@@ -3719,7 +3719,7 @@ impl<X: NodeExtra> GuidWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -3744,7 +3744,7 @@ impl crate::Write for Guid {
 impl<X: NodeExtra> InstitutionWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> InstitutionWith<Y>
     where
         Y: NodeExtra,
@@ -3757,7 +3757,7 @@ impl<X: NodeExtra> InstitutionWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -3782,7 +3782,7 @@ impl crate::Write for Institution {
 impl<X: NodeExtra> InternetSiteTitleWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> InternetSiteTitleWith<Y>
     where
         Y: NodeExtra,
@@ -3795,7 +3795,7 @@ impl<X: NodeExtra> InternetSiteTitleWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -3820,7 +3820,7 @@ impl crate::Write for InternetSiteTitle {
 impl<X: NodeExtra> IntervieweeWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> IntervieweeWith<Y>
     where
         Y: NodeExtra,
@@ -3833,7 +3833,7 @@ impl<X: NodeExtra> IntervieweeWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3855,7 +3855,7 @@ impl crate::Write for Interviewee {
 impl<X: NodeExtra> InterviewerWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> InterviewerWith<Y>
     where
         Y: NodeExtra,
@@ -3868,7 +3868,7 @@ impl<X: NodeExtra> InterviewerWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3890,7 +3890,7 @@ impl crate::Write for Interviewer {
 impl<X: NodeExtra> InventorWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> InventorWith<Y>
     where
         Y: NodeExtra,
@@ -3903,7 +3903,7 @@ impl<X: NodeExtra> InventorWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -3925,7 +3925,7 @@ impl crate::Write for Inventor {
 impl<X: NodeExtra> IssueWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> IssueWith<Y>
     where
         Y: NodeExtra,
@@ -3938,7 +3938,7 @@ impl<X: NodeExtra> IssueWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -3963,7 +3963,7 @@ impl crate::Write for Issue {
 impl<X: NodeExtra> JournalNameWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> JournalNameWith<Y>
     where
         Y: NodeExtra,
@@ -3976,7 +3976,7 @@ impl<X: NodeExtra> JournalNameWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4001,7 +4001,7 @@ impl crate::Write for JournalName {
 impl<X: NodeExtra> LocaleIDWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> LocaleIDWith<Y>
     where
         Y: NodeExtra,
@@ -4014,7 +4014,7 @@ impl<X: NodeExtra> LocaleIDWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4039,7 +4039,7 @@ impl crate::Write for LocaleID {
 impl<X: NodeExtra> MediumWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> MediumWith<Y>
     where
         Y: NodeExtra,
@@ -4052,7 +4052,7 @@ impl<X: NodeExtra> MediumWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4077,7 +4077,7 @@ impl crate::Write for Medium {
 impl<X: NodeExtra> MonthWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> MonthWith<Y>
     where
         Y: NodeExtra,
@@ -4090,7 +4090,7 @@ impl<X: NodeExtra> MonthWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4115,7 +4115,7 @@ impl crate::Write for Month {
 impl<X: NodeExtra> MonthAccessedWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> MonthAccessedWith<Y>
     where
         Y: NodeExtra,
@@ -4128,7 +4128,7 @@ impl<X: NodeExtra> MonthAccessedWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4153,7 +4153,7 @@ impl crate::Write for MonthAccessed {
 impl<X: NodeExtra> NameListWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> NameListWith<Y>
     where
         Y: NodeExtra,
@@ -4166,7 +4166,7 @@ impl<X: NodeExtra> NameListWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -4187,7 +4187,7 @@ impl crate::Write for NameList {
 
 impl<X: NodeExtra> NameOrCorporateContentWith<X> {
     /// This item and every node under it with each `extra` at `Y`'s default.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> NameOrCorporateContentWith<Y>
     where
         Y: NodeExtra,
@@ -4229,7 +4229,7 @@ impl crate::Write for NameOrCorporateContent {
 impl<X: NodeExtra> NumberOfVolumesWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> NumberOfVolumesWith<Y>
     where
         Y: NodeExtra,
@@ -4242,7 +4242,7 @@ impl<X: NodeExtra> NumberOfVolumesWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4267,7 +4267,7 @@ impl crate::Write for NumberOfVolumes {
 impl<X: NodeExtra> PagesWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PagesWith<Y>
     where
         Y: NodeExtra,
@@ -4280,7 +4280,7 @@ impl<X: NodeExtra> PagesWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4305,7 +4305,7 @@ impl crate::Write for Pages {
 impl<X: NodeExtra> PatentNumberWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PatentNumberWith<Y>
     where
         Y: NodeExtra,
@@ -4318,7 +4318,7 @@ impl<X: NodeExtra> PatentNumberWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4343,7 +4343,7 @@ impl crate::Write for PatentNumber {
 impl<X: NodeExtra> PatentTypeWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PatentTypeWith<Y>
     where
         Y: NodeExtra,
@@ -4356,7 +4356,7 @@ impl<X: NodeExtra> PatentTypeWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4381,7 +4381,7 @@ impl crate::Write for PatentType {
 impl<X: NodeExtra> PerformerWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> PerformerWith<Y>
     where
         Y: NodeExtra,
@@ -4397,7 +4397,7 @@ impl<X: NodeExtra> PerformerWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -4419,7 +4419,7 @@ impl crate::Write for Performer {
 impl<X: NodeExtra> PeriodicalTitleWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PeriodicalTitleWith<Y>
     where
         Y: NodeExtra,
@@ -4432,7 +4432,7 @@ impl<X: NodeExtra> PeriodicalTitleWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4457,7 +4457,7 @@ impl crate::Write for PeriodicalTitle {
 impl<X: NodeExtra> PersonWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PersonWith<Y>
     where
         Y: NodeExtra,
@@ -4481,7 +4481,7 @@ impl<X: NodeExtra> PersonWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -4503,7 +4503,7 @@ impl crate::Write for Person {
 impl<X: NodeExtra> PersonsFirstOrGivenNameWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PersonsFirstOrGivenNameWith<Y>
     where
         Y: NodeExtra,
@@ -4516,7 +4516,7 @@ impl<X: NodeExtra> PersonsFirstOrGivenNameWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4541,7 +4541,7 @@ impl crate::Write for PersonsFirstOrGivenName {
 impl<X: NodeExtra> PersonsLastOrFamilyNameWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PersonsLastOrFamilyNameWith<Y>
     where
         Y: NodeExtra,
@@ -4554,7 +4554,7 @@ impl<X: NodeExtra> PersonsLastOrFamilyNameWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4579,7 +4579,7 @@ impl crate::Write for PersonsLastOrFamilyName {
 impl<X: NodeExtra> PersonsMiddleOrOtherNameWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PersonsMiddleOrOtherNameWith<Y>
     where
         Y: NodeExtra,
@@ -4592,7 +4592,7 @@ impl<X: NodeExtra> PersonsMiddleOrOtherNameWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4617,7 +4617,7 @@ impl crate::Write for PersonsMiddleOrOtherName {
 impl<X: NodeExtra> ProducerNameWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ProducerNameWith<Y>
     where
         Y: NodeExtra,
@@ -4630,7 +4630,7 @@ impl<X: NodeExtra> ProducerNameWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -4652,7 +4652,7 @@ impl crate::Write for ProducerName {
 impl<X: NodeExtra> ProductionCompanyWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ProductionCompanyWith<Y>
     where
         Y: NodeExtra,
@@ -4665,7 +4665,7 @@ impl<X: NodeExtra> ProductionCompanyWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4690,7 +4690,7 @@ impl crate::Write for ProductionCompany {
 impl<X: NodeExtra> PublicationTitleWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PublicationTitleWith<Y>
     where
         Y: NodeExtra,
@@ -4703,7 +4703,7 @@ impl<X: NodeExtra> PublicationTitleWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4728,7 +4728,7 @@ impl crate::Write for PublicationTitle {
 impl<X: NodeExtra> PublisherWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PublisherWith<Y>
     where
         Y: NodeExtra,
@@ -4741,7 +4741,7 @@ impl<X: NodeExtra> PublisherWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4766,7 +4766,7 @@ impl crate::Write for Publisher {
 impl<X: NodeExtra> RecordingNumberWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> RecordingNumberWith<Y>
     where
         Y: NodeExtra,
@@ -4779,7 +4779,7 @@ impl<X: NodeExtra> RecordingNumberWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4804,7 +4804,7 @@ impl crate::Write for RecordingNumber {
 impl<X: NodeExtra> ReferenceOrderWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ReferenceOrderWith<Y>
     where
         Y: NodeExtra,
@@ -4817,7 +4817,7 @@ impl<X: NodeExtra> ReferenceOrderWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4842,7 +4842,7 @@ impl crate::Write for ReferenceOrder {
 impl<X: NodeExtra> ReporterWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ReporterWith<Y>
     where
         Y: NodeExtra,
@@ -4855,7 +4855,7 @@ impl<X: NodeExtra> ReporterWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4880,7 +4880,7 @@ impl crate::Write for Reporter {
 impl<X: NodeExtra> ShortTitleWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ShortTitleWith<Y>
     where
         Y: NodeExtra,
@@ -4893,7 +4893,7 @@ impl<X: NodeExtra> ShortTitleWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -4918,7 +4918,7 @@ impl crate::Write for ShortTitle {
 impl<X: NodeExtra> SourceWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SourceWith<Y>
     where
         Y: NodeExtra,
@@ -4931,7 +4931,7 @@ impl<X: NodeExtra> SourceWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -4952,7 +4952,7 @@ impl crate::Write for Source {
 
 impl<X: NodeExtra> SourceContentWith<X> {
     /// This item and every node under it with each `extra` at `Y`'s default.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SourceContentWith<Y>
     where
         Y: NodeExtra,
@@ -5154,7 +5154,7 @@ impl crate::Write for SourceContent {
 impl<X: NodeExtra> SourceTypeWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SourceTypeWith<Y>
     where
         Y: NodeExtra,
@@ -5167,7 +5167,7 @@ impl<X: NodeExtra> SourceTypeWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -5192,7 +5192,7 @@ impl crate::Write for SourceType {
 impl<X: NodeExtra> SourcesWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SourcesWith<Y>
     where
         Y: NodeExtra,
@@ -5208,7 +5208,7 @@ impl<X: NodeExtra> SourcesWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             selected_style: self.selected_style.clone(),
@@ -5235,7 +5235,7 @@ impl crate::Write for Sources {
 impl<X: NodeExtra> StandardNumberWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> StandardNumberWith<Y>
     where
         Y: NodeExtra,
@@ -5248,7 +5248,7 @@ impl<X: NodeExtra> StandardNumberWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -5273,7 +5273,7 @@ impl crate::Write for StandardNumber {
 impl<X: NodeExtra> StateOrProvinceWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> StateOrProvinceWith<Y>
     where
         Y: NodeExtra,
@@ -5286,7 +5286,7 @@ impl<X: NodeExtra> StateOrProvinceWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -5311,7 +5311,7 @@ impl crate::Write for StateOrProvince {
 impl<X: NodeExtra> StationWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> StationWith<Y>
     where
         Y: NodeExtra,
@@ -5324,7 +5324,7 @@ impl<X: NodeExtra> StationWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -5349,7 +5349,7 @@ impl crate::Write for Station {
 impl<X: NodeExtra> TagWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> TagWith<Y>
     where
         Y: NodeExtra,
@@ -5362,7 +5362,7 @@ impl<X: NodeExtra> TagWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -5387,7 +5387,7 @@ impl crate::Write for Tag {
 impl<X: NodeExtra> TheaterWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> TheaterWith<Y>
     where
         Y: NodeExtra,
@@ -5400,7 +5400,7 @@ impl<X: NodeExtra> TheaterWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -5425,7 +5425,7 @@ impl crate::Write for Theater {
 impl<X: NodeExtra> ThesisTypeWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ThesisTypeWith<Y>
     where
         Y: NodeExtra,
@@ -5438,7 +5438,7 @@ impl<X: NodeExtra> ThesisTypeWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -5463,7 +5463,7 @@ impl crate::Write for ThesisType {
 impl<X: NodeExtra> TitleWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> TitleWith<Y>
     where
         Y: NodeExtra,
@@ -5476,7 +5476,7 @@ impl<X: NodeExtra> TitleWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -5501,7 +5501,7 @@ impl crate::Write for Title {
 impl<X: NodeExtra> TranslatorWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> TranslatorWith<Y>
     where
         Y: NodeExtra,
@@ -5514,7 +5514,7 @@ impl<X: NodeExtra> TranslatorWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -5536,7 +5536,7 @@ impl crate::Write for Translator {
 impl<X: NodeExtra> UrlWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> UrlWith<Y>
     where
         Y: NodeExtra,
@@ -5549,7 +5549,7 @@ impl<X: NodeExtra> UrlWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -5574,7 +5574,7 @@ impl crate::Write for Url {
 impl<X: NodeExtra> VersionWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> VersionWith<Y>
     where
         Y: NodeExtra,
@@ -5587,7 +5587,7 @@ impl<X: NodeExtra> VersionWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -5612,7 +5612,7 @@ impl crate::Write for Version {
 impl<X: NodeExtra> VolumeWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> VolumeWith<Y>
     where
         Y: NodeExtra,
@@ -5625,7 +5625,7 @@ impl<X: NodeExtra> VolumeWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -5650,7 +5650,7 @@ impl crate::Write for Volume {
 impl<X: NodeExtra> WriterWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> WriterWith<Y>
     where
         Y: NodeExtra,
@@ -5663,7 +5663,7 @@ impl<X: NodeExtra> WriterWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -5685,7 +5685,7 @@ impl crate::Write for Writer {
 impl<X: NodeExtra> YearWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> YearWith<Y>
     where
         Y: NodeExtra,
@@ -5698,7 +5698,7 @@ impl<X: NodeExtra> YearWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -5723,7 +5723,7 @@ impl crate::Write for Year {
 impl<X: NodeExtra> YearAccessedWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> YearAccessedWith<Y>
     where
         Y: NodeExtra,
@@ -5736,7 +5736,7 @@ impl<X: NodeExtra> YearAccessedWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),

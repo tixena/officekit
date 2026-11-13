@@ -41,7 +41,7 @@ pub struct Additions {
 impl Additions {
     /// The definitions both sets have that gain child elements, attributes,
     /// group references, or enumeration values.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn extended_definitions(&self) -> BTreeSet<&Name> {
         self.elements
             .iter()
@@ -61,7 +61,7 @@ impl Additions {
     }
 
     /// Whether the set declares nothing the other lacks.
-    #[must_use]
+    #[must_use = "this only answers the question"]
     pub fn is_empty(&self) -> bool {
         *self == Self::default()
     }
@@ -274,7 +274,7 @@ fn identity(twins: &BTreeMap<String, String>) -> BTreeMap<String, String> {
 }
 
 /// What Strict declares and Transitional lacks, in the Transitional namespaces.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn strict_only(transitional: &SchemaSet, strict: &SchemaSet) -> Additions {
     let twins = twins(transitional, strict);
     additions(
@@ -285,7 +285,7 @@ pub fn strict_only(transitional: &SchemaSet, strict: &SchemaSet) -> Additions {
 
 /// What Transitional declares and Strict lacks, in the 21 files both sets
 /// share.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn transitional_only(transitional: &SchemaSet, strict: &SchemaSet) -> Additions {
     let twins = twins(transitional, strict);
     additions(
@@ -295,7 +295,7 @@ pub fn transitional_only(transitional: &SchemaSet, strict: &SchemaSet) -> Additi
 }
 
 /// `name` in its Transitional twin namespace, when it has one.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn translate(name: &Name, twins: &BTreeMap<String, String>) -> Name {
     twins.get(&name.namespace).map_or_else(
         || name.clone(),
@@ -304,7 +304,7 @@ pub fn translate(name: &Name, twins: &BTreeMap<String, String>) -> Name {
 }
 
 /// Each Strict namespace mapped to the Transitional namespace of the file with the same name.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn twins(transitional: &SchemaSet, strict: &SchemaSet) -> BTreeMap<String, String> {
     let by_file: BTreeMap<_, _> = transitional
         .namespaces

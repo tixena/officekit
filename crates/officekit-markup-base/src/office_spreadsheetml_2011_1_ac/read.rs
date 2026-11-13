@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `x12ac:list` into a `List`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list(element: &Element) -> super::List {
     let mut node = super::List::default();
     let mut reader = crate::Reader::new(element, &super::LIST_SHAPE);

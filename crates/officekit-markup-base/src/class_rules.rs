@@ -22,7 +22,7 @@ pub const BASE_1904: i64 = -24_107;
 
 /// Whether `name` is the tag `tag`: the same namespace and the same local name, in either
 /// class's spelling of the namespace.
-#[must_use]
+#[must_use = "this only answers the question"]
 pub fn is(tag: Tag, name: &QName) -> bool {
     tag_of(name).is_some_and(|found| order(tag, found) == Ordering::Equal)
 }
@@ -30,7 +30,7 @@ pub fn is(tag: Tag, name: &QName) -> bool {
 /// How a table's tag sorts against a tag of the tree: by namespace id, then by local name.
 ///
 /// The generated tables are sorted this way, so a binary search finds a tag with it.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn order(table: Tag, found: (Option<NamespaceId>, &str)) -> Ordering {
     table.0.cmp(&found.0).then_with(|| table.1.cmp(found.1))
 }

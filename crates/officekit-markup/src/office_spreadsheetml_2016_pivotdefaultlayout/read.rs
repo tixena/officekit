@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xpdl:pivotTableDefinition16` into a `PivotTableDefinition16`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_table_definition16(element: &Element) -> super::PivotTableDefinition16 {
     let mut node = super::PivotTableDefinition16::default();
     let mut reader =

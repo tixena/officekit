@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `wps:bodyPr` into a `BodyPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn body_pr(element: &Element) -> super::BodyPr {
     let mut node = super::BodyPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BODY_PR_SHAPE);
@@ -257,7 +257,7 @@ pub fn body_pr(element: &Element) -> super::BodyPr {
 }
 
 /// Read `wps:cNvCnPr` into a `CNvCnPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_cn_pr(element: &Element) -> super::CNvCnPr {
     let mut node = super::CNvCnPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_CN_PR_SHAPE);
@@ -275,7 +275,7 @@ pub fn c_nv_cn_pr(element: &Element) -> super::CNvCnPr {
 }
 
 /// Read `wps:cNvPr` into a `CNvPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_pr(element: &Element) -> super::CNvPr {
     let mut node = super::CNvPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_PR_SHAPE);
@@ -297,7 +297,7 @@ pub fn c_nv_pr(element: &Element) -> super::CNvPr {
 }
 
 /// Read `wps:cNvSpPr` into a `CNvSpPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_sp_pr(element: &Element) -> super::CNvSpPr {
     let mut node = super::CNvSpPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_SP_PR_SHAPE);
@@ -314,7 +314,7 @@ pub fn c_nv_sp_pr(element: &Element) -> super::CNvSpPr {
 }
 
 /// Read `wps:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -328,7 +328,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `wps:linkedTxbx` into a `LinkedTxbx`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn linked_txbx(element: &Element) -> super::LinkedTxbx {
     let mut node = super::LinkedTxbx::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LINKED_TXBX_SHAPE);
@@ -346,19 +346,19 @@ pub fn linked_txbx(element: &Element) -> super::LinkedTxbx {
 
 /// Read one item of `ShapeNonVisualPropertiesContent` from its element: the arm of its tag, or
 /// `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn shape_non_visual_properties(element: &Element) -> super::ShapeNonVisualPropertiesContent {
     officekit_markup_base::read(element)
 }
 
 /// Read one item of `ShapeTextContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn shape_text(element: &Element) -> super::ShapeTextContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `wps:spPr` into a `SpPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sp_pr(element: &Element) -> super::SpPr {
     let mut node = super::SpPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SP_PR_SHAPE);
@@ -381,7 +381,7 @@ pub fn sp_pr(element: &Element) -> super::SpPr {
 }
 
 /// Read `wps:style` into a `Style`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style(element: &Element) -> super::Style {
     let mut node = super::Style::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::STYLE_SHAPE);
@@ -399,7 +399,7 @@ pub fn style(element: &Element) -> super::Style {
 }
 
 /// Read `wps:txbx` into a `Txbx`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn txbx(element: &Element) -> super::Txbx {
     let mut node = super::Txbx::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TXBX_SHAPE);
@@ -416,7 +416,7 @@ pub fn txbx(element: &Element) -> super::Txbx {
 }
 
 /// Read `wps:wsp` into a `Wsp`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wsp(element: &Element) -> super::Wsp {
     let mut node = super::Wsp::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WSP_SHAPE);

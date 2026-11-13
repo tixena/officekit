@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `a14:artisticBlur` into a `ArtisticBlur`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_blur(element: &Element) -> super::ArtisticBlur {
     let mut node = super::ArtisticBlur::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ARTISTIC_BLUR_SHAPE);
@@ -233,7 +233,7 @@ pub fn artistic_blur(element: &Element) -> super::ArtisticBlur {
 }
 
 /// Read `a14:artisticCement` into a `ArtisticCement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_cement(element: &Element) -> super::ArtisticCement {
     let mut node = super::ArtisticCement::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ARTISTIC_CEMENT_SHAPE);
@@ -249,7 +249,7 @@ pub fn artistic_cement(element: &Element) -> super::ArtisticCement {
 }
 
 /// Read `a14:artisticChalkSketch` into a `ArtisticChalkSketch`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_chalk_sketch(element: &Element) -> super::ArtisticChalkSketch {
     let mut node = super::ArtisticChalkSketch::default();
     let mut reader =
@@ -266,7 +266,7 @@ pub fn artistic_chalk_sketch(element: &Element) -> super::ArtisticChalkSketch {
 }
 
 /// Read `a14:artisticCrisscrossEtching` into a `ArtisticCrisscrossEtching`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_crisscross_etching(element: &Element) -> super::ArtisticCrisscrossEtching {
     let mut node = super::ArtisticCrisscrossEtching::default();
     let mut reader =
@@ -283,7 +283,7 @@ pub fn artistic_crisscross_etching(element: &Element) -> super::ArtisticCrisscro
 }
 
 /// Read `a14:artisticCutout` into a `ArtisticCutout`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_cutout(element: &Element) -> super::ArtisticCutout {
     let mut node = super::ArtisticCutout::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ARTISTIC_CUTOUT_SHAPE);
@@ -299,7 +299,7 @@ pub fn artistic_cutout(element: &Element) -> super::ArtisticCutout {
 }
 
 /// Read `a14:artisticFilmGrain` into a `ArtisticFilmGrain`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_film_grain(element: &Element) -> super::ArtisticFilmGrain {
     let mut node = super::ArtisticFilmGrain::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ARTISTIC_FILM_GRAIN_SHAPE);
@@ -315,7 +315,7 @@ pub fn artistic_film_grain(element: &Element) -> super::ArtisticFilmGrain {
 }
 
 /// Read `a14:artisticGlass` into a `ArtisticGlass`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_glass(element: &Element) -> super::ArtisticGlass {
     let mut node = super::ArtisticGlass::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ARTISTIC_GLASS_SHAPE);
@@ -331,7 +331,7 @@ pub fn artistic_glass(element: &Element) -> super::ArtisticGlass {
 }
 
 /// Read `a14:artisticGlowDiffused` into a `ArtisticGlowDiffused`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_glow_diffused(element: &Element) -> super::ArtisticGlowDiffused {
     let mut node = super::ArtisticGlowDiffused::default();
     let mut reader =
@@ -348,7 +348,7 @@ pub fn artistic_glow_diffused(element: &Element) -> super::ArtisticGlowDiffused 
 }
 
 /// Read `a14:artisticGlowEdges` into a `ArtisticGlowEdges`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_glow_edges(element: &Element) -> super::ArtisticGlowEdges {
     let mut node = super::ArtisticGlowEdges::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ARTISTIC_GLOW_EDGES_SHAPE);
@@ -364,7 +364,7 @@ pub fn artistic_glow_edges(element: &Element) -> super::ArtisticGlowEdges {
 }
 
 /// Read `a14:artisticLightScreen` into a `ArtisticLightScreen`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_light_screen(element: &Element) -> super::ArtisticLightScreen {
     let mut node = super::ArtisticLightScreen::default();
     let mut reader =
@@ -381,7 +381,7 @@ pub fn artistic_light_screen(element: &Element) -> super::ArtisticLightScreen {
 }
 
 /// Read `a14:artisticLineDrawing` into a `ArtisticLineDrawing`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_line_drawing(element: &Element) -> super::ArtisticLineDrawing {
     let mut node = super::ArtisticLineDrawing::default();
     let mut reader =
@@ -398,7 +398,7 @@ pub fn artistic_line_drawing(element: &Element) -> super::ArtisticLineDrawing {
 }
 
 /// Read `a14:artisticMarker` into a `ArtisticMarker`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_marker(element: &Element) -> super::ArtisticMarker {
     let mut node = super::ArtisticMarker::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ARTISTIC_MARKER_SHAPE);
@@ -414,7 +414,7 @@ pub fn artistic_marker(element: &Element) -> super::ArtisticMarker {
 }
 
 /// Read `a14:artisticMosiaicBubbles` into a `ArtisticMosiaicBubbles`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_mosiaic_bubbles(element: &Element) -> super::ArtisticMosiaicBubbles {
     let mut node = super::ArtisticMosiaicBubbles::default();
     let mut reader =
@@ -431,7 +431,7 @@ pub fn artistic_mosiaic_bubbles(element: &Element) -> super::ArtisticMosiaicBubb
 }
 
 /// Read `a14:artisticPaintBrush` into a `ArtisticPaintBrush`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_paint_brush(element: &Element) -> super::ArtisticPaintBrush {
     let mut node = super::ArtisticPaintBrush::default();
     let mut reader =
@@ -448,7 +448,7 @@ pub fn artistic_paint_brush(element: &Element) -> super::ArtisticPaintBrush {
 }
 
 /// Read `a14:artisticPaintStrokes` into a `ArtisticPaintStrokes`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_paint_strokes(element: &Element) -> super::ArtisticPaintStrokes {
     let mut node = super::ArtisticPaintStrokes::default();
     let mut reader =
@@ -465,7 +465,7 @@ pub fn artistic_paint_strokes(element: &Element) -> super::ArtisticPaintStrokes 
 }
 
 /// Read `a14:artisticPastelsSmooth` into a `ArtisticPastelsSmooth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_pastels_smooth(element: &Element) -> super::ArtisticPastelsSmooth {
     let mut node = super::ArtisticPastelsSmooth::default();
     let mut reader =
@@ -482,7 +482,7 @@ pub fn artistic_pastels_smooth(element: &Element) -> super::ArtisticPastelsSmoot
 }
 
 /// Read `a14:artisticPencilGrayscale` into a `ArtisticPencilGrayscale`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_pencil_grayscale(element: &Element) -> super::ArtisticPencilGrayscale {
     let mut node = super::ArtisticPencilGrayscale::default();
     let mut reader =
@@ -499,7 +499,7 @@ pub fn artistic_pencil_grayscale(element: &Element) -> super::ArtisticPencilGray
 }
 
 /// Read `a14:artisticPencilSketch` into a `ArtisticPencilSketch`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_pencil_sketch(element: &Element) -> super::ArtisticPencilSketch {
     let mut node = super::ArtisticPencilSketch::default();
     let mut reader =
@@ -516,7 +516,7 @@ pub fn artistic_pencil_sketch(element: &Element) -> super::ArtisticPencilSketch 
 }
 
 /// Read `a14:artisticPhotocopy` into a `ArtisticPhotocopy`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_photocopy(element: &Element) -> super::ArtisticPhotocopy {
     let mut node = super::ArtisticPhotocopy::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ARTISTIC_PHOTOCOPY_SHAPE);
@@ -532,7 +532,7 @@ pub fn artistic_photocopy(element: &Element) -> super::ArtisticPhotocopy {
 }
 
 /// Read `a14:artisticPlasticWrap` into a `ArtisticPlasticWrap`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_plastic_wrap(element: &Element) -> super::ArtisticPlasticWrap {
     let mut node = super::ArtisticPlasticWrap::default();
     let mut reader =
@@ -549,7 +549,7 @@ pub fn artistic_plastic_wrap(element: &Element) -> super::ArtisticPlasticWrap {
 }
 
 /// Read `a14:artisticTexturizer` into a `ArtisticTexturizer`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_texturizer(element: &Element) -> super::ArtisticTexturizer {
     let mut node = super::ArtisticTexturizer::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ARTISTIC_TEXTURIZER_SHAPE);
@@ -565,7 +565,7 @@ pub fn artistic_texturizer(element: &Element) -> super::ArtisticTexturizer {
 }
 
 /// Read `a14:artisticWatercolorSponge` into a `ArtisticWatercolorSponge`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn artistic_watercolor_sponge(element: &Element) -> super::ArtisticWatercolorSponge {
     let mut node = super::ArtisticWatercolorSponge::default();
     let mut reader =
@@ -582,7 +582,7 @@ pub fn artistic_watercolor_sponge(element: &Element) -> super::ArtisticWatercolo
 }
 
 /// Read `a14:backgroundMark` into a `BackgroundMark`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn background_mark(element: &Element) -> super::BackgroundMark {
     let mut node = super::BackgroundMark::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BACKGROUND_MARK_SHAPE);
@@ -600,7 +600,7 @@ pub fn background_mark(element: &Element) -> super::BackgroundMark {
 }
 
 /// Read `a14:backgroundRemoval` into a `BackgroundRemoval`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn background_removal(element: &Element) -> super::BackgroundRemoval {
     let mut node = super::BackgroundRemoval::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BACKGROUND_REMOVAL_SHAPE);
@@ -620,7 +620,7 @@ pub fn background_removal(element: &Element) -> super::BackgroundRemoval {
 }
 
 /// Read `a14:brightnessContrast` into a `BrightnessContrast`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn brightness_contrast(element: &Element) -> super::BrightnessContrast {
     let mut node = super::BrightnessContrast::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BRIGHTNESS_CONTRAST_SHAPE);
@@ -636,7 +636,7 @@ pub fn brightness_contrast(element: &Element) -> super::BrightnessContrast {
 }
 
 /// Read `a14:cNvContentPartPr` into a `CNvContentPartPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_content_part_pr(element: &Element) -> super::CNvContentPartPr {
     let mut node = super::CNvContentPartPr::default();
     let mut reader =
@@ -654,7 +654,7 @@ pub fn c_nv_content_part_pr(element: &Element) -> super::CNvContentPartPr {
 }
 
 /// Read `a14:cNvPr` into a `CNvPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_pr(element: &Element) -> super::CNvPr {
     let mut node = super::CNvPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_PR_SHAPE);
@@ -676,7 +676,7 @@ pub fn c_nv_pr(element: &Element) -> super::CNvPr {
 }
 
 /// Read `a14:cameraTool` into a `CameraTool`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn camera_tool(element: &Element) -> super::CameraTool {
     let mut node = super::CameraTool::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CAMERA_TOOL_SHAPE);
@@ -692,7 +692,7 @@ pub fn camera_tool(element: &Element) -> super::CameraTool {
 }
 
 /// Read `a14:colorTemperature` into a `ColorTemperature`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color_temperature(element: &Element) -> super::ColorTemperature {
     let mut node = super::ColorTemperature::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COLOR_TEMPERATURE_SHAPE);
@@ -706,7 +706,7 @@ pub fn color_temperature(element: &Element) -> super::ColorTemperature {
 }
 
 /// Read `a14:compatExt` into a `CompatExt`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn compat_ext(element: &Element) -> super::CompatExt {
     let mut node = super::CompatExt::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMPAT_EXT_SHAPE);
@@ -720,7 +720,7 @@ pub fn compat_ext(element: &Element) -> super::CompatExt {
 }
 
 /// Read `a14:contentPart` into a `ContentPart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn content_part(element: &Element) -> super::ContentPart {
     let mut node = super::ContentPart::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONTENT_PART_SHAPE);
@@ -739,7 +739,7 @@ pub fn content_part(element: &Element) -> super::ContentPart {
 }
 
 /// Read `a14:cpLocks` into a `CpLocks`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cp_locks(element: &Element) -> super::CpLocks {
     let mut node = super::CpLocks::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CP_LOCKS_SHAPE);
@@ -764,7 +764,7 @@ pub fn cp_locks(element: &Element) -> super::CpLocks {
 }
 
 /// Read `a14:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -778,7 +778,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `a14:foregroundMark` into a `ForegroundMark`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn foreground_mark(element: &Element) -> super::ForegroundMark {
     let mut node = super::ForegroundMark::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FOREGROUND_MARK_SHAPE);
@@ -796,7 +796,7 @@ pub fn foreground_mark(element: &Element) -> super::ForegroundMark {
 }
 
 /// Read `a14:hiddenEffects` into a `HiddenEffects`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hidden_effects(element: &Element) -> super::HiddenEffects {
     let mut node = super::HiddenEffects::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HIDDEN_EFFECTS_SHAPE);
@@ -810,7 +810,7 @@ pub fn hidden_effects(element: &Element) -> super::HiddenEffects {
 }
 
 /// Read `a14:hiddenFill` into a `HiddenFill`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hidden_fill(element: &Element) -> super::HiddenFill {
     let mut node = super::HiddenFill::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HIDDEN_FILL_SHAPE);
@@ -824,7 +824,7 @@ pub fn hidden_fill(element: &Element) -> super::HiddenFill {
 }
 
 /// Read `a14:hiddenLine` into a `HiddenLine`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hidden_line(element: &Element) -> super::HiddenLine {
     let mut node = super::HiddenLine::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HIDDEN_LINE_SHAPE);
@@ -848,7 +848,7 @@ pub fn hidden_line(element: &Element) -> super::HiddenLine {
 }
 
 /// Read `a14:hiddenScene3d` into a `HiddenScene3d`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hidden_scene3d(element: &Element) -> super::HiddenScene3d {
     let mut node = super::HiddenScene3d::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HIDDEN_SCENE3D_SHAPE);
@@ -866,7 +866,7 @@ pub fn hidden_scene3d(element: &Element) -> super::HiddenScene3d {
 }
 
 /// Read `a14:hiddenSp3d` into a `HiddenSp3d`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hidden_sp3d(element: &Element) -> super::HiddenSp3d {
     let mut node = super::HiddenSp3d::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HIDDEN_SP3D_SHAPE);
@@ -889,7 +889,7 @@ pub fn hidden_sp3d(element: &Element) -> super::HiddenSp3d {
 }
 
 /// Read `a14:imgEffect` into a `ImgEffect`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn img_effect(element: &Element) -> super::ImgEffect {
     let mut node = super::ImgEffect::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::IMG_EFFECT_SHAPE);
@@ -905,7 +905,7 @@ pub fn img_effect(element: &Element) -> super::ImgEffect {
 }
 
 /// Read `a14:imgLayer` into a `ImgLayer`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn img_layer(element: &Element) -> super::ImgLayer {
     let mut node = super::ImgLayer::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::IMG_LAYER_SHAPE);
@@ -921,7 +921,7 @@ pub fn img_layer(element: &Element) -> super::ImgLayer {
 }
 
 /// Read `a14:imgProps` into a `ImgProps`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn img_props(element: &Element) -> super::ImgProps {
     let mut node = super::ImgProps::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::IMG_PROPS_SHAPE);
@@ -935,7 +935,7 @@ pub fn img_props(element: &Element) -> super::ImgProps {
 }
 
 /// Read `a14:isCanvas` into a `IsCanvas`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn is_canvas(element: &Element) -> super::IsCanvas {
     let mut node = super::IsCanvas::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::IS_CANVAS_SHAPE);
@@ -949,7 +949,7 @@ pub fn is_canvas(element: &Element) -> super::IsCanvas {
 }
 
 /// Read `a14:m` into a `M`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn m(element: &Element) -> super::M {
     let reader = officekit_markup_base::Reader::new(element, &super::M_SHAPE);
     super::M {
@@ -959,7 +959,7 @@ pub fn m(element: &Element) -> super::M {
 }
 
 /// Read `a14:nvContentPartPr` into a `NvContentPartPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nv_content_part_pr(element: &Element) -> super::NvContentPartPr {
     let mut node = super::NvContentPartPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NV_CONTENT_PART_PR_SHAPE);
@@ -975,13 +975,13 @@ pub fn nv_content_part_pr(element: &Element) -> super::NvContentPartPr {
 }
 
 /// Read one item of `PictureEffectContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn picture_effect(element: &Element) -> super::PictureEffectContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `a14:saturation` into a `Saturation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn saturation(element: &Element) -> super::Saturation {
     let mut node = super::Saturation::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SATURATION_SHAPE);
@@ -995,7 +995,7 @@ pub fn saturation(element: &Element) -> super::Saturation {
 }
 
 /// Read `a14:shadowObscured` into a `ShadowObscured`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shadow_obscured(element: &Element) -> super::ShadowObscured {
     let mut node = super::ShadowObscured::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHADOW_OBSCURED_SHAPE);
@@ -1009,7 +1009,7 @@ pub fn shadow_obscured(element: &Element) -> super::ShadowObscured {
 }
 
 /// Read `a14:sharpenSoften` into a `SharpenSoften`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sharpen_soften(element: &Element) -> super::SharpenSoften {
     let mut node = super::SharpenSoften::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHARPEN_SOFTEN_SHAPE);
@@ -1023,7 +1023,7 @@ pub fn sharpen_soften(element: &Element) -> super::SharpenSoften {
 }
 
 /// Read `a14:useLocalDpi` into a `UseLocalDpi`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn use_local_dpi(element: &Element) -> super::UseLocalDpi {
     let mut node = super::UseLocalDpi::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::USE_LOCAL_DPI_SHAPE);
@@ -1037,7 +1037,7 @@ pub fn use_local_dpi(element: &Element) -> super::UseLocalDpi {
 }
 
 /// Read `a14:xfrm` into a `Xfrm`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn xfrm(element: &Element) -> super::Xfrm {
     let mut node = super::Xfrm::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::XFRM_SHAPE);

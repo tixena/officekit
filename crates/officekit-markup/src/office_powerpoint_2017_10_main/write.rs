@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `ReadonlyRecommended` as its element, `p1710:readonlyRecommended`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn readonly_recommended(node: &super::ReadonlyRecommended, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,

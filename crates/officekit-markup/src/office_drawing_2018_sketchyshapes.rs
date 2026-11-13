@@ -743,7 +743,7 @@ pub trait Visitor: crate::Visitor {
 impl<X: NodeExtra> ExtLstWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ExtLstWith<Y>
     where
         Y: NodeExtra,
@@ -759,7 +759,7 @@ impl<X: NodeExtra> ExtLstWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -781,7 +781,7 @@ impl officekit_markup_base::Write for ExtLst {
 impl<X: NodeExtra> LineSketchCurvedWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> LineSketchCurvedWith<Y>
     where
         Y: NodeExtra,
@@ -793,7 +793,7 @@ impl<X: NodeExtra> LineSketchCurvedWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -815,7 +815,7 @@ impl officekit_markup_base::Write for LineSketchCurved {
 impl<X: NodeExtra> LineSketchFreehandWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> LineSketchFreehandWith<Y>
     where
         Y: NodeExtra,
@@ -827,7 +827,7 @@ impl<X: NodeExtra> LineSketchFreehandWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -849,7 +849,7 @@ impl officekit_markup_base::Write for LineSketchFreehand {
 impl<X: NodeExtra> LineSketchNoneWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> LineSketchNoneWith<Y>
     where
         Y: NodeExtra,
@@ -861,7 +861,7 @@ impl<X: NodeExtra> LineSketchNoneWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -883,7 +883,7 @@ impl officekit_markup_base::Write for LineSketchNone {
 impl<X: NodeExtra> LineSketchScribbleWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> LineSketchScribbleWith<Y>
     where
         Y: NodeExtra,
@@ -895,7 +895,7 @@ impl<X: NodeExtra> LineSketchScribbleWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -917,7 +917,7 @@ impl officekit_markup_base::Write for LineSketchScribble {
 impl<X: NodeExtra> LineSketchStylePropsWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> LineSketchStylePropsWith<Y>
     where
         Y: NodeExtra,
@@ -943,7 +943,7 @@ impl<X: NodeExtra> LineSketchStylePropsWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             sd: self.sd.clone(),
@@ -967,7 +967,7 @@ impl officekit_markup_base::Write for LineSketchStyleProps {
 
 impl<X: NodeExtra> LineSketchTypePropertiesContentWith<X> {
     /// This item and every node under it with each `extra` at `Y`'s default.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> LineSketchTypePropertiesContentWith<Y>
     where
         Y: NodeExtra,
@@ -1029,7 +1029,7 @@ impl officekit_markup_base::Write for LineSketchTypePropertiesContent {
 impl<X: NodeExtra> SeedWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SeedWith<Y>
     where
         Y: NodeExtra,
@@ -1042,7 +1042,7 @@ impl<X: NodeExtra> SeedWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -1067,7 +1067,7 @@ impl officekit_markup_base::Write for Seed {
 impl<X: NodeExtra> TypeWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> TypeWith<Y>
     where
         Y: NodeExtra,
@@ -1083,7 +1083,7 @@ impl<X: NodeExtra> TypeWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }

@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xxdsv:lastEditFeature` into a `LastEditFeature`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn last_edit_feature(element: &Element) -> super::LastEditFeature {
     let mut node = super::LastEditFeature::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LAST_EDIT_FEATURE_SHAPE);
@@ -233,7 +233,7 @@ pub fn last_edit_feature(element: &Element) -> super::LastEditFeature {
 }
 
 /// Read `xxdsv:lastRefreshFeature` into a `LastRefreshFeature`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn last_refresh_feature(element: &Element) -> super::LastRefreshFeature {
     let mut node = super::LastRefreshFeature::default();
     let mut reader =
@@ -248,7 +248,7 @@ pub fn last_refresh_feature(element: &Element) -> super::LastRefreshFeature {
 }
 
 /// Read `xxdsv:requiredFeature` into a `RequiredFeature`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn required_feature(element: &Element) -> super::RequiredFeature {
     let mut node = super::RequiredFeature::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::REQUIRED_FEATURE_SHAPE);
@@ -262,7 +262,7 @@ pub fn required_feature(element: &Element) -> super::RequiredFeature {
 }
 
 /// Read `xxdsv:versionInfo` into a `VersionInfo`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn version_info(element: &Element) -> super::VersionInfo {
     let mut node = super::VersionInfo::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::VERSION_INFO_SHAPE);

@@ -69,7 +69,7 @@ impl Crate {
     pub const ALL: [Self; 3] = [Self::Base, Self::Core, Self::Ext];
 
     /// The folder of its modules, from the workspace root.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn folder(self) -> &'static str {
         match self {
             Self::Base => "crates/officekit-markup-base/src",
@@ -79,7 +79,7 @@ impl Crate {
     }
 
     /// Its name in a path, `officekit_markup_base`.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn name(self) -> &'static str {
         match self {
             Self::Base => "officekit_markup_base",
@@ -161,19 +161,19 @@ pub struct Summary {
 
 impl<'data> Data<'data> {
     /// Whether `prefix` is a namespace dated Office 2010 to Microsoft 365.
-    #[must_use]
+    #[must_use = "this only answers the question"]
     pub fn is_extension(&self, prefix: &str) -> bool {
         self.extension_prefixes.contains(prefix)
     }
 
     /// The name `prefix:local` stands for.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn name(&self, prefix: &str, local: &str) -> Option<Name> {
         Some(Name::new(self.uri(prefix)?, local))
     }
 
     /// The lookups over the data and the Transitional schemas.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn new(sdk: &'data SdkData, transitional: &'data SchemaSet) -> Self {
         let mut ecma_tags: BTreeMap<Name, Vec<TypeRef>> = BTreeMap::new();
         for (tag, type_ref) in transitional.element_tags() {
@@ -205,7 +205,7 @@ impl<'data> Data<'data> {
     /// The struct a data type's name stands for: an ECMA tag's own pair when
     /// the schemas give the tag one type, or give it the data's type; else the
     /// data's type.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn resolve(&self, data_name: &str) -> Option<NodeKey> {
         let (type_prefix, type_local, element_prefix, element_local) = enums::split(data_name)?;
         let tag = self.name(element_prefix, element_local)?;
@@ -250,7 +250,7 @@ impl<'data> Data<'data> {
     }
 
     /// The URI of `prefix`.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn uri(&self, prefix: &str) -> Option<&str> {
         self.uris.get(prefix).map(String::as_str)
     }
@@ -261,7 +261,7 @@ impl<'data> Data<'data> {
 /// Core is the largest set of modules that reach each other, base every
 /// other module core reaches, and ext the rest. No module of base reaches
 /// core, or it would be in the cycle, so base names no item of core or ext.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn assign(references: &[BTreeSet<usize>]) -> Vec<Crate> {
     let reached: Vec<BTreeSet<usize>> = (0..references.len())
         .map(|module| reach(references, module))

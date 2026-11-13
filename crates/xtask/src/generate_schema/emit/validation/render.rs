@@ -72,7 +72,7 @@ const TRANSITIONAL_ONLY_NAMESPACES: &str = "
 const TYPE_ID: &str = "
 /// The id of the type the data names `name`, `w:CT_TblCellMar/w:tblCellMar`; `None` for a name the
 /// data does not hold.
-#[must_use]
+#[must_use = \"this only returns the value\"]
 pub fn type_id(name: &str) -> Option<TypeId> {
     let index = SCHEMA_TYPES
         .binary_search_by(|row| row.name.cmp(name))

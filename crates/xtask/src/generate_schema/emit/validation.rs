@@ -873,7 +873,7 @@ impl<'data> Converter<'data> {
 impl Marks {
     /// The marks of every complex type of `transitional`, from `only`, what
     /// Transitional declares and Strict lacks.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn new(transitional: &SchemaSet, only: &Additions) -> Self {
         let mut marks = Self::default();
         for name in transitional.complex_types.keys() {
@@ -981,7 +981,7 @@ impl Marks {
 
 impl Tables {
     /// The counts of the tables, and the items of `marks` no row carries.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn summary(&self, marks: &Marks) -> Summary {
         let attributes = self.types.iter().flat_map(|row| &row.attributes);
         let part_children = self.parts.iter().flat_map(|part| &part.children);
@@ -1069,7 +1069,7 @@ impl Versions {
     pub const NONE: Self = Self(0);
 
     /// `version` alone; Office 2007, below every target, is no target.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn only(version: DataVersion) -> Self {
         match rank(version) {
             Some(target) => Self(1 << target),
@@ -1078,7 +1078,7 @@ impl Versions {
     }
 
     /// `version` and every later target; Office 2007 gives every target.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn since(version: DataVersion) -> Self {
         match rank(version) {
             Some(target) => Self(Self::ALL.0 & !((1 << target) - 1)),

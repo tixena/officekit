@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `BodyPr` as its element, `wps:bodyPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn body_pr(node: &super::BodyPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::BODY_PR_SHAPE, &node.unknown);
@@ -253,7 +253,7 @@ pub fn body_pr(node: &super::BodyPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CNvCnPr` as its element, `wps:cNvCnPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_nv_cn_pr(node: &super::CNvCnPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::C_NV_CN_PR_SHAPE, &node.unknown);
@@ -265,7 +265,7 @@ pub fn c_nv_cn_pr(node: &super::CNvCnPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CNvPr` as its element, `wps:cNvPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::C_NV_PR_SHAPE, &node.unknown);
@@ -281,7 +281,7 @@ pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CNvSpPr` as its element, `wps:cNvSpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_nv_sp_pr(node: &super::CNvSpPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::C_NV_SP_PR_SHAPE, &node.unknown);
@@ -292,7 +292,7 @@ pub fn c_nv_sp_pr(node: &super::CNvSpPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ExtLst` as its element, `wps:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -301,7 +301,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `LinkedTxbx` as its element, `wps:linkedTxbx`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn linked_txbx(node: &super::LinkedTxbx, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::LINKED_TXBX_SHAPE, &node.unknown);
@@ -329,7 +329,7 @@ pub fn shape_text(
 }
 
 /// Write a `SpPr` as its element, `wps:spPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::SP_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
@@ -345,7 +345,7 @@ pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Style` as its element, `wps:style`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn style(node: &super::Style, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::STYLE_SHAPE, &node.unknown);
     writer.child(&node.line_reference);
@@ -356,7 +356,7 @@ pub fn style(node: &super::Style, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Txbx` as its element, `wps:txbx`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn txbx(node: &super::Txbx, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::TXBX_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
@@ -366,7 +366,7 @@ pub fn txbx(node: &super::Txbx, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Wsp` as its element, `wps:wsp`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn wsp(node: &super::Wsp, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::WSP_SHAPE, &node.unknown);
     writer.attribute(0, &node.normal_east_asian_flow);

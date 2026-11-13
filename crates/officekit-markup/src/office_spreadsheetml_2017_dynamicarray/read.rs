@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xda:dynamicArrayProperties` into a `DynamicArrayProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dynamic_array_properties(element: &Element) -> super::DynamicArrayProperties {
     let mut node = super::DynamicArrayProperties::default();
     let mut reader =
@@ -237,7 +237,7 @@ pub fn dynamic_array_properties(element: &Element) -> super::DynamicArrayPropert
 }
 
 /// Read `xda:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);

@@ -166,7 +166,7 @@ pub struct Registration {
 
 impl Applications {
     /// Whether the row applies to documents of `application`.
-    #[must_use]
+    #[must_use = "this only answers the question"]
     pub const fn contains(self, application: Application) -> bool {
         let bit = match application {
             Application::Word => 1,

@@ -182,7 +182,7 @@ impl WriteOptions {
     /// Options with `layout` and, when `namespace_cleanup` is true, the cleanup on.
     ///
     /// [`WriteOptions::default`] is compact with the cleanup on.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn new(layout: Layout, namespace_cleanup: bool) -> Self {
         Self {
             layout,
@@ -328,7 +328,7 @@ pub(crate) fn is_whitespace(text: &str) -> bool {
 }
 
 /// Whether a node is text of whitespace only.
-#[must_use]
+#[must_use = "this only answers the question"]
 pub fn is_whitespace_text(node: &Node) -> bool {
     if let Node::Text(text) = node {
         is_whitespace(text)
@@ -424,7 +424,7 @@ fn list_names(element: &Element, prefix: &str) -> bool {
 
 /// Whether whitespace is preserved inside `element`, given whether it is
 /// around it.
-#[must_use]
+#[must_use = "this only answers the question"]
 pub fn preserves_space(element: &Element, around: bool) -> bool {
     element
         .attributes
@@ -434,7 +434,7 @@ pub fn preserves_space(element: &Element, around: bool) -> bool {
 }
 
 /// A name as written: `prefix:local`, or `local` with no prefix.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn qualified(name: &QName) -> String {
     if name.prefix.is_empty() {
         name.local.clone()

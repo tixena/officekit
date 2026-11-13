@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `PivotCacheDataSource` as its element, `xlpds:pivotCacheDataSource`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pivot_cache_data_source(node: &super::PivotCacheDataSource, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,

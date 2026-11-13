@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `CalculatedTimeColumn` as its element, `x16:calculatedTimeColumn`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn calculated_time_column(node: &super::CalculatedTimeColumn, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -235,7 +235,7 @@ pub fn calculated_time_column(node: &super::CalculatedTimeColumn, scope: &mut Sc
 }
 
 /// Write a `ModelTimeGrouping` as its element, `x16:modelTimeGrouping`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn model_time_grouping(node: &super::ModelTimeGrouping, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::MODEL_TIME_GROUPING_SHAPE, &node.unknown);
@@ -247,7 +247,7 @@ pub fn model_time_grouping(node: &super::ModelTimeGrouping, scope: &mut Scope) -
 }
 
 /// Write a `ModelTimeGroupings` as its element, `x16:modelTimeGroupings`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn model_time_groupings(node: &super::ModelTimeGroupings, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,

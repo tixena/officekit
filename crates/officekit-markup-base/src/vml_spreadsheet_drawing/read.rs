@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xvml:Anchor` into a `Anchor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn anchor(element: &Element) -> super::Anchor {
     let mut node = super::Anchor::default();
     let mut reader = crate::Reader::new(element, &super::ANCHOR_SHAPE);
@@ -233,7 +233,7 @@ pub fn anchor(element: &Element) -> super::Anchor {
 }
 
 /// Read `xvml:ClientData` into a `AttachedObjectData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn attached_object_data(element: &Element) -> super::AttachedObjectData {
     let mut node = super::AttachedObjectData::default();
     let mut reader = crate::Reader::new(element, &super::ATTACHED_OBJECT_DATA_SHAPE);
@@ -249,13 +249,13 @@ pub fn attached_object_data(element: &Element) -> super::AttachedObjectData {
 }
 
 /// Read one item of `AttachedObjectDataContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn attached_object_data_content(element: &Element) -> super::AttachedObjectDataContent {
     crate::read(element)
 }
 
 /// Read `xvml:AutoFill` into a `AutoFill`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn auto_fill(element: &Element) -> super::AutoFill {
     let mut node = super::AutoFill::default();
     let mut reader = crate::Reader::new(element, &super::AUTO_FILL_SHAPE);
@@ -269,7 +269,7 @@ pub fn auto_fill(element: &Element) -> super::AutoFill {
 }
 
 /// Read `xvml:AutoLine` into a `AutoLine`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn auto_line(element: &Element) -> super::AutoLine {
     let mut node = super::AutoLine::default();
     let mut reader = crate::Reader::new(element, &super::AUTO_LINE_SHAPE);
@@ -283,7 +283,7 @@ pub fn auto_line(element: &Element) -> super::AutoLine {
 }
 
 /// Read `xvml:AutoPict` into a `AutomaticallySize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn automatically_size(element: &Element) -> super::AutomaticallySize {
     let mut node = super::AutomaticallySize::default();
     let mut reader = crate::Reader::new(element, &super::AUTOMATICALLY_SIZE_SHAPE);
@@ -297,7 +297,7 @@ pub fn automatically_size(element: &Element) -> super::AutomaticallySize {
 }
 
 /// Read `xvml:LCT` into a `CallbackType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn callback_type(element: &Element) -> super::CallbackType {
     let mut node = super::CallbackType::default();
     let mut reader = crate::Reader::new(element, &super::CALLBACK_TYPE_SHAPE);
@@ -311,7 +311,7 @@ pub fn callback_type(element: &Element) -> super::CallbackType {
 }
 
 /// Read `xvml:FmlaPict` into a `CameraSourceRange`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn camera_source_range(element: &Element) -> super::CameraSourceRange {
     let mut node = super::CameraSourceRange::default();
     let mut reader = crate::Reader::new(element, &super::CAMERA_SOURCE_RANGE_SHAPE);
@@ -325,7 +325,7 @@ pub fn camera_source_range(element: &Element) -> super::CameraSourceRange {
 }
 
 /// Read `xvml:Camera` into a `CameraTool`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn camera_tool(element: &Element) -> super::CameraTool {
     let mut node = super::CameraTool::default();
     let mut reader = crate::Reader::new(element, &super::CAMERA_TOOL_SHAPE);
@@ -339,7 +339,7 @@ pub fn camera_tool(element: &Element) -> super::CameraTool {
 }
 
 /// Read `xvml:Cancel` into a `CancelButton`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cancel_button(element: &Element) -> super::CancelButton {
     let mut node = super::CancelButton::default();
     let mut reader = crate::Reader::new(element, &super::CANCEL_BUTTON_SHAPE);
@@ -353,7 +353,7 @@ pub fn cancel_button(element: &Element) -> super::CancelButton {
 }
 
 /// Read `xvml:Checked` into a `Checked`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn checked(element: &Element) -> super::Checked {
     let mut node = super::Checked::default();
     let mut reader = crate::Reader::new(element, &super::CHECKED_SHAPE);
@@ -367,7 +367,7 @@ pub fn checked(element: &Element) -> super::Checked {
 }
 
 /// Read `xvml:CF` into a `ClipboardFormat`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn clipboard_format(element: &Element) -> super::ClipboardFormat {
     let mut node = super::ClipboardFormat::default();
     let mut reader = crate::Reader::new(element, &super::CLIPBOARD_FORMAT_SHAPE);
@@ -381,7 +381,7 @@ pub fn clipboard_format(element: &Element) -> super::ClipboardFormat {
 }
 
 /// Read `xvml:Column` into a `CommentColumnTarget`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_column_target(element: &Element) -> super::CommentColumnTarget {
     let mut node = super::CommentColumnTarget::default();
     let mut reader = crate::Reader::new(element, &super::COMMENT_COLUMN_TARGET_SHAPE);
@@ -395,7 +395,7 @@ pub fn comment_column_target(element: &Element) -> super::CommentColumnTarget {
 }
 
 /// Read `xvml:Row` into a `CommentRowTarget`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_row_target(element: &Element) -> super::CommentRowTarget {
     let mut node = super::CommentRowTarget::default();
     let mut reader = crate::Reader::new(element, &super::COMMENT_ROW_TARGET_SHAPE);
@@ -409,7 +409,7 @@ pub fn comment_row_target(element: &Element) -> super::CommentRowTarget {
 }
 
 /// Read `xvml:Visible` into a `CommentVisibilityToggle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_visibility_toggle(element: &Element) -> super::CommentVisibilityToggle {
     let mut node = super::CommentVisibilityToggle::default();
     let mut reader = crate::Reader::new(element, &super::COMMENT_VISIBILITY_TOGGLE_SHAPE);
@@ -423,7 +423,7 @@ pub fn comment_visibility_toggle(element: &Element) -> super::CommentVisibilityT
 }
 
 /// Read `xvml:ColHidden` into a `CommentsColumnIsHidden`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comments_column_is_hidden(element: &Element) -> super::CommentsColumnIsHidden {
     let mut node = super::CommentsColumnIsHidden::default();
     let mut reader = crate::Reader::new(element, &super::COMMENTS_COLUMN_IS_HIDDEN_SHAPE);
@@ -437,7 +437,7 @@ pub fn comments_column_is_hidden(element: &Element) -> super::CommentsColumnIsHi
 }
 
 /// Read `xvml:RowHidden` into a `CommentsRowIsHidden`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comments_row_is_hidden(element: &Element) -> super::CommentsRowIsHidden {
     let mut node = super::CommentsRowIsHidden::default();
     let mut reader = crate::Reader::new(element, &super::COMMENTS_ROW_IS_HIDDEN_SHAPE);
@@ -451,7 +451,7 @@ pub fn comments_row_is_hidden(element: &Element) -> super::CommentsRowIsHidden {
 }
 
 /// Read `xvml:Default` into a `DefaultButton`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn default_button(element: &Element) -> super::DefaultButton {
     let mut node = super::DefaultButton::default();
     let mut reader = crate::Reader::new(element, &super::DEFAULT_BUTTON_SHAPE);
@@ -465,7 +465,7 @@ pub fn default_button(element: &Element) -> super::DefaultButton {
 }
 
 /// Read `xvml:DefaultSize` into a `DefaultSizeToggle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn default_size_toggle(element: &Element) -> super::DefaultSizeToggle {
     let mut node = super::DefaultSizeToggle::default();
     let mut reader = crate::Reader::new(element, &super::DEFAULT_SIZE_TOGGLE_SHAPE);
@@ -479,7 +479,7 @@ pub fn default_size_toggle(element: &Element) -> super::DefaultSizeToggle {
 }
 
 /// Read `xvml:NoThreeD` into a `Disable3DNoThreeD`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn disable3d_no_three_d(element: &Element) -> super::Disable3DNoThreeD {
     let mut node = super::Disable3DNoThreeD::default();
     let mut reader = crate::Reader::new(element, &super::DISABLE3D_NO_THREE_D_SHAPE);
@@ -493,7 +493,7 @@ pub fn disable3d_no_three_d(element: &Element) -> super::Disable3DNoThreeD {
 }
 
 /// Read `xvml:NoThreeD2` into a `Disable3DNoThreeD2`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn disable3d_no_three_d2(element: &Element) -> super::Disable3DNoThreeD2 {
     let mut node = super::Disable3DNoThreeD2::default();
     let mut reader = crate::Reader::new(element, &super::DISABLE3D_NO_THREE_D2_SHAPE);
@@ -507,7 +507,7 @@ pub fn disable3d_no_three_d2(element: &Element) -> super::Disable3DNoThreeD2 {
 }
 
 /// Read `xvml:Dismiss` into a `DismissButton`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dismiss_button(element: &Element) -> super::DismissButton {
     let mut node = super::DismissButton::default();
     let mut reader = crate::Reader::new(element, &super::DISMISS_BUTTON_SHAPE);
@@ -521,7 +521,7 @@ pub fn dismiss_button(element: &Element) -> super::DismissButton {
 }
 
 /// Read `xvml:Colored` into a `DropdownColorToggle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dropdown_color_toggle(element: &Element) -> super::DropdownColorToggle {
     let mut node = super::DropdownColorToggle::default();
     let mut reader = crate::Reader::new(element, &super::DROPDOWN_COLOR_TOGGLE_SHAPE);
@@ -535,7 +535,7 @@ pub fn dropdown_color_toggle(element: &Element) -> super::DropdownColorToggle {
 }
 
 /// Read `xvml:DropLines` into a `DropdownMaximumLines`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dropdown_maximum_lines(element: &Element) -> super::DropdownMaximumLines {
     let mut node = super::DropdownMaximumLines::default();
     let mut reader = crate::Reader::new(element, &super::DROPDOWN_MAXIMUM_LINES_SHAPE);
@@ -549,7 +549,7 @@ pub fn dropdown_maximum_lines(element: &Element) -> super::DropdownMaximumLines 
 }
 
 /// Read `xvml:DropStyle` into a `DropdownStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dropdown_style(element: &Element) -> super::DropdownStyle {
     let mut node = super::DropdownStyle::default();
     let mut reader = crate::Reader::new(element, &super::DROPDOWN_STYLE_SHAPE);
@@ -563,7 +563,7 @@ pub fn dropdown_style(element: &Element) -> super::DropdownStyle {
 }
 
 /// Read `xvml:DDE` into a `DynamicDataExchange`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dynamic_data_exchange(element: &Element) -> super::DynamicDataExchange {
     let mut node = super::DynamicDataExchange::default();
     let mut reader = crate::Reader::new(element, &super::DYNAMIC_DATA_EXCHANGE_SHAPE);
@@ -577,7 +577,7 @@ pub fn dynamic_data_exchange(element: &Element) -> super::DynamicDataExchange {
 }
 
 /// Read `xvml:MapOCX` into a `EmbeddedControl`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_control(element: &Element) -> super::EmbeddedControl {
     let mut node = super::EmbeddedControl::default();
     let mut reader = crate::Reader::new(element, &super::EMBEDDED_CONTROL_SHAPE);
@@ -591,7 +591,7 @@ pub fn embedded_control(element: &Element) -> super::EmbeddedControl {
 }
 
 /// Read `xvml:JustLastX` into a `FarEastAlignmentToggle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn far_east_alignment_toggle(element: &Element) -> super::FarEastAlignmentToggle {
     let mut node = super::FarEastAlignmentToggle::default();
     let mut reader = crate::Reader::new(element, &super::FAR_EAST_ALIGNMENT_TOGGLE_SHAPE);
@@ -605,7 +605,7 @@ pub fn far_east_alignment_toggle(element: &Element) -> super::FarEastAlignmentTo
 }
 
 /// Read `xvml:FirstButton` into a `FirstRadioButton`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn first_radio_button(element: &Element) -> super::FirstRadioButton {
     let mut node = super::FirstRadioButton::default();
     let mut reader = crate::Reader::new(element, &super::FIRST_RADIO_BUTTON_SHAPE);
@@ -619,7 +619,7 @@ pub fn first_radio_button(element: &Element) -> super::FirstRadioButton {
 }
 
 /// Read `xvml:AutoScale` into a `FontAutoScale`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn font_auto_scale(element: &Element) -> super::FontAutoScale {
     let mut node = super::FontAutoScale::default();
     let mut reader = crate::Reader::new(element, &super::FONT_AUTO_SCALE_SHAPE);
@@ -633,7 +633,7 @@ pub fn font_auto_scale(element: &Element) -> super::FontAutoScale {
 }
 
 /// Read `xvml:Help` into a `HelpButton`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn help_button(element: &Element) -> super::HelpButton {
     let mut node = super::HelpButton::default();
     let mut reader = crate::Reader::new(element, &super::HELP_BUTTON_SHAPE);
@@ -647,7 +647,7 @@ pub fn help_button(element: &Element) -> super::HelpButton {
 }
 
 /// Read `xvml:TextHAlign` into a `HorizontalTextAlignment`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn horizontal_text_alignment(element: &Element) -> super::HorizontalTextAlignment {
     let mut node = super::HorizontalTextAlignment::default();
     let mut reader = crate::Reader::new(element, &super::HORIZONTAL_TEXT_ALIGNMENT_SHAPE);
@@ -661,7 +661,7 @@ pub fn horizontal_text_alignment(element: &Element) -> super::HorizontalTextAlig
 }
 
 /// Read `xvml:ScriptExtended` into a `HTMLScriptAttributes`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn html_script_attributes(element: &Element) -> super::HTMLScriptAttributes {
     let mut node = super::HTMLScriptAttributes::default();
     let mut reader = crate::Reader::new(element, &super::HTML_SCRIPT_ATTRIBUTES_SHAPE);
@@ -675,7 +675,7 @@ pub fn html_script_attributes(element: &Element) -> super::HTMLScriptAttributes 
 }
 
 /// Read `xvml:ScriptLanguage` into a `HTMLScriptLanguage`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn html_script_language(element: &Element) -> super::HTMLScriptLanguage {
     let mut node = super::HTMLScriptLanguage::default();
     let mut reader = crate::Reader::new(element, &super::HTML_SCRIPT_LANGUAGE_SHAPE);
@@ -689,7 +689,7 @@ pub fn html_script_language(element: &Element) -> super::HTMLScriptLanguage {
 }
 
 /// Read `xvml:ScriptLocation` into a `HTMLScriptLocation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn html_script_location(element: &Element) -> super::HTMLScriptLocation {
     let mut node = super::HTMLScriptLocation::default();
     let mut reader = crate::Reader::new(element, &super::HTML_SCRIPT_LOCATION_SHAPE);
@@ -703,7 +703,7 @@ pub fn html_script_location(element: &Element) -> super::HTMLScriptLocation {
 }
 
 /// Read `xvml:ScriptText` into a `HTMLScriptText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn html_script_text(element: &Element) -> super::HTMLScriptText {
     let mut node = super::HTMLScriptText::default();
     let mut reader = crate::Reader::new(element, &super::HTML_SCRIPT_TEXT_SHAPE);
@@ -717,7 +717,7 @@ pub fn html_script_text(element: &Element) -> super::HTMLScriptText {
 }
 
 /// Read `xvml:FmlaLink` into a `LinkedFormula`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn linked_formula(element: &Element) -> super::LinkedFormula {
     let mut node = super::LinkedFormula::default();
     let mut reader = crate::Reader::new(element, &super::LINKED_FORMULA_SHAPE);
@@ -731,7 +731,7 @@ pub fn linked_formula(element: &Element) -> super::LinkedFormula {
 }
 
 /// Read `xvml:FmlaGroup` into a `LinkedFormulaGroupBox`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn linked_formula_group_box(element: &Element) -> super::LinkedFormulaGroupBox {
     let mut node = super::LinkedFormulaGroupBox::default();
     let mut reader = crate::Reader::new(element, &super::LINKED_FORMULA_GROUP_BOX_SHAPE);
@@ -745,7 +745,7 @@ pub fn linked_formula_group_box(element: &Element) -> super::LinkedFormulaGroupB
 }
 
 /// Read `xvml:FmlaRange` into a `ListItemsSourceRange`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_items_source_range(element: &Element) -> super::ListItemsSourceRange {
     let mut node = super::ListItemsSourceRange::default();
     let mut reader = crate::Reader::new(element, &super::LIST_ITEMS_SOURCE_RANGE_SHAPE);
@@ -759,7 +759,7 @@ pub fn list_items_source_range(element: &Element) -> super::ListItemsSourceRange
 }
 
 /// Read `xvml:Locked` into a `LockToggle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn lock_toggle(element: &Element) -> super::LockToggle {
     let mut node = super::LockToggle::default();
     let mut reader = crate::Reader::new(element, &super::LOCK_TOGGLE_SHAPE);
@@ -773,7 +773,7 @@ pub fn lock_toggle(element: &Element) -> super::LockToggle {
 }
 
 /// Read `xvml:Disabled` into a `MacroDisableToggle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn macro_disable_toggle(element: &Element) -> super::MacroDisableToggle {
     let mut node = super::MacroDisableToggle::default();
     let mut reader = crate::Reader::new(element, &super::MACRO_DISABLE_TOGGLE_SHAPE);
@@ -787,7 +787,7 @@ pub fn macro_disable_toggle(element: &Element) -> super::MacroDisableToggle {
 }
 
 /// Read `xvml:WidthMin` into a `MinimumWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn minimum_width(element: &Element) -> super::MinimumWidth {
     let mut node = super::MinimumWidth::default();
     let mut reader = crate::Reader::new(element, &super::MINIMUM_WIDTH_SHAPE);
@@ -801,7 +801,7 @@ pub fn minimum_width(element: &Element) -> super::MinimumWidth {
 }
 
 /// Read `xvml:MoveWithCells` into a `MoveWithCells`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn move_with_cells(element: &Element) -> super::MoveWithCells {
     let mut node = super::MoveWithCells::default();
     let mut reader = crate::Reader::new(element, &super::MOVE_WITH_CELLS_SHAPE);
@@ -815,7 +815,7 @@ pub fn move_with_cells(element: &Element) -> super::MoveWithCells {
 }
 
 /// Read `xvml:MultiLine` into a `MultiLine`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn multi_line(element: &Element) -> super::MultiLine {
     let mut node = super::MultiLine::default();
     let mut reader = crate::Reader::new(element, &super::MULTI_LINE_SHAPE);
@@ -829,7 +829,7 @@ pub fn multi_line(element: &Element) -> super::MultiLine {
 }
 
 /// Read `xvml:MultiSel` into a `MultipleSelections`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn multiple_selections(element: &Element) -> super::MultipleSelections {
     let mut node = super::MultipleSelections::default();
     let mut reader = crate::Reader::new(element, &super::MULTIPLE_SELECTIONS_SHAPE);
@@ -843,7 +843,7 @@ pub fn multiple_selections(element: &Element) -> super::MultipleSelections {
 }
 
 /// Read `xvml:ListItem` into a `NonLinkedListItem`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_linked_list_item(element: &Element) -> super::NonLinkedListItem {
     let mut node = super::NonLinkedListItem::default();
     let mut reader = crate::Reader::new(element, &super::NON_LINKED_LIST_ITEM_SHAPE);
@@ -857,7 +857,7 @@ pub fn non_linked_list_item(element: &Element) -> super::NonLinkedListItem {
 }
 
 /// Read `xvml:SecretEdit` into a `PasswordEdit`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn password_edit(element: &Element) -> super::PasswordEdit {
     let mut node = super::PasswordEdit::default();
     let mut reader = crate::Reader::new(element, &super::PASSWORD_EDIT_SHAPE);
@@ -871,7 +871,7 @@ pub fn password_edit(element: &Element) -> super::PasswordEdit {
 }
 
 /// Read `xvml:Accel` into a `PrimaryKeyboardAccelerator`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn primary_keyboard_accelerator(element: &Element) -> super::PrimaryKeyboardAccelerator {
     let mut node = super::PrimaryKeyboardAccelerator::default();
     let mut reader = crate::Reader::new(element, &super::PRIMARY_KEYBOARD_ACCELERATOR_SHAPE);
@@ -885,7 +885,7 @@ pub fn primary_keyboard_accelerator(element: &Element) -> super::PrimaryKeyboard
 }
 
 /// Read `xvml:PrintObject` into a `PrintToggle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn print_toggle(element: &Element) -> super::PrintToggle {
     let mut node = super::PrintToggle::default();
     let mut reader = crate::Reader::new(element, &super::PRINT_TOGGLE_SHAPE);
@@ -899,7 +899,7 @@ pub fn print_toggle(element: &Element) -> super::PrintToggle {
 }
 
 /// Read `xvml:RecalcAlways` into a `RecalculationToggle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn recalculation_toggle(element: &Element) -> super::RecalculationToggle {
     let mut node = super::RecalculationToggle::default();
     let mut reader = crate::Reader::new(element, &super::RECALCULATION_TOGGLE_SHAPE);
@@ -913,7 +913,7 @@ pub fn recalculation_toggle(element: &Element) -> super::RecalculationToggle {
 }
 
 /// Read `xvml:FmlaMacro` into a `ReferenceToCustomFunction`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn reference_to_custom_function(element: &Element) -> super::ReferenceToCustomFunction {
     let mut node = super::ReferenceToCustomFunction::default();
     let mut reader = crate::Reader::new(element, &super::REFERENCE_TO_CUSTOM_FUNCTION_SHAPE);
@@ -927,7 +927,7 @@ pub fn reference_to_custom_function(element: &Element) -> super::ReferenceToCust
 }
 
 /// Read `xvml:SizeWithCells` into a `ResizeWithCells`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn resize_with_cells(element: &Element) -> super::ResizeWithCells {
     let mut node = super::ResizeWithCells::default();
     let mut reader = crate::Reader::new(element, &super::RESIZE_WITH_CELLS_SHAPE);
@@ -941,7 +941,7 @@ pub fn resize_with_cells(element: &Element) -> super::ResizeWithCells {
 }
 
 /// Read `xvml:Inc` into a `ScrollBarIncrement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scroll_bar_increment(element: &Element) -> super::ScrollBarIncrement {
     let mut node = super::ScrollBarIncrement::default();
     let mut reader = crate::Reader::new(element, &super::SCROLL_BAR_INCREMENT_SHAPE);
@@ -955,7 +955,7 @@ pub fn scroll_bar_increment(element: &Element) -> super::ScrollBarIncrement {
 }
 
 /// Read `xvml:Max` into a `ScrollBarMaximum`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scroll_bar_maximum(element: &Element) -> super::ScrollBarMaximum {
     let mut node = super::ScrollBarMaximum::default();
     let mut reader = crate::Reader::new(element, &super::SCROLL_BAR_MAXIMUM_SHAPE);
@@ -969,7 +969,7 @@ pub fn scroll_bar_maximum(element: &Element) -> super::ScrollBarMaximum {
 }
 
 /// Read `xvml:Min` into a `ScrollBarMinimum`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scroll_bar_minimum(element: &Element) -> super::ScrollBarMinimum {
     let mut node = super::ScrollBarMinimum::default();
     let mut reader = crate::Reader::new(element, &super::SCROLL_BAR_MINIMUM_SHAPE);
@@ -983,7 +983,7 @@ pub fn scroll_bar_minimum(element: &Element) -> super::ScrollBarMinimum {
 }
 
 /// Read `xvml:Horiz` into a `ScrollBarOrientation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scroll_bar_orientation(element: &Element) -> super::ScrollBarOrientation {
     let mut node = super::ScrollBarOrientation::default();
     let mut reader = crate::Reader::new(element, &super::SCROLL_BAR_ORIENTATION_SHAPE);
@@ -997,7 +997,7 @@ pub fn scroll_bar_orientation(element: &Element) -> super::ScrollBarOrientation 
 }
 
 /// Read `xvml:Page` into a `ScrollBarPageIncrement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scroll_bar_page_increment(element: &Element) -> super::ScrollBarPageIncrement {
     let mut node = super::ScrollBarPageIncrement::default();
     let mut reader = crate::Reader::new(element, &super::SCROLL_BAR_PAGE_INCREMENT_SHAPE);
@@ -1011,7 +1011,7 @@ pub fn scroll_bar_page_increment(element: &Element) -> super::ScrollBarPageIncre
 }
 
 /// Read `xvml:Val` into a `ScrollBarPosition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scroll_bar_position(element: &Element) -> super::ScrollBarPosition {
     let mut node = super::ScrollBarPosition::default();
     let mut reader = crate::Reader::new(element, &super::SCROLL_BAR_POSITION_SHAPE);
@@ -1025,7 +1025,7 @@ pub fn scroll_bar_position(element: &Element) -> super::ScrollBarPosition {
 }
 
 /// Read `xvml:Dx` into a `ScrollBarWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scroll_bar_width(element: &Element) -> super::ScrollBarWidth {
     let mut node = super::ScrollBarWidth::default();
     let mut reader = crate::Reader::new(element, &super::SCROLL_BAR_WIDTH_SHAPE);
@@ -1039,7 +1039,7 @@ pub fn scroll_bar_width(element: &Element) -> super::ScrollBarWidth {
 }
 
 /// Read `xvml:Accel2` into a `SecondaryKeyboardAccelerator`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn secondary_keyboard_accelerator(element: &Element) -> super::SecondaryKeyboardAccelerator {
     let mut node = super::SecondaryKeyboardAccelerator::default();
     let mut reader = crate::Reader::new(element, &super::SECONDARY_KEYBOARD_ACCELERATOR_SHAPE);
@@ -1053,7 +1053,7 @@ pub fn secondary_keyboard_accelerator(element: &Element) -> super::SecondaryKeyb
 }
 
 /// Read `xvml:Sel` into a `SelectedEntry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn selected_entry(element: &Element) -> super::SelectedEntry {
     let mut node = super::SelectedEntry::default();
     let mut reader = crate::Reader::new(element, &super::SELECTED_ENTRY_SHAPE);
@@ -1067,7 +1067,7 @@ pub fn selected_entry(element: &Element) -> super::SelectedEntry {
 }
 
 /// Read `xvml:SelType` into a `SelectionType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn selection_type(element: &Element) -> super::SelectionType {
     let mut node = super::SelectionType::default();
     let mut reader = crate::Reader::new(element, &super::SELECTION_TYPE_SHAPE);
@@ -1081,7 +1081,7 @@ pub fn selection_type(element: &Element) -> super::SelectionType {
 }
 
 /// Read `xvml:FmlaTxbx` into a `TextFormula`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_formula(element: &Element) -> super::TextFormula {
     let mut node = super::TextFormula::default();
     let mut reader = crate::Reader::new(element, &super::TEXT_FORMULA_SHAPE);
@@ -1095,7 +1095,7 @@ pub fn text_formula(element: &Element) -> super::TextFormula {
 }
 
 /// Read `xvml:LockText` into a `TextLock`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_lock(element: &Element) -> super::TextLock {
     let mut node = super::TextLock::default();
     let mut reader = crate::Reader::new(element, &super::TEXT_LOCK_SHAPE);
@@ -1109,7 +1109,7 @@ pub fn text_lock(element: &Element) -> super::TextLock {
 }
 
 /// Read `xvml:UIObj` into a `UIObjectToggle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ui_object_toggle(element: &Element) -> super::UIObjectToggle {
     let mut node = super::UIObjectToggle::default();
     let mut reader = crate::Reader::new(element, &super::UI_OBJECT_TOGGLE_SHAPE);
@@ -1123,7 +1123,7 @@ pub fn ui_object_toggle(element: &Element) -> super::UIObjectToggle {
 }
 
 /// Read `xvml:ValidIds` into a `ValidID`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn valid_id(element: &Element) -> super::ValidID {
     let mut node = super::ValidID::default();
     let mut reader = crate::Reader::new(element, &super::VALID_ID_SHAPE);
@@ -1137,7 +1137,7 @@ pub fn valid_id(element: &Element) -> super::ValidID {
 }
 
 /// Read `xvml:VTEdit` into a `ValidationType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn validation_type(element: &Element) -> super::ValidationType {
     let mut node = super::ValidationType::default();
     let mut reader = crate::Reader::new(element, &super::VALIDATION_TYPE_SHAPE);
@@ -1151,7 +1151,7 @@ pub fn validation_type(element: &Element) -> super::ValidationType {
 }
 
 /// Read `xvml:VScroll` into a `VerticalScroll`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn vertical_scroll(element: &Element) -> super::VerticalScroll {
     let mut node = super::VerticalScroll::default();
     let mut reader = crate::Reader::new(element, &super::VERTICAL_SCROLL_SHAPE);
@@ -1165,7 +1165,7 @@ pub fn vertical_scroll(element: &Element) -> super::VerticalScroll {
 }
 
 /// Read `xvml:TextVAlign` into a `VerticalTextAlignment`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn vertical_text_alignment(element: &Element) -> super::VerticalTextAlignment {
     let mut node = super::VerticalTextAlignment::default();
     let mut reader = crate::Reader::new(element, &super::VERTICAL_TEXT_ALIGNMENT_SHAPE);

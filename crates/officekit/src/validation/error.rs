@@ -32,7 +32,7 @@ macro_rules! codes {
             pub const ALL: &'static [Self] = &[$(Self::$code),*];
 
             /// The variant's name.
-            #[must_use]
+            #[must_use = "this only returns the value"]
             pub const fn as_str(self) -> &'static str {
                 match self {
                     $(Self::$code => stringify!($code)),*
@@ -40,7 +40,7 @@ macro_rules! codes {
             }
 
             /// The check that reports this code.
-            #[must_use]
+            #[must_use = "this only returns the value"]
             pub const fn kind(self) -> Finding {
                 match self {
                     $(Self::$code => Finding::$kind),*
@@ -48,13 +48,13 @@ macro_rules! codes {
             }
 
             /// The code named `text`, as [`ErrorCode::as_str`] writes it; `None` for any other text.
-            #[must_use]
+            #[must_use = "this only returns the value"]
             pub fn parse(text: &str) -> Option<Self> {
                 Self::ALL.iter().copied().find(|code| code.as_str() == text)
             }
 
             /// officekit's message, with `{name}` placeholders the validator fills.
-            #[must_use]
+            #[must_use = "this only returns the value"]
             pub const fn template(self) -> &'static str {
                 match self {
                     $(Self::$code => $template),*
@@ -75,19 +75,19 @@ pub struct Errors {
 
 impl Errors {
     /// Whether the cap is reached, so no further error is kept.
-    #[must_use]
+    #[must_use = "this only answers the question"]
     pub const fn full(&self) -> bool {
         self.cap != 0 && self.found.len() >= self.cap
     }
 
     /// The errors kept, in the order they were pushed.
-    #[must_use]
+    #[must_use = "the value moves into the one returned"]
     pub fn into_vec(self) -> Vec<ValidationError> {
         self.found
     }
 
     /// Keeps up to `cap` errors; `0` means no limit.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn new(cap: usize) -> Self {
         Self {
             cap,
@@ -120,7 +120,7 @@ pub enum Finding {
 
 impl Finding {
     /// The word the printed line and the JSON record use.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn as_str(self) -> &'static str {
         match self {
             Self::MarkupCompatibility => "markup-compatibility",
@@ -150,7 +150,7 @@ pub struct Step {
 
 impl Step {
     /// A step on the element `local` of `namespace`, written with `prefix`, the `index`-th of its name.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn new(prefix: &str, namespace: &str, local: &str, index: u32) -> Self {
         Self {
             index,
@@ -229,7 +229,7 @@ pub struct ValidationError {
 
 impl ValidationError {
     /// What `officekit validate` prints: `part path: kind code: message`.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn line(&self) -> String {
         let path = self.path_text();
         let location = match &self.part {
@@ -246,7 +246,7 @@ impl ValidationError {
     }
 
     /// The message from the code's template, each `{name}` filled from `arguments`; an unfilled one is left out.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn new(
         code: ErrorCode,
         part: Option<PartName>,
@@ -263,7 +263,7 @@ impl ValidationError {
     }
 
     /// `/w:document[1]/w:body[1]`, with the file's prefixes.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn path_text(&self) -> String {
         self.path
             .as_ref()
@@ -271,7 +271,7 @@ impl ValidationError {
     }
 
     /// What `officekit validate --json` prints for one error.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn record(&self, file: &str, target: OfficeVersion) -> Value {
         let path = self.path.as_ref().map(|steps| {
             steps
@@ -295,7 +295,7 @@ impl ValidationError {
 }
 
 /// The target as the JSON record and the oracle name it.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub const fn target_name(target: OfficeVersion) -> &'static str {
     if matches!(target, OfficeVersion::Office2010) {
         "Office2010"

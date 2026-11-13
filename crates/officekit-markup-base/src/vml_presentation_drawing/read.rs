@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `pvml:iscomment` into a `InkAnnotationFlag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ink_annotation_flag(element: &Element) -> super::InkAnnotationFlag {
     let reader = crate::Reader::new(element, &super::INK_ANNOTATION_FLAG_SHAPE);
     super::InkAnnotationFlag {
@@ -229,7 +229,7 @@ pub fn ink_annotation_flag(element: &Element) -> super::InkAnnotationFlag {
 }
 
 /// Read `pvml:textdata` into a `VMLDiagramText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn vml_diagram_text(element: &Element) -> super::VMLDiagramText {
     let mut node = super::VMLDiagramText::default();
     let mut reader = crate::Reader::new(element, &super::VML_DIAGRAM_TEXT_SHAPE);

@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `Oembed` as its element, `woe:oembed`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn oembed(node: &super::Oembed, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::OEMBED_SHAPE, &node.unknown);
     writer.attribute(0, &node.o_embed_url);

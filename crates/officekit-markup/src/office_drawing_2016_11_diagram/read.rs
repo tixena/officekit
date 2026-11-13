@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `dgm1611:autoBuNodeInfo` into a `AutoBuNodeInfo`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn auto_bu_node_info(element: &Element) -> super::AutoBuNodeInfo {
     let mut node = super::AutoBuNodeInfo::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::AUTO_BU_NODE_INFO_SHAPE);
@@ -236,7 +236,7 @@ pub fn auto_bu_node_info(element: &Element) -> super::AutoBuNodeInfo {
 }
 
 /// Read `dgm1611:autoBuNodeInfoLst` into a `AutoBuNodeInfoLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn auto_bu_node_info_lst(element: &Element) -> super::AutoBuNodeInfoLst {
     let mut node = super::AutoBuNodeInfoLst::default();
     let mut reader =
@@ -251,7 +251,7 @@ pub fn auto_bu_node_info_lst(element: &Element) -> super::AutoBuNodeInfoLst {
 }
 
 /// Read `dgm1611:buPr` into a `BuPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bu_pr(element: &Element) -> super::BuPr {
     let mut node = super::BuPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BU_PR_SHAPE);

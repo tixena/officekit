@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `pc2:cmMK` into a `CmMK`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cm_mk(element: &Element) -> super::CmMK {
     let mut node = super::CmMK::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CM_MK_SHAPE);
@@ -233,7 +233,7 @@ pub fn cm_mk(element: &Element) -> super::CmMK {
 }
 
 /// Read `pc2:cmMkLst` into a `CmMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cm_mk_lst(element: &Element) -> super::CmMkLst {
     let mut node = super::CmMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CM_MK_LST_SHAPE);
@@ -249,7 +249,7 @@ pub fn cm_mk_lst(element: &Element) -> super::CmMkLst {
 }
 
 /// Read `pc2:cmRplyMk` into a `CmRplyMk`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cm_rply_mk(element: &Element) -> super::CmRplyMk {
     let mut node = super::CmRplyMk::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CM_RPLY_MK_SHAPE);
@@ -263,7 +263,7 @@ pub fn cm_rply_mk(element: &Element) -> super::CmRplyMk {
 }
 
 /// Read `pc2:cmRplyMkLst` into a `CmRplyMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cm_rply_mk_lst(element: &Element) -> super::CmRplyMkLst {
     let mut node = super::CmRplyMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CM_RPLY_MK_LST_SHAPE);

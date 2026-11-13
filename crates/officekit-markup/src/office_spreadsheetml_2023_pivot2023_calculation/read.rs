@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xlpcalc:aggregationInfo` into a `AggregationInfo`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn aggregation_info(element: &Element) -> super::AggregationInfo {
     let mut node = super::AggregationInfo::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::AGGREGATION_INFO_SHAPE);
@@ -235,7 +235,7 @@ pub fn aggregation_info(element: &Element) -> super::AggregationInfo {
 }
 
 /// Read `xlpcalc:featureSupportInfo` into a `FeatureSupportInfo`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn feature_support_info(element: &Element) -> super::FeatureSupportInfo {
     let mut node = super::FeatureSupportInfo::default();
     let mut reader =
@@ -250,7 +250,7 @@ pub fn feature_support_info(element: &Element) -> super::FeatureSupportInfo {
 }
 
 /// Read `xlpcalc:pivotAreaReferenceSubtotals` into a `PivotAreaReferenceSubtotals`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_area_reference_subtotals(element: &Element) -> super::PivotAreaReferenceSubtotals {
     let mut node = super::PivotAreaReferenceSubtotals::default();
     let mut reader =
@@ -265,7 +265,7 @@ pub fn pivot_area_reference_subtotals(element: &Element) -> super::PivotAreaRefe
 }
 
 /// Read `xlpcalc:pivotFieldSubtotalLineItems` into a `PivotFieldSubtotalLineItems`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_field_subtotal_line_items(element: &Element) -> super::PivotFieldSubtotalLineItems {
     let mut node = super::PivotFieldSubtotalLineItems::default();
     let mut reader =
@@ -280,7 +280,7 @@ pub fn pivot_field_subtotal_line_items(element: &Element) -> super::PivotFieldSu
 }
 
 /// Read `xlpcalc:pivotFieldSubtotals` into a `PivotFieldSubtotals`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_field_subtotals(element: &Element) -> super::PivotFieldSubtotals {
     let mut node = super::PivotFieldSubtotals::default();
     let mut reader =
@@ -295,7 +295,7 @@ pub fn pivot_field_subtotals(element: &Element) -> super::PivotFieldSubtotals {
 }
 
 /// Read `xlpcalc:subtotalLineItem` into a `SubtotalLineItem`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn subtotal_line_item(element: &Element) -> super::SubtotalLineItem {
     let reader = officekit_markup_base::Reader::new(element, &super::SUBTOTAL_LINE_ITEM_SHAPE);
     super::SubtotalLineItem {
@@ -305,7 +305,7 @@ pub fn subtotal_line_item(element: &Element) -> super::SubtotalLineItem {
 }
 
 /// Read `xlpcalc:subtotal` into a `SubtotalPivotItemSubtotal`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn subtotal_pivot_item_subtotal(element: &Element) -> super::SubtotalPivotItemSubtotal {
     let reader =
         officekit_markup_base::Reader::new(element, &super::SUBTOTAL_PIVOT_ITEM_SUBTOTAL_SHAPE);
@@ -316,7 +316,7 @@ pub fn subtotal_pivot_item_subtotal(element: &Element) -> super::SubtotalPivotIt
 }
 
 /// Read `xlpcalc:subtotal` into a `SubtotalPivotSubtotalType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn subtotal_pivot_subtotal_type(element: &Element) -> super::SubtotalPivotSubtotalType {
     let mut node = super::SubtotalPivotSubtotalType::default();
     let mut reader =

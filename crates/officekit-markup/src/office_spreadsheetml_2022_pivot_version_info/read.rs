@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xxpvi:cacheVersionInfo` into a `CacheVersionInfo`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cache_version_info(element: &Element) -> super::CacheVersionInfo {
     let mut node = super::CacheVersionInfo::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CACHE_VERSION_INFO_SHAPE);
@@ -235,7 +235,7 @@ pub fn cache_version_info(element: &Element) -> super::CacheVersionInfo {
 }
 
 /// Read `xxpvi:lastRefreshFeature` into a `LastRefreshFeature`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn last_refresh_feature(element: &Element) -> super::LastRefreshFeature {
     let mut node = super::LastRefreshFeature::default();
     let mut reader =
@@ -250,7 +250,7 @@ pub fn last_refresh_feature(element: &Element) -> super::LastRefreshFeature {
 }
 
 /// Read `xxpvi:lastUpdateFeature` into a `LastUpdateFeature`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn last_update_feature(element: &Element) -> super::LastUpdateFeature {
     let mut node = super::LastUpdateFeature::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LAST_UPDATE_FEATURE_SHAPE);
@@ -264,7 +264,7 @@ pub fn last_update_feature(element: &Element) -> super::LastUpdateFeature {
 }
 
 /// Read `xxpvi:pivotVersionInfo` into a `PivotVersionInfo`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_version_info(element: &Element) -> super::PivotVersionInfo {
     let mut node = super::PivotVersionInfo::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PIVOT_VERSION_INFO_SHAPE);
@@ -280,7 +280,7 @@ pub fn pivot_version_info(element: &Element) -> super::PivotVersionInfo {
 }
 
 /// Read `xxpvi:requiredFeature` into a `RequiredFeature`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn required_feature(element: &Element) -> super::RequiredFeature {
     let mut node = super::RequiredFeature::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::REQUIRED_FEATURE_SHAPE);

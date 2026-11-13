@@ -430,7 +430,7 @@ impl PresentationKind {
     ];
 
     /// The content type of the main part of a file of this kind.
-    #[must_use]
+    #[must_use = "this only returns the content type"]
     pub const fn main_content_type(self) -> &'static str {
         match self {
             Self::AddIn => "application/vnd.ms-powerpoint.addin.macroEnabled.main+xml",
@@ -467,7 +467,7 @@ impl SpreadsheetKind {
     ];
 
     /// The content type of the main part of a file of this kind.
-    #[must_use]
+    #[must_use = "this only returns the content type"]
     pub const fn main_content_type(self) -> &'static str {
         match self {
             Self::AddIn => "application/vnd.ms-excel.addin.macroEnabled.main+xml",
@@ -493,7 +493,7 @@ impl WordprocessingKind {
     ];
 
     /// The content type of the main part of a file of this kind.
-    #[must_use]
+    #[must_use = "this only returns the content type"]
     pub const fn main_content_type(self) -> &'static str {
         match self {
             Self::Document => {

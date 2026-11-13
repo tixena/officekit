@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `List` as its element, `x12ac:list`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn list(node: &super::List, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::LIST_SHAPE, &node.unknown);
     writer.text(&node.value);

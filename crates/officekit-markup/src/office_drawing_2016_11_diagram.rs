@@ -444,7 +444,7 @@ pub trait Visitor: crate::Visitor {
 impl<X: NodeExtra> AutoBuNodeInfoWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> AutoBuNodeInfoWith<Y>
     where
         Y: NodeExtra,
@@ -459,7 +459,7 @@ impl<X: NodeExtra> AutoBuNodeInfoWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             lvl: self.lvl.clone(),
@@ -485,7 +485,7 @@ impl officekit_markup_base::Write for AutoBuNodeInfo {
 impl<X: NodeExtra> AutoBuNodeInfoLstWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> AutoBuNodeInfoLstWith<Y>
     where
         Y: NodeExtra,
@@ -501,7 +501,7 @@ impl<X: NodeExtra> AutoBuNodeInfoLstWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -523,7 +523,7 @@ impl officekit_markup_base::Write for AutoBuNodeInfoLst {
 impl<X: NodeExtra> BuPrWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> BuPrWith<Y>
     where
         Y: NodeExtra,
@@ -541,7 +541,7 @@ impl<X: NodeExtra> BuPrWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             lead_zeros: self.lead_zeros.clone(),
@@ -589,14 +589,14 @@ impl STorageTypeMember {
     ];
 
     /// The text the member stands for.
-    #[must_use]
+    #[must_use = "this only returns the text of the member"]
     pub fn as_str(self) -> &'static str {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
     /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
-    #[must_use]
+    #[must_use = "this only returns the Office version of the member"]
     pub fn introduced(self) -> Option<OfficeVersion> {
         officekit_markup_base::member_version(Self::MEMBERS, self)
     }

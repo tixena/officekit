@@ -220,19 +220,19 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `Address` as its element, `xlrdwi:address`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn address(node: &super::Address, scope: &mut Scope) -> Element {
     officekit_markup_base::Writer::new(scope, &super::ADDRESS_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Blip` as its element, `xlrdwi:blip`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn blip(node: &super::Blip, scope: &mut Scope) -> Element {
     officekit_markup_base::Writer::new(scope, &super::BLIP_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `ExtLst` as its element, `xlrdwi:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -241,7 +241,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `MoreImagesAddress` as its element, `xlrdwi:moreImagesAddress`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn more_images_address(node: &super::MoreImagesAddress, scope: &mut Scope) -> Element {
     let writer =
         officekit_markup_base::Writer::new(scope, &super::MORE_IMAGES_ADDRESS_SHAPE, &node.unknown);
@@ -249,7 +249,7 @@ pub fn more_images_address(node: &super::MoreImagesAddress, scope: &mut Scope) -
 }
 
 /// Write a `WebImageSrd` as its element, `xlrdwi:webImageSrd`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn web_image_srd(node: &super::WebImageSrd, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::WEB_IMAGE_SRD_SHAPE, &node.unknown);
@@ -260,7 +260,7 @@ pub fn web_image_srd(node: &super::WebImageSrd, scope: &mut Scope) -> Element {
 }
 
 /// Write a `WebImagesSrd` as its element, `xlrdwi:webImagesSrd`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn web_images_srd(node: &super::WebImagesSrd, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::WEB_IMAGES_SRD_SHAPE, &node.unknown);

@@ -157,7 +157,7 @@ impl<W: Write> PackageWriter<W> {
 
     /// A writer into `sink` whose content types and relationships start as
     /// `template`'s.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn from_template(sink: W, template: &Package) -> Self {
         Self {
             defaults: template.content_type_defaults().to_vec(),

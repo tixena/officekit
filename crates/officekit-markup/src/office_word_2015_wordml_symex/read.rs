@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `w16se:symEx` into a `SymEx`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sym_ex(element: &Element) -> super::SymEx {
     let mut node = super::SymEx::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SYM_EX_SHAPE);

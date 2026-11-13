@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `w:ptab` into a `AbsolutePositionTabCharacter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn absolute_position_tab_character(element: &Element) -> super::AbsolutePositionTabCharacter {
     let mut node = super::AbsolutePositionTabCharacter::default();
     let mut reader =
@@ -237,7 +237,7 @@ pub fn absolute_position_tab_character(element: &Element) -> super::AbsolutePosi
 }
 
 /// Read `w:abstractNum` into a `AbstractNumberingDefinition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn abstract_numbering_definition(element: &Element) -> super::AbstractNumberingDefinition {
     let mut node = super::AbstractNumberingDefinition::default();
     let mut reader =
@@ -260,7 +260,7 @@ pub fn abstract_numbering_definition(element: &Element) -> super::AbstractNumber
 }
 
 /// Read `w:nsid` into a `AbstractNumberingDefinitionIdentifier`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn abstract_numbering_definition_identifier(
     element: &Element,
 ) -> super::AbstractNumberingDefinitionIdentifier {
@@ -279,7 +279,7 @@ pub fn abstract_numbering_definition_identifier(
 }
 
 /// Read `w:abstractNumId` into a `AbstractNumberingDefinitionReference`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn abstract_numbering_definition_reference(
     element: &Element,
 ) -> super::AbstractNumberingDefinitionReference {
@@ -298,7 +298,7 @@ pub fn abstract_numbering_definition_reference(
 }
 
 /// Read `w:multiLevelType` into a `AbstractNumberingDefinitionType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn abstract_numbering_definition_type(
     element: &Element,
 ) -> super::AbstractNumberingDefinitionType {
@@ -317,7 +317,7 @@ pub fn abstract_numbering_definition_type(
 }
 
 /// Read `w:adjustLineHeightInTable` into a `AddDocumentGridLinePitch`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn add_document_grid_line_pitch(element: &Element) -> super::AddDocumentGridLinePitch {
     let mut node = super::AddDocumentGridLinePitch::default();
     let mut reader =
@@ -332,7 +332,7 @@ pub fn add_document_grid_line_pitch(element: &Element) -> super::AddDocumentGrid
 }
 
 /// Read `w:spaceForUL` into a `AddSpaceBelowUnderlinedText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn add_space_below_underlined_text(element: &Element) -> super::AddSpaceBelowUnderlinedText {
     let mut node = super::AddSpaceBelowUnderlinedText::default();
     let mut reader =
@@ -347,7 +347,7 @@ pub fn add_space_below_underlined_text(element: &Element) -> super::AddSpaceBelo
 }
 
 /// Read `w:autoSpaceDN` into a `AdjustSpacingEastAsianTextNumbers`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn adjust_spacing_east_asian_text_numbers(
     element: &Element,
 ) -> super::AdjustSpacingEastAsianTextNumbers {
@@ -366,7 +366,7 @@ pub fn adjust_spacing_east_asian_text_numbers(
 }
 
 /// Read `w:autoSpaceDE` into a `AdjustSpacingLatinEastAsianText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn adjust_spacing_latin_east_asian_text(
     element: &Element,
 ) -> super::AdjustSpacingLatinEastAsianText {
@@ -385,7 +385,7 @@ pub fn adjust_spacing_latin_east_asian_text(
 }
 
 /// Read `w:alignBordersAndEdges` into a `AlignParagraphAndTableBorders`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn align_paragraph_and_table_borders(
     element: &Element,
 ) -> super::AlignParagraphAndTableBorders {
@@ -404,7 +404,7 @@ pub fn align_paragraph_and_table_borders(
 }
 
 /// Read `w:alignTablesRowByRow` into a `AlignTableRowsIndependently`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn align_table_rows_independently(element: &Element) -> super::AlignTableRowsIndependently {
     let mut node = super::AlignTableRowsIndependently::default();
     let mut reader =
@@ -419,7 +419,7 @@ pub fn align_table_rows_independently(element: &Element) -> super::AlignTableRow
 }
 
 /// Read `w:autoFormatOverride` into a `AllowAutomaticFormattingOverride`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn allow_automatic_formatting_override(
     element: &Element,
 ) -> super::AllowAutomaticFormattingOverride {
@@ -438,7 +438,7 @@ pub fn allow_automatic_formatting_override(
 }
 
 /// Read `w:allowSpaceOfSameStyleInTable` into a `AllowContextualSpacingOfParagraphsInTables`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn allow_contextual_spacing_of_paragraphs_in_tables(
     element: &Element,
 ) -> super::AllowContextualSpacingOfParagraphsInTables {
@@ -457,7 +457,7 @@ pub fn allow_contextual_spacing_of_paragraphs_in_tables(
 }
 
 /// Read `w:widowControl` into a `AllowFirstLastLineDisplay`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn allow_first_last_line_display(element: &Element) -> super::AllowFirstLastLineDisplay {
     let mut node = super::AllowFirstLastLineDisplay::default();
     let mut reader =
@@ -472,7 +472,7 @@ pub fn allow_first_last_line_display(element: &Element) -> super::AllowFirstLast
 }
 
 /// Read `w:wordWrap` into a `AllowLineBreakingAtCharacterLevel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn allow_line_breaking_at_character_level(
     element: &Element,
 ) -> super::AllowLineBreakingAtCharacterLevel {
@@ -491,7 +491,7 @@ pub fn allow_line_breaking_at_character_level(
 }
 
 /// Read `w:allowPNG` into a `AllowPNGAsGraphicFormat`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn allow_png_as_graphic_format(element: &Element) -> super::AllowPNGAsGraphicFormat {
     let mut node = super::AllowPNGAsGraphicFormat::default();
     let mut reader =
@@ -506,7 +506,7 @@ pub fn allow_png_as_graphic_format(element: &Element) -> super::AllowPNGAsGraphi
 }
 
 /// Read `w:overflowPunct` into a `AllowPunctuationExtendPastTextExtents`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn allow_punctuation_extend_past_text_extents(
     element: &Element,
 ) -> super::AllowPunctuationExtendPastTextExtents {
@@ -525,7 +525,7 @@ pub fn allow_punctuation_extend_past_text_extents(
 }
 
 /// Read `w:saveInvalidXml` into a `AllowSavingDocumentAsXMLFile`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn allow_saving_document_as_xml_file(element: &Element) -> super::AllowSavingDocumentAsXMLFile {
     let mut node = super::AllowSavingDocumentAsXMLFile::default();
     let mut reader = officekit_markup_base::Reader::new(
@@ -542,7 +542,7 @@ pub fn allow_saving_document_as_xml_file(element: &Element) -> super::AllowSavin
 }
 
 /// Read `w:layoutTableRowsApart` into a `AllowTableRowsToWrapInlineObjectsIndependently`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn allow_table_rows_to_wrap_inline_objects_independently(
     element: &Element,
 ) -> super::AllowTableRowsToWrapInlineObjectsIndependently {
@@ -561,7 +561,7 @@ pub fn allow_table_rows_to_wrap_inline_objects_independently(
 }
 
 /// Read `w:growAutofit` into a `AllowTablesToAutoFitIntoPageMargins`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn allow_tables_to_auto_fit_into_page_margins(
     element: &Element,
 ) -> super::AllowTablesToAutoFitIntoPageMargins {
@@ -580,7 +580,7 @@ pub fn allow_tables_to_auto_fit_into_page_margins(
 }
 
 /// Read `w:altName` into a `AlternateNamesForFont`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn alternate_names_for_font(element: &Element) -> super::AlternateNamesForFont {
     let mut node = super::AlternateNamesForFont::default();
     let mut reader =
@@ -595,7 +595,7 @@ pub fn alternate_names_for_font(element: &Element) -> super::AlternateNamesForFo
 }
 
 /// Read `w:aliases` into a `AlternateStyleNames`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn alternate_style_names(element: &Element) -> super::AlternateStyleNames {
     let mut node = super::AlternateStyleNames::default();
     let mut reader =
@@ -610,7 +610,7 @@ pub fn alternate_style_names(element: &Element) -> super::AlternateStyleNames {
 }
 
 /// Read `w:alwaysMergeEmptyNamespace` into a `AlwaysMergeEmptyNamespace`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn always_merge_empty_namespace(element: &Element) -> super::AlwaysMergeEmptyNamespace {
     let mut node = super::AlwaysMergeEmptyNamespace::default();
     let mut reader =
@@ -625,7 +625,7 @@ pub fn always_merge_empty_namespace(element: &Element) -> super::AlwaysMergeEmpt
 }
 
 /// Read `w:alwaysShowPlaceholderText` into a `AlwaysShowPlaceholderText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn always_show_placeholder_text(element: &Element) -> super::AlwaysShowPlaceholderText {
     let mut node = super::AlwaysShowPlaceholderText::default();
     let mut reader =
@@ -640,7 +640,7 @@ pub fn always_show_placeholder_text(element: &Element) -> super::AlwaysShowPlace
 }
 
 /// Read `w:displayHangulFixedWidth` into a `AlwaysUseFixedWidthForHangulCharacters`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn always_use_fixed_width_for_hangul_characters(
     element: &Element,
 ) -> super::AlwaysUseFixedWidthForHangulCharacters {
@@ -659,7 +659,7 @@ pub fn always_use_fixed_width_for_hangul_characters(
 }
 
 /// Read `w:altChunk` into a `AnchorForImportedExternalContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn anchor_for_imported_external_content(
     element: &Element,
 ) -> super::AnchorForImportedExternalContent {
@@ -680,7 +680,7 @@ pub fn anchor_for_imported_external_content(
 }
 
 /// Read `w:subDoc` into a `AnchorForSubdocumentLocation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn anchor_for_subdocument_location(element: &Element) -> super::AnchorForSubdocumentLocation {
     let mut node = super::AnchorForSubdocumentLocation::default();
     let mut reader =
@@ -695,7 +695,7 @@ pub fn anchor_for_subdocument_location(element: &Element) -> super::AnchorForSub
 }
 
 /// Read `w:effect` into a `AnimatedTextEffect`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn animated_text_effect(element: &Element) -> super::AnimatedTextEffect {
     let mut node = super::AnimatedTextEffect::default();
     let mut reader =
@@ -710,7 +710,7 @@ pub fn animated_text_effect(element: &Element) -> super::AnimatedTextEffect {
 }
 
 /// Read `w:helpText` into a `AssociatedHelpText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn associated_help_text(element: &Element) -> super::AssociatedHelpText {
     let mut node = super::AssociatedHelpText::default();
     let mut reader =
@@ -727,7 +727,7 @@ pub fn associated_help_text(element: &Element) -> super::AssociatedHelpText {
 }
 
 /// Read `w:divId` into a `AssociatedHTMLDivID`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn associated_html_div_id(element: &Element) -> super::AssociatedHTMLDivID {
     let mut node = super::AssociatedHTMLDivID::default();
     let mut reader =
@@ -742,7 +742,7 @@ pub fn associated_html_div_id(element: &Element) -> super::AssociatedHTMLDivID {
 }
 
 /// Read `w:outlineLvl` into a `AssociatedOutlineLevel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn associated_outline_level(element: &Element) -> super::AssociatedOutlineLevel {
     let mut node = super::AssociatedOutlineLevel::default();
     let mut reader =
@@ -757,7 +757,7 @@ pub fn associated_outline_level(element: &Element) -> super::AssociatedOutlineLe
 }
 
 /// Read `w:style` into a `AssociatedParagraphStyleName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn associated_paragraph_style_name(element: &Element) -> super::AssociatedParagraphStyleName {
     let mut node = super::AssociatedParagraphStyleName::default();
     let mut reader =
@@ -772,7 +772,7 @@ pub fn associated_paragraph_style_name(element: &Element) -> super::AssociatedPa
 }
 
 /// Read `w:statusText` into a `AssociatedStatusText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn associated_status_text(element: &Element) -> super::AssociatedStatusText {
     let mut node = super::AssociatedStatusText::default();
     let mut reader =
@@ -789,7 +789,7 @@ pub fn associated_status_text(element: &Element) -> super::AssociatedStatusText 
 }
 
 /// Read `w:attachedSchema` into a `AttachedCustomXMLSchema`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn attached_custom_xml_schema(element: &Element) -> super::AttachedCustomXMLSchema {
     let mut node = super::AttachedCustomXMLSchema::default();
     let mut reader =
@@ -804,7 +804,7 @@ pub fn attached_custom_xml_schema(element: &Element) -> super::AttachedCustomXML
 }
 
 /// Read `w:attachedTemplate` into a `AttachedDocumentTemplate`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn attached_document_template(element: &Element) -> super::AttachedDocumentTemplate {
     let mut node = super::AttachedDocumentTemplate::default();
     let mut reader =
@@ -819,7 +819,7 @@ pub fn attached_document_template(element: &Element) -> super::AttachedDocumentT
 }
 
 /// Read `w:autoSpaceLikeWord95` into a `AutoSpaceLikeWord95`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn auto_space_like_word95(element: &Element) -> super::AutoSpaceLikeWord95 {
     let mut node = super::AutoSpaceLikeWord95::default();
     let mut reader =
@@ -834,7 +834,7 @@ pub fn auto_space_like_word95(element: &Element) -> super::AutoSpaceLikeWord95 {
 }
 
 /// Read `w:autofitToFirstFixedWidthCell` into a `AutofitToFirstFixedWidthCell`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn autofit_to_first_fixed_width_cell(element: &Element) -> super::AutofitToFirstFixedWidthCell {
     let mut node = super::AutofitToFirstFixedWidthCell::default();
     let mut reader = officekit_markup_base::Reader::new(
@@ -851,7 +851,7 @@ pub fn autofit_to_first_fixed_width_cell(element: &Element) -> super::AutofitToF
 }
 
 /// Read `w:autoCaptions` into a `AutomaticCaptioningSettings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn automatic_captioning_settings(element: &Element) -> super::AutomaticCaptioningSettings {
     let mut node = super::AutomaticCaptioningSettings::default();
     let mut reader =
@@ -866,7 +866,7 @@ pub fn automatic_captioning_settings(element: &Element) -> super::AutomaticCapti
 }
 
 /// Read `w:adjustRightInd` into a `AutomaticallyAdjustRightIndent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn automatically_adjust_right_indent(
     element: &Element,
 ) -> super::AutomaticallyAdjustRightIndent {
@@ -885,7 +885,7 @@ pub fn automatically_adjust_right_indent(
 }
 
 /// Read `w:autoHyphenation` into a `AutomaticallyHyphenateDocumentContentsWhenDisplayed`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn automatically_hyphenate_document_contents_when_displayed(
     element: &Element,
 ) -> super::AutomaticallyHyphenateDocumentContentsWhenDisplayed {
@@ -904,7 +904,7 @@ pub fn automatically_hyphenate_document_contents_when_displayed(
 }
 
 /// Read `w:autoRedefine` into a `AutomaticallyMergeUserFormatting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn automatically_merge_user_formatting(
     element: &Element,
 ) -> super::AutomaticallyMergeUserFormatting {
@@ -923,7 +923,7 @@ pub fn automatically_merge_user_formatting(
 }
 
 /// Read `w:updateFields` into a `AutomaticallyRecalculateFieldsOnOpen`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn automatically_recalculate_fields_on_open(
     element: &Element,
 ) -> super::AutomaticallyRecalculateFieldsOnOpen {
@@ -942,7 +942,7 @@ pub fn automatically_recalculate_fields_on_open(
 }
 
 /// Read `w:sizeAuto` into a `AutomaticallySizeFormField`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn automatically_size_form_field(element: &Element) -> super::AutomaticallySizeFormField {
     let mut node = super::AutomaticallySizeFormField::default();
     let mut reader =
@@ -957,7 +957,7 @@ pub fn automatically_size_form_field(element: &Element) -> super::AutomaticallyS
 }
 
 /// Read `w:linkStyles` into a `AutomaticallyUpdateStylesFromDocumentTemplate`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn automatically_update_styles_from_document_template(
     element: &Element,
 ) -> super::AutomaticallyUpdateStylesFromDocumentTemplate {
@@ -976,7 +976,7 @@ pub fn automatically_update_styles_from_document_template(
 }
 
 /// Read `w:balanceSingleByteDoubleByteWidth` into a `BalanceSingleByteDoubleByteWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn balance_single_byte_double_byte_width(
     element: &Element,
 ) -> super::BalanceSingleByteDoubleByteWidth {
@@ -995,7 +995,7 @@ pub fn balance_single_byte_double_byte_width(
 }
 
 /// Read `w:bibliography` into a `BibliographyStructuredDocumentTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bibliography_structured_document_tag(
     element: &Element,
 ) -> super::BibliographyStructuredDocumentTag {
@@ -1010,7 +1010,7 @@ pub fn bibliography_structured_document_tag(
 }
 
 /// Read `w:dir` into a `BidirectionalEmbeddingLevel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bidirectional_embedding_level(element: &Element) -> super::BidirectionalEmbeddingLevel {
     let mut node = super::BidirectionalEmbeddingLevel::default();
     let mut reader =
@@ -1027,7 +1027,7 @@ pub fn bidirectional_embedding_level(element: &Element) -> super::BidirectionalE
 }
 
 /// Read `w:bdo` into a `BidirectionalOverride`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bidirectional_override(element: &Element) -> super::BidirectionalOverride {
     let mut node = super::BidirectionalOverride::default();
     let mut reader =
@@ -1044,13 +1044,13 @@ pub fn bidirectional_override(element: &Element) -> super::BidirectionalOverride
 }
 
 /// Read one item of `BlockContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn block(element: &Element) -> super::BlockContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:customXml` into a `BlockLevelCustomXMLElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn block_level_custom_xml_element(element: &Element) -> super::BlockLevelCustomXMLElement {
     let mut node = super::BlockLevelCustomXMLElement::default();
     let mut reader =
@@ -1069,7 +1069,7 @@ pub fn block_level_custom_xml_element(element: &Element) -> super::BlockLevelCus
 }
 
 /// Read `w:sdt` into a `BlockLevelStructuredDocumentTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn block_level_structured_document_tag(
     element: &Element,
 ) -> super::BlockLevelStructuredDocumentTag {
@@ -1095,7 +1095,7 @@ pub fn block_level_structured_document_tag(
 }
 
 /// Read `w:sdtContent` into a `BlockLevelStructuredDocumentTagContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn block_level_structured_document_tag_content(
     element: &Element,
 ) -> super::BlockLevelStructuredDocumentTagContent {
@@ -1114,7 +1114,7 @@ pub fn block_level_structured_document_tag_content(
 }
 
 /// Read `w:b` into a `Bold`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bold(element: &Element) -> super::Bold {
     let mut node = super::Bold::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BOLD_SHAPE);
@@ -1128,7 +1128,7 @@ pub fn bold(element: &Element) -> super::Bold {
 }
 
 /// Read `w:embedBoldItalic` into a `BoldItalicFontStyleEmbedding`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bold_italic_font_style_embedding(element: &Element) -> super::BoldItalicFontStyleEmbedding {
     let mut node = super::BoldItalicFontStyleEmbedding::default();
     let mut reader =
@@ -1146,7 +1146,7 @@ pub fn bold_italic_font_style_embedding(element: &Element) -> super::BoldItalicF
 }
 
 /// Read `w:embedBold` into a `BoldStyleFontStyleEmbedding`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bold_style_font_style_embedding(element: &Element) -> super::BoldStyleFontStyleEmbedding {
     let mut node = super::BoldStyleFontStyleEmbedding::default();
     let mut reader =
@@ -1164,7 +1164,7 @@ pub fn bold_style_font_style_embedding(element: &Element) -> super::BoldStyleFon
 }
 
 /// Read `w:bookFoldPrinting` into a `BookFoldPrinting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn book_fold_printing(element: &Element) -> super::BookFoldPrinting {
     let mut node = super::BookFoldPrinting::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BOOK_FOLD_PRINTING_SHAPE);
@@ -1178,7 +1178,7 @@ pub fn book_fold_printing(element: &Element) -> super::BookFoldPrinting {
 }
 
 /// Read `w:bookmarkEnd` into a `BookmarkEnd`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bookmark_end(element: &Element) -> super::BookmarkEnd {
     let mut node = super::BookmarkEnd::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BOOKMARK_END_SHAPE);
@@ -1194,7 +1194,7 @@ pub fn bookmark_end(element: &Element) -> super::BookmarkEnd {
 }
 
 /// Read `w:bookmarkStart` into a `BookmarkStart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bookmark_start(element: &Element) -> super::BookmarkStart {
     let mut node = super::BookmarkStart::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BOOKMARK_START_SHAPE);
@@ -1213,7 +1213,7 @@ pub fn bookmark_start(element: &Element) -> super::BookmarkStart {
 }
 
 /// Read `w:bottom` into a `BottomBorder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bottom_border(element: &Element) -> super::BottomBorder {
     let mut node = super::BottomBorder::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BOTTOM_BORDER_SHAPE);
@@ -1239,7 +1239,7 @@ pub fn bottom_border(element: &Element) -> super::BottomBorder {
 }
 
 /// Read `w:marBottom` into a `BottomMarginForHTMLDiv`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bottom_margin_for_html_div(element: &Element) -> super::BottomMarginForHTMLDiv {
     let mut node = super::BottomMarginForHTMLDiv::default();
     let mut reader =
@@ -1254,7 +1254,7 @@ pub fn bottom_margin_for_html_div(element: &Element) -> super::BottomMarginForHT
 }
 
 /// Read `w:br` into a `Break`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r#break(element: &Element) -> super::Break {
     let mut node = super::Break::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BREAK_SHAPE);
@@ -1270,7 +1270,7 @@ pub fn r#break(element: &Element) -> super::Break {
 }
 
 /// Read `w:docPartUnique` into a `BuiltInDocumentPart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn built_in_document_part(element: &Element) -> super::BuiltInDocumentPart {
     let mut node = super::BuiltInDocumentPart::default();
     let mut reader =
@@ -1285,7 +1285,7 @@ pub fn built_in_document_part(element: &Element) -> super::BuiltInDocumentPart {
 }
 
 /// Read `w:docPartObj` into a `BuiltInDocumentPartStructuredDocumentTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn built_in_document_part_structured_document_tag(
     element: &Element,
 ) -> super::BuiltInDocumentPartStructuredDocumentTag {
@@ -1307,7 +1307,7 @@ pub fn built_in_document_part_structured_document_tag(
 }
 
 /// Read `w:captions` into a `CaptionSettings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn caption_settings(element: &Element) -> super::CaptionSettings {
     let mut node = super::CaptionSettings::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CAPTION_SETTINGS_SHAPE);
@@ -1323,7 +1323,7 @@ pub fn caption_settings(element: &Element) -> super::CaptionSettings {
 }
 
 /// Read `w:cr` into a `CarriageReturn`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn carriage_return(element: &Element) -> super::CarriageReturn {
     let reader = officekit_markup_base::Reader::new(element, &super::CARRIAGE_RETURN_SHAPE);
     super::CarriageReturn {
@@ -1333,7 +1333,7 @@ pub fn carriage_return(element: &Element) -> super::CarriageReturn {
 }
 
 /// Read `w:customXml` into a `CellLevelCustomXMLElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cell_level_custom_xml_element(element: &Element) -> super::CellLevelCustomXMLElement {
     let mut node = super::CellLevelCustomXMLElement::default();
     let mut reader =
@@ -1352,7 +1352,7 @@ pub fn cell_level_custom_xml_element(element: &Element) -> super::CellLevelCusto
 }
 
 /// Read `w:sdt` into a `CellLevelStructuredDocumentTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cell_level_structured_document_tag(
     element: &Element,
 ) -> super::CellLevelStructuredDocumentTag {
@@ -1378,7 +1378,7 @@ pub fn cell_level_structured_document_tag(
 }
 
 /// Read `w:sdtContent` into a `CellLevelStructuredDocumentTagContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cell_level_structured_document_tag_content(
     element: &Element,
 ) -> super::CellLevelStructuredDocumentTagContent {
@@ -1397,13 +1397,13 @@ pub fn cell_level_structured_document_tag_content(
 }
 
 /// Read one item of `CellMarkupContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn cell_markup(element: &Element) -> super::CellMarkupContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:characterSpacingControl` into a `CharacterLevelWhitespaceCompression`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn character_level_whitespace_compression(
     element: &Element,
 ) -> super::CharacterLevelWhitespaceCompression {
@@ -1422,7 +1422,7 @@ pub fn character_level_whitespace_compression(
 }
 
 /// Read `w:charset` into a `CharacterSetSupportedByFont`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn character_set_supported_by_font(element: &Element) -> super::CharacterSetSupportedByFont {
     let mut node = super::CharacterSetSupportedByFont::default();
     let mut reader =
@@ -1439,7 +1439,7 @@ pub fn character_set_supported_by_font(element: &Element) -> super::CharacterSet
 }
 
 /// Read `w:spacing` into a `CharacterSpacingAdjustment`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn character_spacing_adjustment(element: &Element) -> super::CharacterSpacingAdjustment {
     let mut node = super::CharacterSpacingAdjustment::default();
     let mut reader =
@@ -1454,7 +1454,7 @@ pub fn character_spacing_adjustment(element: &Element) -> super::CharacterSpacin
 }
 
 /// Read `w:noLineBreaksBefore` into a `CharactersWhichCannotBeginALine`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn characters_which_cannot_begin_a_line(
     element: &Element,
 ) -> super::CharactersWhichCannotBeginALine {
@@ -1475,7 +1475,7 @@ pub fn characters_which_cannot_begin_a_line(
 }
 
 /// Read `w:noLineBreaksAfter` into a `CharactersWhichCannotEndALine`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn characters_which_cannot_end_a_line(
     element: &Element,
 ) -> super::CharactersWhichCannotEndALine {
@@ -1496,7 +1496,7 @@ pub fn characters_which_cannot_end_a_line(
 }
 
 /// Read `w:checkBox` into a `CheckboxFormFieldProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn checkbox_form_field_properties(element: &Element) -> super::CheckboxFormFieldProperties {
     let mut node = super::CheckboxFormFieldProperties::default();
     let mut reader =
@@ -1515,7 +1515,7 @@ pub fn checkbox_form_field_properties(element: &Element) -> super::CheckboxFormF
 
 /// Read one item of `CheckboxFormFieldPropertiesContent` from its element: the arm of its tag, or
 /// `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn checkbox_form_field_properties_content(
     element: &Element,
 ) -> super::CheckboxFormFieldPropertiesContent {
@@ -1523,7 +1523,7 @@ pub fn checkbox_form_field_properties_content(
 }
 
 /// Read `w:size` into a `CheckboxFormFieldSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn checkbox_form_field_size(element: &Element) -> super::CheckboxFormFieldSize {
     let mut node = super::CheckboxFormFieldSize::default();
     let mut reader =
@@ -1538,7 +1538,7 @@ pub fn checkbox_form_field_size(element: &Element) -> super::CheckboxFormFieldSi
 }
 
 /// Read `w:checked` into a `CheckboxFormFieldState`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn checkbox_form_field_state(element: &Element) -> super::CheckboxFormFieldState {
     let mut node = super::CheckboxFormFieldState::default();
     let mut reader =
@@ -1553,7 +1553,7 @@ pub fn checkbox_form_field_state(element: &Element) -> super::CheckboxFormFieldS
 }
 
 /// Read `w:divsChild` into a `ChildDivElements`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn child_div_elements(element: &Element) -> super::ChildDivElements {
     let mut node = super::ChildDivElements::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CHILD_DIV_ELEMENTS_SHAPE);
@@ -1567,7 +1567,7 @@ pub fn child_div_elements(element: &Element) -> super::ChildDivElements {
 }
 
 /// Read `w:citation` into a `CitationStructuredDocumentTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn citation_structured_document_tag(element: &Element) -> super::CitationStructuredDocumentTag {
     let reader =
         officekit_markup_base::Reader::new(element, &super::CITATION_STRUCTURED_DOCUMENT_TAG_SHAPE);
@@ -1578,7 +1578,7 @@ pub fn citation_structured_document_tag(element: &Element) -> super::CitationStr
 }
 
 /// Read `w:clickAndTypeStyle` into a `ClickAndTypeStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn click_and_type_style(element: &Element) -> super::ClickAndTypeStyle {
     let mut node = super::ClickAndTypeStyle::default();
     let mut reader =
@@ -1593,7 +1593,7 @@ pub fn click_and_type_style(element: &Element) -> super::ClickAndTypeStyle {
 }
 
 /// Read `w:addressFieldName` into a `ColumnContainingEMailAddress`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn column_containing_e_mail_address(element: &Element) -> super::ColumnContainingEMailAddress {
     let mut node = super::ColumnContainingEMailAddress::default();
     let mut reader =
@@ -1608,7 +1608,7 @@ pub fn column_containing_e_mail_address(element: &Element) -> super::ColumnConta
 }
 
 /// Read `w:cols` into a `ColumnDefinitions`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn column_definitions(element: &Element) -> super::ColumnDefinitions {
     let mut node = super::ColumnDefinitions::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COLUMN_DEFINITIONS_SHAPE);
@@ -1627,7 +1627,7 @@ pub fn column_definitions(element: &Element) -> super::ColumnDefinitions {
 }
 
 /// Read `w:colDelim` into a `ColumnDelimiterForDataSource`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn column_delimiter_for_data_source(element: &Element) -> super::ColumnDelimiterForDataSource {
     let mut node = super::ColumnDelimiterForDataSource::default();
     let mut reader =
@@ -1642,7 +1642,7 @@ pub fn column_delimiter_for_data_source(element: &Element) -> super::ColumnDelim
 }
 
 /// Read `w:listItem` into a `ComboBoxListItem`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn combo_box_list_item(element: &Element) -> super::ComboBoxListItem {
     let mut node = super::ComboBoxListItem::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMBO_BOX_LIST_ITEM_SHAPE);
@@ -1658,7 +1658,7 @@ pub fn combo_box_list_item(element: &Element) -> super::ComboBoxListItem {
 }
 
 /// Read `w:comboBox` into a `ComboBoxStructuredDocumentTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn combo_box_structured_document_tag(
     element: &Element,
 ) -> super::ComboBoxStructuredDocumentTag {
@@ -1679,7 +1679,7 @@ pub fn combo_box_structured_document_tag(
 }
 
 /// Read `w:commentRangeEnd` into a `CommentAnchorRangeEnd`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_anchor_range_end(element: &Element) -> super::CommentAnchorRangeEnd {
     let mut node = super::CommentAnchorRangeEnd::default();
     let mut reader =
@@ -1696,7 +1696,7 @@ pub fn comment_anchor_range_end(element: &Element) -> super::CommentAnchorRangeE
 }
 
 /// Read `w:commentRangeStart` into a `CommentAnchorRangeStart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_anchor_range_start(element: &Element) -> super::CommentAnchorRangeStart {
     let mut node = super::CommentAnchorRangeStart::default();
     let mut reader =
@@ -1713,7 +1713,7 @@ pub fn comment_anchor_range_start(element: &Element) -> super::CommentAnchorRang
 }
 
 /// Read `w:comment` into a `CommentContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_content(element: &Element) -> super::CommentContent {
     let mut node = super::CommentContent::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENT_CONTENT_SHAPE);
@@ -1733,7 +1733,7 @@ pub fn comment_content(element: &Element) -> super::CommentContent {
 }
 
 /// Read `w:commentReference` into a `CommentContentReferenceMark`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_content_reference_mark(element: &Element) -> super::CommentContentReferenceMark {
     let mut node = super::CommentContentReferenceMark::default();
     let mut reader =
@@ -1748,7 +1748,7 @@ pub fn comment_content_reference_mark(element: &Element) -> super::CommentConten
 }
 
 /// Read `w:annotationRef` into a `CommentInformationBlock`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_information_block(element: &Element) -> super::CommentInformationBlock {
     let reader =
         officekit_markup_base::Reader::new(element, &super::COMMENT_INFORMATION_BLOCK_SHAPE);
@@ -1759,7 +1759,7 @@ pub fn comment_information_block(element: &Element) -> super::CommentInformation
 }
 
 /// Read `w:comments` into a `CommentsCollection`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comments_collection(element: &Element) -> super::CommentsCollection {
     let mut node = super::CommentsCollection::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENTS_COLLECTION_SHAPE);
@@ -1773,7 +1773,7 @@ pub fn comments_collection(element: &Element) -> super::CommentsCollection {
 }
 
 /// Read `w:compat` into a `CompatibilitySettings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn compatibility_settings(element: &Element) -> super::CompatibilitySettings {
     let mut node = super::CompatibilitySettings::default();
     let mut reader =
@@ -1854,7 +1854,7 @@ pub fn compatibility_settings(element: &Element) -> super::CompatibilitySettings
 }
 
 /// Read `w:fldChar` into a `ComplexFieldCharacter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn complex_field_character(element: &Element) -> super::ComplexFieldCharacter {
     let mut node = super::ComplexFieldCharacter::default();
     let mut reader =
@@ -1874,13 +1874,13 @@ pub fn complex_field_character(element: &Element) -> super::ComplexFieldCharacte
 
 /// Read one item of `ComplexFieldCharacterContent` from its element: the arm of its tag, or
 /// `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn complex_field_character_content(element: &Element) -> super::ComplexFieldCharacterContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:bCs` into a `ComplexScriptBold`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn complex_script_bold(element: &Element) -> super::ComplexScriptBold {
     let mut node = super::ComplexScriptBold::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMPLEX_SCRIPT_BOLD_SHAPE);
@@ -1894,7 +1894,7 @@ pub fn complex_script_bold(element: &Element) -> super::ComplexScriptBold {
 }
 
 /// Read `w:szCs` into a `ComplexScriptFontSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn complex_script_font_size(element: &Element) -> super::ComplexScriptFontSize {
     let mut node = super::ComplexScriptFontSize::default();
     let mut reader =
@@ -1909,7 +1909,7 @@ pub fn complex_script_font_size(element: &Element) -> super::ComplexScriptFontSi
 }
 
 /// Read `w:iCs` into a `ComplexScriptItalics`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn complex_script_italics(element: &Element) -> super::ComplexScriptItalics {
     let mut node = super::ComplexScriptItalics::default();
     let mut reader =
@@ -1924,7 +1924,7 @@ pub fn complex_script_italics(element: &Element) -> super::ComplexScriptItalics 
 }
 
 /// Read `w:topLinePunct` into a `CompressPunctuationAtStartOfLine`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn compress_punctuation_at_start_of_line(
     element: &Element,
 ) -> super::CompressPunctuationAtStartOfLine {
@@ -1943,13 +1943,13 @@ pub fn compress_punctuation_at_start_of_line(
 }
 
 /// Read one item of `ConflictChangeContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn conflict_change(element: &Element) -> super::ConflictChangeContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:suff` into a `ContentBetweenNumberingSymbolAndText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn content_between_numbering_symbol_and_text(
     element: &Element,
 ) -> super::ContentBetweenNumberingSymbolAndText {
@@ -1968,19 +1968,19 @@ pub fn content_between_numbering_symbol_and_text(
 }
 
 /// Read one item of `ContentBlockContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn content_block(element: &Element) -> super::ContentBlockContent {
     officekit_markup_base::read(element)
 }
 
 /// Read one item of `ContentCellContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn content_cell(element: &Element) -> super::ContentCellContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:contentPart` into a `ContentPart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn content_part(element: &Element) -> super::ContentPart {
     let mut node = super::ContentPart::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONTENT_PART_SHAPE);
@@ -1994,13 +1994,13 @@ pub fn content_part(element: &Element) -> super::ContentPart {
 }
 
 /// Read one item of `ContentRowContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn content_row(element: &Element) -> super::ContentRowContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:docPartBody` into a `ContentsOfGlossaryDocumentEntry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn contents_of_glossary_document_entry(
     element: &Element,
 ) -> super::ContentsOfGlossaryDocumentEntry {
@@ -2021,7 +2021,7 @@ pub fn contents_of_glossary_document_entry(
 }
 
 /// Read `w:continuationSeparator` into a `ContinuationSeparatorMark`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn continuation_separator_mark(element: &Element) -> super::ContinuationSeparatorMark {
     let reader =
         officekit_markup_base::Reader::new(element, &super::CONTINUATION_SEPARATOR_MARK_SHAPE);
@@ -2032,7 +2032,7 @@ pub fn continuation_separator_mark(element: &Element) -> super::ContinuationSepa
 }
 
 /// Read `w:showingPlcHdr` into a `CurrentContentsArePlaceholderText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn current_contents_are_placeholder_text(
     element: &Element,
 ) -> super::CurrentContentsArePlaceholderText {
@@ -2051,7 +2051,7 @@ pub fn current_contents_are_placeholder_text(
 }
 
 /// Read `w:compatSetting` into a `CustomCompatibilitySetting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_compatibility_setting(element: &Element) -> super::CustomCompatibilitySetting {
     let mut node = super::CustomCompatibilitySetting::default();
     let mut reader =
@@ -2069,7 +2069,7 @@ pub fn custom_compatibility_setting(element: &Element) -> super::CustomCompatibi
 }
 
 /// Read `w:fldData` into a `CustomFieldData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_field_data(element: &Element) -> super::CustomFieldData {
     let mut node = super::CustomFieldData::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOM_FIELD_DATA_SHAPE);
@@ -2085,7 +2085,7 @@ pub fn custom_field_data(element: &Element) -> super::CustomFieldData {
 }
 
 /// Read `w:tab` into a `CustomTabStop`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_tab_stop(element: &Element) -> super::CustomTabStop {
     let mut node = super::CustomTabStop::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOM_TAB_STOP_SHAPE);
@@ -2102,7 +2102,7 @@ pub fn custom_tab_stop(element: &Element) -> super::CustomTabStop {
 }
 
 /// Read `w:attr` into a `CustomXMLAttribute`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xml_attribute(element: &Element) -> super::CustomXMLAttribute {
     let mut node = super::CustomXMLAttribute::default();
     let mut reader =
@@ -2120,7 +2120,7 @@ pub fn custom_xml_attribute(element: &Element) -> super::CustomXMLAttribute {
 }
 
 /// Read `w:storeMappedDataAs` into a `CustomXMLDataDateStorageFormat`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xml_data_date_storage_format(
     element: &Element,
 ) -> super::CustomXMLDataDateStorageFormat {
@@ -2139,7 +2139,7 @@ pub fn custom_xml_data_date_storage_format(
 }
 
 /// Read `w:placeholder` into a `CustomXMLElementPlaceholderText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xml_element_placeholder_text(
     element: &Element,
 ) -> super::CustomXMLElementPlaceholderText {
@@ -2158,7 +2158,7 @@ pub fn custom_xml_element_placeholder_text(
 }
 
 /// Read `w:customXmlPr` into a `CustomXMLElementProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xml_element_properties(element: &Element) -> super::CustomXMLElementProperties {
     let mut node = super::CustomXMLElementProperties::default();
     let mut reader =
@@ -2175,7 +2175,7 @@ pub fn custom_xml_element_properties(element: &Element) -> super::CustomXMLEleme
 }
 
 /// Read `w:customXmlDelRangeEnd` into a `CustomXMLMarkupDeletionEnd`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xml_markup_deletion_end(element: &Element) -> super::CustomXMLMarkupDeletionEnd {
     let mut node = super::CustomXMLMarkupDeletionEnd::default();
     let mut reader =
@@ -2190,7 +2190,7 @@ pub fn custom_xml_markup_deletion_end(element: &Element) -> super::CustomXMLMark
 }
 
 /// Read `w:customXmlDelRangeStart` into a `CustomXMLMarkupDeletionStart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xml_markup_deletion_start(element: &Element) -> super::CustomXMLMarkupDeletionStart {
     let mut node = super::CustomXMLMarkupDeletionStart::default();
     let mut reader =
@@ -2208,7 +2208,7 @@ pub fn custom_xml_markup_deletion_start(element: &Element) -> super::CustomXMLMa
 }
 
 /// Read `w:customXmlInsRangeEnd` into a `CustomXMLMarkupInsertionEnd`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xml_markup_insertion_end(element: &Element) -> super::CustomXMLMarkupInsertionEnd {
     let mut node = super::CustomXMLMarkupInsertionEnd::default();
     let mut reader =
@@ -2223,7 +2223,7 @@ pub fn custom_xml_markup_insertion_end(element: &Element) -> super::CustomXMLMar
 }
 
 /// Read `w:customXmlInsRangeStart` into a `CustomXMLMarkupInsertionStart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xml_markup_insertion_start(
     element: &Element,
 ) -> super::CustomXMLMarkupInsertionStart {
@@ -2245,7 +2245,7 @@ pub fn custom_xml_markup_insertion_start(
 }
 
 /// Read `w:customXmlMoveFromRangeEnd` into a `CustomXMLMarkupMoveSourceEnd`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xml_markup_move_source_end(element: &Element) -> super::CustomXMLMarkupMoveSourceEnd {
     let mut node = super::CustomXMLMarkupMoveSourceEnd::default();
     let mut reader = officekit_markup_base::Reader::new(
@@ -2262,7 +2262,7 @@ pub fn custom_xml_markup_move_source_end(element: &Element) -> super::CustomXMLM
 }
 
 /// Read `w:customXmlMoveFromRangeStart` into a `CustomXMLMarkupMoveSourceStart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xml_markup_move_source_start(
     element: &Element,
 ) -> super::CustomXMLMarkupMoveSourceStart {
@@ -2284,7 +2284,7 @@ pub fn custom_xml_markup_move_source_start(
 }
 
 /// Read `w:customXmlMoveToRangeEnd` into a `CustomXmlMoveToRangeEnd`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xml_move_to_range_end(element: &Element) -> super::CustomXmlMoveToRangeEnd {
     let mut node = super::CustomXmlMoveToRangeEnd::default();
     let mut reader =
@@ -2299,7 +2299,7 @@ pub fn custom_xml_move_to_range_end(element: &Element) -> super::CustomXmlMoveTo
 }
 
 /// Read `w:customXmlMoveToRangeStart` into a `CustomXmlMoveToRangeStart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xml_move_to_range_start(element: &Element) -> super::CustomXmlMoveToRangeStart {
     let mut node = super::CustomXmlMoveToRangeStart::default();
     let mut reader =
@@ -2317,7 +2317,7 @@ pub fn custom_xml_move_to_range_start(element: &Element) -> super::CustomXmlMove
 }
 
 /// Read `w:saveThroughXslt` into a `CustomXSLTransform`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xsl_transform(element: &Element) -> super::CustomXSLTransform {
     let mut node = super::CustomXSLTransform::default();
     let mut reader =
@@ -2334,7 +2334,7 @@ pub fn custom_xsl_transform(element: &Element) -> super::CustomXSLTransform {
 }
 
 /// Read `w:recipientData` into a `DataAboutSingleDataSourceRecord`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_about_single_data_source_record(
     element: &Element,
 ) -> super::DataAboutSingleDataSourceRecord {
@@ -2356,7 +2356,7 @@ pub fn data_about_single_data_source_record(
 }
 
 /// Read `w:blockQuote` into a `DataForHTMLBlockquoteElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_for_html_blockquote_element(element: &Element) -> super::DataForHTMLBlockquoteElement {
     let mut node = super::DataForHTMLBlockquoteElement::default();
     let mut reader =
@@ -2371,7 +2371,7 @@ pub fn data_for_html_blockquote_element(element: &Element) -> super::DataForHTML
 }
 
 /// Read `w:bodyDiv` into a `DataForHTMLBodyElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_for_html_body_element(element: &Element) -> super::DataForHTMLBodyElement {
     let mut node = super::DataForHTMLBodyElement::default();
     let mut reader =
@@ -2386,7 +2386,7 @@ pub fn data_for_html_body_element(element: &Element) -> super::DataForHTMLBodyEl
 }
 
 /// Read `w:connectString` into a `DataSourceConnectionString`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_source_connection_string(element: &Element) -> super::DataSourceConnectionString {
     let mut node = super::DataSourceConnectionString::default();
     let mut reader =
@@ -2401,7 +2401,7 @@ pub fn data_source_connection_string(element: &Element) -> super::DataSourceConn
 }
 
 /// Read `w:dataSource` into a `DataSourceFilePath`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_source_file_path(element: &Element) -> super::DataSourceFilePath {
     let mut node = super::DataSourceFilePath::default();
     let mut reader =
@@ -2416,7 +2416,7 @@ pub fn data_source_file_path(element: &Element) -> super::DataSourceFilePath {
 }
 
 /// Read `w:table` into a `DataSourceTableName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_source_table_name(element: &Element) -> super::DataSourceTableName {
     let mut node = super::DataSourceTableName::default();
     let mut reader =
@@ -2431,7 +2431,7 @@ pub fn data_source_table_name(element: &Element) -> super::DataSourceTableName {
 }
 
 /// Read `w:dataType` into a `DataSourceType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_source_type(element: &Element) -> super::DataSourceType {
     let mut node = super::DataSourceType::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_SOURCE_TYPE_SHAPE);
@@ -2445,7 +2445,7 @@ pub fn data_source_type(element: &Element) -> super::DataSourceType {
 }
 
 /// Read `w:dayLong` into a `DateBlockLongDayFormat`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn date_block_long_day_format(element: &Element) -> super::DateBlockLongDayFormat {
     let reader =
         officekit_markup_base::Reader::new(element, &super::DATE_BLOCK_LONG_DAY_FORMAT_SHAPE);
@@ -2456,7 +2456,7 @@ pub fn date_block_long_day_format(element: &Element) -> super::DateBlockLongDayF
 }
 
 /// Read `w:monthLong` into a `DateBlockLongMonthFormat`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn date_block_long_month_format(element: &Element) -> super::DateBlockLongMonthFormat {
     let reader =
         officekit_markup_base::Reader::new(element, &super::DATE_BLOCK_LONG_MONTH_FORMAT_SHAPE);
@@ -2467,7 +2467,7 @@ pub fn date_block_long_month_format(element: &Element) -> super::DateBlockLongMo
 }
 
 /// Read `w:yearLong` into a `DateBlockLongYearFormat`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn date_block_long_year_format(element: &Element) -> super::DateBlockLongYearFormat {
     let reader =
         officekit_markup_base::Reader::new(element, &super::DATE_BLOCK_LONG_YEAR_FORMAT_SHAPE);
@@ -2478,7 +2478,7 @@ pub fn date_block_long_year_format(element: &Element) -> super::DateBlockLongYea
 }
 
 /// Read `w:dayShort` into a `DateBlockShortDayFormat`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn date_block_short_day_format(element: &Element) -> super::DateBlockShortDayFormat {
     let reader =
         officekit_markup_base::Reader::new(element, &super::DATE_BLOCK_SHORT_DAY_FORMAT_SHAPE);
@@ -2489,7 +2489,7 @@ pub fn date_block_short_day_format(element: &Element) -> super::DateBlockShortDa
 }
 
 /// Read `w:monthShort` into a `DateBlockShortMonthFormat`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn date_block_short_month_format(element: &Element) -> super::DateBlockShortMonthFormat {
     let reader =
         officekit_markup_base::Reader::new(element, &super::DATE_BLOCK_SHORT_MONTH_FORMAT_SHAPE);
@@ -2500,7 +2500,7 @@ pub fn date_block_short_month_format(element: &Element) -> super::DateBlockShort
 }
 
 /// Read `w:yearShort` into a `DateBlockShortYearFormat`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn date_block_short_year_format(element: &Element) -> super::DateBlockShortYearFormat {
     let reader =
         officekit_markup_base::Reader::new(element, &super::DATE_BLOCK_SHORT_YEAR_FORMAT_SHAPE);
@@ -2511,7 +2511,7 @@ pub fn date_block_short_year_format(element: &Element) -> super::DateBlockShortY
 }
 
 /// Read `w:dateFormat` into a `DateDisplayMask`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn date_display_mask(element: &Element) -> super::DateDisplayMask {
     let mut node = super::DateDisplayMask::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATE_DISPLAY_MASK_SHAPE);
@@ -2525,7 +2525,7 @@ pub fn date_display_mask(element: &Element) -> super::DateDisplayMask {
 }
 
 /// Read `w:calendar` into a `DatePickerCalendarType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn date_picker_calendar_type(element: &Element) -> super::DatePickerCalendarType {
     let mut node = super::DatePickerCalendarType::default();
     let mut reader =
@@ -2540,7 +2540,7 @@ pub fn date_picker_calendar_type(element: &Element) -> super::DatePickerCalendar
 }
 
 /// Read `w:date` into a `DateStructuredDocumentTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn date_structured_document_tag(element: &Element) -> super::DateStructuredDocumentTag {
     let mut node = super::DateStructuredDocumentTag::default();
     let mut reader =
@@ -2560,7 +2560,7 @@ pub fn date_structured_document_tag(element: &Element) -> super::DateStructuredD
 }
 
 /// Read `w:default` into a `DefaultCheckboxFormFieldState`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn default_checkbox_form_field_state(
     element: &Element,
 ) -> super::DefaultCheckboxFormFieldState {
@@ -2579,7 +2579,7 @@ pub fn default_checkbox_form_field_state(
 }
 
 /// Read `w:default` into a `DefaultDropDownListItemIndex`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn default_drop_down_list_item_index(element: &Element) -> super::DefaultDropDownListItemIndex {
     let mut node = super::DefaultDropDownListItemIndex::default();
     let mut reader = officekit_markup_base::Reader::new(
@@ -2596,7 +2596,7 @@ pub fn default_drop_down_list_item_index(element: &Element) -> super::DefaultDro
 }
 
 /// Read `w:pPrDefault` into a `DefaultParagraphProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn default_paragraph_properties(element: &Element) -> super::DefaultParagraphProperties {
     let mut node = super::DefaultParagraphProperties::default();
     let mut reader =
@@ -2611,7 +2611,7 @@ pub fn default_paragraph_properties(element: &Element) -> super::DefaultParagrap
 }
 
 /// Read `w:hdrShapeDefaults` into a `DefaultPropertiesForVMLObjectsInHeaderAndFooter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn default_properties_for_vml_objects_in_header_and_footer(
     element: &Element,
 ) -> super::DefaultPropertiesForVMLObjectsInHeaderAndFooter {
@@ -2630,7 +2630,7 @@ pub fn default_properties_for_vml_objects_in_header_and_footer(
 }
 
 /// Read `w:shapeDefaults` into a `DefaultPropertiesForVMLObjectsInMainDocument`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn default_properties_for_vml_objects_in_main_document(
     element: &Element,
 ) -> super::DefaultPropertiesForVMLObjectsInMainDocument {
@@ -2649,7 +2649,7 @@ pub fn default_properties_for_vml_objects_in_main_document(
 }
 
 /// Read `w:rPrDefault` into a `DefaultRunProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn default_run_properties(element: &Element) -> super::DefaultRunProperties {
     let mut node = super::DefaultRunProperties::default();
     let mut reader =
@@ -2664,7 +2664,7 @@ pub fn default_run_properties(element: &Element) -> super::DefaultRunProperties 
 }
 
 /// Read `w:defaultTableStyle` into a `DefaultTableStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn default_table_style(element: &Element) -> super::DefaultTableStyle {
     let mut node = super::DefaultTableStyle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DEFAULT_TABLE_STYLE_SHAPE);
@@ -2678,7 +2678,7 @@ pub fn default_table_style(element: &Element) -> super::DefaultTableStyle {
 }
 
 /// Read `w:default` into a `DefaultTextBoxFormFieldString`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn default_text_box_form_field_string(
     element: &Element,
 ) -> super::DefaultTextBoxFormFieldString {
@@ -2697,7 +2697,7 @@ pub fn default_text_box_form_field_string(
 }
 
 /// Read `w:del` into a `Del`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn del(element: &Element) -> super::Del {
     let mut node = super::Del::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DEL_SHAPE);
@@ -2715,7 +2715,7 @@ pub fn del(element: &Element) -> super::Del {
 }
 
 /// Read `w:delInstrText` into a `DeletedFieldCode`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn deleted_field_code(element: &Element) -> super::DeletedFieldCode {
     let mut node = super::DeletedFieldCode::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DELETED_FIELD_CODE_SHAPE);
@@ -2731,7 +2731,7 @@ pub fn deleted_field_code(element: &Element) -> super::DeletedFieldCode {
 }
 
 /// Read `w:del` into a `DeletedMathControlCharacter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn deleted_math_control_character(element: &Element) -> super::DeletedMathControlCharacter {
     let mut node = super::DeletedMathControlCharacter::default();
     let mut reader =
@@ -2751,7 +2751,7 @@ pub fn deleted_math_control_character(element: &Element) -> super::DeletedMathCo
 }
 
 /// Read `w:del` into a `DeletedRunContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn deleted_run_content(element: &Element) -> super::DeletedRunContent {
     let mut node = super::DeletedRunContent::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DELETED_RUN_CONTENT_SHAPE);
@@ -2769,7 +2769,7 @@ pub fn deleted_run_content(element: &Element) -> super::DeletedRunContent {
 }
 
 /// Read `w:del` into a `DeletedTableRow`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn deleted_table_row(element: &Element) -> super::DeletedTableRow {
     let mut node = super::DeletedTableRow::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DELETED_TABLE_ROW_SHAPE);
@@ -2786,7 +2786,7 @@ pub fn deleted_table_row(element: &Element) -> super::DeletedTableRow {
 }
 
 /// Read `w:delText` into a `DeletedText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn deleted_text(element: &Element) -> super::DeletedText {
     let mut node = super::DeletedText::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DELETED_TEXT_SHAPE);
@@ -2802,7 +2802,7 @@ pub fn deleted_text(element: &Element) -> super::DeletedText {
 }
 
 /// Read `w:description` into a `DescriptionForEntry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn description_for_entry(element: &Element) -> super::DescriptionForEntry {
     let mut node = super::DescriptionForEntry::default();
     let mut reader =
@@ -2817,7 +2817,7 @@ pub fn description_for_entry(element: &Element) -> super::DescriptionForEntry {
 }
 
 /// Read `w:evenAndOddHeaders` into a `DifferentEvenOddPageHeadersAndFooters`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn different_even_odd_page_headers_and_footers(
     element: &Element,
 ) -> super::DifferentEvenOddPageHeadersAndFooters {
@@ -2836,7 +2836,7 @@ pub fn different_even_odd_page_headers_and_footers(
 }
 
 /// Read `w:titlePg` into a `DifferentFirstPageHeadersAndFooters`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn different_first_page_headers_and_footers(
     element: &Element,
 ) -> super::DifferentFirstPageHeadersAndFooters {
@@ -2855,7 +2855,7 @@ pub fn different_first_page_headers_and_footers(
 }
 
 /// Read `w:optimizeForBrowser` into a `DisableFeaturesNotSupported`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn disable_features_not_supported(element: &Element) -> super::DisableFeaturesNotSupported {
     let mut node = super::DisableFeaturesNotSupported::default();
     let mut reader =
@@ -2872,7 +2872,7 @@ pub fn disable_features_not_supported(element: &Element) -> super::DisableFeatur
 }
 
 /// Read `w:caps` into a `DisplayAllCharactersAsCapitalLetters`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn display_all_characters_as_capital_letters(
     element: &Element,
 ) -> super::DisplayAllCharactersAsCapitalLetters {
@@ -2891,7 +2891,7 @@ pub fn display_all_characters_as_capital_letters(
 }
 
 /// Read `w:isLgl` into a `DisplayAllLevelsUsingArabicNumerals`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn display_all_levels_using_arabic_numerals(
     element: &Element,
 ) -> super::DisplayAllLevelsUsingArabicNumerals {
@@ -2910,7 +2910,7 @@ pub fn display_all_levels_using_arabic_numerals(
 }
 
 /// Read `w:displayBackgroundShape` into a `DisplayBackgroundShape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn display_background_shape(element: &Element) -> super::DisplayBackgroundShape {
     let mut node = super::DisplayBackgroundShape::default();
     let mut reader =
@@ -2925,7 +2925,7 @@ pub fn display_background_shape(element: &Element) -> super::DisplayBackgroundSh
 }
 
 /// Read `w:doNotLeaveBackslashAlone` into a `DisplayBackslashAsYenSign`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn display_backslash_as_yen_sign(element: &Element) -> super::DisplayBackslashAsYenSign {
     let mut node = super::DisplayBackslashAsYenSign::default();
     let mut reader =
@@ -2940,7 +2940,7 @@ pub fn display_backslash_as_yen_sign(element: &Element) -> super::DisplayBacksla
 }
 
 /// Read `w:outline` into a `DisplayCharacterOutline`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn display_character_outline(element: &Element) -> super::DisplayCharacterOutline {
     let mut node = super::DisplayCharacterOutline::default();
     let mut reader =
@@ -2955,7 +2955,7 @@ pub fn display_character_outline(element: &Element) -> super::DisplayCharacterOu
 }
 
 /// Read `w:showBreaksInFrames` into a `DisplayPageColumnBreaksPresentInFrames`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn display_page_column_breaks_present_in_frames(
     element: &Element,
 ) -> super::DisplayPageColumnBreaksPresentInFrames {
@@ -2974,7 +2974,7 @@ pub fn display_page_column_breaks_present_in_frames(
 }
 
 /// Read `w:defaultTabStop` into a `DistanceBetweenAutomaticTabStops`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn distance_between_automatic_tab_stops(
     element: &Element,
 ) -> super::DistanceBetweenAutomaticTabStops {
@@ -2993,7 +2993,7 @@ pub fn distance_between_automatic_tab_stops(
 }
 
 /// Read `w:displayHorizontalDrawingGridEvery` into a `DistanceBetweenHorizontalGridlines`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn distance_between_horizontal_gridlines(
     element: &Element,
 ) -> super::DistanceBetweenHorizontalGridlines {
@@ -3012,7 +3012,7 @@ pub fn distance_between_horizontal_gridlines(
 }
 
 /// Read `w:hpsRaise` into a `DistanceBetweenPhoneticGuideText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn distance_between_phonetic_guide_text(
     element: &Element,
 ) -> super::DistanceBetweenPhoneticGuideText {
@@ -3031,7 +3031,7 @@ pub fn distance_between_phonetic_guide_text(
 }
 
 /// Read `w:displayVerticalDrawingGridEvery` into a `DistanceBetweenVerticalGridlines`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn distance_between_vertical_gridlines(
     element: &Element,
 ) -> super::DistanceBetweenVerticalGridlines {
@@ -3050,7 +3050,7 @@ pub fn distance_between_vertical_gridlines(
 }
 
 /// Read `w:noLeading` into a `DoNotAddLeadingBetweenLinesOfText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_add_leading_between_lines_of_text(
     element: &Element,
 ) -> super::DoNotAddLeadingBetweenLinesOfText {
@@ -3069,7 +3069,7 @@ pub fn do_not_add_leading_between_lines_of_text(
 }
 
 /// Read `w:doNotBreakWrappedTables` into a `DoNotAllowFloatingTablesToBreakAcrossPages`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_allow_floating_tables_to_break_across_pages(
     element: &Element,
 ) -> super::DoNotAllowFloatingTablesToBreakAcrossPages {
@@ -3088,7 +3088,7 @@ pub fn do_not_allow_floating_tables_to_break_across_pages(
 }
 
 /// Read `w:doNotAutofitConstrainedTables` into a `DoNotAutofitConstrainedTables`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_autofit_constrained_tables(
     element: &Element,
 ) -> super::DoNotAutofitConstrainedTables {
@@ -3107,7 +3107,7 @@ pub fn do_not_autofit_constrained_tables(
 }
 
 /// Read `w:doNotAutoCompressPictures` into a `DoNotAutomaticallyCompressImages`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_automatically_compress_images(
     element: &Element,
 ) -> super::DoNotAutomaticallyCompressImages {
@@ -3126,7 +3126,7 @@ pub fn do_not_automatically_compress_images(
 }
 
 /// Read `w:noColumnBalance` into a `DoNotBalanceTextColumnsWithinASection`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_balance_text_columns_within_a_section(
     element: &Element,
 ) -> super::DoNotBalanceTextColumnsWithinASection {
@@ -3145,7 +3145,7 @@ pub fn do_not_balance_text_columns_within_a_section(
 }
 
 /// Read `w:doNotBreakConstrainedForcedTable` into a `DoNotBreakConstrainedForcedTable`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_break_constrained_forced_table(
     element: &Element,
 ) -> super::DoNotBreakConstrainedForcedTable {
@@ -3164,7 +3164,7 @@ pub fn do_not_break_constrained_forced_table(
 }
 
 /// Read `w:useFELayout` into a `DoNotBypassEastAsianComplexScriptLayoutCode`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_bypass_east_asian_complex_script_layout_code(
     element: &Element,
 ) -> super::DoNotBypassEastAsianComplexScriptLayoutCode {
@@ -3183,7 +3183,7 @@ pub fn do_not_bypass_east_asian_complex_script_layout_code(
 }
 
 /// Read `w:noExtraLineSpacing` into a `DoNotCenterContentOnLinesWithExactLineHeight`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_center_content_on_lines_with_exact_line_height(
     element: &Element,
 ) -> super::DoNotCenterContentOnLinesWithExactLineHeight {
@@ -3202,7 +3202,7 @@ pub fn do_not_center_content_on_lines_with_exact_line_height(
 }
 
 /// Read `w:noProof` into a `DoNotCheckSpellingOrGrammar`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_check_spelling_or_grammar(element: &Element) -> super::DoNotCheckSpellingOrGrammar {
     let mut node = super::DoNotCheckSpellingOrGrammar::default();
     let mut reader =
@@ -3217,7 +3217,7 @@ pub fn do_not_check_spelling_or_grammar(element: &Element) -> super::DoNotCheckS
 }
 
 /// Read `w:noTabHangInd` into a `DoNotCreateCustomTabStopForHangingIndent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_create_custom_tab_stop_for_hanging_indent(
     element: &Element,
 ) -> super::DoNotCreateCustomTabStopForHangingIndent {
@@ -3236,7 +3236,7 @@ pub fn do_not_create_custom_tab_stop_for_hanging_indent(
 }
 
 /// Read `w:noBorder` into a `DoNotDisplayFramesetSplitters`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_display_frameset_splitters(
     element: &Element,
 ) -> super::DoNotDisplayFramesetSplitters {
@@ -3255,7 +3255,7 @@ pub fn do_not_display_frameset_splitters(
 }
 
 /// Read `w:hideGrammaticalErrors` into a `DoNotDisplayGrammaticalErrors`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_display_grammatical_errors(
     element: &Element,
 ) -> super::DoNotDisplayGrammaticalErrors {
@@ -3274,7 +3274,7 @@ pub fn do_not_display_grammatical_errors(
 }
 
 /// Read `w:doNotDisplayPageBoundaries` into a `DoNotDisplayPageBoundaries`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_display_page_boundaries(element: &Element) -> super::DoNotDisplayPageBoundaries {
     let mut node = super::DoNotDisplayPageBoundaries::default();
     let mut reader =
@@ -3289,7 +3289,7 @@ pub fn do_not_display_page_boundaries(element: &Element) -> super::DoNotDisplayP
 }
 
 /// Read `w:hideSpellingErrors` into a `DoNotDisplaySpellingErrors`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_display_spelling_errors(element: &Element) -> super::DoNotDisplaySpellingErrors {
     let mut node = super::DoNotDisplaySpellingErrors::default();
     let mut reader =
@@ -3304,7 +3304,7 @@ pub fn do_not_display_spelling_errors(element: &Element) -> super::DoNotDisplayS
 }
 
 /// Read `w:doNotHyphenateCaps` into a `DoNotHyphenateCapitalLetters`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_hyphenate_capital_letters(element: &Element) -> super::DoNotHyphenateCapitalLetters {
     let mut node = super::DoNotHyphenateCapitalLetters::default();
     let mut reader =
@@ -3319,7 +3319,7 @@ pub fn do_not_hyphenate_capital_letters(element: &Element) -> super::DoNotHyphen
 }
 
 /// Read `w:doNotIncludeSubdocsInStats` into a `DoNotIncludeSubdocsInStats`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_include_subdocs_in_stats(element: &Element) -> super::DoNotIncludeSubdocsInStats {
     let mut node = super::DoNotIncludeSubdocsInStats::default();
     let mut reader =
@@ -3334,7 +3334,7 @@ pub fn do_not_include_subdocs_in_stats(element: &Element) -> super::DoNotInclude
 }
 
 /// Read `w:noSpaceRaiseLower` into a `DoNotIncreaseLineHeightForRaisedLoweredText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_increase_line_height_for_raised_lowered_text(
     element: &Element,
 ) -> super::DoNotIncreaseLineHeightForRaisedLoweredText {
@@ -3353,7 +3353,7 @@ pub fn do_not_increase_line_height_for_raised_lowered_text(
 }
 
 /// Read `w:doNotOrganizeInFolder` into a `DoNotPlaceSupportingFiles`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_place_supporting_files(element: &Element) -> super::DoNotPlaceSupportingFiles {
     let mut node = super::DoNotPlaceSupportingFiles::default();
     let mut reader =
@@ -3368,7 +3368,7 @@ pub fn do_not_place_supporting_files(element: &Element) -> super::DoNotPlaceSupp
 }
 
 /// Read `w:doNotRelyOnCSS` into a `DoNotRelyOnCSS`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_rely_on_css(element: &Element) -> super::DoNotRelyOnCSS {
     let mut node = super::DoNotRelyOnCSS::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DO_NOT_RELY_ON_CSS_SHAPE);
@@ -3382,7 +3382,7 @@ pub fn do_not_rely_on_css(element: &Element) -> super::DoNotRelyOnCSS {
 }
 
 /// Read `w:doNotShadeFormData` into a `DoNotShowFormFieldIndicator`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_show_form_field_indicator(element: &Element) -> super::DoNotShowFormFieldIndicator {
     let mut node = super::DoNotShowFormFieldIndicator::default();
     let mut reader =
@@ -3397,7 +3397,7 @@ pub fn do_not_show_form_field_indicator(element: &Element) -> super::DoNotShowFo
 }
 
 /// Read `w:doNotDemarcateInvalidXml` into a `DoNotShowInvalidMarkupIndicator`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_show_invalid_markup_indicator(
     element: &Element,
 ) -> super::DoNotShowInvalidMarkupIndicator {
@@ -3416,7 +3416,7 @@ pub fn do_not_show_invalid_markup_indicator(
 }
 
 /// Read `w:doNotSnapToGridInCell` into a `DoNotSnapToDocumentGridInTableCellsWithObjects`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_snap_to_document_grid_in_table_cells_with_objects(
     element: &Element,
 ) -> super::DoNotSnapToDocumentGridInTableCellsWithObjects {
@@ -3435,7 +3435,7 @@ pub fn do_not_snap_to_document_grid_in_table_cells_with_objects(
 }
 
 /// Read `w:doNotSuppressBlankLines` into a `DoNotSuppressBlankLines`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_suppress_blank_lines(element: &Element) -> super::DoNotSuppressBlankLines {
     let mut node = super::DoNotSuppressBlankLines::default();
     let mut reader =
@@ -3450,7 +3450,7 @@ pub fn do_not_suppress_blank_lines(element: &Element) -> super::DoNotSuppressBla
 }
 
 /// Read `w:doNotSuppressIndentation` into a `DoNotSuppressIndentation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_suppress_indentation(element: &Element) -> super::DoNotSuppressIndentation {
     let mut node = super::DoNotSuppressIndentation::default();
     let mut reader =
@@ -3465,7 +3465,7 @@ pub fn do_not_suppress_indentation(element: &Element) -> super::DoNotSuppressInd
 }
 
 /// Read `w:doNotSuppressParagraphBorders` into a `DoNotSuppressParagraphBorders`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_suppress_paragraph_borders(
     element: &Element,
 ) -> super::DoNotSuppressParagraphBorders {
@@ -3484,7 +3484,7 @@ pub fn do_not_suppress_paragraph_borders(
 }
 
 /// Read `w:doNotTrackFormatting` into a `DoNotTrackFormatting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_track_formatting(element: &Element) -> super::DoNotTrackFormatting {
     let mut node = super::DoNotTrackFormatting::default();
     let mut reader =
@@ -3499,7 +3499,7 @@ pub fn do_not_track_formatting(element: &Element) -> super::DoNotTrackFormatting
 }
 
 /// Read `w:doNotUseEastAsianBreakRules` into a `DoNotUseEastAsianBreakRules`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_use_east_asian_break_rules(element: &Element) -> super::DoNotUseEastAsianBreakRules {
     let mut node = super::DoNotUseEastAsianBreakRules::default();
     let mut reader = officekit_markup_base::Reader::new(
@@ -3516,7 +3516,7 @@ pub fn do_not_use_east_asian_break_rules(element: &Element) -> super::DoNotUseEa
 }
 
 /// Read `w:doNotUseLongFileNames` into a `DoNotUseFileNames`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_use_file_names(element: &Element) -> super::DoNotUseFileNames {
     let mut node = super::DoNotUseFileNames::default();
     let mut reader =
@@ -3531,7 +3531,7 @@ pub fn do_not_use_file_names(element: &Element) -> super::DoNotUseFileNames {
 }
 
 /// Read `w:doNotUseHTMLParagraphAutoSpacing` into a `DoNotUseHTMLParagraphAutoSpacing`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_use_html_paragraph_auto_spacing(
     element: &Element,
 ) -> super::DoNotUseHTMLParagraphAutoSpacing {
@@ -3550,7 +3550,7 @@ pub fn do_not_use_html_paragraph_auto_spacing(
 }
 
 /// Read `w:doNotUseIndentAsNumberingTabStop` into a `DoNotUseIndentAsNumberingTabStop`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_use_indent_as_numbering_tab_stop(
     element: &Element,
 ) -> super::DoNotUseIndentAsNumberingTabStop {
@@ -3569,7 +3569,7 @@ pub fn do_not_use_indent_as_numbering_tab_stop(
 }
 
 /// Read `w:doNotUseMarginsForDrawingGridOrigin` into a `DoNotUseMarginsForDrawingGridOrigin`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_use_margins_for_drawing_grid_origin(
     element: &Element,
 ) -> super::DoNotUseMarginsForDrawingGridOrigin {
@@ -3588,7 +3588,7 @@ pub fn do_not_use_margins_for_drawing_grid_origin(
 }
 
 /// Read `w:doNotTrackMoves` into a `DoNotUseMoveSyntax`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_use_move_syntax(element: &Element) -> super::DoNotUseMoveSyntax {
     let mut node = super::DoNotUseMoveSyntax::default();
     let mut reader =
@@ -3603,7 +3603,7 @@ pub fn do_not_use_move_syntax(element: &Element) -> super::DoNotUseMoveSyntax {
 }
 
 /// Read `w:doNotValidateAgainstSchema` into a `DoNotValidateAgainstSchema`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_validate_against_schema(element: &Element) -> super::DoNotValidateAgainstSchema {
     let mut node = super::DoNotValidateAgainstSchema::default();
     let mut reader =
@@ -3618,7 +3618,7 @@ pub fn do_not_validate_against_schema(element: &Element) -> super::DoNotValidate
 }
 
 /// Read `w:doNotVertAlignCellWithSp` into a `DoNotVertAlignCellWithSp`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_vert_align_cell_with_sp(element: &Element) -> super::DoNotVertAlignCellWithSp {
     let mut node = super::DoNotVertAlignCellWithSp::default();
     let mut reader =
@@ -3633,7 +3633,7 @@ pub fn do_not_vert_align_cell_with_sp(element: &Element) -> super::DoNotVertAlig
 }
 
 /// Read `w:doNotWrapTextWithPunct` into a `DoNotWrapTextWithPunct`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn do_not_wrap_text_with_punct(element: &Element) -> super::DoNotWrapTextWithPunct {
     let mut node = super::DoNotWrapTextWithPunct::default();
     let mut reader =
@@ -3648,7 +3648,7 @@ pub fn do_not_wrap_text_with_punct(element: &Element) -> super::DoNotWrapTextWit
 }
 
 /// Read `w:document` into a `Document`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document(element: &Element) -> super::Document {
     let mut node = super::Document::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DOCUMENT_SHAPE);
@@ -3665,7 +3665,7 @@ pub fn document(element: &Element) -> super::Document {
 }
 
 /// Read `w:background` into a `DocumentBackground`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_background(element: &Element) -> super::DocumentBackground {
     let mut node = super::DocumentBackground::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DOCUMENT_BACKGROUND_SHAPE);
@@ -3685,7 +3685,7 @@ pub fn document_background(element: &Element) -> super::DocumentBackground {
 }
 
 /// Read `w:body` into a `DocumentBody`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_body(element: &Element) -> super::DocumentBody {
     let mut node = super::DocumentBody::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DOCUMENT_BODY_SHAPE);
@@ -3701,7 +3701,7 @@ pub fn document_body(element: &Element) -> super::DocumentBody {
 }
 
 /// Read `w:documentType` into a `DocumentClassification`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_classification(element: &Element) -> super::DocumentClassification {
     let mut node = super::DocumentClassification::default();
     let mut reader =
@@ -3716,7 +3716,7 @@ pub fn document_classification(element: &Element) -> super::DocumentClassificati
 }
 
 /// Read `w:docDefaults` into a `DocumentDefaultParagraphAndRunProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_default_paragraph_and_run_properties(
     element: &Element,
 ) -> super::DocumentDefaultParagraphAndRunProperties {
@@ -3737,7 +3737,7 @@ pub fn document_default_paragraph_and_run_properties(
 }
 
 /// Read `w:documentProtection` into a `DocumentEditingRestrictions`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_editing_restrictions(element: &Element) -> super::DocumentEditingRestrictions {
     let mut node = super::DocumentEditingRestrictions::default();
     let mut reader =
@@ -3771,7 +3771,7 @@ pub fn document_editing_restrictions(element: &Element) -> super::DocumentEditin
 }
 
 /// Read `w:endnotes` into a `DocumentEndnotes`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_endnotes(element: &Element) -> super::DocumentEndnotes {
     let mut node = super::DocumentEndnotes::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DOCUMENT_ENDNOTES_SHAPE);
@@ -3785,7 +3785,7 @@ pub fn document_endnotes(element: &Element) -> super::DocumentEndnotes {
 }
 
 /// Read `w:sectPr` into a `DocumentFinalSectionProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_final_section_properties(
     element: &Element,
 ) -> super::DocumentFinalSectionProperties {
@@ -3830,7 +3830,7 @@ pub fn document_final_section_properties(
 }
 
 /// Read `w:footnotes` into a `DocumentFootnotes`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_footnotes(element: &Element) -> super::DocumentFootnotes {
     let mut node = super::DocumentFootnotes::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DOCUMENT_FOOTNOTES_SHAPE);
@@ -3844,7 +3844,7 @@ pub fn document_footnotes(element: &Element) -> super::DocumentFootnotes {
 }
 
 /// Read `w:docGrid` into a `DocumentGrid`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_grid(element: &Element) -> super::DocumentGrid {
     let mut node = super::DocumentGrid::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DOCUMENT_GRID_SHAPE);
@@ -3861,7 +3861,7 @@ pub fn document_grid(element: &Element) -> super::DocumentGrid {
 }
 
 /// Read `w:snapToGrid` into a `DocumentGridInterLineParagraphSpacing`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_grid_inter_line_paragraph_spacing(
     element: &Element,
 ) -> super::DocumentGridInterLineParagraphSpacing {
@@ -3880,7 +3880,7 @@ pub fn document_grid_inter_line_paragraph_spacing(
 }
 
 /// Read `w:docPartCategory` into a `DocumentPartCategoryFilter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_part_category_filter(element: &Element) -> super::DocumentPartCategoryFilter {
     let mut node = super::DocumentPartCategoryFilter::default();
     let mut reader =
@@ -3895,7 +3895,7 @@ pub fn document_part_category_filter(element: &Element) -> super::DocumentPartCa
 }
 
 /// Read `w:docPartGallery` into a `DocumentPartGalleryFilter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_part_gallery_filter(element: &Element) -> super::DocumentPartGalleryFilter {
     let mut node = super::DocumentPartGalleryFilter::default();
     let mut reader =
@@ -3910,7 +3910,7 @@ pub fn document_part_gallery_filter(element: &Element) -> super::DocumentPartGal
 }
 
 /// Read `w:docPartList` into a `DocumentPartGalleryStructuredDocumentTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_part_gallery_structured_document_tag(
     element: &Element,
 ) -> super::DocumentPartGalleryStructuredDocumentTag {
@@ -3932,7 +3932,7 @@ pub fn document_part_gallery_structured_document_tag(
 }
 
 /// Read `w:docPart` into a `DocumentPartReference`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_part_reference(element: &Element) -> super::DocumentPartReference {
     let mut node = super::DocumentPartReference::default();
     let mut reader =
@@ -3947,7 +3947,7 @@ pub fn document_part_reference(element: &Element) -> super::DocumentPartReferenc
 }
 
 /// Read `w:settings` into a `DocumentSettings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_settings(element: &Element) -> super::DocumentSettings {
     let mut node = super::DocumentSettings::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DOCUMENT_SETTINGS_SHAPE);
@@ -4083,7 +4083,7 @@ fn document_settings_2(
 }
 
 /// Read `w:docVars` into a `DocumentVariables`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_variables(element: &Element) -> super::DocumentVariables {
     let mut node = super::DocumentVariables::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DOCUMENT_VARIABLES_SHAPE);
@@ -4097,7 +4097,7 @@ pub fn document_variables(element: &Element) -> super::DocumentVariables {
 }
 
 /// Read `w:view` into a `DocumentViewSetting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_view_setting(element: &Element) -> super::DocumentViewSetting {
     let mut node = super::DocumentViewSetting::default();
     let mut reader =
@@ -4112,7 +4112,7 @@ pub fn document_view_setting(element: &Element) -> super::DocumentViewSetting {
 }
 
 /// Read `w:endnotePr` into a `DocumentWideEndnoteProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_wide_endnote_properties(element: &Element) -> super::DocumentWideEndnoteProperties {
     let mut node = super::DocumentWideEndnoteProperties::default();
     let mut reader =
@@ -4132,7 +4132,7 @@ pub fn document_wide_endnote_properties(element: &Element) -> super::DocumentWid
 }
 
 /// Read `w:footnotePr` into a `DocumentWideFootnoteProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn document_wide_footnote_properties(
     element: &Element,
 ) -> super::DocumentWideFootnoteProperties {
@@ -4156,7 +4156,7 @@ pub fn document_wide_footnote_properties(
 }
 
 /// Read `w:doNotExpandShiftReturn` into a `DontJustifySoftLineBreakLines`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dont_justify_soft_line_break_lines(
     element: &Element,
 ) -> super::DontJustifySoftLineBreakLines {
@@ -4175,7 +4175,7 @@ pub fn dont_justify_soft_line_break_lines(
 }
 
 /// Read `w:noWrap` into a `DontWrapCellContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dont_wrap_cell_content(element: &Element) -> super::DontWrapCellContent {
     let mut node = super::DontWrapCellContent::default();
     let mut reader =
@@ -4190,7 +4190,7 @@ pub fn dont_wrap_cell_content(element: &Element) -> super::DontWrapCellContent {
 }
 
 /// Read `w:dstrike` into a `DoubleStrikethrough`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn double_strikethrough(element: &Element) -> super::DoubleStrikethrough {
     let mut node = super::DoubleStrikethrough::default();
     let mut reader =
@@ -4205,7 +4205,7 @@ pub fn double_strikethrough(element: &Element) -> super::DoubleStrikethrough {
 }
 
 /// Read `w:drawingGridHorizontalSpacing` into a `DrawingGridHorizontalGridUnitSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drawing_grid_horizontal_grid_unit_size(
     element: &Element,
 ) -> super::DrawingGridHorizontalGridUnitSize {
@@ -4224,7 +4224,7 @@ pub fn drawing_grid_horizontal_grid_unit_size(
 }
 
 /// Read `w:drawingGridHorizontalOrigin` into a `DrawingGridHorizontalOriginPoint`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drawing_grid_horizontal_origin_point(
     element: &Element,
 ) -> super::DrawingGridHorizontalOriginPoint {
@@ -4243,7 +4243,7 @@ pub fn drawing_grid_horizontal_origin_point(
 }
 
 /// Read `w:drawingGridVerticalSpacing` into a `DrawingGridVerticalGridUnitSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drawing_grid_vertical_grid_unit_size(
     element: &Element,
 ) -> super::DrawingGridVerticalGridUnitSize {
@@ -4262,7 +4262,7 @@ pub fn drawing_grid_vertical_grid_unit_size(
 }
 
 /// Read `w:drawingGridVerticalOrigin` into a `DrawingGridVerticalOriginPoint`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drawing_grid_vertical_origin_point(
     element: &Element,
 ) -> super::DrawingGridVerticalOriginPoint {
@@ -4281,7 +4281,7 @@ pub fn drawing_grid_vertical_origin_point(
 }
 
 /// Read `w:drawing` into a `DrawingMLObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drawing_ml_object(element: &Element) -> super::DrawingMLObject {
     let mut node = super::DrawingMLObject::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DRAWING_ML_OBJECT_SHAPE);
@@ -4295,13 +4295,13 @@ pub fn drawing_ml_object(element: &Element) -> super::DrawingMLObject {
 }
 
 /// Read one item of `DrawingObjectContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn drawing_object(element: &Element) -> super::DrawingObjectContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:listEntry` into a `DropDownListEntry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drop_down_list_entry(element: &Element) -> super::DropDownListEntry {
     let mut node = super::DropDownListEntry::default();
     let mut reader =
@@ -4316,7 +4316,7 @@ pub fn drop_down_list_entry(element: &Element) -> super::DropDownListEntry {
 }
 
 /// Read `w:ddList` into a `DropDownListFormFieldProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drop_down_list_form_field_properties(
     element: &Element,
 ) -> super::DropDownListFormFieldProperties {
@@ -4338,7 +4338,7 @@ pub fn drop_down_list_form_field_properties(
 }
 
 /// Read `w:result` into a `DropDownListSelection`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drop_down_list_selection(element: &Element) -> super::DropDownListSelection {
     let mut node = super::DropDownListSelection::default();
     let mut reader =
@@ -4353,7 +4353,7 @@ pub fn drop_down_list_selection(element: &Element) -> super::DropDownListSelecti
 }
 
 /// Read `w:dropDownList` into a `DropDownListStructuredDocumentTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn drop_down_list_structured_document_tag(
     element: &Element,
 ) -> super::DropDownListStructuredDocumentTag {
@@ -4374,7 +4374,7 @@ pub fn drop_down_list_structured_document_tag(
 }
 
 /// Read `w:personalCompose` into a `EMailMessageCompositionStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn e_mail_message_composition_style(element: &Element) -> super::EMailMessageCompositionStyle {
     let mut node = super::EMailMessageCompositionStyle::default();
     let mut reader =
@@ -4389,7 +4389,7 @@ pub fn e_mail_message_composition_style(element: &Element) -> super::EMailMessag
 }
 
 /// Read `w:personalReply` into a `EMailMessageReplyStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn e_mail_message_reply_style(element: &Element) -> super::EMailMessageReplyStyle {
     let mut node = super::EMailMessageReplyStyle::default();
     let mut reader =
@@ -4404,7 +4404,7 @@ pub fn e_mail_message_reply_style(element: &Element) -> super::EMailMessageReply
 }
 
 /// Read `w:personal` into a `EMailMessageTextStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn e_mail_message_text_style(element: &Element) -> super::EMailMessageTextStyle {
     let mut node = super::EMailMessageTextStyle::default();
     let mut reader =
@@ -4419,7 +4419,7 @@ pub fn e_mail_message_text_style(element: &Element) -> super::EMailMessageTextSt
 }
 
 /// Read `w:kinsoku` into a `EastAsianTypographyRules`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn east_asian_typography_rules(element: &Element) -> super::EastAsianTypographyRules {
     let mut node = super::EastAsianTypographyRules::default();
     let mut reader =
@@ -4434,7 +4434,7 @@ pub fn east_asian_typography_rules(element: &Element) -> super::EastAsianTypogra
 }
 
 /// Read `w:eastAsianLayout` into a `EastAsianTypographySettings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn east_asian_typography_settings(element: &Element) -> super::EastAsianTypographySettings {
     let mut node = super::EastAsianTypographySettings::default();
     let mut reader =
@@ -4454,7 +4454,7 @@ pub fn east_asian_typography_settings(element: &Element) -> super::EastAsianTypo
 }
 
 /// Read `w:embedSystemFonts` into a `EmbedCommonSystemFonts`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embed_common_system_fonts(element: &Element) -> super::EmbedCommonSystemFonts {
     let mut node = super::EmbedCommonSystemFonts::default();
     let mut reader =
@@ -4469,7 +4469,7 @@ pub fn embed_common_system_fonts(element: &Element) -> super::EmbedCommonSystemF
 }
 
 /// Read `w:embedTrueTypeFonts` into a `EmbedTrueTypeFonts`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embed_true_type_fonts(element: &Element) -> super::EmbedTrueTypeFonts {
     let mut node = super::EmbedTrueTypeFonts::default();
     let mut reader =
@@ -4484,7 +4484,7 @@ pub fn embed_true_type_fonts(element: &Element) -> super::EmbedTrueTypeFonts {
 }
 
 /// Read `w:control` into a `EmbeddedControl`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_control(element: &Element) -> super::EmbeddedControl {
     let mut node = super::EmbeddedControl::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EMBEDDED_CONTROL_SHAPE);
@@ -4501,7 +4501,7 @@ pub fn embedded_control(element: &Element) -> super::EmbeddedControl {
 }
 
 /// Read `w:object` into a `EmbeddedObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_object(element: &Element) -> super::EmbeddedObject {
     let mut node = super::EmbeddedObject::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EMBEDDED_OBJECT_SHAPE);
@@ -4521,13 +4521,13 @@ pub fn embedded_object(element: &Element) -> super::EmbeddedObject {
 }
 
 /// Read one item of `EmbeddedObjectContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn embedded_object_content(element: &Element) -> super::EmbeddedObjectContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:objectEmbed` into a `EmbeddedObjectProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_object_properties(element: &Element) -> super::EmbeddedObjectProperties {
     let mut node = super::EmbeddedObjectProperties::default();
     let mut reader =
@@ -4547,7 +4547,7 @@ pub fn embedded_object_properties(element: &Element) -> super::EmbeddedObjectPro
 }
 
 /// Read `w:movie` into a `EmbeddedVideo`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_video(element: &Element) -> super::EmbeddedVideo {
     let mut node = super::EmbeddedVideo::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EMBEDDED_VIDEO_SHAPE);
@@ -4561,7 +4561,7 @@ pub fn embedded_video(element: &Element) -> super::EmbeddedVideo {
 }
 
 /// Read `w:emboss` into a `Embossing`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embossing(element: &Element) -> super::Embossing {
     let mut node = super::Embossing::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EMBOSSING_SHAPE);
@@ -4575,7 +4575,7 @@ pub fn embossing(element: &Element) -> super::Embossing {
 }
 
 /// Read `w:em` into a `EmphasisMark`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn emphasis_mark(element: &Element) -> super::EmphasisMark {
     let mut node = super::EmphasisMark::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EMPHASIS_MARK_SHAPE);
@@ -4589,7 +4589,7 @@ pub fn emphasis_mark(element: &Element) -> super::EmphasisMark {
 }
 
 /// Read `w:endnote` into a `EndnoteContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn endnote_content(element: &Element) -> super::EndnoteContent {
     let mut node = super::EndnoteContent::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ENDNOTE_CONTENT_SHAPE);
@@ -4606,7 +4606,7 @@ pub fn endnote_content(element: &Element) -> super::EndnoteContent {
 }
 
 /// Read `w:pos` into a `EndnotePlacement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn endnote_placement(element: &Element) -> super::EndnotePlacement {
     let mut node = super::EndnotePlacement::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ENDNOTE_PLACEMENT_SHAPE);
@@ -4620,7 +4620,7 @@ pub fn endnote_placement(element: &Element) -> super::EndnotePlacement {
 }
 
 /// Read `w:endnoteReference` into a `EndnoteReference`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn endnote_reference(element: &Element) -> super::EndnoteReference {
     let mut node = super::EndnoteReference::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ENDNOTE_REFERENCE_SHAPE);
@@ -4636,7 +4636,7 @@ pub fn endnote_reference(element: &Element) -> super::EndnoteReference {
 }
 
 /// Read `w:endnoteRef` into a `EndnoteReferenceMark`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn endnote_reference_mark(element: &Element) -> super::EndnoteReferenceMark {
     let reader = officekit_markup_base::Reader::new(element, &super::ENDNOTE_REFERENCE_MARK_SHAPE);
     super::EndnoteReferenceMark {
@@ -4646,7 +4646,7 @@ pub fn endnote_reference_mark(element: &Element) -> super::EndnoteReferenceMark 
 }
 
 /// Read `w:category` into a `EntryCategorization`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn entry_categorization(element: &Element) -> super::EntryCategorization {
     let mut node = super::EntryCategorization::default();
     let mut reader =
@@ -4663,7 +4663,7 @@ pub fn entry_categorization(element: &Element) -> super::EntryCategorization {
 }
 
 /// Read `w:guid` into a `EntryID`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn entry_id(element: &Element) -> super::EntryID {
     let mut node = super::EntryID::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ENTRY_ID_SHAPE);
@@ -4677,7 +4677,7 @@ pub fn entry_id(element: &Element) -> super::EntryID {
 }
 
 /// Read `w:behavior` into a `EntryInsertionBehavior`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn entry_insertion_behavior(element: &Element) -> super::EntryInsertionBehavior {
     let mut node = super::EntryInsertionBehavior::default();
     let mut reader =
@@ -4692,7 +4692,7 @@ pub fn entry_insertion_behavior(element: &Element) -> super::EntryInsertionBehav
 }
 
 /// Read `w:behaviors` into a `EntryInsertionBehaviors`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn entry_insertion_behaviors(element: &Element) -> super::EntryInsertionBehaviors {
     let mut node = super::EntryInsertionBehaviors::default();
     let mut reader =
@@ -4707,7 +4707,7 @@ pub fn entry_insertion_behaviors(element: &Element) -> super::EntryInsertionBeha
 }
 
 /// Read `w:name` into a `EntryName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn entry_name(element: &Element) -> super::EntryName {
     let mut node = super::EntryName::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ENTRY_NAME_SHAPE);
@@ -4723,7 +4723,7 @@ pub fn entry_name(element: &Element) -> super::EntryName {
 }
 
 /// Read `w:type` into a `EntryType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn entry_type(element: &Element) -> super::EntryType {
     let mut node = super::EntryType::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ENTRY_TYPE_SHAPE);
@@ -4737,7 +4737,7 @@ pub fn entry_type(element: &Element) -> super::EntryType {
 }
 
 /// Read `w:types` into a `EntryTypes`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn entry_types(element: &Element) -> super::EntryTypes {
     let mut node = super::EntryTypes::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ENTRY_TYPES_SHAPE);
@@ -4753,7 +4753,7 @@ pub fn entry_types(element: &Element) -> super::EntryTypes {
 }
 
 /// Read `w:equation` into a `EquationStructuredDocumentTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn equation_structured_document_tag(element: &Element) -> super::EquationStructuredDocumentTag {
     let reader =
         officekit_markup_base::Reader::new(element, &super::EQUATION_STRUCTURED_DOCUMENT_TAG_SHAPE);
@@ -4764,7 +4764,7 @@ pub fn equation_structured_document_tag(element: &Element) -> super::EquationStr
 }
 
 /// Read `w:entryMacro` into a `ExecuteOnFormFieldEntry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn execute_on_form_field_entry(element: &Element) -> super::ExecuteOnFormFieldEntry {
     let mut node = super::ExecuteOnFormFieldEntry::default();
     let mut reader =
@@ -4779,7 +4779,7 @@ pub fn execute_on_form_field_entry(element: &Element) -> super::ExecuteOnFormFie
 }
 
 /// Read `w:exitMacro` into a `ExecuteOnFormFieldExit`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn execute_on_form_field_exit(element: &Element) -> super::ExecuteOnFormFieldExit {
     let mut node = super::ExecuteOnFormFieldExit::default();
     let mut reader =
@@ -4794,7 +4794,7 @@ pub fn execute_on_form_field_exit(element: &Element) -> super::ExecuteOnFormFiel
 }
 
 /// Read `w:w` into a `ExpandedCompressedText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn expanded_compressed_text(element: &Element) -> super::ExpandedCompressedText {
     let mut node = super::ExpandedCompressedText::default();
     let mut reader =
@@ -4809,7 +4809,7 @@ pub fn expanded_compressed_text(element: &Element) -> super::ExpandedCompressedT
 }
 
 /// Read `w:altChunkPr` into a `ExternalContentImportProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn external_content_import_properties(
     element: &Element,
 ) -> super::ExternalContentImportProperties {
@@ -4828,7 +4828,7 @@ pub fn external_content_import_properties(
 }
 
 /// Read `w:fieldMapData` into a `ExternalDataSourceMergeFieldMapping`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn external_data_source_merge_field_mapping(
     element: &Element,
 ) -> super::ExternalDataSourceMergeFieldMapping {
@@ -4853,7 +4853,7 @@ pub fn external_data_source_merge_field_mapping(
 }
 
 /// Read `w:instrText` into a `FieldCode`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn field_code(element: &Element) -> super::FieldCode {
     let mut node = super::FieldCode::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FIELD_CODE_SHAPE);
@@ -4869,7 +4869,7 @@ pub fn field_code(element: &Element) -> super::FieldCode {
 }
 
 /// Read `w:fHdr` into a `FirstRowContainsColumnNames`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn first_row_contains_column_names(element: &Element) -> super::FirstRowContainsColumnNames {
     let mut node = super::FirstRowContainsColumnNames::default();
     let mut reader =
@@ -4884,7 +4884,7 @@ pub fn first_row_contains_column_names(element: &Element) -> super::FirstRowCont
 }
 
 /// Read `w:tcFitText` into a `FitTextWithinCell`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn fit_text_within_cell(element: &Element) -> super::FitTextWithinCell {
     let mut node = super::FitTextWithinCell::default();
     let mut reader =
@@ -4899,7 +4899,7 @@ pub fn fit_text_within_cell(element: &Element) -> super::FitTextWithinCell {
 }
 
 /// Read `w:wpJustification` into a `FitToExpandedWidthWhenPerformingFullJustification`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn fit_to_expanded_width_when_performing_full_justification(
     element: &Element,
 ) -> super::FitToExpandedWidthWhenPerformingFullJustification {
@@ -4918,7 +4918,7 @@ pub fn fit_to_expanded_width_when_performing_full_justification(
 }
 
 /// Read `w:tblOverlap` into a `FloatingTableAllowsOverlap`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn floating_table_allows_overlap(element: &Element) -> super::FloatingTableAllowsOverlap {
     let mut node = super::FloatingTableAllowsOverlap::default();
     let mut reader =
@@ -4933,7 +4933,7 @@ pub fn floating_table_allows_overlap(element: &Element) -> super::FloatingTableA
 }
 
 /// Read `w:tblpPr` into a `FloatingTablePositioning`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn floating_table_positioning(element: &Element) -> super::FloatingTablePositioning {
     let mut node = super::FloatingTablePositioning::default();
     let mut reader =
@@ -4958,7 +4958,7 @@ pub fn floating_table_positioning(element: &Element) -> super::FloatingTablePosi
 }
 
 /// Read `w:family` into a `FontFamily`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn font_family(element: &Element) -> super::FontFamily {
     let mut node = super::FontFamily::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FONT_FAMILY_SHAPE);
@@ -4972,7 +4972,7 @@ pub fn font_family(element: &Element) -> super::FontFamily {
 }
 
 /// Read `w:kern` into a `FontKerning`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn font_kerning(element: &Element) -> super::FontKerning {
     let mut node = super::FontKerning::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FONT_KERNING_SHAPE);
@@ -4986,7 +4986,7 @@ pub fn font_kerning(element: &Element) -> super::FontKerning {
 }
 
 /// Read `w:pitch` into a `FontPitch`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn font_pitch(element: &Element) -> super::FontPitch {
     let mut node = super::FontPitch::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FONT_PITCH_SHAPE);
@@ -5000,7 +5000,7 @@ pub fn font_pitch(element: &Element) -> super::FontPitch {
 }
 
 /// Read `w:fonts` into a `FontTableRootElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn font_table_root_element(element: &Element) -> super::FontTableRootElement {
     let mut node = super::FontTableRootElement::default();
     let mut reader =
@@ -5015,7 +5015,7 @@ pub fn font_table_root_element(element: &Element) -> super::FontTableRootElement
 }
 
 /// Read `w:ftr` into a `Footer`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn footer(element: &Element) -> super::Footer {
     let mut node = super::Footer::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FOOTER_SHAPE);
@@ -5029,7 +5029,7 @@ pub fn footer(element: &Element) -> super::Footer {
 }
 
 /// Read `w:footerReference` into a `FooterReference`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn footer_reference(element: &Element) -> super::FooterReference {
     let mut node = super::FooterReference::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FOOTER_REFERENCE_SHAPE);
@@ -5045,7 +5045,7 @@ pub fn footer_reference(element: &Element) -> super::FooterReference {
 }
 
 /// Read `w:numRestart` into a `FootnoteAndEndnoteNumberingRestartLocation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn footnote_and_endnote_numbering_restart_location(
     element: &Element,
 ) -> super::FootnoteAndEndnoteNumberingRestartLocation {
@@ -5064,7 +5064,7 @@ pub fn footnote_and_endnote_numbering_restart_location(
 }
 
 /// Read `w:numStart` into a `FootnoteAndEndnoteNumberingStartingValue`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn footnote_and_endnote_numbering_starting_value(
     element: &Element,
 ) -> super::FootnoteAndEndnoteNumberingStartingValue {
@@ -5083,7 +5083,7 @@ pub fn footnote_and_endnote_numbering_starting_value(
 }
 
 /// Read `w:footnote` into a `FootnoteContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn footnote_content(element: &Element) -> super::FootnoteContent {
     let mut node = super::FootnoteContent::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FOOTNOTE_CONTENT_SHAPE);
@@ -5100,7 +5100,7 @@ pub fn footnote_content(element: &Element) -> super::FootnoteContent {
 }
 
 /// Read `w:separator` into a `FootnoteEndnoteSeparatorMark`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn footnote_endnote_separator_mark(element: &Element) -> super::FootnoteEndnoteSeparatorMark {
     let reader =
         officekit_markup_base::Reader::new(element, &super::FOOTNOTE_ENDNOTE_SEPARATOR_MARK_SHAPE);
@@ -5111,7 +5111,7 @@ pub fn footnote_endnote_separator_mark(element: &Element) -> super::FootnoteEndn
 }
 
 /// Read `w:pos` into a `FootnotePlacement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn footnote_placement(element: &Element) -> super::FootnotePlacement {
     let mut node = super::FootnotePlacement::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FOOTNOTE_PLACEMENT_SHAPE);
@@ -5125,7 +5125,7 @@ pub fn footnote_placement(element: &Element) -> super::FootnotePlacement {
 }
 
 /// Read `w:footnoteReference` into a `FootnoteReference`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn footnote_reference(element: &Element) -> super::FootnoteReference {
     let mut node = super::FootnoteReference::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FOOTNOTE_REFERENCE_SHAPE);
@@ -5141,7 +5141,7 @@ pub fn footnote_reference(element: &Element) -> super::FootnoteReference {
 }
 
 /// Read `w:footnoteRef` into a `FootnoteReferenceMark`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn footnote_reference_mark(element: &Element) -> super::FootnoteReferenceMark {
     let reader = officekit_markup_base::Reader::new(element, &super::FOOTNOTE_REFERENCE_MARK_SHAPE);
     super::FootnoteReferenceMark {
@@ -5151,7 +5151,7 @@ pub fn footnote_reference_mark(element: &Element) -> super::FootnoteReferenceMar
 }
 
 /// Read `w:forgetLastTabAlignment` into a `ForgetLastTabAlignment`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn forget_last_tab_alignment(element: &Element) -> super::ForgetLastTabAlignment {
     let mut node = super::ForgetLastTabAlignment::default();
     let mut reader =
@@ -5166,7 +5166,7 @@ pub fn forget_last_tab_alignment(element: &Element) -> super::ForgetLastTabAlign
 }
 
 /// Read `w:enabled` into a `FormFieldEnabled`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn form_field_enabled(element: &Element) -> super::FormFieldEnabled {
     let mut node = super::FormFieldEnabled::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FORM_FIELD_ENABLED_SHAPE);
@@ -5180,7 +5180,7 @@ pub fn form_field_enabled(element: &Element) -> super::FormFieldEnabled {
 }
 
 /// Read `w:name` into a `FormFieldName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn form_field_name(element: &Element) -> super::FormFieldName {
     let mut node = super::FormFieldName::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FORM_FIELD_NAME_SHAPE);
@@ -5194,7 +5194,7 @@ pub fn form_field_name(element: &Element) -> super::FormFieldName {
 }
 
 /// Read `w:ffData` into a `FormFieldProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn form_field_properties(element: &Element) -> super::FormFieldProperties {
     let mut node = super::FormFieldProperties::default();
     let mut reader =
@@ -5209,13 +5209,13 @@ pub fn form_field_properties(element: &Element) -> super::FormFieldProperties {
 }
 
 /// Read one item of `FormFieldPropertiesContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn form_field_properties_content(element: &Element) -> super::FormFieldPropertiesContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:noResizeAllowed` into a `FrameCannotBeResized`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn frame_cannot_be_resized(element: &Element) -> super::FrameCannotBeResized {
     let mut node = super::FrameCannotBeResized::default();
     let mut reader =
@@ -5230,7 +5230,7 @@ pub fn frame_cannot_be_resized(element: &Element) -> super::FrameCannotBeResized
 }
 
 /// Read `w:longDesc` into a `FrameLongDescription`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn frame_long_description(element: &Element) -> super::FrameLongDescription {
     let mut node = super::FrameLongDescription::default();
     let mut reader =
@@ -5245,7 +5245,7 @@ pub fn frame_long_description(element: &Element) -> super::FrameLongDescription 
 }
 
 /// Read `w:title` into a `FrameOrFramesetTitle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn frame_or_frameset_title(element: &Element) -> super::FrameOrFramesetTitle {
     let mut node = super::FrameOrFramesetTitle::default();
     let mut reader =
@@ -5260,7 +5260,7 @@ pub fn frame_or_frameset_title(element: &Element) -> super::FrameOrFramesetTitle
 }
 
 /// Read `w:sz` into a `FrameSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn frame_size(element: &Element) -> super::FrameSize {
     let mut node = super::FrameSize::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FRAME_SIZE_SHAPE);
@@ -5274,13 +5274,13 @@ pub fn frame_size(element: &Element) -> super::FrameSize {
 }
 
 /// Read one item of `FramesetDefinitionContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn frameset_definition(element: &Element) -> super::FramesetDefinitionContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:frameLayout` into a `FramesetLayout`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn frameset_layout(element: &Element) -> super::FramesetLayout {
     let mut node = super::FramesetLayout::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FRAMESET_LAYOUT_SHAPE);
@@ -5294,7 +5294,7 @@ pub fn frameset_layout(element: &Element) -> super::FramesetLayout {
 }
 
 /// Read `w:flatBorders` into a `FramesetSplitterBorderStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn frameset_splitter_border_style(element: &Element) -> super::FramesetSplitterBorderStyle {
     let mut node = super::FramesetSplitterBorderStyle::default();
     let mut reader =
@@ -5309,7 +5309,7 @@ pub fn frameset_splitter_border_style(element: &Element) -> super::FramesetSplit
 }
 
 /// Read `w:framesetSplitbar` into a `FramesetSplitterProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn frameset_splitter_properties(element: &Element) -> super::FramesetSplitterProperties {
     let mut node = super::FramesetSplitterProperties::default();
     let mut reader =
@@ -5328,7 +5328,7 @@ pub fn frameset_splitter_properties(element: &Element) -> super::FramesetSplitte
 }
 
 /// Read `w:w` into a `FramesetSplitterWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn frameset_splitter_width(element: &Element) -> super::FramesetSplitterWidth {
     let mut node = super::FramesetSplitterWidth::default();
     let mut reader =
@@ -5343,7 +5343,7 @@ pub fn frameset_splitter_width(element: &Element) -> super::FramesetSplitterWidt
 }
 
 /// Read `w:readModeInkLockDown` into a `FreezeDocumentLayout`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn freeze_document_layout(element: &Element) -> super::FreezeDocumentLayout {
     let mut node = super::FreezeDocumentLayout::default();
     let mut reader =
@@ -5362,7 +5362,7 @@ pub fn freeze_document_layout(element: &Element) -> super::FreezeDocumentLayout 
 }
 
 /// Read `w:alias` into a `FriendlyName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn friendly_name(element: &Element) -> super::FriendlyName {
     let mut node = super::FriendlyName::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FRIENDLY_NAME_SHAPE);
@@ -5376,7 +5376,7 @@ pub fn friendly_name(element: &Element) -> super::FriendlyName {
 }
 
 /// Read `w:gallery` into a `GalleryAssociatedWithEntry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn gallery_associated_with_entry(element: &Element) -> super::GalleryAssociatedWithEntry {
     let mut node = super::GalleryAssociatedWithEntry::default();
     let mut reader =
@@ -5391,7 +5391,7 @@ pub fn gallery_associated_with_entry(element: &Element) -> super::GalleryAssocia
 }
 
 /// Read `w:savePreviewPicture` into a `GenerateThumbnailForDocumentOnSave`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn generate_thumbnail_for_document_on_save(
     element: &Element,
 ) -> super::GenerateThumbnailForDocumentOnSave {
@@ -5410,7 +5410,7 @@ pub fn generate_thumbnail_for_document_on_save(
 }
 
 /// Read `w:docPart` into a `GlossaryDocumentEntry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn glossary_document_entry(element: &Element) -> super::GlossaryDocumentEntry {
     let mut node = super::GlossaryDocumentEntry::default();
     let mut reader =
@@ -5427,7 +5427,7 @@ pub fn glossary_document_entry(element: &Element) -> super::GlossaryDocumentEntr
 }
 
 /// Read `w:docPartPr` into a `GlossaryDocumentEntryProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn glossary_document_entry_properties(
     element: &Element,
 ) -> super::GlossaryDocumentEntryProperties {
@@ -5447,7 +5447,7 @@ pub fn glossary_document_entry_properties(
 
 /// Read one item of `GlossaryDocumentEntryPropertiesContent` from its element: the arm of its tag,
 /// or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn glossary_document_entry_properties_content(
     element: &Element,
 ) -> super::GlossaryDocumentEntryPropertiesContent {
@@ -5455,7 +5455,7 @@ pub fn glossary_document_entry_properties_content(
 }
 
 /// Read `w:glossaryDocument` into a `GlossaryDocumentRootElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn glossary_document_root_element(element: &Element) -> super::GlossaryDocumentRootElement {
     let mut node = super::GlossaryDocumentRootElement::default();
     let mut reader =
@@ -5472,7 +5472,7 @@ pub fn glossary_document_root_element(element: &Element) -> super::GlossaryDocum
 }
 
 /// Read `w:activeWritingStyle` into a `GrammarCheckingSettings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn grammar_checking_settings(element: &Element) -> super::GrammarCheckingSettings {
     let mut node = super::GrammarCheckingSettings::default();
     let mut reader =
@@ -5493,7 +5493,7 @@ pub fn grammar_checking_settings(element: &Element) -> super::GrammarCheckingSet
 }
 
 /// Read `w:gridCol` into a `GridColumnDefinition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn grid_column_definition(element: &Element) -> super::GridColumnDefinition {
     let mut node = super::GridColumnDefinition::default();
     let mut reader =
@@ -5508,7 +5508,7 @@ pub fn grid_column_definition(element: &Element) -> super::GridColumnDefinition 
 }
 
 /// Read `w:gridAfter` into a `GridColumnsAfterLastCell`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn grid_columns_after_last_cell(element: &Element) -> super::GridColumnsAfterLastCell {
     let mut node = super::GridColumnsAfterLastCell::default();
     let mut reader =
@@ -5523,7 +5523,7 @@ pub fn grid_columns_after_last_cell(element: &Element) -> super::GridColumnsAfte
 }
 
 /// Read `w:gridBefore` into a `GridColumnsBeforeFirstCell`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn grid_columns_before_first_cell(element: &Element) -> super::GridColumnsBeforeFirstCell {
     let mut node = super::GridColumnsBeforeFirstCell::default();
     let mut reader =
@@ -5538,7 +5538,7 @@ pub fn grid_columns_before_first_cell(element: &Element) -> super::GridColumnsBe
 }
 
 /// Read `w:gridSpan` into a `GridColumnsSpanned`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn grid_columns_spanned(element: &Element) -> super::GridColumnsSpanned {
     let mut node = super::GridColumnsSpanned::default();
     let mut reader =
@@ -5553,7 +5553,7 @@ pub fn grid_columns_spanned(element: &Element) -> super::GridColumnsSpanned {
 }
 
 /// Read `w:group` into a `GroupStructuredDocumentTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_structured_document_tag(element: &Element) -> super::GroupStructuredDocumentTag {
     let reader =
         officekit_markup_base::Reader::new(element, &super::GROUP_STRUCTURED_DOCUMENT_TAG_SHAPE);
@@ -5564,7 +5564,7 @@ pub fn group_structured_document_tag(element: &Element) -> super::GroupStructure
 }
 
 /// Read `w:rtlGutter` into a `GutterOnRightSideOfPage`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn gutter_on_right_side_of_page(element: &Element) -> super::GutterOnRightSideOfPage {
     let mut node = super::GutterOnRightSideOfPage::default();
     let mut reader =
@@ -5579,7 +5579,7 @@ pub fn gutter_on_right_side_of_page(element: &Element) -> super::GutterOnRightSi
 }
 
 /// Read `w:hdr` into a `Header`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn header(element: &Element) -> super::Header {
     let mut node = super::Header::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HEADER_SHAPE);
@@ -5593,7 +5593,7 @@ pub fn header(element: &Element) -> super::Header {
 }
 
 /// Read `w:header` into a `HeaderCellReference`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn header_cell_reference(element: &Element) -> super::HeaderCellReference {
     let mut node = super::HeaderCellReference::default();
     let mut reader =
@@ -5608,7 +5608,7 @@ pub fn header_cell_reference(element: &Element) -> super::HeaderCellReference {
 }
 
 /// Read `w:headers` into a `HeaderCellsAssociatedWithTableCell`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn header_cells_associated_with_table_cell(
     element: &Element,
 ) -> super::HeaderCellsAssociatedWithTableCell {
@@ -5627,7 +5627,7 @@ pub fn header_cells_associated_with_table_cell(
 }
 
 /// Read `w:headerSource` into a `HeaderDefinitionFilePath`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn header_definition_file_path(element: &Element) -> super::HeaderDefinitionFilePath {
     let mut node = super::HeaderDefinitionFilePath::default();
     let mut reader =
@@ -5642,7 +5642,7 @@ pub fn header_definition_file_path(element: &Element) -> super::HeaderDefinition
 }
 
 /// Read `w:headerReference` into a `HeaderReference`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn header_reference(element: &Element) -> super::HeaderReference {
     let mut node = super::HeaderReference::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HEADER_REFERENCE_SHAPE);
@@ -5658,7 +5658,7 @@ pub fn header_reference(element: &Element) -> super::HeaderReference {
 }
 
 /// Read `w:hidden` into a `HiddenTableRowMarker`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hidden_table_row_marker(element: &Element) -> super::HiddenTableRowMarker {
     let mut node = super::HiddenTableRowMarker::default();
     let mut reader =
@@ -5673,7 +5673,7 @@ pub fn hidden_table_row_marker(element: &Element) -> super::HiddenTableRowMarker
 }
 
 /// Read `w:vanish` into a `HiddenText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hidden_text(element: &Element) -> super::HiddenText {
     let mut node = super::HiddenText::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HIDDEN_TEXT_SHAPE);
@@ -5687,7 +5687,7 @@ pub fn hidden_text(element: &Element) -> super::HiddenText {
 }
 
 /// Read `w:semiHidden` into a `HideStyleFromMainUserInterface`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hide_style_from_main_user_interface(
     element: &Element,
 ) -> super::HideStyleFromMainUserInterface {
@@ -5706,7 +5706,7 @@ pub fn hide_style_from_main_user_interface(
 }
 
 /// Read `w:hMerge` into a `HorizontallyMergedCell`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn horizontally_merged_cell(element: &Element) -> super::HorizontallyMergedCell {
     let mut node = super::HorizontallyMergedCell::default();
     let mut reader =
@@ -5721,7 +5721,7 @@ pub fn horizontally_merged_cell(element: &Element) -> super::HorizontallyMergedC
 }
 
 /// Read `w:hyperlink` into a `Hyperlink`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hyperlink(element: &Element) -> super::Hyperlink {
     let mut node = super::Hyperlink::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HYPERLINK_SHAPE);
@@ -5742,7 +5742,7 @@ pub fn hyperlink(element: &Element) -> super::Hyperlink {
 }
 
 /// Read `w:hyphenationZone` into a `HyphenationZone`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hyphenation_zone(element: &Element) -> super::HyphenationZone {
     let mut node = super::HyphenationZone::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HYPHENATION_ZONE_SHAPE);
@@ -5756,7 +5756,7 @@ pub fn hyphenation_zone(element: &Element) -> super::HyphenationZone {
 }
 
 /// Read `w:hideMark` into a `IgnoreEndOfCellMarker`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ignore_end_of_cell_marker(element: &Element) -> super::IgnoreEndOfCellMarker {
     let mut node = super::IgnoreEndOfCellMarker::default();
     let mut reader =
@@ -5771,7 +5771,7 @@ pub fn ignore_end_of_cell_marker(element: &Element) -> super::IgnoreEndOfCellMar
 }
 
 /// Read `w:suppressBottomSpacing` into a `IgnoreExactLineHeightForLastLineOnPage`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ignore_exact_line_height_for_last_line_on_page(
     element: &Element,
 ) -> super::IgnoreExactLineHeightForLastLineOnPage {
@@ -5790,7 +5790,7 @@ pub fn ignore_exact_line_height_for_last_line_on_page(
 }
 
 /// Read `w:suppressSpacingAtTopOfPage` into a `IgnoreMinimumLineHeightForFirstLineOnPage`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ignore_minimum_line_height_for_first_line_on_page(
     element: &Element,
 ) -> super::IgnoreMinimumLineHeightForFirstLineOnPage {
@@ -5809,7 +5809,7 @@ pub fn ignore_minimum_line_height_for_first_line_on_page(
 }
 
 /// Read `w:ignoreMixedContent` into a `IgnoreMixedContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ignore_mixed_content(element: &Element) -> super::IgnoreMixedContent {
     let mut node = super::IgnoreMixedContent::default();
     let mut reader =
@@ -5824,7 +5824,7 @@ pub fn ignore_mixed_content(element: &Element) -> super::IgnoreMixedContent {
 }
 
 /// Read `w:footnoteLayoutLikeWW8` into a `IgnorePageBreakFromContinuousSectionBreak`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ignore_page_break_from_continuous_section_break(
     element: &Element,
 ) -> super::IgnorePageBreakFromContinuousSectionBreak {
@@ -5843,7 +5843,7 @@ pub fn ignore_page_break_from_continuous_section_break(
 }
 
 /// Read `w:contextualSpacing` into a `IgnoreSpacingAboveAndBelow`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ignore_spacing_above_and_below(element: &Element) -> super::IgnoreSpacingAboveAndBelow {
     let mut node = super::IgnoreSpacingAboveAndBelow::default();
     let mut reader =
@@ -5858,7 +5858,7 @@ pub fn ignore_spacing_above_and_below(element: &Element) -> super::IgnoreSpacing
 }
 
 /// Read `w:shapeLayoutLikeWW8` into a `IgnoreTextWrappingAroundObjectsAtBottomOfPage`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ignore_text_wrapping_around_objects_at_bottom_of_page(
     element: &Element,
 ) -> super::IgnoreTextWrappingAroundObjectsAtBottomOfPage {
@@ -5877,7 +5877,7 @@ pub fn ignore_text_wrapping_around_objects_at_bottom_of_page(
 }
 
 /// Read `w:doNotVertAlignInTxbx` into a `IgnoreVerticalAlignmentInTextboxes`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ignore_vertical_alignment_in_textboxes(
     element: &Element,
 ) -> super::IgnoreVerticalAlignmentInTextboxes {
@@ -5896,7 +5896,7 @@ pub fn ignore_vertical_alignment_in_textboxes(
 }
 
 /// Read `w:imprint` into a `Imprinting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn imprinting(element: &Element) -> super::Imprinting {
     let mut node = super::Imprinting::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::IMPRINTING_SHAPE);
@@ -5910,7 +5910,7 @@ pub fn imprinting(element: &Element) -> super::Imprinting {
 }
 
 /// Read `w:recipients` into a `InclusionExclusionDataForDataSource`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn inclusion_exclusion_data_for_data_source(
     element: &Element,
 ) -> super::InclusionExclusionDataForDataSource {
@@ -5929,7 +5929,7 @@ pub fn inclusion_exclusion_data_for_data_source(
 }
 
 /// Read `w:column` into a `IndexOfColumnBeingMapped`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn index_of_column_being_mapped(element: &Element) -> super::IndexOfColumnBeingMapped {
     let mut node = super::IndexOfColumnBeingMapped::default();
     let mut reader =
@@ -5944,7 +5944,7 @@ pub fn index_of_column_being_mapped(element: &Element) -> super::IndexOfColumnBe
 }
 
 /// Read `w:divs` into a `InformationAboutHTMLDivElements`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn information_about_html_div_elements(
     element: &Element,
 ) -> super::InformationAboutHTMLDivElements {
@@ -5963,7 +5963,7 @@ pub fn information_about_html_div_elements(
 }
 
 /// Read `w:div` into a `InformationAboutSingleHTMLDivElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn information_about_single_html_div_element(
     element: &Element,
 ) -> super::InformationAboutSingleHTMLDivElement {
@@ -5991,7 +5991,7 @@ pub fn information_about_single_html_div_element(
 }
 
 /// Read `w:customXml` into a `InlineLevelCustomXMLElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn inline_level_custom_xml_element(element: &Element) -> super::InlineLevelCustomXMLElement {
     let mut node = super::InlineLevelCustomXMLElement::default();
     let mut reader =
@@ -6010,7 +6010,7 @@ pub fn inline_level_custom_xml_element(element: &Element) -> super::InlineLevelC
 }
 
 /// Read `w:smartTag` into a `InlineLevelSmartTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn inline_level_smart_tag(element: &Element) -> super::InlineLevelSmartTag {
     let mut node = super::InlineLevelSmartTag::default();
     let mut reader =
@@ -6029,7 +6029,7 @@ pub fn inline_level_smart_tag(element: &Element) -> super::InlineLevelSmartTag {
 }
 
 /// Read `w:sdt` into a `InlineLevelStructuredDocumentTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn inline_level_structured_document_tag(
     element: &Element,
 ) -> super::InlineLevelStructuredDocumentTag {
@@ -6055,7 +6055,7 @@ pub fn inline_level_structured_document_tag(
 }
 
 /// Read `w:sdtContent` into a `InlineLevelStructuredDocumentTagContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn inline_level_structured_document_tag_content(
     element: &Element,
 ) -> super::InlineLevelStructuredDocumentTagContent {
@@ -6074,7 +6074,7 @@ pub fn inline_level_structured_document_tag_content(
 }
 
 /// Read `w:ins` into a `InsertedMathControlCharacter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn inserted_math_control_character(element: &Element) -> super::InsertedMathControlCharacter {
     let mut node = super::InsertedMathControlCharacter::default();
     let mut reader =
@@ -6095,7 +6095,7 @@ pub fn inserted_math_control_character(element: &Element) -> super::InsertedMath
 
 /// Read one item of `InsertedMathControlCharacterContent` from its element: the arm of its tag, or
 /// `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn inserted_math_control_character_content(
     element: &Element,
 ) -> super::InsertedMathControlCharacterContent {
@@ -6103,7 +6103,7 @@ pub fn inserted_math_control_character_content(
 }
 
 /// Read `w:ins` into a `InsertedRunContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn inserted_run_content(element: &Element) -> super::InsertedRunContent {
     let mut node = super::InsertedRunContent::default();
     let mut reader =
@@ -6122,7 +6122,7 @@ pub fn inserted_run_content(element: &Element) -> super::InsertedRunContent {
 }
 
 /// Read `w:ins` into a `InsertedTableRow`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn inserted_table_row(element: &Element) -> super::InsertedTableRow {
     let mut node = super::InsertedTableRow::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::INSERTED_TABLE_ROW_SHAPE);
@@ -6139,7 +6139,7 @@ pub fn inserted_table_row(element: &Element) -> super::InsertedTableRow {
 }
 
 /// Read `w:dirty` into a `InvalidatedFieldCache`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn invalidated_field_cache(element: &Element) -> super::InvalidatedFieldCache {
     let mut node = super::InvalidatedFieldCache::default();
     let mut reader =
@@ -6154,7 +6154,7 @@ pub fn invalidated_field_cache(element: &Element) -> super::InvalidatedFieldCach
 }
 
 /// Read `w:embedItalic` into a `ItalicFontStyleEmbedding`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn italic_font_style_embedding(element: &Element) -> super::ItalicFontStyleEmbedding {
     let mut node = super::ItalicFontStyleEmbedding::default();
     let mut reader =
@@ -6172,7 +6172,7 @@ pub fn italic_font_style_embedding(element: &Element) -> super::ItalicFontStyleE
 }
 
 /// Read `w:i` into a `Italics`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn italics(element: &Element) -> super::Italics {
     let mut node = super::Italics::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ITALICS_SHAPE);
@@ -6186,7 +6186,7 @@ pub fn italics(element: &Element) -> super::Italics {
 }
 
 /// Read `w:lvlJc` into a `Justification`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn justification(element: &Element) -> super::Justification {
     let mut node = super::Justification::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::JUSTIFICATION_SHAPE);
@@ -6200,7 +6200,7 @@ pub fn justification(element: &Element) -> super::Justification {
 }
 
 /// Read `w:keepLines` into a `KeepAllLinesOnOnePage`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn keep_all_lines_on_one_page(element: &Element) -> super::KeepAllLinesOnOnePage {
     let mut node = super::KeepAllLinesOnOnePage::default();
     let mut reader =
@@ -6215,7 +6215,7 @@ pub fn keep_all_lines_on_one_page(element: &Element) -> super::KeepAllLinesOnOne
 }
 
 /// Read `w:keepNext` into a `KeepParagraphWithNextParagraph`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn keep_paragraph_with_next_paragraph(
     element: &Element,
 ) -> super::KeepParagraphWithNextParagraph {
@@ -6234,7 +6234,7 @@ pub fn keep_paragraph_with_next_paragraph(
 }
 
 /// Read `w:matchSrc` into a `KeepSourceFormattingOnImport`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn keep_source_formatting_on_import(element: &Element) -> super::KeepSourceFormattingOnImport {
     let mut node = super::KeepSourceFormattingOnImport::default();
     let mut reader =
@@ -6249,7 +6249,7 @@ pub fn keep_source_formatting_on_import(element: &Element) -> super::KeepSourceF
 }
 
 /// Read `w:lid` into a `LanguageIDForPhoneticGuide`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn language_id_for_phonetic_guide(element: &Element) -> super::LanguageIDForPhoneticGuide {
     let mut node = super::LanguageIDForPhoneticGuide::default();
     let mut reader =
@@ -6264,7 +6264,7 @@ pub fn language_id_for_phonetic_guide(element: &Element) -> super::LanguageIDFor
 }
 
 /// Read `w:lang` into a `LanguagesForRunContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn languages_for_run_content(element: &Element) -> super::LanguagesForRunContent {
     let mut node = super::LanguagesForRunContent::default();
     let mut reader =
@@ -6282,7 +6282,7 @@ pub fn languages_for_run_content(element: &Element) -> super::LanguagesForRunCon
 }
 
 /// Read `w:numIdMacAtCleanup` into a `LastReviewedAbstractNumberingDefinition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn last_reviewed_abstract_numbering_definition(
     element: &Element,
 ) -> super::LastReviewedAbstractNumberingDefinition {
@@ -6301,7 +6301,7 @@ pub fn last_reviewed_abstract_numbering_definition(
 }
 
 /// Read `w:lsdException` into a `LatentStyleException`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn latent_style_exception(element: &Element) -> super::LatentStyleException {
     let mut node = super::LatentStyleException::default();
     let mut reader =
@@ -6322,7 +6322,7 @@ pub fn latent_style_exception(element: &Element) -> super::LatentStyleException 
 }
 
 /// Read `w:latentStyles` into a `LatentStyleInformation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn latent_style_information(element: &Element) -> super::LatentStyleInformation {
     let mut node = super::LatentStyleInformation::default();
     let mut reader =
@@ -6344,7 +6344,7 @@ pub fn latent_style_information(element: &Element) -> super::LatentStyleInformat
 }
 
 /// Read `w:layoutRawTableWidth` into a `LayoutRawTableWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn layout_raw_table_width(element: &Element) -> super::LayoutRawTableWidth {
     let mut node = super::LayoutRawTableWidth::default();
     let mut reader =
@@ -6359,7 +6359,7 @@ pub fn layout_raw_table_width(element: &Element) -> super::LayoutRawTableWidth {
 }
 
 /// Read `w:marW` into a `LeftAndRightMarginForFrame`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn left_and_right_margin_for_frame(element: &Element) -> super::LeftAndRightMarginForFrame {
     let mut node = super::LeftAndRightMarginForFrame::default();
     let mut reader =
@@ -6374,7 +6374,7 @@ pub fn left_and_right_margin_for_frame(element: &Element) -> super::LeftAndRight
 }
 
 /// Read `w:left` into a `LeftBorder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn left_border(element: &Element) -> super::LeftBorder {
     let mut node = super::LeftBorder::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LEFT_BORDER_SHAPE);
@@ -6398,7 +6398,7 @@ pub fn left_border(element: &Element) -> super::LeftBorder {
 }
 
 /// Read `w:marLeft` into a `LeftMarginForHTMLDiv`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn left_margin_for_html_div(element: &Element) -> super::LeftMarginForHTMLDiv {
     let mut node = super::LeftMarginForHTMLDiv::default();
     let mut reader =
@@ -6413,7 +6413,7 @@ pub fn left_margin_for_html_div(element: &Element) -> super::LeftMarginForHTMLDi
 }
 
 /// Read `w:left` into a `LeftParagraphBorder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn left_paragraph_border(element: &Element) -> super::LeftParagraphBorder {
     let mut node = super::LeftParagraphBorder::default();
     let mut reader =
@@ -6437,7 +6437,7 @@ pub fn left_paragraph_border(element: &Element) -> super::LeftParagraphBorder {
 }
 
 /// Read `w:left` into a `LeftParagraphBorderTblWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn left_paragraph_border_tbl_width(element: &Element) -> super::LeftParagraphBorderTblWidth {
     let mut node = super::LeftParagraphBorderTblWidth::default();
     let mut reader =
@@ -6454,7 +6454,7 @@ pub fn left_paragraph_border_tbl_width(element: &Element) -> super::LeftParagrap
 }
 
 /// Read `w:applyBreakingRules` into a `LegacyEthiopicAmharicLineBreakingRules`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn legacy_ethiopic_amharic_line_breaking_rules(
     element: &Element,
 ) -> super::LegacyEthiopicAmharicLineBreakingRules {
@@ -6473,7 +6473,7 @@ pub fn legacy_ethiopic_amharic_line_breaking_rules(
 }
 
 /// Read `w:legacy` into a `LegacyNumberingLevelProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn legacy_numbering_level_properties(
     element: &Element,
 ) -> super::LegacyNumberingLevelProperties {
@@ -6495,7 +6495,7 @@ pub fn legacy_numbering_level_properties(
 }
 
 /// Read `w:lnNumType` into a `LineNumberingSettings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line_numbering_settings(element: &Element) -> super::LineNumberingSettings {
     let mut node = super::LineNumberingSettings::default();
     let mut reader =
@@ -6514,7 +6514,7 @@ pub fn line_numbering_settings(element: &Element) -> super::LineNumberingSetting
 }
 
 /// Read `w:lineWrapLikeWord6` into a `LineWrapLikeWord6`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line_wrap_like_word6(element: &Element) -> super::LineWrapLikeWord6 {
     let mut node = super::LineWrapLikeWord6::default();
     let mut reader =
@@ -6529,7 +6529,7 @@ pub fn line_wrap_like_word6(element: &Element) -> super::LineWrapLikeWord6 {
 }
 
 /// Read `w:wrapTrailSpaces` into a `LineWrapTrailingSpaces`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line_wrap_trailing_spaces(element: &Element) -> super::LineWrapTrailingSpaces {
     let mut node = super::LineWrapTrailingSpaces::default();
     let mut reader =
@@ -6544,7 +6544,7 @@ pub fn line_wrap_trailing_spaces(element: &Element) -> super::LineWrapTrailingSp
 }
 
 /// Read `w:linkToQuery` into a `LinkToExternalQueryFile`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn link_to_external_query_file(element: &Element) -> super::LinkToExternalQueryFile {
     let mut node = super::LinkToExternalQueryFile::default();
     let mut reader =
@@ -6559,7 +6559,7 @@ pub fn link_to_external_query_file(element: &Element) -> super::LinkToExternalQu
 }
 
 /// Read `w:objectLink` into a `LinkedObjectProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn linked_object_properties(element: &Element) -> super::LinkedObjectProperties {
     let mut node = super::LinkedObjectProperties::default();
     let mut reader =
@@ -6581,7 +6581,7 @@ pub fn linked_object_properties(element: &Element) -> super::LinkedObjectPropert
 }
 
 /// Read `w:link` into a `LinkedStyleReference`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn linked_style_reference(element: &Element) -> super::LinkedStyleReference {
     let mut node = super::LinkedStyleReference::default();
     let mut reader =
@@ -6596,7 +6596,7 @@ pub fn linked_style_reference(element: &Element) -> super::LinkedStyleReference 
 }
 
 /// Read `w:docParts` into a `ListOfGlossaryDocumentEntries`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_glossary_document_entries(
     element: &Element,
 ) -> super::ListOfGlossaryDocumentEntries {
@@ -6615,7 +6615,7 @@ pub fn list_of_glossary_document_entries(
 }
 
 /// Read `w:listSeparator` into a `ListSeparatorForFieldCodeEvaluation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_separator_for_field_code_evaluation(
     element: &Element,
 ) -> super::ListSeparatorForFieldCodeEvaluation {
@@ -6634,7 +6634,7 @@ pub fn list_separator_for_field_code_evaluation(
 }
 
 /// Read `w:lock` into a `LockingSetting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn locking_setting(element: &Element) -> super::LockingSetting {
     let mut node = super::LockingSetting::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LOCKING_SETTING_SHAPE);
@@ -6648,7 +6648,7 @@ pub fn locking_setting(element: &Element) -> super::LockingSetting {
 }
 
 /// Read `w:zoom` into a `MagnificationSetting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn magnification_setting(element: &Element) -> super::MagnificationSetting {
     let mut node = super::MagnificationSetting::default();
     let mut reader =
@@ -6665,7 +6665,7 @@ pub fn magnification_setting(element: &Element) -> super::MagnificationSetting {
 }
 
 /// Read `w:checkErrors` into a `MailMergeErrorReportingSetting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn mail_merge_error_reporting_setting(
     element: &Element,
 ) -> super::MailMergeErrorReportingSetting {
@@ -6684,7 +6684,7 @@ pub fn mail_merge_error_reporting_setting(
 }
 
 /// Read `w:mailMerge` into a `MailMergeSettings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn mail_merge_settings(element: &Element) -> super::MailMergeSettings {
     let mut node = super::MailMergeSettings::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MAIL_MERGE_SETTINGS_SHAPE);
@@ -6714,7 +6714,7 @@ pub fn mail_merge_settings(element: &Element) -> super::MailMergeSettings {
 }
 
 /// Read `w:linkedToFile` into a `MaintainLinkToExistingFile`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn maintain_link_to_existing_file(element: &Element) -> super::MaintainLinkToExistingFile {
     let mut node = super::MaintainLinkToExistingFile::default();
     let mut reader =
@@ -6729,7 +6729,7 @@ pub fn maintain_link_to_existing_file(element: &Element) -> super::MaintainLinkT
 }
 
 /// Read `w:fitText` into a `ManualRunWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn manual_run_width(element: &Element) -> super::ManualRunWidth {
     let mut node = super::ManualRunWidth::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MANUAL_RUN_WIDTH_SHAPE);
@@ -6745,7 +6745,7 @@ pub fn manual_run_width(element: &Element) -> super::ManualRunWidth {
 }
 
 /// Read `w:consecutiveHyphenLimit` into a `MaximumNumberOfConsecutivelyHyphenatedLines`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn maximum_number_of_consecutively_hyphenated_lines(
     element: &Element,
 ) -> super::MaximumNumberOfConsecutivelyHyphenatedLines {
@@ -6764,7 +6764,7 @@ pub fn maximum_number_of_consecutively_hyphenated_lines(
 }
 
 /// Read `w:type` into a `MergeFieldMapping`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn merge_field_mapping(element: &Element) -> super::MergeFieldMapping {
     let mut node = super::MergeFieldMapping::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MERGE_FIELD_MAPPING_SHAPE);
@@ -6778,7 +6778,7 @@ pub fn merge_field_mapping(element: &Element) -> super::MergeFieldMapping {
 }
 
 /// Read `w:destination` into a `MergedDocumentDestination`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn merged_document_destination(element: &Element) -> super::MergedDocumentDestination {
     let mut node = super::MergedDocumentDestination::default();
     let mut reader =
@@ -6793,7 +6793,7 @@ pub fn merged_document_destination(element: &Element) -> super::MergedDocumentDe
 }
 
 /// Read `w:mailAsAttachment` into a `MergedDocumentToEMailAttachment`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn merged_document_to_e_mail_attachment(
     element: &Element,
 ) -> super::MergedDocumentToEMailAttachment {
@@ -6812,7 +6812,7 @@ pub fn merged_document_to_e_mail_attachment(
 }
 
 /// Read `w:mailSubject` into a `MergedEMailOrFaxSubjectLine`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn merged_e_mail_or_fax_subject_line(element: &Element) -> super::MergedEMailOrFaxSubjectLine {
     let mut node = super::MergedEMailOrFaxSubjectLine::default();
     let mut reader = officekit_markup_base::Reader::new(
@@ -6829,7 +6829,7 @@ pub fn merged_e_mail_or_fax_subject_line(element: &Element) -> super::MergedEMai
 }
 
 /// Read `w:mirrorMargins` into a `MirrorPageMargins`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn mirror_page_margins(element: &Element) -> super::MirrorPageMargins {
     let mut node = super::MirrorPageMargins::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MIRROR_PAGE_MARGINS_SHAPE);
@@ -6843,7 +6843,7 @@ pub fn mirror_page_margins(element: &Element) -> super::MirrorPageMargins {
 }
 
 /// Read `w:moveToRangeEnd` into a `MoveDestinationLocationContainerEnd`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn move_destination_location_container_end(
     element: &Element,
 ) -> super::MoveDestinationLocationContainerEnd {
@@ -6864,7 +6864,7 @@ pub fn move_destination_location_container_end(
 }
 
 /// Read `w:moveToRangeStart` into a `MoveDestinationLocationContainerStart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn move_destination_location_container_start(
     element: &Element,
 ) -> super::MoveDestinationLocationContainerStart {
@@ -6890,7 +6890,7 @@ pub fn move_destination_location_container_start(
 }
 
 /// Read `w:moveTo` into a `MoveDestinationParagraph`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn move_destination_paragraph(element: &Element) -> super::MoveDestinationParagraph {
     let mut node = super::MoveDestinationParagraph::default();
     let mut reader =
@@ -6908,7 +6908,7 @@ pub fn move_destination_paragraph(element: &Element) -> super::MoveDestinationPa
 }
 
 /// Read `w:moveTo` into a `MoveDestinationRunContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn move_destination_run_content(element: &Element) -> super::MoveDestinationRunContent {
     let mut node = super::MoveDestinationRunContent::default();
     let mut reader =
@@ -6927,7 +6927,7 @@ pub fn move_destination_run_content(element: &Element) -> super::MoveDestination
 }
 
 /// Read `w:moveFromRangeEnd` into a `MoveSourceLocationContainerEnd`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn move_source_location_container_end(
     element: &Element,
 ) -> super::MoveSourceLocationContainerEnd {
@@ -6948,7 +6948,7 @@ pub fn move_source_location_container_end(
 }
 
 /// Read `w:moveFromRangeStart` into a `MoveSourceLocationContainerStart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn move_source_location_container_start(
     element: &Element,
 ) -> super::MoveSourceLocationContainerStart {
@@ -6974,7 +6974,7 @@ pub fn move_source_location_container_start(
 }
 
 /// Read `w:moveFrom` into a `MoveSourceParagraph`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn move_source_paragraph(element: &Element) -> super::MoveSourceParagraph {
     let mut node = super::MoveSourceParagraph::default();
     let mut reader =
@@ -6992,7 +6992,7 @@ pub fn move_source_paragraph(element: &Element) -> super::MoveSourceParagraph {
 }
 
 /// Read `w:moveFrom` into a `MoveSourceRunContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn move_source_run_content(element: &Element) -> super::MoveSourceRunContent {
     let mut node = super::MoveSourceRunContent::default();
     let mut reader =
@@ -7011,7 +7011,7 @@ pub fn move_source_run_content(element: &Element) -> super::MoveSourceRunContent
 }
 
 /// Read `w:frameset` into a `NestedFramesetDefinition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nested_frameset_definition(element: &Element) -> super::NestedFramesetDefinition {
     let mut node = super::NestedFramesetDefinition::default();
     let mut reader =
@@ -7031,7 +7031,7 @@ pub fn nested_frameset_definition(element: &Element) -> super::NestedFramesetDef
 }
 
 /// Read `w:noPunctuationKerning` into a `NeverKernPunctuationCharacters`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn never_kern_punctuation_characters(
     element: &Element,
 ) -> super::NeverKernPunctuationCharacters {
@@ -7050,7 +7050,7 @@ pub fn never_kern_punctuation_characters(
 }
 
 /// Read `w:noBreakHyphen` into a `NonBreakingHyphenCharacter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_breaking_hyphen_character(element: &Element) -> super::NonBreakingHyphenCharacter {
     let reader =
         officekit_markup_base::Reader::new(element, &super::NON_BREAKING_HYPHEN_CHARACTER_SHAPE);
@@ -7061,7 +7061,7 @@ pub fn non_breaking_hyphen_character(element: &Element) -> super::NonBreakingHyp
 }
 
 /// Read `w:sz` into a `NonComplexScriptFontSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_complex_script_font_size(element: &Element) -> super::NonComplexScriptFontSize {
     let mut node = super::NonComplexScriptFontSize::default();
     let mut reader =
@@ -7076,7 +7076,7 @@ pub fn non_complex_script_font_size(element: &Element) -> super::NonComplexScrip
 }
 
 /// Read `w:notTrueType` into a `NotATrueTypeOutlineFont`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn not_a_true_type_outline_font(element: &Element) -> super::NotATrueTypeOutlineFont {
     let mut node = super::NotATrueTypeOutlineFont::default();
     let mut reader =
@@ -7091,7 +7091,7 @@ pub fn not_a_true_type_outline_font(element: &Element) -> super::NotATrueTypeOut
 }
 
 /// Read `w:tblStyleColBandSize` into a `NumberOfColumnsInColumnBand`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn number_of_columns_in_column_band(element: &Element) -> super::NumberOfColumnsInColumnBand {
     let mut node = super::NumberOfColumnsInColumnBand::default();
     let mut reader =
@@ -7106,7 +7106,7 @@ pub fn number_of_columns_in_column_band(element: &Element) -> super::NumberOfCol
 }
 
 /// Read `w:bookFoldPrintingSheets` into a `NumberOfPagesPerBooklet`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn number_of_pages_per_booklet(element: &Element) -> super::NumberOfPagesPerBooklet {
     let mut node = super::NumberOfPagesPerBooklet::default();
     let mut reader =
@@ -7121,7 +7121,7 @@ pub fn number_of_pages_per_booklet(element: &Element) -> super::NumberOfPagesPer
 }
 
 /// Read `w:tblStyleRowBandSize` into a `NumberOfRowsInRowBand`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn number_of_rows_in_row_band(element: &Element) -> super::NumberOfRowsInRowBand {
     let mut node = super::NumberOfRowsInRowBand::default();
     let mut reader =
@@ -7136,7 +7136,7 @@ pub fn number_of_rows_in_row_band(element: &Element) -> super::NumberOfRowsInRow
 }
 
 /// Read `w:num` into a `NumberingDefinitionInstance`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn numbering_definition_instance(element: &Element) -> super::NumberingDefinitionInstance {
     let mut node = super::NumberingDefinitionInstance::default();
     let mut reader =
@@ -7154,7 +7154,7 @@ pub fn numbering_definition_instance(element: &Element) -> super::NumberingDefin
 }
 
 /// Read `w:numId` into a `NumberingDefinitionInstanceReferenceNumId`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn numbering_definition_instance_reference_num_id(
     element: &Element,
 ) -> super::NumberingDefinitionInstanceReferenceNumId {
@@ -7173,7 +7173,7 @@ pub fn numbering_definition_instance_reference_num_id(
 }
 
 /// Read `w:numPr` into a `NumberingDefinitionInstanceReferenceNumPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn numbering_definition_instance_reference_num_pr(
     element: &Element,
 ) -> super::NumberingDefinitionInstanceReferenceNumPr {
@@ -7196,7 +7196,7 @@ pub fn numbering_definition_instance_reference_num_pr(
 }
 
 /// Read `w:numbering` into a `NumberingDefinitions`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn numbering_definitions(element: &Element) -> super::NumberingDefinitions {
     let mut node = super::NumberingDefinitions::default();
     let mut reader =
@@ -7215,7 +7215,7 @@ pub fn numbering_definitions(element: &Element) -> super::NumberingDefinitions {
 }
 
 /// Read `w:numFmt` into a `NumberingFormat`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn numbering_format(element: &Element) -> super::NumberingFormat {
     let mut node = super::NumberingFormat::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NUMBERING_FORMAT_SHAPE);
@@ -7231,7 +7231,7 @@ pub fn numbering_format(element: &Element) -> super::NumberingFormat {
 }
 
 /// Read `w:lvlOverride` into a `NumberingLevelDefinitionOverride`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn numbering_level_definition_override(
     element: &Element,
 ) -> super::NumberingLevelDefinitionOverride {
@@ -7253,7 +7253,7 @@ pub fn numbering_level_definition_override(
 }
 
 /// Read `w:lvl` into a `NumberingLevelOverrideDefinition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn numbering_level_override_definition(
     element: &Element,
 ) -> super::NumberingLevelOverrideDefinition {
@@ -7287,7 +7287,7 @@ pub fn numbering_level_override_definition(
 }
 
 /// Read `w:ilvl` into a `NumberingLevelReference`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn numbering_level_reference(element: &Element) -> super::NumberingLevelReference {
     let mut node = super::NumberingLevelReference::default();
     let mut reader =
@@ -7302,7 +7302,7 @@ pub fn numbering_level_reference(element: &Element) -> super::NumberingLevelRefe
 }
 
 /// Read `w:startOverride` into a `NumberingLevelStartingValueOverride`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn numbering_level_starting_value_override(
     element: &Element,
 ) -> super::NumberingLevelStartingValueOverride {
@@ -7321,7 +7321,7 @@ pub fn numbering_level_starting_value_override(
 }
 
 /// Read `w:lvlText` into a `NumberingLevelText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn numbering_level_text(element: &Element) -> super::NumberingLevelText {
     let mut node = super::NumberingLevelText::default();
     let mut reader =
@@ -7338,7 +7338,7 @@ pub fn numbering_level_text(element: &Element) -> super::NumberingLevelText {
 }
 
 /// Read `w:styleLink` into a `NumberingStyleDefinition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn numbering_style_definition(element: &Element) -> super::NumberingStyleDefinition {
     let mut node = super::NumberingStyleDefinition::default();
     let mut reader =
@@ -7353,7 +7353,7 @@ pub fn numbering_style_definition(element: &Element) -> super::NumberingStyleDef
 }
 
 /// Read `w:numStyleLink` into a `NumberingStyleReference`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn numbering_style_reference(element: &Element) -> super::NumberingStyleReference {
     let mut node = super::NumberingStyleReference::default();
     let mut reader =
@@ -7368,7 +7368,7 @@ pub fn numbering_style_reference(element: &Element) -> super::NumberingStyleRefe
 }
 
 /// Read `w:tmpl` into a `NumberingTemplateCode`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn numbering_template_code(element: &Element) -> super::NumberingTemplateCode {
     let mut node = super::NumberingTemplateCode::default();
     let mut reader =
@@ -7383,7 +7383,7 @@ pub fn numbering_template_code(element: &Element) -> super::NumberingTemplateCod
 }
 
 /// Read `w:src` into a `ODSODataSourceFilePath`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn odso_data_source_file_path(element: &Element) -> super::ODSODataSourceFilePath {
     let mut node = super::ODSODataSourceFilePath::default();
     let mut reader =
@@ -7398,7 +7398,7 @@ pub fn odso_data_source_file_path(element: &Element) -> super::ODSODataSourceFil
 }
 
 /// Read `w:type` into a `ODSODataSourceType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn odso_data_source_type(element: &Element) -> super::ODSODataSourceType {
     let mut node = super::ODSODataSourceType::default();
     let mut reader =
@@ -7413,7 +7413,7 @@ pub fn odso_data_source_type(element: &Element) -> super::ODSODataSourceType {
 }
 
 /// Read `w:odso` into a `OfficeDataSourceObjectSettings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn office_data_source_object_settings(
     element: &Element,
 ) -> super::OfficeDataSourceObjectSettings {
@@ -7440,7 +7440,7 @@ pub fn office_data_source_object_settings(
 }
 
 /// Read `w:oMath` into a `OfficeOpenXMLMath`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn office_open_xml_math(element: &Element) -> super::OfficeOpenXMLMath {
     let mut node = super::OfficeOpenXMLMath::default();
     let mut reader =
@@ -7455,7 +7455,7 @@ pub fn office_open_xml_math(element: &Element) -> super::OfficeOpenXMLMath {
 }
 
 /// Read `w:formProt` into a `OnlyAllowEditingOfFormFields`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn only_allow_editing_of_form_fields(element: &Element) -> super::OnlyAllowEditingOfFormFields {
     let mut node = super::OnlyAllowEditingOfFormFields::default();
     let mut reader = officekit_markup_base::Reader::new(
@@ -7472,7 +7472,7 @@ pub fn only_allow_editing_of_form_fields(element: &Element) -> super::OnlyAllowE
 }
 
 /// Read `w:spacingInWholePoints` into a `OnlyExpandCondenseTextByWholePoints`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn only_expand_condense_text_by_whole_points(
     element: &Element,
 ) -> super::OnlyExpandCondenseTextByWholePoints {
@@ -7491,7 +7491,7 @@ pub fn only_expand_condense_text_by_whole_points(
 }
 
 /// Read `w:printFormsData` into a `OnlyPrintFormFieldContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn only_print_form_field_content(element: &Element) -> super::OnlyPrintFormFieldContent {
     let mut node = super::OnlyPrintFormFieldContent::default();
     let mut reader =
@@ -7506,7 +7506,7 @@ pub fn only_print_form_field_content(element: &Element) -> super::OnlyPrintFormF
 }
 
 /// Read `w:saveXmlDataOnly` into a `OnlySaveCustomXMLMarkup`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn only_save_custom_xml_markup(element: &Element) -> super::OnlySaveCustomXMLMarkup {
     let mut node = super::OnlySaveCustomXMLMarkup::default();
     let mut reader =
@@ -7521,7 +7521,7 @@ pub fn only_save_custom_xml_markup(element: &Element) -> super::OnlySaveCustomXM
 }
 
 /// Read `w:saveFormsData` into a `OnlySaveFormFieldContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn only_save_form_field_content(element: &Element) -> super::OnlySaveFormFieldContent {
     let mut node = super::OnlySaveFormFieldContent::default();
     let mut reader =
@@ -7536,7 +7536,7 @@ pub fn only_save_form_field_content(element: &Element) -> super::OnlySaveFormFie
 }
 
 /// Read `w:softHyphen` into a `OptionalHyphenCharacter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn optional_hyphen_character(element: &Element) -> super::OptionalHyphenCharacter {
     let reader =
         officekit_markup_base::Reader::new(element, &super::OPTIONAL_HYPHEN_CHARACTER_SHAPE);
@@ -7547,7 +7547,7 @@ pub fn optional_hyphen_character(element: &Element) -> super::OptionalHyphenChar
 }
 
 /// Read `w:uiPriority` into a `OptionalUserInterfaceSortingOrder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn optional_user_interface_sorting_order(
     element: &Element,
 ) -> super::OptionalUserInterfaceSortingOrder {
@@ -7566,7 +7566,7 @@ pub fn optional_user_interface_sorting_order(
 }
 
 /// Read `w:rsidRoot` into a `OriginalDocumentRevisionSaveID`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn original_document_revision_save_id(
     element: &Element,
 ) -> super::OriginalDocumentRevisionSaveID {
@@ -7585,7 +7585,7 @@ pub fn original_document_revision_save_id(
 }
 
 /// Read `w:encoding` into a `OutputEncoding`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn output_encoding(element: &Element) -> super::OutputEncoding {
     let mut node = super::OutputEncoding::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::OUTPUT_ENCODING_SHAPE);
@@ -7599,7 +7599,7 @@ pub fn output_encoding(element: &Element) -> super::OutputEncoding {
 }
 
 /// Read `w:bordersDoNotSurroundFooter` into a `PageBorderExcludesFooter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn page_border_excludes_footer(element: &Element) -> super::PageBorderExcludesFooter {
     let mut node = super::PageBorderExcludesFooter::default();
     let mut reader =
@@ -7614,7 +7614,7 @@ pub fn page_border_excludes_footer(element: &Element) -> super::PageBorderExclud
 }
 
 /// Read `w:bordersDoNotSurroundHeader` into a `PageBorderExcludesHeader`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn page_border_excludes_header(element: &Element) -> super::PageBorderExcludesHeader {
     let mut node = super::PageBorderExcludesHeader::default();
     let mut reader =
@@ -7629,7 +7629,7 @@ pub fn page_border_excludes_header(element: &Element) -> super::PageBorderExclud
 }
 
 /// Read `w:pgBorders` into a `PageBorders`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn page_borders(element: &Element) -> super::PageBorders {
     let mut node = super::PageBorders::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PAGE_BORDERS_SHAPE);
@@ -7650,7 +7650,7 @@ pub fn page_borders(element: &Element) -> super::PageBorders {
 }
 
 /// Read `w:pgMar` into a `PageMargins`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn page_margins(element: &Element) -> super::PageMargins {
     let mut node = super::PageMargins::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PAGE_MARGINS_SHAPE);
@@ -7671,7 +7671,7 @@ pub fn page_margins(element: &Element) -> super::PageMargins {
 }
 
 /// Read `w:pgNum` into a `PageNumberBlock`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn page_number_block(element: &Element) -> super::PageNumberBlock {
     let reader = officekit_markup_base::Reader::new(element, &super::PAGE_NUMBER_BLOCK_SHAPE);
     super::PageNumberBlock {
@@ -7681,7 +7681,7 @@ pub fn page_number_block(element: &Element) -> super::PageNumberBlock {
 }
 
 /// Read `w:pgNumType` into a `PageNumberingSettings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn page_numbering_settings(element: &Element) -> super::PageNumberingSettings {
     let mut node = super::PageNumberingSettings::default();
     let mut reader =
@@ -7700,7 +7700,7 @@ pub fn page_numbering_settings(element: &Element) -> super::PageNumberingSetting
 }
 
 /// Read `w:pgSz` into a `PageSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn page_size(element: &Element) -> super::PageSize {
     let mut node = super::PageSize::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PAGE_SIZE_SHAPE);
@@ -7718,7 +7718,7 @@ pub fn page_size(element: &Element) -> super::PageSize {
 }
 
 /// Read `w:panose1` into a `Panose1TypefaceClassificationNumber`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn panose1typeface_classification_number(
     element: &Element,
 ) -> super::Panose1TypefaceClassificationNumber {
@@ -7737,7 +7737,7 @@ pub fn panose1typeface_classification_number(
 }
 
 /// Read `w:paperSrc` into a `PaperSourceInformation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paper_source_information(element: &Element) -> super::PaperSourceInformation {
     let mut node = super::PaperSourceInformation::default();
     let mut reader =
@@ -7754,7 +7754,7 @@ pub fn paper_source_information(element: &Element) -> super::PaperSourceInformat
 }
 
 /// Read `w:p` into a `Paragraph`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph(element: &Element) -> super::Paragraph {
     let mut node = super::Paragraph::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PARAGRAPH_SHAPE);
@@ -7778,7 +7778,7 @@ pub fn paragraph(element: &Element) -> super::Paragraph {
 }
 
 /// Read `w:jc` into a `ParagraphAlignment`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_alignment(element: &Element) -> super::ParagraphAlignment {
     let mut node = super::ParagraphAlignment::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PARAGRAPH_ALIGNMENT_SHAPE);
@@ -7792,7 +7792,7 @@ pub fn paragraph_alignment(element: &Element) -> super::ParagraphAlignment {
 }
 
 /// Read `w:top` into a `ParagraphBorderAboveIdenticalParagraphs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_border_above_identical_paragraphs(
     element: &Element,
 ) -> super::ParagraphBorderAboveIdenticalParagraphs {
@@ -7820,7 +7820,7 @@ pub fn paragraph_border_above_identical_paragraphs(
 }
 
 /// Read `w:top` into a `ParagraphBorderAboveIdenticalParagraphsTblWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_border_above_identical_paragraphs_tbl_width(
     element: &Element,
 ) -> super::ParagraphBorderAboveIdenticalParagraphsTblWidth {
@@ -7841,7 +7841,7 @@ pub fn paragraph_border_above_identical_paragraphs_tbl_width(
 }
 
 /// Read `w:bottom` into a `ParagraphBorderBelowIdenticalParagraphs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_border_below_identical_paragraphs(
     element: &Element,
 ) -> super::ParagraphBorderBelowIdenticalParagraphs {
@@ -7869,7 +7869,7 @@ pub fn paragraph_border_below_identical_paragraphs(
 }
 
 /// Read `w:bottom` into a `ParagraphBorderBelowIdenticalParagraphsTblWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_border_below_identical_paragraphs_tbl_width(
     element: &Element,
 ) -> super::ParagraphBorderBelowIdenticalParagraphsTblWidth {
@@ -7890,7 +7890,7 @@ pub fn paragraph_border_below_identical_paragraphs_tbl_width(
 }
 
 /// Read `w:bar` into a `ParagraphBorderBetweenFacingPages`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_border_between_facing_pages(
     element: &Element,
 ) -> super::ParagraphBorderBetweenFacingPages {
@@ -7918,7 +7918,7 @@ pub fn paragraph_border_between_facing_pages(
 }
 
 /// Read `w:between` into a `ParagraphBorderBetweenIdenticalParagraphs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_border_between_identical_paragraphs(
     element: &Element,
 ) -> super::ParagraphBorderBetweenIdenticalParagraphs {
@@ -7946,7 +7946,7 @@ pub fn paragraph_border_between_identical_paragraphs(
 }
 
 /// Read `w:pBdr` into a `ParagraphBorders`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_borders(element: &Element) -> super::ParagraphBorders {
     let mut node = super::ParagraphBorders::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PARAGRAPH_BORDERS_SHAPE);
@@ -7966,7 +7966,7 @@ pub fn paragraph_borders(element: &Element) -> super::ParagraphBorders {
 }
 
 /// Read `w:cnfStyle` into a `ParagraphConditionalFormatting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_conditional_formatting(
     element: &Element,
 ) -> super::ParagraphConditionalFormatting {
@@ -7996,13 +7996,13 @@ pub fn paragraph_conditional_formatting(
 }
 
 /// Read one item of `ParagraphContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn paragraph_content(element: &Element) -> super::ParagraphContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:ind` into a `ParagraphIndentation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_indentation(element: &Element) -> super::ParagraphIndentation {
     let mut node = super::ParagraphIndentation::default();
     let mut reader =
@@ -8029,7 +8029,7 @@ pub fn paragraph_indentation(element: &Element) -> super::ParagraphIndentation {
 }
 
 /// Read `w:specVanish` into a `ParagraphMarkIsAlwaysHidden`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_mark_is_always_hidden(element: &Element) -> super::ParagraphMarkIsAlwaysHidden {
     let mut node = super::ParagraphMarkIsAlwaysHidden::default();
     let mut reader =
@@ -8044,7 +8044,7 @@ pub fn paragraph_mark_is_always_hidden(element: &Element) -> super::ParagraphMar
 }
 
 /// Read `w:rPrChange` into a `ParagraphMarkRunPropertiesRevision`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_mark_run_properties_revision(
     element: &Element,
 ) -> super::ParagraphMarkRunPropertiesRevision {
@@ -8068,7 +8068,7 @@ pub fn paragraph_mark_run_properties_revision(
 }
 
 /// Read `w:pPr` into a `ParagraphProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_properties(element: &Element) -> super::ParagraphProperties {
     let mut node = super::ParagraphProperties::default();
     let mut reader =
@@ -8119,7 +8119,7 @@ pub fn paragraph_properties(element: &Element) -> super::ParagraphProperties {
 }
 
 /// Read `w:pPr` into a `ParagraphPropertiesPPrGeneral`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_properties_p_pr_general(
     element: &Element,
 ) -> super::ParagraphPropertiesPPrGeneral {
@@ -8172,7 +8172,7 @@ pub fn paragraph_properties_p_pr_general(
 }
 
 /// Read `w:shd` into a `ParagraphShading`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_shading(element: &Element) -> super::ParagraphShading {
     let mut node = super::ParagraphShading::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PARAGRAPH_SHADING_SHAPE);
@@ -8195,7 +8195,7 @@ pub fn paragraph_shading(element: &Element) -> super::ParagraphShading {
 }
 
 /// Read `w:textDirection` into a `ParagraphTextFlowDirection`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_text_flow_direction(element: &Element) -> super::ParagraphTextFlowDirection {
     let mut node = super::ParagraphTextFlowDirection::default();
     let mut reader =
@@ -8210,7 +8210,7 @@ pub fn paragraph_text_flow_direction(element: &Element) -> super::ParagraphTextF
 }
 
 /// Read `w:basedOn` into a `ParentStyleID`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn parent_style_id(element: &Element) -> super::ParentStyleID {
     let mut node = super::ParentStyleID::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PARENT_STYLE_ID_SHAPE);
@@ -8224,7 +8224,7 @@ pub fn parent_style_id(element: &Element) -> super::ParentStyleID {
 }
 
 /// Read `w:summaryLength` into a `PercentageOfDocumentToUse`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn percentage_of_document_to_use(element: &Element) -> super::PercentageOfDocumentToUse {
     let mut node = super::PercentageOfDocumentToUse::default();
     let mut reader =
@@ -8239,7 +8239,7 @@ pub fn percentage_of_document_to_use(element: &Element) -> super::PercentageOfDo
 }
 
 /// Read `w:ruby` into a `PhoneticGuide`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn phonetic_guide(element: &Element) -> super::PhoneticGuide {
     let mut node = super::PhoneticGuide::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PHONETIC_GUIDE_SHAPE);
@@ -8256,7 +8256,7 @@ pub fn phonetic_guide(element: &Element) -> super::PhoneticGuide {
 }
 
 /// Read `w:rubyBase` into a `PhoneticGuideBaseText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn phonetic_guide_base_text(element: &Element) -> super::PhoneticGuideBaseText {
     let mut node = super::PhoneticGuideBaseText::default();
     let mut reader =
@@ -8271,7 +8271,7 @@ pub fn phonetic_guide_base_text(element: &Element) -> super::PhoneticGuideBaseTe
 }
 
 /// Read `w:hpsBaseText` into a `PhoneticGuideBaseTextFontSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn phonetic_guide_base_text_font_size(
     element: &Element,
 ) -> super::PhoneticGuideBaseTextFontSize {
@@ -8290,13 +8290,13 @@ pub fn phonetic_guide_base_text_font_size(
 }
 
 /// Read one item of `PhoneticGuideContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn phonetic_guide_content(element: &Element) -> super::PhoneticGuideContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:rubyPr` into a `PhoneticGuideProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn phonetic_guide_properties(element: &Element) -> super::PhoneticGuideProperties {
     let mut node = super::PhoneticGuideProperties::default();
     let mut reader =
@@ -8317,7 +8317,7 @@ pub fn phonetic_guide_properties(element: &Element) -> super::PhoneticGuidePrope
 }
 
 /// Read `w:rt` into a `PhoneticGuideText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn phonetic_guide_text(element: &Element) -> super::PhoneticGuideText {
     let mut node = super::PhoneticGuideText::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PHONETIC_GUIDE_TEXT_SHAPE);
@@ -8331,7 +8331,7 @@ pub fn phonetic_guide_text(element: &Element) -> super::PhoneticGuideText {
 }
 
 /// Read `w:rubyAlign` into a `PhoneticGuideTextAlignment`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn phonetic_guide_text_alignment(element: &Element) -> super::PhoneticGuideTextAlignment {
     let mut node = super::PhoneticGuideTextAlignment::default();
     let mut reader =
@@ -8346,7 +8346,7 @@ pub fn phonetic_guide_text_alignment(element: &Element) -> super::PhoneticGuideT
 }
 
 /// Read `w:hps` into a `PhoneticGuideTextFontSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn phonetic_guide_text_font_size(element: &Element) -> super::PhoneticGuideTextFontSize {
     let mut node = super::PhoneticGuideTextFontSize::default();
     let mut reader =
@@ -8361,7 +8361,7 @@ pub fn phonetic_guide_text_font_size(element: &Element) -> super::PhoneticGuideT
 }
 
 /// Read `w:numPicBullet` into a `PictureNumberingSymbolDefinition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn picture_numbering_symbol_definition(
     element: &Element,
 ) -> super::PictureNumberingSymbolDefinition {
@@ -8383,7 +8383,7 @@ pub fn picture_numbering_symbol_definition(
 
 /// Read one item of `PictureNumberingSymbolDefinitionContent` from its element: the arm of its tag,
 /// or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn picture_numbering_symbol_definition_content(
     element: &Element,
 ) -> super::PictureNumberingSymbolDefinitionContent {
@@ -8391,7 +8391,7 @@ pub fn picture_numbering_symbol_definition_content(
 }
 
 /// Read `w:lvlPicBulletId` into a `PictureNumberingSymbolDefinitionReference`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn picture_numbering_symbol_definition_reference(
     element: &Element,
 ) -> super::PictureNumberingSymbolDefinitionReference {
@@ -8410,7 +8410,7 @@ pub fn picture_numbering_symbol_definition_reference(
 }
 
 /// Read `w:picture` into a `PictureStructuredDocumentTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn picture_structured_document_tag(element: &Element) -> super::PictureStructuredDocumentTag {
     let reader =
         officekit_markup_base::Reader::new(element, &super::PICTURE_STRUCTURED_DOCUMENT_TAG_SHAPE);
@@ -8421,7 +8421,7 @@ pub fn picture_structured_document_tag(element: &Element) -> super::PictureStruc
 }
 
 /// Read `w:pixelsPerInch` into a `PixelsPerInchForGraphicsImages`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pixels_per_inch_for_graphics_images(
     element: &Element,
 ) -> super::PixelsPerInchForGraphicsImages {
@@ -8440,7 +8440,7 @@ pub fn pixels_per_inch_for_graphics_images(
 }
 
 /// Read `w:formsDesign` into a `PlaceholderTextShouldBeResaved`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn placeholder_text_should_be_resaved(
     element: &Element,
 ) -> super::PlaceholderTextShouldBeResaved {
@@ -8459,7 +8459,7 @@ pub fn placeholder_text_should_be_resaved(
 }
 
 /// Read `w:text` into a `PlainTextStructuredDocumentTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn plain_text_structured_document_tag(
     element: &Element,
 ) -> super::PlainTextStructuredDocumentTag {
@@ -8478,7 +8478,7 @@ pub fn plain_text_structured_document_tag(
 }
 
 /// Read `w:gutterAtTop` into a `PositionGutterAtTopOfPage`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn position_gutter_at_top_of_page(element: &Element) -> super::PositionGutterAtTopOfPage {
     let mut node = super::PositionGutterAtTopOfPage::default();
     let mut reader =
@@ -8493,7 +8493,7 @@ pub fn position_gutter_at_top_of_page(element: &Element) -> super::PositionGutte
 }
 
 /// Read `w:lastRenderedPageBreak` into a `PositionOfLastCalculatedPageBreak`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn position_of_last_calculated_page_break(
     element: &Element,
 ) -> super::PositionOfLastCalculatedPageBreak {
@@ -8508,7 +8508,7 @@ pub fn position_of_last_calculated_page_break(
 }
 
 /// Read `w:mappedName` into a `PredefinedMergeFieldName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn predefined_merge_field_name(element: &Element) -> super::PredefinedMergeFieldName {
     let mut node = super::PredefinedMergeFieldName::default();
     let mut reader =
@@ -8523,7 +8523,7 @@ pub fn predefined_merge_field_name(element: &Element) -> super::PredefinedMergeF
 }
 
 /// Read `w:tcW` into a `PreferredTableCellWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn preferred_table_cell_width(element: &Element) -> super::PreferredTableCellWidth {
     let mut node = super::PreferredTableCellWidth::default();
     let mut reader =
@@ -8540,7 +8540,7 @@ pub fn preferred_table_cell_width(element: &Element) -> super::PreferredTableCel
 }
 
 /// Read `w:tblW` into a `PreferredTableWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn preferred_table_width(element: &Element) -> super::PreferredTableWidth {
     let mut node = super::PreferredTableWidth::default();
     let mut reader =
@@ -8557,7 +8557,7 @@ pub fn preferred_table_width(element: &Element) -> super::PreferredTableWidth {
 }
 
 /// Read `w:wAfter` into a `PreferredWidthAfterTableRow`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn preferred_width_after_table_row(element: &Element) -> super::PreferredWidthAfterTableRow {
     let mut node = super::PreferredWidthAfterTableRow::default();
     let mut reader =
@@ -8574,7 +8574,7 @@ pub fn preferred_width_after_table_row(element: &Element) -> super::PreferredWid
 }
 
 /// Read `w:wBefore` into a `PreferredWidthBeforeTableRow`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn preferred_width_before_table_row(element: &Element) -> super::PreferredWidthBeforeTableRow {
     let mut node = super::PreferredWidthBeforeTableRow::default();
     let mut reader =
@@ -8591,7 +8591,7 @@ pub fn preferred_width_before_table_row(element: &Element) -> super::PreferredWi
 }
 
 /// Read `w:styleLockTheme` into a `PreventModificationOfThemesPart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn prevent_modification_of_themes_part(
     element: &Element,
 ) -> super::PreventModificationOfThemesPart {
@@ -8610,7 +8610,7 @@ pub fn prevent_modification_of_themes_part(
 }
 
 /// Read `w:styleLockQFSet` into a `PreventReplacementOfStylesPart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn prevent_replacement_of_styles_part(
     element: &Element,
 ) -> super::PreventReplacementOfStylesPart {
@@ -8629,7 +8629,7 @@ pub fn prevent_replacement_of_styles_part(
 }
 
 /// Read `w:suppressOverlap` into a `PreventTextFramesFromOverlapping`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn prevent_text_frames_from_overlapping(
     element: &Element,
 ) -> super::PreventTextFramesFromOverlapping {
@@ -8648,7 +8648,7 @@ pub fn prevent_text_frames_from_overlapping(
 }
 
 /// Read `w:numberingChange` into a `PreviousNumberingFieldProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn previous_numbering_field_properties(
     element: &Element,
 ) -> super::PreviousNumberingFieldProperties {
@@ -8672,7 +8672,7 @@ pub fn previous_numbering_field_properties(
 }
 
 /// Read `w:rPr` into a `PreviousParagraphMarkRunProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn previous_paragraph_mark_run_properties(
     element: &Element,
 ) -> super::PreviousParagraphMarkRunProperties {
@@ -8709,7 +8709,7 @@ pub fn previous_paragraph_mark_run_properties(
 }
 
 /// Read `w:pPr` into a `PreviousParagraphProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn previous_paragraph_properties(element: &Element) -> super::PreviousParagraphProperties {
     let mut node = super::PreviousParagraphProperties::default();
     let mut reader =
@@ -8757,7 +8757,7 @@ pub fn previous_paragraph_properties(element: &Element) -> super::PreviousParagr
 }
 
 /// Read `w:rPr` into a `PreviousRunProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn previous_run_properties(element: &Element) -> super::PreviousRunProperties {
     let mut node = super::PreviousRunProperties::default();
     let mut reader =
@@ -8785,7 +8785,7 @@ pub fn previous_run_properties(element: &Element) -> super::PreviousRunPropertie
 }
 
 /// Read `w:sectPr` into a `PreviousSectionProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn previous_section_properties(element: &Element) -> super::PreviousSectionProperties {
     let mut node = super::PreviousSectionProperties::default();
     let mut reader =
@@ -8824,7 +8824,7 @@ pub fn previous_section_properties(element: &Element) -> super::PreviousSectionP
 }
 
 /// Read `w:tcPr` into a `PreviousTableCellProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn previous_table_cell_properties(element: &Element) -> super::PreviousTableCellProperties {
     let mut node = super::PreviousTableCellProperties::default();
     let mut reader =
@@ -8854,7 +8854,7 @@ pub fn previous_table_cell_properties(element: &Element) -> super::PreviousTable
 }
 
 /// Read `w:tblGrid` into a `PreviousTableGrid`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn previous_table_grid(element: &Element) -> super::PreviousTableGrid {
     let mut node = super::PreviousTableGrid::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PREVIOUS_TABLE_GRID_SHAPE);
@@ -8868,7 +8868,7 @@ pub fn previous_table_grid(element: &Element) -> super::PreviousTableGrid {
 }
 
 /// Read `w:tblPrEx` into a `PreviousTableLevelPropertyExceptions`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn previous_table_level_property_exceptions(
     element: &Element,
 ) -> super::PreviousTableLevelPropertyExceptions {
@@ -8896,7 +8896,7 @@ pub fn previous_table_level_property_exceptions(
 }
 
 /// Read `w:tblPr` into a `PreviousTableProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn previous_table_properties(element: &Element) -> super::PreviousTableProperties {
     let mut node = super::PreviousTableProperties::default();
     let mut reader =
@@ -8928,7 +8928,7 @@ pub fn previous_table_properties(element: &Element) -> super::PreviousTablePrope
 }
 
 /// Read `w:trPr` into a `PreviousTableRowProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn previous_table_row_properties(element: &Element) -> super::PreviousTableRowProperties {
     let mut node = super::PreviousTableRowProperties::default();
     let mut reader =
@@ -8943,7 +8943,7 @@ pub fn previous_table_row_properties(element: &Element) -> super::PreviousTableR
 }
 
 /// Read `w:qFormat` into a `PrimaryStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn primary_style(element: &Element) -> super::PrimaryStyle {
     let mut node = super::PrimaryStyle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PRIMARY_STYLE_SHAPE);
@@ -8957,7 +8957,7 @@ pub fn primary_style(element: &Element) -> super::PrimaryStyle {
 }
 
 /// Read `w:name` into a `PrimaryStyleName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn primary_style_name(element: &Element) -> super::PrimaryStyleName {
     let mut node = super::PrimaryStyleName::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PRIMARY_STYLE_NAME_SHAPE);
@@ -8971,7 +8971,7 @@ pub fn primary_style_name(element: &Element) -> super::PrimaryStyleName {
 }
 
 /// Read `w:printBodyTextBeforeHeader` into a `PrintBodyTextBeforeHeaderFooterContents`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn print_body_text_before_header_footer_contents(
     element: &Element,
 ) -> super::PrintBodyTextBeforeHeaderFooterContents {
@@ -8990,7 +8990,7 @@ pub fn print_body_text_before_header_footer_contents(
 }
 
 /// Read `w:printColBlack` into a `PrintColorsAsBlackAndWhiteWithoutDithering`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn print_colors_as_black_and_white_without_dithering(
     element: &Element,
 ) -> super::PrintColorsAsBlackAndWhiteWithoutDithering {
@@ -9009,7 +9009,7 @@ pub fn print_colors_as_black_and_white_without_dithering(
 }
 
 /// Read `w:printFractionalCharacterWidth` into a `PrintFractionalCharacterWidths`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn print_fractional_character_widths(
     element: &Element,
 ) -> super::PrintFractionalCharacterWidths {
@@ -9028,7 +9028,7 @@ pub fn print_fractional_character_widths(
 }
 
 /// Read `w:printPostScriptOverText` into a `PrintPostScriptCodesWithDocumentText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn print_post_script_codes_with_document_text(
     element: &Element,
 ) -> super::PrintPostScriptCodesWithDocumentText {
@@ -9047,7 +9047,7 @@ pub fn print_post_script_codes_with_document_text(
 }
 
 /// Read `w:printTwoOnOne` into a `PrintTwoPagesPerSheet`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn print_two_pages_per_sheet(element: &Element) -> super::PrintTwoPagesPerSheet {
     let mut node = super::PrintTwoPagesPerSheet::default();
     let mut reader =
@@ -9062,7 +9062,7 @@ pub fn print_two_pages_per_sheet(element: &Element) -> super::PrintTwoPagesPerSh
 }
 
 /// Read `w:tag` into a `ProgrammaticTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn programmatic_tag(element: &Element) -> super::ProgrammaticTag {
     let mut node = super::ProgrammaticTag::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PROGRAMMATIC_TAG_SHAPE);
@@ -9076,7 +9076,7 @@ pub fn programmatic_tag(element: &Element) -> super::ProgrammaticTag {
 }
 
 /// Read `w:proofErr` into a `ProofingErrorAnchor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn proofing_error_anchor(element: &Element) -> super::ProofingErrorAnchor {
     let mut node = super::ProofingErrorAnchor::default();
     let mut reader =
@@ -9091,7 +9091,7 @@ pub fn proofing_error_anchor(element: &Element) -> super::ProofingErrorAnchor {
 }
 
 /// Read `w:font` into a `PropertiesForASingleFont`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn properties_for_a_single_font(element: &Element) -> super::PropertiesForASingleFont {
     let mut node = super::PropertiesForASingleFont::default();
     let mut reader =
@@ -9118,7 +9118,7 @@ pub fn properties_for_a_single_font(element: &Element) -> super::PropertiesForAS
 }
 
 /// Read `w:query` into a `QueryForDataSourceRecords`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn query_for_data_source_records(element: &Element) -> super::QueryForDataSourceRecords {
     let mut node = super::QueryForDataSourceRecords::default();
     let mut reader =
@@ -9133,7 +9133,7 @@ pub fn query_for_data_source_records(element: &Element) -> super::QueryForDataSo
 }
 
 /// Read `w:decimalSymbol` into a `RadixPointForFieldCodeEvaluation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn radix_point_for_field_code_evaluation(
     element: &Element,
 ) -> super::RadixPointForFieldCodeEvaluation {
@@ -9152,13 +9152,13 @@ pub fn radix_point_for_field_code_evaluation(
 }
 
 /// Read one item of `RangeMarkupContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn range_markup(element: &Element) -> super::RangeMarkupContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:permEnd` into a `RangePermissionEnd`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn range_permission_end(element: &Element) -> super::RangePermissionEnd {
     let mut node = super::RangePermissionEnd::default();
     let mut reader =
@@ -9175,7 +9175,7 @@ pub fn range_permission_end(element: &Element) -> super::RangePermissionEnd {
 }
 
 /// Read `w:permStart` into a `RangePermissionStart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn range_permission_start(element: &Element) -> super::RangePermissionStart {
     let mut node = super::RangePermissionStart::default();
     let mut reader =
@@ -9196,7 +9196,7 @@ pub fn range_permission_start(element: &Element) -> super::RangePermissionStart 
 }
 
 /// Read `w:calcOnExit` into a `RecalculateFieldsWhenModified`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn recalculate_fields_when_modified(element: &Element) -> super::RecalculateFieldsWhenModified {
     let mut node = super::RecalculateFieldsWhenModified::default();
     let mut reader =
@@ -9211,7 +9211,7 @@ pub fn recalculate_fields_when_modified(element: &Element) -> super::Recalculate
 }
 
 /// Read `w:doNotSaveAsSingleFile` into a `RecommendWebPageFormat`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn recommend_web_page_format(element: &Element) -> super::RecommendWebPageFormat {
     let mut node = super::RecommendWebPageFormat::default();
     let mut reader =
@@ -9226,7 +9226,7 @@ pub fn recommend_web_page_format(element: &Element) -> super::RecommendWebPageFo
 }
 
 /// Read `w:activeRecord` into a `RecordCurrentlyDisplayedInMergedDocument`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn record_currently_displayed_in_merged_document(
     element: &Element,
 ) -> super::RecordCurrentlyDisplayedInMergedDocument {
@@ -9245,7 +9245,7 @@ pub fn record_currently_displayed_in_merged_document(
 }
 
 /// Read `w:active` into a `RecordIsIncludedInMailMerge`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn record_is_included_in_mail_merge(element: &Element) -> super::RecordIsIncludedInMailMerge {
     let mut node = super::RecordIsIncludedInMailMerge::default();
     let mut reader =
@@ -9260,7 +9260,7 @@ pub fn record_is_included_in_mail_merge(element: &Element) -> super::RecordIsInc
 }
 
 /// Read `w:recipientData` into a `ReferenceToInclusionExclusionData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn reference_to_inclusion_exclusion_data(
     element: &Element,
 ) -> super::ReferenceToInclusionExclusionData {
@@ -9279,7 +9279,7 @@ pub fn reference_to_inclusion_exclusion_data(
 }
 
 /// Read `w:printerSettings` into a `ReferenceToPrinterSettingsData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn reference_to_printer_settings_data(
     element: &Element,
 ) -> super::ReferenceToPrinterSettingsData {
@@ -9298,7 +9298,7 @@ pub fn reference_to_printer_settings_data(
 }
 
 /// Read `w:rStyle` into a `ReferencedCharacterStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn referenced_character_style(element: &Element) -> super::ReferencedCharacterStyle {
     let mut node = super::ReferencedCharacterStyle::default();
     let mut reader =
@@ -9313,7 +9313,7 @@ pub fn referenced_character_style(element: &Element) -> super::ReferencedCharact
 }
 
 /// Read `w:pStyle` into a `ReferencedParagraphStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn referenced_paragraph_style(element: &Element) -> super::ReferencedParagraphStyle {
     let mut node = super::ReferencedParagraphStyle::default();
     let mut reader =
@@ -9328,7 +9328,7 @@ pub fn referenced_paragraph_style(element: &Element) -> super::ReferencedParagra
 }
 
 /// Read `w:tblStyle` into a `ReferencedTableStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn referenced_table_style(element: &Element) -> super::ReferencedTableStyle {
     let mut node = super::ReferencedTableStyle::default();
     let mut reader =
@@ -9343,7 +9343,7 @@ pub fn referenced_table_style(element: &Element) -> super::ReferencedTableStyle 
 }
 
 /// Read `w:embedRegular` into a `RegularFontStyleEmbedding`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn regular_font_style_embedding(element: &Element) -> super::RegularFontStyleEmbedding {
     let mut node = super::RegularFontStyleEmbedding::default();
     let mut reader =
@@ -9361,7 +9361,7 @@ pub fn regular_font_style_embedding(element: &Element) -> super::RegularFontStyl
 }
 
 /// Read `w:removeDateAndTime` into a `RemoveDateAndTimeFromAnnotations`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn remove_date_and_time_from_annotations(
     element: &Element,
 ) -> super::RemoveDateAndTimeFromAnnotations {
@@ -9380,7 +9380,7 @@ pub fn remove_date_and_time_from_annotations(
 }
 
 /// Read `w:removePersonalInformation` into a `RemovePersonalInformation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn remove_personal_information(element: &Element) -> super::RemovePersonalInformation {
     let mut node = super::RemovePersonalInformation::default();
     let mut reader =
@@ -9395,7 +9395,7 @@ pub fn remove_personal_information(element: &Element) -> super::RemovePersonalIn
 }
 
 /// Read `w:unhideWhenUsed` into a `RemoveSemiHiddenProperty`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn remove_semi_hidden_property(element: &Element) -> super::RemoveSemiHiddenProperty {
     let mut node = super::RemoveSemiHiddenProperty::default();
     let mut reader =
@@ -9410,7 +9410,7 @@ pub fn remove_semi_hidden_property(element: &Element) -> super::RemoveSemiHidden
 }
 
 /// Read `w:doNotEmbedSmartTags` into a `RemoveSmartTagsWhenSaving`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn remove_smart_tags_when_saving(element: &Element) -> super::RemoveSmartTagsWhenSaving {
     let mut node = super::RemoveSmartTagsWhenSaving::default();
     let mut reader =
@@ -9425,7 +9425,7 @@ pub fn remove_smart_tags_when_saving(element: &Element) -> super::RemoveSmartTag
 }
 
 /// Read `w:temporary` into a `RemoveStructuredDocumentTagWhenEdited`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn remove_structured_document_tag_when_edited(
     element: &Element,
 ) -> super::RemoveStructuredDocumentTagWhenEdited {
@@ -9444,7 +9444,7 @@ pub fn remove_structured_document_tag_when_edited(
 }
 
 /// Read `w:tblHeader` into a `RepeatTableRow`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn repeat_table_row(element: &Element) -> super::RepeatTableRow {
     let mut node = super::RepeatTableRow::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::REPEAT_TABLE_ROW_SHAPE);
@@ -9458,7 +9458,7 @@ pub fn repeat_table_row(element: &Element) -> super::RepeatTableRow {
 }
 
 /// Read `w:subFontBySize` into a `RequireExactSizeDuringFontSubstitution`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn require_exact_size_during_font_substitution(
     element: &Element,
 ) -> super::RequireExactSizeDuringFontSubstitution {
@@ -9477,7 +9477,7 @@ pub fn require_exact_size_during_font_substitution(
 }
 
 /// Read `w:lvlRestart` into a `RestartNumberingLevelSymbol`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn restart_numbering_level_symbol(element: &Element) -> super::RestartNumberingLevelSymbol {
     let mut node = super::RestartNumberingLevelSymbol::default();
     let mut reader =
@@ -9492,7 +9492,7 @@ pub fn restart_numbering_level_symbol(element: &Element) -> super::RestartNumber
 }
 
 /// Read `w:bookFoldRevPrinting` into a `ReverseBookFoldPrinting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn reverse_book_fold_printing(element: &Element) -> super::ReverseBookFoldPrinting {
     let mut node = super::ReverseBookFoldPrinting::default();
     let mut reader =
@@ -9507,7 +9507,7 @@ pub fn reverse_book_fold_printing(element: &Element) -> super::ReverseBookFoldPr
 }
 
 /// Read `w:rsid` into a `RevisionIdentifierForStyleDefinition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn revision_identifier_for_style_definition(
     element: &Element,
 ) -> super::RevisionIdentifierForStyleDefinition {
@@ -9526,7 +9526,7 @@ pub fn revision_identifier_for_style_definition(
 }
 
 /// Read `w:pPrChange` into a `RevisionInformationForParagraphProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn revision_information_for_paragraph_properties(
     element: &Element,
 ) -> super::RevisionInformationForParagraphProperties {
@@ -9550,7 +9550,7 @@ pub fn revision_information_for_paragraph_properties(
 }
 
 /// Read `w:rPrChange` into a `RevisionInformationForRunProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn revision_information_for_run_properties(
     element: &Element,
 ) -> super::RevisionInformationForRunProperties {
@@ -9574,7 +9574,7 @@ pub fn revision_information_for_run_properties(
 }
 
 /// Read `w:sectPrChange` into a `RevisionInformationForSectionProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn revision_information_for_section_properties(
     element: &Element,
 ) -> super::RevisionInformationForSectionProperties {
@@ -9598,7 +9598,7 @@ pub fn revision_information_for_section_properties(
 }
 
 /// Read `w:tcPrChange` into a `RevisionInformationForTableCellProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn revision_information_for_table_cell_properties(
     element: &Element,
 ) -> super::RevisionInformationForTableCellProperties {
@@ -9622,7 +9622,7 @@ pub fn revision_information_for_table_cell_properties(
 }
 
 /// Read `w:tblPrExChange` into a `RevisionInformationForTableLevelPropertyExceptions`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn revision_information_for_table_level_property_exceptions(
     element: &Element,
 ) -> super::RevisionInformationForTableLevelPropertyExceptions {
@@ -9646,7 +9646,7 @@ pub fn revision_information_for_table_level_property_exceptions(
 }
 
 /// Read `w:tblPrChange` into a `RevisionInformationForTableProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn revision_information_for_table_properties(
     element: &Element,
 ) -> super::RevisionInformationForTableProperties {
@@ -9670,7 +9670,7 @@ pub fn revision_information_for_table_properties(
 }
 
 /// Read `w:trPrChange` into a `RevisionInformationForTableRowProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn revision_information_for_table_row_properties(
     element: &Element,
 ) -> super::RevisionInformationForTableRowProperties {
@@ -9694,7 +9694,7 @@ pub fn revision_information_for_table_row_properties(
 }
 
 /// Read `w:rsids` into a `RevisionSaveIDValues`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn revision_save_id_values(element: &Element) -> super::RevisionSaveIDValues {
     let mut node = super::RevisionSaveIDValues::default();
     let mut reader =
@@ -9711,7 +9711,7 @@ pub fn revision_save_id_values(element: &Element) -> super::RevisionSaveIDValues
 }
 
 /// Read `w:txbxContent` into a `RichTextBoxContentContainer`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_text_box_content_container(element: &Element) -> super::RichTextBoxContentContainer {
     let mut node = super::RichTextBoxContentContainer::default();
     let mut reader =
@@ -9726,7 +9726,7 @@ pub fn rich_text_box_content_container(element: &Element) -> super::RichTextBoxC
 }
 
 /// Read `w:richText` into a `RichTextStructuredDocumentTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_text_structured_document_tag(
     element: &Element,
 ) -> super::RichTextStructuredDocumentTag {
@@ -9741,7 +9741,7 @@ pub fn rich_text_structured_document_tag(
 }
 
 /// Read `w:right` into a `RightBorder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn right_border(element: &Element) -> super::RightBorder {
     let mut node = super::RightBorder::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RIGHT_BORDER_SHAPE);
@@ -9765,7 +9765,7 @@ pub fn right_border(element: &Element) -> super::RightBorder {
 }
 
 /// Read `w:marRight` into a `RightMarginForHTMLDiv`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn right_margin_for_html_div(element: &Element) -> super::RightMarginForHTMLDiv {
     let mut node = super::RightMarginForHTMLDiv::default();
     let mut reader =
@@ -9780,7 +9780,7 @@ pub fn right_margin_for_html_div(element: &Element) -> super::RightMarginForHTML
 }
 
 /// Read `w:right` into a `RightParagraphBorder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn right_paragraph_border(element: &Element) -> super::RightParagraphBorder {
     let mut node = super::RightParagraphBorder::default();
     let mut reader =
@@ -9804,7 +9804,7 @@ pub fn right_paragraph_border(element: &Element) -> super::RightParagraphBorder 
 }
 
 /// Read `w:right` into a `RightParagraphBorderTblWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn right_paragraph_border_tbl_width(element: &Element) -> super::RightParagraphBorderTblWidth {
     let mut node = super::RightParagraphBorderTblWidth::default();
     let mut reader =
@@ -9821,7 +9821,7 @@ pub fn right_paragraph_border_tbl_width(element: &Element) -> super::RightParagr
 }
 
 /// Read `w:bidi` into a `RightToLeftParagraphLayout`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn right_to_left_paragraph_layout(element: &Element) -> super::RightToLeftParagraphLayout {
     let mut node = super::RightToLeftParagraphLayout::default();
     let mut reader =
@@ -9836,7 +9836,7 @@ pub fn right_to_left_paragraph_layout(element: &Element) -> super::RightToLeftPa
 }
 
 /// Read `w:rtl` into a `RightToLeftText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn right_to_left_text(element: &Element) -> super::RightToLeftText {
     let mut node = super::RightToLeftText::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RIGHT_TO_LEFT_TEXT_SHAPE);
@@ -9850,7 +9850,7 @@ pub fn right_to_left_text(element: &Element) -> super::RightToLeftText {
 }
 
 /// Read `w:customXml` into a `RowLevelCustomXMLElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn row_level_custom_xml_element(element: &Element) -> super::RowLevelCustomXMLElement {
     let mut node = super::RowLevelCustomXMLElement::default();
     let mut reader =
@@ -9869,7 +9869,7 @@ pub fn row_level_custom_xml_element(element: &Element) -> super::RowLevelCustomX
 }
 
 /// Read `w:sdt` into a `RowLevelStructuredDocumentTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn row_level_structured_document_tag(
     element: &Element,
 ) -> super::RowLevelStructuredDocumentTag {
@@ -9895,7 +9895,7 @@ pub fn row_level_structured_document_tag(
 }
 
 /// Read `w:sdtContent` into a `RowLevelStructuredDocumentTagContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn row_level_structured_document_tag_content(
     element: &Element,
 ) -> super::RowLevelStructuredDocumentTagContent {
@@ -9914,7 +9914,7 @@ pub fn row_level_structured_document_tag_content(
 }
 
 /// Read `w:color` into a `RunContentColor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn run_content_color(element: &Element) -> super::RunContentColor {
     let mut node = super::RunContentColor::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RUN_CONTENT_COLOR_SHAPE);
@@ -9932,7 +9932,7 @@ pub fn run_content_color(element: &Element) -> super::RunContentColor {
 }
 
 /// Read `w:rFonts` into a `RunFonts`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn run_fonts(element: &Element) -> super::RunFonts {
     let mut node = super::RunFonts::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RUN_FONTS_SHAPE);
@@ -9955,7 +9955,7 @@ pub fn run_fonts(element: &Element) -> super::RunFonts {
 }
 
 /// Read `w:rPr` into a `RunProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn run_properties(element: &Element) -> super::RunProperties {
     let mut node = super::RunProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RUN_PROPERTIES_SHAPE);
@@ -9983,13 +9983,13 @@ pub fn run_properties(element: &Element) -> super::RunProperties {
 }
 
 /// Read one item of `RunPropertiesContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn run_properties_content(element: &Element) -> super::RunPropertiesContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:rPr` into a `RunPropertiesForTheParagraphMark`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn run_properties_for_the_paragraph_mark(
     element: &Element,
 ) -> super::RunPropertiesForTheParagraphMark {
@@ -10027,7 +10027,7 @@ pub fn run_properties_for_the_paragraph_mark(
 }
 
 /// Read `w:saveSmartTagsAsXml` into a `SaveSmartTagData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn save_smart_tag_data(element: &Element) -> super::SaveSmartTagData {
     let mut node = super::SaveSmartTagData::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SAVE_SMART_TAG_DATA_SHAPE);
@@ -10041,7 +10041,7 @@ pub fn save_smart_tag_data(element: &Element) -> super::SaveSmartTagData {
 }
 
 /// Read `w:useXSLTWhenSaving` into a `SaveThroughCustomXSLTransform`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn save_through_custom_xsl_transform(
     element: &Element,
 ) -> super::SaveThroughCustomXSLTransform {
@@ -10060,7 +10060,7 @@ pub fn save_through_custom_xsl_transform(
 }
 
 /// Read `w:scrollbar` into a `ScrollbarDisplayOption`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scrollbar_display_option(element: &Element) -> super::ScrollbarDisplayOption {
     let mut node = super::ScrollbarDisplayOption::default();
     let mut reader =
@@ -10075,13 +10075,13 @@ pub fn scrollbar_display_option(element: &Element) -> super::ScrollbarDisplayOpt
 }
 
 /// Read one item of `SectionPropertiesContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn section_properties(element: &Element) -> super::SectionPropertiesContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:type` into a `SectionType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn section_type(element: &Element) -> super::SectionType {
     let mut node = super::SectionType::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SECTION_TYPE_SHAPE);
@@ -10095,7 +10095,7 @@ pub fn section_type(element: &Element) -> super::SectionType {
 }
 
 /// Read `w:endnotePr` into a `SectionWideEndnoteProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn section_wide_endnote_properties(element: &Element) -> super::SectionWideEndnoteProperties {
     let mut node = super::SectionWideEndnoteProperties::default();
     let mut reader =
@@ -10114,7 +10114,7 @@ pub fn section_wide_endnote_properties(element: &Element) -> super::SectionWideE
 }
 
 /// Read `w:footnotePr` into a `SectionWideFootnoteProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn section_wide_footnote_properties(element: &Element) -> super::SectionWideFootnoteProperties {
     let mut node = super::SectionWideFootnoteProperties::default();
     let mut reader =
@@ -10133,7 +10133,7 @@ pub fn section_wide_footnote_properties(element: &Element) -> super::SectionWide
 }
 
 /// Read `w:selectFldWithFirstOrLastChar` into a `SelectFldWithFirstOrLastChar`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn select_fld_with_first_or_last_char(
     element: &Element,
 ) -> super::SelectFldWithFirstOrLastChar {
@@ -10152,7 +10152,7 @@ pub fn select_fld_with_first_or_last_char(
 }
 
 /// Read `w:divBdr` into a `SetOfBordersForHTMLDiv`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn set_of_borders_for_html_div(element: &Element) -> super::SetOfBordersForHTMLDiv {
     let mut node = super::SetOfBordersForHTMLDiv::default();
     let mut reader =
@@ -10171,7 +10171,7 @@ pub fn set_of_borders_for_html_div(element: &Element) -> super::SetOfBordersForH
 }
 
 /// Read `w:tabs` into a `SetOfCustomTabStops`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn set_of_custom_tab_stops(element: &Element) -> super::SetOfCustomTabStops {
     let mut node = super::SetOfCustomTabStops::default();
     let mut reader =
@@ -10186,7 +10186,7 @@ pub fn set_of_custom_tab_stops(element: &Element) -> super::SetOfCustomTabStops 
 }
 
 /// Read `w:shadow` into a `Shadow`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shadow(element: &Element) -> super::Shadow {
     let mut node = super::Shadow::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHADOW_SHAPE);
@@ -10200,7 +10200,7 @@ pub fn shadow(element: &Element) -> super::Shadow {
 }
 
 /// Read `w:showEnvelope` into a `ShowEMailMessageHeader`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn show_e_mail_message_header(element: &Element) -> super::ShowEMailMessageHeader {
     let mut node = super::ShowEMailMessageHeader::default();
     let mut reader =
@@ -10215,7 +10215,7 @@ pub fn show_e_mail_message_header(element: &Element) -> super::ShowEMailMessageH
 }
 
 /// Read `w:showXMLTags` into a `ShowXMLTags`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn show_xml_tags(element: &Element) -> super::ShowXMLTags {
     let mut node = super::ShowXMLTags::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHOW_XML_TAGS_SHAPE);
@@ -10229,7 +10229,7 @@ pub fn show_xml_tags(element: &Element) -> super::ShowXMLTags {
 }
 
 /// Read `w:fldSimple` into a `SimpleField`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn simple_field(element: &Element) -> super::SimpleField {
     let mut node = super::SimpleField::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SIMPLE_FIELD_SHAPE);
@@ -10248,7 +10248,7 @@ pub fn simple_field(element: &Element) -> super::SimpleField {
 }
 
 /// Read `w:autoCaption` into a `SingleAutomaticCaptioningSetting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn single_automatic_captioning_setting(
     element: &Element,
 ) -> super::SingleAutomaticCaptioningSetting {
@@ -10269,7 +10269,7 @@ pub fn single_automatic_captioning_setting(
 }
 
 /// Read `w:caption` into a `SingleCaptionTypeDefinition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn single_caption_type_definition(element: &Element) -> super::SingleCaptionTypeDefinition {
     let mut node = super::SingleCaptionTypeDefinition::default();
     let mut reader =
@@ -10291,7 +10291,7 @@ pub fn single_caption_type_definition(element: &Element) -> super::SingleCaption
 }
 
 /// Read `w:col` into a `SingleColumnDefinition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn single_column_definition(element: &Element) -> super::SingleColumnDefinition {
     let mut node = super::SingleColumnDefinition::default();
     let mut reader =
@@ -10308,7 +10308,7 @@ pub fn single_column_definition(element: &Element) -> super::SingleColumnDefinit
 }
 
 /// Read `w:docVar` into a `SingleDocumentVariable`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn single_document_variable(element: &Element) -> super::SingleDocumentVariable {
     let mut node = super::SingleDocumentVariable::default();
     let mut reader =
@@ -10325,7 +10325,7 @@ pub fn single_document_variable(element: &Element) -> super::SingleDocumentVaria
 }
 
 /// Read `w:frame` into a `SingleFrameProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn single_frame_properties(element: &Element) -> super::SingleFrameProperties {
     let mut node = super::SingleFrameProperties::default();
     let mut reader =
@@ -10350,7 +10350,7 @@ pub fn single_frame_properties(element: &Element) -> super::SingleFramePropertie
 }
 
 /// Read `w:strike` into a `SingleStrikethrough`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn single_strikethrough(element: &Element) -> super::SingleStrikethrough {
     let mut node = super::SingleStrikethrough::default();
     let mut reader =
@@ -10365,7 +10365,7 @@ pub fn single_strikethrough(element: &Element) -> super::SingleStrikethrough {
 }
 
 /// Read `w:tcMar` into a `SingleTableCellMargins`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn single_table_cell_margins(element: &Element) -> super::SingleTableCellMargins {
     let mut node = super::SingleTableCellMargins::default();
     let mut reader =
@@ -10386,7 +10386,7 @@ pub fn single_table_cell_margins(element: &Element) -> super::SingleTableCellMar
 }
 
 /// Read `w:smallCaps` into a `SmallCaps`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn small_caps(element: &Element) -> super::SmallCaps {
     let mut node = super::SmallCaps::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SMALL_CAPS_SHAPE);
@@ -10400,7 +10400,7 @@ pub fn small_caps(element: &Element) -> super::SmallCaps {
 }
 
 /// Read `w:smartTagPr` into a `SmartTagProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn smart_tag_properties(element: &Element) -> super::SmartTagProperties {
     let mut node = super::SmartTagProperties::default();
     let mut reader =
@@ -10415,7 +10415,7 @@ pub fn smart_tag_properties(element: &Element) -> super::SmartTagProperties {
 }
 
 /// Read `w:mainDocumentType` into a `SourceDocumentType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn source_document_type(element: &Element) -> super::SourceDocumentType {
     let mut node = super::SourceDocumentType::default();
     let mut reader =
@@ -10430,7 +10430,7 @@ pub fn source_document_type(element: &Element) -> super::SourceDocumentType {
 }
 
 /// Read `w:sourceFileName` into a `SourceFileForFrame`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn source_file_for_frame(element: &Element) -> super::SourceFileForFrame {
     let mut node = super::SourceFileForFrame::default();
     let mut reader =
@@ -10445,7 +10445,7 @@ pub fn source_file_for_frame(element: &Element) -> super::SourceFileForFrame {
 }
 
 /// Read `w:spacing` into a `SpacingBetweenLinesAndAboveBelowParagraph`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn spacing_between_lines_and_above_below_paragraph(
     element: &Element,
 ) -> super::SpacingBetweenLinesAndAboveBelowParagraph {
@@ -10472,7 +10472,7 @@ pub fn spacing_between_lines_and_above_below_paragraph(
 }
 
 /// Read `w:endnote` into a `SpecialEndnoteList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn special_endnote_list(element: &Element) -> super::SpecialEndnoteList {
     let mut node = super::SpecialEndnoteList::default();
     let mut reader =
@@ -10487,7 +10487,7 @@ pub fn special_endnote_list(element: &Element) -> super::SpecialEndnoteList {
 }
 
 /// Read `w:footnote` into a `SpecialFootnoteList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn special_footnote_list(element: &Element) -> super::SpecialFootnoteList {
     let mut node = super::SpecialFootnoteList::default();
     let mut reader =
@@ -10502,7 +10502,7 @@ pub fn special_footnote_list(element: &Element) -> super::SpecialFootnoteList {
 }
 
 /// Read `w:proofState` into a `SpellingAndGrammaticalCheckingState`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn spelling_and_grammatical_checking_state(
     element: &Element,
 ) -> super::SpellingAndGrammaticalCheckingState {
@@ -10523,7 +10523,7 @@ pub fn spelling_and_grammatical_checking_state(
 }
 
 /// Read `w:splitPgBreakAndParaMark` into a `SplitPgBreakAndParaMark`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn split_pg_break_and_para_mark(element: &Element) -> super::SplitPgBreakAndParaMark {
     let mut node = super::SplitPgBreakAndParaMark::default();
     let mut reader =
@@ -10538,7 +10538,7 @@ pub fn split_pg_break_and_para_mark(element: &Element) -> super::SplitPgBreakAnd
 }
 
 /// Read `w:pageBreakBefore` into a `StartParagraphOnNextPage`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn start_paragraph_on_next_page(element: &Element) -> super::StartParagraphOnNextPage {
     let mut node = super::StartParagraphOnNextPage::default();
     let mut reader =
@@ -10553,7 +10553,7 @@ pub fn start_paragraph_on_next_page(element: &Element) -> super::StartParagraphO
 }
 
 /// Read `w:start` into a `StartingValue`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn starting_value(element: &Element) -> super::StartingValue {
     let mut node = super::StartingValue::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::STARTING_VALUE_SHAPE);
@@ -10567,7 +10567,7 @@ pub fn starting_value(element: &Element) -> super::StartingValue {
 }
 
 /// Read `w:strictFirstAndLastChars` into a `StrictKinsokuRules`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn strict_kinsoku_rules(element: &Element) -> super::StrictKinsokuRules {
     let mut node = super::StrictKinsokuRules::default();
     let mut reader =
@@ -10582,7 +10582,7 @@ pub fn strict_kinsoku_rules(element: &Element) -> super::StrictKinsokuRules {
 }
 
 /// Read `w:sdtEndPr` into a `StructuredDocumentTagEndCharacterProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn structured_document_tag_end_character_properties(
     element: &Element,
 ) -> super::StructuredDocumentTagEndCharacterProperties {
@@ -10601,7 +10601,7 @@ pub fn structured_document_tag_end_character_properties(
 }
 
 /// Read `w:label` into a `StructuredDocumentTagLabel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn structured_document_tag_label(element: &Element) -> super::StructuredDocumentTagLabel {
     let mut node = super::StructuredDocumentTagLabel::default();
     let mut reader =
@@ -10616,7 +10616,7 @@ pub fn structured_document_tag_label(element: &Element) -> super::StructuredDocu
 }
 
 /// Read `w:tabIndex` into a `StructuredDocumentTagNavigationOrderIndex`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn structured_document_tag_navigation_order_index(
     element: &Element,
 ) -> super::StructuredDocumentTagNavigationOrderIndex {
@@ -10635,7 +10635,7 @@ pub fn structured_document_tag_navigation_order_index(
 }
 
 /// Read `w:placeholder` into a `StructuredDocumentTagPlaceholderText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn structured_document_tag_placeholder_text(
     element: &Element,
 ) -> super::StructuredDocumentTagPlaceholderText {
@@ -10654,7 +10654,7 @@ pub fn structured_document_tag_placeholder_text(
 }
 
 /// Read `w:sdtPr` into a `StructuredDocumentTagProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn structured_document_tag_properties(
     element: &Element,
 ) -> super::StructuredDocumentTagProperties {
@@ -10691,7 +10691,7 @@ pub fn structured_document_tag_properties(
 
 /// Read one item of `StructuredDocumentTagPropertiesContent` from its element: the arm of its tag,
 /// or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn structured_document_tag_properties_content(
     element: &Element,
 ) -> super::StructuredDocumentTagPropertiesContent {
@@ -10699,7 +10699,7 @@ pub fn structured_document_tag_properties_content(
 }
 
 /// Read `w:locked` into a `StyleCannotBeApplied`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style_cannot_be_applied(element: &Element) -> super::StyleCannotBeApplied {
     let mut node = super::StyleCannotBeApplied::default();
     let mut reader =
@@ -10714,7 +10714,7 @@ pub fn style_cannot_be_applied(element: &Element) -> super::StyleCannotBeApplied
 }
 
 /// Read `w:tblStylePr` into a `StyleConditionalTableFormattingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style_conditional_table_formatting_properties(
     element: &Element,
 ) -> super::StyleConditionalTableFormattingProperties {
@@ -10739,7 +10739,7 @@ pub fn style_conditional_table_formatting_properties(
 }
 
 /// Read `w:style` into a `StyleDefinition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style_definition(element: &Element) -> super::StyleDefinition {
     let mut node = super::StyleDefinition::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::STYLE_DEFINITION_SHAPE);
@@ -10779,7 +10779,7 @@ pub fn style_definition(element: &Element) -> super::StyleDefinition {
 }
 
 /// Read `w:styles` into a `StyleDefinitions`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style_definitions(element: &Element) -> super::StyleDefinitions {
     let mut node = super::StyleDefinitions::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::STYLE_DEFINITIONS_SHAPE);
@@ -10796,7 +10796,7 @@ pub fn style_definitions(element: &Element) -> super::StyleDefinitions {
 }
 
 /// Read `w:next` into a `StyleForNextParagraph`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style_for_next_paragraph(element: &Element) -> super::StyleForNextParagraph {
     let mut node = super::StyleForNextParagraph::default();
     let mut reader =
@@ -10811,7 +10811,7 @@ pub fn style_for_next_paragraph(element: &Element) -> super::StyleForNextParagra
 }
 
 /// Read `w:vertAlign` into a `SubscriptSuperscriptText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn subscript_superscript_text(element: &Element) -> super::SubscriptSuperscriptText {
     let mut node = super::SubscriptSuperscriptText::default();
     let mut reader =
@@ -10826,7 +10826,7 @@ pub fn subscript_superscript_text(element: &Element) -> super::SubscriptSuperscr
 }
 
 /// Read `w:saveSubsetFonts` into a `SubsetFontsWhenEmbedding`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn subset_fonts_when_embedding(element: &Element) -> super::SubsetFontsWhenEmbedding {
     let mut node = super::SubsetFontsWhenEmbedding::default();
     let mut reader =
@@ -10841,7 +10841,7 @@ pub fn subset_fonts_when_embedding(element: &Element) -> super::SubsetFontsWhenE
 }
 
 /// Read `w:stylePaneFormatFilter` into a `SuggestedFiltering`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn suggested_filtering(element: &Element) -> super::SuggestedFiltering {
     let mut node = super::SuggestedFiltering::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SUGGESTED_FILTERING_SHAPE);
@@ -10871,7 +10871,7 @@ pub fn suggested_filtering(element: &Element) -> super::SuggestedFiltering {
 }
 
 /// Read `w:stylePaneSortMethod` into a `SuggestedSorting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn suggested_sorting(element: &Element) -> super::SuggestedSorting {
     let mut node = super::SuggestedSorting::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SUGGESTED_SORTING_SHAPE);
@@ -10885,7 +10885,7 @@ pub fn suggested_sorting(element: &Element) -> super::SuggestedSorting {
 }
 
 /// Read `w:smartTagType` into a `SupplementarySmartTagInformation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn supplementary_smart_tag_information(
     element: &Element,
 ) -> super::SupplementarySmartTagInformation {
@@ -10907,7 +10907,7 @@ pub fn supplementary_smart_tag_information(
 }
 
 /// Read `w:sig` into a `SupportedUnicodeSubrangesAndCodePages`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn supported_unicode_subranges_and_code_pages(
     element: &Element,
 ) -> super::SupportedUnicodeSubrangesAndCodePages {
@@ -10932,7 +10932,7 @@ pub fn supported_unicode_subranges_and_code_pages(
 }
 
 /// Read `w:noEndnote` into a `SuppressEndnotesInDocument`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn suppress_endnotes_in_document(element: &Element) -> super::SuppressEndnotesInDocument {
     let mut node = super::SuppressEndnotesInDocument::default();
     let mut reader =
@@ -10947,7 +10947,7 @@ pub fn suppress_endnotes_in_document(element: &Element) -> super::SuppressEndnot
 }
 
 /// Read `w:suppressAutoHyphens` into a `SuppressHyphenationForParagraph`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn suppress_hyphenation_for_paragraph(
     element: &Element,
 ) -> super::SuppressHyphenationForParagraph {
@@ -10966,7 +10966,7 @@ pub fn suppress_hyphenation_for_paragraph(
 }
 
 /// Read `w:suppressLineNumbers` into a `SuppressLineNumbersForParagraph`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn suppress_line_numbers_for_paragraph(
     element: &Element,
 ) -> super::SuppressLineNumbersForParagraph {
@@ -10985,7 +10985,7 @@ pub fn suppress_line_numbers_for_paragraph(
 }
 
 /// Read `w:suppressSpBfAfterPgBrk` into a `SuppressSpBfAfterPgBrk`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn suppress_sp_bf_after_pg_brk(element: &Element) -> super::SuppressSpBfAfterPgBrk {
     let mut node = super::SuppressSpBfAfterPgBrk::default();
     let mut reader =
@@ -11000,7 +11000,7 @@ pub fn suppress_sp_bf_after_pg_brk(element: &Element) -> super::SuppressSpBfAfte
 }
 
 /// Read `w:suppressTopSpacing` into a `SuppressTopSpacing`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn suppress_top_spacing(element: &Element) -> super::SuppressTopSpacing {
     let mut node = super::SuppressTopSpacing::default();
     let mut reader =
@@ -11015,7 +11015,7 @@ pub fn suppress_top_spacing(element: &Element) -> super::SuppressTopSpacing {
 }
 
 /// Read `w:swapBordersFacingPages` into a `SwapParagraphBordersOnOddNumberedPages`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn swap_paragraph_borders_on_odd_numbered_pages(
     element: &Element,
 ) -> super::SwapParagraphBordersOnOddNumberedPages {
@@ -11034,7 +11034,7 @@ pub fn swap_paragraph_borders_on_odd_numbered_pages(
 }
 
 /// Read `w:sym` into a `SymbolCharacter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn symbol_character(element: &Element) -> super::SymbolCharacter {
     let mut node = super::SymbolCharacter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SYMBOL_CHARACTER_SHAPE);
@@ -11050,7 +11050,7 @@ pub fn symbol_character(element: &Element) -> super::SymbolCharacter {
 }
 
 /// Read `w:tab` into a `TabCharacter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tab_character(element: &Element) -> super::TabCharacter {
     let reader = officekit_markup_base::Reader::new(element, &super::TAB_CHARACTER_SHAPE);
     super::TabCharacter {
@@ -11060,7 +11060,7 @@ pub fn tab_character(element: &Element) -> super::TabCharacter {
 }
 
 /// Read `w:tbl` into a `Table`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table(element: &Element) -> super::Table {
     let mut node = super::Table::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TABLE_SHAPE);
@@ -11078,7 +11078,7 @@ pub fn table(element: &Element) -> super::Table {
 }
 
 /// Read `w:jc` into a `TableAlignmentException`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_alignment_exception(element: &Element) -> super::TableAlignmentException {
     let mut node = super::TableAlignmentException::default();
     let mut reader =
@@ -11093,7 +11093,7 @@ pub fn table_alignment_exception(element: &Element) -> super::TableAlignmentExce
 }
 
 /// Read `w:tblBorders` into a `TableBorders`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_borders(element: &Element) -> super::TableBorders {
     let mut node = super::TableBorders::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TABLE_BORDERS_SHAPE);
@@ -11115,7 +11115,7 @@ pub fn table_borders(element: &Element) -> super::TableBorders {
 }
 
 /// Read `w:tblCaption` into a `TableCaption`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_caption(element: &Element) -> super::TableCaption {
     let mut node = super::TableCaption::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TABLE_CAPTION_SHAPE);
@@ -11129,7 +11129,7 @@ pub fn table_caption(element: &Element) -> super::TableCaption {
 }
 
 /// Read `w:tc` into a `TableCell`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_cell(element: &Element) -> super::TableCell {
     let mut node = super::TableCell::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TABLE_CELL_SHAPE);
@@ -11146,7 +11146,7 @@ pub fn table_cell(element: &Element) -> super::TableCell {
 }
 
 /// Read `w:tcBorders` into a `TableCellBorders`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_cell_borders(element: &Element) -> super::TableCellBorders {
     let mut node = super::TableCellBorders::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TABLE_CELL_BORDERS_SHAPE);
@@ -11170,7 +11170,7 @@ pub fn table_cell_borders(element: &Element) -> super::TableCellBorders {
 }
 
 /// Read `w:cellDel` into a `TableCellDeletion`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_cell_deletion(element: &Element) -> super::TableCellDeletion {
     let mut node = super::TableCellDeletion::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TABLE_CELL_DELETION_SHAPE);
@@ -11187,7 +11187,7 @@ pub fn table_cell_deletion(element: &Element) -> super::TableCellDeletion {
 }
 
 /// Read `w:cellIns` into a `TableCellInsertion`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_cell_insertion(element: &Element) -> super::TableCellInsertion {
     let mut node = super::TableCellInsertion::default();
     let mut reader =
@@ -11205,7 +11205,7 @@ pub fn table_cell_insertion(element: &Element) -> super::TableCellInsertion {
 }
 
 /// Read `w:start` into a `TableCellLeadingEdgeBorder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_cell_leading_edge_border(element: &Element) -> super::TableCellLeadingEdgeBorder {
     let mut node = super::TableCellLeadingEdgeBorder::default();
     let mut reader =
@@ -11229,7 +11229,7 @@ pub fn table_cell_leading_edge_border(element: &Element) -> super::TableCellLead
 }
 
 /// Read `w:start` into a `TableCellLeadingEdgeBorderTblWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_cell_leading_edge_border_tbl_width(
     element: &Element,
 ) -> super::TableCellLeadingEdgeBorderTblWidth {
@@ -11250,7 +11250,7 @@ pub fn table_cell_leading_edge_border_tbl_width(
 }
 
 /// Read `w:tblCellMar` into a `TableCellMarginExceptions`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_cell_margin_exceptions(element: &Element) -> super::TableCellMarginExceptions {
     let mut node = super::TableCellMarginExceptions::default();
     let mut reader =
@@ -11271,7 +11271,7 @@ pub fn table_cell_margin_exceptions(element: &Element) -> super::TableCellMargin
 }
 
 /// Read `w:tcPr` into a `TableCellProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_cell_properties(element: &Element) -> super::TableCellProperties {
     let mut node = super::TableCellProperties::default();
     let mut reader =
@@ -11302,7 +11302,7 @@ pub fn table_cell_properties(element: &Element) -> super::TableCellProperties {
 }
 
 /// Read `w:end` into a `TableCellTrailingMarginException`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_cell_trailing_margin_exception(
     element: &Element,
 ) -> super::TableCellTrailingMarginException {
@@ -11330,7 +11330,7 @@ pub fn table_cell_trailing_margin_exception(
 }
 
 /// Read `w:end` into a `TableCellTrailingMarginExceptionTblWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_cell_trailing_margin_exception_tbl_width(
     element: &Element,
 ) -> super::TableCellTrailingMarginExceptionTblWidth {
@@ -11351,7 +11351,7 @@ pub fn table_cell_trailing_margin_exception_tbl_width(
 }
 
 /// Read `w:vAlign` into a `TableCellVerticalAlignment`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_cell_vertical_alignment(element: &Element) -> super::TableCellVerticalAlignment {
     let mut node = super::TableCellVerticalAlignment::default();
     let mut reader =
@@ -11366,7 +11366,7 @@ pub fn table_cell_vertical_alignment(element: &Element) -> super::TableCellVerti
 }
 
 /// Read `w:tblDescription` into a `TableDescription`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_description(element: &Element) -> super::TableDescription {
     let mut node = super::TableDescription::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TABLE_DESCRIPTION_SHAPE);
@@ -11380,7 +11380,7 @@ pub fn table_description(element: &Element) -> super::TableDescription {
 }
 
 /// Read `w:tblGrid` into a `TableGrid`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_grid(element: &Element) -> super::TableGrid {
     let mut node = super::TableGrid::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TABLE_GRID_SHAPE);
@@ -11396,7 +11396,7 @@ pub fn table_grid(element: &Element) -> super::TableGrid {
 }
 
 /// Read `w:tblGridChange` into a `TableGridColumnRevisionInformation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_grid_column_revision_information(
     element: &Element,
 ) -> super::TableGridColumnRevisionInformation {
@@ -11417,7 +11417,7 @@ pub fn table_grid_column_revision_information(
 }
 
 /// Read `w:tblInd` into a `TableIndentFromLeadingMargin`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_indent_from_leading_margin(element: &Element) -> super::TableIndentFromLeadingMargin {
     let mut node = super::TableIndentFromLeadingMargin::default();
     let mut reader =
@@ -11434,7 +11434,7 @@ pub fn table_indent_from_leading_margin(element: &Element) -> super::TableIndent
 }
 
 /// Read `w:insideH` into a `TableInsideHorizontalEdgesBorder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_inside_horizontal_edges_border(
     element: &Element,
 ) -> super::TableInsideHorizontalEdgesBorder {
@@ -11462,7 +11462,7 @@ pub fn table_inside_horizontal_edges_border(
 }
 
 /// Read `w:insideV` into a `TableInsideVerticalEdgesBorder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_inside_vertical_edges_border(
     element: &Element,
 ) -> super::TableInsideVerticalEdgesBorder {
@@ -11490,7 +11490,7 @@ pub fn table_inside_vertical_edges_border(
 }
 
 /// Read `w:tblLayout` into a `TableLayout`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_layout(element: &Element) -> super::TableLayout {
     let mut node = super::TableLayout::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TABLE_LAYOUT_SHAPE);
@@ -11504,7 +11504,7 @@ pub fn table_layout(element: &Element) -> super::TableLayout {
 }
 
 /// Read `w:tblPrEx` into a `TableLevelPropertyExceptions`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_level_property_exceptions(element: &Element) -> super::TableLevelPropertyExceptions {
     let mut node = super::TableLevelPropertyExceptions::default();
     let mut reader =
@@ -11529,7 +11529,7 @@ pub fn table_level_property_exceptions(element: &Element) -> super::TableLevelPr
 }
 
 /// Read `w:tblPr` into a `TableProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_properties(element: &Element) -> super::TableProperties {
     let mut node = super::TableProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TABLE_PROPERTIES_SHAPE);
@@ -11561,7 +11561,7 @@ pub fn table_properties(element: &Element) -> super::TableProperties {
 }
 
 /// Read `w:tr` into a `TableRow`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_row(element: &Element) -> super::TableRow {
     let mut node = super::TableRow::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TABLE_ROW_SHAPE);
@@ -11584,7 +11584,7 @@ pub fn table_row(element: &Element) -> super::TableRow {
 }
 
 /// Read `w:cantSplit` into a `TableRowCannotBreakAcrossPages`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_row_cannot_break_across_pages(
     element: &Element,
 ) -> super::TableRowCannotBreakAcrossPages {
@@ -11603,7 +11603,7 @@ pub fn table_row_cannot_break_across_pages(
 }
 
 /// Read `w:tblCellSpacing` into a `TableRowCellSpacing`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_row_cell_spacing(element: &Element) -> super::TableRowCellSpacing {
     let mut node = super::TableRowCellSpacing::default();
     let mut reader =
@@ -11620,7 +11620,7 @@ pub fn table_row_cell_spacing(element: &Element) -> super::TableRowCellSpacing {
 }
 
 /// Read `w:trHeight` into a `TableRowHeight`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_row_height(element: &Element) -> super::TableRowHeight {
     let mut node = super::TableRowHeight::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TABLE_ROW_HEIGHT_SHAPE);
@@ -11636,7 +11636,7 @@ pub fn table_row_height(element: &Element) -> super::TableRowHeight {
 }
 
 /// Read `w:trPr` into a `TableRowProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_row_properties(element: &Element) -> super::TableRowProperties {
     let mut node = super::TableRowProperties::default();
     let mut reader =
@@ -11656,13 +11656,13 @@ pub fn table_row_properties(element: &Element) -> super::TableRowProperties {
 }
 
 /// Read one item of `TableRowPropertiesContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn table_row_properties_content(element: &Element) -> super::TableRowPropertiesContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:tblLook` into a `TableStyleConditionalFormattingSettingsException`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_style_conditional_formatting_settings_exception(
     element: &Element,
 ) -> super::TableStyleConditionalFormattingSettingsException {
@@ -11688,7 +11688,7 @@ pub fn table_style_conditional_formatting_settings_exception(
 }
 
 /// Read `w:targetScreenSz` into a `TargetScreenSizeForWebPage`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn target_screen_size_for_web_page(element: &Element) -> super::TargetScreenSizeForWebPage {
     let mut node = super::TargetScreenSizeForWebPage::default();
     let mut reader =
@@ -11703,7 +11703,7 @@ pub fn target_screen_size_for_web_page(element: &Element) -> super::TargetScreen
 }
 
 /// Read `w:t` into a `Text`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text(element: &Element) -> super::Text {
     let mut node = super::Text::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TEXT_SHAPE);
@@ -11719,7 +11719,7 @@ pub fn text(element: &Element) -> super::Text {
 }
 
 /// Read `w:bdr` into a `TextBorder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_border(element: &Element) -> super::TextBorder {
     let mut node = super::TextBorder::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TEXT_BORDER_SHAPE);
@@ -11742,7 +11742,7 @@ pub fn text_border(element: &Element) -> super::TextBorder {
 }
 
 /// Read `w:format` into a `TextBoxFormFieldFormatting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_box_form_field_formatting(element: &Element) -> super::TextBoxFormFieldFormatting {
     let mut node = super::TextBoxFormFieldFormatting::default();
     let mut reader =
@@ -11757,7 +11757,7 @@ pub fn text_box_form_field_formatting(element: &Element) -> super::TextBoxFormFi
 }
 
 /// Read `w:maxLength` into a `TextBoxFormFieldMaximumLength`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_box_form_field_maximum_length(
     element: &Element,
 ) -> super::TextBoxFormFieldMaximumLength {
@@ -11776,7 +11776,7 @@ pub fn text_box_form_field_maximum_length(
 }
 
 /// Read `w:textInput` into a `TextBoxFormFieldProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_box_form_field_properties(element: &Element) -> super::TextBoxFormFieldProperties {
     let mut node = super::TextBoxFormFieldProperties::default();
     let mut reader =
@@ -11795,7 +11795,7 @@ pub fn text_box_form_field_properties(element: &Element) -> super::TextBoxFormFi
 }
 
 /// Read `w:type` into a `TextBoxFormFieldType`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_box_form_field_type(element: &Element) -> super::TextBoxFormFieldType {
     let mut node = super::TextBoxFormFieldType::default();
     let mut reader =
@@ -11810,7 +11810,7 @@ pub fn text_box_form_field_type(element: &Element) -> super::TextBoxFormFieldTyp
 }
 
 /// Read `w:framePr` into a `TextFrameProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_frame_properties(element: &Element) -> super::TextFrameProperties {
     let mut node = super::TextFrameProperties::default();
     let mut reader =
@@ -11840,7 +11840,7 @@ pub fn text_frame_properties(element: &Element) -> super::TextFrameProperties {
 }
 
 /// Read `w:highlight` into a `TextHighlighting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_highlighting(element: &Element) -> super::TextHighlighting {
     let mut node = super::TextHighlighting::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TEXT_HIGHLIGHTING_SHAPE);
@@ -11854,7 +11854,7 @@ pub fn text_highlighting(element: &Element) -> super::TextHighlighting {
 }
 
 /// Read `w:r` into a `TextRun`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_run(element: &Element) -> super::TextRun {
     let mut node = super::TextRun::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TEXT_RUN_SHAPE);
@@ -11873,13 +11873,13 @@ pub fn text_run(element: &Element) -> super::TextRun {
 }
 
 /// Read one item of `TextRunContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn text_run_content(element: &Element) -> super::TextRunContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:textboxTightWrap` into a `TextboxTightWrap`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn textbox_tight_wrap(element: &Element) -> super::TextboxTightWrap {
     let mut node = super::TextboxTightWrap::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TEXTBOX_TIGHT_WRAP_SHAPE);
@@ -11893,7 +11893,7 @@ pub fn textbox_tight_wrap(element: &Element) -> super::TextboxTightWrap {
 }
 
 /// Read `w:clrSchemeMapping` into a `ThemeColorMappings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn theme_color_mappings(element: &Element) -> super::ThemeColorMappings {
     let mut node = super::ThemeColorMappings::default();
     let mut reader =
@@ -11920,7 +11920,7 @@ pub fn theme_color_mappings(element: &Element) -> super::ThemeColorMappings {
 }
 
 /// Read `w:themeFontLang` into a `ThemeFontLanguages`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn theme_font_languages(element: &Element) -> super::ThemeFontLanguages {
     let mut node = super::ThemeFontLanguages::default();
     let mut reader =
@@ -11938,7 +11938,7 @@ pub fn theme_font_languages(element: &Element) -> super::ThemeFontLanguages {
 }
 
 /// Read `w:marH` into a `TopAndBottomMarginForFrame`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn top_and_bottom_margin_for_frame(element: &Element) -> super::TopAndBottomMarginForFrame {
     let mut node = super::TopAndBottomMarginForFrame::default();
     let mut reader =
@@ -11953,7 +11953,7 @@ pub fn top_and_bottom_margin_for_frame(element: &Element) -> super::TopAndBottom
 }
 
 /// Read `w:top` into a `TopBorder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn top_border(element: &Element) -> super::TopBorder {
     let mut node = super::TopBorder::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TOP_BORDER_SHAPE);
@@ -11979,7 +11979,7 @@ pub fn top_border(element: &Element) -> super::TopBorder {
 }
 
 /// Read `w:tl2br` into a `TopLeftBottomRightDiagonalBorder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn top_left_bottom_right_diagonal_border(
     element: &Element,
 ) -> super::TopLeftBottomRightDiagonalBorder {
@@ -12007,7 +12007,7 @@ pub fn top_left_bottom_right_diagonal_border(
 }
 
 /// Read `w:marTop` into a `TopMarginForHTMLDiv`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn top_margin_for_html_div(element: &Element) -> super::TopMarginForHTMLDiv {
     let mut node = super::TopMarginForHTMLDiv::default();
     let mut reader =
@@ -12022,7 +12022,7 @@ pub fn top_margin_for_html_div(element: &Element) -> super::TopMarginForHTMLDiv 
 }
 
 /// Read `w:tr2bl` into a `TopRightBottomLeftDiagonalBorder`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn top_right_bottom_left_diagonal_border(
     element: &Element,
 ) -> super::TopRightBottomLeftDiagonalBorder {
@@ -12050,7 +12050,7 @@ pub fn top_right_bottom_left_diagonal_border(
 }
 
 /// Read `w:trackRevisions` into a `TrackRevisionsToDocument`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn track_revisions_to_document(element: &Element) -> super::TrackRevisionsToDocument {
     let mut node = super::TrackRevisionsToDocument::default();
     let mut reader =
@@ -12065,13 +12065,13 @@ pub fn track_revisions_to_document(element: &Element) -> super::TrackRevisionsTo
 }
 
 /// Read one item of `TrackedRunContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn tracked_run(element: &Element) -> super::TrackedRunContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:convMailMergeEsc` into a `TreatBackslashQuotationDelimiterAsTwoQuotationMarks`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn treat_backslash_quotation_delimiter_as_two_quotation_marks(
     element: &Element,
 ) -> super::TreatBackslashQuotationDelimiterAsTwoQuotationMarks {
@@ -12090,7 +12090,7 @@ pub fn treat_backslash_quotation_delimiter_as_two_quotation_marks(
 }
 
 /// Read `w:truncateFontHeightsLikeWP6` into a `TruncateFontHeightsLikeWP6`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn truncate_font_heights_like_wp6(element: &Element) -> super::TruncateFontHeightsLikeWP6 {
     let mut node = super::TruncateFontHeightsLikeWP6::default();
     let mut reader =
@@ -12105,7 +12105,7 @@ pub fn truncate_font_heights_like_wp6(element: &Element) -> super::TruncateFontH
 }
 
 /// Read `w:udl` into a `UDLConnectionString`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn udl_connection_string(element: &Element) -> super::UDLConnectionString {
     let mut node = super::UDLConnectionString::default();
     let mut reader =
@@ -12120,7 +12120,7 @@ pub fn udl_connection_string(element: &Element) -> super::UDLConnectionString {
 }
 
 /// Read `w:u` into a `Underline`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn underline(element: &Element) -> super::Underline {
     let mut node = super::Underline::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::UNDERLINE_SHAPE);
@@ -12139,7 +12139,7 @@ pub fn underline(element: &Element) -> super::Underline {
 }
 
 /// Read `w:ulTrailSpace` into a `UnderlineAllTrailingSpaces`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn underline_all_trailing_spaces(element: &Element) -> super::UnderlineAllTrailingSpaces {
     let mut node = super::UnderlineAllTrailingSpaces::default();
     let mut reader =
@@ -12154,7 +12154,7 @@ pub fn underline_all_trailing_spaces(element: &Element) -> super::UnderlineAllTr
 }
 
 /// Read `w:underlineTabInNumList` into a `UnderlineFollowingCharacterFollowingNumbering`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn underline_following_character_following_numbering(
     element: &Element,
 ) -> super::UnderlineFollowingCharacterFollowingNumbering {
@@ -12173,7 +12173,7 @@ pub fn underline_following_character_following_numbering(
 }
 
 /// Read `w:id` into a `UniqueID`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn unique_id(element: &Element) -> super::UniqueID {
     let mut node = super::UniqueID::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::UNIQUE_ID_SHAPE);
@@ -12187,7 +12187,7 @@ pub fn unique_id(element: &Element) -> super::UniqueID {
 }
 
 /// Read `w:uniqueTag` into a `UniqueValueForRecord`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn unique_value_for_record(element: &Element) -> super::UniqueValueForRecord {
     let mut node = super::UniqueValueForRecord::default();
     let mut reader =
@@ -12202,7 +12202,7 @@ pub fn unique_value_for_record(element: &Element) -> super::UniqueValueForRecord
 }
 
 /// Read `w:forceUpgrade` into a `UpgradeDocumentOnOpen`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn upgrade_document_on_open(element: &Element) -> super::UpgradeDocumentOnOpen {
     let reader =
         officekit_markup_base::Reader::new(element, &super::UPGRADE_DOCUMENT_ON_OPEN_SHAPE);
@@ -12213,7 +12213,7 @@ pub fn upgrade_document_on_open(element: &Element) -> super::UpgradeDocumentOnOp
 }
 
 /// Read `w:useAltKinsokuLineBreakRules` into a `UseAltKinsokuLineBreakRules`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn use_alt_kinsoku_line_break_rules(element: &Element) -> super::UseAltKinsokuLineBreakRules {
     let mut node = super::UseAltKinsokuLineBreakRules::default();
     let mut reader =
@@ -12228,7 +12228,7 @@ pub fn use_alt_kinsoku_line_break_rules(element: &Element) -> super::UseAltKinso
 }
 
 /// Read `w:useAnsiKerningPairs` into a `UseANSIKerningPairsFromFonts`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn use_ansi_kerning_pairs_from_fonts(element: &Element) -> super::UseANSIKerningPairsFromFonts {
     let mut node = super::UseANSIKerningPairsFromFonts::default();
     let mut reader = officekit_markup_base::Reader::new(
@@ -12245,7 +12245,7 @@ pub fn use_ansi_kerning_pairs_from_fonts(element: &Element) -> super::UseANSIKer
 }
 
 /// Read `w:cachedColBalance` into a `UseCachedParagraphInformationForColumnBalancing`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn use_cached_paragraph_information_for_column_balancing(
     element: &Element,
 ) -> super::UseCachedParagraphInformationForColumnBalancing {
@@ -12264,7 +12264,7 @@ pub fn use_cached_paragraph_information_for_column_balancing(
 }
 
 /// Read `w:cs` into a `UseComplexScriptFormattingOnRun`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn use_complex_script_formatting_on_run(
     element: &Element,
 ) -> super::UseComplexScriptFormattingOnRun {
@@ -12283,7 +12283,7 @@ pub fn use_complex_script_formatting_on_run(
 }
 
 /// Read `w:dynamicAddress` into a `UseCountryBasedAddressFieldOrdering`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn use_country_based_address_field_ordering(
     element: &Element,
 ) -> super::UseCountryBasedAddressFieldOrdering {
@@ -12302,7 +12302,7 @@ pub fn use_country_based_address_field_ordering(
 }
 
 /// Read `w:useWord97LineBreakRules` into a `UseIncorrectInterCharacterSpacingRules`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn use_incorrect_inter_character_spacing_rules(
     element: &Element,
 ) -> super::UseIncorrectInterCharacterSpacingRules {
@@ -12321,7 +12321,7 @@ pub fn use_incorrect_inter_character_spacing_rules(
 }
 
 /// Read `w:mirrorIndents` into a `UseLeftRightIndentsAsInsideOutsideIndents`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn use_left_right_indents_as_inside_outside_indents(
     element: &Element,
 ) -> super::UseLeftRightIndentsAsInsideOutsideIndents {
@@ -12340,7 +12340,7 @@ pub fn use_left_right_indents_as_inside_outside_indents(
 }
 
 /// Read `w:useNormalStyleForList` into a `UseNormalStyleForList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn use_normal_style_for_list(element: &Element) -> super::UseNormalStyleForList {
     let mut node = super::UseNormalStyleForList::default();
     let mut reader =
@@ -12355,7 +12355,7 @@ pub fn use_normal_style_for_list(element: &Element) -> super::UseNormalStyleForL
 }
 
 /// Read `w:usePrinterMetrics` into a `UsePrinterMetricsToDisplayDocuments`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn use_printer_metrics_to_display_documents(
     element: &Element,
 ) -> super::UsePrinterMetricsToDisplayDocuments {
@@ -12374,7 +12374,7 @@ pub fn use_printer_metrics_to_display_documents(
 }
 
 /// Read `w:useSingleBorderforContiguousCells` into a `UseSingleBorderforContiguousCells`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn use_single_borderfor_contiguous_cells(
     element: &Element,
 ) -> super::UseSingleBorderforContiguousCells {
@@ -12393,7 +12393,7 @@ pub fn use_single_borderfor_contiguous_cells(
 }
 
 /// Read `w:mwSmallCaps` into a `UseSpecificSmallCapsAlgorithm`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn use_specific_small_caps_algorithm(
     element: &Element,
 ) -> super::UseSpecificSmallCapsAlgorithm {
@@ -12412,7 +12412,7 @@ pub fn use_specific_small_caps_algorithm(
 }
 
 /// Read `w:wpSpaceWidth` into a `UseSpecificSpaceWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn use_specific_space_width(element: &Element) -> super::UseSpecificSpaceWidth {
     let mut node = super::UseSpecificSpaceWidth::default();
     let mut reader =
@@ -12427,7 +12427,7 @@ pub fn use_specific_space_width(element: &Element) -> super::UseSpecificSpaceWid
 }
 
 /// Read `w:suppressTopSpacingWP` into a `UseStaticTextLeading`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn use_static_text_leading(element: &Element) -> super::UseStaticTextLeading {
     let mut node = super::UseStaticTextLeading::default();
     let mut reader =
@@ -12442,7 +12442,7 @@ pub fn use_static_text_leading(element: &Element) -> super::UseStaticTextLeading
 }
 
 /// Read `w:useWord2002TableStyleRules` into a `UseWord2002TableStyleRules`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn use_word2002table_style_rules(element: &Element) -> super::UseWord2002TableStyleRules {
     let mut node = super::UseWord2002TableStyleRules::default();
     let mut reader =
@@ -12457,7 +12457,7 @@ pub fn use_word2002table_style_rules(element: &Element) -> super::UseWord2002Tab
 }
 
 /// Read `w:relyOnVML` into a `UtilizeVMLWhenSavingAsWebPage`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn utilize_vml_when_saving_as_web_page(
     element: &Element,
 ) -> super::UtilizeVMLWhenSavingAsWebPage {
@@ -12476,7 +12476,7 @@ pub fn utilize_vml_when_saving_as_web_page(
 }
 
 /// Read `w:textAlignment` into a `VerticalCharacterAlignmentOnLine`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn vertical_character_alignment_on_line(
     element: &Element,
 ) -> super::VerticalCharacterAlignmentOnLine {
@@ -12495,7 +12495,7 @@ pub fn vertical_character_alignment_on_line(
 }
 
 /// Read `w:vMerge` into a `VerticallyMergedCell`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn vertically_merged_cell(element: &Element) -> super::VerticallyMergedCell {
     let mut node = super::VerticallyMergedCell::default();
     let mut reader =
@@ -12510,7 +12510,7 @@ pub fn vertically_merged_cell(element: &Element) -> super::VerticallyMergedCell 
 }
 
 /// Read `w:cellMerge` into a `VerticallyMergedSplitTableCells`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn vertically_merged_split_table_cells(
     element: &Element,
 ) -> super::VerticallyMergedSplitTableCells {
@@ -12535,7 +12535,7 @@ pub fn vertically_merged_split_table_cells(
 }
 
 /// Read `w:position` into a `VerticallyRaisedOrLoweredText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn vertically_raised_or_lowered_text(
     element: &Element,
 ) -> super::VerticallyRaisedOrLoweredText {
@@ -12554,7 +12554,7 @@ pub fn vertically_raised_or_lowered_text(
 }
 
 /// Read `w:viewMergedData` into a `ViewMergedDataWithinDocument`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn view_merged_data_within_document(element: &Element) -> super::ViewMergedDataWithinDocument {
     let mut node = super::ViewMergedDataWithinDocument::default();
     let mut reader =
@@ -12569,7 +12569,7 @@ pub fn view_merged_data_within_document(element: &Element) -> super::ViewMergedD
 }
 
 /// Read `w:revisionView` into a `VisibilityOfAnnotationTypes`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn visibility_of_annotation_types(element: &Element) -> super::VisibilityOfAnnotationTypes {
     let mut node = super::VisibilityOfAnnotationTypes::default();
     let mut reader =
@@ -12589,7 +12589,7 @@ pub fn visibility_of_annotation_types(element: &Element) -> super::VisibilityOfA
 }
 
 /// Read `w:bidiVisual` into a `VisuallyRightToLeftTable`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn visually_right_to_left_table(element: &Element) -> super::VisuallyRightToLeftTable {
     let mut node = super::VisuallyRightToLeftTable::default();
     let mut reader =
@@ -12604,13 +12604,13 @@ pub fn visually_right_to_left_table(element: &Element) -> super::VisuallyRightTo
 }
 
 /// Read one item of `VmlElementContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn vml_element(element: &Element) -> super::VmlElementContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:pict` into a `VMLObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn vml_object(element: &Element) -> super::VMLObject {
     let mut node = super::VMLObject::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::VML_OBJECT_SHAPE);
@@ -12629,13 +12629,13 @@ pub fn vml_object(element: &Element) -> super::VMLObject {
 
 /// Read one item of `VmlOfficeDrawingElementContent` from its element: the arm of its tag, or
 /// `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn vml_office_drawing_element(element: &Element) -> super::VmlOfficeDrawingElementContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `w:webHidden` into a `WebHiddenText`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn web_hidden_text(element: &Element) -> super::WebHiddenText {
     let mut node = super::WebHiddenText::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WEB_HIDDEN_TEXT_SHAPE);
@@ -12649,7 +12649,7 @@ pub fn web_hidden_text(element: &Element) -> super::WebHiddenText {
 }
 
 /// Read `w:webSettings` into a `WebPageSettings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn web_page_settings(element: &Element) -> super::WebPageSettings {
     let mut node = super::WebPageSettings::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WEB_PAGE_SETTINGS_SHAPE);
@@ -12676,7 +12676,7 @@ pub fn web_page_settings(element: &Element) -> super::WebPageSettings {
 }
 
 /// Read `w:writeProtection` into a `WriteProtection`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn write_protection(element: &Element) -> super::WriteProtection {
     let mut node = super::WriteProtection::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WRITE_PROTECTION_SHAPE);
@@ -12707,7 +12707,7 @@ pub fn write_protection(element: &Element) -> super::WriteProtection {
 }
 
 /// Read `w:dataBinding` into a `XMLMapping`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn xml_mapping(element: &Element) -> super::XMLMapping {
     let mut node = super::XMLMapping::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::XML_MAPPING_SHAPE);

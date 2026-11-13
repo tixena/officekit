@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xltc2:checksum` into a `Checksum`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn checksum(element: &Element) -> super::Checksum {
     let mut node = super::Checksum::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CHECKSUM_SHAPE);
@@ -233,7 +233,7 @@ pub fn checksum(element: &Element) -> super::Checksum {
 }
 
 /// Read `xltc2:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -247,7 +247,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `xltc2:hyperlink` into a `Hyperlink`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hyperlink(element: &Element) -> super::Hyperlink {
     let mut node = super::Hyperlink::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HYPERLINK_SHAPE);

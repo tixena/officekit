@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xlecs:externalCodeService` into a `ExternalCodeService`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn external_code_service(element: &Element) -> super::ExternalCodeService {
     let mut node = super::ExternalCodeService::default();
     let mut reader =

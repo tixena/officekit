@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `ApplicationName` as its element, `ap:Application`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn application_name(node: &super::ApplicationName, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::APPLICATION_NAME_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -229,7 +229,7 @@ pub fn application_name(node: &super::ApplicationName, scope: &mut Scope) -> Ele
 }
 
 /// Write a `ApplicationSpecificFileProperties` as its element, `ap:Properties`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn application_specific_file_properties(
     node: &super::ApplicationSpecificFileProperties,
     scope: &mut Scope,
@@ -253,7 +253,7 @@ pub fn application_specific_file_properties_content(
 }
 
 /// Write a `ApplicationVersion` as its element, `ap:AppVersion`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn application_version(node: &super::ApplicationVersion, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::APPLICATION_VERSION_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -261,7 +261,7 @@ pub fn application_version(node: &super::ApplicationVersion, scope: &mut Scope) 
 }
 
 /// Write a `CharactersWithSpaces` as its element, `ap:CharactersWithSpaces`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn characters_with_spaces(node: &super::CharactersWithSpaces, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::CHARACTERS_WITH_SPACES_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -269,7 +269,7 @@ pub fn characters_with_spaces(node: &super::CharactersWithSpaces, scope: &mut Sc
 }
 
 /// Write a `DigitalSignature` as its element, `ap:DigSig`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn digital_signature(node: &super::DigitalSignature, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::DIGITAL_SIGNATURE_SHAPE, &node.unknown);
     writer.child(&node.binary_blob);
@@ -277,7 +277,7 @@ pub fn digital_signature(node: &super::DigitalSignature, scope: &mut Scope) -> E
 }
 
 /// Write a `DocumentSecurity` as its element, `ap:DocSecurity`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_security(node: &super::DocumentSecurity, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::DOCUMENT_SECURITY_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -285,7 +285,7 @@ pub fn document_security(node: &super::DocumentSecurity, scope: &mut Scope) -> E
 }
 
 /// Write a `HeadingPairs` as its element, `ap:HeadingPairs`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn heading_pairs(node: &super::HeadingPairs, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::HEADING_PAIRS_SHAPE, &node.unknown);
     writer.child(&node.vector);
@@ -293,7 +293,7 @@ pub fn heading_pairs(node: &super::HeadingPairs, scope: &mut Scope) -> Element {
 }
 
 /// Write a `HyperlinkList` as its element, `ap:HLinks`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hyperlink_list(node: &super::HyperlinkList, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::HYPERLINK_LIST_SHAPE, &node.unknown);
     writer.child(&node.vector);
@@ -301,7 +301,7 @@ pub fn hyperlink_list(node: &super::HyperlinkList, scope: &mut Scope) -> Element
 }
 
 /// Write a `HyperlinksChanged` as its element, `ap:HyperlinksChanged`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hyperlinks_changed(node: &super::HyperlinksChanged, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::HYPERLINKS_CHANGED_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -309,7 +309,7 @@ pub fn hyperlinks_changed(node: &super::HyperlinksChanged, scope: &mut Scope) ->
 }
 
 /// Write a `IntendedFormatOfPresentation` as its element, `ap:PresentationFormat`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn intended_format_of_presentation(
     node: &super::IntendedFormatOfPresentation,
     scope: &mut Scope,
@@ -324,7 +324,7 @@ pub fn intended_format_of_presentation(
 }
 
 /// Write a `LinksUpToDate` as its element, `ap:LinksUpToDate`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn links_up_to_date(node: &super::LinksUpToDate, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::LINKS_UP_TO_DATE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -332,7 +332,7 @@ pub fn links_up_to_date(node: &super::LinksUpToDate, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `NameOfCompany` as its element, `ap:Company`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn name_of_company(node: &super::NameOfCompany, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::NAME_OF_COMPANY_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -340,7 +340,7 @@ pub fn name_of_company(node: &super::NameOfCompany, scope: &mut Scope) -> Elemen
 }
 
 /// Write a `NameOfDocumentTemplate` as its element, `ap:Template`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn name_of_document_template(
     node: &super::NameOfDocumentTemplate,
     scope: &mut Scope,
@@ -355,7 +355,7 @@ pub fn name_of_document_template(
 }
 
 /// Write a `NameOfManager` as its element, `ap:Manager`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn name_of_manager(node: &super::NameOfManager, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::NAME_OF_MANAGER_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -363,7 +363,7 @@ pub fn name_of_manager(node: &super::NameOfManager, scope: &mut Scope) -> Elemen
 }
 
 /// Write a `NumberOfHiddenSlides` as its element, `ap:HiddenSlides`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn number_of_hidden_slides(node: &super::NumberOfHiddenSlides, scope: &mut Scope) -> Element {
     let mut writer =
         crate::Writer::new(scope, &super::NUMBER_OF_HIDDEN_SLIDES_SHAPE, &node.unknown);
@@ -372,7 +372,7 @@ pub fn number_of_hidden_slides(node: &super::NumberOfHiddenSlides, scope: &mut S
 }
 
 /// Write a `NumberOfLines` as its element, `ap:Lines`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn number_of_lines(node: &super::NumberOfLines, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::NUMBER_OF_LINES_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -380,7 +380,7 @@ pub fn number_of_lines(node: &super::NumberOfLines, scope: &mut Scope) -> Elemen
 }
 
 /// Write a `NumberOfSlidesContainingNotes` as its element, `ap:Notes`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn number_of_slides_containing_notes(
     node: &super::NumberOfSlidesContainingNotes,
     scope: &mut Scope,
@@ -395,7 +395,7 @@ pub fn number_of_slides_containing_notes(
 }
 
 /// Write a `PartTitles` as its element, `ap:TitlesOfParts`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn part_titles(node: &super::PartTitles, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::PART_TITLES_SHAPE, &node.unknown);
     writer.child(&node.vector);
@@ -403,7 +403,7 @@ pub fn part_titles(node: &super::PartTitles, scope: &mut Scope) -> Element {
 }
 
 /// Write a `RelativeHyperlinkBase` as its element, `ap:HyperlinkBase`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn relative_hyperlink_base(node: &super::RelativeHyperlinkBase, scope: &mut Scope) -> Element {
     let mut writer =
         crate::Writer::new(scope, &super::RELATIVE_HYPERLINK_BASE_SHAPE, &node.unknown);
@@ -412,7 +412,7 @@ pub fn relative_hyperlink_base(node: &super::RelativeHyperlinkBase, scope: &mut 
 }
 
 /// Write a `SharedDocument` as its element, `ap:SharedDoc`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shared_document(node: &super::SharedDocument, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::SHARED_DOCUMENT_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -420,7 +420,7 @@ pub fn shared_document(node: &super::SharedDocument, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `SlidesMetadataElement` as its element, `ap:Slides`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn slides_metadata_element(node: &super::SlidesMetadataElement, scope: &mut Scope) -> Element {
     let mut writer =
         crate::Writer::new(scope, &super::SLIDES_METADATA_ELEMENT_SHAPE, &node.unknown);
@@ -429,7 +429,7 @@ pub fn slides_metadata_element(node: &super::SlidesMetadataElement, scope: &mut 
 }
 
 /// Write a `ThumbnailDisplayMode` as its element, `ap:ScaleCrop`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn thumbnail_display_mode(node: &super::ThumbnailDisplayMode, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::THUMBNAIL_DISPLAY_MODE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -437,7 +437,7 @@ pub fn thumbnail_display_mode(node: &super::ThumbnailDisplayMode, scope: &mut Sc
 }
 
 /// Write a `TotalEditTimeMetadataElement` as its element, `ap:TotalTime`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn total_edit_time_metadata_element(
     node: &super::TotalEditTimeMetadataElement,
     scope: &mut Scope,
@@ -452,7 +452,7 @@ pub fn total_edit_time_metadata_element(
 }
 
 /// Write a `TotalNumberOfCharacters` as its element, `ap:Characters`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn total_number_of_characters(
     node: &super::TotalNumberOfCharacters,
     scope: &mut Scope,
@@ -467,7 +467,7 @@ pub fn total_number_of_characters(
 }
 
 /// Write a `TotalNumberOfMultimediaClips` as its element, `ap:MMClips`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn total_number_of_multimedia_clips(
     node: &super::TotalNumberOfMultimediaClips,
     scope: &mut Scope,
@@ -482,7 +482,7 @@ pub fn total_number_of_multimedia_clips(
 }
 
 /// Write a `TotalNumberOfPages` as its element, `ap:Pages`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn total_number_of_pages(node: &super::TotalNumberOfPages, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::TOTAL_NUMBER_OF_PAGES_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -490,7 +490,7 @@ pub fn total_number_of_pages(node: &super::TotalNumberOfPages, scope: &mut Scope
 }
 
 /// Write a `TotalNumberOfParagraphs` as its element, `ap:Paragraphs`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn total_number_of_paragraphs(
     node: &super::TotalNumberOfParagraphs,
     scope: &mut Scope,
@@ -505,7 +505,7 @@ pub fn total_number_of_paragraphs(
 }
 
 /// Write a `WordCount` as its element, `ap:Words`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn word_count(node: &super::WordCount, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::WORD_COUNT_SHAPE, &node.unknown);
     writer.text(&node.value);

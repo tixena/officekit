@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xlwcv:version` into a `Version`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn version(element: &Element) -> super::Version {
     let mut node = super::Version::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::VERSION_SHAPE);

@@ -104,7 +104,7 @@ assert!(matches!(file, OfficeFile::Word(_)));
     }
 
     /// The options the file was opened with.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn options(&self) -> OpenOptions {
         match self {
             Self::Excel(xlsx) => xlsx.options(),

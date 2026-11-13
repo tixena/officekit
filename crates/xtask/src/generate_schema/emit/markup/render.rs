@@ -59,7 +59,7 @@ pub struct Names<'catalog> {
 impl Names<'_> {
     /// The path from the module's `archive` module to an item of `module`
     /// named `name`: through `super` in this crate, as `path` from another.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn archived(&self, module: usize, name: &str) -> String {
         let path = self.path(module, name);
         if self.crosses(module) {
@@ -70,7 +70,7 @@ impl Names<'_> {
     }
 
     /// Whether `module` is written to another crate than this module.
-    #[must_use]
+    #[must_use = "this only answers the question"]
     pub fn crosses(&self, module: usize) -> bool {
         self.catalog.crates.get(module) != self.catalog.crates.get(self.module)
     }
@@ -93,7 +93,7 @@ impl Names<'_> {
     /// The constructor of a newtype of `module` named `name`: its tuple
     /// constructor in this crate, its `From<String>` from another, where
     /// `#[non_exhaustive]` keeps the constructor private.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn newtype(&self, module: usize, name: &str) -> String {
         let path = self.path(module, name);
         if self.crosses(module) {
@@ -106,7 +106,7 @@ impl Names<'_> {
     /// The path from this module to an item of `module` named `name`: through
     /// `super` in this crate, through the module, which the file imports,
     /// from another.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn path(&self, module: usize, name: &str) -> String {
         if module == self.module {
             return name.to_owned();
@@ -122,7 +122,7 @@ impl Names<'_> {
 
     /// The path from this module to the runtime: `crate` in
     /// `officekit-markup-base`, the crate's name from core and ext.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn runtime(&self) -> &'static str {
         match self.catalog.crates.get(self.module) {
             Some(Crate::Core | Crate::Ext) => Crate::Base.name(),
@@ -131,7 +131,7 @@ impl Names<'_> {
     }
 
     /// The `SCREAMING_SNAKE_CASE` name of a struct's shape, after its reader.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn shape(&self, node: usize) -> String {
         let function = self.node_functions.get(&node).map_or("", String::as_str);
         format!(
@@ -144,7 +144,7 @@ impl Names<'_> {
     }
 
     /// The path from this module to an enum's tags.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn tags(&self, found: usize) -> String {
         let definition = &self.catalog.enums[found];
         self.path(
@@ -365,7 +365,7 @@ impl Uses {
     /// The imports of a file whose items are `body`, `runtime` the path to
     /// the runtime: the names of `officekit_xml` it uses, and the `Write`
     /// trait when it calls `write_into` outside an `impl` of that trait.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn of(runtime: &str, body: &str) -> String {
         let mut uses = Self::default();
         uses.scan(runtime, body, body);
@@ -389,7 +389,7 @@ impl Uses {
     }
 
     /// The `use` lines, in rustfmt's order.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn text(&self) -> String {
         // Each line by its path's segments, which rustfmt sorts the lines by.
         let mut lines: Vec<(Vec<&str>, String)> = Vec::new();
@@ -516,7 +516,7 @@ pub struct Field {
 }
 
 /// The name of the generic type of a struct or an enum.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn generic_name(name: &str) -> String {
     format!("{name}With")
 }
@@ -957,7 +957,7 @@ fn namespace_constants(catalog: &Catalog, namespaces: &BTreeSet<Option<u8>>) -> 
 }
 
 /// The constant of a namespace id, `NS_W`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn namespace_constant(prefix: &str) -> String {
     format!("NS_{}", prefix.to_ascii_uppercase())
 }
@@ -1055,7 +1055,9 @@ fn into_extra_text(
                    field moves as it is.";
     let mut out = String::from("\n");
     out.push_str(&layout::doc(4, summary));
-    out.push_str("    #[must_use]\n");
+    out.push_str(
+        "    #[must_use = \"the tree moves into the one returned; dropping it drops the tree\"]\n",
+    );
     out.push_str(&layout::signature_where(
         4,
         "pub fn into_extra<Y>",
@@ -1203,7 +1205,9 @@ fn enum_into_extra(found: &EnumDef, runtime: &str) -> String {
     let summary = "This item and every node under it with each `extra` at `Y`'s default.";
     let mut out = format!("\nimpl<X: NodeExtra> {with}<X> {{\n");
     out.push_str(&layout::doc(4, summary));
-    out.push_str("    #[must_use]\n");
+    out.push_str(
+        "    #[must_use = \"the tree moves into the one returned; dropping it drops the tree\"]\n",
+    );
     out.push_str(&layout::signature_where(
         4,
         "pub fn into_extra<Y>",
@@ -1288,7 +1292,7 @@ fn without_children_text(node: &Node) -> String {
     };
     copied.sort_by(|left, right| bare(left).cmp(bare(right)));
     let mut out = format!(
-        "\nimpl<X: NodeExtra> {}<X> {{\n    /// {summary}\n    #[must_use]\n    \
+        "\nimpl<X: NodeExtra> {}<X> {{\n    /// {summary}\n    #[must_use = \"this returns a copy; the node is unchanged\"]\n    \
          pub fn without_children(&self) -> Self {{\n",
         generic_name(&node.name)
     );
@@ -1683,8 +1687,7 @@ fn enum_read(
                 && (count == CHUNK / 2
                     || chunk.lines().count() + text.lines().count() >= BODY_LINES)
             {
-                chunks.push(chunk);
-                chunk = String::new();
+                chunks.push(mem::take(&mut chunk));
                 count = 0;
             }
             chunk.push_str(&text);
@@ -1894,8 +1897,7 @@ fn steps_helpers(
         );
         text.push_str("    }\n");
         if !chunk.is_empty() && chunk.lines().count() + text.lines().count() >= BODY_LINES {
-            chunks.push(chunk);
-            chunk = String::new();
+            chunks.push(mem::take(&mut chunk));
         }
         chunk.push_str(&text);
     }

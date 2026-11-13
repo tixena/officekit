@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `p:guide` into a `AGuide`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn a_guide(element: &Element) -> super::AGuide {
     let mut node = super::AGuide::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::A_GUIDE_SHAPE);
@@ -235,7 +235,7 @@ pub fn a_guide(element: &Element) -> super::AGuide {
 }
 
 /// Read `p:sldAll` into a `AllSlides`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn all_slides(element: &Element) -> super::AllSlides {
     let reader = officekit_markup_base::Reader::new(element, &super::ALL_SLIDES_SHAPE);
     super::AllSlides {
@@ -245,7 +245,7 @@ pub fn all_slides(element: &Element) -> super::AllSlides {
 }
 
 /// Read `p:anim` into a `Animate`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn animate(element: &Element) -> super::Animate {
     let mut node = super::Animate::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ANIMATE_SHAPE);
@@ -267,7 +267,7 @@ pub fn animate(element: &Element) -> super::Animate {
 }
 
 /// Read `p:animClr` into a `AnimateColorBehavior`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn animate_color_behavior(element: &Element) -> super::AnimateColorBehavior {
     let mut node = super::AnimateColorBehavior::default();
     let mut reader =
@@ -288,13 +288,13 @@ pub fn animate_color_behavior(element: &Element) -> super::AnimateColorBehavior 
 }
 
 /// Read one item of `AnimateColorByContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn animate_color_by(element: &Element) -> super::AnimateColorByContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:animEffect` into a `AnimateEffect`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn animate_effect(element: &Element) -> super::AnimateEffect {
     let mut node = super::AnimateEffect::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ANIMATE_EFFECT_SHAPE);
@@ -313,7 +313,7 @@ pub fn animate_effect(element: &Element) -> super::AnimateEffect {
 }
 
 /// Read `p:animMotion` into a `AnimateMotion`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn animate_motion(element: &Element) -> super::AnimateMotion {
     let mut node = super::AnimateMotion::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ANIMATE_MOTION_SHAPE);
@@ -338,7 +338,7 @@ pub fn animate_motion(element: &Element) -> super::AnimateMotion {
 }
 
 /// Read `p:animRot` into a `AnimateRotation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn animate_rotation(element: &Element) -> super::AnimateRotation {
     let mut node = super::AnimateRotation::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ANIMATE_ROTATION_SHAPE);
@@ -357,7 +357,7 @@ pub fn animate_rotation(element: &Element) -> super::AnimateRotation {
 }
 
 /// Read `p:animScale` into a `AnimateScale`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn animate_scale(element: &Element) -> super::AnimateScale {
     let mut node = super::AnimateScale::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ANIMATE_SCALE_SHAPE);
@@ -377,13 +377,13 @@ pub fn animate_scale(element: &Element) -> super::AnimateScale {
 }
 
 /// Read one item of `AnimationVariantContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn animation_variant(element: &Element) -> super::AnimationVariantContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:attrName` into a `AttributeName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn attribute_name(element: &Element) -> super::AttributeName {
     let mut node = super::AttributeName::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ATTRIBUTE_NAME_SHAPE);
@@ -397,7 +397,7 @@ pub fn attribute_name(element: &Element) -> super::AttributeName {
 }
 
 /// Read `p:attrNameLst` into a `AttributeNameList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn attribute_name_list(element: &Element) -> super::AttributeNameList {
     let mut node = super::AttributeNameList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ATTRIBUTE_NAME_LIST_SHAPE);
@@ -411,7 +411,7 @@ pub fn attribute_name_list(element: &Element) -> super::AttributeNameList {
 }
 
 /// Read `p:audio` into a `Audio`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn audio(element: &Element) -> super::Audio {
     let mut node = super::Audio::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::AUDIO_SHAPE);
@@ -427,7 +427,7 @@ pub fn audio(element: &Element) -> super::Audio {
 }
 
 /// Read `p:bg` into a `Background`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn background(element: &Element) -> super::Background {
     let reader = officekit_markup_base::Reader::new(element, &super::BACKGROUND_SHAPE);
     super::Background {
@@ -437,7 +437,7 @@ pub fn background(element: &Element) -> super::Background {
 }
 
 /// Read `p:bgPr` into a `BackgroundProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn background_properties(element: &Element) -> super::BackgroundProperties {
     let mut node = super::BackgroundProperties::default();
     let mut reader =
@@ -456,7 +456,7 @@ pub fn background_properties(element: &Element) -> super::BackgroundProperties {
 }
 
 /// Read `p:bgRef` into a `BackgroundStyleReference`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn background_style_reference(element: &Element) -> super::BackgroundStyleReference {
     let mut node = super::BackgroundStyleReference::default();
     let mut reader =
@@ -473,7 +473,7 @@ pub fn background_style_reference(element: &Element) -> super::BackgroundStyleRe
 }
 
 /// Read `p:blinds` into a `BlindsSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn blinds_slide_transition(element: &Element) -> super::BlindsSlideTransition {
     let mut node = super::BlindsSlideTransition::default();
     let mut reader =
@@ -488,7 +488,7 @@ pub fn blinds_slide_transition(element: &Element) -> super::BlindsSlideTransitio
 }
 
 /// Read `p:bold` into a `BoldEmbeddedFont`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bold_embedded_font(element: &Element) -> super::BoldEmbeddedFont {
     let mut node = super::BoldEmbeddedFont::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BOLD_EMBEDDED_FONT_SHAPE);
@@ -502,7 +502,7 @@ pub fn bold_embedded_font(element: &Element) -> super::BoldEmbeddedFont {
 }
 
 /// Read `p:boldItalic` into a `BoldItalicEmbeddedFont`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bold_italic_embedded_font(element: &Element) -> super::BoldItalicEmbeddedFont {
     let mut node = super::BoldItalicEmbeddedFont::default();
     let mut reader =
@@ -517,7 +517,7 @@ pub fn bold_italic_embedded_font(element: &Element) -> super::BoldItalicEmbedded
 }
 
 /// Read `p:boolVal` into a `BooleanVariant`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn boolean_variant(element: &Element) -> super::BooleanVariant {
     let mut node = super::BooleanVariant::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BOOLEAN_VARIANT_SHAPE);
@@ -531,7 +531,7 @@ pub fn boolean_variant(element: &Element) -> super::BooleanVariant {
 }
 
 /// Read `p:browse` into a `BrowseSlideShowMode`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn browse_slide_show_mode(element: &Element) -> super::BrowseSlideShowMode {
     let mut node = super::BrowseSlideShowMode::default();
     let mut reader =
@@ -546,7 +546,7 @@ pub fn browse_slide_show_mode(element: &Element) -> super::BrowseSlideShowMode {
 }
 
 /// Read `p:bldAsOne` into a `BuildAsOne`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn build_as_one(element: &Element) -> super::BuildAsOne {
     let reader = officekit_markup_base::Reader::new(element, &super::BUILD_AS_ONE_SHAPE);
     super::BuildAsOne {
@@ -556,7 +556,7 @@ pub fn build_as_one(element: &Element) -> super::BuildAsOne {
 }
 
 /// Read `p:bldDgm` into a `BuildDiagram`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn build_diagram(element: &Element) -> super::BuildDiagram {
     let mut node = super::BuildDiagram::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BUILD_DIAGRAM_SHAPE);
@@ -574,7 +574,7 @@ pub fn build_diagram(element: &Element) -> super::BuildDiagram {
 }
 
 /// Read `p:bldOleChart` into a `BuildEmbeddedChart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn build_embedded_chart(element: &Element) -> super::BuildEmbeddedChart {
     let mut node = super::BuildEmbeddedChart::default();
     let mut reader =
@@ -594,7 +594,7 @@ pub fn build_embedded_chart(element: &Element) -> super::BuildEmbeddedChart {
 }
 
 /// Read `p:bldGraphic` into a `BuildGraphics`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn build_graphics(element: &Element) -> super::BuildGraphics {
     let mut node = super::BuildGraphics::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BUILD_GRAPHICS_SHAPE);
@@ -612,13 +612,13 @@ pub fn build_graphics(element: &Element) -> super::BuildGraphics {
 }
 
 /// Read one item of `BuildGraphicsContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn build_graphics_content(element: &Element) -> super::BuildGraphicsContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:bldLst` into a `BuildList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn build_list(element: &Element) -> super::BuildList {
     let mut node = super::BuildList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BUILD_LIST_SHAPE);
@@ -632,13 +632,13 @@ pub fn build_list(element: &Element) -> super::BuildList {
 }
 
 /// Read one item of `BuildListContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn build_list_content(element: &Element) -> super::BuildListContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:bldP` into a `BuildParagraph`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn build_paragraph(element: &Element) -> super::BuildParagraph {
     let mut node = super::BuildParagraph::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BUILD_PARAGRAPH_SHAPE);
@@ -662,7 +662,7 @@ pub fn build_paragraph(element: &Element) -> super::BuildParagraph {
 }
 
 /// Read `p:bldSub` into a `BuildSubElements`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn build_sub_elements(element: &Element) -> super::BuildSubElements {
     let mut node = super::BuildSubElements::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BUILD_SUB_ELEMENTS_SHAPE);
@@ -676,7 +676,7 @@ pub fn build_sub_elements(element: &Element) -> super::BuildSubElements {
 }
 
 /// Read `p:by` into a `By`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn by(element: &Element) -> super::By {
     let mut node = super::By::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BY_SHAPE);
@@ -690,7 +690,7 @@ pub fn by(element: &Element) -> super::By {
 }
 
 /// Read `p:by` into a `ByTLPoint`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn by_tl_point(element: &Element) -> super::ByTLPoint {
     let mut node = super::ByTLPoint::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BY_TL_POINT_SHAPE);
@@ -706,7 +706,7 @@ pub fn by_tl_point(element: &Element) -> super::ByTLPoint {
 }
 
 /// Read `p:charRg` into a `CharacterRange`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn character_range(element: &Element) -> super::CharacterRange {
     let mut node = super::CharacterRange::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CHARACTER_RANGE_SHAPE);
@@ -722,7 +722,7 @@ pub fn character_range(element: &Element) -> super::CharacterRange {
 }
 
 /// Read `p:checker` into a `CheckerSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn checker_slide_transition(element: &Element) -> super::CheckerSlideTransition {
     let mut node = super::CheckerSlideTransition::default();
     let mut reader =
@@ -737,7 +737,7 @@ pub fn checker_slide_transition(element: &Element) -> super::CheckerSlideTransit
 }
 
 /// Read `p:childTnLst` into a `ChildrenTimeNodeList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn children_time_node_list(element: &Element) -> super::ChildrenTimeNodeList {
     let mut node = super::ChildrenTimeNodeList::default();
     let mut reader =
@@ -752,7 +752,7 @@ pub fn children_time_node_list(element: &Element) -> super::ChildrenTimeNodeList
 }
 
 /// Read `p:circle` into a `CircleSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn circle_slide_transition(element: &Element) -> super::CircleSlideTransition {
     let reader = officekit_markup_base::Reader::new(element, &super::CIRCLE_SLIDE_TRANSITION_SHAPE);
     super::CircleSlideTransition {
@@ -762,7 +762,7 @@ pub fn circle_slide_transition(element: &Element) -> super::CircleSlideTransitio
 }
 
 /// Read `p:clrMru` into a `ColorMRU`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color_mru(element: &Element) -> super::ColorMRU {
     let mut node = super::ColorMRU::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COLOR_MRU_SHAPE);
@@ -776,7 +776,7 @@ pub fn color_mru(element: &Element) -> super::ColorMRU {
 }
 
 /// Read `p:clrMap` into a `ColorSchemeMap`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color_scheme_map(element: &Element) -> super::ColorSchemeMap {
     let mut node = super::ColorSchemeMap::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COLOR_SCHEME_MAP_SHAPE);
@@ -803,7 +803,7 @@ pub fn color_scheme_map(element: &Element) -> super::ColorSchemeMap {
 }
 
 /// Read `p:clrMapOvr` into a `ColorSchemeMapOverride`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color_scheme_map_override(element: &Element) -> super::ColorSchemeMapOverride {
     let mut node = super::ColorSchemeMapOverride::default();
     let mut reader =
@@ -818,7 +818,7 @@ pub fn color_scheme_map_override(element: &Element) -> super::ColorSchemeMapOver
 }
 
 /// Read `p:clrVal` into a `ColorValue`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color_value(element: &Element) -> super::ColorValue {
     let mut node = super::ColorValue::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COLOR_VALUE_SHAPE);
@@ -832,7 +832,7 @@ pub fn color_value(element: &Element) -> super::ColorValue {
 }
 
 /// Read `p:comb` into a `CombSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comb_slide_transition(element: &Element) -> super::CombSlideTransition {
     let mut node = super::CombSlideTransition::default();
     let mut reader =
@@ -847,7 +847,7 @@ pub fn comb_slide_transition(element: &Element) -> super::CombSlideTransition {
 }
 
 /// Read `p:cmd` into a `Command`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn command(element: &Element) -> super::Command {
     let mut node = super::Command::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMAND_SHAPE);
@@ -864,7 +864,7 @@ pub fn command(element: &Element) -> super::Command {
 }
 
 /// Read `p:cm` into a `Comment`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment(element: &Element) -> super::Comment {
     let mut node = super::Comment::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENT_SHAPE);
@@ -884,7 +884,7 @@ pub fn comment(element: &Element) -> super::Comment {
 }
 
 /// Read `p:cmAuthor` into a `CommentAuthor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_author(element: &Element) -> super::CommentAuthor {
     let mut node = super::CommentAuthor::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENT_AUTHOR_SHAPE);
@@ -904,7 +904,7 @@ pub fn comment_author(element: &Element) -> super::CommentAuthor {
 }
 
 /// Read `p:cmLst` into a `CommentList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_list(element: &Element) -> super::CommentList {
     let mut node = super::CommentList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENT_LIST_SHAPE);
@@ -918,7 +918,7 @@ pub fn comment_list(element: &Element) -> super::CommentList {
 }
 
 /// Read `p:pos` into a `CommentPosition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment_position(element: &Element) -> super::CommentPosition {
     let mut node = super::CommentPosition::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENT_POSITION_SHAPE);
@@ -934,7 +934,7 @@ pub fn comment_position(element: &Element) -> super::CommentPosition {
 }
 
 /// Read `p:text` into a `CommentsTextContent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comments_text_content(element: &Element) -> super::CommentsTextContent {
     let mut node = super::CommentsTextContent::default();
     let mut reader =
@@ -949,7 +949,7 @@ pub fn comments_text_content(element: &Element) -> super::CommentsTextContent {
 }
 
 /// Read `p:cBhvr` into a `CommonBehavior`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn common_behavior(element: &Element) -> super::CommonBehavior {
     let mut node = super::CommonBehavior::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMON_BEHAVIOR_SHAPE);
@@ -974,7 +974,7 @@ pub fn common_behavior(element: &Element) -> super::CommonBehavior {
 }
 
 /// Read `p:cMediaNode` into a `CommonMediaNodeProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn common_media_node_properties(element: &Element) -> super::CommonMediaNodeProperties {
     let mut node = super::CommonMediaNodeProperties::default();
     let mut reader =
@@ -995,7 +995,7 @@ pub fn common_media_node_properties(element: &Element) -> super::CommonMediaNode
 }
 
 /// Read `p:cSld` into a `CommonSlideData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn common_slide_data(element: &Element) -> super::CommonSlideData {
     let mut node = super::CommonSlideData::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMON_SLIDE_DATA_SHAPE);
@@ -1015,7 +1015,7 @@ pub fn common_slide_data(element: &Element) -> super::CommonSlideData {
 }
 
 /// Read `p:cSldViewPr` into a `CommonSlideViewProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn common_slide_view_properties(element: &Element) -> super::CommonSlideViewProperties {
     let mut node = super::CommonSlideViewProperties::default();
     let mut reader =
@@ -1035,7 +1035,7 @@ pub fn common_slide_view_properties(element: &Element) -> super::CommonSlideView
 }
 
 /// Read `p:cTn` into a `CommonTimeNodeProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn common_time_node_properties(element: &Element) -> super::CommonTimeNodeProperties {
     let mut node = super::CommonTimeNodeProperties::default();
     let mut reader =
@@ -1080,7 +1080,7 @@ pub fn common_time_node_properties(element: &Element) -> super::CommonTimeNodePr
 }
 
 /// Read `p:cViewPr` into a `CommonViewProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn common_view_properties(element: &Element) -> super::CommonViewProperties {
     let mut node = super::CommonViewProperties::default();
     let mut reader =
@@ -1098,7 +1098,7 @@ pub fn common_view_properties(element: &Element) -> super::CommonViewProperties 
 }
 
 /// Read `p:cond` into a `Condition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn condition(element: &Element) -> super::Condition {
     let mut node = super::Condition::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONDITION_SHAPE);
@@ -1115,7 +1115,7 @@ pub fn condition(element: &Element) -> super::Condition {
 }
 
 /// Read `p:cxnSp` into a `ConnectionShape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn connection_shape(element: &Element) -> super::ConnectionShape {
     let mut node = super::ConnectionShape::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONNECTION_SHAPE_SHAPE);
@@ -1133,7 +1133,7 @@ pub fn connection_shape(element: &Element) -> super::ConnectionShape {
 }
 
 /// Read `p:contentPart` into a `ContentPart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn content_part(element: &Element) -> super::ContentPart {
     let mut node = super::ContentPart::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONTENT_PART_SHAPE);
@@ -1147,7 +1147,7 @@ pub fn content_part(element: &Element) -> super::ContentPart {
 }
 
 /// Read `p:cover` into a `CoverSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cover_slide_transition(element: &Element) -> super::CoverSlideTransition {
     let mut node = super::CoverSlideTransition::default();
     let mut reader =
@@ -1162,7 +1162,7 @@ pub fn cover_slide_transition(element: &Element) -> super::CoverSlideTransition 
 }
 
 /// Read `p:custShow` into a `CustomShow`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_show(element: &Element) -> super::CustomShow {
     let mut node = super::CustomShow::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOM_SHOW_SHAPE);
@@ -1176,7 +1176,7 @@ pub fn custom_show(element: &Element) -> super::CustomShow {
 }
 
 /// Read `p:custShow` into a `CustomShowCustomShow`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_show_custom_show(element: &Element) -> super::CustomShowCustomShow {
     let mut node = super::CustomShowCustomShow::default();
     let mut reader =
@@ -1195,7 +1195,7 @@ pub fn custom_show_custom_show(element: &Element) -> super::CustomShowCustomShow
 }
 
 /// Read `p:custData` into a `CustomerData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn customer_data(element: &Element) -> super::CustomerData {
     let mut node = super::CustomerData::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOMER_DATA_SHAPE);
@@ -1209,7 +1209,7 @@ pub fn customer_data(element: &Element) -> super::CustomerData {
 }
 
 /// Read `p:custDataLst` into a `CustomerDataList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn customer_data_list(element: &Element) -> super::CustomerDataList {
     let mut node = super::CustomerDataList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOMER_DATA_LIST_SHAPE);
@@ -1225,7 +1225,7 @@ pub fn customer_data_list(element: &Element) -> super::CustomerDataList {
 }
 
 /// Read `p:tags` into a `CustomerDataTags`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn customer_data_tags(element: &Element) -> super::CustomerDataTags {
     let mut node = super::CustomerDataTags::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOMER_DATA_TAGS_SHAPE);
@@ -1239,7 +1239,7 @@ pub fn customer_data_tags(element: &Element) -> super::CustomerDataTags {
 }
 
 /// Read `p:cut` into a `CutSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cut_slide_transition(element: &Element) -> super::CutSlideTransition {
     let mut node = super::CutSlideTransition::default();
     let mut reader =
@@ -1254,7 +1254,7 @@ pub fn cut_slide_transition(element: &Element) -> super::CutSlideTransition {
 }
 
 /// Read `p:diamond` into a `DiamondSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn diamond_slide_transition(element: &Element) -> super::DiamondSlideTransition {
     let reader =
         officekit_markup_base::Reader::new(element, &super::DIAMOND_SLIDE_TRANSITION_SHAPE);
@@ -1265,7 +1265,7 @@ pub fn diamond_slide_transition(element: &Element) -> super::DiamondSlideTransit
 }
 
 /// Read `p:dissolve` into a `DissolveSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dissolve_slide_transition(element: &Element) -> super::DissolveSlideTransition {
     let reader =
         officekit_markup_base::Reader::new(element, &super::DISSOLVE_SLIDE_TRANSITION_SHAPE);
@@ -1276,7 +1276,7 @@ pub fn dissolve_slide_transition(element: &Element) -> super::DissolveSlideTrans
 }
 
 /// Read `p:oleChartEl` into a `EmbeddedChartElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_chart_element(element: &Element) -> super::EmbeddedChartElement {
     let mut node = super::EmbeddedChartElement::default();
     let mut reader =
@@ -1293,7 +1293,7 @@ pub fn embedded_chart_element(element: &Element) -> super::EmbeddedChartElement 
 }
 
 /// Read `p:control` into a `EmbeddedControl`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_control(element: &Element) -> super::EmbeddedControl {
     let mut node = super::EmbeddedControl::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EMBEDDED_CONTROL_SHAPE);
@@ -1315,7 +1315,7 @@ pub fn embedded_control(element: &Element) -> super::EmbeddedControl {
 }
 
 /// Read `p:embeddedFont` into a `EmbeddedFont`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_font(element: &Element) -> super::EmbeddedFont {
     let mut node = super::EmbeddedFont::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EMBEDDED_FONT_SHAPE);
@@ -1334,7 +1334,7 @@ pub fn embedded_font(element: &Element) -> super::EmbeddedFont {
 }
 
 /// Read `p:embeddedFontLst` into a `EmbeddedFontList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_font_list(element: &Element) -> super::EmbeddedFontList {
     let mut node = super::EmbeddedFontList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EMBEDDED_FONT_LIST_SHAPE);
@@ -1348,7 +1348,7 @@ pub fn embedded_font_list(element: &Element) -> super::EmbeddedFontList {
 }
 
 /// Read `p:font` into a `EmbeddedFontName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_font_name(element: &Element) -> super::EmbeddedFontName {
     let mut node = super::EmbeddedFontName::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EMBEDDED_FONT_NAME_SHAPE);
@@ -1366,13 +1366,13 @@ pub fn embedded_font_name(element: &Element) -> super::EmbeddedFontName {
 }
 
 /// Read one item of `EmbeddedObjectContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn embedded_object(element: &Element) -> super::EmbeddedObjectContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:embed` into a `EmbeddedObjectOrControl`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_object_or_control(element: &Element) -> super::EmbeddedObjectOrControl {
     let mut node = super::EmbeddedObjectOrControl::default();
     let mut reader =
@@ -1389,7 +1389,7 @@ pub fn embedded_object_or_control(element: &Element) -> super::EmbeddedObjectOrC
 }
 
 /// Read `p:oleObj` into a `EmbeddedObjectsAndControls`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn embedded_objects_and_controls(element: &Element) -> super::EmbeddedObjectsAndControls {
     let mut node = super::EmbeddedObjectsAndControls::default();
     let mut reader =
@@ -1413,7 +1413,7 @@ pub fn embedded_objects_and_controls(element: &Element) -> super::EmbeddedObject
 }
 
 /// Read `p:endCondLst` into a `EndConditionsList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn end_conditions_list(element: &Element) -> super::EndConditionsList {
     let mut node = super::EndConditionsList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::END_CONDITIONS_LIST_SHAPE);
@@ -1427,7 +1427,7 @@ pub fn end_conditions_list(element: &Element) -> super::EndConditionsList {
 }
 
 /// Read `p:endSync` into a `EndSync`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn end_sync(element: &Element) -> super::EndSync {
     let mut node = super::EndSync::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::END_SYNC_SHAPE);
@@ -1444,7 +1444,7 @@ pub fn end_sync(element: &Element) -> super::EndSync {
 }
 
 /// Read `p:excl` into a `Exclusive`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn exclusive(element: &Element) -> super::Exclusive {
     let mut node = super::Exclusive::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXCLUSIVE_SHAPE);
@@ -1458,7 +1458,7 @@ pub fn exclusive(element: &Element) -> super::Exclusive {
 }
 
 /// Read `p:ext` into a `Extension`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn extension(element: &Element) -> super::Extension {
     let mut node = super::Extension::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXTENSION_SHAPE);
@@ -1474,7 +1474,7 @@ pub fn extension(element: &Element) -> super::Extension {
 }
 
 /// Read `p:extLst` into a `ExtensionList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn extension_list(element: &Element) -> super::ExtensionList {
     let mut node = super::ExtensionList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXTENSION_LIST_SHAPE);
@@ -1488,7 +1488,7 @@ pub fn extension_list(element: &Element) -> super::ExtensionList {
 }
 
 /// Read `p:extLst` into a `ExtensionListWithModificationFlag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn extension_list_with_modification_flag(
     element: &Element,
 ) -> super::ExtensionListWithModificationFlag {
@@ -1509,7 +1509,7 @@ pub fn extension_list_with_modification_flag(
 }
 
 /// Read `p:fade` into a `FadeSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn fade_slide_transition(element: &Element) -> super::FadeSlideTransition {
     let mut node = super::FadeSlideTransition::default();
     let mut reader =
@@ -1524,7 +1524,7 @@ pub fn fade_slide_transition(element: &Element) -> super::FadeSlideTransition {
 }
 
 /// Read `p:fltVal` into a `FloatValue`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn float_value(element: &Element) -> super::FloatValue {
     let mut node = super::FloatValue::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FLOAT_VALUE_SHAPE);
@@ -1538,7 +1538,7 @@ pub fn float_value(element: &Element) -> super::FloatValue {
 }
 
 /// Read `p:from` into a `FromColor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn from_color(element: &Element) -> super::FromColor {
     let mut node = super::FromColor::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FROM_COLOR_SHAPE);
@@ -1552,7 +1552,7 @@ pub fn from_color(element: &Element) -> super::FromColor {
 }
 
 /// Read `p:from` into a `FromTLPoint`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn from_tl_point(element: &Element) -> super::FromTLPoint {
     let mut node = super::FromTLPoint::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FROM_TL_POINT_SHAPE);
@@ -1568,7 +1568,7 @@ pub fn from_tl_point(element: &Element) -> super::FromTLPoint {
 }
 
 /// Read `p:graphicEl` into a `GraphicElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn graphic_element(element: &Element) -> super::GraphicElement {
     let mut node = super::GraphicElement::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GRAPHIC_ELEMENT_SHAPE);
@@ -1582,7 +1582,7 @@ pub fn graphic_element(element: &Element) -> super::GraphicElement {
 }
 
 /// Read `p:graphicFrame` into a `GraphicFrame`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn graphic_frame(element: &Element) -> super::GraphicFrame {
     let mut node = super::GraphicFrame::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GRAPHIC_FRAME_SHAPE);
@@ -1601,7 +1601,7 @@ pub fn graphic_frame(element: &Element) -> super::GraphicFrame {
 }
 
 /// Read `p:gridSpacing` into a `GridSpacing`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn grid_spacing(element: &Element) -> super::GridSpacing {
     let mut node = super::GridSpacing::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GRID_SPACING_SHAPE);
@@ -1617,7 +1617,7 @@ pub fn grid_spacing(element: &Element) -> super::GridSpacing {
 }
 
 /// Read `p:grpSp` into a `GroupShape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_shape(element: &Element) -> super::GroupShape {
     let mut node = super::GroupShape::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GROUP_SHAPE_SHAPE);
@@ -1635,13 +1635,13 @@ pub fn group_shape(element: &Element) -> super::GroupShape {
 }
 
 /// Read one item of `GroupShapeContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn group_shape_content(element: &Element) -> super::GroupShapeContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:grpSpPr` into a `GroupShapeProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_shape_properties(element: &Element) -> super::GroupShapeProperties {
     let mut node = super::GroupShapeProperties::default();
     let mut reader =
@@ -1662,7 +1662,7 @@ pub fn group_shape_properties(element: &Element) -> super::GroupShapeProperties 
 }
 
 /// Read `p:handoutMaster` into a `HandoutMaster`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn handout_master(element: &Element) -> super::HandoutMaster {
     let mut node = super::HandoutMaster::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HANDOUT_MASTER_SHAPE);
@@ -1680,7 +1680,7 @@ pub fn handout_master(element: &Element) -> super::HandoutMaster {
 }
 
 /// Read `p:handoutMasterId` into a `HandoutMasterID`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn handout_master_id(element: &Element) -> super::HandoutMasterID {
     let mut node = super::HandoutMasterID::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HANDOUT_MASTER_ID_SHAPE);
@@ -1696,7 +1696,7 @@ pub fn handout_master_id(element: &Element) -> super::HandoutMasterID {
 }
 
 /// Read `p:hf` into a `HeaderFooterInformationForASlideMaster`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn header_footer_information_for_a_slide_master(
     element: &Element,
 ) -> super::HeaderFooterInformationForASlideMaster {
@@ -1720,7 +1720,7 @@ pub fn header_footer_information_for_a_slide_master(
 }
 
 /// Read `p:hsl` into a `Hsl`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hsl(element: &Element) -> super::Hsl {
     let mut node = super::Hsl::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HSL_SHAPE);
@@ -1737,7 +1737,7 @@ pub fn hsl(element: &Element) -> super::Hsl {
 }
 
 /// Read `p:htmlPubPr` into a `HTMLPublishingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn html_publishing_properties(element: &Element) -> super::HTMLPublishingProperties {
     let mut node = super::HTMLPublishingProperties::default();
     let mut reader =
@@ -1758,7 +1758,7 @@ pub fn html_publishing_properties(element: &Element) -> super::HTMLPublishingPro
 }
 
 /// Read `p:inkTgt` into a `InkTarget`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ink_target(element: &Element) -> super::InkTarget {
     let mut node = super::InkTarget::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::INK_TARGET_SHAPE);
@@ -1772,7 +1772,7 @@ pub fn ink_target(element: &Element) -> super::InkTarget {
 }
 
 /// Read `p:intVal` into a `Integer`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn integer(element: &Element) -> super::Integer {
     let mut node = super::Integer::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::INTEGER_SHAPE);
@@ -1786,7 +1786,7 @@ pub fn integer(element: &Element) -> super::Integer {
 }
 
 /// Read `p:italic` into a `ItalicEmbeddedFont`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn italic_embedded_font(element: &Element) -> super::ItalicEmbeddedFont {
     let mut node = super::ItalicEmbeddedFont::default();
     let mut reader =
@@ -1801,7 +1801,7 @@ pub fn italic_embedded_font(element: &Element) -> super::ItalicEmbeddedFont {
 }
 
 /// Read `p:iterate` into a `Iterate`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn iterate(element: &Element) -> super::Iterate {
     let mut node = super::Iterate::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ITERATE_SHAPE);
@@ -1818,13 +1818,13 @@ pub fn iterate(element: &Element) -> super::Iterate {
 }
 
 /// Read one item of `IterateContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn iterate_content(element: &Element) -> super::IterateContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:kinsoku` into a `KinsokuSettings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn kinsoku_settings(element: &Element) -> super::KinsokuSettings {
     let mut node = super::KinsokuSettings::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::KINSOKU_SETTINGS_SHAPE);
@@ -1841,7 +1841,7 @@ pub fn kinsoku_settings(element: &Element) -> super::KinsokuSettings {
 }
 
 /// Read `p:kiosk` into a `KioskSlideShowMode`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn kiosk_slide_show_mode(element: &Element) -> super::KioskSlideShowMode {
     let mut node = super::KioskSlideShowMode::default();
     let mut reader =
@@ -1856,7 +1856,7 @@ pub fn kiosk_slide_show_mode(element: &Element) -> super::KioskSlideShowMode {
 }
 
 /// Read `p:link` into a `LinkedObjectOrControl`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn linked_object_or_control(element: &Element) -> super::LinkedObjectOrControl {
     let mut node = super::LinkedObjectOrControl::default();
     let mut reader =
@@ -1873,7 +1873,7 @@ pub fn linked_object_or_control(element: &Element) -> super::LinkedObjectOrContr
 }
 
 /// Read `p:cmAuthorLst` into a `ListOfCommentAuthors`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_comment_authors(element: &Element) -> super::ListOfCommentAuthors {
     let mut node = super::ListOfCommentAuthors::default();
     let mut reader =
@@ -1888,7 +1888,7 @@ pub fn list_of_comment_authors(element: &Element) -> super::ListOfCommentAuthors
 }
 
 /// Read `p:controls` into a `ListOfControls`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_controls(element: &Element) -> super::ListOfControls {
     let mut node = super::ListOfControls::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LIST_OF_CONTROLS_SHAPE);
@@ -1902,7 +1902,7 @@ pub fn list_of_controls(element: &Element) -> super::ListOfControls {
 }
 
 /// Read `p:custShowLst` into a `ListOfCustomShows`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_custom_shows(element: &Element) -> super::ListOfCustomShows {
     let mut node = super::ListOfCustomShows::default();
     let mut reader =
@@ -1917,7 +1917,7 @@ pub fn list_of_custom_shows(element: &Element) -> super::ListOfCustomShows {
 }
 
 /// Read `p:guideLst` into a `ListOfGuides`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_guides(element: &Element) -> super::ListOfGuides {
     let mut node = super::ListOfGuides::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LIST_OF_GUIDES_SHAPE);
@@ -1931,7 +1931,7 @@ pub fn list_of_guides(element: &Element) -> super::ListOfGuides {
 }
 
 /// Read `p:handoutMasterIdLst` into a `ListOfHandoutMasterIDs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_handout_master_i_ds(element: &Element) -> super::ListOfHandoutMasterIDs {
     let mut node = super::ListOfHandoutMasterIDs::default();
     let mut reader =
@@ -1946,7 +1946,7 @@ pub fn list_of_handout_master_i_ds(element: &Element) -> super::ListOfHandoutMas
 }
 
 /// Read `p:notesMasterIdLst` into a `ListOfNotesMasterIDs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_notes_master_i_ds(element: &Element) -> super::ListOfNotesMasterIDs {
     let mut node = super::ListOfNotesMasterIDs::default();
     let mut reader =
@@ -1961,7 +1961,7 @@ pub fn list_of_notes_master_i_ds(element: &Element) -> super::ListOfNotesMasterI
 }
 
 /// Read `p:sldLst` into a `ListOfPresentationSlides`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_presentation_slides(element: &Element) -> super::ListOfPresentationSlides {
     let mut node = super::ListOfPresentationSlides::default();
     let mut reader =
@@ -1976,7 +1976,7 @@ pub fn list_of_presentation_slides(element: &Element) -> super::ListOfPresentati
 }
 
 /// Read `p:sldLst` into a `ListOfPresentationSlidesOutlineViewSlideList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_presentation_slides_outline_view_slide_list(
     element: &Element,
 ) -> super::ListOfPresentationSlidesOutlineViewSlideList {
@@ -1995,7 +1995,7 @@ pub fn list_of_presentation_slides_outline_view_slide_list(
 }
 
 /// Read `p:sldIdLst` into a `ListOfSlideIDs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_slide_i_ds(element: &Element) -> super::ListOfSlideIDs {
     let mut node = super::ListOfSlideIDs::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LIST_OF_SLIDE_I_DS_SHAPE);
@@ -2009,7 +2009,7 @@ pub fn list_of_slide_i_ds(element: &Element) -> super::ListOfSlideIDs {
 }
 
 /// Read `p:sldLayoutIdLst` into a `ListOfSlideLayouts`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_slide_layouts(element: &Element) -> super::ListOfSlideLayouts {
     let mut node = super::ListOfSlideLayouts::default();
     let mut reader =
@@ -2024,7 +2024,7 @@ pub fn list_of_slide_layouts(element: &Element) -> super::ListOfSlideLayouts {
 }
 
 /// Read `p:sldMasterIdLst` into a `ListOfSlideMasterIDs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_slide_master_i_ds(element: &Element) -> super::ListOfSlideMasterIDs {
     let mut node = super::ListOfSlideMasterIDs::default();
     let mut reader =
@@ -2039,7 +2039,7 @@ pub fn list_of_slide_master_i_ds(element: &Element) -> super::ListOfSlideMasterI
 }
 
 /// Read `p:modifyVerifier` into a `ModificationVerifier`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn modification_verifier(element: &Element) -> super::ModificationVerifier {
     let mut node = super::ModificationVerifier::default();
     let mut reader =
@@ -2070,7 +2070,7 @@ pub fn modification_verifier(element: &Element) -> super::ModificationVerifier {
 }
 
 /// Read `p:newsflash` into a `NewsflashSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn newsflash_slide_transition(element: &Element) -> super::NewsflashSlideTransition {
     let reader =
         officekit_markup_base::Reader::new(element, &super::NEWSFLASH_SLIDE_TRANSITION_SHAPE);
@@ -2081,7 +2081,7 @@ pub fn newsflash_slide_transition(element: &Element) -> super::NewsflashSlideTra
 }
 
 /// Read `p:nextCondLst` into a `NextConditionsList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn next_conditions_list(element: &Element) -> super::NextConditionsList {
     let mut node = super::NextConditionsList::default();
     let mut reader =
@@ -2096,7 +2096,7 @@ pub fn next_conditions_list(element: &Element) -> super::NextConditionsList {
 }
 
 /// Read `p:cNvCxnSpPr` into a `NonVisualConnectorShapeDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_connector_shape_drawing_properties(
     element: &Element,
 ) -> super::NonVisualConnectorShapeDrawingProperties {
@@ -2119,7 +2119,7 @@ pub fn non_visual_connector_shape_drawing_properties(
 }
 
 /// Read `p:cNvPr` into a `NonVisualDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawingProperties {
     let mut node = super::NonVisualDrawingProperties::default();
     let mut reader =
@@ -2142,7 +2142,7 @@ pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawi
 }
 
 /// Read `p:cNvSpPr` into a `NonVisualDrawingPropertiesForAShape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_drawing_properties_for_a_shape(
     element: &Element,
 ) -> super::NonVisualDrawingPropertiesForAShape {
@@ -2164,7 +2164,7 @@ pub fn non_visual_drawing_properties_for_a_shape(
 }
 
 /// Read `p:cNvGraphicFramePr` into a `NonVisualGraphicFrameDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_graphic_frame_drawing_properties(
     element: &Element,
 ) -> super::NonVisualGraphicFrameDrawingProperties {
@@ -2185,7 +2185,7 @@ pub fn non_visual_graphic_frame_drawing_properties(
 }
 
 /// Read `p:cNvGrpSpPr` into a `NonVisualGroupShapeDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_group_shape_drawing_properties(
     element: &Element,
 ) -> super::NonVisualGroupShapeDrawingProperties {
@@ -2206,7 +2206,7 @@ pub fn non_visual_group_shape_drawing_properties(
 }
 
 /// Read `p:cNvPicPr` into a `NonVisualPictureDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_picture_drawing_properties(
     element: &Element,
 ) -> super::NonVisualPictureDrawingProperties {
@@ -2228,7 +2228,7 @@ pub fn non_visual_picture_drawing_properties(
 }
 
 /// Read `p:nvPr` into a `NonVisualProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_properties(element: &Element) -> super::NonVisualProperties {
     let mut node = super::NonVisualProperties::default();
     let mut reader =
@@ -2249,13 +2249,13 @@ pub fn non_visual_properties(element: &Element) -> super::NonVisualProperties {
 }
 
 /// Read one item of `NonVisualPropertiesContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn non_visual_properties_content(element: &Element) -> super::NonVisualPropertiesContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:nvCxnSpPr` into a `NonVisualPropertiesForAConnectionShape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_properties_for_a_connection_shape(
     element: &Element,
 ) -> super::NonVisualPropertiesForAConnectionShape {
@@ -2277,7 +2277,7 @@ pub fn non_visual_properties_for_a_connection_shape(
 }
 
 /// Read `p:nvGraphicFramePr` into a `NonVisualPropertiesForAGraphicFrame`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_properties_for_a_graphic_frame(
     element: &Element,
 ) -> super::NonVisualPropertiesForAGraphicFrame {
@@ -2299,7 +2299,7 @@ pub fn non_visual_properties_for_a_graphic_frame(
 }
 
 /// Read `p:nvGrpSpPr` into a `NonVisualPropertiesForAGroupShape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_properties_for_a_group_shape(
     element: &Element,
 ) -> super::NonVisualPropertiesForAGroupShape {
@@ -2321,7 +2321,7 @@ pub fn non_visual_properties_for_a_group_shape(
 }
 
 /// Read `p:nvPicPr` into a `NonVisualPropertiesForAPicture`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_properties_for_a_picture(
     element: &Element,
 ) -> super::NonVisualPropertiesForAPicture {
@@ -2343,7 +2343,7 @@ pub fn non_visual_properties_for_a_picture(
 }
 
 /// Read `p:nvSpPr` into a `NonVisualPropertiesForAShape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_properties_for_a_shape(element: &Element) -> super::NonVisualPropertiesForAShape {
     let mut node = super::NonVisualPropertiesForAShape::default();
     let mut reader = officekit_markup_base::Reader::new(
@@ -2363,7 +2363,7 @@ pub fn non_visual_properties_for_a_shape(element: &Element) -> super::NonVisualP
 }
 
 /// Read `p:normalViewPr` into a `NormalViewProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn normal_view_properties(element: &Element) -> super::NormalViewProperties {
     let mut node = super::NormalViewProperties::default();
     let mut reader =
@@ -2386,7 +2386,7 @@ pub fn normal_view_properties(element: &Element) -> super::NormalViewProperties 
 }
 
 /// Read `p:restoredLeft` into a `NormalViewRestoredLeftProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn normal_view_restored_left_properties(
     element: &Element,
 ) -> super::NormalViewRestoredLeftProperties {
@@ -2407,7 +2407,7 @@ pub fn normal_view_restored_left_properties(
 }
 
 /// Read `p:restoredTop` into a `NormalViewRestoredTopProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn normal_view_restored_top_properties(
     element: &Element,
 ) -> super::NormalViewRestoredTopProperties {
@@ -2428,7 +2428,7 @@ pub fn normal_view_restored_top_properties(
 }
 
 /// Read `p:notesMaster` into a `NotesMaster`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_master(element: &Element) -> super::NotesMaster {
     let mut node = super::NotesMaster::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NOTES_MASTER_SHAPE);
@@ -2447,7 +2447,7 @@ pub fn notes_master(element: &Element) -> super::NotesMaster {
 }
 
 /// Read `p:notesMasterId` into a `NotesMasterID`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_master_id(element: &Element) -> super::NotesMasterID {
     let mut node = super::NotesMasterID::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NOTES_MASTER_ID_SHAPE);
@@ -2463,7 +2463,7 @@ pub fn notes_master_id(element: &Element) -> super::NotesMasterID {
 }
 
 /// Read `p:notes` into a `NotesSlide`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_slide(element: &Element) -> super::NotesSlide {
     let mut node = super::NotesSlide::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NOTES_SLIDE_SHAPE);
@@ -2482,7 +2482,7 @@ pub fn notes_slide(element: &Element) -> super::NotesSlide {
 }
 
 /// Read `p:notesSz` into a `NotesSlideSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_slide_size(element: &Element) -> super::NotesSlideSize {
     let mut node = super::NotesSlideSize::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NOTES_SLIDE_SIZE_SHAPE);
@@ -2498,7 +2498,7 @@ pub fn notes_slide_size(element: &Element) -> super::NotesSlideSize {
 }
 
 /// Read `p:notesStyle` into a `NotesTextStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_text_style(element: &Element) -> super::NotesTextStyle {
     let mut node = super::NotesTextStyle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NOTES_TEXT_STYLE_SHAPE);
@@ -2523,7 +2523,7 @@ pub fn notes_text_style(element: &Element) -> super::NotesTextStyle {
 }
 
 /// Read `p:notesTextViewPr` into a `NotesTextViewProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_text_view_properties(element: &Element) -> super::NotesTextViewProperties {
     let mut node = super::NotesTextViewProperties::default();
     let mut reader =
@@ -2540,7 +2540,7 @@ pub fn notes_text_view_properties(element: &Element) -> super::NotesTextViewProp
 }
 
 /// Read `p:notesViewPr` into a `NotesViewProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_view_properties(element: &Element) -> super::NotesViewProperties {
     let mut node = super::NotesViewProperties::default();
     let mut reader =
@@ -2557,7 +2557,7 @@ pub fn notes_view_properties(element: &Element) -> super::NotesViewProperties {
 }
 
 /// Read `p:outlineViewPr` into a `OutlineViewProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn outline_view_properties(element: &Element) -> super::OutlineViewProperties {
     let mut node = super::OutlineViewProperties::default();
     let mut reader =
@@ -2575,7 +2575,7 @@ pub fn outline_view_properties(element: &Element) -> super::OutlineViewPropertie
 }
 
 /// Read `p:pRg` into a `ParagraphTextRange`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn paragraph_text_range(element: &Element) -> super::ParagraphTextRange {
     let mut node = super::ParagraphTextRange::default();
     let mut reader =
@@ -2592,7 +2592,7 @@ pub fn paragraph_text_range(element: &Element) -> super::ParagraphTextRange {
 }
 
 /// Read `p:par` into a `ParallelTimeNode`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn parallel_time_node(element: &Element) -> super::ParallelTimeNode {
     let mut node = super::ParallelTimeNode::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PARALLEL_TIME_NODE_SHAPE);
@@ -2606,7 +2606,7 @@ pub fn parallel_time_node(element: &Element) -> super::ParallelTimeNode {
 }
 
 /// Read `p:penClr` into a `PenColorForSlideShow`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pen_color_for_slide_show(element: &Element) -> super::PenColorForSlideShow {
     let mut node = super::PenColorForSlideShow::default();
     let mut reader =
@@ -2621,7 +2621,7 @@ pub fn pen_color_for_slide_show(element: &Element) -> super::PenColorForSlideSho
 }
 
 /// Read `p:photoAlbum` into a `PhotoAlbumInformation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn photo_album_information(element: &Element) -> super::PhotoAlbumInformation {
     let mut node = super::PhotoAlbumInformation::default();
     let mut reader =
@@ -2641,7 +2641,7 @@ pub fn photo_album_information(element: &Element) -> super::PhotoAlbumInformatio
 }
 
 /// Read `p:pic` into a `Picture`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn picture(element: &Element) -> super::Picture {
     let mut node = super::Picture::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PICTURE_SHAPE);
@@ -2660,7 +2660,7 @@ pub fn picture(element: &Element) -> super::Picture {
 }
 
 /// Read `p:blipFill` into a `PictureFill`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn picture_fill(element: &Element) -> super::PictureFill {
     let mut node = super::PictureFill::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PICTURE_FILL_SHAPE);
@@ -2679,7 +2679,7 @@ pub fn picture_fill(element: &Element) -> super::PictureFill {
 }
 
 /// Read `p:ph` into a `PlaceholderShape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn placeholder_shape(element: &Element) -> super::PlaceholderShape {
     let mut node = super::PlaceholderShape::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PLACEHOLDER_SHAPE_SHAPE);
@@ -2699,7 +2699,7 @@ pub fn placeholder_shape(element: &Element) -> super::PlaceholderShape {
 }
 
 /// Read `p:plus` into a `PlusSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn plus_slide_transition(element: &Element) -> super::PlusSlideTransition {
     let reader = officekit_markup_base::Reader::new(element, &super::PLUS_SLIDE_TRANSITION_SHAPE);
     super::PlusSlideTransition {
@@ -2709,7 +2709,7 @@ pub fn plus_slide_transition(element: &Element) -> super::PlusSlideTransition {
 }
 
 /// Read `p:presentation` into a `Presentation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation(element: &Element) -> super::Presentation {
     let mut node = super::Presentation::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PRESENTATION_SHAPE);
@@ -2750,7 +2750,7 @@ pub fn presentation(element: &Element) -> super::Presentation {
 }
 
 /// Read `p:defaultTextStyle` into a `PresentationDefaultTextStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation_default_text_style(element: &Element) -> super::PresentationDefaultTextStyle {
     let mut node = super::PresentationDefaultTextStyle::default();
     let mut reader =
@@ -2776,7 +2776,7 @@ pub fn presentation_default_text_style(element: &Element) -> super::Presentation
 }
 
 /// Read `p:sld` into a `PresentationSlide`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation_slide(element: &Element) -> super::PresentationSlide {
     let mut node = super::PresentationSlide::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PRESENTATION_SLIDE_SHAPE);
@@ -2790,7 +2790,7 @@ pub fn presentation_slide(element: &Element) -> super::PresentationSlide {
 }
 
 /// Read `p:sld` into a `PresentationSlideOutlineViewSlideEntry`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation_slide_outline_view_slide_entry(
     element: &Element,
 ) -> super::PresentationSlideOutlineViewSlideEntry {
@@ -2811,7 +2811,7 @@ pub fn presentation_slide_outline_view_slide_entry(
 }
 
 /// Read `p:sldSz` into a `PresentationSlideSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation_slide_size(element: &Element) -> super::PresentationSlideSize {
     let mut node = super::PresentationSlideSize::default();
     let mut reader =
@@ -2829,7 +2829,7 @@ pub fn presentation_slide_size(element: &Element) -> super::PresentationSlideSiz
 }
 
 /// Read `p:sld` into a `PresentationSlideSlide`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation_slide_slide(element: &Element) -> super::PresentationSlideSlide {
     let mut node = super::PresentationSlideSlide::default();
     let mut reader =
@@ -2852,7 +2852,7 @@ pub fn presentation_slide_slide(element: &Element) -> super::PresentationSlideSl
 }
 
 /// Read `p:presentationPr` into a `PresentationWideProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation_wide_properties(element: &Element) -> super::PresentationWideProperties {
     let mut node = super::PresentationWideProperties::default();
     let mut reader =
@@ -2873,7 +2873,7 @@ pub fn presentation_wide_properties(element: &Element) -> super::PresentationWid
 }
 
 /// Read `p:showPr` into a `PresentationWideShowProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation_wide_show_properties(
     element: &Element,
 ) -> super::PresentationWideShowProperties {
@@ -2900,7 +2900,7 @@ pub fn presentation_wide_show_properties(
 }
 
 /// Read `p:viewPr` into a `PresentationWideViewProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation_wide_view_properties(
     element: &Element,
 ) -> super::PresentationWideViewProperties {
@@ -2929,7 +2929,7 @@ pub fn presentation_wide_view_properties(
 }
 
 /// Read `p:present` into a `PresenterSlideShowMode`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presenter_slide_show_mode(element: &Element) -> super::PresenterSlideShowMode {
     let reader =
         officekit_markup_base::Reader::new(element, &super::PRESENTER_SLIDE_SHOW_MODE_SHAPE);
@@ -2940,7 +2940,7 @@ pub fn presenter_slide_show_mode(element: &Element) -> super::PresenterSlideShow
 }
 
 /// Read `p:prevCondLst` into a `PreviousConditionsList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn previous_conditions_list(element: &Element) -> super::PreviousConditionsList {
     let mut node = super::PreviousConditionsList::default();
     let mut reader =
@@ -2955,7 +2955,7 @@ pub fn previous_conditions_list(element: &Element) -> super::PreviousConditionsL
 }
 
 /// Read `p:prnPr` into a `PrintingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn printing_properties(element: &Element) -> super::PrintingProperties {
     let mut node = super::PrintingProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PRINTING_PROPERTIES_SHAPE);
@@ -2975,7 +2975,7 @@ pub fn printing_properties(element: &Element) -> super::PrintingProperties {
 }
 
 /// Read `p:tag` into a `ProgrammableExtensibilityTag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn programmable_extensibility_tag(element: &Element) -> super::ProgrammableExtensibilityTag {
     let mut node = super::ProgrammableExtensibilityTag::default();
     let mut reader =
@@ -2992,7 +2992,7 @@ pub fn programmable_extensibility_tag(element: &Element) -> super::ProgrammableE
 }
 
 /// Read `p:tagLst` into a `ProgrammableTabList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn programmable_tab_list(element: &Element) -> super::ProgrammableTabList {
     let mut node = super::ProgrammableTabList::default();
     let mut reader =
@@ -3007,7 +3007,7 @@ pub fn programmable_tab_list(element: &Element) -> super::ProgrammableTabList {
 }
 
 /// Read `p:progress` into a `Progress`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn progress(element: &Element) -> super::Progress {
     let mut node = super::Progress::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PROGRESS_SHAPE);
@@ -3021,7 +3021,7 @@ pub fn progress(element: &Element) -> super::Progress {
 }
 
 /// Read `p:pull` into a `PullSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pull_slide_transition(element: &Element) -> super::PullSlideTransition {
     let mut node = super::PullSlideTransition::default();
     let mut reader =
@@ -3036,7 +3036,7 @@ pub fn pull_slide_transition(element: &Element) -> super::PullSlideTransition {
 }
 
 /// Read `p:push` into a `PushSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn push_slide_transition(element: &Element) -> super::PushSlideTransition {
     let mut node = super::PushSlideTransition::default();
     let mut reader =
@@ -3051,7 +3051,7 @@ pub fn push_slide_transition(element: &Element) -> super::PushSlideTransition {
 }
 
 /// Read `p:randomBar` into a `RandomBarSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn random_bar_slide_transition(element: &Element) -> super::RandomBarSlideTransition {
     let mut node = super::RandomBarSlideTransition::default();
     let mut reader =
@@ -3066,7 +3066,7 @@ pub fn random_bar_slide_transition(element: &Element) -> super::RandomBarSlideTr
 }
 
 /// Read `p:random` into a `RandomSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn random_slide_transition(element: &Element) -> super::RandomSlideTransition {
     let reader = officekit_markup_base::Reader::new(element, &super::RANDOM_SLIDE_TRANSITION_SHAPE);
     super::RandomSlideTransition {
@@ -3076,7 +3076,7 @@ pub fn random_slide_transition(element: &Element) -> super::RandomSlideTransitio
 }
 
 /// Read `p:regular` into a `RegularEmbeddedFont`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn regular_embedded_font(element: &Element) -> super::RegularEmbeddedFont {
     let mut node = super::RegularEmbeddedFont::default();
     let mut reader =
@@ -3091,7 +3091,7 @@ pub fn regular_embedded_font(element: &Element) -> super::RegularEmbeddedFont {
 }
 
 /// Read `p:rgb` into a `Rgb`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rgb(element: &Element) -> super::Rgb {
     let mut node = super::Rgb::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RGB_SHAPE);
@@ -3108,7 +3108,7 @@ pub fn rgb(element: &Element) -> super::Rgb {
 }
 
 /// Read `p:rCtr` into a `RotationCenter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rotation_center(element: &Element) -> super::RotationCenter {
     let mut node = super::RotationCenter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ROTATION_CENTER_SHAPE);
@@ -3124,7 +3124,7 @@ pub fn rotation_center(element: &Element) -> super::RotationCenter {
 }
 
 /// Read `p:rtn` into a `RuntimeNodeTriggerChoice`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn runtime_node_trigger_choice(element: &Element) -> super::RuntimeNodeTriggerChoice {
     let mut node = super::RuntimeNodeTriggerChoice::default();
     let mut reader =
@@ -3139,7 +3139,7 @@ pub fn runtime_node_trigger_choice(element: &Element) -> super::RuntimeNodeTrigg
 }
 
 /// Read `p:seq` into a `SequenceTimeNode`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sequence_time_node(element: &Element) -> super::SequenceTimeNode {
     let mut node = super::SequenceTimeNode::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SEQUENCE_TIME_NODE_SHAPE);
@@ -3159,7 +3159,7 @@ pub fn sequence_time_node(element: &Element) -> super::SequenceTimeNode {
 }
 
 /// Read `p:set` into a `SetTimeNodeBehavior`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn set_time_node_behavior(element: &Element) -> super::SetTimeNodeBehavior {
     let mut node = super::SetTimeNodeBehavior::default();
     let mut reader =
@@ -3176,7 +3176,7 @@ pub fn set_time_node_behavior(element: &Element) -> super::SetTimeNodeBehavior {
 }
 
 /// Read `p:sp` into a `Shape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape(element: &Element) -> super::Shape {
     let mut node = super::Shape::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_SHAPE);
@@ -3196,7 +3196,7 @@ pub fn shape(element: &Element) -> super::Shape {
 }
 
 /// Read `p:spPr` into a `ShapeProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_properties(element: &Element) -> super::ShapeProperties {
     let mut node = super::ShapeProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_PROPERTIES_SHAPE);
@@ -3219,7 +3219,7 @@ pub fn shape_properties(element: &Element) -> super::ShapeProperties {
 }
 
 /// Read `p:style` into a `ShapeStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_style(element: &Element) -> super::ShapeStyle {
     let mut node = super::ShapeStyle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_STYLE_SHAPE);
@@ -3237,7 +3237,7 @@ pub fn shape_style(element: &Element) -> super::ShapeStyle {
 }
 
 /// Read `p:spTgt` into a `ShapeTarget`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_target(element: &Element) -> super::ShapeTarget {
     let mut node = super::ShapeTarget::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_TARGET_SHAPE);
@@ -3253,13 +3253,13 @@ pub fn shape_target(element: &Element) -> super::ShapeTarget {
 }
 
 /// Read one item of `ShapeTargetContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn shape_target_content(element: &Element) -> super::ShapeTargetContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:txBody` into a `ShapeTextBody`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_text_body(element: &Element) -> super::ShapeTextBody {
     let mut node = super::ShapeTextBody::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_TEXT_BODY_SHAPE);
@@ -3276,7 +3276,7 @@ pub fn shape_text_body(element: &Element) -> super::ShapeTextBody {
 }
 
 /// Read `p:spTree` into a `ShapeTree`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_tree(element: &Element) -> super::ShapeTree {
     let mut node = super::ShapeTree::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_TREE_SHAPE);
@@ -3294,13 +3294,13 @@ pub fn shape_tree(element: &Element) -> super::ShapeTree {
 }
 
 /// Read one item of `ShowTypeContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn show_type(element: &Element) -> super::ShowTypeContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:bg` into a `SlideBackground`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_background(element: &Element) -> super::SlideBackground {
     let mut node = super::SlideBackground::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SLIDE_BACKGROUND_SHAPE);
@@ -3316,13 +3316,13 @@ pub fn slide_background(element: &Element) -> super::SlideBackground {
 }
 
 /// Read one item of `SlideBackgroundContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn slide_background_content(element: &Element) -> super::SlideBackgroundContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:sldId` into a `SlideID`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_id(element: &Element) -> super::SlideID {
     let mut node = super::SlideID::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SLIDE_ID_SHAPE);
@@ -3339,7 +3339,7 @@ pub fn slide_id(element: &Element) -> super::SlideID {
 }
 
 /// Read `p:sldLayout` into a `SlideLayout`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_layout(element: &Element) -> super::SlideLayout {
     let mut node = super::SlideLayout::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SLIDE_LAYOUT_SHAPE);
@@ -3365,7 +3365,7 @@ pub fn slide_layout(element: &Element) -> super::SlideLayout {
 }
 
 /// Read `p:sldLayoutId` into a `SlideLayoutId`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_layout_id(element: &Element) -> super::SlideLayoutId {
     let mut node = super::SlideLayoutId::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SLIDE_LAYOUT_ID_SHAPE);
@@ -3382,13 +3382,13 @@ pub fn slide_layout_id(element: &Element) -> super::SlideLayoutId {
 }
 
 /// Read one item of `SlideListContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn slide_list(element: &Element) -> super::SlideListContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:sldMaster` into a `SlideMaster`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_master(element: &Element) -> super::SlideMaster {
     let mut node = super::SlideMaster::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SLIDE_MASTER_SHAPE);
@@ -3411,7 +3411,7 @@ pub fn slide_master(element: &Element) -> super::SlideMaster {
 }
 
 /// Read `p:bodyStyle` into a `SlideMasterBodyTextStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_master_body_text_style(element: &Element) -> super::SlideMasterBodyTextStyle {
     let mut node = super::SlideMasterBodyTextStyle::default();
     let mut reader =
@@ -3437,7 +3437,7 @@ pub fn slide_master_body_text_style(element: &Element) -> super::SlideMasterBody
 }
 
 /// Read `p:sldMasterId` into a `SlideMasterID`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_master_id(element: &Element) -> super::SlideMasterID {
     let mut node = super::SlideMasterID::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SLIDE_MASTER_ID_SHAPE);
@@ -3454,7 +3454,7 @@ pub fn slide_master_id(element: &Element) -> super::SlideMasterID {
 }
 
 /// Read `p:otherStyle` into a `SlideMasterOtherTextStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_master_other_text_style(element: &Element) -> super::SlideMasterOtherTextStyle {
     let mut node = super::SlideMasterOtherTextStyle::default();
     let mut reader =
@@ -3480,7 +3480,7 @@ pub fn slide_master_other_text_style(element: &Element) -> super::SlideMasterOth
 }
 
 /// Read `p:txStyles` into a `SlideMasterTextStyles`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_master_text_styles(element: &Element) -> super::SlideMasterTextStyles {
     let mut node = super::SlideMasterTextStyles::default();
     let mut reader =
@@ -3499,7 +3499,7 @@ pub fn slide_master_text_styles(element: &Element) -> super::SlideMasterTextStyl
 }
 
 /// Read `p:titleStyle` into a `SlideMasterTitleTextStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_master_title_text_style(element: &Element) -> super::SlideMasterTitleTextStyle {
     let mut node = super::SlideMasterTitleTextStyle::default();
     let mut reader =
@@ -3525,7 +3525,7 @@ pub fn slide_master_title_text_style(element: &Element) -> super::SlideMasterTit
 }
 
 /// Read `p:sldRg` into a `SlideRange`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_range(element: &Element) -> super::SlideRange {
     let mut node = super::SlideRange::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SLIDE_RANGE_SHAPE);
@@ -3541,7 +3541,7 @@ pub fn slide_range(element: &Element) -> super::SlideRange {
 }
 
 /// Read `p:sorterViewPr` into a `SlideSorterViewProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_sorter_view_properties(element: &Element) -> super::SlideSorterViewProperties {
     let mut node = super::SlideSorterViewProperties::default();
     let mut reader =
@@ -3559,7 +3559,7 @@ pub fn slide_sorter_view_properties(element: &Element) -> super::SlideSorterView
 }
 
 /// Read `p:sldSyncPr` into a `SlideSynchronizationProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_synchronization_properties(
     element: &Element,
 ) -> super::SlideSynchronizationProperties {
@@ -3580,7 +3580,7 @@ pub fn slide_synchronization_properties(
 }
 
 /// Read `p:sldTgt` into a `SlideTarget`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_target(element: &Element) -> super::SlideTarget {
     let reader = officekit_markup_base::Reader::new(element, &super::SLIDE_TARGET_SHAPE);
     super::SlideTarget {
@@ -3590,7 +3590,7 @@ pub fn slide_target(element: &Element) -> super::SlideTarget {
 }
 
 /// Read `p:timing` into a `SlideTimingInformation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_timing_information(element: &Element) -> super::SlideTimingInformation {
     let mut node = super::SlideTimingInformation::default();
     let mut reader =
@@ -3608,13 +3608,13 @@ pub fn slide_timing_information(element: &Element) -> super::SlideTimingInformat
 }
 
 /// Read one item of `SlideTransitionContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn slide_transition(element: &Element) -> super::SlideTransitionContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:transition` into a `SlideTransitionForASlideLayout`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_transition_for_a_slide_layout(
     element: &Element,
 ) -> super::SlideTransitionForASlideLayout {
@@ -3640,7 +3640,7 @@ pub fn slide_transition_for_a_slide_layout(
 }
 
 /// Read `p:slideViewPr` into a `SlideViewProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slide_view_properties(element: &Element) -> super::SlideViewProperties {
     let mut node = super::SlideViewProperties::default();
     let mut reader =
@@ -3657,7 +3657,7 @@ pub fn slide_view_properties(element: &Element) -> super::SlideViewProperties {
 }
 
 /// Read `p:smartTags` into a `SmartTags`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn smart_tags(element: &Element) -> super::SmartTags {
     let mut node = super::SmartTags::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SMART_TAGS_SHAPE);
@@ -3671,7 +3671,7 @@ pub fn smart_tags(element: &Element) -> super::SmartTags {
 }
 
 /// Read `p:snd` into a `Sound`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sound(element: &Element) -> super::Sound {
     let mut node = super::Sound::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SOUND_SHAPE);
@@ -3687,7 +3687,7 @@ pub fn sound(element: &Element) -> super::Sound {
 }
 
 /// Read `p:sndAc` into a `SoundAction`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sound_action(element: &Element) -> super::SoundAction {
     let mut node = super::SoundAction::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SOUND_ACTION_SHAPE);
@@ -3701,13 +3701,13 @@ pub fn sound_action(element: &Element) -> super::SoundAction {
 }
 
 /// Read one item of `SoundActionContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn sound_action_content(element: &Element) -> super::SoundActionContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:sndTgt` into a `SoundTarget`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sound_target(element: &Element) -> super::SoundTarget {
     let mut node = super::SoundTarget::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SOUND_TARGET_SHAPE);
@@ -3723,7 +3723,7 @@ pub fn sound_target(element: &Element) -> super::SoundTarget {
 }
 
 /// Read `p:split` into a `SplitSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn split_slide_transition(element: &Element) -> super::SplitSlideTransition {
     let mut node = super::SplitSlideTransition::default();
     let mut reader =
@@ -3740,7 +3740,7 @@ pub fn split_slide_transition(element: &Element) -> super::SplitSlideTransition 
 }
 
 /// Read `p:stCondLst` into a `StartConditionsList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn start_conditions_list(element: &Element) -> super::StartConditionsList {
     let mut node = super::StartConditionsList::default();
     let mut reader =
@@ -3755,7 +3755,7 @@ pub fn start_conditions_list(element: &Element) -> super::StartConditionsList {
 }
 
 /// Read `p:stSnd` into a `StartSoundAction`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn start_sound_action(element: &Element) -> super::StartSoundAction {
     let mut node = super::StartSoundAction::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::START_SOUND_ACTION_SHAPE);
@@ -3771,7 +3771,7 @@ pub fn start_sound_action(element: &Element) -> super::StartSoundAction {
 }
 
 /// Read `p:endSnd` into a `StopSoundAction`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn stop_sound_action(element: &Element) -> super::StopSoundAction {
     let reader = officekit_markup_base::Reader::new(element, &super::STOP_SOUND_ACTION_SHAPE);
     super::StopSoundAction {
@@ -3781,7 +3781,7 @@ pub fn stop_sound_action(element: &Element) -> super::StopSoundAction {
 }
 
 /// Read `p:strVal` into a `StringValue`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn string_value(element: &Element) -> super::StringValue {
     let mut node = super::StringValue::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::STRING_VALUE_SHAPE);
@@ -3795,7 +3795,7 @@ pub fn string_value(element: &Element) -> super::StringValue {
 }
 
 /// Read `p:strips` into a `StripsSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn strips_slide_transition(element: &Element) -> super::StripsSlideTransition {
     let mut node = super::StripsSlideTransition::default();
     let mut reader =
@@ -3810,7 +3810,7 @@ pub fn strips_slide_transition(element: &Element) -> super::StripsSlideTransitio
 }
 
 /// Read `p:subTnLst` into a `SubTimeNodesList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sub_time_nodes_list(element: &Element) -> super::SubTimeNodesList {
     let mut node = super::SubTimeNodesList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SUB_TIME_NODES_LIST_SHAPE);
@@ -3824,7 +3824,7 @@ pub fn sub_time_nodes_list(element: &Element) -> super::SubTimeNodesList {
 }
 
 /// Read `p:subSp` into a `Subshape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn subshape(element: &Element) -> super::Subshape {
     let mut node = super::Subshape::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SUBSHAPE_SHAPE);
@@ -3838,7 +3838,7 @@ pub fn subshape(element: &Element) -> super::Subshape {
 }
 
 /// Read `p:tgtEl` into a `TargetElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn target_element(element: &Element) -> super::TargetElement {
     let mut node = super::TargetElement::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TARGET_ELEMENT_SHAPE);
@@ -3852,13 +3852,13 @@ pub fn target_element(element: &Element) -> super::TargetElement {
 }
 
 /// Read one item of `TargetElementContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn target_element_content(element: &Element) -> super::TargetElementContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:tmpl` into a `TemplateEffectsTmpl`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn template_effects_tmpl(element: &Element) -> super::TemplateEffectsTmpl {
     let mut node = super::TemplateEffectsTmpl::default();
     let mut reader =
@@ -3875,7 +3875,7 @@ pub fn template_effects_tmpl(element: &Element) -> super::TemplateEffectsTmpl {
 }
 
 /// Read `p:tmplLst` into a `TemplateEffectsTmplLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn template_effects_tmpl_lst(element: &Element) -> super::TemplateEffectsTmplLst {
     let mut node = super::TemplateEffectsTmplLst::default();
     let mut reader =
@@ -3890,7 +3890,7 @@ pub fn template_effects_tmpl_lst(element: &Element) -> super::TemplateEffectsTmp
 }
 
 /// Read `p:txEl` into a `TextElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_element(element: &Element) -> super::TextElement {
     let mut node = super::TextElement::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TEXT_ELEMENT_SHAPE);
@@ -3904,13 +3904,13 @@ pub fn text_element(element: &Element) -> super::TextElement {
 }
 
 /// Read one item of `TextElementContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn text_element_content(element: &Element) -> super::TextElementContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:tmAbs` into a `TimeAbsolute`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn time_absolute(element: &Element) -> super::TimeAbsolute {
     let mut node = super::TimeAbsolute::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TIME_ABSOLUTE_SHAPE);
@@ -3924,7 +3924,7 @@ pub fn time_absolute(element: &Element) -> super::TimeAbsolute {
 }
 
 /// Read `p:tav` into a `TimeAnimateValue`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn time_animate_value(element: &Element) -> super::TimeAnimateValue {
     let mut node = super::TimeAnimateValue::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TIME_ANIMATE_VALUE_SHAPE);
@@ -3941,7 +3941,7 @@ pub fn time_animate_value(element: &Element) -> super::TimeAnimateValue {
 }
 
 /// Read `p:tavLst` into a `TimeAnimatedValueList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn time_animated_value_list(element: &Element) -> super::TimeAnimatedValueList {
     let mut node = super::TimeAnimatedValueList::default();
     let mut reader =
@@ -3956,13 +3956,13 @@ pub fn time_animated_value_list(element: &Element) -> super::TimeAnimatedValueLi
 }
 
 /// Read one item of `TimeConditionContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn time_condition(element: &Element) -> super::TimeConditionContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:tn` into a `TimeNode`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn time_node(element: &Element) -> super::TimeNode {
     let mut node = super::TimeNode::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TIME_NODE_SHAPE);
@@ -3976,7 +3976,7 @@ pub fn time_node(element: &Element) -> super::TimeNode {
 }
 
 /// Read `p:tnLst` into a `TimeNodeList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn time_node_list(element: &Element) -> super::TimeNodeList {
     let mut node = super::TimeNodeList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TIME_NODE_LIST_SHAPE);
@@ -3990,13 +3990,13 @@ pub fn time_node_list(element: &Element) -> super::TimeNodeList {
 }
 
 /// Read one item of `TimeNodeListContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn time_node_list_content(element: &Element) -> super::TimeNodeListContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p:tmPct` into a `TimePercentage`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn time_percentage(element: &Element) -> super::TimePercentage {
     let mut node = super::TimePercentage::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TIME_PERCENTAGE_SHAPE);
@@ -4010,7 +4010,7 @@ pub fn time_percentage(element: &Element) -> super::TimePercentage {
 }
 
 /// Read `p:to` into a `To`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn to(element: &Element) -> super::To {
     let mut node = super::To::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TO_SHAPE);
@@ -4026,7 +4026,7 @@ pub fn to(element: &Element) -> super::To {
 }
 
 /// Read `p:to` into a `ToColor`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn to_color(element: &Element) -> super::ToColor {
     let mut node = super::ToColor::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TO_COLOR_SHAPE);
@@ -4040,7 +4040,7 @@ pub fn to_color(element: &Element) -> super::ToColor {
 }
 
 /// Read `p:to` into a `ToTLAnimVariant`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn to_tl_anim_variant(element: &Element) -> super::ToTLAnimVariant {
     let mut node = super::ToTLAnimVariant::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TO_TL_ANIM_VARIANT_SHAPE);
@@ -4054,7 +4054,7 @@ pub fn to_tl_anim_variant(element: &Element) -> super::ToTLAnimVariant {
 }
 
 /// Read `p:val` into a `Value`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn value(element: &Element) -> super::Value {
     let mut node = super::Value::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::VALUE_SHAPE);
@@ -4068,7 +4068,7 @@ pub fn value(element: &Element) -> super::Value {
 }
 
 /// Read `p:video` into a `Video`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn video(element: &Element) -> super::Video {
     let mut node = super::Video::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::VIDEO_SHAPE);
@@ -4084,7 +4084,7 @@ pub fn video(element: &Element) -> super::Video {
 }
 
 /// Read `p:origin` into a `ViewOrigin`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn view_origin(element: &Element) -> super::ViewOrigin {
     let mut node = super::ViewOrigin::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::VIEW_ORIGIN_SHAPE);
@@ -4100,7 +4100,7 @@ pub fn view_origin(element: &Element) -> super::ViewOrigin {
 }
 
 /// Read `p:scale` into a `ViewScale`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn view_scale(element: &Element) -> super::ViewScale {
     let mut node = super::ViewScale::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::VIEW_SCALE_SHAPE);
@@ -4116,7 +4116,7 @@ pub fn view_scale(element: &Element) -> super::ViewScale {
 }
 
 /// Read `p:webPr` into a `WebProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn web_properties(element: &Element) -> super::WebProperties {
     let mut node = super::WebProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WEB_PROPERTIES_SHAPE);
@@ -4140,7 +4140,7 @@ pub fn web_properties(element: &Element) -> super::WebProperties {
 }
 
 /// Read `p:wedge` into a `WedgeSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wedge_slide_transition(element: &Element) -> super::WedgeSlideTransition {
     let reader = officekit_markup_base::Reader::new(element, &super::WEDGE_SLIDE_TRANSITION_SHAPE);
     super::WedgeSlideTransition {
@@ -4150,7 +4150,7 @@ pub fn wedge_slide_transition(element: &Element) -> super::WedgeSlideTransition 
 }
 
 /// Read `p:wheel` into a `WheelSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wheel_slide_transition(element: &Element) -> super::WheelSlideTransition {
     let mut node = super::WheelSlideTransition::default();
     let mut reader =
@@ -4165,7 +4165,7 @@ pub fn wheel_slide_transition(element: &Element) -> super::WheelSlideTransition 
 }
 
 /// Read `p:wipe` into a `WipeSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wipe_slide_transition(element: &Element) -> super::WipeSlideTransition {
     let mut node = super::WipeSlideTransition::default();
     let mut reader =
@@ -4180,7 +4180,7 @@ pub fn wipe_slide_transition(element: &Element) -> super::WipeSlideTransition {
 }
 
 /// Read `p:xfrm` into a `Xfrm`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn xfrm(element: &Element) -> super::Xfrm {
     let mut node = super::Xfrm::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::XFRM_SHAPE);
@@ -4199,7 +4199,7 @@ pub fn xfrm(element: &Element) -> super::Xfrm {
 }
 
 /// Read `p:zoom` into a `ZoomSlideTransition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn zoom_slide_transition(element: &Element) -> super::ZoomSlideTransition {
     let mut node = super::ZoomSlideTransition::default();
     let mut reader =

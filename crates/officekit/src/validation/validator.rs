@@ -59,7 +59,7 @@ impl Validator {
     pub const DEFAULT_MAX_ERRORS: usize = 1000;
 
     /// Keeps the errors up to the cap; the one that reaches it is kept.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn limit(&self, mut errors: Vec<ValidationError>) -> Vec<ValidationError> {
         if self.max_errors != 0 {
             errors.truncate(self.max_errors);
@@ -68,7 +68,7 @@ impl Validator {
     }
 
     /// The cap on errors; `0` means no limit.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn max_errors(&self) -> usize {
         self.max_errors
     }
@@ -76,7 +76,7 @@ impl Validator {
     /// A validator for `version` with the cap [`Validator::DEFAULT_MAX_ERRORS`].
     ///
     /// The release decides which elements, attributes and part types exist.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn new(version: OfficeVersion) -> Self {
         Self {
             max_errors: Self::DEFAULT_MAX_ERRORS,
@@ -93,7 +93,7 @@ impl Validator {
     /// semantic checks of each element it visits, whose errors follow the
     /// part's schema errors. A part that does not parse is the package
     /// pass's to report.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn validate(&self, package: &Package) -> Vec<ValidationError> {
         let mut errors = Errors::new(self.max_errors);
         package::check(package, self.version, &mut errors);
@@ -155,13 +155,13 @@ impl Validator {
     }
 
     /// The Office release the validator checks against.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn version(&self) -> OfficeVersion {
         self.version
     }
 
     /// `0` means no limit.
-    #[must_use]
+    #[must_use = "the value moves into the one returned"]
     pub const fn with_max_errors(mut self, max_errors: usize) -> Self {
         self.max_errors = max_errors;
         self
@@ -170,7 +170,7 @@ impl Validator {
 
 /// The part types a document can hold: every rule the document's rule
 /// reaches through child parts, but the ones SDK 3.5.1 leaves out of it.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn document_parts(document: &PartRule) -> Vec<&'static PartRule> {
     let left_out = LEFT_OUT
         .iter()
@@ -268,7 +268,7 @@ fn reach(
 /// document and that type exists at `version`. The parts come in the order a
 /// depth-first walk of the relationships meets them, each once, typed by the
 /// first relationship that reaches it.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn reachable_parts(
     package: &Package,
     version: OfficeVersion,

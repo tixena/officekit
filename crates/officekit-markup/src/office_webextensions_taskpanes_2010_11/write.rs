@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `ExtLst` as its element, `wetp:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -229,7 +229,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Taskpane` as its element, `wetp:taskpane`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn taskpane(node: &super::Taskpane, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TASKPANE_SHAPE, &node.unknown);
@@ -244,7 +244,7 @@ pub fn taskpane(node: &super::Taskpane, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Taskpanes` as its element, `wetp:taskpanes`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn taskpanes(node: &super::Taskpanes, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TASKPANES_SHAPE, &node.unknown);
@@ -253,7 +253,7 @@ pub fn taskpanes(node: &super::Taskpanes, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Webextensionref` as its element, `wetp:webextensionref`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn webextensionref(node: &super::Webextensionref, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::WEBEXTENSIONREF_SHAPE, &node.unknown);

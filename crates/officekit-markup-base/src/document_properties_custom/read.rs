@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `op:Properties` into a `CustomFileProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_file_properties(element: &Element) -> super::CustomFileProperties {
     let mut node = super::CustomFileProperties::default();
     let mut reader = crate::Reader::new(element, &super::CUSTOM_FILE_PROPERTIES_SHAPE);
@@ -233,7 +233,7 @@ pub fn custom_file_properties(element: &Element) -> super::CustomFileProperties 
 }
 
 /// Read `op:property` into a `CustomFileProperty`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_file_property(element: &Element) -> super::CustomFileProperty {
     let mut node = super::CustomFileProperty::default();
     let mut reader = crate::Reader::new(element, &super::CUSTOM_FILE_PROPERTY_SHAPE);
@@ -252,7 +252,7 @@ pub fn custom_file_property(element: &Element) -> super::CustomFileProperty {
 }
 
 /// Read one item of `CustomFilePropertyContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn custom_file_property_content(element: &Element) -> super::CustomFilePropertyContent {
     crate::read(element)
 }

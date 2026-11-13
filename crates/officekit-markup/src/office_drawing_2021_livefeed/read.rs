@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `alf:backgroundProps` into a `BackgroundProps`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn background_props(element: &Element) -> super::BackgroundProps {
     let mut node = super::BackgroundProps::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BACKGROUND_PROPS_SHAPE);
@@ -235,7 +235,7 @@ pub fn background_props(element: &Element) -> super::BackgroundProps {
 }
 
 /// Read `alf:Blur` into a `Blur`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn blur(element: &Element) -> super::Blur {
     let mut node = super::Blur::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BLUR_SHAPE);
@@ -249,7 +249,7 @@ pub fn blur(element: &Element) -> super::Blur {
 }
 
 /// Read `alf:Custom` into a `Custom`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom(element: &Element) -> super::Custom {
     let mut node = super::Custom::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOM_SHAPE);
@@ -263,7 +263,7 @@ pub fn custom(element: &Element) -> super::Custom {
 }
 
 /// Read `alf:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -278,7 +278,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 
 /// Read one item of `LiveFeedBackgroundPropertiesContent` from its element: the arm of its tag, or
 /// `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn live_feed_background_properties(
     element: &Element,
 ) -> super::LiveFeedBackgroundPropertiesContent {
@@ -286,7 +286,7 @@ pub fn live_feed_background_properties(
 }
 
 /// Read `alf:liveFeedProps` into a `LiveFeedProps`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn live_feed_props(element: &Element) -> super::LiveFeedProps {
     let mut node = super::LiveFeedProps::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LIVE_FEED_PROPS_SHAPE);
@@ -302,7 +302,7 @@ pub fn live_feed_props(element: &Element) -> super::LiveFeedProps {
 }
 
 /// Read `alf:Normal` into a `Normal`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn normal(element: &Element) -> super::Normal {
     let mut node = super::Normal::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NORMAL_SHAPE);
@@ -316,7 +316,7 @@ pub fn normal(element: &Element) -> super::Normal {
 }
 
 /// Read `alf:Removed` into a `Removed`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn removed(element: &Element) -> super::Removed {
     let mut node = super::Removed::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::REMOVED_SHAPE);

@@ -315,7 +315,7 @@ pub struct Versions(pub u8);
 
 impl Versions {
     /// Whether the row applies at `target`.
-    #[must_use]
+    #[must_use = "this only answers the question"]
     pub const fn contains(self, target: OfficeVersion) -> bool {
         self.0 & (1 << target.rank()) != 0
     }

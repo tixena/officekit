@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xnsv:columnFilter` into a `ColumnFilter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn column_filter(element: &Element) -> super::ColumnFilter {
     let mut node = super::ColumnFilter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COLUMN_FILTER_SHAPE);
@@ -238,7 +238,7 @@ pub fn column_filter(element: &Element) -> super::ColumnFilter {
 }
 
 /// Read `xnsv:dxf` into a `Dxf`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dxf(element: &Element) -> super::Dxf {
     let mut node = super::Dxf::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DXF_SHAPE);
@@ -259,7 +259,7 @@ pub fn dxf(element: &Element) -> super::Dxf {
 }
 
 /// Read `xnsv:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -273,7 +273,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `xnsv:filter` into a `Filter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn filter(element: &Element) -> super::Filter {
     let mut node = super::Filter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FILTER_SHAPE);
@@ -291,7 +291,7 @@ pub fn filter(element: &Element) -> super::Filter {
 }
 
 /// Read `xnsv:namedSheetView` into a `NamedSheetView`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn named_sheet_view(element: &Element) -> super::NamedSheetView {
     let mut node = super::NamedSheetView::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NAMED_SHEET_VIEW_SHAPE);
@@ -309,7 +309,7 @@ pub fn named_sheet_view(element: &Element) -> super::NamedSheetView {
 }
 
 /// Read `xnsv:namedSheetViews` into a `NamedSheetViews`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn named_sheet_views(element: &Element) -> super::NamedSheetViews {
     let mut node = super::NamedSheetViews::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NAMED_SHEET_VIEWS_SHAPE);
@@ -325,7 +325,7 @@ pub fn named_sheet_views(element: &Element) -> super::NamedSheetViews {
 }
 
 /// Read `xnsv:nsvFilter` into a `NsvFilter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn nsv_filter(element: &Element) -> super::NsvFilter {
     let mut node = super::NsvFilter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NSV_FILTER_SHAPE);
@@ -345,7 +345,7 @@ pub fn nsv_filter(element: &Element) -> super::NsvFilter {
 }
 
 /// Read `xnsv:richSortCondition` into a `RichSortCondition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_sort_condition(element: &Element) -> super::RichSortCondition {
     let mut node = super::RichSortCondition::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RICH_SORT_CONDITION_SHAPE);
@@ -367,7 +367,7 @@ pub fn rich_sort_condition(element: &Element) -> super::RichSortCondition {
 }
 
 /// Read `xnsv:sortCondition` into a `SortCondition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sort_condition(element: &Element) -> super::SortCondition {
     let mut node = super::SortCondition::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SORT_CONDITION_SHAPE);
@@ -388,7 +388,7 @@ pub fn sort_condition(element: &Element) -> super::SortCondition {
 }
 
 /// Read `xnsv:sortRule` into a `SortRule`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sort_rule(element: &Element) -> super::SortRule {
     let mut node = super::SortRule::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SORT_RULE_SHAPE);
@@ -406,13 +406,13 @@ pub fn sort_rule(element: &Element) -> super::SortRule {
 }
 
 /// Read one item of `SortRuleContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn sort_rule_content(element: &Element) -> super::SortRuleContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `xnsv:sortRules` into a `SortRules`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sort_rules(element: &Element) -> super::SortRules {
     let mut node = super::SortRules::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SORT_RULES_SHAPE);

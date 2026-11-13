@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `ExtLst` as its element, `ask:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -230,7 +230,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `LineSketchCurved` as its element, `ask:lineSketchCurved`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn line_sketch_curved(node: &super::LineSketchCurved, scope: &mut Scope) -> Element {
     let writer =
         officekit_markup_base::Writer::new(scope, &super::LINE_SKETCH_CURVED_SHAPE, &node.unknown);
@@ -238,7 +238,7 @@ pub fn line_sketch_curved(node: &super::LineSketchCurved, scope: &mut Scope) -> 
 }
 
 /// Write a `LineSketchFreehand` as its element, `ask:lineSketchFreehand`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn line_sketch_freehand(node: &super::LineSketchFreehand, scope: &mut Scope) -> Element {
     let writer = officekit_markup_base::Writer::new(
         scope,
@@ -249,7 +249,7 @@ pub fn line_sketch_freehand(node: &super::LineSketchFreehand, scope: &mut Scope)
 }
 
 /// Write a `LineSketchNone` as its element, `ask:lineSketchNone`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn line_sketch_none(node: &super::LineSketchNone, scope: &mut Scope) -> Element {
     let writer =
         officekit_markup_base::Writer::new(scope, &super::LINE_SKETCH_NONE_SHAPE, &node.unknown);
@@ -257,7 +257,7 @@ pub fn line_sketch_none(node: &super::LineSketchNone, scope: &mut Scope) -> Elem
 }
 
 /// Write a `LineSketchScribble` as its element, `ask:lineSketchScribble`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn line_sketch_scribble(node: &super::LineSketchScribble, scope: &mut Scope) -> Element {
     let writer = officekit_markup_base::Writer::new(
         scope,
@@ -268,7 +268,7 @@ pub fn line_sketch_scribble(node: &super::LineSketchScribble, scope: &mut Scope)
 }
 
 /// Write a `LineSketchStyleProps` as its element, `ask:lineSketchStyleProps`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn line_sketch_style_props(node: &super::LineSketchStyleProps, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -293,7 +293,7 @@ pub fn line_sketch_type_properties(
 }
 
 /// Write a `Seed` as its element, `ask:seed`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn seed(node: &super::Seed, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::SEED_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -301,7 +301,7 @@ pub fn seed(node: &super::Seed, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Type` as its element, `ask:type`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn r#type(node: &super::Type, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::TYPE_SHAPE, &node.unknown);
     writer.child(&node.content);

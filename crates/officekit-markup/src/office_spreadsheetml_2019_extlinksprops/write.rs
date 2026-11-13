@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `ExternalLinksPr` as its element, `xxlnp:externalLinksPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn external_links_pr(node: &super::ExternalLinksPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXTERNAL_LINKS_PR_SHAPE, &node.unknown);

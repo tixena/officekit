@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `ArtisticBlur` as its element, `a14:artisticBlur`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_blur(node: &super::ArtisticBlur, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ARTISTIC_BLUR_SHAPE, &node.unknown);
@@ -230,7 +230,7 @@ pub fn artistic_blur(node: &super::ArtisticBlur, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ArtisticCement` as its element, `a14:artisticCement`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_cement(node: &super::ArtisticCement, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ARTISTIC_CEMENT_SHAPE, &node.unknown);
@@ -240,7 +240,7 @@ pub fn artistic_cement(node: &super::ArtisticCement, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `ArtisticChalkSketch` as its element, `a14:artisticChalkSketch`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_chalk_sketch(node: &super::ArtisticChalkSketch, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -253,7 +253,7 @@ pub fn artistic_chalk_sketch(node: &super::ArtisticChalkSketch, scope: &mut Scop
 }
 
 /// Write a `ArtisticCrisscrossEtching` as its element, `a14:artisticCrisscrossEtching`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_crisscross_etching(
     node: &super::ArtisticCrisscrossEtching,
     scope: &mut Scope,
@@ -269,7 +269,7 @@ pub fn artistic_crisscross_etching(
 }
 
 /// Write a `ArtisticCutout` as its element, `a14:artisticCutout`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_cutout(node: &super::ArtisticCutout, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ARTISTIC_CUTOUT_SHAPE, &node.unknown);
@@ -279,7 +279,7 @@ pub fn artistic_cutout(node: &super::ArtisticCutout, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `ArtisticFilmGrain` as its element, `a14:artisticFilmGrain`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_film_grain(node: &super::ArtisticFilmGrain, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ARTISTIC_FILM_GRAIN_SHAPE, &node.unknown);
@@ -289,7 +289,7 @@ pub fn artistic_film_grain(node: &super::ArtisticFilmGrain, scope: &mut Scope) -
 }
 
 /// Write a `ArtisticGlass` as its element, `a14:artisticGlass`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_glass(node: &super::ArtisticGlass, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ARTISTIC_GLASS_SHAPE, &node.unknown);
@@ -299,7 +299,7 @@ pub fn artistic_glass(node: &super::ArtisticGlass, scope: &mut Scope) -> Element
 }
 
 /// Write a `ArtisticGlowDiffused` as its element, `a14:artisticGlowDiffused`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_glow_diffused(node: &super::ArtisticGlowDiffused, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -312,7 +312,7 @@ pub fn artistic_glow_diffused(node: &super::ArtisticGlowDiffused, scope: &mut Sc
 }
 
 /// Write a `ArtisticGlowEdges` as its element, `a14:artisticGlowEdges`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_glow_edges(node: &super::ArtisticGlowEdges, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ARTISTIC_GLOW_EDGES_SHAPE, &node.unknown);
@@ -322,7 +322,7 @@ pub fn artistic_glow_edges(node: &super::ArtisticGlowEdges, scope: &mut Scope) -
 }
 
 /// Write a `ArtisticLightScreen` as its element, `a14:artisticLightScreen`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_light_screen(node: &super::ArtisticLightScreen, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -335,7 +335,7 @@ pub fn artistic_light_screen(node: &super::ArtisticLightScreen, scope: &mut Scop
 }
 
 /// Write a `ArtisticLineDrawing` as its element, `a14:artisticLineDrawing`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_line_drawing(node: &super::ArtisticLineDrawing, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -348,7 +348,7 @@ pub fn artistic_line_drawing(node: &super::ArtisticLineDrawing, scope: &mut Scop
 }
 
 /// Write a `ArtisticMarker` as its element, `a14:artisticMarker`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_marker(node: &super::ArtisticMarker, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ARTISTIC_MARKER_SHAPE, &node.unknown);
@@ -358,7 +358,7 @@ pub fn artistic_marker(node: &super::ArtisticMarker, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `ArtisticMosiaicBubbles` as its element, `a14:artisticMosiaicBubbles`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_mosiaic_bubbles(
     node: &super::ArtisticMosiaicBubbles,
     scope: &mut Scope,
@@ -374,7 +374,7 @@ pub fn artistic_mosiaic_bubbles(
 }
 
 /// Write a `ArtisticPaintBrush` as its element, `a14:artisticPaintBrush`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_paint_brush(node: &super::ArtisticPaintBrush, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -387,7 +387,7 @@ pub fn artistic_paint_brush(node: &super::ArtisticPaintBrush, scope: &mut Scope)
 }
 
 /// Write a `ArtisticPaintStrokes` as its element, `a14:artisticPaintStrokes`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_paint_strokes(node: &super::ArtisticPaintStrokes, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -400,7 +400,7 @@ pub fn artistic_paint_strokes(node: &super::ArtisticPaintStrokes, scope: &mut Sc
 }
 
 /// Write a `ArtisticPastelsSmooth` as its element, `a14:artisticPastelsSmooth`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_pastels_smooth(node: &super::ArtisticPastelsSmooth, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -413,7 +413,7 @@ pub fn artistic_pastels_smooth(node: &super::ArtisticPastelsSmooth, scope: &mut 
 }
 
 /// Write a `ArtisticPencilGrayscale` as its element, `a14:artisticPencilGrayscale`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_pencil_grayscale(
     node: &super::ArtisticPencilGrayscale,
     scope: &mut Scope,
@@ -429,7 +429,7 @@ pub fn artistic_pencil_grayscale(
 }
 
 /// Write a `ArtisticPencilSketch` as its element, `a14:artisticPencilSketch`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_pencil_sketch(node: &super::ArtisticPencilSketch, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -442,7 +442,7 @@ pub fn artistic_pencil_sketch(node: &super::ArtisticPencilSketch, scope: &mut Sc
 }
 
 /// Write a `ArtisticPhotocopy` as its element, `a14:artisticPhotocopy`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_photocopy(node: &super::ArtisticPhotocopy, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ARTISTIC_PHOTOCOPY_SHAPE, &node.unknown);
@@ -452,7 +452,7 @@ pub fn artistic_photocopy(node: &super::ArtisticPhotocopy, scope: &mut Scope) ->
 }
 
 /// Write a `ArtisticPlasticWrap` as its element, `a14:artisticPlasticWrap`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_plastic_wrap(node: &super::ArtisticPlasticWrap, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -465,7 +465,7 @@ pub fn artistic_plastic_wrap(node: &super::ArtisticPlasticWrap, scope: &mut Scop
 }
 
 /// Write a `ArtisticTexturizer` as its element, `a14:artisticTexturizer`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_texturizer(node: &super::ArtisticTexturizer, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ARTISTIC_TEXTURIZER_SHAPE, &node.unknown);
@@ -475,7 +475,7 @@ pub fn artistic_texturizer(node: &super::ArtisticTexturizer, scope: &mut Scope) 
 }
 
 /// Write a `ArtisticWatercolorSponge` as its element, `a14:artisticWatercolorSponge`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artistic_watercolor_sponge(
     node: &super::ArtisticWatercolorSponge,
     scope: &mut Scope,
@@ -491,7 +491,7 @@ pub fn artistic_watercolor_sponge(
 }
 
 /// Write a `BackgroundMark` as its element, `a14:backgroundMark`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn background_mark(node: &super::BackgroundMark, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::BACKGROUND_MARK_SHAPE, &node.unknown);
@@ -503,7 +503,7 @@ pub fn background_mark(node: &super::BackgroundMark, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `BackgroundRemoval` as its element, `a14:backgroundRemoval`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn background_removal(node: &super::BackgroundRemoval, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::BACKGROUND_REMOVAL_SHAPE, &node.unknown);
@@ -517,7 +517,7 @@ pub fn background_removal(node: &super::BackgroundRemoval, scope: &mut Scope) ->
 }
 
 /// Write a `BrightnessContrast` as its element, `a14:brightnessContrast`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn brightness_contrast(node: &super::BrightnessContrast, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::BRIGHTNESS_CONTRAST_SHAPE, &node.unknown);
@@ -527,7 +527,7 @@ pub fn brightness_contrast(node: &super::BrightnessContrast, scope: &mut Scope) 
 }
 
 /// Write a `CNvContentPartPr` as its element, `a14:cNvContentPartPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_nv_content_part_pr(node: &super::CNvContentPartPr, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -541,7 +541,7 @@ pub fn c_nv_content_part_pr(node: &super::CNvContentPartPr, scope: &mut Scope) -
 }
 
 /// Write a `CNvPr` as its element, `a14:cNvPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::C_NV_PR_SHAPE, &node.unknown);
@@ -557,7 +557,7 @@ pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CameraTool` as its element, `a14:cameraTool`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn camera_tool(node: &super::CameraTool, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CAMERA_TOOL_SHAPE, &node.unknown);
@@ -567,7 +567,7 @@ pub fn camera_tool(node: &super::CameraTool, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ColorTemperature` as its element, `a14:colorTemperature`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn color_temperature(node: &super::ColorTemperature, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::COLOR_TEMPERATURE_SHAPE, &node.unknown);
@@ -576,7 +576,7 @@ pub fn color_temperature(node: &super::ColorTemperature, scope: &mut Scope) -> E
 }
 
 /// Write a `CompatExt` as its element, `a14:compatExt`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn compat_ext(node: &super::CompatExt, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::COMPAT_EXT_SHAPE, &node.unknown);
@@ -585,7 +585,7 @@ pub fn compat_ext(node: &super::CompatExt, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ContentPart` as its element, `a14:contentPart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn content_part(node: &super::ContentPart, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CONTENT_PART_SHAPE, &node.unknown);
@@ -598,7 +598,7 @@ pub fn content_part(node: &super::ContentPart, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CpLocks` as its element, `a14:cpLocks`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cp_locks(node: &super::CpLocks, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CP_LOCKS_SHAPE, &node.unknown);
@@ -617,7 +617,7 @@ pub fn cp_locks(node: &super::CpLocks, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ExtLst` as its element, `a14:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -626,7 +626,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ForegroundMark` as its element, `a14:foregroundMark`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn foreground_mark(node: &super::ForegroundMark, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::FOREGROUND_MARK_SHAPE, &node.unknown);
@@ -638,7 +638,7 @@ pub fn foreground_mark(node: &super::ForegroundMark, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `HiddenEffects` as its element, `a14:hiddenEffects`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hidden_effects(node: &super::HiddenEffects, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::HIDDEN_EFFECTS_SHAPE, &node.unknown);
@@ -647,7 +647,7 @@ pub fn hidden_effects(node: &super::HiddenEffects, scope: &mut Scope) -> Element
 }
 
 /// Write a `HiddenFill` as its element, `a14:hiddenFill`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hidden_fill(node: &super::HiddenFill, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::HIDDEN_FILL_SHAPE, &node.unknown);
@@ -656,7 +656,7 @@ pub fn hidden_fill(node: &super::HiddenFill, scope: &mut Scope) -> Element {
 }
 
 /// Write a `HiddenLine` as its element, `a14:hiddenLine`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hidden_line(node: &super::HiddenLine, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::HIDDEN_LINE_SHAPE, &node.unknown);
@@ -674,7 +674,7 @@ pub fn hidden_line(node: &super::HiddenLine, scope: &mut Scope) -> Element {
 }
 
 /// Write a `HiddenScene3d` as its element, `a14:hiddenScene3d`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hidden_scene3d(node: &super::HiddenScene3d, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::HIDDEN_SCENE3D_SHAPE, &node.unknown);
@@ -686,7 +686,7 @@ pub fn hidden_scene3d(node: &super::HiddenScene3d, scope: &mut Scope) -> Element
 }
 
 /// Write a `HiddenSp3d` as its element, `a14:hiddenSp3d`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hidden_sp3d(node: &super::HiddenSp3d, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::HIDDEN_SP3D_SHAPE, &node.unknown);
@@ -703,7 +703,7 @@ pub fn hidden_sp3d(node: &super::HiddenSp3d, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ImgEffect` as its element, `a14:imgEffect`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn img_effect(node: &super::ImgEffect, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::IMG_EFFECT_SHAPE, &node.unknown);
@@ -713,7 +713,7 @@ pub fn img_effect(node: &super::ImgEffect, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ImgLayer` as its element, `a14:imgLayer`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn img_layer(node: &super::ImgLayer, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::IMG_LAYER_SHAPE, &node.unknown);
@@ -723,7 +723,7 @@ pub fn img_layer(node: &super::ImgLayer, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ImgProps` as its element, `a14:imgProps`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn img_props(node: &super::ImgProps, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::IMG_PROPS_SHAPE, &node.unknown);
@@ -732,7 +732,7 @@ pub fn img_props(node: &super::ImgProps, scope: &mut Scope) -> Element {
 }
 
 /// Write a `IsCanvas` as its element, `a14:isCanvas`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn is_canvas(node: &super::IsCanvas, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::IS_CANVAS_SHAPE, &node.unknown);
@@ -741,13 +741,13 @@ pub fn is_canvas(node: &super::IsCanvas, scope: &mut Scope) -> Element {
 }
 
 /// Write a `M` as its element, `a14:m`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn m(node: &super::M, scope: &mut Scope) -> Element {
     officekit_markup_base::Writer::new(scope, &super::M_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `NvContentPartPr` as its element, `a14:nvContentPartPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn nv_content_part_pr(node: &super::NvContentPartPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::NV_CONTENT_PART_PR_SHAPE, &node.unknown);
@@ -765,7 +765,7 @@ pub fn picture_effect(
 }
 
 /// Write a `Saturation` as its element, `a14:saturation`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn saturation(node: &super::Saturation, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SATURATION_SHAPE, &node.unknown);
@@ -774,7 +774,7 @@ pub fn saturation(node: &super::Saturation, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ShadowObscured` as its element, `a14:shadowObscured`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shadow_obscured(node: &super::ShadowObscured, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHADOW_OBSCURED_SHAPE, &node.unknown);
@@ -783,7 +783,7 @@ pub fn shadow_obscured(node: &super::ShadowObscured, scope: &mut Scope) -> Eleme
 }
 
 /// Write a `SharpenSoften` as its element, `a14:sharpenSoften`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sharpen_soften(node: &super::SharpenSoften, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SHARPEN_SOFTEN_SHAPE, &node.unknown);
@@ -792,7 +792,7 @@ pub fn sharpen_soften(node: &super::SharpenSoften, scope: &mut Scope) -> Element
 }
 
 /// Write a `UseLocalDpi` as its element, `a14:useLocalDpi`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn use_local_dpi(node: &super::UseLocalDpi, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::USE_LOCAL_DPI_SHAPE, &node.unknown);
@@ -801,7 +801,7 @@ pub fn use_local_dpi(node: &super::UseLocalDpi, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Xfrm` as its element, `a14:xfrm`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn xfrm(node: &super::Xfrm, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::XFRM_SHAPE, &node.unknown);
     writer.attribute(0, &node.rot);

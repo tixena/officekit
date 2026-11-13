@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `wp14:pctHeight` into a `PctHeight`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pct_height(element: &Element) -> super::PctHeight {
     let mut node = super::PctHeight::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PCT_HEIGHT_SHAPE);
@@ -233,7 +233,7 @@ pub fn pct_height(element: &Element) -> super::PctHeight {
 }
 
 /// Read `wp14:pctPosHOffset` into a `PctPosHOffset`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pct_pos_h_offset(element: &Element) -> super::PctPosHOffset {
     let mut node = super::PctPosHOffset::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PCT_POS_H_OFFSET_SHAPE);
@@ -247,7 +247,7 @@ pub fn pct_pos_h_offset(element: &Element) -> super::PctPosHOffset {
 }
 
 /// Read `wp14:pctPosVOffset` into a `PctPosVOffset`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pct_pos_v_offset(element: &Element) -> super::PctPosVOffset {
     let mut node = super::PctPosVOffset::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PCT_POS_V_OFFSET_SHAPE);
@@ -261,7 +261,7 @@ pub fn pct_pos_v_offset(element: &Element) -> super::PctPosVOffset {
 }
 
 /// Read `wp14:pctWidth` into a `PctWidth`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pct_width(element: &Element) -> super::PctWidth {
     let mut node = super::PctWidth::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PCT_WIDTH_SHAPE);
@@ -275,7 +275,7 @@ pub fn pct_width(element: &Element) -> super::PctWidth {
 }
 
 /// Read `wp14:sizeRelH` into a `SizeRelH`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn size_rel_h(element: &Element) -> super::SizeRelH {
     let mut node = super::SizeRelH::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SIZE_REL_H_SHAPE);
@@ -291,7 +291,7 @@ pub fn size_rel_h(element: &Element) -> super::SizeRelH {
 }
 
 /// Read `wp14:sizeRelV` into a `SizeRelV`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn size_rel_v(element: &Element) -> super::SizeRelV {
     let mut node = super::SizeRelV::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SIZE_REL_V_SHAPE);

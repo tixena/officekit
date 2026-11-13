@@ -420,7 +420,7 @@ impl Eq for CustomFilePropertyContentWith<()> {}
 impl<X: NodeExtra> CustomFilePropertiesWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CustomFilePropertiesWith<Y>
     where
         Y: NodeExtra,
@@ -436,7 +436,7 @@ impl<X: NodeExtra> CustomFilePropertiesWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -458,7 +458,7 @@ impl crate::Write for CustomFileProperties {
 impl<X: NodeExtra> CustomFilePropertyWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CustomFilePropertyWith<Y>
     where
         Y: NodeExtra,
@@ -478,7 +478,7 @@ impl<X: NodeExtra> CustomFilePropertyWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             fmtid: self.fmtid.clone(),
@@ -505,7 +505,7 @@ impl crate::Write for CustomFileProperty {
 
 impl<X: NodeExtra> CustomFilePropertyContentWith<X> {
     /// This item and every node under it with each `extra` at `Y`'s default.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CustomFilePropertyContentWith<Y>
     where
         Y: NodeExtra,

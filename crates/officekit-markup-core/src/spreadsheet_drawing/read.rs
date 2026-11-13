@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xdr:absoluteAnchor` into a `AbsoluteAnchorShapeSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn absolute_anchor_shape_size(element: &Element) -> super::AbsoluteAnchorShapeSize {
     let mut node = super::AbsoluteAnchorShapeSize::default();
     let mut reader =
@@ -238,7 +238,7 @@ pub fn absolute_anchor_shape_size(element: &Element) -> super::AbsoluteAnchorSha
 }
 
 /// Read `xdr:clientData` into a `ClientData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn client_data(element: &Element) -> super::ClientData {
     let mut node = super::ClientData::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CLIENT_DATA_SHAPE);
@@ -254,7 +254,7 @@ pub fn client_data(element: &Element) -> super::ClientData {
 }
 
 /// Read `xdr:col` into a `Col`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn col(element: &Element) -> super::Col {
     let mut node = super::Col::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COL_SHAPE);
@@ -268,7 +268,7 @@ pub fn col(element: &Element) -> super::Col {
 }
 
 /// Read `xdr:colOff` into a `ColumnOffset`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn column_offset(element: &Element) -> super::ColumnOffset {
     let mut node = super::ColumnOffset::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COLUMN_OFFSET_SHAPE);
@@ -282,7 +282,7 @@ pub fn column_offset(element: &Element) -> super::ColumnOffset {
 }
 
 /// Read `xdr:cNvSpPr` into a `ConnectionNonVisualShapeProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn connection_non_visual_shape_properties(
     element: &Element,
 ) -> super::ConnectionNonVisualShapeProperties {
@@ -304,7 +304,7 @@ pub fn connection_non_visual_shape_properties(
 }
 
 /// Read `xdr:cxnSp` into a `ConnectionShape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn connection_shape(element: &Element) -> super::ConnectionShape {
     let mut node = super::ConnectionShape::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONNECTION_SHAPE_SHAPE);
@@ -323,7 +323,7 @@ pub fn connection_shape(element: &Element) -> super::ConnectionShape {
 }
 
 /// Read `xdr:contentPart` into a `ContentPart`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn content_part(element: &Element) -> super::ContentPart {
     let mut node = super::ContentPart::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONTENT_PART_SHAPE);
@@ -337,7 +337,7 @@ pub fn content_part(element: &Element) -> super::ContentPart {
 }
 
 /// Read `xdr:to` into a `EndingAnchorPoint`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ending_anchor_point(element: &Element) -> super::EndingAnchorPoint {
     let mut node = super::EndingAnchorPoint::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ENDING_ANCHOR_POINT_SHAPE);
@@ -355,7 +355,7 @@ pub fn ending_anchor_point(element: &Element) -> super::EndingAnchorPoint {
 }
 
 /// Read `xdr:graphicFrame` into a `GraphicFrame`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn graphic_frame(element: &Element) -> super::GraphicFrame {
     let mut node = super::GraphicFrame::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GRAPHIC_FRAME_SHAPE);
@@ -374,7 +374,7 @@ pub fn graphic_frame(element: &Element) -> super::GraphicFrame {
 }
 
 /// Read `xdr:grpSp` into a `GroupShape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_shape(element: &Element) -> super::GroupShape {
     let mut node = super::GroupShape::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GROUP_SHAPE_SHAPE);
@@ -391,13 +391,13 @@ pub fn group_shape(element: &Element) -> super::GroupShape {
 }
 
 /// Read one item of `GroupShapeContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn group_shape_content(element: &Element) -> super::GroupShapeContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `xdr:grpSpPr` into a `GroupShapeProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn group_shape_properties(element: &Element) -> super::GroupShapeProperties {
     let mut node = super::GroupShapeProperties::default();
     let mut reader =
@@ -418,7 +418,7 @@ pub fn group_shape_properties(element: &Element) -> super::GroupShapeProperties 
 }
 
 /// Read `xdr:cNvCxnSpPr` into a `NonVisualConnectorShapeDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_connector_shape_drawing_properties(
     element: &Element,
 ) -> super::NonVisualConnectorShapeDrawingProperties {
@@ -441,7 +441,7 @@ pub fn non_visual_connector_shape_drawing_properties(
 }
 
 /// Read `xdr:cNvPr` into a `NonVisualDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawingProperties {
     let mut node = super::NonVisualDrawingProperties::default();
     let mut reader =
@@ -464,7 +464,7 @@ pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawi
 }
 
 /// Read `xdr:cNvGraphicFramePr` into a `NonVisualGraphicFrameDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_graphic_frame_drawing_properties(
     element: &Element,
 ) -> super::NonVisualGraphicFrameDrawingProperties {
@@ -485,7 +485,7 @@ pub fn non_visual_graphic_frame_drawing_properties(
 }
 
 /// Read `xdr:cNvGrpSpPr` into a `NonVisualGroupShapeDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_group_shape_drawing_properties(
     element: &Element,
 ) -> super::NonVisualGroupShapeDrawingProperties {
@@ -506,7 +506,7 @@ pub fn non_visual_group_shape_drawing_properties(
 }
 
 /// Read `xdr:cNvPicPr` into a `NonVisualPictureDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_picture_drawing_properties(
     element: &Element,
 ) -> super::NonVisualPictureDrawingProperties {
@@ -528,7 +528,7 @@ pub fn non_visual_picture_drawing_properties(
 }
 
 /// Read `xdr:nvCxnSpPr` into a `NonVisualPropertiesForAConnectionShape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_properties_for_a_connection_shape(
     element: &Element,
 ) -> super::NonVisualPropertiesForAConnectionShape {
@@ -549,7 +549,7 @@ pub fn non_visual_properties_for_a_connection_shape(
 }
 
 /// Read `xdr:nvGraphicFramePr` into a `NonVisualPropertiesForAGraphicFrame`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_properties_for_a_graphic_frame(
     element: &Element,
 ) -> super::NonVisualPropertiesForAGraphicFrame {
@@ -570,7 +570,7 @@ pub fn non_visual_properties_for_a_graphic_frame(
 }
 
 /// Read `xdr:nvGrpSpPr` into a `NonVisualPropertiesForAGroupShape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_properties_for_a_group_shape(
     element: &Element,
 ) -> super::NonVisualPropertiesForAGroupShape {
@@ -591,7 +591,7 @@ pub fn non_visual_properties_for_a_group_shape(
 }
 
 /// Read `xdr:nvPicPr` into a `NonVisualPropertiesForAPicture`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_properties_for_a_picture(
     element: &Element,
 ) -> super::NonVisualPropertiesForAPicture {
@@ -612,7 +612,7 @@ pub fn non_visual_properties_for_a_picture(
 }
 
 /// Read `xdr:nvSpPr` into a `NonVisualPropertiesForAShape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_properties_for_a_shape(element: &Element) -> super::NonVisualPropertiesForAShape {
     let mut node = super::NonVisualPropertiesForAShape::default();
     let mut reader = officekit_markup_base::Reader::new(
@@ -631,13 +631,13 @@ pub fn non_visual_properties_for_a_shape(element: &Element) -> super::NonVisualP
 }
 
 /// Read one item of `ObjectContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn object(element: &Element) -> super::ObjectContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `xdr:oneCellAnchor` into a `OneCellAnchorShapeSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn one_cell_anchor_shape_size(element: &Element) -> super::OneCellAnchorShapeSize {
     let mut node = super::OneCellAnchorShapeSize::default();
     let mut reader =
@@ -656,7 +656,7 @@ pub fn one_cell_anchor_shape_size(element: &Element) -> super::OneCellAnchorShap
 }
 
 /// Read `xdr:pic` into a `Picture`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn picture(element: &Element) -> super::Picture {
     let mut node = super::Picture::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PICTURE_SHAPE);
@@ -676,7 +676,7 @@ pub fn picture(element: &Element) -> super::Picture {
 }
 
 /// Read `xdr:blipFill` into a `PictureFill`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn picture_fill(element: &Element) -> super::PictureFill {
     let mut node = super::PictureFill::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PICTURE_FILL_SHAPE);
@@ -695,7 +695,7 @@ pub fn picture_fill(element: &Element) -> super::PictureFill {
 }
 
 /// Read `xdr:pos` into a `Position`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn position(element: &Element) -> super::Position {
     let mut node = super::Position::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::POSITION_SHAPE);
@@ -711,7 +711,7 @@ pub fn position(element: &Element) -> super::Position {
 }
 
 /// Read `xdr:row` into a `Row`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn row(element: &Element) -> super::Row {
     let mut node = super::Row::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ROW_SHAPE);
@@ -725,7 +725,7 @@ pub fn row(element: &Element) -> super::Row {
 }
 
 /// Read `xdr:rowOff` into a `RowOffset`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn row_offset(element: &Element) -> super::RowOffset {
     let mut node = super::RowOffset::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ROW_OFFSET_SHAPE);
@@ -739,7 +739,7 @@ pub fn row_offset(element: &Element) -> super::RowOffset {
 }
 
 /// Read `xdr:sp` into a `Shape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape(element: &Element) -> super::Shape {
     let mut node = super::Shape::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_SHAPE);
@@ -761,7 +761,7 @@ pub fn shape(element: &Element) -> super::Shape {
 }
 
 /// Read `xdr:ext` into a `ShapeExtent`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_extent(element: &Element) -> super::ShapeExtent {
     let mut node = super::ShapeExtent::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_EXTENT_SHAPE);
@@ -777,7 +777,7 @@ pub fn shape_extent(element: &Element) -> super::ShapeExtent {
 }
 
 /// Read `xdr:spPr` into a `ShapeProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_properties(element: &Element) -> super::ShapeProperties {
     let mut node = super::ShapeProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_PROPERTIES_SHAPE);
@@ -800,7 +800,7 @@ pub fn shape_properties(element: &Element) -> super::ShapeProperties {
 }
 
 /// Read `xdr:style` into a `ShapeStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_style(element: &Element) -> super::ShapeStyle {
     let mut node = super::ShapeStyle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_STYLE_SHAPE);
@@ -818,7 +818,7 @@ pub fn shape_style(element: &Element) -> super::ShapeStyle {
 }
 
 /// Read `xdr:txBody` into a `ShapeTextBody`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_text_body(element: &Element) -> super::ShapeTextBody {
     let mut node = super::ShapeTextBody::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_TEXT_BODY_SHAPE);
@@ -835,7 +835,7 @@ pub fn shape_text_body(element: &Element) -> super::ShapeTextBody {
 }
 
 /// Read `xdr:from` into a `StartingAnchorPoint`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn starting_anchor_point(element: &Element) -> super::StartingAnchorPoint {
     let mut node = super::StartingAnchorPoint::default();
     let mut reader =
@@ -854,7 +854,7 @@ pub fn starting_anchor_point(element: &Element) -> super::StartingAnchorPoint {
 }
 
 /// Read `xdr:twoCellAnchor` into a `TwoCellAnchorShapeSize`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn two_cell_anchor_shape_size(element: &Element) -> super::TwoCellAnchorShapeSize {
     let mut node = super::TwoCellAnchorShapeSize::default();
     let mut reader =
@@ -874,7 +874,7 @@ pub fn two_cell_anchor_shape_size(element: &Element) -> super::TwoCellAnchorShap
 }
 
 /// Read `xdr:wsDr` into a `WorksheetDrawing`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn worksheet_drawing(element: &Element) -> super::WorksheetDrawing {
     let mut node = super::WorksheetDrawing::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WORKSHEET_DRAWING_SHAPE);
@@ -888,13 +888,13 @@ pub fn worksheet_drawing(element: &Element) -> super::WorksheetDrawing {
 }
 
 /// Read one item of `WorksheetDrawingContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn worksheet_drawing_content(element: &Element) -> super::WorksheetDrawingContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `xdr:xfrm` into a `Xfrm`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn xfrm(element: &Element) -> super::Xfrm {
     let mut node = super::Xfrm::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::XFRM_SHAPE);

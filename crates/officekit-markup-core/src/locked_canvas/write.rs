@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `LockedCanvasContainer` as its element, `lc:lockedCanvas`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn locked_canvas_container(node: &super::LockedCanvasContainer, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,

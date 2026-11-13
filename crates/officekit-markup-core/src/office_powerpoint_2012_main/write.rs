@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `ChartTrackingRefBased` as its element, `p15:chartTrackingRefBased`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn chart_tracking_ref_based(node: &super::ChartTrackingRefBased, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -232,7 +232,7 @@ pub fn chart_tracking_ref_based(node: &super::ChartTrackingRefBased, scope: &mut
 }
 
 /// Write a `Clr` as its element, `p15:clr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn clr(node: &super::Clr, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::CLR_SHAPE, &node.unknown);
     writer.child(&node.content);
@@ -240,7 +240,7 @@ pub fn clr(node: &super::Clr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ExtLst` as its element, `p15:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -249,7 +249,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Guide` as its element, `p15:guide`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn guide(node: &super::Guide, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::GUIDE_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
@@ -263,7 +263,7 @@ pub fn guide(node: &super::Guide, scope: &mut Scope) -> Element {
 }
 
 /// Write a `NotesGuideLst` as its element, `p15:notesGuideLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn notes_guide_lst(node: &super::NotesGuideLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::NOTES_GUIDE_LST_SHAPE, &node.unknown);
@@ -273,7 +273,7 @@ pub fn notes_guide_lst(node: &super::NotesGuideLst, scope: &mut Scope) -> Elemen
 }
 
 /// Write a `ParentCm` as its element, `p15:parentCm`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn parent_cm(node: &super::ParentCm, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PARENT_CM_SHAPE, &node.unknown);
@@ -283,7 +283,7 @@ pub fn parent_cm(node: &super::ParentCm, scope: &mut Scope) -> Element {
 }
 
 /// Write a `PresenceInfo` as its element, `p15:presenceInfo`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn presence_info(node: &super::PresenceInfo, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PRESENCE_INFO_SHAPE, &node.unknown);
@@ -293,7 +293,7 @@ pub fn presence_info(node: &super::PresenceInfo, scope: &mut Scope) -> Element {
 }
 
 /// Write a `PrstTrans` as its element, `p15:prstTrans`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn prst_trans(node: &super::PrstTrans, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PRST_TRANS_SHAPE, &node.unknown);
@@ -304,7 +304,7 @@ pub fn prst_trans(node: &super::PrstTrans, scope: &mut Scope) -> Element {
 }
 
 /// Write a `SldGuideLst` as its element, `p15:sldGuideLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sld_guide_lst(node: &super::SldGuideLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SLD_GUIDE_LST_SHAPE, &node.unknown);
@@ -314,7 +314,7 @@ pub fn sld_guide_lst(node: &super::SldGuideLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ThreadingInfo` as its element, `p15:threadingInfo`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn threading_info(node: &super::ThreadingInfo, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::THREADING_INFO_SHAPE, &node.unknown);

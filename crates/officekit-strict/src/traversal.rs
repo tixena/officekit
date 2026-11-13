@@ -155,7 +155,7 @@ pub struct Walk<'node> {
 /// list hooks a list of its items asks.
 pub trait Item: Sized {
     /// Whether the item is one of the enum's arms, not its `Other` node.
-    #[must_use]
+    #[must_use = "this only answers the question"]
     fn is_declared(&self) -> bool;
 
     /// The list hook: `Some` puts any number of items, none included, in the
@@ -185,12 +185,12 @@ pub trait Item: Sized {
 pub trait Transform: Sized {
     /// Ask the context's hook for this node, found through the accessor of the node's namespace;
     /// rebuild from transformed children if it answers `None`, or gives no hook.
-    #[must_use]
+    #[must_use = "the result is returned and kept nowhere else"]
     fn transform(&self, ctx: &mut dyn Context) -> Self;
 
     /// Rebuild from transformed children without asking the context about
     /// this node.
-    #[must_use]
+    #[must_use = "the result is returned and kept nowhere else"]
     fn transform_children(&self, ctx: &mut dyn Context) -> Self;
 }
 
@@ -198,7 +198,7 @@ pub trait Transform: Sized {
 /// three shapes of a child field: `Box<T>`, `Option<Box<T>>`, and `Vec<T>`.
 pub trait TransformNodes: Nodes {
     /// The field rebuilt with each of its nodes transformed.
-    #[must_use]
+    #[must_use = "the result is returned and kept nowhere else"]
     fn transform_nodes(&self, ctx: &mut dyn Context) -> Self
     where
         Self: Sized,
@@ -284,7 +284,7 @@ impl<'unknown> Place<'unknown> {
     }
 
     /// A writer of the unknown children of a node, none written yet.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn new(unknown: &'unknown Unknown) -> Self {
         Self { known: 0, unknown }
     }
@@ -332,7 +332,7 @@ impl Rebase {
     }
 
     /// The rebase of a node whose unknown content is `unknown`.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn new(unknown: &Unknown) -> Self {
         Self {
             absent: unknown.absent.clone(),
@@ -342,7 +342,7 @@ impl Rebase {
 
     /// The place, in the rebuilt node, of an `Extra` placed after the
     /// `after`-th original declared child.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn place(&self, after: usize) -> usize {
         self.leading
             + self.counts.iter().take(after).sum::<usize>()
@@ -448,7 +448,7 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
     /// Start writing a node of `shape` with the unknown content it keeps:
     /// its element takes the prefix `out` binds to its namespace, or declares
     /// the table's.
-    #[must_use]
+    #[must_use = "the result is returned and kept nowhere else"]
     pub fn new(
         out: &'out mut PartWriter<'sink>,
         shape: &'static Shape,
@@ -690,7 +690,7 @@ impl<'node> Walk<'node> {
     }
 
     /// A walk over the children of a node whose unknown content is `unknown`, none visited yet.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn new(unknown: &'node Unknown) -> Self {
         Self {
             known: 0,
@@ -745,7 +745,7 @@ where
 ///
 /// The default node of a child the read element did not hold is copied
 /// without asking any hook, and counts none.
-#[must_use]
+#[must_use = "the result is returned and kept nowhere else"]
 pub fn transform_child<F>(field: &F, ctx: &mut dyn Context, rebase: &mut Rebase) -> F
 where
     F: Clone + TransformNodes,
@@ -762,7 +762,7 @@ where
 /// A single declared child of an enum type rebuilt with its node
 /// transformed; the node counts one declared child in `rebase`, an `Other`
 /// node as a declared one.
-#[must_use]
+#[must_use = "the result is returned and kept nowhere else"]
 pub fn transform_choice<F>(field: &F, ctx: &mut dyn Context, rebase: &mut Rebase) -> F
 where
     F: Clone + TransformNodes,

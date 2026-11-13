@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `dgm14:cNvPr` into a `CNvPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_nv_pr(element: &Element) -> super::CNvPr {
     let mut node = super::CNvPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::C_NV_PR_SHAPE);
@@ -241,7 +241,7 @@ pub fn c_nv_pr(element: &Element) -> super::CNvPr {
 }
 
 /// Read `dgm14:recolorImg` into a `RecolorImg`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn recolor_img(element: &Element) -> super::RecolorImg {
     let mut node = super::RecolorImg::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RECOLOR_IMG_SHAPE);

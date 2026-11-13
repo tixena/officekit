@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `p1710:readonlyRecommended` into a `ReadonlyRecommended`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn readonly_recommended(element: &Element) -> super::ReadonlyRecommended {
     let mut node = super::ReadonlyRecommended::default();
     let mut reader =

@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `Checksum` as its element, `xltc2:checksum`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn checksum(node: &super::Checksum, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CHECKSUM_SHAPE, &node.unknown);
@@ -229,7 +229,7 @@ pub fn checksum(node: &super::Checksum, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ExtLst` as its element, `xltc2:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -238,7 +238,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Hyperlink` as its element, `xltc2:hyperlink`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hyperlink(node: &super::Hyperlink, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::HYPERLINK_SHAPE, &node.unknown);

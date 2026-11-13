@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `F` as its element, `xne:f`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn f(node: &super::F, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::F_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -228,7 +228,7 @@ pub fn f(node: &super::F, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Sqref` as its element, `xne:sqref`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sqref(node: &super::Sqref, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::SQREF_SHAPE, &node.unknown);
     writer.text(&node.value);

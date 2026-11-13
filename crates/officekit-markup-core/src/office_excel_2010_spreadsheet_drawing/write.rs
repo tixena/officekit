@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `CNvContentPartPr` as its element, `xdr14:cNvContentPartPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_nv_content_part_pr(node: &super::CNvContentPartPr, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -234,7 +234,7 @@ pub fn c_nv_content_part_pr(node: &super::CNvContentPartPr, scope: &mut Scope) -
 }
 
 /// Write a `CNvPr` as its element, `xdr14:cNvPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::C_NV_PR_SHAPE, &node.unknown);
@@ -250,7 +250,7 @@ pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ContentPart` as its element, `xdr14:contentPart`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn content_part(node: &super::ContentPart, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::CONTENT_PART_SHAPE, &node.unknown);
@@ -264,7 +264,7 @@ pub fn content_part(node: &super::ContentPart, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ExtLst` as its element, `xdr14:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -273,7 +273,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `NvContentPartPr` as its element, `xdr14:nvContentPartPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn nv_content_part_pr(node: &super::NvContentPartPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::NV_CONTENT_PART_PR_SHAPE, &node.unknown);
@@ -283,7 +283,7 @@ pub fn nv_content_part_pr(node: &super::NvContentPartPr, scope: &mut Scope) -> E
 }
 
 /// Write a `NvPr` as its element, `xdr14:nvPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn nv_pr(node: &super::NvPr, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::NV_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#macro);
@@ -292,7 +292,7 @@ pub fn nv_pr(node: &super::NvPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Xfrm` as its element, `xdr14:xfrm`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn xfrm(node: &super::Xfrm, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::XFRM_SHAPE, &node.unknown);
     writer.attribute(0, &node.rot);

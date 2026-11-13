@@ -50,7 +50,7 @@ impl Class {
 }
 
 /// `<module>.rs` of `officekit-strict` or of `officekit::transitional`: every node's impl.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn module(
     header: &str,
     class: Class,
@@ -111,7 +111,7 @@ pub fn module(
 }
 
 /// `modules.rs`: the `pub mod` line of each module.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn modules(header: &str, class: Class, names: &[String]) -> String {
     let (lower, _) = class.names();
     let (_, place) = class.root();
@@ -133,7 +133,7 @@ pub fn modules(header: &str, class: Class, names: &[String]) -> String {
 }
 
 /// `rules.rs` of `officekit-strict`: the tables of the Strict walk.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn strict_rules(header: &str, prefixes: &[String], rules: &Rules) -> String {
     let mut out = String::from(header);
     out.push_str(
@@ -165,7 +165,7 @@ pub fn strict_rules(header: &str, prefixes: &[String], rules: &Rules) -> String 
 
 /// `spellings.rs` of `officekit::transitional`: the tables of a save from Strict to
 /// Transitional, a module of its own.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn transitional_spellings(header: &str, prefixes: &[String], back: &Back) -> String {
     let mut out = String::from(header);
     out.push_str(
@@ -325,7 +325,7 @@ fn back_contextual_static(prefixes: &[String], back: &Back, out: &mut String) {
 }
 
 /// `rules.rs` of `officekit::transitional`: the values a Transitional write refuses.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn transitional_rules(header: &str, prefixes: &[String], rules: &Rules) -> String {
     let mut out = String::from(header);
     out.push_str(

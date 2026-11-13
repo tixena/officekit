@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `LastEditFeature` as its element, `xxdsv:lastEditFeature`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn last_edit_feature(node: &super::LastEditFeature, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::LAST_EDIT_FEATURE_SHAPE, &node.unknown);
@@ -229,7 +229,7 @@ pub fn last_edit_feature(node: &super::LastEditFeature, scope: &mut Scope) -> El
 }
 
 /// Write a `LastRefreshFeature` as its element, `xxdsv:lastRefreshFeature`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn last_refresh_feature(node: &super::LastRefreshFeature, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -241,7 +241,7 @@ pub fn last_refresh_feature(node: &super::LastRefreshFeature, scope: &mut Scope)
 }
 
 /// Write a `RequiredFeature` as its element, `xxdsv:requiredFeature`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn required_feature(node: &super::RequiredFeature, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::REQUIRED_FEATURE_SHAPE, &node.unknown);
@@ -250,7 +250,7 @@ pub fn required_feature(node: &super::RequiredFeature, scope: &mut Scope) -> Ele
 }
 
 /// Write a `VersionInfo` as its element, `xxdsv:versionInfo`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn version_info(node: &super::VersionInfo, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::VERSION_INFO_SHAPE, &node.unknown);

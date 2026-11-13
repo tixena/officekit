@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `adec:decorative` into a `Decorative`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn decorative(element: &Element) -> super::Decorative {
     let mut node = super::Decorative::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DECORATIVE_SHAPE);

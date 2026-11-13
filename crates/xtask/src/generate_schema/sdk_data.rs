@@ -237,7 +237,7 @@ impl SdkData {
 
     /// The namespaces dated Office 2010 to Microsoft 365: those with types or
     /// attributes in the data, then those without.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn extension_namespaces(&self) -> (Vec<&DataNamespace>, Vec<&DataNamespace>) {
         let mut used = BTreeSet::new();
         for (name, data_type) in &self.types {
@@ -260,7 +260,7 @@ impl SdkData {
     /// The extension content the data places in a type: each attribute and
     /// particle element of a namespace dated Office 2010 to Microsoft 365
     /// other than the type's own.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn extensions_in(&self, ecma_type: &str) -> Vec<Extension<'_>> {
         let Some((type_name, data_type)) = self.types.get_key_value(ecma_type) else {
             return Vec::new();

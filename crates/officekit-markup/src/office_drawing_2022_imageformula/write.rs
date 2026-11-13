@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `ImageFormula` as its element, `aif:imageFormula`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn image_formula(node: &super::ImageFormula, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::IMAGE_FORMULA_SHAPE, &node.unknown);

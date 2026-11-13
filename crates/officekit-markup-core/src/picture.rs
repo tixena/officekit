@@ -477,7 +477,7 @@ impl Eq for ShapePropertiesWith<()> {}
 impl<X: NodeExtra> NonVisualDrawingPropertiesWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> NonVisualDrawingPropertiesWith<Y>
     where
         Y: NodeExtra,
@@ -506,7 +506,7 @@ impl<X: NodeExtra> NonVisualDrawingPropertiesWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             descr: self.descr.clone(),
@@ -535,7 +535,7 @@ impl officekit_markup_base::Write for NonVisualDrawingProperties {
 impl<X: NodeExtra> NonVisualPictureDrawingPropertiesWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> NonVisualPictureDrawingPropertiesWith<Y>
     where
         Y: NodeExtra,
@@ -556,7 +556,7 @@ impl<X: NodeExtra> NonVisualPictureDrawingPropertiesWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             prefer_relative_resize: self.prefer_relative_resize.clone(),
@@ -581,7 +581,7 @@ impl officekit_markup_base::Write for NonVisualPictureDrawingProperties {
 impl<X: NodeExtra> NonVisualPicturePropertiesWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> NonVisualPicturePropertiesWith<Y>
     where
         Y: NodeExtra,
@@ -601,7 +601,7 @@ impl<X: NodeExtra> NonVisualPicturePropertiesWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -623,7 +623,7 @@ impl officekit_markup_base::Write for NonVisualPictureProperties {
 impl<X: NodeExtra> PictureWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> PictureWith<Y>
     where
         Y: NodeExtra,
@@ -655,7 +655,7 @@ impl<X: NodeExtra> PictureWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -677,7 +677,7 @@ impl officekit_markup_base::Write for Picture {
 impl<X: NodeExtra> PictureFillWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> PictureFillWith<Y>
     where
         Y: NodeExtra,
@@ -703,7 +703,7 @@ impl<X: NodeExtra> PictureFillWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             dpi: self.dpi.clone(),
@@ -729,7 +729,7 @@ impl officekit_markup_base::Write for PictureFill {
 impl<X: NodeExtra> ShapePropertiesWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(mut self) -> ShapePropertiesWith<Y>
     where
         Y: NodeExtra,
@@ -774,7 +774,7 @@ impl<X: NodeExtra> ShapePropertiesWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             bw_mode: self.bw_mode.clone(),

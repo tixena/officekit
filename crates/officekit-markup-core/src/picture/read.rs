@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `pic:cNvPr` into a `NonVisualDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawingProperties {
     let mut node = super::NonVisualDrawingProperties::default();
     let mut reader =
@@ -242,7 +242,7 @@ pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawi
 }
 
 /// Read `pic:cNvPicPr` into a `NonVisualPictureDrawingProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_picture_drawing_properties(
     element: &Element,
 ) -> super::NonVisualPictureDrawingProperties {
@@ -264,7 +264,7 @@ pub fn non_visual_picture_drawing_properties(
 }
 
 /// Read `pic:nvPicPr` into a `NonVisualPictureProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn non_visual_picture_properties(element: &Element) -> super::NonVisualPictureProperties {
     let mut node = super::NonVisualPictureProperties::default();
     let mut reader =
@@ -281,7 +281,7 @@ pub fn non_visual_picture_properties(element: &Element) -> super::NonVisualPictu
 }
 
 /// Read `pic:pic` into a `Picture`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn picture(element: &Element) -> super::Picture {
     let mut node = super::Picture::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PICTURE_SHAPE);
@@ -300,7 +300,7 @@ pub fn picture(element: &Element) -> super::Picture {
 }
 
 /// Read `pic:blipFill` into a `PictureFill`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn picture_fill(element: &Element) -> super::PictureFill {
     let mut node = super::PictureFill::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PICTURE_FILL_SHAPE);
@@ -319,7 +319,7 @@ pub fn picture_fill(element: &Element) -> super::PictureFill {
 }
 
 /// Read `pic:spPr` into a `ShapeProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_properties(element: &Element) -> super::ShapeProperties {
     let mut node = super::ShapeProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_PROPERTIES_SHAPE);

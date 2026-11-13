@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xlrd2:a` into a `AArray`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn a_array(element: &Element) -> super::AArray {
     let mut node = super::AArray::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::A_ARRAY_SHAPE);
@@ -236,7 +236,7 @@ pub fn a_array(element: &Element) -> super::AArray {
 }
 
 /// Read `xlrd2:a` into a `ASupportingPropertyBagArray`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn a_supporting_property_bag_array(element: &Element) -> super::ASupportingPropertyBagArray {
     let mut node = super::ASupportingPropertyBagArray::default();
     let mut reader =
@@ -253,7 +253,7 @@ pub fn a_supporting_property_bag_array(element: &Element) -> super::ASupportingP
 }
 
 /// Read `xlrd2:arrayData` into a `ArrayData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn array_data(element: &Element) -> super::ArrayData {
     let mut node = super::ArrayData::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ARRAY_DATA_SHAPE);
@@ -270,7 +270,7 @@ pub fn array_data(element: &Element) -> super::ArrayData {
 }
 
 /// Read `xlrd2:customFilter` into a `CustomFilter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_filter(element: &Element) -> super::CustomFilter {
     let mut node = super::CustomFilter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOM_FILTER_SHAPE);
@@ -287,7 +287,7 @@ pub fn custom_filter(element: &Element) -> super::CustomFilter {
 }
 
 /// Read `xlrd2:customFilters` into a `CustomFilters`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_filters(element: &Element) -> super::CustomFilters {
     let mut node = super::CustomFilters::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CUSTOM_FILTERS_SHAPE);
@@ -303,13 +303,13 @@ pub fn custom_filters(element: &Element) -> super::CustomFilters {
 }
 
 /// Read one item of `CustomRichFiltersContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn custom_rich_filters(element: &Element) -> super::CustomRichFiltersContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `xlrd2:dateGroupItem` into a `DateGroupItem`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn date_group_item(element: &Element) -> super::DateGroupItem {
     let mut node = super::DateGroupItem::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATE_GROUP_ITEM_SHAPE);
@@ -331,7 +331,7 @@ pub fn date_group_item(element: &Element) -> super::DateGroupItem {
 }
 
 /// Read `xlrd2:dxfs` into a `Dxfs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dxfs(element: &Element) -> super::Dxfs {
     let mut node = super::Dxfs::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DXFS_SHAPE);
@@ -347,7 +347,7 @@ pub fn dxfs(element: &Element) -> super::Dxfs {
 }
 
 /// Read `xlrd2:dynamicFilter` into a `DynamicFilter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dynamic_filter(element: &Element) -> super::DynamicFilter {
     let mut node = super::DynamicFilter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DYNAMIC_FILTER_SHAPE);
@@ -367,7 +367,7 @@ pub fn dynamic_filter(element: &Element) -> super::DynamicFilter {
 }
 
 /// Read `xlrd2:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -381,7 +381,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `xlrd2:filter` into a `Filter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn filter(element: &Element) -> super::Filter {
     let mut node = super::Filter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FILTER_SHAPE);
@@ -399,7 +399,7 @@ pub fn filter(element: &Element) -> super::Filter {
 }
 
 /// Read `xlrd2:filterColumn` into a `FilterColumn`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn filter_column(element: &Element) -> super::FilterColumn {
     let mut node = super::FilterColumn::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FILTER_COLUMN_SHAPE);
@@ -413,7 +413,7 @@ pub fn filter_column(element: &Element) -> super::FilterColumn {
 }
 
 /// Read `xlrd2:filters` into a `Filters`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn filters(element: &Element) -> super::Filters {
     let mut node = super::Filters::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FILTERS_SHAPE);
@@ -430,7 +430,7 @@ pub fn filters(element: &Element) -> super::Filters {
 }
 
 /// Read `xlrd2:flag` into a `Flag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn flag(element: &Element) -> super::Flag {
     let mut node = super::Flag::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FLAG_SHAPE);
@@ -446,7 +446,7 @@ pub fn flag(element: &Element) -> super::Flag {
 }
 
 /// Read `xlrd2:global` into a `Global`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn global(element: &Element) -> super::Global {
     let mut node = super::Global::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GLOBAL_SHAPE);
@@ -462,7 +462,7 @@ pub fn global(element: &Element) -> super::Global {
 }
 
 /// Read `xlrd2:k` into a `K`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn k(element: &Element) -> super::K {
     let mut node = super::K::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::K_SHAPE);
@@ -478,7 +478,7 @@ pub fn k(element: &Element) -> super::K {
 }
 
 /// Read `xlrd2:key` into a `Key`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn key(element: &Element) -> super::Key {
     let mut node = super::Key::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::KEY_SHAPE);
@@ -494,7 +494,7 @@ pub fn key(element: &Element) -> super::Key {
 }
 
 /// Read `xlrd2:keyFlags` into a `KeyFlags`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn key_flags(element: &Element) -> super::KeyFlags {
     let mut node = super::KeyFlags::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::KEY_FLAGS_SHAPE);
@@ -508,7 +508,7 @@ pub fn key_flags(element: &Element) -> super::KeyFlags {
 }
 
 /// Read `xlrd2:rPr` into a `RPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r_pr(element: &Element) -> super::RPr {
     let mut node = super::RPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::R_PR_SHAPE);
@@ -524,7 +524,7 @@ pub fn r_pr(element: &Element) -> super::RPr {
 }
 
 /// Read `xlrd2:rSty` into a `RSty`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r_sty(element: &Element) -> super::RSty {
     let mut node = super::RSty::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::R_STY_SHAPE);
@@ -540,13 +540,13 @@ pub fn r_sty(element: &Element) -> super::RSty {
 }
 
 /// Read one item of `RichFilterColumnContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn rich_filter_column(element: &Element) -> super::RichFilterColumnContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `xlrd2:richProperties` into a `RichProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_properties(element: &Element) -> super::RichProperties {
     let mut node = super::RichProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RICH_PROPERTIES_SHAPE);
@@ -560,7 +560,7 @@ pub fn rich_properties(element: &Element) -> super::RichProperties {
 }
 
 /// Read `xlrd2:richSortCondition` into a `RichSortCondition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_sort_condition(element: &Element) -> super::RichSortCondition {
     let mut node = super::RichSortCondition::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RICH_SORT_CONDITION_SHAPE);
@@ -582,7 +582,7 @@ pub fn rich_sort_condition(element: &Element) -> super::RichSortCondition {
 }
 
 /// Read `xlrd2:richStyleSheet` into a `RichStyleSheet`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_style_sheet(element: &Element) -> super::RichStyleSheet {
     let mut node = super::RichStyleSheet::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RICH_STYLE_SHEET_SHAPE);
@@ -600,7 +600,7 @@ pub fn rich_style_sheet(element: &Element) -> super::RichStyleSheet {
 }
 
 /// Read `xlrd2:richStyles` into a `RichStyles`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rich_styles(element: &Element) -> super::RichStyles {
     let mut node = super::RichStyles::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RICH_STYLES_SHAPE);
@@ -614,7 +614,7 @@ pub fn rich_styles(element: &Element) -> super::RichStyles {
 }
 
 /// Read `xlrd2:rpv` into a `Rpv`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rpv(element: &Element) -> super::Rpv {
     let mut node = super::Rpv::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RPV_SHAPE);
@@ -630,7 +630,7 @@ pub fn rpv(element: &Element) -> super::Rpv {
 }
 
 /// Read `xlrd2:rvTypesInfo` into a `RvTypesInfo`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rv_types_info(element: &Element) -> super::RvTypesInfo {
     let mut node = super::RvTypesInfo::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RV_TYPES_INFO_SHAPE);
@@ -647,7 +647,7 @@ pub fn rv_types_info(element: &Element) -> super::RvTypesInfo {
 }
 
 /// Read `xlrd2:s` into a `S`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn s(element: &Element) -> super::S {
     let mut node = super::S::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::S_SHAPE);
@@ -661,7 +661,7 @@ pub fn s(element: &Element) -> super::S {
 }
 
 /// Read `xlrd2:spb` into a `Spb`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn spb(element: &Element) -> super::Spb {
     let mut node = super::Spb::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SPB_SHAPE);
@@ -677,7 +677,7 @@ pub fn spb(element: &Element) -> super::Spb {
 }
 
 /// Read `xlrd2:spbArrays` into a `SpbArrays`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn spb_arrays(element: &Element) -> super::SpbArrays {
     let mut node = super::SpbArrays::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SPB_ARRAYS_SHAPE);
@@ -694,7 +694,7 @@ pub fn spb_arrays(element: &Element) -> super::SpbArrays {
 }
 
 /// Read `xlrd2:spbData` into a `SpbData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn spb_data(element: &Element) -> super::SpbData {
     let mut node = super::SpbData::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SPB_DATA_SHAPE);
@@ -711,7 +711,7 @@ pub fn spb_data(element: &Element) -> super::SpbData {
 }
 
 /// Read `xlrd2:spbStructures` into a `SpbStructures`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn spb_structures(element: &Element) -> super::SpbStructures {
     let mut node = super::SpbStructures::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SPB_STRUCTURES_SHAPE);
@@ -728,7 +728,7 @@ pub fn spb_structures(element: &Element) -> super::SpbStructures {
 }
 
 /// Read `xlrd2:supportingPropertyBags` into a `SupportingPropertyBags`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn supporting_property_bags(element: &Element) -> super::SupportingPropertyBags {
     let mut node = super::SupportingPropertyBags::default();
     let mut reader =
@@ -745,7 +745,7 @@ pub fn supporting_property_bags(element: &Element) -> super::SupportingPropertyB
 }
 
 /// Read `xlrd2:top10` into a `Top10`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn top10(element: &Element) -> super::Top10 {
     let mut node = super::Top10::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TOP10_SHAPE);
@@ -764,7 +764,7 @@ pub fn top10(element: &Element) -> super::Top10 {
 }
 
 /// Read `xlrd2:type` into a `Type`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r#type(element: &Element) -> super::Type {
     let mut node = super::Type::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TYPE_SHAPE);
@@ -781,7 +781,7 @@ pub fn r#type(element: &Element) -> super::Type {
 }
 
 /// Read `xlrd2:types` into a `Types`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn types(element: &Element) -> super::Types {
     let mut node = super::Types::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TYPES_SHAPE);
@@ -795,7 +795,7 @@ pub fn types(element: &Element) -> super::Types {
 }
 
 /// Read `xlrd2:v` into a `VArrayValue`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn v_array_value(element: &Element) -> super::VArrayValue {
     let mut node = super::VArrayValue::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::V_ARRAY_VALUE_SHAPE);
@@ -811,7 +811,7 @@ pub fn v_array_value(element: &Element) -> super::VArrayValue {
 }
 
 /// Read `xlrd2:v` into a `VSupportingPropertyBagArrayValue`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn v_supporting_property_bag_array_value(
     element: &Element,
 ) -> super::VSupportingPropertyBagArrayValue {
@@ -832,7 +832,7 @@ pub fn v_supporting_property_bag_array_value(
 }
 
 /// Read `xlrd2:v` into a `VSupportingPropertyBagValue`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn v_supporting_property_bag_value(element: &Element) -> super::VSupportingPropertyBagValue {
     let mut node = super::VSupportingPropertyBagValue::default();
     let mut reader =

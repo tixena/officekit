@@ -498,7 +498,7 @@ pub trait Visitor: crate::Visitor {
 impl<X: NodeExtra> ColIdWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ColIdWith<Y>
     where
         Y: NodeExtra,
@@ -510,7 +510,7 @@ impl<X: NodeExtra> ColIdWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -532,7 +532,7 @@ impl officekit_markup_base::Write for ColId {
 impl<X: NodeExtra> CreationIdWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CreationIdWith<Y>
     where
         Y: NodeExtra,
@@ -545,7 +545,7 @@ impl<X: NodeExtra> CreationIdWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             id: self.id.clone(),
@@ -570,7 +570,7 @@ impl officekit_markup_base::Write for CreationId {
 impl<X: NodeExtra> CxnDERefsWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> CxnDERefsWith<Y>
     where
         Y: NodeExtra,
@@ -584,7 +584,7 @@ impl<X: NodeExtra> CxnDERefsWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             end: self.end.clone(),
@@ -610,7 +610,7 @@ impl officekit_markup_base::Write for CxnDERefs {
 impl<X: NodeExtra> PredDERefWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PredDERefWith<Y>
     where
         Y: NodeExtra,
@@ -623,7 +623,7 @@ impl<X: NodeExtra> PredDERefWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             pred: self.pred.clone(),
@@ -648,7 +648,7 @@ impl officekit_markup_base::Write for PredDERef {
 impl<X: NodeExtra> RowIdWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> RowIdWith<Y>
     where
         Y: NodeExtra,
@@ -660,7 +660,7 @@ impl<X: NodeExtra> RowIdWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }

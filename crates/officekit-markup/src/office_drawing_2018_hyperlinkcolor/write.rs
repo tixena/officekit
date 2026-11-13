@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `HlinkClr` as its element, `ahyp:hlinkClr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hlink_clr(node: &super::HlinkClr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::HLINK_CLR_SHAPE, &node.unknown);

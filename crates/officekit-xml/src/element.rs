@@ -148,7 +148,7 @@ pub enum XmlError {
 
 impl Attribute {
     /// An attribute with `name` and `value`, which is stored as given.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn new(name: QName, value: String) -> Self {
         Self { name, value }
     }
@@ -156,7 +156,7 @@ impl Attribute {
 
 impl Document {
     /// A part with `declaration` and a `\r\n` after it, as Office writes it.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn new(declaration: &str, root: Element) -> Self {
         Self {
             declaration: Some(declaration.to_owned()),
@@ -183,7 +183,7 @@ impl Document {
     /// attributes and text, but the bytes can differ: the writer puts namespace declarations before
     /// the other attributes, writes characters with its own escapes, and drops the whitespace and
     /// namespace declarations `options` removes.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn to_xml(&self, options: WriteOptions) -> Vec<u8> {
         write::document(self, options)
     }
@@ -192,7 +192,7 @@ impl Document {
 impl Element {
     /// The value of the attribute named `local` in `namespace`; `None` when there is none. The
     /// prefix does not matter. Use `Namespace::None` for an attribute with no prefix.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn attribute(&self, namespace: &Namespace, local: &str) -> Option<&str> {
         self.attributes
             .iter()
@@ -214,7 +214,7 @@ impl Element {
     }
 
     /// An element with no attributes, declarations, or children.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn new(name: QName) -> Self {
         Self {
             attributes: Vec::new(),
@@ -305,7 +305,7 @@ impl Element {
 
 impl NamespaceDeclaration {
     /// A declaration of `uri` under `prefix`; the prefix is empty for a default namespace.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn new(prefix: String, uri: String) -> Self {
         Self { prefix, uri }
     }

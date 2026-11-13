@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `wpc:bg` into a `Bg`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bg(element: &Element) -> super::Bg {
     let mut node = super::Bg::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BG_SHAPE);
@@ -235,7 +235,7 @@ pub fn bg(element: &Element) -> super::Bg {
 }
 
 /// Read `wpc:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -249,7 +249,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `wpc:graphicFrame` into a `GraphicFrame`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn graphic_frame(element: &Element) -> super::GraphicFrame {
     let mut node = super::GraphicFrame::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::GRAPHIC_FRAME_SHAPE);
@@ -268,7 +268,7 @@ pub fn graphic_frame(element: &Element) -> super::GraphicFrame {
 }
 
 /// Read `wpc:whole` into a `Whole`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn whole(element: &Element) -> super::Whole {
     let mut node = super::Whole::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WHOLE_SHAPE);
@@ -284,13 +284,13 @@ pub fn whole(element: &Element) -> super::Whole {
 }
 
 /// Read one item of `WordprocessingCanvasContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn wordprocessing_canvas(element: &Element) -> super::WordprocessingCanvasContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `wpc:wpc` into a `Wpc`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn wpc(element: &Element) -> super::Wpc {
     let mut node = super::Wpc::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WPC_SHAPE);

@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `p1912:add` into a `Add`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn add(element: &Element) -> super::Add {
     let reader = officekit_markup_base::Reader::new(element, &super::ADD_SHAPE);
     super::Add {
@@ -229,7 +229,7 @@ pub fn add(element: &Element) -> super::Add {
 }
 
 /// Read `p1912:anchr` into a `Anchr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn anchr(element: &Element) -> super::Anchr {
     let mut node = super::Anchr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ANCHR_SHAPE);
@@ -245,7 +245,7 @@ pub fn anchr(element: &Element) -> super::Anchr {
 }
 
 /// Read `p1912:asgn` into a `Asgn`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn asgn(element: &Element) -> super::Asgn {
     let reader = officekit_markup_base::Reader::new(element, &super::ASGN_SHAPE);
     super::Asgn {
@@ -255,7 +255,7 @@ pub fn asgn(element: &Element) -> super::Asgn {
 }
 
 /// Read `p1912:atrbtn` into a `Atrbtn`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn atrbtn(element: &Element) -> super::Atrbtn {
     let reader = officekit_markup_base::Reader::new(element, &super::ATRBTN_SHAPE);
     super::Atrbtn {
@@ -265,7 +265,7 @@ pub fn atrbtn(element: &Element) -> super::Atrbtn {
 }
 
 /// Read `p1912:comment` into a `Comment`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn comment(element: &Element) -> super::Comment {
     let mut node = super::Comment::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COMMENT_SHAPE);
@@ -279,7 +279,7 @@ pub fn comment(element: &Element) -> super::Comment {
 }
 
 /// Read `p1912:date` into a `Date`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn date(element: &Element) -> super::Date {
     let mut node = super::Date::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATE_SHAPE);
@@ -295,7 +295,7 @@ pub fn date(element: &Element) -> super::Date {
 }
 
 /// Read `p1912:event` into a `Event`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn event(element: &Element) -> super::Event {
     let mut node = super::Event::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EVENT_SHAPE);
@@ -315,7 +315,7 @@ pub fn event(element: &Element) -> super::Event {
 }
 
 /// Read `p1912:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -329,7 +329,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `p1912:history` into a `History`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn history(element: &Element) -> super::History {
     let mut node = super::History::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HISTORY_SHAPE);
@@ -343,7 +343,7 @@ pub fn history(element: &Element) -> super::History {
 }
 
 /// Read `p1912:pcntCmplt` into a `PcntCmplt`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pcnt_cmplt(element: &Element) -> super::PcntCmplt {
     let mut node = super::PcntCmplt::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PCNT_CMPLT_SHAPE);
@@ -357,7 +357,7 @@ pub fn pcnt_cmplt(element: &Element) -> super::PcntCmplt {
 }
 
 /// Read `p1912:pri` into a `Pri`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pri(element: &Element) -> super::Pri {
     let mut node = super::Pri::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PRI_SHAPE);
@@ -371,7 +371,7 @@ pub fn pri(element: &Element) -> super::Pri {
 }
 
 /// Read `p1912:taskHistoryDetails` into a `TaskHistoryDetails`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn task_history_details(element: &Element) -> super::TaskHistoryDetails {
     let mut node = super::TaskHistoryDetails::default();
     let mut reader =
@@ -389,13 +389,13 @@ pub fn task_history_details(element: &Element) -> super::TaskHistoryDetails {
 }
 
 /// Read one item of `TaskHistoryEventContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn task_history_event(element: &Element) -> super::TaskHistoryEventContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p1912:title` into a `Title`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn title(element: &Element) -> super::Title {
     let mut node = super::Title::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TITLE_SHAPE);
@@ -409,7 +409,7 @@ pub fn title(element: &Element) -> super::Title {
 }
 
 /// Read `p1912:unAsgn` into a `UnAsgn`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn un_asgn(element: &Element) -> super::UnAsgn {
     let reader = officekit_markup_base::Reader::new(element, &super::UN_ASGN_SHAPE);
     super::UnAsgn {
@@ -419,7 +419,7 @@ pub fn un_asgn(element: &Element) -> super::UnAsgn {
 }
 
 /// Read `p1912:unasgnAll` into a `UnasgnAll`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn unasgn_all(element: &Element) -> super::UnasgnAll {
     let reader = officekit_markup_base::Reader::new(element, &super::UNASGN_ALL_SHAPE);
     super::UnasgnAll {
@@ -429,7 +429,7 @@ pub fn unasgn_all(element: &Element) -> super::UnasgnAll {
 }
 
 /// Read `p1912:undo` into a `Undo`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn undo(element: &Element) -> super::Undo {
     let mut node = super::Undo::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::UNDO_SHAPE);
@@ -443,7 +443,7 @@ pub fn undo(element: &Element) -> super::Undo {
 }
 
 /// Read `p1912:unknown` into a `Unknown`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn unknown(element: &Element) -> super::Unknown {
     let reader = officekit_markup_base::Reader::new(element, &super::UNKNOWN_SHAPE);
     super::Unknown {

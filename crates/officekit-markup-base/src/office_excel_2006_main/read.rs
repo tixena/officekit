@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xne:f` into a `F`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn f(element: &Element) -> super::F {
     let mut node = super::F::default();
     let mut reader = crate::Reader::new(element, &super::F_SHAPE);
@@ -233,7 +233,7 @@ pub fn f(element: &Element) -> super::F {
 }
 
 /// Read `xne:sqref` into a `Sqref`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sqref(element: &Element) -> super::Sqref {
     let mut node = super::Sqref::default();
     let mut reader = crate::Reader::new(element, &super::SQREF_SHAPE);

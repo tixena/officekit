@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `c16r3:dataDisplayOptions16` into a `DataDisplayOptions16`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_display_options16(element: &Element) -> super::DataDisplayOptions16 {
     let mut node = super::DataDisplayOptions16::default();
     let mut reader =
@@ -234,7 +234,7 @@ pub fn data_display_options16(element: &Element) -> super::DataDisplayOptions16 
 }
 
 /// Read `c16r3:dispNaAsBlank` into a `DispNaAsBlank`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn disp_na_as_blank(element: &Element) -> super::DispNaAsBlank {
     let mut node = super::DispNaAsBlank::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DISP_NA_AS_BLANK_SHAPE);

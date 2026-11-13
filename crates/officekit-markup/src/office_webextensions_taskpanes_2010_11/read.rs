@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `wetp:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -233,7 +233,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `wetp:taskpane` into a `Taskpane`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn taskpane(element: &Element) -> super::Taskpane {
     let mut node = super::Taskpane::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TASKPANE_SHAPE);
@@ -254,7 +254,7 @@ pub fn taskpane(element: &Element) -> super::Taskpane {
 }
 
 /// Read `wetp:taskpanes` into a `Taskpanes`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn taskpanes(element: &Element) -> super::Taskpanes {
     let mut node = super::Taskpanes::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TASKPANES_SHAPE);
@@ -268,7 +268,7 @@ pub fn taskpanes(element: &Element) -> super::Taskpanes {
 }
 
 /// Read `wetp:webextensionref` into a `Webextensionref`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn webextensionref(element: &Element) -> super::Webextensionref {
     let mut node = super::Webextensionref::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WEBEXTENSIONREF_SHAPE);

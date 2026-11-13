@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `vt:array` into a `Array`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn array(element: &Element) -> super::Array {
     let mut node = super::Array::default();
     let mut reader = crate::Reader::new(element, &super::ARRAY_SHAPE);
@@ -237,13 +237,13 @@ pub fn array(element: &Element) -> super::Array {
 }
 
 /// Read one item of `ArrayContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn array_content(element: &Element) -> super::ArrayContent {
     crate::read(element)
 }
 
 /// Read `vt:bstr` into a `BasicString`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn basic_string(element: &Element) -> super::BasicString {
     let mut node = super::BasicString::default();
     let mut reader = crate::Reader::new(element, &super::BASIC_STRING_SHAPE);
@@ -257,7 +257,7 @@ pub fn basic_string(element: &Element) -> super::BasicString {
 }
 
 /// Read `vt:blob` into a `BinaryBlob`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn binary_blob(element: &Element) -> super::BinaryBlob {
     let mut node = super::BinaryBlob::default();
     let mut reader = crate::Reader::new(element, &super::BINARY_BLOB_SHAPE);
@@ -271,7 +271,7 @@ pub fn binary_blob(element: &Element) -> super::BinaryBlob {
 }
 
 /// Read `vt:oblob` into a `BinaryBlobObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn binary_blob_object(element: &Element) -> super::BinaryBlobObject {
     let mut node = super::BinaryBlobObject::default();
     let mut reader = crate::Reader::new(element, &super::BINARY_BLOB_OBJECT_SHAPE);
@@ -285,7 +285,7 @@ pub fn binary_blob_object(element: &Element) -> super::BinaryBlobObject {
 }
 
 /// Read `vt:storage` into a `BinaryStorage`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn binary_storage(element: &Element) -> super::BinaryStorage {
     let mut node = super::BinaryStorage::default();
     let mut reader = crate::Reader::new(element, &super::BINARY_STORAGE_SHAPE);
@@ -299,7 +299,7 @@ pub fn binary_storage(element: &Element) -> super::BinaryStorage {
 }
 
 /// Read `vt:ostorage` into a `BinaryStorageObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn binary_storage_object(element: &Element) -> super::BinaryStorageObject {
     let mut node = super::BinaryStorageObject::default();
     let mut reader = crate::Reader::new(element, &super::BINARY_STORAGE_OBJECT_SHAPE);
@@ -313,7 +313,7 @@ pub fn binary_storage_object(element: &Element) -> super::BinaryStorageObject {
 }
 
 /// Read `vt:stream` into a `BinaryStream`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn binary_stream(element: &Element) -> super::BinaryStream {
     let mut node = super::BinaryStream::default();
     let mut reader = crate::Reader::new(element, &super::BINARY_STREAM_SHAPE);
@@ -327,7 +327,7 @@ pub fn binary_stream(element: &Element) -> super::BinaryStream {
 }
 
 /// Read `vt:ostream` into a `BinaryStreamObject`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn binary_stream_object(element: &Element) -> super::BinaryStreamObject {
     let mut node = super::BinaryStreamObject::default();
     let mut reader = crate::Reader::new(element, &super::BINARY_STREAM_OBJECT_SHAPE);
@@ -341,7 +341,7 @@ pub fn binary_stream_object(element: &Element) -> super::BinaryStreamObject {
 }
 
 /// Read `vt:vstream` into a `BinaryVersionedStream`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn binary_versioned_stream(element: &Element) -> super::BinaryVersionedStream {
     let mut node = super::BinaryVersionedStream::default();
     let mut reader = crate::Reader::new(element, &super::BINARY_VERSIONED_STREAM_SHAPE);
@@ -357,7 +357,7 @@ pub fn binary_versioned_stream(element: &Element) -> super::BinaryVersionedStrea
 }
 
 /// Read `vt:bool` into a `Boolean`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn boolean(element: &Element) -> super::Boolean {
     let mut node = super::Boolean::default();
     let mut reader = crate::Reader::new(element, &super::BOOLEAN_SHAPE);
@@ -371,7 +371,7 @@ pub fn boolean(element: &Element) -> super::Boolean {
 }
 
 /// Read `vt:clsid` into a `ClassID`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn class_id(element: &Element) -> super::ClassID {
     let mut node = super::ClassID::default();
     let mut reader = crate::Reader::new(element, &super::CLASS_ID_SHAPE);
@@ -385,7 +385,7 @@ pub fn class_id(element: &Element) -> super::ClassID {
 }
 
 /// Read `vt:cy` into a `Currency`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn currency(element: &Element) -> super::Currency {
     let mut node = super::Currency::default();
     let mut reader = crate::Reader::new(element, &super::CURRENCY_SHAPE);
@@ -399,7 +399,7 @@ pub fn currency(element: &Element) -> super::Currency {
 }
 
 /// Read `vt:date` into a `DateAndTime`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn date_and_time(element: &Element) -> super::DateAndTime {
     let mut node = super::DateAndTime::default();
     let mut reader = crate::Reader::new(element, &super::DATE_AND_TIME_SHAPE);
@@ -413,7 +413,7 @@ pub fn date_and_time(element: &Element) -> super::DateAndTime {
 }
 
 /// Read `vt:decimal` into a `Decimal`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn decimal(element: &Element) -> super::Decimal {
     let mut node = super::Decimal::default();
     let mut reader = crate::Reader::new(element, &super::DECIMAL_SHAPE);
@@ -427,7 +427,7 @@ pub fn decimal(element: &Element) -> super::Decimal {
 }
 
 /// Read `vt:empty` into a `Empty`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn empty(element: &Element) -> super::Empty {
     let reader = crate::Reader::new(element, &super::EMPTY_SHAPE);
     super::Empty {
@@ -437,7 +437,7 @@ pub fn empty(element: &Element) -> super::Empty {
 }
 
 /// Read `vt:error` into a `ErrorStatusCode`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn error_status_code(element: &Element) -> super::ErrorStatusCode {
     let mut node = super::ErrorStatusCode::default();
     let mut reader = crate::Reader::new(element, &super::ERROR_STATUS_CODE_SHAPE);
@@ -451,7 +451,7 @@ pub fn error_status_code(element: &Element) -> super::ErrorStatusCode {
 }
 
 /// Read `vt:filetime` into a `FileTime`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn file_time(element: &Element) -> super::FileTime {
     let mut node = super::FileTime::default();
     let mut reader = crate::Reader::new(element, &super::FILE_TIME_SHAPE);
@@ -465,7 +465,7 @@ pub fn file_time(element: &Element) -> super::FileTime {
 }
 
 /// Read `vt:i1` into a `I1`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn i1(element: &Element) -> super::I1 {
     let mut node = super::I1::default();
     let mut reader = crate::Reader::new(element, &super::I1_SHAPE);
@@ -479,7 +479,7 @@ pub fn i1(element: &Element) -> super::I1 {
 }
 
 /// Read `vt:i2` into a `I2`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn i2(element: &Element) -> super::I2 {
     let mut node = super::I2::default();
     let mut reader = crate::Reader::new(element, &super::I2_SHAPE);
@@ -493,7 +493,7 @@ pub fn i2(element: &Element) -> super::I2 {
 }
 
 /// Read `vt:i4` into a `I4`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn i4(element: &Element) -> super::I4 {
     let mut node = super::I4::default();
     let mut reader = crate::Reader::new(element, &super::I4_SHAPE);
@@ -507,7 +507,7 @@ pub fn i4(element: &Element) -> super::I4 {
 }
 
 /// Read `vt:i8` into a `I8`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn i8(element: &Element) -> super::I8 {
     let mut node = super::I8::default();
     let mut reader = crate::Reader::new(element, &super::I8_SHAPE);
@@ -521,7 +521,7 @@ pub fn i8(element: &Element) -> super::I8 {
 }
 
 /// Read `vt:int` into a `Integer`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn integer(element: &Element) -> super::Integer {
     let mut node = super::Integer::default();
     let mut reader = crate::Reader::new(element, &super::INTEGER_SHAPE);
@@ -535,7 +535,7 @@ pub fn integer(element: &Element) -> super::Integer {
 }
 
 /// Read `vt:lpstr` into a `Lpstr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn lpstr(element: &Element) -> super::Lpstr {
     let mut node = super::Lpstr::default();
     let mut reader = crate::Reader::new(element, &super::LPSTR_SHAPE);
@@ -549,7 +549,7 @@ pub fn lpstr(element: &Element) -> super::Lpstr {
 }
 
 /// Read `vt:lpwstr` into a `Lpwstr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn lpwstr(element: &Element) -> super::Lpwstr {
     let mut node = super::Lpwstr::default();
     let mut reader = crate::Reader::new(element, &super::LPWSTR_SHAPE);
@@ -563,7 +563,7 @@ pub fn lpwstr(element: &Element) -> super::Lpwstr {
 }
 
 /// Read `vt:null` into a `Null`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn null(element: &Element) -> super::Null {
     let reader = crate::Reader::new(element, &super::NULL_SHAPE);
     super::Null {
@@ -573,7 +573,7 @@ pub fn null(element: &Element) -> super::Null {
 }
 
 /// Read `vt:r4` into a `R4`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r4(element: &Element) -> super::R4 {
     let mut node = super::R4::default();
     let mut reader = crate::Reader::new(element, &super::R4_SHAPE);
@@ -587,7 +587,7 @@ pub fn r4(element: &Element) -> super::R4 {
 }
 
 /// Read `vt:r8` into a `R8`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r8(element: &Element) -> super::R8 {
     let mut node = super::R8::default();
     let mut reader = crate::Reader::new(element, &super::R8_SHAPE);
@@ -601,7 +601,7 @@ pub fn r8(element: &Element) -> super::R8 {
 }
 
 /// Read `vt:ui1` into a `Ui1`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ui1(element: &Element) -> super::Ui1 {
     let mut node = super::Ui1::default();
     let mut reader = crate::Reader::new(element, &super::UI1_SHAPE);
@@ -615,7 +615,7 @@ pub fn ui1(element: &Element) -> super::Ui1 {
 }
 
 /// Read `vt:ui2` into a `Ui2`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ui2(element: &Element) -> super::Ui2 {
     let mut node = super::Ui2::default();
     let mut reader = crate::Reader::new(element, &super::UI2_SHAPE);
@@ -629,7 +629,7 @@ pub fn ui2(element: &Element) -> super::Ui2 {
 }
 
 /// Read `vt:ui4` into a `Ui4`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ui4(element: &Element) -> super::Ui4 {
     let mut node = super::Ui4::default();
     let mut reader = crate::Reader::new(element, &super::UI4_SHAPE);
@@ -643,7 +643,7 @@ pub fn ui4(element: &Element) -> super::Ui4 {
 }
 
 /// Read `vt:ui8` into a `Ui8`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ui8(element: &Element) -> super::Ui8 {
     let mut node = super::Ui8::default();
     let mut reader = crate::Reader::new(element, &super::UI8_SHAPE);
@@ -657,7 +657,7 @@ pub fn ui8(element: &Element) -> super::Ui8 {
 }
 
 /// Read `vt:uint` into a `UnsignedInteger`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn unsigned_integer(element: &Element) -> super::UnsignedInteger {
     let mut node = super::UnsignedInteger::default();
     let mut reader = crate::Reader::new(element, &super::UNSIGNED_INTEGER_SHAPE);
@@ -671,7 +671,7 @@ pub fn unsigned_integer(element: &Element) -> super::UnsignedInteger {
 }
 
 /// Read `vt:variant` into a `Variant`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn variant(element: &Element) -> super::Variant {
     let mut node = super::Variant::default();
     let mut reader = crate::Reader::new(element, &super::VARIANT_SHAPE);
@@ -685,13 +685,13 @@ pub fn variant(element: &Element) -> super::Variant {
 }
 
 /// Read one item of `VariantContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn variant_content(element: &Element) -> super::VariantContent {
     crate::read(element)
 }
 
 /// Read `vt:vector` into a `Vector`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn vector(element: &Element) -> super::Vector {
     let mut node = super::Vector::default();
     let mut reader = crate::Reader::new(element, &super::VECTOR_SHAPE);
@@ -708,7 +708,7 @@ pub fn vector(element: &Element) -> super::Vector {
 }
 
 /// Read one item of `VectorContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn vector_content(element: &Element) -> super::VectorContent {
     crate::read(element)
 }

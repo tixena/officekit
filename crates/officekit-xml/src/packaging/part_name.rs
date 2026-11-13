@@ -25,14 +25,14 @@ pub struct PartName {
 
 impl PartName {
     /// The name, leading `/` included, with any non-ASCII character percent-encoded.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn as_str(&self) -> &str {
         &self.name
     }
 
     /// The folder holding the part: `/word` for `/word/document.xml`, the
     /// empty string for `/a.xml`.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn directory(&self) -> &str {
         self.name
             .rsplit_once('/')
@@ -41,7 +41,7 @@ impl PartName {
 
     /// The last segment's extension, ASCII-lowercased: `png` for
     /// `/word/media/image1.PNG`, the empty string when the segment has no `.`.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn extension(&self) -> String {
         self.name
             .rsplit_once('/')
@@ -50,7 +50,7 @@ impl PartName {
     }
 
     /// The ASCII-lowercased form: the key a package files this name under.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn folded(&self) -> String {
         self.name.to_ascii_lowercase()
     }
@@ -90,14 +90,14 @@ impl PartName {
 
     /// The name of this part's relationship part:
     /// `/word/_rels/document.xml.rels` for `/word/document.xml`.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn relationships_part(&self) -> String {
         let (directory, file) = self.name.rsplit_once('/').unwrap_or(("", &self.name));
         format!("{directory}/_rels/{file}.rels")
     }
 
     /// The name as a zip entry: the leading `/` dropped.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn zip_entry_name(&self) -> &str {
         self.name.strip_prefix('/').unwrap_or(&self.name)
     }

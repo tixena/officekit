@@ -1155,7 +1155,7 @@ impl RelationshipType {
     };
 
     /// The type `type_uri` spells in either class.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn find(type_uri: &str) -> Option<Self> {
         Self::ALL
             .iter()
@@ -1164,7 +1164,7 @@ impl RelationshipType {
     }
 
     /// The spelling `class` writes.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn in_class(&self, class: ConformanceClass) -> &'static str {
         if matches!(class, ConformanceClass::Strict) {
             self.strict
@@ -1174,7 +1174,7 @@ impl RelationshipType {
     }
 
     /// Whether `type_uri` is this type in either class's spelling.
-    #[must_use]
+    #[must_use = "this only answers the question"]
     pub fn matches(&self, type_uri: &str) -> bool {
         type_uri == self.transitional || type_uri == self.strict
     }

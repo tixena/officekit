@@ -739,7 +739,7 @@ pub trait Visitor: crate::Visitor {
 impl<X: NodeExtra> AggregationInfoWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> AggregationInfoWith<Y>
     where
         Y: NodeExtra,
@@ -753,7 +753,7 @@ impl<X: NodeExtra> AggregationInfoWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             aggregation_type: self.aggregation_type.clone(),
@@ -820,14 +820,14 @@ impl AggregationTypeMember {
     ];
 
     /// The text the member stands for.
-    #[must_use]
+    #[must_use = "this only returns the text of the member"]
     pub fn as_str(self) -> &'static str {
         officekit_markup_base::member_text(Self::MEMBERS, self)
     }
 
     /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for
     /// ECMA-376's own.
-    #[must_use]
+    #[must_use = "this only returns the Office version of the member"]
     pub fn introduced(self) -> Option<OfficeVersion> {
         officekit_markup_base::member_version(Self::MEMBERS, self)
     }
@@ -851,7 +851,7 @@ impl AggregationType {
 impl<X: NodeExtra> FeatureSupportInfoWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> FeatureSupportInfoWith<Y>
     where
         Y: NodeExtra,
@@ -864,7 +864,7 @@ impl<X: NodeExtra> FeatureSupportInfoWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             feature_name: self.feature_name.clone(),
@@ -889,7 +889,7 @@ impl officekit_markup_base::Write for FeatureSupportInfo {
 impl<X: NodeExtra> PivotAreaReferenceSubtotalsWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PivotAreaReferenceSubtotalsWith<Y>
     where
         Y: NodeExtra,
@@ -905,7 +905,7 @@ impl<X: NodeExtra> PivotAreaReferenceSubtotalsWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -927,7 +927,7 @@ impl officekit_markup_base::Write for PivotAreaReferenceSubtotals {
 impl<X: NodeExtra> PivotFieldSubtotalLineItemsWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PivotFieldSubtotalLineItemsWith<Y>
     where
         Y: NodeExtra,
@@ -943,7 +943,7 @@ impl<X: NodeExtra> PivotFieldSubtotalLineItemsWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -965,7 +965,7 @@ impl officekit_markup_base::Write for PivotFieldSubtotalLineItems {
 impl<X: NodeExtra> PivotFieldSubtotalsWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> PivotFieldSubtotalsWith<Y>
     where
         Y: NodeExtra,
@@ -981,7 +981,7 @@ impl<X: NodeExtra> PivotFieldSubtotalsWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -1003,7 +1003,7 @@ impl officekit_markup_base::Write for PivotFieldSubtotals {
 impl<X: NodeExtra> SubtotalLineItemWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SubtotalLineItemWith<Y>
     where
         Y: NodeExtra,
@@ -1015,7 +1015,7 @@ impl<X: NodeExtra> SubtotalLineItemWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -1037,7 +1037,7 @@ impl officekit_markup_base::Write for SubtotalLineItem {
 impl<X: NodeExtra> SubtotalPivotItemSubtotalWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SubtotalPivotItemSubtotalWith<Y>
     where
         Y: NodeExtra,
@@ -1049,7 +1049,7 @@ impl<X: NodeExtra> SubtotalPivotItemSubtotalWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self::default()
     }
@@ -1071,7 +1071,7 @@ impl officekit_markup_base::Write for SubtotalPivotItemSubtotal {
 impl<X: NodeExtra> SubtotalPivotSubtotalTypeWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SubtotalPivotSubtotalTypeWith<Y>
     where
         Y: NodeExtra,
@@ -1084,7 +1084,7 @@ impl<X: NodeExtra> SubtotalPivotSubtotalTypeWith<X> {
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             subtotal_type: self.subtotal_type.clone(),

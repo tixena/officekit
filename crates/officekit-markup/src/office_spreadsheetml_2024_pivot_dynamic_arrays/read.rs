@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xlpda:pivotCacheDynamicArray` into a `PivotCacheDynamicArray`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_cache_dynamic_array(element: &Element) -> super::PivotCacheDynamicArray {
     let mut node = super::PivotCacheDynamicArray::default();
     let mut reader =

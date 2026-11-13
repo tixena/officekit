@@ -38,7 +38,7 @@ pub struct Inputs {
 
 impl Inputs {
     /// The `SHA256SUMS` lines, for the header of every generated file.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn checksums(&self) -> &str {
         &self.checksums
     }
@@ -94,7 +94,7 @@ impl Inputs {
     }
 
     /// The `TOOLS` lines: `pdftotext`'s version and the SDK commit.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn tools(&self) -> &str {
         &self.tools
     }

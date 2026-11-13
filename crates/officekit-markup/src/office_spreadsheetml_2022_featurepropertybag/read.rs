@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xfpb:a` into a `A`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn a(element: &Element) -> super::A {
     let mut node = super::A::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::A_SHAPE);
@@ -235,13 +235,13 @@ pub fn a(element: &Element) -> super::A {
 }
 
 /// Read one item of `ArrayFeaturePropertyContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn array_feature_property(element: &Element) -> super::ArrayFeaturePropertyContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `xfpb:b` into a `BBoolFeatureProperty`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn b_bool_feature_property(element: &Element) -> super::BBoolFeatureProperty {
     let mut node = super::BBoolFeatureProperty::default();
     let mut reader =
@@ -258,7 +258,7 @@ pub fn b_bool_feature_property(element: &Element) -> super::BBoolFeatureProperty
 }
 
 /// Read `xfpb:b` into a `BBoolean`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn b_boolean(element: &Element) -> super::BBoolean {
     let mut node = super::BBoolean::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::B_BOOLEAN_SHAPE);
@@ -272,7 +272,7 @@ pub fn b_boolean(element: &Element) -> super::BBoolean {
 }
 
 /// Read `xfpb:bag` into a `Bag`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bag(element: &Element) -> super::Bag {
     let mut node = super::Bag::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BAG_SHAPE);
@@ -291,7 +291,7 @@ pub fn bag(element: &Element) -> super::Bag {
 }
 
 /// Read `xfpb:bagExt` into a `BagExt`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bag_ext(element: &Element) -> super::BagExt {
     let mut node = super::BagExt::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BAG_EXT_SHAPE);
@@ -305,7 +305,7 @@ pub fn bag_ext(element: &Element) -> super::BagExt {
 }
 
 /// Read `xfpb:bagId` into a `BagIdBagFeatureProperty`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bag_id_bag_feature_property(element: &Element) -> super::BagIdBagFeatureProperty {
     let mut node = super::BagIdBagFeatureProperty::default();
     let mut reader =
@@ -322,7 +322,7 @@ pub fn bag_id_bag_feature_property(element: &Element) -> super::BagIdBagFeatureP
 }
 
 /// Read `xfpb:bagId` into a `BagIdUnsignedInt`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bag_id_unsigned_int(element: &Element) -> super::BagIdUnsignedInt {
     let mut node = super::BagIdUnsignedInt::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::BAG_ID_UNSIGNED_INT_SHAPE);
@@ -336,7 +336,7 @@ pub fn bag_id_unsigned_int(element: &Element) -> super::BagIdUnsignedInt {
 }
 
 /// Read `xfpb:columnBodyRevDxf` into a `ColumnBodyRevDxf`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn column_body_rev_dxf(element: &Element) -> super::ColumnBodyRevDxf {
     let mut node = super::ColumnBodyRevDxf::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::COLUMN_BODY_REV_DXF_SHAPE);
@@ -352,7 +352,7 @@ pub fn column_body_rev_dxf(element: &Element) -> super::ColumnBodyRevDxf {
 }
 
 /// Read `xfpb:columnHeaderRevDxf` into a `ColumnHeaderRevDxf`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn column_header_rev_dxf(element: &Element) -> super::ColumnHeaderRevDxf {
     let mut node = super::ColumnHeaderRevDxf::default();
     let mut reader =
@@ -369,7 +369,7 @@ pub fn column_header_rev_dxf(element: &Element) -> super::ColumnHeaderRevDxf {
 }
 
 /// Read `xfpb:columnTotalsRevDxf` into a `ColumnTotalsRevDxf`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn column_totals_rev_dxf(element: &Element) -> super::ColumnTotalsRevDxf {
     let mut node = super::ColumnTotalsRevDxf::default();
     let mut reader =
@@ -386,7 +386,7 @@ pub fn column_totals_rev_dxf(element: &Element) -> super::ColumnTotalsRevDxf {
 }
 
 /// Read `xfpb:d` into a `DDecimalFeatureProperty`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn d_decimal_feature_property(element: &Element) -> super::DDecimalFeatureProperty {
     let mut node = super::DDecimalFeatureProperty::default();
     let mut reader =
@@ -403,7 +403,7 @@ pub fn d_decimal_feature_property(element: &Element) -> super::DDecimalFeaturePr
 }
 
 /// Read `xfpb:d` into a `DDouble`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn d_double(element: &Element) -> super::DDouble {
     let mut node = super::DDouble::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::D_DOUBLE_SHAPE);
@@ -417,7 +417,7 @@ pub fn d_double(element: &Element) -> super::DDouble {
 }
 
 /// Read `xfpb:dataRevDxf` into a `DataRevDxf`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_rev_dxf(element: &Element) -> super::DataRevDxf {
     let mut node = super::DataRevDxf::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_REV_DXF_SHAPE);
@@ -433,7 +433,7 @@ pub fn data_rev_dxf(element: &Element) -> super::DataRevDxf {
 }
 
 /// Read `xfpb:dxf` into a `Dxf`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dxf(element: &Element) -> super::Dxf {
     let mut node = super::Dxf::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DXF_SHAPE);
@@ -454,7 +454,7 @@ pub fn dxf(element: &Element) -> super::Dxf {
 }
 
 /// Read `xfpb:DXFComplement` into a `DXFComplement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dxf_complement(element: &Element) -> super::DXFComplement {
     let mut node = super::DXFComplement::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DXF_COMPLEMENT_SHAPE);
@@ -468,7 +468,7 @@ pub fn dxf_complement(element: &Element) -> super::DXFComplement {
 }
 
 /// Read `xfpb:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -482,13 +482,13 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read one item of `FeaturePropertyBagContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn feature_property_bag(element: &Element) -> super::FeaturePropertyBagContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `xfpb:FeaturePropertyBags` into a `FeaturePropertyBags`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn feature_property_bags(element: &Element) -> super::FeaturePropertyBags {
     let mut node = super::FeaturePropertyBags::default();
     let mut reader =
@@ -507,7 +507,7 @@ pub fn feature_property_bags(element: &Element) -> super::FeaturePropertyBags {
 }
 
 /// Read `xfpb:fpbs` into a `Fpbs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn fpbs(element: &Element) -> super::Fpbs {
     let mut node = super::Fpbs::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FPBS_SHAPE);
@@ -524,7 +524,7 @@ pub fn fpbs(element: &Element) -> super::Fpbs {
 }
 
 /// Read `xfpb:headerRowBorderRevDxf` into a `HeaderRowBorderRevDxf`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn header_row_border_rev_dxf(element: &Element) -> super::HeaderRowBorderRevDxf {
     let mut node = super::HeaderRowBorderRevDxf::default();
     let mut reader =
@@ -541,7 +541,7 @@ pub fn header_row_border_rev_dxf(element: &Element) -> super::HeaderRowBorderRev
 }
 
 /// Read `xfpb:headerRowRevDxf` into a `HeaderRowRevDxf`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn header_row_rev_dxf(element: &Element) -> super::HeaderRowRevDxf {
     let mut node = super::HeaderRowRevDxf::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HEADER_ROW_REV_DXF_SHAPE);
@@ -557,7 +557,7 @@ pub fn header_row_rev_dxf(element: &Element) -> super::HeaderRowRevDxf {
 }
 
 /// Read `xfpb:i` into a `IIntFeatureProperty`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn i_int_feature_property(element: &Element) -> super::IIntFeatureProperty {
     let mut node = super::IIntFeatureProperty::default();
     let mut reader =
@@ -574,7 +574,7 @@ pub fn i_int_feature_property(element: &Element) -> super::IIntFeatureProperty {
 }
 
 /// Read `xfpb:i` into a `IInteger`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn i_integer(element: &Element) -> super::IInteger {
     let mut node = super::IInteger::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::I_INTEGER_SHAPE);
@@ -588,7 +588,7 @@ pub fn i_integer(element: &Element) -> super::IInteger {
 }
 
 /// Read `xfpb:rel` into a `RelRelFeatureProperty`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rel_rel_feature_property(element: &Element) -> super::RelRelFeatureProperty {
     let mut node = super::RelRelFeatureProperty::default();
     let mut reader =
@@ -605,7 +605,7 @@ pub fn rel_rel_feature_property(element: &Element) -> super::RelRelFeatureProper
 }
 
 /// Read `xfpb:rel` into a `RelString`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rel_string(element: &Element) -> super::RelString {
     let mut node = super::RelString::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::REL_STRING_SHAPE);
@@ -619,7 +619,7 @@ pub fn rel_string(element: &Element) -> super::RelString {
 }
 
 /// Read `xfpb:revdxf` into a `Revdxf`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn revdxf(element: &Element) -> super::Revdxf {
     let mut node = super::Revdxf::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::REVDXF_SHAPE);
@@ -635,7 +635,7 @@ pub fn revdxf(element: &Element) -> super::Revdxf {
 }
 
 /// Read `xfpb:s` into a `SString`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn s_string(element: &Element) -> super::SString {
     let mut node = super::SString::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::S_STRING_SHAPE);
@@ -649,7 +649,7 @@ pub fn s_string(element: &Element) -> super::SString {
 }
 
 /// Read `xfpb:s` into a `SStringFeatureProperty`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn s_string_feature_property(element: &Element) -> super::SStringFeatureProperty {
     let mut node = super::SStringFeatureProperty::default();
     let mut reader =
@@ -666,7 +666,7 @@ pub fn s_string_feature_property(element: &Element) -> super::SStringFeatureProp
 }
 
 /// Read `xfpb:tableBorderRevDxf` into a `TableBorderRevDxf`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_border_rev_dxf(element: &Element) -> super::TableBorderRevDxf {
     let mut node = super::TableBorderRevDxf::default();
     let mut reader =
@@ -683,7 +683,7 @@ pub fn table_border_rev_dxf(element: &Element) -> super::TableBorderRevDxf {
 }
 
 /// Read `xfpb:totalsRowBorderRevDxf` into a `TotalsRowBorderRevDxf`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn totals_row_border_rev_dxf(element: &Element) -> super::TotalsRowBorderRevDxf {
     let mut node = super::TotalsRowBorderRevDxf::default();
     let mut reader =
@@ -700,7 +700,7 @@ pub fn totals_row_border_rev_dxf(element: &Element) -> super::TotalsRowBorderRev
 }
 
 /// Read `xfpb:totalsRowRevDxf` into a `TotalsRowRevDxf`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn totals_row_rev_dxf(element: &Element) -> super::TotalsRowRevDxf {
     let mut node = super::TotalsRowRevDxf::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TOTALS_ROW_REV_DXF_SHAPE);
@@ -716,7 +716,7 @@ pub fn totals_row_rev_dxf(element: &Element) -> super::TotalsRowRevDxf {
 }
 
 /// Read `xfpb:xfComplement` into a `XfComplement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn xf_complement(element: &Element) -> super::XfComplement {
     let mut node = super::XfComplement::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::XF_COMPLEMENT_SHAPE);

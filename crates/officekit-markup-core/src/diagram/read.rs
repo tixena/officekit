@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `dgm:alg` into a `Algorithm`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn algorithm(element: &Element) -> super::Algorithm {
     let mut node = super::Algorithm::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ALGORITHM_SHAPE);
@@ -237,7 +237,7 @@ pub fn algorithm(element: &Element) -> super::Algorithm {
 }
 
 /// Read `dgm:bg` into a `BackgroundFormatting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn background_formatting(element: &Element) -> super::BackgroundFormatting {
     let mut node = super::BackgroundFormatting::default();
     let mut reader =
@@ -254,7 +254,7 @@ pub fn background_formatting(element: &Element) -> super::BackgroundFormatting {
 }
 
 /// Read `dgm:cat` into a `Category`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn category(element: &Element) -> super::Category {
     let mut node = super::Category::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CATEGORY_SHAPE);
@@ -270,7 +270,7 @@ pub fn category(element: &Element) -> super::Category {
 }
 
 /// Read `dgm:catLst` into a `CategoryList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn category_list(element: &Element) -> super::CategoryList {
     let mut node = super::CategoryList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CATEGORY_LIST_SHAPE);
@@ -284,7 +284,7 @@ pub fn category_list(element: &Element) -> super::CategoryList {
 }
 
 /// Read `dgm:catLst` into a `CategoryListSDCategories`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn category_list_sd_categories(element: &Element) -> super::CategoryListSDCategories {
     let mut node = super::CategoryListSDCategories::default();
     let mut reader =
@@ -299,7 +299,7 @@ pub fn category_list_sd_categories(element: &Element) -> super::CategoryListSDCa
 }
 
 /// Read `dgm:cat` into a `CategorySDCategory`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn category_sd_category(element: &Element) -> super::CategorySDCategory {
     let mut node = super::CategorySDCategory::default();
     let mut reader =
@@ -316,7 +316,7 @@ pub fn category_sd_category(element: &Element) -> super::CategorySDCategory {
 }
 
 /// Read `dgm:choose` into a `ChooseElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn choose_element(element: &Element) -> super::ChooseElement {
     let mut node = super::ChooseElement::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CHOOSE_ELEMENT_SHAPE);
@@ -333,7 +333,7 @@ pub fn choose_element(element: &Element) -> super::ChooseElement {
 }
 
 /// Read `dgm:cat` into a `ColorTransformCategory`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color_transform_category(element: &Element) -> super::ColorTransformCategory {
     let mut node = super::ColorTransformCategory::default();
     let mut reader =
@@ -350,7 +350,7 @@ pub fn color_transform_category(element: &Element) -> super::ColorTransformCateg
 }
 
 /// Read `dgm:catLst` into a `ColorTransformCategoryList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color_transform_category_list(element: &Element) -> super::ColorTransformCategoryList {
     let mut node = super::ColorTransformCategoryList::default();
     let mut reader =
@@ -365,7 +365,7 @@ pub fn color_transform_category_list(element: &Element) -> super::ColorTransform
 }
 
 /// Read `dgm:colorsDefHdr` into a `ColorTransformDefinitionHeader`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color_transform_definition_header(
     element: &Element,
 ) -> super::ColorTransformDefinitionHeader {
@@ -391,7 +391,7 @@ pub fn color_transform_definition_header(
 }
 
 /// Read `dgm:colorsDef` into a `ColorTransformDefinitions`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color_transform_definitions(element: &Element) -> super::ColorTransformDefinitions {
     let mut node = super::ColorTransformDefinitions::default();
     let mut reader =
@@ -413,7 +413,7 @@ pub fn color_transform_definitions(element: &Element) -> super::ColorTransformDe
 }
 
 /// Read `dgm:colorsDefHdrLst` into a `ColorTransformHeaderList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color_transform_header_list(element: &Element) -> super::ColorTransformHeaderList {
     let mut node = super::ColorTransformHeaderList::default();
     let mut reader =
@@ -428,7 +428,7 @@ pub fn color_transform_header_list(element: &Element) -> super::ColorTransformHe
 }
 
 /// Read `dgm:clrData` into a `ColorTransformSampleData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn color_transform_sample_data(element: &Element) -> super::ColorTransformSampleData {
     let mut node = super::ColorTransformSampleData::default();
     let mut reader =
@@ -445,7 +445,7 @@ pub fn color_transform_sample_data(element: &Element) -> super::ColorTransformSa
 }
 
 /// Read `dgm:cxn` into a `Connection`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn connection(element: &Element) -> super::Connection {
     let mut node = super::Connection::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONNECTION_SHAPE);
@@ -469,7 +469,7 @@ pub fn connection(element: &Element) -> super::Connection {
 }
 
 /// Read `dgm:cxnLst` into a `ConnectionList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn connection_list(element: &Element) -> super::ConnectionList {
     let mut node = super::ConnectionList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONNECTION_LIST_SHAPE);
@@ -483,7 +483,7 @@ pub fn connection_list(element: &Element) -> super::ConnectionList {
 }
 
 /// Read `dgm:constr` into a `Constraint`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn constraint(element: &Element) -> super::Constraint {
     let mut node = super::Constraint::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONSTRAINT_SHAPE);
@@ -509,7 +509,7 @@ pub fn constraint(element: &Element) -> super::Constraint {
 }
 
 /// Read `dgm:constrLst` into a `ConstraintList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn constraint_list(element: &Element) -> super::ConstraintList {
     let mut node = super::ConstraintList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONSTRAINT_LIST_SHAPE);
@@ -523,7 +523,7 @@ pub fn constraint_list(element: &Element) -> super::ConstraintList {
 }
 
 /// Read `dgm:dataModel` into a `DataModel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_model(element: &Element) -> super::DataModel {
     let mut node = super::DataModel::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_MODEL_SHAPE);
@@ -542,7 +542,7 @@ pub fn data_model(element: &Element) -> super::DataModel {
 }
 
 /// Read `dgm:desc` into a `Description`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn description(element: &Element) -> super::Description {
     let mut node = super::Description::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DESCRIPTION_SHAPE);
@@ -558,7 +558,7 @@ pub fn description(element: &Element) -> super::Description {
 }
 
 /// Read `dgm:desc` into a `DescriptionCTDescription`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn description_ct_description(element: &Element) -> super::DescriptionCTDescription {
     let mut node = super::DescriptionCTDescription::default();
     let mut reader =
@@ -575,7 +575,7 @@ pub fn description_ct_description(element: &Element) -> super::DescriptionCTDesc
 }
 
 /// Read `dgm:dir` into a `DiagramDirection`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn diagram_direction(element: &Element) -> super::DiagramDirection {
     let mut node = super::DiagramDirection::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DIAGRAM_DIRECTION_SHAPE);
@@ -589,7 +589,7 @@ pub fn diagram_direction(element: &Element) -> super::DiagramDirection {
 }
 
 /// Read `dgm:layoutDefHdrLst` into a `DiagramLayoutHeaderList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn diagram_layout_header_list(element: &Element) -> super::DiagramLayoutHeaderList {
     let mut node = super::DiagramLayoutHeaderList::default();
     let mut reader =
@@ -604,7 +604,7 @@ pub fn diagram_layout_header_list(element: &Element) -> super::DiagramLayoutHead
 }
 
 /// Read `dgm:effectClrLst` into a `EffectColorList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn effect_color_list(element: &Element) -> super::EffectColorList {
     let mut node = super::EffectColorList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EFFECT_COLOR_LIST_SHAPE);
@@ -621,7 +621,7 @@ pub fn effect_color_list(element: &Element) -> super::EffectColorList {
 }
 
 /// Read `dgm:else` into a `Else`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r#else(element: &Element) -> super::Else {
     let mut node = super::Else::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ELSE_SHAPE);
@@ -637,7 +637,7 @@ pub fn r#else(element: &Element) -> super::Else {
 }
 
 /// Read `dgm:relIds` into a `ExplicitRelationshipsToDiagramParts`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn explicit_relationships_to_diagram_parts(
     element: &Element,
 ) -> super::ExplicitRelationshipsToDiagramParts {
@@ -660,7 +660,7 @@ pub fn explicit_relationships_to_diagram_parts(
 }
 
 /// Read `dgm:extLst` into a `ExtensionList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn extension_list(element: &Element) -> super::ExtensionList {
     let mut node = super::ExtensionList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXTENSION_LIST_SHAPE);
@@ -674,7 +674,7 @@ pub fn extension_list(element: &Element) -> super::ExtensionList {
 }
 
 /// Read `dgm:fillClrLst` into a `FillColorList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn fill_color_list(element: &Element) -> super::FillColorList {
     let mut node = super::FillColorList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FILL_COLOR_LIST_SHAPE);
@@ -691,7 +691,7 @@ pub fn fill_color_list(element: &Element) -> super::FillColorList {
 }
 
 /// Read `dgm:forEach` into a `ForEach`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn for_each(element: &Element) -> super::ForEach {
     let mut node = super::ForEach::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FOR_EACH_SHAPE);
@@ -714,7 +714,7 @@ pub fn for_each(element: &Element) -> super::ForEach {
 }
 
 /// Read `dgm:if` into a `If`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r#if(element: &Element) -> super::If {
     let mut node = super::If::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::IF_SHAPE);
@@ -740,7 +740,7 @@ pub fn r#if(element: &Element) -> super::If {
 }
 
 /// Read `dgm:layoutDef` into a `LayoutDefinition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn layout_definition(element: &Element) -> super::LayoutDefinition {
     let mut node = super::LayoutDefinition::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LAYOUT_DEFINITION_SHAPE);
@@ -765,7 +765,7 @@ pub fn layout_definition(element: &Element) -> super::LayoutDefinition {
 }
 
 /// Read `dgm:layoutDefHdr` into a `LayoutDefinitionHeader`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn layout_definition_header(element: &Element) -> super::LayoutDefinitionHeader {
     let mut node = super::LayoutDefinitionHeader::default();
     let mut reader =
@@ -788,13 +788,13 @@ pub fn layout_definition_header(element: &Element) -> super::LayoutDefinitionHea
 }
 
 /// Read one item of `LayoutElementContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn layout_element(element: &Element) -> super::LayoutElementContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `dgm:layoutNode` into a `LayoutNode`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn layout_node(element: &Element) -> super::LayoutNode {
     let mut node = super::LayoutNode::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LAYOUT_NODE_SHAPE);
@@ -813,13 +813,13 @@ pub fn layout_node(element: &Element) -> super::LayoutNode {
 }
 
 /// Read one item of `LayoutNodeContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn layout_node_content(element: &Element) -> super::LayoutNodeContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `dgm:animLvl` into a `LevelAnimation`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn level_animation(element: &Element) -> super::LevelAnimation {
     let mut node = super::LevelAnimation::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LEVEL_ANIMATION_SHAPE);
@@ -833,7 +833,7 @@ pub fn level_animation(element: &Element) -> super::LevelAnimation {
 }
 
 /// Read `dgm:linClrLst` into a `LineColorList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line_color_list(element: &Element) -> super::LineColorList {
     let mut node = super::LineColorList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::LINE_COLOR_LIST_SHAPE);
@@ -850,7 +850,7 @@ pub fn line_color_list(element: &Element) -> super::LineColorList {
 }
 
 /// Read `dgm:styleDefHdrLst` into a `ListOfStyleDefinitionHeaders`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn list_of_style_definition_headers(element: &Element) -> super::ListOfStyleDefinitionHeaders {
     let mut node = super::ListOfStyleDefinitionHeaders::default();
     let mut reader =
@@ -865,7 +865,7 @@ pub fn list_of_style_definition_headers(element: &Element) -> super::ListOfStyle
 }
 
 /// Read `dgm:chMax` into a `MaximumChildren`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn maximum_children(element: &Element) -> super::MaximumChildren {
     let mut node = super::MaximumChildren::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MAXIMUM_CHILDREN_SHAPE);
@@ -879,7 +879,7 @@ pub fn maximum_children(element: &Element) -> super::MaximumChildren {
 }
 
 /// Read `dgm:animOne` into a `OneByOneAnimationString`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn one_by_one_animation_string(element: &Element) -> super::OneByOneAnimationString {
     let mut node = super::OneByOneAnimationString::default();
     let mut reader =
@@ -894,7 +894,7 @@ pub fn one_by_one_animation_string(element: &Element) -> super::OneByOneAnimatio
 }
 
 /// Read `dgm:hierBranch` into a `OrganizationChartBranchStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn organization_chart_branch_style(element: &Element) -> super::OrganizationChartBranchStyle {
     let mut node = super::OrganizationChartBranchStyle::default();
     let mut reader =
@@ -909,7 +909,7 @@ pub fn organization_chart_branch_style(element: &Element) -> super::Organization
 }
 
 /// Read `dgm:param` into a `Parameter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn parameter(element: &Element) -> super::Parameter {
     let mut node = super::Parameter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PARAMETER_SHAPE);
@@ -925,7 +925,7 @@ pub fn parameter(element: &Element) -> super::Parameter {
 }
 
 /// Read `dgm:pt` into a `Point`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn point(element: &Element) -> super::Point {
     let mut node = super::Point::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::POINT_SHAPE);
@@ -946,7 +946,7 @@ pub fn point(element: &Element) -> super::Point {
 }
 
 /// Read `dgm:ptLst` into a `PointList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn point_list(element: &Element) -> super::PointList {
     let mut node = super::PointList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::POINT_LIST_SHAPE);
@@ -960,7 +960,7 @@ pub fn point_list(element: &Element) -> super::PointList {
 }
 
 /// Read `dgm:chPref` into a `PreferredNumberOfChildren`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn preferred_number_of_children(element: &Element) -> super::PreferredNumberOfChildren {
     let mut node = super::PreferredNumberOfChildren::default();
     let mut reader =
@@ -975,7 +975,7 @@ pub fn preferred_number_of_children(element: &Element) -> super::PreferredNumber
 }
 
 /// Read `dgm:presLayoutVars` into a `PresentationLayoutVariables`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation_layout_variables(element: &Element) -> super::PresentationLayoutVariables {
     let mut node = super::PresentationLayoutVariables::default();
     let mut reader =
@@ -999,7 +999,7 @@ pub fn presentation_layout_variables(element: &Element) -> super::PresentationLa
 }
 
 /// Read `dgm:presOf` into a `PresentationOf`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn presentation_of(element: &Element) -> super::PresentationOf {
     let mut node = super::PresentationOf::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PRESENTATION_OF_SHAPE);
@@ -1020,7 +1020,7 @@ pub fn presentation_of(element: &Element) -> super::PresentationOf {
 }
 
 /// Read `dgm:prSet` into a `PropertySet`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn property_set(element: &Element) -> super::PropertySet {
     let mut node = super::PropertySet::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PROPERTY_SET_SHAPE);
@@ -1064,7 +1064,7 @@ pub fn property_set(element: &Element) -> super::PropertySet {
 }
 
 /// Read `dgm:rule` into a `Rule`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rule(element: &Element) -> super::Rule {
     let mut node = super::Rule::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RULE_SHAPE);
@@ -1086,7 +1086,7 @@ pub fn rule(element: &Element) -> super::Rule {
 }
 
 /// Read `dgm:ruleLst` into a `RuleList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn rule_list(element: &Element) -> super::RuleList {
     let mut node = super::RuleList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RULE_LIST_SHAPE);
@@ -1100,7 +1100,7 @@ pub fn rule_list(element: &Element) -> super::RuleList {
 }
 
 /// Read `dgm:sampData` into a `SampleData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sample_data(element: &Element) -> super::SampleData {
     let mut node = super::SampleData::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SAMPLE_DATA_SHAPE);
@@ -1116,7 +1116,7 @@ pub fn sample_data(element: &Element) -> super::SampleData {
 }
 
 /// Read `dgm:scene3d` into a `Scene3d`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn scene3d(element: &Element) -> super::Scene3d {
     let mut node = super::Scene3d::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SCENE3D_SHAPE);
@@ -1134,7 +1134,7 @@ pub fn scene3d(element: &Element) -> super::Scene3d {
 }
 
 /// Read `dgm:shape` into a `Shape`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape(element: &Element) -> super::Shape {
     let mut node = super::Shape::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_SHAPE);
@@ -1157,7 +1157,7 @@ pub fn shape(element: &Element) -> super::Shape {
 }
 
 /// Read `dgm:adj` into a `ShapeAdjust`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_adjust(element: &Element) -> super::ShapeAdjust {
     let mut node = super::ShapeAdjust::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_ADJUST_SHAPE);
@@ -1173,7 +1173,7 @@ pub fn shape_adjust(element: &Element) -> super::ShapeAdjust {
 }
 
 /// Read `dgm:adjLst` into a `ShapeAdjustList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_adjust_list(element: &Element) -> super::ShapeAdjustList {
     let mut node = super::ShapeAdjustList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_ADJUST_LIST_SHAPE);
@@ -1187,7 +1187,7 @@ pub fn shape_adjust_list(element: &Element) -> super::ShapeAdjustList {
 }
 
 /// Read `dgm:spPr` into a `ShapeProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_properties(element: &Element) -> super::ShapeProperties {
     let mut node = super::ShapeProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_PROPERTIES_SHAPE);
@@ -1210,7 +1210,7 @@ pub fn shape_properties(element: &Element) -> super::ShapeProperties {
 }
 
 /// Read `dgm:resizeHandles` into a `ShapeResizeStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_resize_style(element: &Element) -> super::ShapeResizeStyle {
     let mut node = super::ShapeResizeStyle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_RESIZE_STYLE_SHAPE);
@@ -1224,7 +1224,7 @@ pub fn shape_resize_style(element: &Element) -> super::ShapeResizeStyle {
 }
 
 /// Read `dgm:style` into a `ShapeStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn shape_style(element: &Element) -> super::ShapeStyle {
     let mut node = super::ShapeStyle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHAPE_STYLE_SHAPE);
@@ -1242,7 +1242,7 @@ pub fn shape_style(element: &Element) -> super::ShapeStyle {
 }
 
 /// Read `dgm:bulletEnabled` into a `ShowInsertNode`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn show_insert_node(element: &Element) -> super::ShowInsertNode {
     let mut node = super::ShowInsertNode::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SHOW_INSERT_NODE_SHAPE);
@@ -1256,7 +1256,7 @@ pub fn show_insert_node(element: &Element) -> super::ShowInsertNode {
 }
 
 /// Read `dgm:orgChart` into a `ShowOrganizationChartUserInterface`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn show_organization_chart_user_interface(
     element: &Element,
 ) -> super::ShowOrganizationChartUserInterface {
@@ -1275,7 +1275,7 @@ pub fn show_organization_chart_user_interface(
 }
 
 /// Read `dgm:sp3d` into a `Sp3d`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sp3d(element: &Element) -> super::Sp3d {
     let mut node = super::Sp3d::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SP3D_SHAPE);
@@ -1298,7 +1298,7 @@ pub fn sp3d(element: &Element) -> super::Sp3d {
 }
 
 /// Read `dgm:styleData` into a `StyleData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style_data(element: &Element) -> super::StyleData {
     let mut node = super::StyleData::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::STYLE_DATA_SHAPE);
@@ -1314,7 +1314,7 @@ pub fn style_data(element: &Element) -> super::StyleData {
 }
 
 /// Read `dgm:styleDef` into a `StyleDefinition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style_definition(element: &Element) -> super::StyleDefinition {
     let mut node = super::StyleDefinition::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::STYLE_DEFINITION_SHAPE);
@@ -1336,7 +1336,7 @@ pub fn style_definition(element: &Element) -> super::StyleDefinition {
 }
 
 /// Read `dgm:styleDefHdr` into a `StyleDefinitionHeader`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style_definition_header(element: &Element) -> super::StyleDefinitionHeader {
     let mut node = super::StyleDefinitionHeader::default();
     let mut reader =
@@ -1358,7 +1358,7 @@ pub fn style_definition_header(element: &Element) -> super::StyleDefinitionHeade
 }
 
 /// Read `dgm:styleLbl` into a `StyleLabel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style_label(element: &Element) -> super::StyleLabel {
     let mut node = super::StyleLabel::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::STYLE_LABEL_SHAPE);
@@ -1380,7 +1380,7 @@ pub fn style_label(element: &Element) -> super::StyleLabel {
 }
 
 /// Read `dgm:desc` into a `StyleLabelDescription`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style_label_description(element: &Element) -> super::StyleLabelDescription {
     let mut node = super::StyleLabelDescription::default();
     let mut reader =
@@ -1397,7 +1397,7 @@ pub fn style_label_description(element: &Element) -> super::StyleLabelDescriptio
 }
 
 /// Read `dgm:styleLbl` into a `StyleLabelStyleLabel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn style_label_style_label(element: &Element) -> super::StyleLabelStyleLabel {
     let mut node = super::StyleLabelStyleLabel::default();
     let mut reader =
@@ -1418,7 +1418,7 @@ pub fn style_label_style_label(element: &Element) -> super::StyleLabelStyleLabel
 }
 
 /// Read `dgm:t` into a `TextBody`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_body(element: &Element) -> super::TextBody {
     let mut node = super::TextBody::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TEXT_BODY_SHAPE);
@@ -1435,7 +1435,7 @@ pub fn text_body(element: &Element) -> super::TextBody {
 }
 
 /// Read `dgm:txEffectClrLst` into a `TextEffectColorList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_effect_color_list(element: &Element) -> super::TextEffectColorList {
     let mut node = super::TextEffectColorList::default();
     let mut reader =
@@ -1453,7 +1453,7 @@ pub fn text_effect_color_list(element: &Element) -> super::TextEffectColorList {
 }
 
 /// Read `dgm:txFillClrLst` into a `TextFillColorList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_fill_color_list(element: &Element) -> super::TextFillColorList {
     let mut node = super::TextFillColorList::default();
     let mut reader =
@@ -1471,7 +1471,7 @@ pub fn text_fill_color_list(element: &Element) -> super::TextFillColorList {
 }
 
 /// Read `dgm:txLinClrLst` into a `TextLineColorList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_line_color_list(element: &Element) -> super::TextLineColorList {
     let mut node = super::TextLineColorList::default();
     let mut reader =
@@ -1489,7 +1489,7 @@ pub fn text_line_color_list(element: &Element) -> super::TextLineColorList {
 }
 
 /// Read `dgm:txPr` into a `TextProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_properties(element: &Element) -> super::TextProperties {
     let mut node = super::TextProperties::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TEXT_PROPERTIES_SHAPE);
@@ -1503,7 +1503,7 @@ pub fn text_properties(element: &Element) -> super::TextProperties {
 }
 
 /// Read `dgm:title` into a `Title`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn title(element: &Element) -> super::Title {
     let mut node = super::Title::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TITLE_SHAPE);
@@ -1519,7 +1519,7 @@ pub fn title(element: &Element) -> super::Title {
 }
 
 /// Read `dgm:title` into a `TitleCTName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn title_ct_name(element: &Element) -> super::TitleCTName {
     let mut node = super::TitleCTName::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TITLE_CT_NAME_SHAPE);
@@ -1535,7 +1535,7 @@ pub fn title_ct_name(element: &Element) -> super::TitleCTName {
 }
 
 /// Read `dgm:title` into a `TitleSDName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn title_sd_name(element: &Element) -> super::TitleSDName {
     let mut node = super::TitleSDName::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TITLE_SD_NAME_SHAPE);
@@ -1551,7 +1551,7 @@ pub fn title_sd_name(element: &Element) -> super::TitleSDName {
 }
 
 /// Read `dgm:varLst` into a `VariableList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn variable_list(element: &Element) -> super::VariableList {
     let mut node = super::VariableList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::VARIABLE_LIST_SHAPE);
@@ -1574,7 +1574,7 @@ pub fn variable_list(element: &Element) -> super::VariableList {
 }
 
 /// Read `dgm:whole` into a `WholeE2OFormatting`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn whole_e2o_formatting(element: &Element) -> super::WholeE2OFormatting {
     let mut node = super::WholeE2OFormatting::default();
     let mut reader =

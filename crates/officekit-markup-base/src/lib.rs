@@ -456,7 +456,7 @@ pub trait Nodes {
 pub trait Read: Sized {
     /// The `Other` item holding a node the schemas do not declare, for an
     /// enum; `None` for a struct, which has no such item.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     fn other(_node: Node) -> Option<Self> {
         None
     }
@@ -489,7 +489,7 @@ impl<'extra> Children<'extra> {
 
     /// The children written so far, then every `Extra` whose place is past
     /// the last declared child.
-    #[must_use]
+    #[must_use = "the value moves into the one returned"]
     pub fn finish(mut self) -> Vec<Node> {
         let known = self.known;
         self.out.extend(
@@ -507,7 +507,7 @@ impl<'extra> Children<'extra> {
     }
 
     /// An empty list of children, to be written around these `Extra`s.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn new(extra: &'extra [Extra]) -> Self {
         Self {
             extra,
@@ -525,7 +525,7 @@ impl<'extra> Children<'extra> {
 impl Extra {
     /// An unknown node placed after the `after`-th declared child of its
     /// parent.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn new(after: usize, node: Node) -> Self {
         Self { after, node }
     }
@@ -804,7 +804,7 @@ impl<'element> Reader<'element> {
     /// The unknown content: attributes the shape does not declare, children
     /// at positions no list covers, the node's own namespace declarations,
     /// and the required single positions the element left empty.
-    #[must_use]
+    #[must_use = "the value moves into the one returned"]
     pub fn finish(mut self) -> Unknown {
         while self.next().is_some() {}
         self.unknown.absent = self
@@ -820,7 +820,7 @@ impl<'element> Reader<'element> {
     }
 
     /// What `element`'s reader is given, by `shape`.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn new(element: &'element Element, shape: &'static Shape) -> Self {
         Self {
             attributes: element.attributes.iter(),
@@ -928,7 +928,7 @@ impl Slot {
     }
 
     /// An optional single position of an enum type.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn choice(accept: &'static Accept) -> Self {
         Self {
             accept: Accepted::Enum(accept),
@@ -937,7 +937,7 @@ impl Slot {
     }
 
     /// A list of an enum type: unknown nodes among its items join it.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn items(accept: &'static Accept) -> Self {
         Self {
             accept: Accepted::Enum(accept),
@@ -946,7 +946,7 @@ impl Slot {
     }
 
     /// A list of one struct type.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn list(tag: Tag) -> Self {
         Self {
             accept: Accepted::Tag(tag),
@@ -955,7 +955,7 @@ impl Slot {
     }
 
     /// The list of an `xsd:all` type: each tag at most once.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn once(accept: &'static Accept) -> Self {
         Self {
             accept: Accepted::Enum(accept),
@@ -964,7 +964,7 @@ impl Slot {
     }
 
     /// A required single position of one struct type.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn required(tag: Tag) -> Self {
         Self {
             accept: Accepted::Tag(tag),
@@ -973,7 +973,7 @@ impl Slot {
     }
 
     /// A required single position of an enum type.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn required_choice(accept: &'static Accept) -> Self {
         Self {
             accept: Accepted::Enum(accept),
@@ -982,7 +982,7 @@ impl Slot {
     }
 
     /// An optional single position of one struct type.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn single(tag: Tag) -> Self {
         Self {
             accept: Accepted::Tag(tag),
@@ -1005,7 +1005,7 @@ impl Slot {
 
 impl Unknown {
     /// Unknown content with these absent positions, attributes, children, and declarations.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn new(
         absent: Vec<usize>,
         attributes: Vec<Attribute>,
@@ -1061,7 +1061,7 @@ impl<'scope, 'node> Writer<'scope, 'node> {
 
     /// The element: its unknown attributes after the declared ones, and its
     /// children with each `Extra` at its place.
-    #[must_use]
+    #[must_use = "the value moves into the one returned"]
     pub fn finish(mut self) -> Element {
         self.element
             .attributes
@@ -1078,7 +1078,7 @@ impl<'scope, 'node> Writer<'scope, 'node> {
 
     /// Start writing a node of `shape`, with its own namespace declarations
     /// and the unknown content it keeps.
-    #[must_use]
+    #[must_use = "the result is returned and kept nowhere else"]
     pub fn new(scope: &'scope mut Scope, shape: &'static Shape, unknown: &'node Unknown) -> Self {
         let (namespace, local) = shape.name;
         let element = scope.element(
@@ -1138,7 +1138,7 @@ impl<'scope, 'node> Writer<'scope, 'node> {
 /// The children of a list field, each converted by `each`.
 ///
 /// `each` is the `into_extra` of the node a list holds.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn into_extra_list<T, U>(items: Vec<T>, each: fn(T) -> U) -> Vec<U> {
     items.into_iter().map(each).collect()
 }
@@ -1146,7 +1146,7 @@ pub fn into_extra_list<T, U>(items: Vec<T>, each: fn(T) -> U) -> Vec<U> {
 /// The child of an optional field, taken out of the field and converted by `each`.
 ///
 /// `each` is the `into_extra` of the node the field holds.
-#[must_use]
+#[must_use = "the result is returned and kept nowhere else"]
 pub fn into_extra_optional<T, U>(item: &mut Option<Box<T>>, each: fn(T) -> U) -> Option<Box<U>> {
     item.take().map(|boxed| Box::new(each(*boxed)))
 }
@@ -1154,7 +1154,7 @@ pub fn into_extra_optional<T, U>(item: &mut Option<Box<T>>, each: fn(T) -> U) ->
 /// The child of a required field, converted by `each` and boxed again.
 ///
 /// `each` is the `into_extra` of the node the field holds.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn into_extra_required<T, U>(item: T, each: fn(T) -> U) -> Box<U> {
     Box::new(each(item))
 }
@@ -1180,7 +1180,7 @@ where
 }
 
 /// The text a member stands for.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn member_text<M>(members: &Members<M>, member: M) -> &'static str
 where
     M: Copy + PartialEq,
@@ -1193,7 +1193,7 @@ where
 
 /// The Office version that brought a member, from the Open XML SDK 3.5.1 data;
 /// `None` for ECMA-376's own.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn member_version<M>(members: &Members<M>, member: M) -> Option<OfficeVersion>
 where
     M: Copy + PartialEq,
@@ -1307,7 +1307,7 @@ pub fn integer_in(
 }
 
 /// The error of a text that is no value of its simple type.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn invalid(text: &str, simple_type: &'static str) -> ValueError {
     ValueError::new(simple_type, text.to_owned())
 }
@@ -1347,7 +1347,7 @@ pub fn measure(
 
 /// An element's tag as the typed tree matches it; `None` for a namespace the
 /// table does not know.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub const fn name(element: &Element) -> Option<(Option<NamespaceId>, &str)> {
     tag_of(&element.name)
 }
@@ -1372,7 +1372,7 @@ pub fn percentage(
 
 /// The generic node an item of the typed tree writes as: an arm's element
 /// with the namespace declarations it needs on its own, or the `Other` node.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn generic<T>(item: &T) -> Node
 where
     T: Write,
@@ -1397,7 +1397,7 @@ where
 }
 
 /// The node of `T` an element holds.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn read<T>(element: &Element) -> T
 where
     T: Read,
@@ -1432,7 +1432,7 @@ pub fn text<'text>(
 }
 
 /// The Transitional URI of a namespace id.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn uri(id: NamespaceId) -> &'static str {
     NAMESPACES.get(usize::from(id)).map_or("", |row| row.uri)
 }

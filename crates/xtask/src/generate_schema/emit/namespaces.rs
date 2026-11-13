@@ -168,7 +168,7 @@ fn declared_prefix(transitional: &SchemaSet, uri: &str) -> Result<String> {
 }
 
 /// The table's text: `header`, then the rows.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn render(header: &str, rows: &[Row]) -> String {
     let body = rows
         .iter()

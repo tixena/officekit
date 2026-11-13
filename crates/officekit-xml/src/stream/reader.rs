@@ -49,7 +49,7 @@ pub struct PartReader<R: BufRead> {
 
 impl<R: BufRead> PartReader<R> {
     /// A reader over `source`, before the first event.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn new(source: R) -> Self {
         let mut reader = Reader::from_reader(source);
         reader.config_mut().trim_text(false);

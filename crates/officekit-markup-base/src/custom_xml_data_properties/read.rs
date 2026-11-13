@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `ds:schemaRef` into a `AssociatedXMLSchema`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn associated_xml_schema(element: &Element) -> super::AssociatedXMLSchema {
     let mut node = super::AssociatedXMLSchema::default();
     let mut reader = crate::Reader::new(element, &super::ASSOCIATED_XML_SCHEMA_SHAPE);
@@ -233,7 +233,7 @@ pub fn associated_xml_schema(element: &Element) -> super::AssociatedXMLSchema {
 }
 
 /// Read `ds:datastoreItem` into a `CustomXMLDataProperties`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn custom_xml_data_properties(element: &Element) -> super::CustomXMLDataProperties {
     let mut node = super::CustomXMLDataProperties::default();
     let mut reader = crate::Reader::new(element, &super::CUSTOM_XML_DATA_PROPERTIES_SHAPE);
@@ -249,7 +249,7 @@ pub fn custom_xml_data_properties(element: &Element) -> super::CustomXMLDataProp
 }
 
 /// Read `ds:schemaRefs` into a `SetOfAssociatedXMLSchemas`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn set_of_associated_xml_schemas(element: &Element) -> super::SetOfAssociatedXMLSchemas {
     let mut node = super::SetOfAssociatedXMLSchemas::default();
     let mut reader = crate::Reader::new(element, &super::SET_OF_ASSOCIATED_XML_SCHEMAS_SHAPE);

@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `CNvGrpSpPr` as its element, `dsp:cNvGrpSpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_nv_grp_sp_pr(node: &super::CNvGrpSpPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::C_NV_GRP_SP_PR_SHAPE, &node.unknown);
@@ -231,7 +231,7 @@ pub fn c_nv_grp_sp_pr(node: &super::CNvGrpSpPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CNvPr` as its element, `dsp:cNvPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::C_NV_PR_SHAPE, &node.unknown);
@@ -247,7 +247,7 @@ pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `CNvSpPr` as its element, `dsp:cNvSpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_nv_sp_pr(node: &super::CNvSpPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::C_NV_SP_PR_SHAPE, &node.unknown);
@@ -258,7 +258,7 @@ pub fn c_nv_sp_pr(node: &super::CNvSpPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `DataModelExt` as its element, `dsp:dataModelExt`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_model_ext(node: &super::DataModelExt, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DATA_MODEL_EXT_SHAPE, &node.unknown);
@@ -268,7 +268,7 @@ pub fn data_model_ext(node: &super::DataModelExt, scope: &mut Scope) -> Element 
 }
 
 /// Write a `Drawing` as its element, `dsp:drawing`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drawing(node: &super::Drawing, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DRAWING_SHAPE, &node.unknown);
@@ -277,7 +277,7 @@ pub fn drawing(node: &super::Drawing, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ExtLst` as its element, `dsp:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -294,7 +294,7 @@ pub fn group_shape(
 }
 
 /// Write a `GrpSp` as its element, `dsp:grpSp`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn grp_sp(node: &super::GrpSp, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::GRP_SP_SHAPE, &node.unknown);
     writer.child(&node.nv_grp_sp_pr);
@@ -305,7 +305,7 @@ pub fn grp_sp(node: &super::GrpSp, scope: &mut Scope) -> Element {
 }
 
 /// Write a `GrpSpPr` as its element, `dsp:grpSpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn grp_sp_pr(node: &super::GrpSpPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::GRP_SP_PR_SHAPE, &node.unknown);
@@ -319,7 +319,7 @@ pub fn grp_sp_pr(node: &super::GrpSpPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `NvGrpSpPr` as its element, `dsp:nvGrpSpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn nv_grp_sp_pr(node: &super::NvGrpSpPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::NV_GRP_SP_PR_SHAPE, &node.unknown);
@@ -329,7 +329,7 @@ pub fn nv_grp_sp_pr(node: &super::NvGrpSpPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `NvSpPr` as its element, `dsp:nvSpPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn nv_sp_pr(node: &super::NvSpPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::NV_SP_PR_SHAPE, &node.unknown);
@@ -339,7 +339,7 @@ pub fn nv_sp_pr(node: &super::NvSpPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Sp` as its element, `dsp:sp`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sp(node: &super::Sp, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::SP_SHAPE, &node.unknown);
     writer.attribute(0, &node.model_id);
@@ -353,7 +353,7 @@ pub fn sp(node: &super::Sp, scope: &mut Scope) -> Element {
 }
 
 /// Write a `SpPr` as its element, `dsp:spPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::SP_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
@@ -369,7 +369,7 @@ pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `SpTree` as its element, `dsp:spTree`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sp_tree(node: &super::SpTree, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SP_TREE_SHAPE, &node.unknown);
@@ -381,7 +381,7 @@ pub fn sp_tree(node: &super::SpTree, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Style` as its element, `dsp:style`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn style(node: &super::Style, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::STYLE_SHAPE, &node.unknown);
     writer.child(&node.line_reference);
@@ -392,7 +392,7 @@ pub fn style(node: &super::Style, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TxBody` as its element, `dsp:txBody`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tx_body(node: &super::TxBody, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TX_BODY_SHAPE, &node.unknown);
@@ -403,7 +403,7 @@ pub fn tx_body(node: &super::TxBody, scope: &mut Scope) -> Element {
 }
 
 /// Write a `TxXfrm` as its element, `dsp:txXfrm`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tx_xfrm(node: &super::TxXfrm, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::TX_XFRM_SHAPE, &node.unknown);

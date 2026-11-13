@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `aclsh:classification` into a `Classification`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn classification(element: &Element) -> super::Classification {
     let mut node = super::Classification::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CLASSIFICATION_SHAPE);

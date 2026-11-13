@@ -255,7 +255,7 @@ impl Eq for ListWith<()> {}
 impl<X: NodeExtra> ListWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> ListWith<Y>
     where
         Y: NodeExtra,
@@ -268,7 +268,7 @@ impl<X: NodeExtra> ListWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),

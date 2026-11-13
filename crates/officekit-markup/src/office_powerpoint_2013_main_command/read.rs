@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `pc:animEffectMkLst` into a `AnimEffectMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn anim_effect_mk_lst(element: &Element) -> super::AnimEffectMkLst {
     let mut node = super::AnimEffectMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::ANIM_EFFECT_MK_LST_SHAPE);
@@ -233,7 +233,7 @@ pub fn anim_effect_mk_lst(element: &Element) -> super::AnimEffectMkLst {
 }
 
 /// Read `pc:animEffectParentMkLst` into a `AnimEffectParentMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn anim_effect_parent_mk_lst(element: &Element) -> super::AnimEffectParentMkLst {
     let mut node = super::AnimEffectParentMkLst::default();
     let mut reader =
@@ -248,7 +248,7 @@ pub fn anim_effect_parent_mk_lst(element: &Element) -> super::AnimEffectParentMk
 }
 
 /// Read `pc:cXmlMkLst` into a `CXmlMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c_xml_mk_lst(element: &Element) -> super::CXmlMkLst {
     let mut node = super::CXmlMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::C_XML_MK_LST_SHAPE);
@@ -262,7 +262,7 @@ pub fn c_xml_mk_lst(element: &Element) -> super::CXmlMkLst {
 }
 
 /// Read `pc:cmAuthorMkLst` into a `CmAuthorMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cm_author_mk_lst(element: &Element) -> super::CmAuthorMkLst {
     let mut node = super::CmAuthorMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CM_AUTHOR_MK_LST_SHAPE);
@@ -276,7 +276,7 @@ pub fn cm_author_mk_lst(element: &Element) -> super::CmAuthorMkLst {
 }
 
 /// Read `pc:cmMkLst` into a `CmMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cm_mk_lst(element: &Element) -> super::CmMkLst {
     let mut node = super::CmMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CM_MK_LST_SHAPE);
@@ -290,7 +290,7 @@ pub fn cm_mk_lst(element: &Element) -> super::CmMkLst {
 }
 
 /// Read `pc:custShowMkLst` into a `CustShowMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cust_show_mk_lst(element: &Element) -> super::CustShowMkLst {
     let mut node = super::CustShowMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CUST_SHOW_MK_LST_SHAPE);
@@ -304,7 +304,7 @@ pub fn cust_show_mk_lst(element: &Element) -> super::CustShowMkLst {
 }
 
 /// Read `pc:designTagMkLst` into a `DesignTagMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn design_tag_mk_lst(element: &Element) -> super::DesignTagMkLst {
     let mut node = super::DesignTagMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DESIGN_TAG_MK_LST_SHAPE);
@@ -318,7 +318,7 @@ pub fn design_tag_mk_lst(element: &Element) -> super::DesignTagMkLst {
 }
 
 /// Read `pc:docMk` into a `DocMk`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn doc_mk(element: &Element) -> super::DocMk {
     let reader = officekit_markup_base::Reader::new(element, &super::DOC_MK_SHAPE);
     super::DocMk {
@@ -328,7 +328,7 @@ pub fn doc_mk(element: &Element) -> super::DocMk {
 }
 
 /// Read `pc:docMkLst` into a `DocMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn doc_mk_lst(element: &Element) -> super::DocMkLst {
     let mut node = super::DocMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DOC_MK_LST_SHAPE);
@@ -342,7 +342,7 @@ pub fn doc_mk_lst(element: &Element) -> super::DocMkLst {
 }
 
 /// Read `pc:handoutMkLst` into a `HandoutMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn handout_mk_lst(element: &Element) -> super::HandoutMkLst {
     let mut node = super::HandoutMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HANDOUT_MK_LST_SHAPE);
@@ -356,7 +356,7 @@ pub fn handout_mk_lst(element: &Element) -> super::HandoutMkLst {
 }
 
 /// Read `pc:notesMasterMkLst` into a `NotesMasterMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_master_mk_lst(element: &Element) -> super::NotesMasterMkLst {
     let mut node = super::NotesMasterMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NOTES_MASTER_MK_LST_SHAPE);
@@ -370,7 +370,7 @@ pub fn notes_master_mk_lst(element: &Element) -> super::NotesMasterMkLst {
 }
 
 /// Read `pc:notesMkLst` into a `NotesMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_mk_lst(element: &Element) -> super::NotesMkLst {
     let mut node = super::NotesMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NOTES_MK_LST_SHAPE);
@@ -384,7 +384,7 @@ pub fn notes_mk_lst(element: &Element) -> super::NotesMkLst {
 }
 
 /// Read `pc:notesTxtMkLst` into a `NotesTxtMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn notes_txt_mk_lst(element: &Element) -> super::NotesTxtMkLst {
     let mut node = super::NotesTxtMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::NOTES_TXT_MK_LST_SHAPE);
@@ -398,7 +398,7 @@ pub fn notes_txt_mk_lst(element: &Element) -> super::NotesTxtMkLst {
 }
 
 /// Read `pc:sectionLnkObjMkLst` into a `SectionLnkObjMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn section_lnk_obj_mk_lst(element: &Element) -> super::SectionLnkObjMkLst {
     let mut node = super::SectionLnkObjMkLst::default();
     let mut reader =
@@ -413,7 +413,7 @@ pub fn section_lnk_obj_mk_lst(element: &Element) -> super::SectionLnkObjMkLst {
 }
 
 /// Read `pc:sectionMkLst` into a `SectionMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn section_mk_lst(element: &Element) -> super::SectionMkLst {
     let mut node = super::SectionMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SECTION_MK_LST_SHAPE);
@@ -427,7 +427,7 @@ pub fn section_mk_lst(element: &Element) -> super::SectionMkLst {
 }
 
 /// Read `pc:sldBaseMkLst` into a `SldBaseMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sld_base_mk_lst(element: &Element) -> super::SldBaseMkLst {
     let mut node = super::SldBaseMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SLD_BASE_MK_LST_SHAPE);
@@ -441,7 +441,7 @@ pub fn sld_base_mk_lst(element: &Element) -> super::SldBaseMkLst {
 }
 
 /// Read `pc:sldLayoutMkLst` into a `SldLayoutMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sld_layout_mk_lst(element: &Element) -> super::SldLayoutMkLst {
     let mut node = super::SldLayoutMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SLD_LAYOUT_MK_LST_SHAPE);
@@ -455,7 +455,7 @@ pub fn sld_layout_mk_lst(element: &Element) -> super::SldLayoutMkLst {
 }
 
 /// Read `pc:sldMasterMkLst` into a `SldMasterMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sld_master_mk_lst(element: &Element) -> super::SldMasterMkLst {
     let mut node = super::SldMasterMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SLD_MASTER_MK_LST_SHAPE);
@@ -469,7 +469,7 @@ pub fn sld_master_mk_lst(element: &Element) -> super::SldMasterMkLst {
 }
 
 /// Read `pc:sldMk` into a `SldMk`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sld_mk(element: &Element) -> super::SldMk {
     let mut node = super::SldMk::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SLD_MK_SHAPE);
@@ -485,7 +485,7 @@ pub fn sld_mk(element: &Element) -> super::SldMk {
 }
 
 /// Read `pc:sldMkLst` into a `SldMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sld_mk_lst(element: &Element) -> super::SldMkLst {
     let mut node = super::SldMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SLD_MK_LST_SHAPE);
@@ -502,7 +502,7 @@ pub fn sld_mk_lst(element: &Element) -> super::SldMkLst {
 }
 
 /// Read `pc:sldPosMkLst` into a `SldPosMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn sld_pos_mk_lst(element: &Element) -> super::SldPosMkLst {
     let mut node = super::SldPosMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SLD_POS_MK_LST_SHAPE);
@@ -516,7 +516,7 @@ pub fn sld_pos_mk_lst(element: &Element) -> super::SldPosMkLst {
 }
 
 /// Read `pc:tagMkLst` into a `TagMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tag_mk_lst(element: &Element) -> super::TagMkLst {
     let mut node = super::TagMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TAG_MK_LST_SHAPE);
@@ -530,7 +530,7 @@ pub fn tag_mk_lst(element: &Element) -> super::TagMkLst {
 }
 
 /// Read `pc:tkAppMkLst` into a `TkAppMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn tk_app_mk_lst(element: &Element) -> super::TkAppMkLst {
     let mut node = super::TkAppMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TK_APP_MK_LST_SHAPE);
@@ -544,7 +544,7 @@ pub fn tk_app_mk_lst(element: &Element) -> super::TkAppMkLst {
 }
 
 /// Read `pc:tocMkLst` into a `TocMkLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn toc_mk_lst(element: &Element) -> super::TocMkLst {
     let mut node = super::TocMkLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TOC_MK_LST_SHAPE);

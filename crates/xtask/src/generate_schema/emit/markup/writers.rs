@@ -14,7 +14,7 @@ const STATEMENTS: usize = 90;
 
 /// The text of `write.rs`.
 ///
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn text(header: &str, names: &Names<'_>) -> String {
     let catalog = names.catalog;
     let module = &catalog.modules[names.module];
@@ -107,7 +107,7 @@ fn node_writer(names: &Names<'_>, index: usize, function: &str) -> String {
             node.name, catalog.modules[node.module].prefix, node.key.tag.local
         ),
     );
-    out.push_str("#[must_use]\n");
+    out.push_str("#[must_use = \"the element written is returned; nothing else keeps it\"]\n");
     out.push_str(&layout::signature(
         0,
         &format!("pub fn {function}"),

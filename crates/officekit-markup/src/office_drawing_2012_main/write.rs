@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `BackgroundPr` as its element, `a15:backgroundPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn background_pr(node: &super::BackgroundPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::BACKGROUND_PR_SHAPE, &node.unknown);
@@ -232,7 +232,7 @@ pub fn background_pr(node: &super::BackgroundPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `NonVisualGroupProps` as its element, `a15:nonVisualGroupProps`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn non_visual_group_props(node: &super::NonVisualGroupProps, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(
         scope,
@@ -244,7 +244,7 @@ pub fn non_visual_group_props(node: &super::NonVisualGroupProps, scope: &mut Sco
 }
 
 /// Write a `ObjectPr` as its element, `a15:objectPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn object_pr(node: &super::ObjectPr, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::OBJECT_PR_SHAPE, &node.unknown);
@@ -255,7 +255,7 @@ pub fn object_pr(node: &super::ObjectPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `SignatureLine` as its element, `a15:signatureLine`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn signature_line(node: &super::SignatureLine, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SIGNATURE_LINE_SHAPE, &node.unknown);

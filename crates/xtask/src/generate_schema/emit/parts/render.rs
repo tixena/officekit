@@ -374,7 +374,7 @@ pub fn restore_through_module(
 /// The methods of `RelationshipType`, after its constants.
 const RELATIONSHIP_METHODS: &str = "
     /// The type `type_uri` spells in either class.
-    #[must_use]
+    #[must_use = \"this only returns the value\"]
     pub fn find(type_uri: &str) -> Option<Self> {
         Self::ALL
             .iter()
@@ -383,7 +383,7 @@ const RELATIONSHIP_METHODS: &str = "
     }
 
     /// The spelling `class` writes.
-    #[must_use]
+    #[must_use = \"this only returns the value\"]
     pub const fn in_class(&self, class: ConformanceClass) -> &'static str {
         if matches!(class, ConformanceClass::Strict) {
             self.strict
@@ -393,7 +393,7 @@ const RELATIONSHIP_METHODS: &str = "
     }
 
     /// Whether `type_uri` is this type in either class's spelling.
-    #[must_use]
+    #[must_use = \"this only answers the question\"]
     pub fn matches(&self, type_uri: &str) -> bool {
         type_uri == self.transitional || type_uri == self.strict
     }
@@ -592,7 +592,7 @@ fn kind_enum(kinds: &[Kind], file: &str, name: &str, family: &str) -> (String, S
         implementation.push_str("    ];\n");
     }
     implementation.push_str(
-        "\n    /// The content type of the main part of a file of this kind.\n    #[must_use]\n    pub const fn main_content_type(self) -> &'static str {\n        match self {\n",
+        "\n    /// The content type of the main part of a file of this kind.\n    #[must_use = \"this only returns the content type\"]\n    pub const fn main_content_type(self) -> &'static str {\n        match self {\n",
     );
     for row in &rows {
         implementation.push_str(&layout::arm(

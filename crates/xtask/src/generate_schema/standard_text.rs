@@ -99,7 +99,7 @@ impl PendingRow {
 
 /// The text's lines without page furniture: a line that holds only a page number, and a line starting with a form
 /// feed, which holds the next page's running header.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn lines(text: &str) -> Vec<&str> {
     let page_number = |line: &str| {
         let trimmed = line.trim();
@@ -120,13 +120,13 @@ fn section_number(token: &str, min_levels: usize, max_levels: usize) -> bool {
 
 /// Every element heading of Part 1's body, once each: lines of the table of contents, which carry a dot leader, are
 /// left out.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn element_headings(text: &str) -> BTreeSet<ElementHeading> {
     headings(text, false)
 }
 
 /// The same for simple types: `17.18.44 ST_Jc (Horizontal Alignment Type)`, the local name starting with `ST_`.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn simple_type_headings(text: &str) -> BTreeSet<ElementHeading> {
     headings(text, true)
 }
@@ -175,7 +175,7 @@ fn heading(line: &str, simple_types: bool) -> Option<ElementHeading> {
 /// The type is the one of the note "The W3C XML Schema definition of this
 /// element's content model (`CT_P`) is located in ...", searched up to the
 /// next heading; `None` when the section has no such note.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn element_heading_types(text: &str) -> Vec<(ElementHeading, Option<String>)> {
     let lines: Vec<&str> = text.lines().collect();
     let starts: Vec<(usize, ElementHeading)> = lines
@@ -279,7 +279,7 @@ fn field_value(values: &[String]) -> String {
 }
 
 /// Every part definition of Part 1, in document order.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn part_definitions(text: &str) -> Vec<PartDefinition> {
     let lines = lines(text);
     let mut parts = Vec::new();
@@ -403,7 +403,7 @@ fn cells(line: &str) -> Vec<(usize, &str)> {
 ///
 /// A part name wrapped onto the next line is joined with a space, a root element wrapped without one, and a root of
 /// `Not applicable`, or a reference `Defined in ECMA-376-2`, gives no root element.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn part_summary(text: &str) -> Vec<SummaryRow> {
     let mut rows = Vec::new();
     let mut pending: Option<PendingRow> = None;
@@ -471,7 +471,7 @@ pub fn part_summary(text: &str) -> Vec<SummaryRow> {
 }
 
 /// Every part of Part 4's part summaries, in document order.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn transitional_parts(text: &str) -> Vec<TransitionalPart> {
     restatements(text, |section| {
         section_number(section, 3, 3)
@@ -483,7 +483,7 @@ pub fn transitional_parts(text: &str) -> Vec<TransitionalPart> {
 
 /// Every relationship section of Part 4 (`9.3 Document Template (Part 1, §11.4)`), in document order, as the
 /// part it restates: the Part 1 section it names and the Transitional relationship type it states.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn transitional_relationships(text: &str) -> Vec<TransitionalPart> {
     restatements(text, |section| {
         section_number(section, 2, 2)
@@ -531,7 +531,7 @@ fn restatements(text: &str, keep: impl Fn(&str) -> bool) -> Vec<TransitionalPart
 
 /// Every section of clauses 11 to 15 of Part 1 that is not a part definition and states a "Source Relationship:",
 /// in document order.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn relationship_sections(text: &str) -> Vec<RelationshipSection> {
     let lines = lines(text);
     let mut sections = Vec::new();
@@ -570,7 +570,7 @@ pub fn relationship_sections(text: &str) -> Vec<RelationshipSection> {
 }
 
 /// The counts the generator reports over the two texts, on one line.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn summary(part_1: &str, part_4: &str) -> String {
     let elements = element_headings(part_1);
     let mut per_name: BTreeMap<&str, usize> = BTreeMap::new();

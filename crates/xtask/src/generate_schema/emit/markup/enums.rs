@@ -255,7 +255,7 @@ impl Placer<'_, '_> {
 
 /// Every choice position of the set's complex types, each type's in the
 /// order its content writes them.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn ecma_positions(set: &SchemaSet) -> Vec<Position> {
     let mut found = Vec::new();
     for (owner, complex_type) in &set.complex_types {
@@ -316,7 +316,7 @@ fn walk(
 
 /// Every element and wildcard a particle reaches, groups and nested
 /// particles expanded; `target` is the namespace of the schema writing it.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn flatten(set: &SchemaSet, particle: &Particle, target: &str) -> BTreeSet<Entry> {
     let mut found = BTreeSet::new();
     gather(set, particle, target, &mut found);
@@ -356,7 +356,7 @@ fn gather(set: &SchemaSet, particle: &Particle, target: &str, found: &mut BTreeS
 }
 
 /// Every complex type that extends `owner`, directly or through others, and `owner` itself first.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn with_derived(set: &SchemaSet, owner: &Name) -> Vec<Name> {
     let mut found = vec![owner.clone()];
     let mut index = 0;
@@ -380,7 +380,7 @@ pub fn with_derived(set: &SchemaSet, owner: &Name) -> Vec<Name> {
 /// the data joins the 5th edition's choice of its owner type that shares the most tags with the
 /// ECMA tags beside it there; one inside no choice, or beside no ECMA tag of any such choice, is a
 /// field; a choice of extension tags only is a new position.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn placements(data: &Data<'_>, positions: &[Position]) -> Placements {
     let mut by_owner: BTreeMap<&Name, Vec<&BTreeSet<Entry>>> = BTreeMap::new();
     for position in positions.iter().filter(|position| position.set.len() > 1) {
@@ -448,7 +448,7 @@ fn tag_pairs(set: &BTreeSet<Entry>) -> BTreeSet<(String, String)> {
 }
 
 /// Whether a particle of the data may repeat, and whether it may be absent.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn occurs(particle: &DataParticle) -> (bool, bool) {
     if particle.occurs.is_empty() {
         return (false, false);
@@ -466,7 +466,7 @@ pub fn occurs(particle: &DataParticle) -> (bool, bool) {
 
 /// The choice positions of an extension type in the data: every choice not
 /// inside another choice, flattened.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn data_positions(data: &Data<'_>, particle: &DataParticle) -> Vec<BTreeSet<Entry>> {
     let mut found = Vec::new();
     data_walk(data, particle, &mut found);
@@ -489,7 +489,7 @@ fn data_walk(data: &Data<'_>, particle: &DataParticle, found: &mut Vec<BTreeSet<
 }
 
 /// Every element and wildcard under a particle of the data.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn data_flatten(data: &Data<'_>, particle: &DataParticle) -> BTreeSet<Entry> {
     let mut found = BTreeSet::new();
     data_gather(data, particle, &mut found);
@@ -517,7 +517,7 @@ fn data_gather(data: &Data<'_>, particle: &DataParticle, found: &mut BTreeSet<En
 
 /// A data type's name, `w:CT_P/w:p`: the type's prefix and local name, then
 /// the element's.
-#[must_use]
+#[must_use = "this only returns the value"]
 pub fn split(name: &str) -> Option<(&str, &str, &str, &str)> {
     let (schema_type, element) = name.split_once('/')?;
     let (type_prefix, type_local) = schema_type.split_once(':')?;

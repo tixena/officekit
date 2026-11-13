@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `ahyp:hlinkClr` into a `HlinkClr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn hlink_clr(element: &Element) -> super::HlinkClr {
     let mut node = super::HlinkClr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::HLINK_CLR_SHAPE);

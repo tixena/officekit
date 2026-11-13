@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `x15ac:absPath` into a `AbsPath`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn abs_path(element: &Element) -> super::AbsPath {
     let mut node = super::AbsPath::default();
     let mut reader = crate::Reader::new(element, &super::ABS_PATH_SHAPE);

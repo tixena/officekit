@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `p232:cameo` into a `Cameo`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cameo(element: &Element) -> super::Cameo {
     let reader = officekit_markup_base::Reader::new(element, &super::CAMEO_SHAPE);
     super::Cameo {
@@ -229,7 +229,7 @@ pub fn cameo(element: &Element) -> super::Cameo {
 }
 
 /// Read `p232:phTypeExt` into a `PhTypeExt`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ph_type_ext(element: &Element) -> super::PhTypeExt {
     let mut node = super::PhTypeExt::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PH_TYPE_EXT_SHAPE);
@@ -243,13 +243,13 @@ pub fn ph_type_ext(element: &Element) -> super::PhTypeExt {
 }
 
 /// Read one item of `PlaceholderTypeContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn placeholder_type(element: &Element) -> super::PlaceholderTypeContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `p232:type` into a `Type`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r#type(element: &Element) -> super::Type {
     let mut node = super::Type::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TYPE_SHAPE);
@@ -263,7 +263,7 @@ pub fn r#type(element: &Element) -> super::Type {
 }
 
 /// Read `p232:unknown` into a `Unknown`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn unknown(element: &Element) -> super::Unknown {
     let reader = officekit_markup_base::Reader::new(element, &super::UNKNOWN_SHAPE);
     super::Unknown {

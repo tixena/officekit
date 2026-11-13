@@ -78,7 +78,7 @@ pub struct Fixed {
 impl Fixed {
     /// `part path: renamed id "from" to "to"`, with the path written as
     /// [`ValidationError::line`] writes it.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn line(&self) -> String {
         format!(
             "{} {}: renamed {} \"{}\" to \"{}\"",

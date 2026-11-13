@@ -280,7 +280,7 @@ impl Eq for SqrefWith<()> {}
 impl<X: NodeExtra> FWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> FWith<Y>
     where
         Y: NodeExtra,
@@ -293,7 +293,7 @@ impl<X: NodeExtra> FWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),
@@ -318,7 +318,7 @@ impl crate::Write for F {
 impl<X: NodeExtra> SqrefWith<X> {
     /// This node and every node under it with each `extra` at `Y`'s default; every other field
     /// moves as it is.
-    #[must_use]
+    #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
     pub fn into_extra<Y>(self) -> SqrefWith<Y>
     where
         Y: NodeExtra,
@@ -331,7 +331,7 @@ impl<X: NodeExtra> SqrefWith<X> {
     }
 
     /// This node's attributes and value, copied, with no unknown content.
-    #[must_use]
+    #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
         Self {
             value: self.value.clone(),

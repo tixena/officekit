@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `BackgroundProps` as its element, `alf:backgroundProps`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn background_props(node: &super::BackgroundProps, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::BACKGROUND_PROPS_SHAPE, &node.unknown);
@@ -231,7 +231,7 @@ pub fn background_props(node: &super::BackgroundProps, scope: &mut Scope) -> Ele
 }
 
 /// Write a `Blur` as its element, `alf:Blur`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn blur(node: &super::Blur, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::BLUR_SHAPE, &node.unknown);
     writer.child(&node.ext_lst);
@@ -239,7 +239,7 @@ pub fn blur(node: &super::Blur, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Custom` as its element, `alf:Custom`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom(node: &super::Custom, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::CUSTOM_SHAPE, &node.unknown);
     writer.child(&node.ext_lst);
@@ -247,7 +247,7 @@ pub fn custom(node: &super::Custom, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ExtLst` as its element, `alf:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -265,7 +265,7 @@ pub fn live_feed_background_properties(
 }
 
 /// Write a `LiveFeedProps` as its element, `alf:liveFeedProps`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn live_feed_props(node: &super::LiveFeedProps, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::LIVE_FEED_PROPS_SHAPE, &node.unknown);
@@ -275,7 +275,7 @@ pub fn live_feed_props(node: &super::LiveFeedProps, scope: &mut Scope) -> Elemen
 }
 
 /// Write a `Normal` as its element, `alf:Normal`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn normal(node: &super::Normal, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::NORMAL_SHAPE, &node.unknown);
     writer.child(&node.ext_lst);
@@ -283,7 +283,7 @@ pub fn normal(node: &super::Normal, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Removed` as its element, `alf:Removed`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn removed(node: &super::Removed, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::REMOVED_SHAPE, &node.unknown);

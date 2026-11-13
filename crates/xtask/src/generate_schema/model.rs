@@ -187,7 +187,7 @@ pub struct Name {
 }
 
 impl Name {
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub fn new(namespace: &str, local: &str) -> Self {
         Self {
             local: local.to_owned(),
@@ -317,7 +317,7 @@ impl SchemaSet {
     }
 
     /// The `xsd:element` and `xsd:attribute` tags of every file, summed.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn declarations(&self) -> Declarations {
         self.namespaces
             .values()
@@ -332,7 +332,7 @@ impl SchemaSet {
     /// attributes then its own, and the base's particle then its own in a
     /// sequence; for a restriction, the base's attributes as it redeclares
     /// them, and its own content.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn effective(&self, complex_type: &ComplexType) -> ComplexType {
         let mut flat = complex_type.clone();
         let Some(derivation) = &complex_type.base else {
@@ -382,7 +382,7 @@ impl SchemaSet {
 
     /// Every distinct pair of element tag and type the set declares: its
     /// global elements and the elements of its complex types and groups.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn element_tags(&self) -> BTreeSet<(&Name, &TypeRef)> {
         let mut tags: BTreeSet<(&Name, &TypeRef)> = self
             .elements
@@ -444,7 +444,7 @@ impl SchemaSet {
     }
 
     /// Every wildcard (`xsd:any`) particle, with the complex type or group it sits in.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn wildcards(&self) -> Vec<(&Name, &Particle)> {
         self.particles()
             .into_iter()
@@ -482,7 +482,7 @@ pub enum SimpleType {
 }
 
 impl SimpleType {
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn name(&self) -> &Name {
         match self {
             Self::List { item: _item, name } => name,
@@ -520,7 +520,7 @@ pub enum TypeRef {
 
 impl TypeRef {
     /// The name of the type, `xsd:` built-ins in [`XSD_NAMESPACE`]; `None` when unknown.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn name(&self) -> Option<Name> {
         match self {
             Self::BuiltIn(local) => Some(Name::new(XSD_NAMESPACE, local)),

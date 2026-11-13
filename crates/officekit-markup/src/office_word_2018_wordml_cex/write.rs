@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `CommentExtensible` as its element, `w16cex:commentExtensible`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comment_extensible(node: &super::CommentExtensible, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::COMMENT_EXTENSIBLE_SHAPE, &node.unknown);
@@ -232,7 +232,7 @@ pub fn comment_extensible(node: &super::CommentExtensible, scope: &mut Scope) ->
 }
 
 /// Write a `CommentsExtensible` as its element, `w16cex:commentsExtensible`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comments_extensible(node: &super::CommentsExtensible, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::COMMENTS_EXTENSIBLE_SHAPE, &node.unknown);
@@ -242,7 +242,7 @@ pub fn comments_extensible(node: &super::CommentsExtensible, scope: &mut Scope) 
 }
 
 /// Write a `ExtLst` as its element, `w16cex:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);

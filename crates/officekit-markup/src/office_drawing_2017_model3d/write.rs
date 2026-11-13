@@ -221,7 +221,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `AmbientLight` as its element, `am3d:ambientLight`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ambient_light(node: &super::AmbientLight, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::AMBIENT_LIGHT_SHAPE, &node.unknown);
@@ -233,7 +233,7 @@ pub fn ambient_light(node: &super::AmbientLight, scope: &mut Scope) -> Element {
 }
 
 /// Write a `AttrSrcUrl` as its element, `am3d:attrSrcUrl`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn attr_src_url(node: &super::AttrSrcUrl, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ATTR_SRC_URL_SHAPE, &node.unknown);
@@ -242,7 +242,7 @@ pub fn attr_src_url(node: &super::AttrSrcUrl, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Blip` as its element, `am3d:blip`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn blip(node: &super::Blip, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::BLIP_SHAPE, &node.unknown);
     writer.attribute(0, &node.embed);
@@ -254,7 +254,7 @@ pub fn blip(node: &super::Blip, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Camera` as its element, `am3d:camera`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn camera(node: &super::Camera, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::CAMERA_SHAPE, &node.unknown);
     writer.child(&node.pos);
@@ -266,7 +266,7 @@ pub fn camera(node: &super::Camera, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Clr` as its element, `am3d:clr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn clr(node: &super::Clr, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::CLR_SHAPE, &node.unknown);
     writer.child(&node.content);
@@ -274,7 +274,7 @@ pub fn clr(node: &super::Clr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `DirLight` as its element, `am3d:dirLight`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dir_light(node: &super::DirLight, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::DIR_LIGHT_SHAPE, &node.unknown);
@@ -289,7 +289,7 @@ pub fn dir_light(node: &super::DirLight, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Ext` as its element, `am3d:ext`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext(node: &super::Ext, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::EXT_SHAPE, &node.unknown);
     writer.attribute(0, &node.uri);
@@ -298,7 +298,7 @@ pub fn ext(node: &super::Ext, scope: &mut Scope) -> Element {
 }
 
 /// Write a `ExtLstModel3DExtensionList` as its element, `am3d:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst_model3d_extension_list(
     node: &super::ExtLstModel3DExtensionList,
     scope: &mut Scope,
@@ -313,7 +313,7 @@ pub fn ext_lst_model3d_extension_list(
 }
 
 /// Write a `ExtLstOfficeArtExtensionList` as its element, `am3d:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst_office_art_extension_list(
     node: &super::ExtLstOfficeArtExtensionList,
     scope: &mut Scope,
@@ -328,19 +328,19 @@ pub fn ext_lst_office_art_extension_list(
 }
 
 /// Write a `Illuminance` as its element, `am3d:illuminance`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn illuminance(node: &super::Illuminance, scope: &mut Scope) -> Element {
     officekit_markup_base::Writer::new(scope, &super::ILLUMINANCE_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Intensity` as its element, `am3d:intensity`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn intensity(node: &super::Intensity, scope: &mut Scope) -> Element {
     officekit_markup_base::Writer::new(scope, &super::INTENSITY_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `LookAt` as its element, `am3d:lookAt`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn look_at(node: &super::LookAt, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::LOOK_AT_SHAPE, &node.unknown);
@@ -351,7 +351,7 @@ pub fn look_at(node: &super::LookAt, scope: &mut Scope) -> Element {
 }
 
 /// Write a `MeterPerModelUnit` as its element, `am3d:meterPerModelUnit`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn meter_per_model_unit(node: &super::MeterPerModelUnit, scope: &mut Scope) -> Element {
     let writer = officekit_markup_base::Writer::new(
         scope,
@@ -362,7 +362,7 @@ pub fn meter_per_model_unit(node: &super::MeterPerModelUnit, scope: &mut Scope) 
 }
 
 /// Write a `Model3d` as its element, `am3d:model3d`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn model3d(node: &super::Model3d, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::MODEL3D_SHAPE, &node.unknown);
@@ -413,7 +413,7 @@ pub fn model3d_viewport(
 }
 
 /// Write a `ObjViewport` as its element, `am3d:objViewport`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn obj_viewport(node: &super::ObjViewport, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::OBJ_VIEWPORT_SHAPE, &node.unknown);
@@ -423,7 +423,7 @@ pub fn obj_viewport(node: &super::ObjViewport, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Orthographic` as its element, `am3d:orthographic`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn orthographic(node: &super::Orthographic, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::ORTHOGRAPHIC_SHAPE, &node.unknown);
@@ -433,7 +433,7 @@ pub fn orthographic(node: &super::Orthographic, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Perspective` as its element, `am3d:perspective`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn perspective(node: &super::Perspective, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PERSPECTIVE_SHAPE, &node.unknown);
@@ -443,7 +443,7 @@ pub fn perspective(node: &super::Perspective, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Pos` as its element, `am3d:pos`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pos(node: &super::Pos, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::POS_SHAPE, &node.unknown);
     writer.attribute(0, &node.x);
@@ -453,7 +453,7 @@ pub fn pos(node: &super::Pos, scope: &mut Scope) -> Element {
 }
 
 /// Write a `PostTrans` as its element, `am3d:postTrans`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn post_trans(node: &super::PostTrans, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::POST_TRANS_SHAPE, &node.unknown);
@@ -464,7 +464,7 @@ pub fn post_trans(node: &super::PostTrans, scope: &mut Scope) -> Element {
 }
 
 /// Write a `PreTrans` as its element, `am3d:preTrans`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pre_trans(node: &super::PreTrans, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PRE_TRANS_SHAPE, &node.unknown);
@@ -475,7 +475,7 @@ pub fn pre_trans(node: &super::PreTrans, scope: &mut Scope) -> Element {
 }
 
 /// Write a `PtLight` as its element, `am3d:ptLight`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pt_light(node: &super::PtLight, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::PT_LIGHT_SHAPE, &node.unknown);
@@ -489,7 +489,7 @@ pub fn pt_light(node: &super::PtLight, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Raster` as its element, `am3d:raster`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn raster(node: &super::Raster, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::RASTER_SHAPE, &node.unknown);
     writer.attribute(0, &node.r_name);
@@ -499,7 +499,7 @@ pub fn raster(node: &super::Raster, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Rot` as its element, `am3d:rot`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rot(node: &super::Rot, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::ROT_SHAPE, &node.unknown);
     writer.attribute(0, &node.ax);
@@ -509,7 +509,7 @@ pub fn rot(node: &super::Rot, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Scale` as its element, `am3d:scale`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn scale(node: &super::Scale, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::SCALE_SHAPE, &node.unknown);
     writer.child(&node.sx);
@@ -519,7 +519,7 @@ pub fn scale(node: &super::Scale, scope: &mut Scope) -> Element {
 }
 
 /// Write a `SpPr` as its element, `am3d:spPr`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::SP_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
@@ -535,7 +535,7 @@ pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
 }
 
 /// Write a `SpotLight` as its element, `am3d:spotLight`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn spot_light(node: &super::SpotLight, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SPOT_LIGHT_SHAPE, &node.unknown);
@@ -551,7 +551,7 @@ pub fn spot_light(node: &super::SpotLight, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Sx` as its element, `am3d:sx`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sx(node: &super::Sx, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::SX_SHAPE, &node.unknown);
     writer.attribute(0, &node.n);
@@ -560,7 +560,7 @@ pub fn sx(node: &super::Sx, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Sy` as its element, `am3d:sy`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sy(node: &super::Sy, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::SY_SHAPE, &node.unknown);
     writer.attribute(0, &node.n);
@@ -569,7 +569,7 @@ pub fn sy(node: &super::Sy, scope: &mut Scope) -> Element {
 }
 
 /// Write a `SzPositiveRatio` as its element, `am3d:sz`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sz_positive_ratio(node: &super::SzPositiveRatio, scope: &mut Scope) -> Element {
     let writer =
         officekit_markup_base::Writer::new(scope, &super::SZ_POSITIVE_RATIO_SHAPE, &node.unknown);
@@ -577,7 +577,7 @@ pub fn sz_positive_ratio(node: &super::SzPositiveRatio, scope: &mut Scope) -> El
 }
 
 /// Write a `SzRatio` as its element, `am3d:sz`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sz_ratio(node: &super::SzRatio, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::SZ_RATIO_SHAPE, &node.unknown);
@@ -587,7 +587,7 @@ pub fn sz_ratio(node: &super::SzRatio, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Trans` as its element, `am3d:trans`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn trans(node: &super::Trans, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::TRANS_SHAPE, &node.unknown);
     writer.child(&node.meter_per_model_unit);
@@ -600,13 +600,13 @@ pub fn trans(node: &super::Trans, scope: &mut Scope) -> Element {
 }
 
 /// Write a `UnkLight` as its element, `am3d:unkLight`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn unk_light(node: &super::UnkLight, scope: &mut Scope) -> Element {
     officekit_markup_base::Writer::new(scope, &super::UNK_LIGHT_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Up` as its element, `am3d:up`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn up(node: &super::Up, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::UP_SHAPE, &node.unknown);
     writer.attribute(0, &node.dx);
@@ -616,7 +616,7 @@ pub fn up(node: &super::Up, scope: &mut Scope) -> Element {
 }
 
 /// Write a `WinViewport` as its element, `am3d:winViewport`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn win_viewport(node: &super::WinViewport, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::WIN_VIEWPORT_SHAPE, &node.unknown);

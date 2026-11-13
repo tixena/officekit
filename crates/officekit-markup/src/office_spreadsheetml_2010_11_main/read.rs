@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `x15:activeTabTopLevelEntity` into a `ActiveTabTopLevelEntity`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn active_tab_top_level_entity(element: &Element) -> super::ActiveTabTopLevelEntity {
     let mut node = super::ActiveTabTopLevelEntity::default();
     let mut reader =
@@ -236,7 +236,7 @@ pub fn active_tab_top_level_entity(element: &Element) -> super::ActiveTabTopLeve
 }
 
 /// Read `x15:autoFilter` into a `AutoFilter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn auto_filter(element: &Element) -> super::AutoFilter {
     let mut node = super::AutoFilter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::AUTO_FILTER_SHAPE);
@@ -254,7 +254,7 @@ pub fn auto_filter(element: &Element) -> super::AutoFilter {
 }
 
 /// Read `x15:bounds` into a `Bounds`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn bounds(element: &Element) -> super::Bounds {
     let reader = officekit_markup_base::Reader::new(element, &super::BOUNDS_SHAPE);
     super::Bounds {
@@ -264,7 +264,7 @@ pub fn bounds(element: &Element) -> super::Bounds {
 }
 
 /// Read `x15:c` into a `C`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn c(element: &Element) -> super::C {
     let mut node = super::C::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::C_SHAPE);
@@ -282,7 +282,7 @@ pub fn c(element: &Element) -> super::C {
 }
 
 /// Read `x15:cacheHierarchy` into a `CacheHierarchy`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cache_hierarchy(element: &Element) -> super::CacheHierarchy {
     let mut node = super::CacheHierarchy::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CACHE_HIERARCHY_SHAPE);
@@ -296,7 +296,7 @@ pub fn cache_hierarchy(element: &Element) -> super::CacheHierarchy {
 }
 
 /// Read `x15:cachedUniqueName` into a `CachedUniqueName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cached_unique_name(element: &Element) -> super::CachedUniqueName {
     let mut node = super::CachedUniqueName::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CACHED_UNIQUE_NAME_SHAPE);
@@ -312,7 +312,7 @@ pub fn cached_unique_name(element: &Element) -> super::CachedUniqueName {
 }
 
 /// Read `x15:cachedUniqueNames` into a `CachedUniqueNames`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn cached_unique_names(element: &Element) -> super::CachedUniqueNames {
     let mut node = super::CachedUniqueNames::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CACHED_UNIQUE_NAMES_SHAPE);
@@ -326,7 +326,7 @@ pub fn cached_unique_names(element: &Element) -> super::CachedUniqueNames {
 }
 
 /// Read `x15:calculatedMember` into a `CalculatedMember`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn calculated_member(element: &Element) -> super::CalculatedMember {
     let mut node = super::CalculatedMember::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CALCULATED_MEMBER_SHAPE);
@@ -343,7 +343,7 @@ pub fn calculated_member(element: &Element) -> super::CalculatedMember {
 }
 
 /// Read `x15:connection` into a `Connection`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn connection(element: &Element) -> super::Connection {
     let mut node = super::Connection::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CONNECTION_SHAPE);
@@ -367,7 +367,7 @@ pub fn connection(element: &Element) -> super::Connection {
 }
 
 /// Read `x15:dataFeedPr` into a `DataFeedPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_feed_pr(element: &Element) -> super::DataFeedPr {
     let mut node = super::DataFeedPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_FEED_PR_SHAPE);
@@ -383,7 +383,7 @@ pub fn data_feed_pr(element: &Element) -> super::DataFeedPr {
 }
 
 /// Read `x15:dataField` into a `DataField`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_field(element: &Element) -> super::DataField {
     let mut node = super::DataField::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_FIELD_SHAPE);
@@ -397,7 +397,7 @@ pub fn data_field(element: &Element) -> super::DataField {
 }
 
 /// Read `x15:dataModel` into a `DataModel`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn data_model(element: &Element) -> super::DataModel {
     let mut node = super::DataModel::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DATA_MODEL_SHAPE);
@@ -415,13 +415,13 @@ pub fn data_model(element: &Element) -> super::DataModel {
 }
 
 /// Read one item of `DatabaseSourceContent` from its element: the arm of its tag, or `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn database_source(element: &Element) -> super::DatabaseSourceContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `x15:dbCommand` into a `DbCommand`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn db_command(element: &Element) -> super::DbCommand {
     let mut node = super::DbCommand::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DB_COMMAND_SHAPE);
@@ -435,7 +435,7 @@ pub fn db_command(element: &Element) -> super::DbCommand {
 }
 
 /// Read `x15:dbTable` into a `DbTable`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn db_table(element: &Element) -> super::DbTable {
     let mut node = super::DbTable::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DB_TABLE_SHAPE);
@@ -449,7 +449,7 @@ pub fn db_table(element: &Element) -> super::DbTable {
 }
 
 /// Read `x15:dbTables` into a `DbTables`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn db_tables(element: &Element) -> super::DbTables {
     let mut node = super::DbTables::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DB_TABLES_SHAPE);
@@ -463,7 +463,7 @@ pub fn db_tables(element: &Element) -> super::DbTables {
 }
 
 /// Read `x15:descriptionPr` into a `DescriptionPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn description_pr(element: &Element) -> super::DescriptionPr {
     let mut node = super::DescriptionPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DESCRIPTION_PR_SHAPE);
@@ -477,7 +477,7 @@ pub fn description_pr(element: &Element) -> super::DescriptionPr {
 }
 
 /// Read `x15:dxfs` into a `Dxfs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn dxfs(element: &Element) -> super::Dxfs {
     let mut node = super::Dxfs::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::DXFS_SHAPE);
@@ -493,7 +493,7 @@ pub fn dxfs(element: &Element) -> super::Dxfs {
 }
 
 /// Read `x15:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -507,7 +507,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `x15:modelRelationship` into a `ModelRelationship`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn model_relationship(element: &Element) -> super::ModelRelationship {
     let mut node = super::ModelRelationship::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MODEL_RELATIONSHIP_SHAPE);
@@ -525,7 +525,7 @@ pub fn model_relationship(element: &Element) -> super::ModelRelationship {
 }
 
 /// Read `x15:modelRelationships` into a `ModelRelationships`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn model_relationships(element: &Element) -> super::ModelRelationships {
     let mut node = super::ModelRelationships::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MODEL_RELATIONSHIPS_SHAPE);
@@ -539,7 +539,7 @@ pub fn model_relationships(element: &Element) -> super::ModelRelationships {
 }
 
 /// Read `x15:modelTable` into a `ModelTable`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn model_table(element: &Element) -> super::ModelTable {
     let mut node = super::ModelTable::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MODEL_TABLE_SHAPE);
@@ -556,7 +556,7 @@ pub fn model_table(element: &Element) -> super::ModelTable {
 }
 
 /// Read `x15:modelTables` into a `ModelTables`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn model_tables(element: &Element) -> super::ModelTables {
     let mut node = super::ModelTables::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MODEL_TABLES_SHAPE);
@@ -570,7 +570,7 @@ pub fn model_tables(element: &Element) -> super::ModelTables {
 }
 
 /// Read `x15:modelTextPr` into a `ModelTextPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn model_text_pr(element: &Element) -> super::ModelTextPr {
     let mut node = super::ModelTextPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MODEL_TEXT_PR_SHAPE);
@@ -584,7 +584,7 @@ pub fn model_text_pr(element: &Element) -> super::ModelTextPr {
 }
 
 /// Read `x15:movingPeriodState` into a `MovingPeriodState`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn moving_period_state(element: &Element) -> super::MovingPeriodState {
     let mut node = super::MovingPeriodState::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MOVING_PERIOD_STATE_SHAPE);
@@ -603,7 +603,7 @@ pub fn moving_period_state(element: &Element) -> super::MovingPeriodState {
 }
 
 /// Read `x15:oledbPr` into a `OledbPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn oledb_pr(element: &Element) -> super::OledbPr {
     let mut node = super::OledbPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::OLEDB_PR_SHAPE);
@@ -619,7 +619,7 @@ pub fn oledb_pr(element: &Element) -> super::OledbPr {
 }
 
 /// Read `x15:pivotCacheDecoupled` into a `PivotCacheDecoupled`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_cache_decoupled(element: &Element) -> super::PivotCacheDecoupled {
     let mut node = super::PivotCacheDecoupled::default();
     let mut reader =
@@ -634,7 +634,7 @@ pub fn pivot_cache_decoupled(element: &Element) -> super::PivotCacheDecoupled {
 }
 
 /// Read `x15:pivotCacheIdVersion` into a `PivotCacheIdVersion`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_cache_id_version(element: &Element) -> super::PivotCacheIdVersion {
     let mut node = super::PivotCacheIdVersion::default();
     let mut reader =
@@ -651,7 +651,7 @@ pub fn pivot_cache_id_version(element: &Element) -> super::PivotCacheIdVersion {
 }
 
 /// Read `x15:pivotCaches` into a `PivotCaches`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_caches(element: &Element) -> super::PivotCaches {
     let mut node = super::PivotCaches::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PIVOT_CACHES_SHAPE);
@@ -665,7 +665,7 @@ pub fn pivot_caches(element: &Element) -> super::PivotCaches {
 }
 
 /// Read `x15:pivotFilter` into a `PivotFilter`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_filter(element: &Element) -> super::PivotFilter {
     let mut node = super::PivotFilter::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PIVOT_FILTER_SHAPE);
@@ -679,7 +679,7 @@ pub fn pivot_filter(element: &Element) -> super::PivotFilter {
 }
 
 /// Read `x15:pivotRow` into a `PivotRow`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_row(element: &Element) -> super::PivotRow {
     let mut node = super::PivotRow::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PIVOT_ROW_SHAPE);
@@ -696,7 +696,7 @@ pub fn pivot_row(element: &Element) -> super::PivotRow {
 }
 
 /// Read `x15:pivotTable` into a `PivotTable`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_table(element: &Element) -> super::PivotTable {
     let mut node = super::PivotTable::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PIVOT_TABLE_SHAPE);
@@ -712,7 +712,7 @@ pub fn pivot_table(element: &Element) -> super::PivotTable {
 }
 
 /// Read `x15:pivotTableData` into a `PivotTableData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_table_data(element: &Element) -> super::PivotTableData {
     let mut node = super::PivotTableData::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PIVOT_TABLE_DATA_SHAPE);
@@ -730,7 +730,7 @@ pub fn pivot_table_data(element: &Element) -> super::PivotTableData {
 }
 
 /// Read `x15:pivotTableReference` into a `PivotTableReference`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_table_reference(element: &Element) -> super::PivotTableReference {
     let mut node = super::PivotTableReference::default();
     let mut reader =
@@ -745,7 +745,7 @@ pub fn pivot_table_reference(element: &Element) -> super::PivotTableReference {
 }
 
 /// Read `x15:pivotTableReferences` into a `PivotTableReferences`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_table_references(element: &Element) -> super::PivotTableReferences {
     let mut node = super::PivotTableReferences::default();
     let mut reader =
@@ -760,7 +760,7 @@ pub fn pivot_table_references(element: &Element) -> super::PivotTableReferences 
 }
 
 /// Read `x15:pivotTableServerFormats` into a `PivotTableServerFormats`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_table_server_formats(element: &Element) -> super::PivotTableServerFormats {
     let mut node = super::PivotTableServerFormats::default();
     let mut reader =
@@ -777,7 +777,7 @@ pub fn pivot_table_server_formats(element: &Element) -> super::PivotTableServerF
 }
 
 /// Read `x15:pivotTableUISettings` into a `PivotTableUISettings`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_table_ui_settings(element: &Element) -> super::PivotTableUISettings {
     let mut node = super::PivotTableUISettings::default();
     let mut reader =
@@ -796,7 +796,7 @@ pub fn pivot_table_ui_settings(element: &Element) -> super::PivotTableUISettings
 }
 
 /// Read `x15:pivotTables` into a `PivotTables`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn pivot_tables(element: &Element) -> super::PivotTables {
     let mut node = super::PivotTables::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PIVOT_TABLES_SHAPE);
@@ -810,7 +810,7 @@ pub fn pivot_tables(element: &Element) -> super::PivotTables {
 }
 
 /// Read `x15:queryTable` into a `QueryTable`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn query_table(element: &Element) -> super::QueryTable {
     let mut node = super::QueryTable::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::QUERY_TABLE_SHAPE);
@@ -827,7 +827,7 @@ pub fn query_table(element: &Element) -> super::QueryTable {
 }
 
 /// Read `x15:question` into a `Question`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn question(element: &Element) -> super::Question {
     let mut node = super::Question::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::QUESTION_SHAPE);
@@ -852,7 +852,7 @@ pub fn question(element: &Element) -> super::Question {
 }
 
 /// Read `x15:questionPr` into a `QuestionPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn question_pr(element: &Element) -> super::QuestionPr {
     let mut node = super::QuestionPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::QUESTION_PR_SHAPE);
@@ -866,7 +866,7 @@ pub fn question_pr(element: &Element) -> super::QuestionPr {
 }
 
 /// Read `x15:questions` into a `Questions`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn questions(element: &Element) -> super::Questions {
     let mut node = super::Questions::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::QUESTIONS_SHAPE);
@@ -882,7 +882,7 @@ pub fn questions(element: &Element) -> super::Questions {
 }
 
 /// Read `x15:questionsPr` into a `QuestionsPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn questions_pr(element: &Element) -> super::QuestionsPr {
     let mut node = super::QuestionsPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::QUESTIONS_PR_SHAPE);
@@ -896,7 +896,7 @@ pub fn questions_pr(element: &Element) -> super::QuestionsPr {
 }
 
 /// Read `x15:rangePr` into a `RangePr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn range_pr(element: &Element) -> super::RangePr {
     let mut node = super::RangePr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::RANGE_PR_SHAPE);
@@ -910,7 +910,7 @@ pub fn range_pr(element: &Element) -> super::RangePr {
 }
 
 /// Read `x15:selection` into a `Selection`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn selection(element: &Element) -> super::Selection {
     let reader = officekit_markup_base::Reader::new(element, &super::SELECTION_SHAPE);
     super::Selection {
@@ -920,7 +920,7 @@ pub fn selection(element: &Element) -> super::Selection {
 }
 
 /// Read `x15:serverFormat` into a `ServerFormat`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn server_format(element: &Element) -> super::ServerFormat {
     let mut node = super::ServerFormat::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SERVER_FORMAT_SHAPE);
@@ -936,7 +936,7 @@ pub fn server_format(element: &Element) -> super::ServerFormat {
 }
 
 /// Read `x15:slicerCacheHideItemsWithNoData` into a `SlicerCacheHideItemsWithNoData`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slicer_cache_hide_items_with_no_data(
     element: &Element,
 ) -> super::SlicerCacheHideItemsWithNoData {
@@ -957,7 +957,7 @@ pub fn slicer_cache_hide_items_with_no_data(
 }
 
 /// Read `x15:slicerCacheOlapLevelName` into a `SlicerCacheOlapLevelName`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slicer_cache_olap_level_name(element: &Element) -> super::SlicerCacheOlapLevelName {
     let mut node = super::SlicerCacheOlapLevelName::default();
     let mut reader =
@@ -974,7 +974,7 @@ pub fn slicer_cache_olap_level_name(element: &Element) -> super::SlicerCacheOlap
 }
 
 /// Read `x15:slicerCachePivotTables` into a `SlicerCachePivotTables`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slicer_cache_pivot_tables(element: &Element) -> super::SlicerCachePivotTables {
     let mut node = super::SlicerCachePivotTables::default();
     let mut reader =
@@ -989,7 +989,7 @@ pub fn slicer_cache_pivot_tables(element: &Element) -> super::SlicerCachePivotTa
 }
 
 /// Read `x15:slicerCaches` into a `SlicerCaches`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn slicer_caches(element: &Element) -> super::SlicerCaches {
     let mut node = super::SlicerCaches::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SLICER_CACHES_SHAPE);
@@ -1003,7 +1003,7 @@ pub fn slicer_caches(element: &Element) -> super::SlicerCaches {
 }
 
 /// Read `x15:state` into a `State`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn state(element: &Element) -> super::State {
     let mut node = super::State::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::STATE_SHAPE);
@@ -1029,7 +1029,7 @@ pub fn state(element: &Element) -> super::State {
 }
 
 /// Read `x15:survey` into a `Survey`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn survey(element: &Element) -> super::Survey {
     let mut node = super::Survey::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SURVEY_SHAPE);
@@ -1052,7 +1052,7 @@ pub fn survey(element: &Element) -> super::Survey {
 }
 
 /// Read `x15:surveyPr` into a `SurveyPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn survey_pr(element: &Element) -> super::SurveyPr {
     let mut node = super::SurveyPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SURVEY_PR_SHAPE);
@@ -1066,7 +1066,7 @@ pub fn survey_pr(element: &Element) -> super::SurveyPr {
 }
 
 /// Read `x15:tableSlicerCache` into a `TableSlicerCache`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn table_slicer_cache(element: &Element) -> super::TableSlicerCache {
     let mut node = super::TableSlicerCache::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TABLE_SLICER_CACHE_SHAPE);
@@ -1086,7 +1086,7 @@ pub fn table_slicer_cache(element: &Element) -> super::TableSlicerCache {
 }
 
 /// Read `x15:textPr` into a `TextPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text_pr(element: &Element) -> super::TextPr {
     let mut node = super::TextPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TEXT_PR_SHAPE);
@@ -1117,7 +1117,7 @@ pub fn text_pr(element: &Element) -> super::TextPr {
 }
 
 /// Read `x15:timeline` into a `Timeline`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn timeline(element: &Element) -> super::Timeline {
     let mut node = super::Timeline::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TIMELINE_SHAPE);
@@ -1143,7 +1143,7 @@ pub fn timeline(element: &Element) -> super::Timeline {
 }
 
 /// Read `x15:timelineCacheDefinition` into a `TimelineCacheDefinition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn timeline_cache_definition(element: &Element) -> super::TimelineCacheDefinition {
     let mut node = super::TimelineCacheDefinition::default();
     let mut reader =
@@ -1163,7 +1163,7 @@ pub fn timeline_cache_definition(element: &Element) -> super::TimelineCacheDefin
 }
 
 /// Read `x15:timelineCachePivotCaches` into a `TimelineCachePivotCaches`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn timeline_cache_pivot_caches(element: &Element) -> super::TimelineCachePivotCaches {
     let mut node = super::TimelineCachePivotCaches::default();
     let mut reader =
@@ -1178,7 +1178,7 @@ pub fn timeline_cache_pivot_caches(element: &Element) -> super::TimelineCachePiv
 }
 
 /// Read `x15:timelineCacheRef` into a `TimelineCacheRef`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn timeline_cache_ref(element: &Element) -> super::TimelineCacheRef {
     let mut node = super::TimelineCacheRef::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TIMELINE_CACHE_REF_SHAPE);
@@ -1192,7 +1192,7 @@ pub fn timeline_cache_ref(element: &Element) -> super::TimelineCacheRef {
 }
 
 /// Read `x15:timelineCacheRefs` into a `TimelineCacheRefs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn timeline_cache_refs(element: &Element) -> super::TimelineCacheRefs {
     let mut node = super::TimelineCacheRefs::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TIMELINE_CACHE_REFS_SHAPE);
@@ -1206,7 +1206,7 @@ pub fn timeline_cache_refs(element: &Element) -> super::TimelineCacheRefs {
 }
 
 /// Read `x15:timelinePivotCacheDefinition` into a `TimelinePivotCacheDefinition`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn timeline_pivot_cache_definition(element: &Element) -> super::TimelinePivotCacheDefinition {
     let mut node = super::TimelinePivotCacheDefinition::default();
     let mut reader =
@@ -1221,7 +1221,7 @@ pub fn timeline_pivot_cache_definition(element: &Element) -> super::TimelinePivo
 }
 
 /// Read `x15:timelineRef` into a `TimelineRef`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn timeline_ref(element: &Element) -> super::TimelineRef {
     let mut node = super::TimelineRef::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TIMELINE_REF_SHAPE);
@@ -1235,7 +1235,7 @@ pub fn timeline_ref(element: &Element) -> super::TimelineRef {
 }
 
 /// Read `x15:timelineRefs` into a `TimelineRefs`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn timeline_refs(element: &Element) -> super::TimelineRefs {
     let mut node = super::TimelineRefs::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TIMELINE_REFS_SHAPE);
@@ -1249,7 +1249,7 @@ pub fn timeline_refs(element: &Element) -> super::TimelineRefs {
 }
 
 /// Read `x15:timelineStyle` into a `TimelineStyle`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn timeline_style(element: &Element) -> super::TimelineStyle {
     let mut node = super::TimelineStyle::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TIMELINE_STYLE_SHAPE);
@@ -1265,7 +1265,7 @@ pub fn timeline_style(element: &Element) -> super::TimelineStyle {
 }
 
 /// Read `x15:timelineStyleElement` into a `TimelineStyleElement`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn timeline_style_element(element: &Element) -> super::TimelineStyleElement {
     let mut node = super::TimelineStyleElement::default();
     let mut reader =
@@ -1282,7 +1282,7 @@ pub fn timeline_style_element(element: &Element) -> super::TimelineStyleElement 
 }
 
 /// Read `x15:timelineStyleElements` into a `TimelineStyleElements`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn timeline_style_elements(element: &Element) -> super::TimelineStyleElements {
     let mut node = super::TimelineStyleElements::default();
     let mut reader =
@@ -1297,7 +1297,7 @@ pub fn timeline_style_elements(element: &Element) -> super::TimelineStyleElement
 }
 
 /// Read `x15:timelineStyles` into a `TimelineStyles`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn timeline_styles(element: &Element) -> super::TimelineStyles {
     let mut node = super::TimelineStyles::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TIMELINE_STYLES_SHAPE);
@@ -1313,7 +1313,7 @@ pub fn timeline_styles(element: &Element) -> super::TimelineStyles {
 }
 
 /// Read `x15:timelines` into a `Timelines`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn timelines(element: &Element) -> super::Timelines {
     let mut node = super::Timelines::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TIMELINES_SHAPE);
@@ -1327,7 +1327,7 @@ pub fn timelines(element: &Element) -> super::Timelines {
 }
 
 /// Read `x15:titlePr` into a `TitlePr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn title_pr(element: &Element) -> super::TitlePr {
     let mut node = super::TitlePr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TITLE_PR_SHAPE);
@@ -1341,7 +1341,7 @@ pub fn title_pr(element: &Element) -> super::TitlePr {
 }
 
 /// Read `x15:v` into a `V`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn v(element: &Element) -> super::V {
     let mut node = super::V::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::V_SHAPE);
@@ -1355,7 +1355,7 @@ pub fn v(element: &Element) -> super::V {
 }
 
 /// Read `x15:webExtension` into a `WebExtension`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn web_extension(element: &Element) -> super::WebExtension {
     let mut node = super::WebExtension::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WEB_EXTENSION_SHAPE);
@@ -1371,7 +1371,7 @@ pub fn web_extension(element: &Element) -> super::WebExtension {
 }
 
 /// Read `x15:webExtensions` into a `WebExtensions`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn web_extensions(element: &Element) -> super::WebExtensions {
     let mut node = super::WebExtensions::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WEB_EXTENSIONS_SHAPE);
@@ -1385,7 +1385,7 @@ pub fn web_extensions(element: &Element) -> super::WebExtensions {
 }
 
 /// Read `x15:workbookPr` into a `WorkbookPr`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn workbook_pr(element: &Element) -> super::WorkbookPr {
     let mut node = super::WorkbookPr::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::WORKBOOK_PR_SHAPE);
@@ -1399,7 +1399,7 @@ pub fn workbook_pr(element: &Element) -> super::WorkbookPr {
 }
 
 /// Read `x15:x` into a `X`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn x(element: &Element) -> super::X {
     let mut node = super::X::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::X_SHAPE);

@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `RefreshInterval` as its element, `xlrvr:refreshInterval`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn refresh_interval(node: &super::RefreshInterval, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::REFRESH_INTERVAL_SHAPE, &node.unknown);
@@ -231,7 +231,7 @@ pub fn refresh_interval(node: &super::RefreshInterval, scope: &mut Scope) -> Ele
 }
 
 /// Write a `RefreshIntervals` as its element, `xlrvr:refreshIntervals`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn refresh_intervals(node: &super::RefreshIntervals, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::REFRESH_INTERVALS_SHAPE, &node.unknown);

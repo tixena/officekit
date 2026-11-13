@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xcalcf:calcFeatures` into a `CalcFeatures`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn calc_features(element: &Element) -> super::CalcFeatures {
     let mut node = super::CalcFeatures::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::CALC_FEATURES_SHAPE);
@@ -233,7 +233,7 @@ pub fn calc_features(element: &Element) -> super::CalcFeatures {
 }
 
 /// Read `xcalcf:feature` into a `Feature`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn feature(element: &Element) -> super::Feature {
     let mut node = super::Feature::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::FEATURE_SHAPE);

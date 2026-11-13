@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `CompatSp` as its element, `com14:compatSp`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn compat_sp(node: &super::CompatSp, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::COMPAT_SP_SHAPE, &node.unknown);

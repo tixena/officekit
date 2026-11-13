@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `ask:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -233,7 +233,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `ask:lineSketchCurved` into a `LineSketchCurved`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line_sketch_curved(element: &Element) -> super::LineSketchCurved {
     let reader = officekit_markup_base::Reader::new(element, &super::LINE_SKETCH_CURVED_SHAPE);
     super::LineSketchCurved {
@@ -243,7 +243,7 @@ pub fn line_sketch_curved(element: &Element) -> super::LineSketchCurved {
 }
 
 /// Read `ask:lineSketchFreehand` into a `LineSketchFreehand`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line_sketch_freehand(element: &Element) -> super::LineSketchFreehand {
     let reader = officekit_markup_base::Reader::new(element, &super::LINE_SKETCH_FREEHAND_SHAPE);
     super::LineSketchFreehand {
@@ -253,7 +253,7 @@ pub fn line_sketch_freehand(element: &Element) -> super::LineSketchFreehand {
 }
 
 /// Read `ask:lineSketchNone` into a `LineSketchNone`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line_sketch_none(element: &Element) -> super::LineSketchNone {
     let reader = officekit_markup_base::Reader::new(element, &super::LINE_SKETCH_NONE_SHAPE);
     super::LineSketchNone {
@@ -263,7 +263,7 @@ pub fn line_sketch_none(element: &Element) -> super::LineSketchNone {
 }
 
 /// Read `ask:lineSketchScribble` into a `LineSketchScribble`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line_sketch_scribble(element: &Element) -> super::LineSketchScribble {
     let reader = officekit_markup_base::Reader::new(element, &super::LINE_SKETCH_SCRIBBLE_SHAPE);
     super::LineSketchScribble {
@@ -273,7 +273,7 @@ pub fn line_sketch_scribble(element: &Element) -> super::LineSketchScribble {
 }
 
 /// Read `ask:lineSketchStyleProps` into a `LineSketchStyleProps`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn line_sketch_style_props(element: &Element) -> super::LineSketchStyleProps {
     let mut node = super::LineSketchStyleProps::default();
     let mut reader =
@@ -294,13 +294,13 @@ pub fn line_sketch_style_props(element: &Element) -> super::LineSketchStyleProps
 
 /// Read one item of `LineSketchTypePropertiesContent` from its element: the arm of its tag, or
 /// `Other`.
-#[must_use]
+#[must_use = "the item read is returned; nothing else keeps it"]
 pub fn line_sketch_type_properties(element: &Element) -> super::LineSketchTypePropertiesContent {
     officekit_markup_base::read(element)
 }
 
 /// Read `ask:seed` into a `Seed`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn seed(element: &Element) -> super::Seed {
     let mut node = super::Seed::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::SEED_SHAPE);
@@ -314,7 +314,7 @@ pub fn seed(element: &Element) -> super::Seed {
 }
 
 /// Read `ask:type` into a `Type`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn r#type(element: &Element) -> super::Type {
     let mut node = super::Type::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TYPE_SHAPE);

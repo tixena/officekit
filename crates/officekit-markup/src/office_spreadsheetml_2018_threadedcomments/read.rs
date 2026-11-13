@@ -219,7 +219,7 @@
 use officekit_xml::element::Element;
 
 /// Read `xltc:extLst` into a `ExtLst`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
@@ -233,7 +233,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 }
 
 /// Read `xltc:mention` into a `Mention`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn mention(element: &Element) -> super::Mention {
     let mut node = super::Mention::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MENTION_SHAPE);
@@ -251,7 +251,7 @@ pub fn mention(element: &Element) -> super::Mention {
 }
 
 /// Read `xltc:mentions` into a `Mentions`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn mentions(element: &Element) -> super::Mentions {
     let mut node = super::Mentions::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::MENTIONS_SHAPE);
@@ -265,7 +265,7 @@ pub fn mentions(element: &Element) -> super::Mentions {
 }
 
 /// Read `xltc:person` into a `Person`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn person(element: &Element) -> super::Person {
     let mut node = super::Person::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PERSON_SHAPE);
@@ -284,7 +284,7 @@ pub fn person(element: &Element) -> super::Person {
 }
 
 /// Read `xltc:personList` into a `PersonList`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn person_list(element: &Element) -> super::PersonList {
     let mut node = super::PersonList::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::PERSON_LIST_SHAPE);
@@ -300,7 +300,7 @@ pub fn person_list(element: &Element) -> super::PersonList {
 }
 
 /// Read `xltc:text` into a `Text`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn text(element: &Element) -> super::Text {
     let mut node = super::Text::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::TEXT_SHAPE);
@@ -314,7 +314,7 @@ pub fn text(element: &Element) -> super::Text {
 }
 
 /// Read `xltc:threadedComment` into a `ThreadedComment`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn threaded_comment(element: &Element) -> super::ThreadedComment {
     let mut node = super::ThreadedComment::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::THREADED_COMMENT_SHAPE);
@@ -337,7 +337,7 @@ pub fn threaded_comment(element: &Element) -> super::ThreadedComment {
 }
 
 /// Read `xltc:ThreadedComments` into a `ThreadedComments`.
-#[must_use]
+#[must_use = "the node read is returned; nothing else keeps it"]
 pub fn threaded_comments(element: &Element) -> super::ThreadedComments {
     let mut node = super::ThreadedComments::default();
     let mut reader = officekit_markup_base::Reader::new(element, &super::THREADED_COMMENTS_SHAPE);

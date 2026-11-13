@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `SetOfAdditionalCharacteristics` as its element, `ac:additionalCharacteristics`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn set_of_additional_characteristics(
     node: &super::SetOfAdditionalCharacteristics,
     scope: &mut Scope,
@@ -235,7 +235,7 @@ pub fn set_of_additional_characteristics(
 }
 
 /// Write a `SingleCharacteristic` as its element, `ac:characteristic`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn single_characteristic(node: &super::SingleCharacteristic, scope: &mut Scope) -> Element {
     let mut writer = crate::Writer::new(scope, &super::SINGLE_CHARACTERISTIC_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);

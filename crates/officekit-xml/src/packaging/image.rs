@@ -74,7 +74,7 @@ pub enum ImageError {
 impl ImageFormat {
     /// The extension a part name of this format takes: the format's name in lower case, `wdp` for
     /// JPEG XR, the subtype for `Other`.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn extension(&self) -> &str {
         match self {
             Self::Bmp => "bmp",
@@ -93,7 +93,7 @@ impl ImageFormat {
     }
 
     /// The format a content type names; `None` when it does not start with `image/`.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn from_content_type(content_type: &str) -> Option<Self> {
         let subtype = content_type.strip_prefix("image/")?;
         Some(match subtype {
@@ -113,13 +113,13 @@ impl ImageFormat {
 
 impl Image {
     /// The image's bytes.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn bytes(&self) -> &[u8] {
         &self.bytes
     }
 
     /// The image's content type.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn content_type(&self) -> &str {
         match &self.format {
             ImageFormat::Bmp => "image/bmp",
@@ -136,7 +136,7 @@ impl Image {
     }
 
     /// The image's format.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub const fn format(&self) -> &ImageFormat {
         &self.format
     }
@@ -162,7 +162,7 @@ impl Image {
 
     /// The size the header gives; `None` for EMF, WMF, JPEG XR, SVG, and a header that cannot be
     /// read.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn pixel_size(&self) -> Option<PixelSize> {
         if !matches!(
             self.format,
@@ -182,7 +182,7 @@ impl Image {
     }
 
     /// Bytes in a format the caller states, for the formats a header does not name.
-    #[must_use]
+    #[must_use = "this only builds the value"]
     pub const fn with_format(format: ImageFormat, bytes: Vec<u8>) -> Self {
         Self { bytes, format }
     }

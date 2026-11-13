@@ -6,6 +6,7 @@
 
 use alloc::collections::BTreeMap;
 use core::fmt::Write as _;
+use core::mem;
 use core::slice;
 
 use anyhow::{Context as _, Result, bail};
@@ -208,19 +209,19 @@ impl Atom {
 
 impl Simple {
     /// Whether the newtype has a member enum: an enumeration or a union.
-    #[must_use]
+    #[must_use = "this only answers the question"]
     pub const fn has_member(&self) -> bool {
         matches!(self.kind, Kind::Enumeration(_) | Kind::Union(_))
     }
 
     /// The namespace of the simple type.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn namespace(&self) -> &str {
         &self.uri
     }
 
     /// The simple types its value reads through.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn references(&self) -> Vec<Key> {
         match &self.kind {
             Kind::List(Some(item)) => vec![item.clone()],
@@ -238,7 +239,7 @@ impl Simple {
     }
 
     /// The schema name a `ValueError` carries, `ST_Jc`.
-    #[must_use]
+    #[must_use = "this only returns the value"]
     pub fn xsd_name(&self) -> &str {
         match &self.key {
             Key::Data(name) => name
@@ -1027,8 +1028,8 @@ fn member_impls(runtime: &str, simple: &Simple, members: &[Member], uses: &mut U
     );
     let _ = write!(
         out,
-        "\n    /// The text the member stands for.\n    #[must_use]\n    pub fn as_str(self) -> &'static str {{\n        {runtime}::member_text(Self::MEMBERS, self)\n    }}\n\
-         \n    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for\n    /// ECMA-376's own.\n    #[must_use]\n    pub fn introduced(self) -> Option<OfficeVersion> {{\n        {runtime}::member_version(Self::MEMBERS, self)\n    }}\n}}\n",
+        "\n    /// The text the member stands for.\n    #[must_use = \"this only returns the text of the member\"]\n    pub fn as_str(self) -> &'static str {{\n        {runtime}::member_text(Self::MEMBERS, self)\n    }}\n\
+         \n    /// The Office version that brought the member, from the data of the Open XML SDK, version 3.5.1; `None` for\n    /// ECMA-376's own.\n    #[must_use = \"this only returns the Office version of the member\"]\n    pub fn introduced(self) -> Option<OfficeVersion> {{\n        {runtime}::member_version(Self::MEMBERS, self)\n    }}\n}}\n",
     );
     out
 }
@@ -1300,8 +1301,7 @@ fn union_value(
         trial_text(member_name, trial, "Some", &mut text);
         if !chunk.is_empty() && chunk.lines().count() + text.lines().count() >= BODY_LINES {
             chunk.push_str("        None\n");
-            chunks.push(chunk);
-            chunk = String::new();
+            chunks.push(mem::take(&mut chunk));
         }
         chunk.push_str(&text);
     }

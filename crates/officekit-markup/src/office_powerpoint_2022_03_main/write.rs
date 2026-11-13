@@ -220,7 +220,7 @@ use officekit_xml::element::Element;
 use officekit_xml::write::Scope;
 
 /// Write a `ExtLst` as its element, `p223:extLst`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
@@ -229,7 +229,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Instance` as its element, `p223:instance`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn instance(node: &super::Instance, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::INSTANCE_SHAPE, &node.unknown);
@@ -240,7 +240,7 @@ pub fn instance(node: &super::Instance, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Reactions` as its element, `p223:reactions`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn reactions(node: &super::Reactions, scope: &mut Scope) -> Element {
     let mut writer =
         officekit_markup_base::Writer::new(scope, &super::REACTIONS_SHAPE, &node.unknown);
@@ -249,7 +249,7 @@ pub fn reactions(node: &super::Reactions, scope: &mut Scope) -> Element {
 }
 
 /// Write a `Rxn` as its element, `p223:rxn`.
-#[must_use]
+#[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rxn(node: &super::Rxn, scope: &mut Scope) -> Element {
     let mut writer = officekit_markup_base::Writer::new(scope, &super::RXN_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#type);
