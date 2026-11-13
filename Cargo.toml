@@ -101,12 +101,14 @@ codegen-units = 1
 panic = "abort"
 
 # The three markup crates keep file and line numbers only: their full debug info
-# takes memory past the gate's cap.
+# takes memory past the gate's cap. officekit-markup-core also compiles without
+# incremental state: with it, its compile passes the cap.
 [profile.dev.package.officekit-markup-base]
 debug = "line-tables-only"
 
 [profile.dev.package.officekit-markup-core]
 debug = "line-tables-only"
+incremental = false
 
 [profile.dev.package.officekit-markup]
 debug = "line-tables-only"
