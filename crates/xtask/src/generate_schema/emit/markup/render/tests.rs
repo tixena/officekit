@@ -5,7 +5,7 @@ use super::super::structs::{
     Attribute, Body, Catalog, Child, EnumDef, EnumKind, Module, Node, Occurs, Target, Value,
 };
 use super::super::{Crate, NodeKey, Source};
-use super::{enum_into_extra, functions, into_extra_text, without_children_text};
+use super::{enum_into_user_data, functions, into_user_data_text, without_children_text};
 use crate::generate_schema::model::Name;
 
 /// A struct with the attributes `val` and `alignment`, in schema order.
@@ -41,7 +41,7 @@ fn without_children_copies_the_attributes_and_leaves_each_declared_child_at_its_
     }]));
     assert_eq!(
         without_children_text(&sample),
-        "\nimpl<X: NodeExtra> SampleWith<X> {\n    \
+        "\nimpl<X: UserData> SampleWith<X> {\n    \
          /// This node's attributes, copied, with no declared child and no unknown content.\n    \
          #[must_use = \"this returns a copy; the node is unchanged\"]\n    \
          pub fn without_children(&self) -> Self {\n        \
@@ -58,7 +58,7 @@ fn without_children_copies_the_attributes_and_leaves_each_declared_child_at_its_
 fn without_children_copies_a_text_value_beside_the_attributes() {
     assert_eq!(
         without_children_text(&node(Body::Text(Value::Text))),
-        "\nimpl<X: NodeExtra> SampleWith<X> {\n    \
+        "\nimpl<X: UserData> SampleWith<X> {\n    \
          /// This node's attributes and value, copied, with no unknown content.\n    \
          #[must_use = \"this returns a copy; the node is unchanged\"]\n    \
          pub fn without_children(&self) -> Self {\n        \
@@ -74,7 +74,7 @@ fn without_children_copies_a_text_value_beside_the_attributes() {
 
 /// `Sample`, with an attribute and a child of each occurrence, and `Props`, beside the enum
 /// `SampleContent` with an arm of each.
-fn into_extra_catalog() -> Catalog {
+fn into_user_data_catalog() -> Catalog {
     let mut sample = node(Body::Children(vec![
         Child {
             field: "content".to_owned(),
@@ -120,38 +120,38 @@ fn into_extra_catalog() -> Catalog {
 }
 
 #[test]
-fn into_extra_moves_the_fields_and_converts_each_child_by_its_occurrence() {
-    let catalog = into_extra_catalog();
+fn into_user_data_moves_the_fields_and_converts_each_child_by_its_occurrence() {
+    let catalog = into_user_data_catalog();
     let names = functions(&catalog, 0).unwrap();
     let cycles = Cycles::new(&catalog);
     let mut helpers = String::new();
-    let text = into_extra_text(&names, &cycles, 0, &catalog.nodes[0], &mut helpers);
+    let text = into_user_data_text(&names, &cycles, 0, &catalog.nodes[0], &mut helpers);
     assert_eq!(helpers, "");
     assert_eq!(
         text,
         "\n    \
-         /// This node and every node under it with each `extra` at `Y`'s default; every other field\n    \
+         /// This node and every node under it with each `user_data` at `Y`'s default; every other field\n    \
          /// moves as it is.\n    \
          #[must_use = \"the tree moves into the one returned; dropping it drops the tree\"]\n    \
-         pub fn into_extra<Y>(mut self) -> SampleWith<Y>\n    \
+         pub fn into_user_data<Y>(mut self) -> SampleWith<Y>\n    \
          where\n        \
-         Y: NodeExtra,\n    \
+         Y: UserData,\n    \
          {\n        \
          SampleWith {\n            \
-         content: officekit_markup_base::into_extra_list(\n                \
+         content: officekit_markup_base::into_user_data_list(\n                \
          self.content,\n                \
-         SampleContentWith::into_extra,\n            \
+         SampleContentWith::into_user_data,\n            \
          ),\n            \
-         extra: Default::default(),\n            \
-         properties: officekit_markup_base::into_extra_optional(\n                \
+         properties: officekit_markup_base::into_user_data_optional(\n                \
          &mut self.properties,\n                \
-         PropsWith::into_extra,\n            \
+         PropsWith::into_user_data,\n            \
          ),\n            \
-         required: officekit_markup_base::into_extra_required(\n                \
+         required: officekit_markup_base::into_user_data_required(\n                \
          *self.required,\n                \
-         PropsWith::into_extra,\n            \
+         PropsWith::into_user_data,\n            \
          ),\n            \
          unknown: self.unknown,\n            \
+         user_data: Default::default(),\n            \
          val: self.val,\n        \
          }\n    \
          }\n"
@@ -159,30 +159,30 @@ fn into_extra_moves_the_fields_and_converts_each_child_by_its_occurrence() {
 }
 
 #[test]
-fn into_extra_of_an_enum_converts_each_arm_and_moves_other() {
-    let catalog = into_extra_catalog();
+fn into_user_data_of_an_enum_converts_each_arm_and_moves_other() {
+    let catalog = into_user_data_catalog();
     let names = functions(&catalog, 0).unwrap();
     assert_eq!(
-        enum_into_extra(&catalog.enums[0], names.runtime()),
-        "\nimpl<X: NodeExtra> SampleContentWith<X> {\n    \
-         /// This item and every node under it with each `extra` at `Y`'s default.\n    \
+        enum_into_user_data(&catalog.enums[0], names.runtime()),
+        "\nimpl<X: UserData> SampleContentWith<X> {\n    \
+         /// This item and every node under it with each `user_data` at `Y`'s default.\n    \
          #[must_use = \"the tree moves into the one returned; dropping it drops the tree\"]\n    \
-         pub fn into_extra<Y>(self) -> SampleContentWith<Y>\n    \
+         pub fn into_user_data<Y>(self) -> SampleContentWith<Y>\n    \
          where\n        \
-         Y: NodeExtra,\n    \
+         Y: UserData,\n    \
          {\n        \
          match self {\n            \
          Self::Other(node) => SampleContentWith::Other(node),\n            \
-         Self::Props(node) => SampleContentWith::Props(node.into_extra()),\n            \
-         Self::Sample(node) => SampleContentWith::Sample(Box::new((*node).into_extra())),\n        \
+         Self::Props(node) => SampleContentWith::Props(node.into_user_data()),\n            \
+         Self::Sample(node) => SampleContentWith::Sample(Box::new((*node).into_user_data())),\n        \
          }\n    \
          }\n}\n"
     );
 }
 
 #[test]
-fn into_extra_of_a_struct_past_the_body_lines_moves_its_fields_in_helpers() {
-    let mut catalog = into_extra_catalog();
+fn into_user_data_of_a_struct_past_the_body_lines_moves_its_fields_in_helpers() {
+    let mut catalog = into_user_data_catalog();
     catalog.nodes[0].attributes = (0_u32..100)
         .map(|number| Attribute {
             field: format!("field_{number:03}"),
@@ -194,31 +194,31 @@ fn into_extra_of_a_struct_past_the_body_lines_moves_its_fields_in_helpers() {
     let names = functions(&catalog, 0).unwrap();
     let cycles = Cycles::new(&catalog);
     let mut helpers = String::new();
-    let text = into_extra_text(&names, &cycles, 0, &catalog.nodes[0], &mut helpers);
-    assert!(text.contains("pub fn into_extra<Y>(mut self) -> SampleWith<Y>"));
+    let text = into_user_data_text(&names, &cycles, 0, &catalog.nodes[0], &mut helpers);
+    assert!(text.contains("pub fn into_user_data<Y>(mut self) -> SampleWith<Y>"));
     assert!(text.contains("let mut node = SampleWith::<Y>::default();"));
-    assert!(text.contains("into_extra_sample_1(&mut self, &mut node);"));
-    assert!(text.contains("into_extra_sample_2(&mut self, &mut node);"));
+    assert!(text.contains("into_user_data_sample_1(&mut self, &mut node);"));
+    assert!(text.contains("into_user_data_sample_2(&mut self, &mut node);"));
     assert!(helpers.contains(
-        "fn into_extra_sample_1<X, Y>(from: &mut SampleWith<X>, node: &mut SampleWith<Y>)\nwhere\n    X: NodeExtra,"
+        "fn into_user_data_sample_1<X, Y>(from: &mut SampleWith<X>, node: &mut SampleWith<Y>)\nwhere\n    X: UserData,"
     ));
     assert!(helpers.contains("    node.field_000 = mem::take(&mut from.field_000);\n"));
     assert!(helpers.contains(
-        "    node.properties =\n        officekit_markup_base::into_extra_optional(&mut from.properties, PropsWith::into_extra);\n"
+        "    node.properties = officekit_markup_base::into_user_data_optional(\n        &mut from.properties,\n        PropsWith::into_user_data,\n    );\n"
     ));
-    assert!(!helpers.contains("from.extra"));
+    assert!(!helpers.contains("from.user_data"));
 }
 
 #[test]
-fn into_extra_of_an_enum_past_the_body_lines_is_the_runtimes_match() {
-    let mut catalog = into_extra_catalog();
+fn into_user_data_of_an_enum_past_the_body_lines_is_the_runtimes_match() {
+    let mut catalog = into_user_data_catalog();
     let mut arms = Vec::new();
     for number in 0_u32..120 {
         arms.push((format!("Arm{number:03}"), 1));
     }
     catalog.enums[0].arms = arms;
     catalog.enums[0].boxed = BTreeSet::from([0]);
-    let text = enum_into_extra(&catalog.enums[0], "officekit_markup_base");
-    assert!(text.contains("officekit_markup_base::into_extra_match!(self, SampleContentWith;\n            plain [\n                Arm000, Arm001,"));
+    let text = enum_into_user_data(&catalog.enums[0], "officekit_markup_base");
+    assert!(text.contains("officekit_markup_base::into_user_data_match!(self, SampleContentWith;\n            plain [\n                Arm000, Arm001,"));
     assert!(text.contains("            ]\n            boxed [\n            ]\n        )\n"));
 }

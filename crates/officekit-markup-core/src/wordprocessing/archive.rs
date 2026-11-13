@@ -227,10 +227,10 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct AbsolutePositionTabCharacterMirror {
     pub alignment: Option<super::AbsolutePositionTabAlignment>,
-    pub extra: (),
     pub leader: Option<super::AbsolutePositionTabLeaderCharacter>,
     pub relative_to: Option<super::AbsolutePositionTabPositioningBase>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -238,7 +238,6 @@ pub struct AbsolutePositionTabCharacterMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AbstractNumberingDefinitionMirror {
     pub abstract_num_id: Option<super::DecimalNumberValue>,
-    pub extra: (),
     pub identifier: Option<Box<super::AbstractNumberingDefinitionIdentifier>>,
     pub numbering_level_override_definition: Vec<super::NumberingLevelOverrideDefinition>,
     pub numbering_style_definition: Option<Box<super::NumberingStyleDefinition>>,
@@ -247,14 +246,15 @@ pub struct AbstractNumberingDefinitionMirror {
     pub primary_style_name: Option<Box<super::PrimaryStyleName>>,
     pub r#type: Option<Box<super::AbstractNumberingDefinitionType>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::AbstractNumberingDefinitionIdentifier)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AbstractNumberingDefinitionIdentifierMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::EightDigitHexadecimalValue>,
 }
 
@@ -262,8 +262,8 @@ pub struct AbstractNumberingDefinitionIdentifierMirror {
 #[rkyv(remote = super::AbstractNumberingDefinitionReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AbstractNumberingDefinitionReferenceMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -271,8 +271,8 @@ pub struct AbstractNumberingDefinitionReferenceMirror {
 #[rkyv(remote = super::AbstractNumberingDefinitionType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AbstractNumberingDefinitionTypeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::NumberingDefinitionType>,
 }
 
@@ -280,8 +280,8 @@ pub struct AbstractNumberingDefinitionTypeMirror {
 #[rkyv(remote = super::AddDocumentGridLinePitch)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AddDocumentGridLinePitchMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -289,8 +289,8 @@ pub struct AddDocumentGridLinePitchMirror {
 #[rkyv(remote = super::AddSpaceBelowUnderlinedText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AddSpaceBelowUnderlinedTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -298,8 +298,8 @@ pub struct AddSpaceBelowUnderlinedTextMirror {
 #[rkyv(remote = super::AdjustSpacingEastAsianTextNumbers)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AdjustSpacingEastAsianTextNumbersMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -307,8 +307,8 @@ pub struct AdjustSpacingEastAsianTextNumbersMirror {
 #[rkyv(remote = super::AdjustSpacingLatinEastAsianText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AdjustSpacingLatinEastAsianTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -316,8 +316,8 @@ pub struct AdjustSpacingLatinEastAsianTextMirror {
 #[rkyv(remote = super::AlignParagraphAndTableBorders)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlignParagraphAndTableBordersMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -325,8 +325,8 @@ pub struct AlignParagraphAndTableBordersMirror {
 #[rkyv(remote = super::AlignTableRowsIndependently)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlignTableRowsIndependentlyMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -334,8 +334,8 @@ pub struct AlignTableRowsIndependentlyMirror {
 #[rkyv(remote = super::AllowAutomaticFormattingOverride)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowAutomaticFormattingOverrideMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -343,8 +343,8 @@ pub struct AllowAutomaticFormattingOverrideMirror {
 #[rkyv(remote = super::AllowContextualSpacingOfParagraphsInTables)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowContextualSpacingOfParagraphsInTablesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -352,8 +352,8 @@ pub struct AllowContextualSpacingOfParagraphsInTablesMirror {
 #[rkyv(remote = super::AllowFirstLastLineDisplay)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowFirstLastLineDisplayMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -361,8 +361,8 @@ pub struct AllowFirstLastLineDisplayMirror {
 #[rkyv(remote = super::AllowLineBreakingAtCharacterLevel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowLineBreakingAtCharacterLevelMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -370,8 +370,8 @@ pub struct AllowLineBreakingAtCharacterLevelMirror {
 #[rkyv(remote = super::AllowPNGAsGraphicFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowPNGAsGraphicFormatMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -379,8 +379,8 @@ pub struct AllowPNGAsGraphicFormatMirror {
 #[rkyv(remote = super::AllowPunctuationExtendPastTextExtents)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowPunctuationExtendPastTextExtentsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -388,8 +388,8 @@ pub struct AllowPunctuationExtendPastTextExtentsMirror {
 #[rkyv(remote = super::AllowSavingDocumentAsXMLFile)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowSavingDocumentAsXMLFileMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -397,8 +397,8 @@ pub struct AllowSavingDocumentAsXMLFileMirror {
 #[rkyv(remote = super::AllowTableRowsToWrapInlineObjectsIndependently)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowTableRowsToWrapInlineObjectsIndependentlyMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -406,8 +406,8 @@ pub struct AllowTableRowsToWrapInlineObjectsIndependentlyMirror {
 #[rkyv(remote = super::AllowTablesToAutoFitIntoPageMargins)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowTablesToAutoFitIntoPageMarginsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -415,8 +415,8 @@ pub struct AllowTablesToAutoFitIntoPageMarginsMirror {
 #[rkyv(remote = super::AlternateNamesForFont)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlternateNamesForFontMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -424,8 +424,8 @@ pub struct AlternateNamesForFontMirror {
 #[rkyv(remote = super::AlternateStyleNames)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlternateStyleNamesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -433,8 +433,8 @@ pub struct AlternateStyleNamesMirror {
 #[rkyv(remote = super::AlwaysMergeEmptyNamespace)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlwaysMergeEmptyNamespaceMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -442,8 +442,8 @@ pub struct AlwaysMergeEmptyNamespaceMirror {
 #[rkyv(remote = super::AlwaysShowPlaceholderText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlwaysShowPlaceholderTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -451,8 +451,8 @@ pub struct AlwaysShowPlaceholderTextMirror {
 #[rkyv(remote = super::AlwaysUseFixedWidthForHangulCharacters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlwaysUseFixedWidthForHangulCharactersMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -460,27 +460,27 @@ pub struct AlwaysUseFixedWidthForHangulCharactersMirror {
 #[rkyv(remote = super::AnchorForImportedExternalContent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AnchorForImportedExternalContentMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub import_properties: Option<Box<super::ExternalContentImportProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::AnchorForSubdocumentLocation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AnchorForSubdocumentLocationMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::AnimatedTextEffect)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AnimatedTextEffectMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::AnimatedTextEffects>,
 }
 
@@ -488,8 +488,8 @@ pub struct AnimatedTextEffectMirror {
 #[rkyv(remote = super::AssociatedHTMLDivID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AssociatedHTMLDivIDMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -497,9 +497,9 @@ pub struct AssociatedHTMLDivIDMirror {
 #[rkyv(remote = super::AssociatedHelpText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AssociatedHelpTextMirror {
-    pub extra: (),
     pub r#type: Option<super::HelpOrStatusTextType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::HelpTextValue>,
 }
 
@@ -507,8 +507,8 @@ pub struct AssociatedHelpTextMirror {
 #[rkyv(remote = super::AssociatedOutlineLevel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AssociatedOutlineLevelMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -516,8 +516,8 @@ pub struct AssociatedOutlineLevelMirror {
 #[rkyv(remote = super::AssociatedParagraphStyleName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AssociatedParagraphStyleNameMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -525,9 +525,9 @@ pub struct AssociatedParagraphStyleNameMirror {
 #[rkyv(remote = super::AssociatedStatusText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AssociatedStatusTextMirror {
-    pub extra: (),
     pub r#type: Option<super::HelpOrStatusTextType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StatusTextValue>,
 }
 
@@ -535,8 +535,8 @@ pub struct AssociatedStatusTextMirror {
 #[rkyv(remote = super::AttachedCustomXMLSchema)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AttachedCustomXMLSchemaMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -544,17 +544,17 @@ pub struct AttachedCustomXMLSchemaMirror {
 #[rkyv(remote = super::AttachedDocumentTemplate)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AttachedDocumentTemplateMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::AutoSpaceLikeWord95)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutoSpaceLikeWord95Mirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -562,8 +562,8 @@ pub struct AutoSpaceLikeWord95Mirror {
 #[rkyv(remote = super::AutofitToFirstFixedWidthCell)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutofitToFirstFixedWidthCellMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -571,17 +571,17 @@ pub struct AutofitToFirstFixedWidthCellMirror {
 #[rkyv(remote = super::AutomaticCaptioningSettings)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutomaticCaptioningSettingsMirror {
-    pub extra: (),
     pub single_automatic_captioning_setting: Vec<super::SingleAutomaticCaptioningSetting>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::AutomaticallyAdjustRightIndent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutomaticallyAdjustRightIndentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -589,8 +589,8 @@ pub struct AutomaticallyAdjustRightIndentMirror {
 #[rkyv(remote = super::AutomaticallyHyphenateDocumentContentsWhenDisplayed)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutomaticallyHyphenateDocumentContentsWhenDisplayedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -598,8 +598,8 @@ pub struct AutomaticallyHyphenateDocumentContentsWhenDisplayedMirror {
 #[rkyv(remote = super::AutomaticallyMergeUserFormatting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutomaticallyMergeUserFormattingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -607,8 +607,8 @@ pub struct AutomaticallyMergeUserFormattingMirror {
 #[rkyv(remote = super::AutomaticallyRecalculateFieldsOnOpen)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutomaticallyRecalculateFieldsOnOpenMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -616,8 +616,8 @@ pub struct AutomaticallyRecalculateFieldsOnOpenMirror {
 #[rkyv(remote = super::AutomaticallySizeFormField)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutomaticallySizeFormFieldMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -625,8 +625,8 @@ pub struct AutomaticallySizeFormFieldMirror {
 #[rkyv(remote = super::AutomaticallyUpdateStylesFromDocumentTemplate)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutomaticallyUpdateStylesFromDocumentTemplateMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -634,8 +634,8 @@ pub struct AutomaticallyUpdateStylesFromDocumentTemplateMirror {
 #[rkyv(remote = super::BalanceSingleByteDoubleByteWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BalanceSingleByteDoubleByteWidthMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -643,8 +643,8 @@ pub struct BalanceSingleByteDoubleByteWidthMirror {
 #[rkyv(remote = super::BibliographyStructuredDocumentTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BibliographyStructuredDocumentTagMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -656,8 +656,8 @@ pub struct BibliographyStructuredDocumentTagMirror {
 pub struct BidirectionalEmbeddingLevelMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ParagraphContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BidirectionalDirectionTypes>,
 }
 
@@ -670,8 +670,8 @@ pub struct BidirectionalEmbeddingLevelMirror {
 pub struct BidirectionalOverrideMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ParagraphContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BidirectionalDirectionTypes>,
 }
 
@@ -685,10 +685,10 @@ pub struct BlockLevelCustomXMLElementMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ContentBlockContent>,
     pub element: Option<common_simple_types::XMLName>,
-    pub extra: (),
     pub properties: Option<Box<super::CustomXMLElementProperties>>,
     pub unknown: officekit_markup_base::Unknown,
     pub uri: Option<String>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -709,9 +709,9 @@ pub struct BlockLevelStructuredDocumentTagMirror {
     pub custom_xml_conflict_ins_range_start:
         Vec<super::super::office_word_2010_wordml::CustomXmlConflictInsRangeStart>,
     pub end_character_properties: Option<Box<super::StructuredDocumentTagEndCharacterProperties>>,
-    pub extra: (),
     pub properties: Option<Box<super::StructuredDocumentTagProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -723,16 +723,16 @@ pub struct BlockLevelStructuredDocumentTagMirror {
 pub struct BlockLevelStructuredDocumentTagContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ContentBlockContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Bold)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BoldMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -740,30 +740,30 @@ pub struct BoldMirror {
 #[rkyv(remote = super::BoldItalicFontStyleEmbedding)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BoldItalicFontStyleEmbeddingMirror {
-    pub extra: (),
     pub font_key: Option<common_simple_types::Guid>,
     pub id: Option<String>,
     pub subsetted: Option<common_simple_types::OnOffValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BoldStyleFontStyleEmbedding)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BoldStyleFontStyleEmbeddingMirror {
-    pub extra: (),
     pub font_key: Option<common_simple_types::Guid>,
     pub id: Option<String>,
     pub subsetted: Option<common_simple_types::OnOffValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BookFoldPrinting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BookFoldPrintingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -772,9 +772,9 @@ pub struct BookFoldPrintingMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BookmarkEndMirror {
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -784,10 +784,10 @@ pub struct BookmarkStartMirror {
     pub col_first: Option<super::DecimalNumberValue>,
     pub col_last: Option<super::DecimalNumberValue>,
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -797,7 +797,6 @@ pub struct BottomBorderMirror {
     pub bottom_left: Option<String>,
     pub bottom_right: Option<String>,
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub id: Option<String>,
     pub shadow: Option<common_simple_types::OnOffValue>,
@@ -807,6 +806,7 @@ pub struct BottomBorderMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -814,8 +814,8 @@ pub struct BottomBorderMirror {
 #[rkyv(remote = super::BottomMarginForHTMLDiv)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BottomMarginForHTMLDivMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::SignedMeasurementInTwentiethsOfPoint>,
 }
 
@@ -824,17 +824,17 @@ pub struct BottomMarginForHTMLDivMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BreakMirror {
     pub clear: Option<super::LineBreakTextWrappingRestartLocation>,
-    pub extra: (),
     pub r#type: Option<super::BreakTypes>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BuiltInDocumentPart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BuiltInDocumentPartMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -845,8 +845,8 @@ pub struct BuiltInDocumentPartStructuredDocumentTagMirror {
     pub built_in_document_part: Option<Box<super::BuiltInDocumentPart>>,
     pub document_part_category_filter: Option<Box<super::DocumentPartCategoryFilter>>,
     pub document_part_gallery_filter: Option<Box<super::DocumentPartGalleryFilter>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -854,17 +854,17 @@ pub struct BuiltInDocumentPartStructuredDocumentTagMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CaptionSettingsMirror {
     pub automatic_captioning_settings: Option<Box<super::AutomaticCaptioningSettings>>,
-    pub extra: (),
     pub single_caption_type_definition: Vec<super::SingleCaptionTypeDefinition>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CarriageReturn)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CarriageReturnMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -877,10 +877,10 @@ pub struct CellLevelCustomXMLElementMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ContentCellContent>,
     pub element: Option<common_simple_types::XMLName>,
-    pub extra: (),
     pub properties: Option<Box<super::CustomXMLElementProperties>>,
     pub unknown: officekit_markup_base::Unknown,
     pub uri: Option<String>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -901,9 +901,9 @@ pub struct CellLevelStructuredDocumentTagMirror {
     pub custom_xml_conflict_ins_range_start:
         Vec<super::super::office_word_2010_wordml::CustomXmlConflictInsRangeStart>,
     pub end_character_properties: Option<Box<super::StructuredDocumentTagEndCharacterProperties>>,
-    pub extra: (),
     pub properties: Option<Box<super::StructuredDocumentTagProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -915,16 +915,16 @@ pub struct CellLevelStructuredDocumentTagMirror {
 pub struct CellLevelStructuredDocumentTagContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ContentCellContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CharacterLevelWhitespaceCompression)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CharacterLevelWhitespaceCompressionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::CharacterLevelWhitespaceCompressionSettings>,
 }
 
@@ -933,8 +933,8 @@ pub struct CharacterLevelWhitespaceCompressionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CharacterSetSupportedByFontMirror {
     pub character_set: Option<String>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::TwoDigitHexadecimalValue>,
 }
 
@@ -942,8 +942,8 @@ pub struct CharacterSetSupportedByFontMirror {
 #[rkyv(remote = super::CharacterSpacingAdjustment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CharacterSpacingAdjustmentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::SignedMeasurementInTwentiethsOfPoint>,
 }
 
@@ -951,9 +951,9 @@ pub struct CharacterSpacingAdjustmentMirror {
 #[rkyv(remote = super::CharactersWhichCannotBeginALine)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CharactersWhichCannotBeginALineMirror {
-    pub extra: (),
     pub lang: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -961,9 +961,9 @@ pub struct CharactersWhichCannotBeginALineMirror {
 #[rkyv(remote = super::CharactersWhichCannotEndALine)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CharactersWhichCannotEndALineMirror {
-    pub extra: (),
     pub lang: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -974,16 +974,16 @@ pub struct CheckboxFormFieldPropertiesMirror {
     pub checkbox_form_field_state: Option<Box<super::CheckboxFormFieldState>>,
     pub content: Box<super::CheckboxFormFieldPropertiesContent>,
     pub default_checkbox_form_field_state: Option<Box<super::DefaultCheckboxFormFieldState>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CheckboxFormFieldSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CheckboxFormFieldSizeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::MeasurementInHalfPoints>,
 }
 
@@ -991,8 +991,8 @@ pub struct CheckboxFormFieldSizeMirror {
 #[rkyv(remote = super::CheckboxFormFieldState)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CheckboxFormFieldStateMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1003,26 +1003,26 @@ pub struct CheckboxFormFieldStateMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct ChildDivElementsMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub information_about_single_html_div_element: Vec<super::InformationAboutSingleHTMLDivElement>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CitationStructuredDocumentTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CitationStructuredDocumentTagMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ClickAndTypeStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ClickAndTypeStyleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -1030,8 +1030,8 @@ pub struct ClickAndTypeStyleMirror {
 #[rkyv(remote = super::ColumnContainingEMailAddress)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ColumnContainingEMailAddressMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -1040,20 +1040,20 @@ pub struct ColumnContainingEMailAddressMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ColumnDefinitionsMirror {
     pub equal_width: Option<common_simple_types::OnOffValue>,
-    pub extra: (),
     pub num: Option<super::DecimalNumberValue>,
     pub sep: Option<common_simple_types::OnOffValue>,
     pub single_column_definition: Vec<super::SingleColumnDefinition>,
     pub space: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ColumnDelimiterForDataSource)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ColumnDelimiterForDataSourceMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -1062,8 +1062,8 @@ pub struct ColumnDelimiterForDataSourceMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ComboBoxListItemMirror {
     pub display_text: Option<String>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: Option<String>,
 }
 
@@ -1072,9 +1072,9 @@ pub struct ComboBoxListItemMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ComboBoxStructuredDocumentTagMirror {
     pub combo_box_list_item: Vec<super::ComboBoxListItem>,
-    pub extra: (),
     pub last_value: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1082,9 +1082,9 @@ pub struct ComboBoxStructuredDocumentTagMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentAnchorRangeEndMirror {
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1092,9 +1092,9 @@ pub struct CommentAnchorRangeEndMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentAnchorRangeStartMirror {
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1109,27 +1109,27 @@ pub struct CommentContentMirror {
     pub content: Vec<super::BlockContent>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub date_utc: Option<String>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub initials: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CommentContentReferenceMark)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentContentReferenceMarkMirror {
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CommentInformationBlock)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentInformationBlockMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1141,8 +1141,8 @@ pub struct CommentInformationBlockMirror {
 pub struct CommentsCollectionMirror {
     #[rkyv(omit_bounds)]
     pub comment_content: Vec<super::CommentContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1195,7 +1195,6 @@ pub struct CompatibilitySettingsMirror {
     pub do_not_vert_align_cell_with_sp: Option<Box<super::DoNotVertAlignCellWithSp>>,
     pub do_not_wrap_text_with_punct: Option<Box<super::DoNotWrapTextWithPunct>>,
     pub dont_justify_soft_line_break_lines: Option<Box<super::DontJustifySoftLineBreakLines>>,
-    pub extra: (),
     pub fit_to_expanded_width_when_performing_full_justification:
         Option<Box<super::FitToExpandedWidthWhenPerformingFullJustification>>,
     pub forget_last_tab_alignment: Option<Box<super::ForgetLastTabAlignment>>,
@@ -1250,6 +1249,7 @@ pub struct CompatibilitySettingsMirror {
     pub use_specific_space_width: Option<Box<super::UseSpecificSpaceWidth>>,
     pub use_static_text_leading: Option<Box<super::UseStaticTextLeading>>,
     pub use_word2002table_style_rules: Option<Box<super::UseWord2002TableStyleRules>>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1258,18 +1258,18 @@ pub struct CompatibilitySettingsMirror {
 pub struct ComplexFieldCharacterMirror {
     pub content: Option<Box<super::ComplexFieldCharacterContent>>,
     pub dirty: Option<common_simple_types::OnOffValue>,
-    pub extra: (),
     pub fld_char_type: Option<super::ComplexFieldCharacterType>,
     pub fld_lock: Option<common_simple_types::OnOffValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ComplexScriptBold)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ComplexScriptBoldMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1277,8 +1277,8 @@ pub struct ComplexScriptBoldMirror {
 #[rkyv(remote = super::ComplexScriptFontSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ComplexScriptFontSizeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::MeasurementInHalfPoints>,
 }
 
@@ -1286,8 +1286,8 @@ pub struct ComplexScriptFontSizeMirror {
 #[rkyv(remote = super::ComplexScriptItalics)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ComplexScriptItalicsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1295,8 +1295,8 @@ pub struct ComplexScriptItalicsMirror {
 #[rkyv(remote = super::CompressPunctuationAtStartOfLine)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CompressPunctuationAtStartOfLineMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1304,8 +1304,8 @@ pub struct CompressPunctuationAtStartOfLineMirror {
 #[rkyv(remote = super::ContentBetweenNumberingSymbolAndText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ContentBetweenNumberingSymbolAndTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StLevelSuffix>,
 }
 
@@ -1313,9 +1313,9 @@ pub struct ContentBetweenNumberingSymbolAndTextMirror {
 #[rkyv(remote = super::ContentPart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ContentPartMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1328,24 +1328,24 @@ pub struct ContentsOfGlossaryDocumentEntryMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::BlockContent>,
     pub document_final_section_properties: Option<Box<super::DocumentFinalSectionProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ContinuationSeparatorMark)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ContinuationSeparatorMarkMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CurrentContentsArePlaceholderText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CurrentContentsArePlaceholderTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1353,10 +1353,10 @@ pub struct CurrentContentsArePlaceholderTextMirror {
 #[rkyv(remote = super::CustomCompatibilitySetting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomCompatibilitySettingMirror {
-    pub extra: (),
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
     pub uri: Option<String>,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -1364,9 +1364,9 @@ pub struct CustomCompatibilitySettingMirror {
 #[rkyv(remote = super::CustomFieldData)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomFieldDataMirror {
-    pub extra: (),
     pub space: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -1374,10 +1374,10 @@ pub struct CustomFieldDataMirror {
 #[rkyv(remote = super::CustomTabStop)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomTabStopMirror {
-    pub extra: (),
     pub leader: Option<super::CustomTabStopLeaderCharacter>,
     pub pos: Option<super::SignedMeasurementInTwentiethsOfPoint>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::CustomTabStopType>,
 }
 
@@ -1385,10 +1385,10 @@ pub struct CustomTabStopMirror {
 #[rkyv(remote = super::CustomXMLAttribute)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXMLAttributeMirror {
-    pub extra: (),
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
     pub uri: Option<String>,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -1396,8 +1396,8 @@ pub struct CustomXMLAttributeMirror {
 #[rkyv(remote = super::CustomXMLDataDateStorageFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXMLDataDateStorageFormatMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DateStorageFormatTypes>,
 }
 
@@ -1405,8 +1405,8 @@ pub struct CustomXMLDataDateStorageFormatMirror {
 #[rkyv(remote = super::CustomXMLElementPlaceholderText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXMLElementPlaceholderTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -1416,17 +1416,17 @@ pub struct CustomXMLElementPlaceholderTextMirror {
 pub struct CustomXMLElementPropertiesMirror {
     pub custom_xml_attribute: Vec<super::CustomXMLAttribute>,
     pub custom_xml_element_placeholder_text: Option<Box<super::CustomXMLElementPlaceholderText>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CustomXMLMarkupDeletionEnd)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXMLMarkupDeletionEndMirror {
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1435,18 +1435,18 @@ pub struct CustomXMLMarkupDeletionEndMirror {
 pub struct CustomXMLMarkupDeletionStartMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CustomXMLMarkupInsertionEnd)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXMLMarkupInsertionEndMirror {
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1455,18 +1455,18 @@ pub struct CustomXMLMarkupInsertionEndMirror {
 pub struct CustomXMLMarkupInsertionStartMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CustomXMLMarkupMoveSourceEnd)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXMLMarkupMoveSourceEndMirror {
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1475,28 +1475,28 @@ pub struct CustomXMLMarkupMoveSourceEndMirror {
 pub struct CustomXMLMarkupMoveSourceStartMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CustomXSLTransform)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXSLTransformMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub solution_id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CustomXmlMoveToRangeEnd)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXmlMoveToRangeEndMirror {
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1505,28 +1505,28 @@ pub struct CustomXmlMoveToRangeEndMirror {
 pub struct CustomXmlMoveToRangeStartMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DataAboutSingleDataSourceRecord)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataAboutSingleDataSourceRecordMirror {
-    pub extra: (),
     pub index_of_column_being_mapped: Box<super::IndexOfColumnBeingMapped>,
     pub is_included_in_mail_merge: Option<Box<super::RecordIsIncludedInMailMerge>>,
     pub unique_value_for_record: Box<super::UniqueValueForRecord>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DataForHTMLBlockquoteElement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataForHTMLBlockquoteElementMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1534,8 +1534,8 @@ pub struct DataForHTMLBlockquoteElementMirror {
 #[rkyv(remote = super::DataForHTMLBodyElement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataForHTMLBodyElementMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1543,8 +1543,8 @@ pub struct DataForHTMLBodyElementMirror {
 #[rkyv(remote = super::DataSourceConnectionString)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataSourceConnectionStringMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -1552,17 +1552,17 @@ pub struct DataSourceConnectionStringMirror {
 #[rkyv(remote = super::DataSourceFilePath)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataSourceFilePathMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DataSourceTableName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataSourceTableNameMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -1570,8 +1570,8 @@ pub struct DataSourceTableNameMirror {
 #[rkyv(remote = super::DataSourceType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataSourceTypeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -1579,56 +1579,56 @@ pub struct DataSourceTypeMirror {
 #[rkyv(remote = super::DateBlockLongDayFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateBlockLongDayFormatMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DateBlockLongMonthFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateBlockLongMonthFormatMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DateBlockLongYearFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateBlockLongYearFormatMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DateBlockShortDayFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateBlockShortDayFormatMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DateBlockShortMonthFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateBlockShortMonthFormatMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DateBlockShortYearFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateBlockShortYearFormatMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DateDisplayMask)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateDisplayMaskMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -1636,8 +1636,8 @@ pub struct DateDisplayMaskMirror {
 #[rkyv(remote = super::DatePickerCalendarType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DatePickerCalendarTypeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::CalendarTypes>,
 }
 
@@ -1648,18 +1648,18 @@ pub struct DateStructuredDocumentTagMirror {
     pub custom_xml_data_date_storage_format: Option<Box<super::CustomXMLDataDateStorageFormat>>,
     pub date_display_mask: Option<Box<super::DateDisplayMask>>,
     pub date_picker_calendar_type: Option<Box<super::DatePickerCalendarType>>,
-    pub extra: (),
     pub full_date: Option<super::StandardDateAndTimeStorageFormat>,
     pub language_id_for_phonetic_guide: Option<Box<super::LanguageIDForPhoneticGuide>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DefaultCheckboxFormFieldState)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultCheckboxFormFieldStateMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1667,8 +1667,8 @@ pub struct DefaultCheckboxFormFieldStateMirror {
 #[rkyv(remote = super::DefaultDropDownListItemIndex)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultDropDownListItemIndexMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -1676,9 +1676,9 @@ pub struct DefaultDropDownListItemIndexMirror {
 #[rkyv(remote = super::DefaultParagraphProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultParagraphPropertiesMirror {
-    pub extra: (),
     pub p_pr_general: Option<Box<super::ParagraphPropertiesPPrGeneral>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1690,8 +1690,8 @@ pub struct DefaultParagraphPropertiesMirror {
 pub struct DefaultPropertiesForVMLObjectsInHeaderAndFooterMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::VmlOfficeDrawingElementContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1703,25 +1703,25 @@ pub struct DefaultPropertiesForVMLObjectsInHeaderAndFooterMirror {
 pub struct DefaultPropertiesForVMLObjectsInMainDocumentMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::VmlOfficeDrawingElementContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DefaultRunProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultRunPropertiesMirror {
-    pub extra: (),
     pub run_properties: Option<Box<super::RunProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DefaultTableStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultTableStyleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -1729,8 +1729,8 @@ pub struct DefaultTableStyleMirror {
 #[rkyv(remote = super::DefaultTextBoxFormFieldString)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultTextBoxFormFieldStringMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -1740,19 +1740,19 @@ pub struct DefaultTextBoxFormFieldStringMirror {
 pub struct DelMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub previous_run_properties: Box<super::PreviousRunProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DeletedFieldCode)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DeletedFieldCodeMirror {
-    pub extra: (),
     pub space: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -1763,10 +1763,10 @@ pub struct DeletedMathControlCharacterMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub date_utc: Option<String>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub run_properties: Option<Box<super::RunProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1780,9 +1780,9 @@ pub struct DeletedRunContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::TrackedRunContent>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1791,18 +1791,18 @@ pub struct DeletedRunContentMirror {
 pub struct DeletedTableRowMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DeletedText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DeletedTextMirror {
-    pub extra: (),
     pub space: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -1810,8 +1810,8 @@ pub struct DeletedTextMirror {
 #[rkyv(remote = super::DescriptionForEntry)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DescriptionForEntryMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -1819,8 +1819,8 @@ pub struct DescriptionForEntryMirror {
 #[rkyv(remote = super::DifferentEvenOddPageHeadersAndFooters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DifferentEvenOddPageHeadersAndFootersMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1828,8 +1828,8 @@ pub struct DifferentEvenOddPageHeadersAndFootersMirror {
 #[rkyv(remote = super::DifferentFirstPageHeadersAndFooters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DifferentFirstPageHeadersAndFootersMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1837,9 +1837,9 @@ pub struct DifferentFirstPageHeadersAndFootersMirror {
 #[rkyv(remote = super::DisableFeaturesNotSupported)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DisableFeaturesNotSupportedMirror {
-    pub extra: (),
     pub target: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1847,8 +1847,8 @@ pub struct DisableFeaturesNotSupportedMirror {
 #[rkyv(remote = super::DisplayAllCharactersAsCapitalLetters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DisplayAllCharactersAsCapitalLettersMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1856,8 +1856,8 @@ pub struct DisplayAllCharactersAsCapitalLettersMirror {
 #[rkyv(remote = super::DisplayAllLevelsUsingArabicNumerals)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DisplayAllLevelsUsingArabicNumeralsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1865,8 +1865,8 @@ pub struct DisplayAllLevelsUsingArabicNumeralsMirror {
 #[rkyv(remote = super::DisplayBackgroundShape)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DisplayBackgroundShapeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1874,8 +1874,8 @@ pub struct DisplayBackgroundShapeMirror {
 #[rkyv(remote = super::DisplayBackslashAsYenSign)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DisplayBackslashAsYenSignMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1883,8 +1883,8 @@ pub struct DisplayBackslashAsYenSignMirror {
 #[rkyv(remote = super::DisplayCharacterOutline)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DisplayCharacterOutlineMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1892,8 +1892,8 @@ pub struct DisplayCharacterOutlineMirror {
 #[rkyv(remote = super::DisplayPageColumnBreaksPresentInFrames)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DisplayPageColumnBreaksPresentInFramesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1901,8 +1901,8 @@ pub struct DisplayPageColumnBreaksPresentInFramesMirror {
 #[rkyv(remote = super::DistanceBetweenAutomaticTabStops)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DistanceBetweenAutomaticTabStopsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -1910,8 +1910,8 @@ pub struct DistanceBetweenAutomaticTabStopsMirror {
 #[rkyv(remote = super::DistanceBetweenHorizontalGridlines)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DistanceBetweenHorizontalGridlinesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -1919,8 +1919,8 @@ pub struct DistanceBetweenHorizontalGridlinesMirror {
 #[rkyv(remote = super::DistanceBetweenPhoneticGuideText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DistanceBetweenPhoneticGuideTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::MeasurementInHalfPoints>,
 }
 
@@ -1928,8 +1928,8 @@ pub struct DistanceBetweenPhoneticGuideTextMirror {
 #[rkyv(remote = super::DistanceBetweenVerticalGridlines)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DistanceBetweenVerticalGridlinesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -1937,8 +1937,8 @@ pub struct DistanceBetweenVerticalGridlinesMirror {
 #[rkyv(remote = super::DoNotAddLeadingBetweenLinesOfText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotAddLeadingBetweenLinesOfTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1946,8 +1946,8 @@ pub struct DoNotAddLeadingBetweenLinesOfTextMirror {
 #[rkyv(remote = super::DoNotAllowFloatingTablesToBreakAcrossPages)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotAllowFloatingTablesToBreakAcrossPagesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1955,8 +1955,8 @@ pub struct DoNotAllowFloatingTablesToBreakAcrossPagesMirror {
 #[rkyv(remote = super::DoNotAutofitConstrainedTables)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotAutofitConstrainedTablesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1964,8 +1964,8 @@ pub struct DoNotAutofitConstrainedTablesMirror {
 #[rkyv(remote = super::DoNotAutomaticallyCompressImages)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotAutomaticallyCompressImagesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1973,8 +1973,8 @@ pub struct DoNotAutomaticallyCompressImagesMirror {
 #[rkyv(remote = super::DoNotBalanceTextColumnsWithinASection)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotBalanceTextColumnsWithinASectionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1982,8 +1982,8 @@ pub struct DoNotBalanceTextColumnsWithinASectionMirror {
 #[rkyv(remote = super::DoNotBreakConstrainedForcedTable)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotBreakConstrainedForcedTableMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1991,8 +1991,8 @@ pub struct DoNotBreakConstrainedForcedTableMirror {
 #[rkyv(remote = super::DoNotBypassEastAsianComplexScriptLayoutCode)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotBypassEastAsianComplexScriptLayoutCodeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2000,8 +2000,8 @@ pub struct DoNotBypassEastAsianComplexScriptLayoutCodeMirror {
 #[rkyv(remote = super::DoNotCenterContentOnLinesWithExactLineHeight)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotCenterContentOnLinesWithExactLineHeightMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2009,8 +2009,8 @@ pub struct DoNotCenterContentOnLinesWithExactLineHeightMirror {
 #[rkyv(remote = super::DoNotCheckSpellingOrGrammar)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotCheckSpellingOrGrammarMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2018,8 +2018,8 @@ pub struct DoNotCheckSpellingOrGrammarMirror {
 #[rkyv(remote = super::DoNotCreateCustomTabStopForHangingIndent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotCreateCustomTabStopForHangingIndentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2027,8 +2027,8 @@ pub struct DoNotCreateCustomTabStopForHangingIndentMirror {
 #[rkyv(remote = super::DoNotDisplayFramesetSplitters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotDisplayFramesetSplittersMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2036,8 +2036,8 @@ pub struct DoNotDisplayFramesetSplittersMirror {
 #[rkyv(remote = super::DoNotDisplayGrammaticalErrors)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotDisplayGrammaticalErrorsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2045,8 +2045,8 @@ pub struct DoNotDisplayGrammaticalErrorsMirror {
 #[rkyv(remote = super::DoNotDisplayPageBoundaries)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotDisplayPageBoundariesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2054,8 +2054,8 @@ pub struct DoNotDisplayPageBoundariesMirror {
 #[rkyv(remote = super::DoNotDisplaySpellingErrors)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotDisplaySpellingErrorsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2063,8 +2063,8 @@ pub struct DoNotDisplaySpellingErrorsMirror {
 #[rkyv(remote = super::DoNotHyphenateCapitalLetters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotHyphenateCapitalLettersMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2072,8 +2072,8 @@ pub struct DoNotHyphenateCapitalLettersMirror {
 #[rkyv(remote = super::DoNotIncludeSubdocsInStats)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotIncludeSubdocsInStatsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2081,8 +2081,8 @@ pub struct DoNotIncludeSubdocsInStatsMirror {
 #[rkyv(remote = super::DoNotIncreaseLineHeightForRaisedLoweredText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotIncreaseLineHeightForRaisedLoweredTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2090,8 +2090,8 @@ pub struct DoNotIncreaseLineHeightForRaisedLoweredTextMirror {
 #[rkyv(remote = super::DoNotPlaceSupportingFiles)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotPlaceSupportingFilesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2099,8 +2099,8 @@ pub struct DoNotPlaceSupportingFilesMirror {
 #[rkyv(remote = super::DoNotRelyOnCSS)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotRelyOnCSSMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2108,8 +2108,8 @@ pub struct DoNotRelyOnCSSMirror {
 #[rkyv(remote = super::DoNotShowFormFieldIndicator)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotShowFormFieldIndicatorMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2117,8 +2117,8 @@ pub struct DoNotShowFormFieldIndicatorMirror {
 #[rkyv(remote = super::DoNotShowInvalidMarkupIndicator)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotShowInvalidMarkupIndicatorMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2126,8 +2126,8 @@ pub struct DoNotShowInvalidMarkupIndicatorMirror {
 #[rkyv(remote = super::DoNotSnapToDocumentGridInTableCellsWithObjects)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotSnapToDocumentGridInTableCellsWithObjectsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2135,8 +2135,8 @@ pub struct DoNotSnapToDocumentGridInTableCellsWithObjectsMirror {
 #[rkyv(remote = super::DoNotSuppressBlankLines)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotSuppressBlankLinesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2144,8 +2144,8 @@ pub struct DoNotSuppressBlankLinesMirror {
 #[rkyv(remote = super::DoNotSuppressIndentation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotSuppressIndentationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2153,8 +2153,8 @@ pub struct DoNotSuppressIndentationMirror {
 #[rkyv(remote = super::DoNotSuppressParagraphBorders)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotSuppressParagraphBordersMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2162,8 +2162,8 @@ pub struct DoNotSuppressParagraphBordersMirror {
 #[rkyv(remote = super::DoNotTrackFormatting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotTrackFormattingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2171,8 +2171,8 @@ pub struct DoNotTrackFormattingMirror {
 #[rkyv(remote = super::DoNotUseEastAsianBreakRules)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotUseEastAsianBreakRulesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2180,8 +2180,8 @@ pub struct DoNotUseEastAsianBreakRulesMirror {
 #[rkyv(remote = super::DoNotUseFileNames)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotUseFileNamesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2189,8 +2189,8 @@ pub struct DoNotUseFileNamesMirror {
 #[rkyv(remote = super::DoNotUseHTMLParagraphAutoSpacing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotUseHTMLParagraphAutoSpacingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2198,8 +2198,8 @@ pub struct DoNotUseHTMLParagraphAutoSpacingMirror {
 #[rkyv(remote = super::DoNotUseIndentAsNumberingTabStop)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotUseIndentAsNumberingTabStopMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2207,8 +2207,8 @@ pub struct DoNotUseIndentAsNumberingTabStopMirror {
 #[rkyv(remote = super::DoNotUseMarginsForDrawingGridOrigin)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotUseMarginsForDrawingGridOriginMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2216,8 +2216,8 @@ pub struct DoNotUseMarginsForDrawingGridOriginMirror {
 #[rkyv(remote = super::DoNotUseMoveSyntax)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotUseMoveSyntaxMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2225,8 +2225,8 @@ pub struct DoNotUseMoveSyntaxMirror {
 #[rkyv(remote = super::DoNotValidateAgainstSchema)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotValidateAgainstSchemaMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2234,8 +2234,8 @@ pub struct DoNotValidateAgainstSchemaMirror {
 #[rkyv(remote = super::DoNotVertAlignCellWithSp)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotVertAlignCellWithSpMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2243,8 +2243,8 @@ pub struct DoNotVertAlignCellWithSpMirror {
 #[rkyv(remote = super::DoNotWrapTextWithPunct)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotWrapTextWithPunctMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2260,8 +2260,8 @@ pub struct DocumentMirror {
     #[rkyv(omit_bounds)]
     pub body: Option<Box<super::DocumentBody>>,
     pub conformance: Option<common_simple_types::DocumentConformanceClassValue>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2276,11 +2276,11 @@ pub struct DocumentBackgroundMirror {
     pub content: Vec<super::VmlElementContent>,
     #[rkyv(omit_bounds)]
     pub drawingml_object: Option<Box<super::DrawingMLObject>>,
-    pub extra: (),
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2293,16 +2293,16 @@ pub struct DocumentBodyMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::BlockContent>,
     pub document_final_section_properties: Option<Box<super::DocumentFinalSectionProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DocumentClassification)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentClassificationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -2312,8 +2312,8 @@ pub struct DocumentClassificationMirror {
 pub struct DocumentDefaultParagraphAndRunPropertiesMirror {
     pub default_paragraph_properties: Option<Box<super::DefaultParagraphProperties>>,
     pub default_run_properties: Option<Box<super::DefaultRunProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2333,7 +2333,6 @@ pub struct DocumentEditingRestrictionsMirror {
     pub crypt_spin_count: Option<super::DecimalNumberValue>,
     pub edit: Option<super::DocumentProtectionTypes>,
     pub enforcement: Option<common_simple_types::OnOffValue>,
-    pub extra: (),
     pub formatting: Option<common_simple_types::OnOffValue>,
     pub hash: Option<String>,
     pub hash_value: Option<String>,
@@ -2341,6 +2340,7 @@ pub struct DocumentEditingRestrictionsMirror {
     pub salt_value: Option<String>,
     pub spin_count: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2352,8 +2352,8 @@ pub struct DocumentEditingRestrictionsMirror {
 pub struct DocumentEndnotesMirror {
     #[rkyv(omit_bounds)]
     pub endnote_content: Vec<super::EndnoteContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2365,7 +2365,6 @@ pub struct DocumentFinalSectionPropertiesMirror {
     pub different_first_page_headers_and_footers:
         Option<Box<super::DifferentFirstPageHeadersAndFooters>>,
     pub document_grid: Option<Box<super::DocumentGrid>>,
-    pub extra: (),
     pub footnote_columns: Option<Box<super::super::office_word_2012_wordml::FootnoteColumns>>,
     pub gutter_on_right_side_of_page: Option<Box<super::GutterOnRightSideOfPage>>,
     pub line_numbering_settings: Option<Box<super::LineNumberingSettings>>,
@@ -2390,6 +2389,7 @@ pub struct DocumentFinalSectionPropertiesMirror {
     pub suppress_endnotes_in_document: Option<Box<super::SuppressEndnotesInDocument>>,
     pub table_cell_vertical_alignment: Option<Box<super::TableCellVerticalAlignment>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2399,10 +2399,10 @@ pub struct DocumentFinalSectionPropertiesMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentFootnotesMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub footnote_content: Vec<super::FootnoteContent>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2410,18 +2410,18 @@ pub struct DocumentFootnotesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentGridMirror {
     pub char_space: Option<super::DecimalNumberValue>,
-    pub extra: (),
     pub line_pitch: Option<super::DecimalNumberValue>,
     pub r#type: Option<super::DocumentGridTypes>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DocumentGridInterLineParagraphSpacing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentGridInterLineParagraphSpacingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2429,8 +2429,8 @@ pub struct DocumentGridInterLineParagraphSpacingMirror {
 #[rkyv(remote = super::DocumentPartCategoryFilter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentPartCategoryFilterMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -2438,8 +2438,8 @@ pub struct DocumentPartCategoryFilterMirror {
 #[rkyv(remote = super::DocumentPartGalleryFilter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentPartGalleryFilterMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -2450,16 +2450,16 @@ pub struct DocumentPartGalleryStructuredDocumentTagMirror {
     pub built_in_document_part: Option<Box<super::BuiltInDocumentPart>>,
     pub document_part_category_filter: Option<Box<super::DocumentPartCategoryFilter>>,
     pub document_part_gallery_filter: Option<Box<super::DocumentPartGalleryFilter>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DocumentPartReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentPartReferenceMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -2540,7 +2540,6 @@ pub struct DocumentSettingsMirror {
     pub embed_truetype_fonts: Option<Box<super::EmbedTrueTypeFonts>>,
     pub embedded_custom_xml_schema_supplementary_data:
         Option<Box<custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryData>>,
-    pub extra: (),
     pub freeze_document_layout: Option<Box<super::FreezeDocumentLayout>>,
     pub generate_thumbnail_for_document_on_save:
         Option<Box<super::GenerateThumbnailForDocumentOnSave>>,
@@ -2592,6 +2591,7 @@ pub struct DocumentSettingsMirror {
     pub track_revisions_to_document: Option<Box<super::TrackRevisionsToDocument>>,
     pub unknown: officekit_markup_base::Unknown,
     pub upgrade_document_on_open: Option<Box<super::UpgradeDocumentOnOpen>>,
+    pub user_data: (),
     pub visibility_of_annotation_types: Option<Box<super::VisibilityOfAnnotationTypes>>,
     pub w14_doc_id: Option<Box<super::super::office_word_2010_wordml::DocId>>,
     pub w15_doc_id: Option<Box<super::super::office_word_2012_wordml::DocId>>,
@@ -2602,17 +2602,17 @@ pub struct DocumentSettingsMirror {
 #[rkyv(remote = super::DocumentVariables)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentVariablesMirror {
-    pub extra: (),
     pub single_document_variable: Vec<super::SingleDocumentVariable>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DocumentViewSetting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentViewSettingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DocumentViewValues>,
 }
 
@@ -2621,7 +2621,6 @@ pub struct DocumentViewSettingMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentWideEndnotePropertiesMirror {
     pub endnote_placement: Option<Box<super::EndnotePlacement>>,
-    pub extra: (),
     pub footnote_and_endnote_numbering_restart_location:
         Option<Box<super::FootnoteAndEndnoteNumberingRestartLocation>>,
     pub footnote_and_endnote_numbering_starting_value:
@@ -2629,13 +2628,13 @@ pub struct DocumentWideEndnotePropertiesMirror {
     pub numbering_format: Option<Box<super::NumberingFormat>>,
     pub special_endnote_list: Vec<super::SpecialEndnoteList>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DocumentWideFootnoteProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentWideFootnotePropertiesMirror {
-    pub extra: (),
     pub footnote_and_endnote_numbering_restart_location:
         Option<Box<super::FootnoteAndEndnoteNumberingRestartLocation>>,
     pub footnote_and_endnote_numbering_starting_value:
@@ -2644,14 +2643,15 @@ pub struct DocumentWideFootnotePropertiesMirror {
     pub numbering_format: Option<Box<super::NumberingFormat>>,
     pub special_footnote_list: Vec<super::SpecialFootnoteList>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DontJustifySoftLineBreakLines)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DontJustifySoftLineBreakLinesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2659,8 +2659,8 @@ pub struct DontJustifySoftLineBreakLinesMirror {
 #[rkyv(remote = super::DontWrapCellContent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DontWrapCellContentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2668,8 +2668,8 @@ pub struct DontWrapCellContentMirror {
 #[rkyv(remote = super::DoubleStrikethrough)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoubleStrikethroughMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2677,8 +2677,8 @@ pub struct DoubleStrikethroughMirror {
 #[rkyv(remote = super::DrawingGridHorizontalGridUnitSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DrawingGridHorizontalGridUnitSizeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -2686,8 +2686,8 @@ pub struct DrawingGridHorizontalGridUnitSizeMirror {
 #[rkyv(remote = super::DrawingGridHorizontalOriginPoint)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DrawingGridHorizontalOriginPointMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -2695,8 +2695,8 @@ pub struct DrawingGridHorizontalOriginPointMirror {
 #[rkyv(remote = super::DrawingGridVerticalGridUnitSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DrawingGridVerticalGridUnitSizeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -2704,8 +2704,8 @@ pub struct DrawingGridVerticalGridUnitSizeMirror {
 #[rkyv(remote = super::DrawingGridVerticalOriginPoint)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DrawingGridVerticalOriginPointMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -2718,16 +2718,16 @@ pub struct DrawingGridVerticalOriginPointMirror {
 pub struct DrawingMLObjectMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::DrawingObjectContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DropDownListEntry)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropDownListEntryMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -2738,16 +2738,16 @@ pub struct DropDownListFormFieldPropertiesMirror {
     pub default_drop_down_list_item_index: Option<Box<super::DefaultDropDownListItemIndex>>,
     pub drop_down_list_entry: Vec<super::DropDownListEntry>,
     pub drop_down_list_selection: Option<Box<super::DropDownListSelection>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DropDownListSelection)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropDownListSelectionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -2756,17 +2756,17 @@ pub struct DropDownListSelectionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DropDownListStructuredDocumentTagMirror {
     pub combo_box_list_item: Vec<super::ComboBoxListItem>,
-    pub extra: (),
     pub last_value: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::EMailMessageCompositionStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EMailMessageCompositionStyleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2774,8 +2774,8 @@ pub struct EMailMessageCompositionStyleMirror {
 #[rkyv(remote = super::EMailMessageReplyStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EMailMessageReplyStyleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2783,8 +2783,8 @@ pub struct EMailMessageReplyStyleMirror {
 #[rkyv(remote = super::EMailMessageTextStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EMailMessageTextStyleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2792,8 +2792,8 @@ pub struct EMailMessageTextStyleMirror {
 #[rkyv(remote = super::EastAsianTypographyRules)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EastAsianTypographyRulesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2803,9 +2803,9 @@ pub struct EastAsianTypographyRulesMirror {
 pub struct EastAsianTypographySettingsMirror {
     pub combine: Option<common_simple_types::OnOffValue>,
     pub combine_brackets: Option<super::TwoLinesEnclosingCharacterType>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub vert: Option<common_simple_types::OnOffValue>,
     pub vert_compress: Option<common_simple_types::OnOffValue>,
 }
@@ -2814,8 +2814,8 @@ pub struct EastAsianTypographySettingsMirror {
 #[rkyv(remote = super::EmbedCommonSystemFonts)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbedCommonSystemFontsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2823,8 +2823,8 @@ pub struct EmbedCommonSystemFontsMirror {
 #[rkyv(remote = super::EmbedTrueTypeFonts)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbedTrueTypeFontsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2832,11 +2832,11 @@ pub struct EmbedTrueTypeFontsMirror {
 #[rkyv(remote = super::EmbeddedControl)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbeddedControlMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub name: Option<String>,
     pub shapeid: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2852,8 +2852,8 @@ pub struct EmbeddedObjectMirror {
     pub drawingml_object: Option<Box<super::DrawingMLObject>>,
     pub dxa_orig: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub dya_orig: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     #[rkyv(omit_bounds)]
     pub vml_element_content: Vec<super::VmlElementContent>,
 }
@@ -2863,29 +2863,29 @@ pub struct EmbeddedObjectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbeddedObjectPropertiesMirror {
     pub draw_aspect: Option<super::EmbeddedObjectRepresentations>,
-    pub extra: (),
     pub field_codes: Option<String>,
     pub id: Option<String>,
     pub prog_id: Option<String>,
     pub shape_id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::EmbeddedVideo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbeddedVideoMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Embossing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbossingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -2893,8 +2893,8 @@ pub struct EmbossingMirror {
 #[rkyv(remote = super::EmphasisMark)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmphasisMarkMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::EmphasisMarkType>,
 }
 
@@ -2907,18 +2907,18 @@ pub struct EmphasisMarkMirror {
 pub struct EndnoteContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::BlockContent>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub r#type: Option<super::FootnoteOrEndnoteType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::EndnotePlacement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EndnotePlacementMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::EndnotePositioningLocation>,
 }
 
@@ -2927,35 +2927,35 @@ pub struct EndnotePlacementMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct EndnoteReferenceMirror {
     pub custom_mark_follows: Option<common_simple_types::OnOffValue>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::EndnoteReferenceMark)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EndnoteReferenceMarkMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::EntryCategorization)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EntryCategorizationMirror {
-    pub extra: (),
     pub gallery_associated_with_entry: Box<super::GalleryAssociatedWithEntry>,
     pub primary_style_name: Box<super::PrimaryStyleName>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::EntryID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EntryIDMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::Guid>,
 }
 
@@ -2963,8 +2963,8 @@ pub struct EntryIDMirror {
 #[rkyv(remote = super::EntryInsertionBehavior)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EntryInsertionBehaviorMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::InsertionBehaviorTypes>,
 }
 
@@ -2973,8 +2973,8 @@ pub struct EntryInsertionBehaviorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct EntryInsertionBehaviorsMirror {
     pub entry_insertion_behavior: Vec<super::EntryInsertionBehavior>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2982,8 +2982,8 @@ pub struct EntryInsertionBehaviorsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct EntryNameMirror {
     pub decorated: Option<common_simple_types::OnOffValue>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -2991,8 +2991,8 @@ pub struct EntryNameMirror {
 #[rkyv(remote = super::EntryType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EntryTypeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StDocPartType>,
 }
 
@@ -3002,24 +3002,24 @@ pub struct EntryTypeMirror {
 pub struct EntryTypesMirror {
     pub all: Option<common_simple_types::OnOffValue>,
     pub entry_type: Vec<super::EntryType>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::EquationStructuredDocumentTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EquationStructuredDocumentTagMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ExecuteOnFormFieldEntry)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ExecuteOnFormFieldEntryMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::ScriptSubroutineNameValue>,
 }
 
@@ -3027,8 +3027,8 @@ pub struct ExecuteOnFormFieldEntryMirror {
 #[rkyv(remote = super::ExecuteOnFormFieldExit)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ExecuteOnFormFieldExitMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::ScriptSubroutineNameValue>,
 }
 
@@ -3036,8 +3036,8 @@ pub struct ExecuteOnFormFieldExitMirror {
 #[rkyv(remote = super::ExpandedCompressedText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ExpandedCompressedTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StTextScale>,
 }
 
@@ -3045,16 +3045,15 @@ pub struct ExpandedCompressedTextMirror {
 #[rkyv(remote = super::ExternalContentImportProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ExternalContentImportPropertiesMirror {
-    pub extra: (),
     pub keep_source_formatting_on_import: Option<Box<super::KeepSourceFormattingOnImport>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ExternalDataSourceMergeFieldMapping)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ExternalDataSourceMergeFieldMappingMirror {
-    pub extra: (),
     pub index_of_column_being_mapped: Option<Box<super::IndexOfColumnBeingMapped>>,
     pub language_id_for_phonetic_guide: Option<Box<super::LanguageIDForPhoneticGuide>>,
     pub merge_field_mapping: Option<Box<super::MergeFieldMapping>>,
@@ -3063,15 +3062,16 @@ pub struct ExternalDataSourceMergeFieldMappingMirror {
     pub unknown: officekit_markup_base::Unknown,
     pub use_country_based_address_field_ordering:
         Option<Box<super::UseCountryBasedAddressFieldOrdering>>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FieldCode)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FieldCodeMirror {
-    pub extra: (),
     pub space: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -3079,8 +3079,8 @@ pub struct FieldCodeMirror {
 #[rkyv(remote = super::FirstRowContainsColumnNames)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FirstRowContainsColumnNamesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3088,8 +3088,8 @@ pub struct FirstRowContainsColumnNamesMirror {
 #[rkyv(remote = super::FitTextWithinCell)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FitTextWithinCellMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3097,8 +3097,8 @@ pub struct FitTextWithinCellMirror {
 #[rkyv(remote = super::FitToExpandedWidthWhenPerformingFullJustification)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FitToExpandedWidthWhenPerformingFullJustificationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3106,8 +3106,8 @@ pub struct FitToExpandedWidthWhenPerformingFullJustificationMirror {
 #[rkyv(remote = super::FloatingTableAllowsOverlap)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FloatingTableAllowsOverlapMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::TableOverlapSetting>,
 }
 
@@ -3116,7 +3116,6 @@ pub struct FloatingTableAllowsOverlapMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FloatingTablePositioningMirror {
     pub bottom_from_text: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
-    pub extra: (),
     pub horz_anchor: Option<super::HorizontalAnchorLocation>,
     pub left_from_text: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub right_from_text: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
@@ -3126,6 +3125,7 @@ pub struct FloatingTablePositioningMirror {
     pub tblp_y_spec: Option<common_simple_types::VerticalAlignmentLocation>,
     pub top_from_text: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub vert_anchor: Option<super::VerticalAnchorLocation>,
 }
 
@@ -3133,8 +3133,8 @@ pub struct FloatingTablePositioningMirror {
 #[rkyv(remote = super::FontFamily)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FontFamilyMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::FontFamilyValue>,
 }
 
@@ -3142,8 +3142,8 @@ pub struct FontFamilyMirror {
 #[rkyv(remote = super::FontKerning)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FontKerningMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::MeasurementInHalfPoints>,
 }
 
@@ -3151,8 +3151,8 @@ pub struct FontKerningMirror {
 #[rkyv(remote = super::FontPitch)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FontPitchMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::FontPitchValue>,
 }
 
@@ -3160,9 +3160,9 @@ pub struct FontPitchMirror {
 #[rkyv(remote = super::FontTableRootElement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FontTableRootElementMirror {
-    pub extra: (),
     pub properties_for_a_single_font: Vec<super::PropertiesForASingleFont>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3174,26 +3174,26 @@ pub struct FontTableRootElementMirror {
 pub struct FooterMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::BlockContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FooterReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FooterReferenceMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub r#type: Option<super::HeaderOrFooterType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FootnoteAndEndnoteNumberingRestartLocation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FootnoteAndEndnoteNumberingRestartLocationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::FootnoteEndnoteNumberingRestartLocations>,
 }
 
@@ -3201,8 +3201,8 @@ pub struct FootnoteAndEndnoteNumberingRestartLocationMirror {
 #[rkyv(remote = super::FootnoteAndEndnoteNumberingStartingValue)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FootnoteAndEndnoteNumberingStartingValueMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -3215,26 +3215,26 @@ pub struct FootnoteAndEndnoteNumberingStartingValueMirror {
 pub struct FootnoteContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::BlockContent>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub r#type: Option<super::FootnoteOrEndnoteType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FootnoteEndnoteSeparatorMark)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FootnoteEndnoteSeparatorMarkMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FootnotePlacement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FootnotePlacementMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::FootnotePositioningLocation>,
 }
 
@@ -3243,25 +3243,25 @@ pub struct FootnotePlacementMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FootnoteReferenceMirror {
     pub custom_mark_follows: Option<common_simple_types::OnOffValue>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FootnoteReferenceMark)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FootnoteReferenceMarkMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ForgetLastTabAlignment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ForgetLastTabAlignmentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3269,8 +3269,8 @@ pub struct ForgetLastTabAlignmentMirror {
 #[rkyv(remote = super::FormFieldEnabled)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FormFieldEnabledMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3278,8 +3278,8 @@ pub struct FormFieldEnabledMirror {
 #[rkyv(remote = super::FormFieldName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FormFieldNameMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::FormFieldNameValue>,
 }
 
@@ -3288,16 +3288,16 @@ pub struct FormFieldNameMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FormFieldPropertiesMirror {
     pub content: Vec<super::FormFieldPropertiesContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FrameCannotBeResized)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FrameCannotBeResizedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3305,17 +3305,17 @@ pub struct FrameCannotBeResizedMirror {
 #[rkyv(remote = super::FrameLongDescription)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FrameLongDescriptionMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FrameOrFramesetTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FrameOrFramesetTitleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -3323,8 +3323,8 @@ pub struct FrameOrFramesetTitleMirror {
 #[rkyv(remote = super::FrameSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FrameSizeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -3332,8 +3332,8 @@ pub struct FrameSizeMirror {
 #[rkyv(remote = super::FramesetLayout)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FramesetLayoutMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::FramesetLayoutOrder>,
 }
 
@@ -3341,8 +3341,8 @@ pub struct FramesetLayoutMirror {
 #[rkyv(remote = super::FramesetSplitterBorderStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FramesetSplitterBorderStyleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3351,19 +3351,19 @@ pub struct FramesetSplitterBorderStyleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FramesetSplitterPropertiesMirror {
     pub do_not_display_frameset_splitters: Option<Box<super::DoNotDisplayFramesetSplitters>>,
-    pub extra: (),
     pub frameset_splitter_border_style: Option<Box<super::FramesetSplitterBorderStyle>>,
     pub frameset_splitter_width: Option<Box<super::FramesetSplitterWidth>>,
     pub run_content_color: Option<Box<super::RunContentColor>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FramesetSplitterWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FramesetSplitterWidthMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -3372,10 +3372,10 @@ pub struct FramesetSplitterWidthMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FreezeDocumentLayoutMirror {
     pub actual_pg: Option<common_simple_types::OnOffValue>,
-    pub extra: (),
     pub font_sz: Option<super::PercentageMeasurement>,
     pub h: Option<super::MeasurementInPixels>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::MeasurementInPixels>,
 }
 
@@ -3383,8 +3383,8 @@ pub struct FreezeDocumentLayoutMirror {
 #[rkyv(remote = super::FriendlyName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FriendlyNameMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -3392,8 +3392,8 @@ pub struct FriendlyNameMirror {
 #[rkyv(remote = super::GalleryAssociatedWithEntry)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GalleryAssociatedWithEntryMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::EntryGalleryTypes>,
 }
 
@@ -3401,8 +3401,8 @@ pub struct GalleryAssociatedWithEntryMirror {
 #[rkyv(remote = super::GenerateThumbnailForDocumentOnSave)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GenerateThumbnailForDocumentOnSaveMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3415,9 +3415,9 @@ pub struct GenerateThumbnailForDocumentOnSaveMirror {
 pub struct GlossaryDocumentEntryMirror {
     #[rkyv(omit_bounds)]
     pub contents: Option<Box<super::ContentsOfGlossaryDocumentEntry>>,
-    pub extra: (),
     pub properties: Option<Box<super::GlossaryDocumentEntryProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3425,8 +3425,8 @@ pub struct GlossaryDocumentEntryMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct GlossaryDocumentEntryPropertiesMirror {
     pub content: Vec<super::GlossaryDocumentEntryPropertiesContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3438,10 +3438,10 @@ pub struct GlossaryDocumentEntryPropertiesMirror {
 pub struct GlossaryDocumentRootElementMirror {
     #[rkyv(omit_bounds)]
     pub document_background: Option<Box<super::DocumentBackground>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub list_of_glossary_document_entries: Option<Box<super::ListOfGlossaryDocumentEntries>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3451,10 +3451,10 @@ pub struct GrammarCheckingSettingsMirror {
     pub app_name: Option<String>,
     pub check_style: Option<common_simple_types::OnOffValue>,
     pub dll_version: Option<String>,
-    pub extra: (),
     pub lang: Option<String>,
     pub nl_check: Option<common_simple_types::OnOffValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub vendor_id: Option<String>,
 }
 
@@ -3462,8 +3462,8 @@ pub struct GrammarCheckingSettingsMirror {
 #[rkyv(remote = super::GridColumnDefinition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GridColumnDefinitionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -3471,8 +3471,8 @@ pub struct GridColumnDefinitionMirror {
 #[rkyv(remote = super::GridColumnsAfterLastCell)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GridColumnsAfterLastCellMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -3480,8 +3480,8 @@ pub struct GridColumnsAfterLastCellMirror {
 #[rkyv(remote = super::GridColumnsBeforeFirstCell)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GridColumnsBeforeFirstCellMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -3489,8 +3489,8 @@ pub struct GridColumnsBeforeFirstCellMirror {
 #[rkyv(remote = super::GridColumnsSpanned)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GridColumnsSpannedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -3498,16 +3498,16 @@ pub struct GridColumnsSpannedMirror {
 #[rkyv(remote = super::GroupStructuredDocumentTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GroupStructuredDocumentTagMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::GutterOnRightSideOfPage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GutterOnRightSideOfPageMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3520,16 +3520,16 @@ pub struct GutterOnRightSideOfPageMirror {
 pub struct HeaderMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::BlockContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::HeaderCellReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HeaderCellReferenceMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -3537,36 +3537,36 @@ pub struct HeaderCellReferenceMirror {
 #[rkyv(remote = super::HeaderCellsAssociatedWithTableCell)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HeaderCellsAssociatedWithTableCellMirror {
-    pub extra: (),
     pub header_cell_reference: Vec<super::HeaderCellReference>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::HeaderDefinitionFilePath)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HeaderDefinitionFilePathMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::HeaderReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HeaderReferenceMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub r#type: Option<super::HeaderOrFooterType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::HiddenTableRowMarker)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HiddenTableRowMarkerMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3574,8 +3574,8 @@ pub struct HiddenTableRowMarkerMirror {
 #[rkyv(remote = super::HiddenText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HiddenTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3583,8 +3583,8 @@ pub struct HiddenTextMirror {
 #[rkyv(remote = super::HideStyleFromMainUserInterface)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HideStyleFromMainUserInterfaceMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3592,8 +3592,8 @@ pub struct HideStyleFromMainUserInterfaceMirror {
 #[rkyv(remote = super::HorizontallyMergedCell)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HorizontallyMergedCellMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::MergedCellType>,
 }
 
@@ -3608,20 +3608,20 @@ pub struct HyperlinkMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ParagraphContent>,
     pub doc_location: Option<String>,
-    pub extra: (),
     pub history: Option<common_simple_types::OnOffValue>,
     pub id: Option<String>,
     pub tgt_frame: Option<String>,
     pub tooltip: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::HyphenationZone)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HyphenationZoneMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -3629,8 +3629,8 @@ pub struct HyphenationZoneMirror {
 #[rkyv(remote = super::IgnoreEndOfCellMarker)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnoreEndOfCellMarkerMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3638,8 +3638,8 @@ pub struct IgnoreEndOfCellMarkerMirror {
 #[rkyv(remote = super::IgnoreExactLineHeightForLastLineOnPage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnoreExactLineHeightForLastLineOnPageMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3647,8 +3647,8 @@ pub struct IgnoreExactLineHeightForLastLineOnPageMirror {
 #[rkyv(remote = super::IgnoreMinimumLineHeightForFirstLineOnPage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnoreMinimumLineHeightForFirstLineOnPageMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3656,8 +3656,8 @@ pub struct IgnoreMinimumLineHeightForFirstLineOnPageMirror {
 #[rkyv(remote = super::IgnoreMixedContent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnoreMixedContentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3665,8 +3665,8 @@ pub struct IgnoreMixedContentMirror {
 #[rkyv(remote = super::IgnorePageBreakFromContinuousSectionBreak)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnorePageBreakFromContinuousSectionBreakMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3674,8 +3674,8 @@ pub struct IgnorePageBreakFromContinuousSectionBreakMirror {
 #[rkyv(remote = super::IgnoreSpacingAboveAndBelow)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnoreSpacingAboveAndBelowMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3683,8 +3683,8 @@ pub struct IgnoreSpacingAboveAndBelowMirror {
 #[rkyv(remote = super::IgnoreTextWrappingAroundObjectsAtBottomOfPage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnoreTextWrappingAroundObjectsAtBottomOfPageMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3692,8 +3692,8 @@ pub struct IgnoreTextWrappingAroundObjectsAtBottomOfPageMirror {
 #[rkyv(remote = super::IgnoreVerticalAlignmentInTextboxes)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnoreVerticalAlignmentInTextboxesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3701,8 +3701,8 @@ pub struct IgnoreVerticalAlignmentInTextboxesMirror {
 #[rkyv(remote = super::Imprinting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ImprintingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3711,16 +3711,16 @@ pub struct ImprintingMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct InclusionExclusionDataForDataSourceMirror {
     pub data_about_single_data_source_record: Vec<super::DataAboutSingleDataSourceRecord>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::IndexOfColumnBeingMapped)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IndexOfColumnBeingMappedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -3728,9 +3728,9 @@ pub struct IndexOfColumnBeingMappedMirror {
 #[rkyv(remote = super::InformationAboutHTMLDivElements)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InformationAboutHTMLDivElementsMirror {
-    pub extra: (),
     pub information_about_single_html_div_element: Vec<super::InformationAboutSingleHTMLDivElement>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3745,13 +3745,13 @@ pub struct InformationAboutSingleHTMLDivElementMirror {
     pub child_div_elements: Vec<super::ChildDivElements>,
     pub data_for_html_blockquote_element: Option<Box<super::DataForHTMLBlockquoteElement>>,
     pub data_for_html_body_element: Option<Box<super::DataForHTMLBodyElement>>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub left_margin_for_html_div: Box<super::LeftMarginForHTMLDiv>,
     pub right_margin_for_html_div: Box<super::RightMarginForHTMLDiv>,
     pub set_of_borders_for_html_div: Option<Box<super::SetOfBordersForHTMLDiv>>,
     pub top_margin_for_html_div: Box<super::TopMarginForHTMLDiv>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3764,10 +3764,10 @@ pub struct InlineLevelCustomXMLElementMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ParagraphContent>,
     pub element: Option<common_simple_types::XMLName>,
-    pub extra: (),
     pub properties: Option<Box<super::CustomXMLElementProperties>>,
     pub unknown: officekit_markup_base::Unknown,
     pub uri: Option<String>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3780,10 +3780,10 @@ pub struct InlineLevelSmartTagMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ParagraphContent>,
     pub element: Option<common_simple_types::XMLName>,
-    pub extra: (),
     pub properties: Option<Box<super::SmartTagProperties>>,
     pub unknown: officekit_markup_base::Unknown,
     pub uri: Option<String>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3804,9 +3804,9 @@ pub struct InlineLevelStructuredDocumentTagMirror {
     pub custom_xml_conflict_ins_range_start:
         Vec<super::super::office_word_2010_wordml::CustomXmlConflictInsRangeStart>,
     pub end_character_properties: Option<Box<super::StructuredDocumentTagEndCharacterProperties>>,
-    pub extra: (),
     pub properties: Option<Box<super::StructuredDocumentTagProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3818,8 +3818,8 @@ pub struct InlineLevelStructuredDocumentTagMirror {
 pub struct InlineLevelStructuredDocumentTagContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ParagraphContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3830,9 +3830,9 @@ pub struct InsertedMathControlCharacterMirror {
     pub content: Option<Box<super::InsertedMathControlCharacterContent>>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub date_utc: Option<String>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3846,9 +3846,9 @@ pub struct InsertedRunContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::TrackedRunContent>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3857,17 +3857,17 @@ pub struct InsertedRunContentMirror {
 pub struct InsertedTableRowMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::InvalidatedFieldCache)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InvalidatedFieldCacheMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3875,19 +3875,19 @@ pub struct InvalidatedFieldCacheMirror {
 #[rkyv(remote = super::ItalicFontStyleEmbedding)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ItalicFontStyleEmbeddingMirror {
-    pub extra: (),
     pub font_key: Option<common_simple_types::Guid>,
     pub id: Option<String>,
     pub subsetted: Option<common_simple_types::OnOffValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Italics)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ItalicsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3895,8 +3895,8 @@ pub struct ItalicsMirror {
 #[rkyv(remote = super::Justification)]
 #[rkyv(attr(non_exhaustive))]
 pub struct JustificationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::HorizontalAlignmentType>,
 }
 
@@ -3904,8 +3904,8 @@ pub struct JustificationMirror {
 #[rkyv(remote = super::KeepAllLinesOnOnePage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct KeepAllLinesOnOnePageMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3913,8 +3913,8 @@ pub struct KeepAllLinesOnOnePageMirror {
 #[rkyv(remote = super::KeepParagraphWithNextParagraph)]
 #[rkyv(attr(non_exhaustive))]
 pub struct KeepParagraphWithNextParagraphMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3922,8 +3922,8 @@ pub struct KeepParagraphWithNextParagraphMirror {
 #[rkyv(remote = super::KeepSourceFormattingOnImport)]
 #[rkyv(attr(non_exhaustive))]
 pub struct KeepSourceFormattingOnImportMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3931,8 +3931,8 @@ pub struct KeepSourceFormattingOnImportMirror {
 #[rkyv(remote = super::LanguageIDForPhoneticGuide)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LanguageIDForPhoneticGuideMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -3942,8 +3942,8 @@ pub struct LanguageIDForPhoneticGuideMirror {
 pub struct LanguagesForRunContentMirror {
     pub bidi: Option<String>,
     pub east_asia: Option<String>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -3951,8 +3951,8 @@ pub struct LanguagesForRunContentMirror {
 #[rkyv(remote = super::LastReviewedAbstractNumberingDefinition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LastReviewedAbstractNumberingDefinitionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -3960,7 +3960,6 @@ pub struct LastReviewedAbstractNumberingDefinitionMirror {
 #[rkyv(remote = super::LatentStyleException)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LatentStyleExceptionMirror {
-    pub extra: (),
     pub locked: Option<common_simple_types::OnOffValue>,
     pub name: Option<String>,
     pub q_format: Option<common_simple_types::OnOffValue>,
@@ -3968,6 +3967,7 @@ pub struct LatentStyleExceptionMirror {
     pub ui_priority: Option<super::DecimalNumberValue>,
     pub unhide_when_used: Option<common_simple_types::OnOffValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3980,17 +3980,17 @@ pub struct LatentStyleInformationMirror {
     pub def_semi_hidden: Option<common_simple_types::OnOffValue>,
     pub def_ui_priority: Option<super::DecimalNumberValue>,
     pub def_unhide_when_used: Option<common_simple_types::OnOffValue>,
-    pub extra: (),
     pub latent_style_exception: Vec<super::LatentStyleException>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LayoutRawTableWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LayoutRawTableWidthMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3998,8 +3998,8 @@ pub struct LayoutRawTableWidthMirror {
 #[rkyv(remote = super::LeftAndRightMarginForFrame)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LeftAndRightMarginForFrameMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::MeasurementInPixels>,
 }
 
@@ -4008,7 +4008,6 @@ pub struct LeftAndRightMarginForFrameMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct LeftBorderMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub id: Option<String>,
     pub shadow: Option<common_simple_types::OnOffValue>,
@@ -4018,6 +4017,7 @@ pub struct LeftBorderMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -4025,8 +4025,8 @@ pub struct LeftBorderMirror {
 #[rkyv(remote = super::LeftMarginForHTMLDiv)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LeftMarginForHTMLDivMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::SignedMeasurementInTwentiethsOfPoint>,
 }
 
@@ -4035,7 +4035,6 @@ pub struct LeftMarginForHTMLDivMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct LeftParagraphBorderMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub shadow: Option<common_simple_types::OnOffValue>,
     pub space: Option<super::MeasurementInPoints>,
@@ -4044,6 +4043,7 @@ pub struct LeftParagraphBorderMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -4051,9 +4051,9 @@ pub struct LeftParagraphBorderMirror {
 #[rkyv(remote = super::LeftParagraphBorderTblWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LeftParagraphBorderTblWidthMirror {
-    pub extra: (),
     pub r#type: Option<super::TableWidthUnits>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
 
@@ -4061,8 +4061,8 @@ pub struct LeftParagraphBorderTblWidthMirror {
 #[rkyv(remote = super::LegacyEthiopicAmharicLineBreakingRules)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LegacyEthiopicAmharicLineBreakingRulesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4070,11 +4070,11 @@ pub struct LegacyEthiopicAmharicLineBreakingRulesMirror {
 #[rkyv(remote = super::LegacyNumberingLevelProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LegacyNumberingLevelPropertiesMirror {
-    pub extra: (),
     pub legacy: Option<common_simple_types::OnOffValue>,
     pub legacy_indent: Option<super::SignedMeasurementInTwentiethsOfPoint>,
     pub legacy_space: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4083,18 +4083,18 @@ pub struct LegacyNumberingLevelPropertiesMirror {
 pub struct LineNumberingSettingsMirror {
     pub count_by: Option<super::DecimalNumberValue>,
     pub distance: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
-    pub extra: (),
     pub restart: Option<super::LineNumberingRestartPosition>,
     pub start: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LineWrapLikeWord6)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineWrapLikeWord6Mirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4102,8 +4102,8 @@ pub struct LineWrapLikeWord6Mirror {
 #[rkyv(remote = super::LineWrapTrailingSpaces)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineWrapTrailingSpacesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4111,8 +4111,8 @@ pub struct LineWrapTrailingSpacesMirror {
 #[rkyv(remote = super::LinkToExternalQueryFile)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LinkToExternalQueryFileMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4121,7 +4121,6 @@ pub struct LinkToExternalQueryFileMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct LinkedObjectPropertiesMirror {
     pub draw_aspect: Option<super::EmbeddedObjectRepresentations>,
-    pub extra: (),
     pub field_codes: Option<String>,
     pub id: Option<String>,
     pub locked_field: Option<common_simple_types::OnOffValue>,
@@ -4129,14 +4128,15 @@ pub struct LinkedObjectPropertiesMirror {
     pub shape_id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
     pub update_mode: Option<super::EmbeddedObjectUpdateModes>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LinkedStyleReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LinkedStyleReferenceMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -4147,18 +4147,18 @@ pub struct LinkedStyleReferenceMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct ListOfGlossaryDocumentEntriesMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub glossary_document_entry: Vec<super::GlossaryDocumentEntry>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ListSeparatorForFieldCodeEvaluation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ListSeparatorForFieldCodeEvaluationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -4166,8 +4166,8 @@ pub struct ListSeparatorForFieldCodeEvaluationMirror {
 #[rkyv(remote = super::LockingSetting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LockingSettingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::LockingTypes>,
 }
 
@@ -4175,9 +4175,9 @@ pub struct LockingSettingMirror {
 #[rkyv(remote = super::MagnificationSetting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MagnificationSettingMirror {
-    pub extra: (),
     pub percent: Option<super::PercentageMeasurement>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::MagnificationPresetValues>,
 }
 
@@ -4185,8 +4185,8 @@ pub struct MagnificationSettingMirror {
 #[rkyv(remote = super::MailMergeErrorReportingSetting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MailMergeErrorReportingSettingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -4199,7 +4199,6 @@ pub struct MailMergeSettingsMirror {
     pub data_source_file_path: Option<Box<super::DataSourceFilePath>>,
     pub data_source_type: Box<super::DataSourceType>,
     pub do_not_suppress_blank_lines: Option<Box<super::DoNotSuppressBlankLines>>,
-    pub extra: (),
     pub header_definition_file_path: Option<Box<super::HeaderDefinitionFilePath>>,
     pub link_to_external_query_file: Option<Box<super::LinkToExternalQueryFile>>,
     pub mail_merge_error_reporting_setting: Option<Box<super::MailMergeErrorReportingSetting>>,
@@ -4212,6 +4211,7 @@ pub struct MailMergeSettingsMirror {
         Option<Box<super::RecordCurrentlyDisplayedInMergedDocument>>,
     pub source_document_type: Box<super::SourceDocumentType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub view_merged_data_within_document: Option<Box<super::ViewMergedDataWithinDocument>>,
 }
 
@@ -4219,8 +4219,8 @@ pub struct MailMergeSettingsMirror {
 #[rkyv(remote = super::MaintainLinkToExistingFile)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MaintainLinkToExistingFileMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4228,9 +4228,9 @@ pub struct MaintainLinkToExistingFileMirror {
 #[rkyv(remote = super::ManualRunWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ManualRunWidthMirror {
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -4238,8 +4238,8 @@ pub struct ManualRunWidthMirror {
 #[rkyv(remote = super::MaximumNumberOfConsecutivelyHyphenatedLines)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MaximumNumberOfConsecutivelyHyphenatedLinesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -4247,8 +4247,8 @@ pub struct MaximumNumberOfConsecutivelyHyphenatedLinesMirror {
 #[rkyv(remote = super::MergeFieldMapping)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MergeFieldMappingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::MergeFieldMappingTypes>,
 }
 
@@ -4256,8 +4256,8 @@ pub struct MergeFieldMappingMirror {
 #[rkyv(remote = super::MergedDocumentDestination)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MergedDocumentDestinationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::MergedDocumentDestinationTypes>,
 }
 
@@ -4265,8 +4265,8 @@ pub struct MergedDocumentDestinationMirror {
 #[rkyv(remote = super::MergedDocumentToEMailAttachment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MergedDocumentToEMailAttachmentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4274,8 +4274,8 @@ pub struct MergedDocumentToEMailAttachmentMirror {
 #[rkyv(remote = super::MergedEMailOrFaxSubjectLine)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MergedEMailOrFaxSubjectLineMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -4283,8 +4283,8 @@ pub struct MergedEMailOrFaxSubjectLineMirror {
 #[rkyv(remote = super::MirrorPageMargins)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MirrorPageMarginsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4293,9 +4293,9 @@ pub struct MirrorPageMarginsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct MoveDestinationLocationContainerEndMirror {
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4307,10 +4307,10 @@ pub struct MoveDestinationLocationContainerStartMirror {
     pub col_last: Option<super::DecimalNumberValue>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4319,9 +4319,9 @@ pub struct MoveDestinationLocationContainerStartMirror {
 pub struct MoveDestinationParagraphMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4335,9 +4335,9 @@ pub struct MoveDestinationRunContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::TrackedRunContent>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4345,9 +4345,9 @@ pub struct MoveDestinationRunContentMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct MoveSourceLocationContainerEndMirror {
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4359,10 +4359,10 @@ pub struct MoveSourceLocationContainerStartMirror {
     pub col_last: Option<super::DecimalNumberValue>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4371,9 +4371,9 @@ pub struct MoveSourceLocationContainerStartMirror {
 pub struct MoveSourceParagraphMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4387,9 +4387,9 @@ pub struct MoveSourceRunContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::TrackedRunContent>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4401,20 +4401,20 @@ pub struct MoveSourceRunContentMirror {
 pub struct NestedFramesetDefinitionMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::FramesetDefinitionContent>,
-    pub extra: (),
     pub frame_or_frameset_title: Option<Box<super::FrameOrFramesetTitle>>,
     pub frame_size: Option<Box<super::FrameSize>>,
     pub frameset_layout: Option<Box<super::FramesetLayout>>,
     pub frameset_splitter_properties: Option<Box<super::FramesetSplitterProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::NeverKernPunctuationCharacters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NeverKernPunctuationCharactersMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4422,16 +4422,16 @@ pub struct NeverKernPunctuationCharactersMirror {
 #[rkyv(remote = super::NonBreakingHyphenCharacter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonBreakingHyphenCharacterMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::NonComplexScriptFontSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonComplexScriptFontSizeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::MeasurementInHalfPoints>,
 }
 
@@ -4439,8 +4439,8 @@ pub struct NonComplexScriptFontSizeMirror {
 #[rkyv(remote = super::NotATrueTypeOutlineFont)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NotATrueTypeOutlineFontMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4448,8 +4448,8 @@ pub struct NotATrueTypeOutlineFontMirror {
 #[rkyv(remote = super::NumberOfColumnsInColumnBand)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberOfColumnsInColumnBandMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -4457,8 +4457,8 @@ pub struct NumberOfColumnsInColumnBandMirror {
 #[rkyv(remote = super::NumberOfPagesPerBooklet)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberOfPagesPerBookletMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -4466,8 +4466,8 @@ pub struct NumberOfPagesPerBookletMirror {
 #[rkyv(remote = super::NumberOfRowsInRowBand)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberOfRowsInRowBandMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -4476,18 +4476,18 @@ pub struct NumberOfRowsInRowBandMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingDefinitionInstanceMirror {
     pub abstract_numbering_definition_reference: Box<super::AbstractNumberingDefinitionReference>,
-    pub extra: (),
     pub num_id: Option<super::DecimalNumberValue>,
     pub numbering_level_definition_override: Vec<super::NumberingLevelDefinitionOverride>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::NumberingDefinitionInstanceReferenceNumId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingDefinitionInstanceReferenceNumIdMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -4495,13 +4495,13 @@ pub struct NumberingDefinitionInstanceReferenceNumIdMirror {
 #[rkyv(remote = super::NumberingDefinitionInstanceReferenceNumPr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingDefinitionInstanceReferenceNumPrMirror {
-    pub extra: (),
     pub inserted_table_row: Option<Box<super::InsertedTableRow>>,
     pub numbering_definition_instance_reference_num_id:
         Option<Box<super::NumberingDefinitionInstanceReferenceNumId>>,
     pub numbering_level_reference: Option<Box<super::NumberingLevelReference>>,
     pub previous_numbering_field_properties: Option<Box<super::PreviousNumberingFieldProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4512,22 +4512,22 @@ pub struct NumberingDefinitionInstanceReferenceNumPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingDefinitionsMirror {
     pub abstract_numbering_definition: Vec<super::AbstractNumberingDefinition>,
-    pub extra: (),
     pub last_reviewed_abstract_numbering_definition:
         Option<Box<super::LastReviewedAbstractNumberingDefinition>>,
     pub numbering_definition_instance: Vec<super::NumberingDefinitionInstance>,
     #[rkyv(omit_bounds)]
     pub picture_numbering_symbol_definition: Vec<super::PictureNumberingSymbolDefinition>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::NumberingFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingFormatMirror {
-    pub extra: (),
     pub format: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StNumberFormat>,
 }
 
@@ -4535,12 +4535,12 @@ pub struct NumberingFormatMirror {
 #[rkyv(remote = super::NumberingLevelDefinitionOverride)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingLevelDefinitionOverrideMirror {
-    pub extra: (),
     pub ilvl: Option<super::DecimalNumberValue>,
     pub numbering_level_override_definition: Option<Box<super::NumberingLevelOverrideDefinition>>,
     pub numbering_level_starting_value_override:
         Option<Box<super::NumberingLevelStartingValueOverride>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4551,7 +4551,6 @@ pub struct NumberingLevelOverrideDefinitionMirror {
         Option<Box<super::ContentBetweenNumberingSymbolAndText>>,
     pub display_all_levels_using_arabic_numerals:
         Option<Box<super::DisplayAllLevelsUsingArabicNumerals>>,
-    pub extra: (),
     pub ilvl: Option<super::DecimalNumberValue>,
     pub justification: Option<Box<super::Justification>>,
     pub legacy_numbering_level_properties: Option<Box<super::LegacyNumberingLevelProperties>>,
@@ -4567,14 +4566,15 @@ pub struct NumberingLevelOverrideDefinitionMirror {
     pub tentative: Option<common_simple_types::OnOffValue>,
     pub tplc: Option<super::EightDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::NumberingLevelReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingLevelReferenceMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -4582,8 +4582,8 @@ pub struct NumberingLevelReferenceMirror {
 #[rkyv(remote = super::NumberingLevelStartingValueOverride)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingLevelStartingValueOverrideMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -4591,9 +4591,9 @@ pub struct NumberingLevelStartingValueOverrideMirror {
 #[rkyv(remote = super::NumberingLevelText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingLevelTextMirror {
-    pub extra: (),
     pub null: Option<common_simple_types::OnOffValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -4601,8 +4601,8 @@ pub struct NumberingLevelTextMirror {
 #[rkyv(remote = super::NumberingStyleDefinition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingStyleDefinitionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -4610,8 +4610,8 @@ pub struct NumberingStyleDefinitionMirror {
 #[rkyv(remote = super::NumberingStyleReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingStyleReferenceMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -4619,8 +4619,8 @@ pub struct NumberingStyleReferenceMirror {
 #[rkyv(remote = super::NumberingTemplateCode)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingTemplateCodeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::EightDigitHexadecimalValue>,
 }
 
@@ -4628,17 +4628,17 @@ pub struct NumberingTemplateCodeMirror {
 #[rkyv(remote = super::ODSODataSourceFilePath)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ODSODataSourceFilePathMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ODSODataSourceType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ODSODataSourceTypeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::MailMergeODSODataSourceTypes>,
 }
 
@@ -4649,21 +4649,21 @@ pub struct OfficeDataSourceObjectSettingsMirror {
     pub column_delimiter_for_data_source: Option<Box<super::ColumnDelimiterForDataSource>>,
     pub data_source_table_name: Option<Box<super::DataSourceTableName>>,
     pub external_data_source_merge_field_mapping: Vec<super::ExternalDataSourceMergeFieldMapping>,
-    pub extra: (),
     pub first_row_contains_column_names: Option<Box<super::FirstRowContainsColumnNames>>,
     pub odso_data_source_file_path: Option<Box<super::ODSODataSourceFilePath>>,
     pub odso_data_source_type: Option<Box<super::ODSODataSourceType>>,
     pub reference_to_inclusion_exclusion_data: Vec<super::ReferenceToInclusionExclusionData>,
     pub udl_connection_string: Option<Box<super::UDLConnectionString>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::OfficeOpenXMLMath)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OfficeOpenXMLMathMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4671,8 +4671,8 @@ pub struct OfficeOpenXMLMathMirror {
 #[rkyv(remote = super::OnlyAllowEditingOfFormFields)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OnlyAllowEditingOfFormFieldsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4680,8 +4680,8 @@ pub struct OnlyAllowEditingOfFormFieldsMirror {
 #[rkyv(remote = super::OnlyExpandCondenseTextByWholePoints)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OnlyExpandCondenseTextByWholePointsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4689,8 +4689,8 @@ pub struct OnlyExpandCondenseTextByWholePointsMirror {
 #[rkyv(remote = super::OnlyPrintFormFieldContent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OnlyPrintFormFieldContentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4698,8 +4698,8 @@ pub struct OnlyPrintFormFieldContentMirror {
 #[rkyv(remote = super::OnlySaveCustomXMLMarkup)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OnlySaveCustomXMLMarkupMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4707,8 +4707,8 @@ pub struct OnlySaveCustomXMLMarkupMirror {
 #[rkyv(remote = super::OnlySaveFormFieldContent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OnlySaveFormFieldContentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4716,16 +4716,16 @@ pub struct OnlySaveFormFieldContentMirror {
 #[rkyv(remote = super::OptionalHyphenCharacter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OptionalHyphenCharacterMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::OptionalUserInterfaceSortingOrder)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OptionalUserInterfaceSortingOrderMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -4733,8 +4733,8 @@ pub struct OptionalUserInterfaceSortingOrderMirror {
 #[rkyv(remote = super::OriginalDocumentRevisionSaveID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OriginalDocumentRevisionSaveIDMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::EightDigitHexadecimalValue>,
 }
 
@@ -4742,8 +4742,8 @@ pub struct OriginalDocumentRevisionSaveIDMirror {
 #[rkyv(remote = super::OutputEncoding)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OutputEncodingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -4751,8 +4751,8 @@ pub struct OutputEncodingMirror {
 #[rkyv(remote = super::PageBorderExcludesFooter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PageBorderExcludesFooterMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4760,8 +4760,8 @@ pub struct PageBorderExcludesFooterMirror {
 #[rkyv(remote = super::PageBorderExcludesHeader)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PageBorderExcludesHeaderMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -4771,12 +4771,12 @@ pub struct PageBorderExcludesHeaderMirror {
 pub struct PageBordersMirror {
     pub bottom_border: Option<Box<super::BottomBorder>>,
     pub display: Option<super::PageBorderDisplayOptions>,
-    pub extra: (),
     pub left_border: Option<Box<super::LeftBorder>>,
     pub offset_from: Option<super::PageBorderPositioningBase>,
     pub right_border: Option<Box<super::RightBorder>>,
     pub top_border: Option<Box<super::TopBorder>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub z_order: Option<super::PageBorderZOrder>,
 }
 
@@ -4785,7 +4785,6 @@ pub struct PageBordersMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PageMarginsMirror {
     pub bottom: Option<super::SignedMeasurementInTwentiethsOfPoint>,
-    pub extra: (),
     pub footer: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub gutter: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub header: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
@@ -4793,14 +4792,15 @@ pub struct PageMarginsMirror {
     pub right: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub top: Option<super::SignedMeasurementInTwentiethsOfPoint>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PageNumberBlock)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PageNumberBlockMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4809,10 +4809,10 @@ pub struct PageNumberBlockMirror {
 pub struct PageNumberingSettingsMirror {
     pub chap_sep: Option<super::ChapterSeparatorTypes>,
     pub chap_style: Option<super::DecimalNumberValue>,
-    pub extra: (),
     pub fmt: Option<super::StNumberFormat>,
     pub start: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4820,10 +4820,10 @@ pub struct PageNumberingSettingsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PageSizeMirror {
     pub code: Option<super::DecimalNumberValue>,
-    pub extra: (),
     pub h: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub orient: Option<super::PageOrientation>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -4831,8 +4831,8 @@ pub struct PageSizeMirror {
 #[rkyv(remote = super::Panose1TypefaceClassificationNumber)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Panose1TypefaceClassificationNumberMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::Panose1Number>,
 }
 
@@ -4840,10 +4840,10 @@ pub struct Panose1TypefaceClassificationNumberMirror {
 #[rkyv(remote = super::PaperSourceInformation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PaperSourceInformationMirror {
-    pub extra: (),
     pub first: Option<super::DecimalNumberValue>,
     pub other: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4855,7 +4855,6 @@ pub struct PaperSourceInformationMirror {
 pub struct ParagraphMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ParagraphContent>,
-    pub extra: (),
     pub no_spell_err: Option<common_simple_types::OnOffValue>,
     pub para_id: Option<String>,
     pub properties: Option<Box<super::ParagraphProperties>>,
@@ -4866,14 +4865,15 @@ pub struct ParagraphMirror {
     pub rsid_r_pr: Option<super::EightDigitHexadecimalValue>,
     pub text_id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ParagraphAlignment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ParagraphAlignmentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::HorizontalAlignmentType>,
 }
 
@@ -4882,7 +4882,6 @@ pub struct ParagraphAlignmentMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ParagraphBorderAboveIdenticalParagraphsMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub shadow: Option<common_simple_types::OnOffValue>,
     pub space: Option<super::MeasurementInPoints>,
@@ -4891,6 +4890,7 @@ pub struct ParagraphBorderAboveIdenticalParagraphsMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -4898,9 +4898,9 @@ pub struct ParagraphBorderAboveIdenticalParagraphsMirror {
 #[rkyv(remote = super::ParagraphBorderAboveIdenticalParagraphsTblWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ParagraphBorderAboveIdenticalParagraphsTblWidthMirror {
-    pub extra: (),
     pub r#type: Option<super::TableWidthUnits>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
 
@@ -4909,7 +4909,6 @@ pub struct ParagraphBorderAboveIdenticalParagraphsTblWidthMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ParagraphBorderBelowIdenticalParagraphsMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub shadow: Option<common_simple_types::OnOffValue>,
     pub space: Option<super::MeasurementInPoints>,
@@ -4918,6 +4917,7 @@ pub struct ParagraphBorderBelowIdenticalParagraphsMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -4925,9 +4925,9 @@ pub struct ParagraphBorderBelowIdenticalParagraphsMirror {
 #[rkyv(remote = super::ParagraphBorderBelowIdenticalParagraphsTblWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ParagraphBorderBelowIdenticalParagraphsTblWidthMirror {
-    pub extra: (),
     pub r#type: Option<super::TableWidthUnits>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
 
@@ -4936,7 +4936,6 @@ pub struct ParagraphBorderBelowIdenticalParagraphsTblWidthMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ParagraphBorderBetweenFacingPagesMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub shadow: Option<common_simple_types::OnOffValue>,
     pub space: Option<super::MeasurementInPoints>,
@@ -4945,6 +4944,7 @@ pub struct ParagraphBorderBetweenFacingPagesMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -4953,7 +4953,6 @@ pub struct ParagraphBorderBetweenFacingPagesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ParagraphBorderBetweenIdenticalParagraphsMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub shadow: Option<common_simple_types::OnOffValue>,
     pub space: Option<super::MeasurementInPoints>,
@@ -4962,6 +4961,7 @@ pub struct ParagraphBorderBetweenIdenticalParagraphsMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -4969,7 +4969,6 @@ pub struct ParagraphBorderBetweenIdenticalParagraphsMirror {
 #[rkyv(remote = super::ParagraphBorders)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ParagraphBordersMirror {
-    pub extra: (),
     pub left_paragraph_border: Option<Box<super::LeftParagraphBorder>>,
     pub paragraph_border_above_identical_paragraphs:
         Option<Box<super::ParagraphBorderAboveIdenticalParagraphs>>,
@@ -4981,6 +4980,7 @@ pub struct ParagraphBordersMirror {
         Option<Box<super::ParagraphBorderBetweenIdenticalParagraphs>>,
     pub right_paragraph_border: Option<Box<super::RightParagraphBorder>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4989,7 +4989,6 @@ pub struct ParagraphBordersMirror {
 pub struct ParagraphConditionalFormattingMirror {
     pub even_h_band: Option<common_simple_types::OnOffValue>,
     pub even_v_band: Option<common_simple_types::OnOffValue>,
-    pub extra: (),
     pub first_column: Option<common_simple_types::OnOffValue>,
     pub first_row: Option<common_simple_types::OnOffValue>,
     pub first_row_first_column: Option<common_simple_types::OnOffValue>,
@@ -5001,6 +5000,7 @@ pub struct ParagraphConditionalFormattingMirror {
     pub odd_h_band: Option<common_simple_types::OnOffValue>,
     pub odd_v_band: Option<common_simple_types::OnOffValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::ConditionalFormattingBitmask>,
 }
 
@@ -5010,7 +5010,6 @@ pub struct ParagraphConditionalFormattingMirror {
 pub struct ParagraphIndentationMirror {
     pub end: Option<super::SignedMeasurementInTwentiethsOfPoint>,
     pub end_chars: Option<super::DecimalNumberValue>,
-    pub extra: (),
     pub first_line: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub first_line_chars: Option<super::DecimalNumberValue>,
     pub hanging: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
@@ -5022,14 +5021,15 @@ pub struct ParagraphIndentationMirror {
     pub start: Option<super::SignedMeasurementInTwentiethsOfPoint>,
     pub start_chars: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ParagraphMarkIsAlwaysHidden)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ParagraphMarkIsAlwaysHiddenMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5040,10 +5040,10 @@ pub struct ParagraphMarkRunPropertiesRevisionMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub date_utc: Option<String>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub previous_paragraph_mark_run_properties: Box<super::PreviousParagraphMarkRunProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5066,7 +5066,6 @@ pub struct ParagraphPropertiesMirror {
     pub document_grid_inter_line_paragraph_spacing:
         Option<Box<super::DocumentGridInterLineParagraphSpacing>>,
     pub east_asian_typography_rules: Option<Box<super::EastAsianTypographyRules>>,
-    pub extra: (),
     pub ignore_spacing_above_and_below: Option<Box<super::IgnoreSpacingAboveAndBelow>>,
     pub keep_all_lines_on_one_page: Option<Box<super::KeepAllLinesOnOnePage>>,
     pub keep_paragraph_with_next_paragraph: Option<Box<super::KeepParagraphWithNextParagraph>>,
@@ -5094,6 +5093,7 @@ pub struct ParagraphPropertiesMirror {
     pub unknown: officekit_markup_base::Unknown,
     pub use_left_right_indents_as_inside_outside_indents:
         Option<Box<super::UseLeftRightIndentsAsInsideOutsideIndents>>,
+    pub user_data: (),
     pub vertical_character_alignment_on_line: Option<Box<super::VerticalCharacterAlignmentOnLine>>,
 }
 
@@ -5116,7 +5116,6 @@ pub struct ParagraphPropertiesPPrGeneralMirror {
     pub document_grid_inter_line_paragraph_spacing:
         Option<Box<super::DocumentGridInterLineParagraphSpacing>>,
     pub east_asian_typography_rules: Option<Box<super::EastAsianTypographyRules>>,
-    pub extra: (),
     pub ignore_spacing_above_and_below: Option<Box<super::IgnoreSpacingAboveAndBelow>>,
     pub keep_all_lines_on_one_page: Option<Box<super::KeepAllLinesOnOnePage>>,
     pub keep_paragraph_with_next_paragraph: Option<Box<super::KeepParagraphWithNextParagraph>>,
@@ -5144,6 +5143,7 @@ pub struct ParagraphPropertiesPPrGeneralMirror {
     pub unknown: officekit_markup_base::Unknown,
     pub use_left_right_indents_as_inside_outside_indents:
         Option<Box<super::UseLeftRightIndentsAsInsideOutsideIndents>>,
+    pub user_data: (),
     pub vertical_character_alignment_on_line: Option<Box<super::VerticalCharacterAlignmentOnLine>>,
 }
 
@@ -5152,7 +5152,6 @@ pub struct ParagraphPropertiesPPrGeneralMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ParagraphShadingMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub fill: Option<super::ColorValue>,
     pub theme_color: Option<super::ThemeColor>,
     pub theme_fill: Option<super::ThemeColor>,
@@ -5161,6 +5160,7 @@ pub struct ParagraphShadingMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::ShadingPatterns>,
 }
 
@@ -5168,8 +5168,8 @@ pub struct ParagraphShadingMirror {
 #[rkyv(remote = super::ParagraphTextFlowDirection)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ParagraphTextFlowDirectionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StTextDirection>,
 }
 
@@ -5177,8 +5177,8 @@ pub struct ParagraphTextFlowDirectionMirror {
 #[rkyv(remote = super::ParentStyleID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ParentStyleIDMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -5186,8 +5186,8 @@ pub struct ParentStyleIDMirror {
 #[rkyv(remote = super::PercentageOfDocumentToUse)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PercentageOfDocumentToUseMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::PercentageMeasurement>,
 }
 
@@ -5200,11 +5200,11 @@ pub struct PercentageOfDocumentToUseMirror {
 pub struct PhoneticGuideMirror {
     #[rkyv(omit_bounds)]
     pub base_text: Box<super::PhoneticGuideBaseText>,
-    pub extra: (),
     pub properties: Box<super::PhoneticGuideProperties>,
     #[rkyv(omit_bounds)]
     pub text: Box<super::PhoneticGuideText>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5216,16 +5216,16 @@ pub struct PhoneticGuideMirror {
 pub struct PhoneticGuideBaseTextMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::PhoneticGuideContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PhoneticGuideBaseTextFontSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PhoneticGuideBaseTextFontSizeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::MeasurementInHalfPoints>,
 }
 
@@ -5234,13 +5234,13 @@ pub struct PhoneticGuideBaseTextFontSizeMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PhoneticGuidePropertiesMirror {
     pub distance_between_phonetic_guide_text: Box<super::DistanceBetweenPhoneticGuideText>,
-    pub extra: (),
     pub invalidated_field_cache: Option<Box<super::InvalidatedFieldCache>>,
     pub language_id_for_phonetic_guide: Box<super::LanguageIDForPhoneticGuide>,
     pub phonetic_guide_base_text_font_size: Box<super::PhoneticGuideBaseTextFontSize>,
     pub phonetic_guide_text_alignment: Box<super::PhoneticGuideTextAlignment>,
     pub phonetic_guide_text_font_size: Box<super::PhoneticGuideTextFontSize>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5252,16 +5252,16 @@ pub struct PhoneticGuidePropertiesMirror {
 pub struct PhoneticGuideTextMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::PhoneticGuideContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PhoneticGuideTextAlignment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PhoneticGuideTextAlignmentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StRubyAlign>,
 }
 
@@ -5269,8 +5269,8 @@ pub struct PhoneticGuideTextAlignmentMirror {
 #[rkyv(remote = super::PhoneticGuideTextFontSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PhoneticGuideTextFontSizeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::MeasurementInHalfPoints>,
 }
 
@@ -5283,17 +5283,17 @@ pub struct PhoneticGuideTextFontSizeMirror {
 pub struct PictureNumberingSymbolDefinitionMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::PictureNumberingSymbolDefinitionContent>,
-    pub extra: (),
     pub num_pic_bullet_id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PictureNumberingSymbolDefinitionReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PictureNumberingSymbolDefinitionReferenceMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -5301,16 +5301,16 @@ pub struct PictureNumberingSymbolDefinitionReferenceMirror {
 #[rkyv(remote = super::PictureStructuredDocumentTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PictureStructuredDocumentTagMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PixelsPerInchForGraphicsImages)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PixelsPerInchForGraphicsImagesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -5318,8 +5318,8 @@ pub struct PixelsPerInchForGraphicsImagesMirror {
 #[rkyv(remote = super::PlaceholderTextShouldBeResaved)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PlaceholderTextShouldBeResavedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5327,17 +5327,17 @@ pub struct PlaceholderTextShouldBeResavedMirror {
 #[rkyv(remote = super::PlainTextStructuredDocumentTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PlainTextStructuredDocumentTagMirror {
-    pub extra: (),
     pub multi_line: Option<common_simple_types::OnOffValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PositionGutterAtTopOfPage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PositionGutterAtTopOfPageMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5345,16 +5345,16 @@ pub struct PositionGutterAtTopOfPageMirror {
 #[rkyv(remote = super::PositionOfLastCalculatedPageBreak)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PositionOfLastCalculatedPageBreakMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PredefinedMergeFieldName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PredefinedMergeFieldNameMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -5362,9 +5362,9 @@ pub struct PredefinedMergeFieldNameMirror {
 #[rkyv(remote = super::PreferredTableCellWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PreferredTableCellWidthMirror {
-    pub extra: (),
     pub r#type: Option<super::TableWidthUnits>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
 
@@ -5372,9 +5372,9 @@ pub struct PreferredTableCellWidthMirror {
 #[rkyv(remote = super::PreferredTableWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PreferredTableWidthMirror {
-    pub extra: (),
     pub r#type: Option<super::TableWidthUnits>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
 
@@ -5382,9 +5382,9 @@ pub struct PreferredTableWidthMirror {
 #[rkyv(remote = super::PreferredWidthAfterTableRow)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PreferredWidthAfterTableRowMirror {
-    pub extra: (),
     pub r#type: Option<super::TableWidthUnits>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
 
@@ -5392,9 +5392,9 @@ pub struct PreferredWidthAfterTableRowMirror {
 #[rkyv(remote = super::PreferredWidthBeforeTableRow)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PreferredWidthBeforeTableRowMirror {
-    pub extra: (),
     pub r#type: Option<super::TableWidthUnits>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
 
@@ -5402,8 +5402,8 @@ pub struct PreferredWidthBeforeTableRowMirror {
 #[rkyv(remote = super::PreventModificationOfThemesPart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PreventModificationOfThemesPartMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5411,8 +5411,8 @@ pub struct PreventModificationOfThemesPartMirror {
 #[rkyv(remote = super::PreventReplacementOfStylesPart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PreventReplacementOfStylesPartMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5420,8 +5420,8 @@ pub struct PreventReplacementOfStylesPartMirror {
 #[rkyv(remote = super::PreventTextFramesFromOverlapping)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PreventTextFramesFromOverlappingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5432,10 +5432,10 @@ pub struct PreviousNumberingFieldPropertiesMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub date_utc: Option<String>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub original: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5446,7 +5446,6 @@ pub struct PreviousParagraphMarkRunPropertiesMirror {
     pub conflict_change_content: Option<Box<super::ConflictChangeContent>>,
     pub content: Vec<super::RunPropertiesContent>,
     pub deleted_table_row: Option<Box<super::DeletedTableRow>>,
-    pub extra: (),
     pub glow: Vec<super::super::office_word_2010_wordml::Glow>,
     pub inserted_table_row: Option<Box<super::InsertedTableRow>>,
     pub ligatures: Vec<super::super::office_word_2010_wordml::Ligatures>,
@@ -5462,6 +5461,7 @@ pub struct PreviousParagraphMarkRunPropertiesMirror {
     pub text_fill: Vec<super::super::office_word_2010_wordml::TextFill>,
     pub text_outline: Vec<super::super::office_word_2010_wordml::TextOutline>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5483,7 +5483,6 @@ pub struct PreviousParagraphPropertiesMirror {
     pub document_grid_inter_line_paragraph_spacing:
         Option<Box<super::DocumentGridInterLineParagraphSpacing>>,
     pub east_asian_typography_rules: Option<Box<super::EastAsianTypographyRules>>,
-    pub extra: (),
     pub ignore_spacing_above_and_below: Option<Box<super::IgnoreSpacingAboveAndBelow>>,
     pub keep_all_lines_on_one_page: Option<Box<super::KeepAllLinesOnOnePage>>,
     pub keep_paragraph_with_next_paragraph: Option<Box<super::KeepParagraphWithNextParagraph>>,
@@ -5509,6 +5508,7 @@ pub struct PreviousParagraphPropertiesMirror {
     pub unknown: officekit_markup_base::Unknown,
     pub use_left_right_indents_as_inside_outside_indents:
         Option<Box<super::UseLeftRightIndentsAsInsideOutsideIndents>>,
+    pub user_data: (),
     pub vertical_character_alignment_on_line: Option<Box<super::VerticalCharacterAlignmentOnLine>>,
 }
 
@@ -5518,7 +5518,6 @@ pub struct PreviousParagraphPropertiesMirror {
 pub struct PreviousRunPropertiesMirror {
     pub cntxt_alts: Vec<super::super::office_word_2010_wordml::CntxtAlts>,
     pub content: Vec<super::RunPropertiesContent>,
-    pub extra: (),
     pub glow: Vec<super::super::office_word_2010_wordml::Glow>,
     pub ligatures: Vec<super::super::office_word_2010_wordml::Ligatures>,
     pub num_form: Vec<super::super::office_word_2010_wordml::NumForm>,
@@ -5531,6 +5530,7 @@ pub struct PreviousRunPropertiesMirror {
     pub text_fill: Vec<super::super::office_word_2010_wordml::TextFill>,
     pub text_outline: Vec<super::super::office_word_2010_wordml::TextOutline>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5541,7 +5541,6 @@ pub struct PreviousSectionPropertiesMirror {
     pub different_first_page_headers_and_footers:
         Option<Box<super::DifferentFirstPageHeadersAndFooters>>,
     pub document_grid: Option<Box<super::DocumentGrid>>,
-    pub extra: (),
     pub footnote_columns: Option<Box<super::super::office_word_2012_wordml::FootnoteColumns>>,
     pub gutter_on_right_side_of_page: Option<Box<super::GutterOnRightSideOfPage>>,
     pub line_numbering_settings: Option<Box<super::LineNumberingSettings>>,
@@ -5564,6 +5563,7 @@ pub struct PreviousSectionPropertiesMirror {
     pub suppress_endnotes_in_document: Option<Box<super::SuppressEndnotesInDocument>>,
     pub table_cell_vertical_alignment: Option<Box<super::TableCellVerticalAlignment>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5572,7 +5572,6 @@ pub struct PreviousSectionPropertiesMirror {
 pub struct PreviousTableCellPropertiesMirror {
     pub content: Option<Box<super::CellMarkupContent>>,
     pub dont_wrap_cell_content: Option<Box<super::DontWrapCellContent>>,
-    pub extra: (),
     pub fit_text_within_cell: Option<Box<super::FitTextWithinCell>>,
     pub grid_columns_spanned: Option<Box<super::GridColumnsSpanned>>,
     pub header_cells_associated_with_table_cell:
@@ -5587,6 +5586,7 @@ pub struct PreviousTableCellPropertiesMirror {
     pub table_cell_borders: Option<Box<super::TableCellBorders>>,
     pub table_cell_vertical_alignment: Option<Box<super::TableCellVerticalAlignment>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub vertically_merged_cell: Option<Box<super::VerticallyMergedCell>>,
 }
 
@@ -5595,15 +5595,14 @@ pub struct PreviousTableCellPropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PreviousTableGridMirror {
     pub column_definition: Vec<super::GridColumnDefinition>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PreviousTableLevelPropertyExceptions)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PreviousTableLevelPropertyExceptionsMirror {
-    pub extra: (),
     pub paragraph_shading: Option<Box<super::ParagraphShading>>,
     pub preferred_table_width: Option<Box<super::PreferredTableWidth>>,
     pub table_alignment_exception: Option<Box<super::TableAlignmentException>>,
@@ -5615,13 +5614,13 @@ pub struct PreviousTableLevelPropertyExceptionsMirror {
     pub table_style_conditional_formatting_settings_exception:
         Option<Box<super::TableStyleConditionalFormattingSettingsException>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PreviousTableProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PreviousTablePropertiesMirror {
-    pub extra: (),
     pub floating_table_allows_overlap: Option<Box<super::FloatingTableAllowsOverlap>>,
     pub floating_table_positioning: Option<Box<super::FloatingTablePositioning>>,
     pub number_of_columns_in_column_band: Option<Box<super::NumberOfColumnsInColumnBand>>,
@@ -5640,6 +5639,7 @@ pub struct PreviousTablePropertiesMirror {
     pub table_style_conditional_formatting_settings_exception:
         Option<Box<super::TableStyleConditionalFormattingSettingsException>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visually_right_to_left_table: Option<Box<super::VisuallyRightToLeftTable>>,
 }
 
@@ -5648,16 +5648,16 @@ pub struct PreviousTablePropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PreviousTableRowPropertiesMirror {
     pub content: Vec<super::TableRowPropertiesContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PrimaryStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrimaryStyleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5665,8 +5665,8 @@ pub struct PrimaryStyleMirror {
 #[rkyv(remote = super::PrimaryStyleName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrimaryStyleNameMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -5674,8 +5674,8 @@ pub struct PrimaryStyleNameMirror {
 #[rkyv(remote = super::PrintBodyTextBeforeHeaderFooterContents)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrintBodyTextBeforeHeaderFooterContentsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5683,8 +5683,8 @@ pub struct PrintBodyTextBeforeHeaderFooterContentsMirror {
 #[rkyv(remote = super::PrintColorsAsBlackAndWhiteWithoutDithering)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrintColorsAsBlackAndWhiteWithoutDitheringMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5692,8 +5692,8 @@ pub struct PrintColorsAsBlackAndWhiteWithoutDitheringMirror {
 #[rkyv(remote = super::PrintFractionalCharacterWidths)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrintFractionalCharacterWidthsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5701,8 +5701,8 @@ pub struct PrintFractionalCharacterWidthsMirror {
 #[rkyv(remote = super::PrintPostScriptCodesWithDocumentText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrintPostScriptCodesWithDocumentTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5710,8 +5710,8 @@ pub struct PrintPostScriptCodesWithDocumentTextMirror {
 #[rkyv(remote = super::PrintTwoPagesPerSheet)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrintTwoPagesPerSheetMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5719,8 +5719,8 @@ pub struct PrintTwoPagesPerSheetMirror {
 #[rkyv(remote = super::ProgrammaticTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ProgrammaticTagMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -5728,9 +5728,9 @@ pub struct ProgrammaticTagMirror {
 #[rkyv(remote = super::ProofingErrorAnchor)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ProofingErrorAnchorMirror {
-    pub extra: (),
     pub r#type: Option<super::ProofingErrorType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5741,7 +5741,6 @@ pub struct PropertiesForASingleFontMirror {
     pub bold_italic_font_style_embedding: Option<Box<super::BoldItalicFontStyleEmbedding>>,
     pub bold_style_font_style_embedding: Option<Box<super::BoldStyleFontStyleEmbedding>>,
     pub character_set_supported_by_font: Option<Box<super::CharacterSetSupportedByFont>>,
-    pub extra: (),
     pub family: Option<Box<super::FontFamily>>,
     pub italic_font_style_embedding: Option<Box<super::ItalicFontStyleEmbedding>>,
     pub name: Option<String>,
@@ -5753,14 +5752,15 @@ pub struct PropertiesForASingleFontMirror {
     pub supported_unicode_subranges_and_code_pages:
         Option<Box<super::SupportedUnicodeSubrangesAndCodePages>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::QueryForDataSourceRecords)]
 #[rkyv(attr(non_exhaustive))]
 pub struct QueryForDataSourceRecordsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -5768,8 +5768,8 @@ pub struct QueryForDataSourceRecordsMirror {
 #[rkyv(remote = super::RadixPointForFieldCodeEvaluation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RadixPointForFieldCodeEvaluationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -5778,9 +5778,9 @@ pub struct RadixPointForFieldCodeEvaluationMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RangePermissionEndMirror {
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5792,17 +5792,17 @@ pub struct RangePermissionStartMirror {
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
     pub ed: Option<String>,
     pub ed_grp: Option<super::RangePermisionEditingGroup>,
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RecalculateFieldsWhenModified)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RecalculateFieldsWhenModifiedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5810,8 +5810,8 @@ pub struct RecalculateFieldsWhenModifiedMirror {
 #[rkyv(remote = super::RecommendWebPageFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RecommendWebPageFormatMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5819,8 +5819,8 @@ pub struct RecommendWebPageFormatMirror {
 #[rkyv(remote = super::RecordCurrentlyDisplayedInMergedDocument)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RecordCurrentlyDisplayedInMergedDocumentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -5828,8 +5828,8 @@ pub struct RecordCurrentlyDisplayedInMergedDocumentMirror {
 #[rkyv(remote = super::RecordIsIncludedInMailMerge)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RecordIsIncludedInMailMergeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5837,26 +5837,26 @@ pub struct RecordIsIncludedInMailMergeMirror {
 #[rkyv(remote = super::ReferenceToInclusionExclusionData)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferenceToInclusionExclusionDataMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ReferenceToPrinterSettingsData)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferenceToPrinterSettingsDataMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ReferencedCharacterStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferencedCharacterStyleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -5864,8 +5864,8 @@ pub struct ReferencedCharacterStyleMirror {
 #[rkyv(remote = super::ReferencedParagraphStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferencedParagraphStyleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -5873,8 +5873,8 @@ pub struct ReferencedParagraphStyleMirror {
 #[rkyv(remote = super::ReferencedTableStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferencedTableStyleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -5882,19 +5882,19 @@ pub struct ReferencedTableStyleMirror {
 #[rkyv(remote = super::RegularFontStyleEmbedding)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RegularFontStyleEmbeddingMirror {
-    pub extra: (),
     pub font_key: Option<common_simple_types::Guid>,
     pub id: Option<String>,
     pub subsetted: Option<common_simple_types::OnOffValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RemoveDateAndTimeFromAnnotations)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RemoveDateAndTimeFromAnnotationsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5902,8 +5902,8 @@ pub struct RemoveDateAndTimeFromAnnotationsMirror {
 #[rkyv(remote = super::RemovePersonalInformation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RemovePersonalInformationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5911,8 +5911,8 @@ pub struct RemovePersonalInformationMirror {
 #[rkyv(remote = super::RemoveSemiHiddenProperty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RemoveSemiHiddenPropertyMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5920,8 +5920,8 @@ pub struct RemoveSemiHiddenPropertyMirror {
 #[rkyv(remote = super::RemoveSmartTagsWhenSaving)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RemoveSmartTagsWhenSavingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5929,8 +5929,8 @@ pub struct RemoveSmartTagsWhenSavingMirror {
 #[rkyv(remote = super::RemoveStructuredDocumentTagWhenEdited)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RemoveStructuredDocumentTagWhenEditedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5938,8 +5938,8 @@ pub struct RemoveStructuredDocumentTagWhenEditedMirror {
 #[rkyv(remote = super::RepeatTableRow)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RepeatTableRowMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5947,8 +5947,8 @@ pub struct RepeatTableRowMirror {
 #[rkyv(remote = super::RequireExactSizeDuringFontSubstitution)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RequireExactSizeDuringFontSubstitutionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5956,8 +5956,8 @@ pub struct RequireExactSizeDuringFontSubstitutionMirror {
 #[rkyv(remote = super::RestartNumberingLevelSymbol)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RestartNumberingLevelSymbolMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -5965,8 +5965,8 @@ pub struct RestartNumberingLevelSymbolMirror {
 #[rkyv(remote = super::ReverseBookFoldPrinting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReverseBookFoldPrintingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -5974,8 +5974,8 @@ pub struct ReverseBookFoldPrintingMirror {
 #[rkyv(remote = super::RevisionIdentifierForStyleDefinition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RevisionIdentifierForStyleDefinitionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::EightDigitHexadecimalValue>,
 }
 
@@ -5986,10 +5986,10 @@ pub struct RevisionInformationForParagraphPropertiesMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub date_utc: Option<String>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub previous_paragraph_properties: Box<super::PreviousParagraphProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5999,10 +5999,10 @@ pub struct RevisionInformationForRunPropertiesMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub date_utc: Option<String>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub previous_run_properties: Box<super::PreviousRunProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6012,10 +6012,10 @@ pub struct RevisionInformationForSectionPropertiesMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub date_utc: Option<String>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub previous_section_properties: Option<Box<super::PreviousSectionProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6025,10 +6025,10 @@ pub struct RevisionInformationForTableCellPropertiesMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub date_utc: Option<String>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub previous_table_cell_properties: Box<super::PreviousTableCellProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6038,10 +6038,10 @@ pub struct RevisionInformationForTableLevelPropertyExceptionsMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub date_utc: Option<String>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub previous_table_level_property_exceptions: Box<super::PreviousTableLevelPropertyExceptions>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6051,10 +6051,10 @@ pub struct RevisionInformationForTablePropertiesMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub date_utc: Option<String>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub previous_table_properties: Box<super::PreviousTableProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6064,20 +6064,20 @@ pub struct RevisionInformationForTableRowPropertiesMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub date_utc: Option<String>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub previous_table_row_properties: Box<super::PreviousTableRowProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RevisionSaveIDValues)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RevisionSaveIDValuesMirror {
-    pub extra: (),
     pub original_document_revision_save_id: Option<Box<super::OriginalDocumentRevisionSaveID>>,
     pub revision_identifier_for_style_definition: Vec<super::RevisionIdentifierForStyleDefinition>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6089,16 +6089,16 @@ pub struct RevisionSaveIDValuesMirror {
 pub struct RichTextBoxContentContainerMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::BlockContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RichTextStructuredDocumentTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RichTextStructuredDocumentTagMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6106,7 +6106,6 @@ pub struct RichTextStructuredDocumentTagMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RightBorderMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub id: Option<String>,
     pub shadow: Option<common_simple_types::OnOffValue>,
@@ -6116,6 +6115,7 @@ pub struct RightBorderMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -6123,8 +6123,8 @@ pub struct RightBorderMirror {
 #[rkyv(remote = super::RightMarginForHTMLDiv)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RightMarginForHTMLDivMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::SignedMeasurementInTwentiethsOfPoint>,
 }
 
@@ -6133,7 +6133,6 @@ pub struct RightMarginForHTMLDivMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RightParagraphBorderMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub shadow: Option<common_simple_types::OnOffValue>,
     pub space: Option<super::MeasurementInPoints>,
@@ -6142,6 +6141,7 @@ pub struct RightParagraphBorderMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -6149,9 +6149,9 @@ pub struct RightParagraphBorderMirror {
 #[rkyv(remote = super::RightParagraphBorderTblWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RightParagraphBorderTblWidthMirror {
-    pub extra: (),
     pub r#type: Option<super::TableWidthUnits>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
 
@@ -6159,8 +6159,8 @@ pub struct RightParagraphBorderTblWidthMirror {
 #[rkyv(remote = super::RightToLeftParagraphLayout)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RightToLeftParagraphLayoutMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6168,8 +6168,8 @@ pub struct RightToLeftParagraphLayoutMirror {
 #[rkyv(remote = super::RightToLeftText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RightToLeftTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6183,10 +6183,10 @@ pub struct RowLevelCustomXMLElementMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ContentRowContent>,
     pub element: Option<common_simple_types::XMLName>,
-    pub extra: (),
     pub properties: Option<Box<super::CustomXMLElementProperties>>,
     pub unknown: officekit_markup_base::Unknown,
     pub uri: Option<String>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6207,9 +6207,9 @@ pub struct RowLevelStructuredDocumentTagMirror {
     pub custom_xml_conflict_ins_range_start:
         Vec<super::super::office_word_2010_wordml::CustomXmlConflictInsRangeStart>,
     pub end_character_properties: Option<Box<super::StructuredDocumentTagEndCharacterProperties>>,
-    pub extra: (),
     pub properties: Option<Box<super::StructuredDocumentTagProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6221,19 +6221,19 @@ pub struct RowLevelStructuredDocumentTagMirror {
 pub struct RowLevelStructuredDocumentTagContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ContentRowContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RunContentColor)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RunContentColorMirror {
-    pub extra: (),
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::ColorValue>,
 }
 
@@ -6247,11 +6247,11 @@ pub struct RunFontsMirror {
     pub cstheme: Option<super::ThemeFont>,
     pub east_asia: Option<String>,
     pub east_asia_theme: Option<super::ThemeFont>,
-    pub extra: (),
     pub h_ansi: Option<String>,
     pub h_ansi_theme: Option<super::ThemeFont>,
     pub hint: Option<super::FontTypeHint>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6260,7 +6260,6 @@ pub struct RunFontsMirror {
 pub struct RunPropertiesMirror {
     pub cntxt_alts: Option<Box<super::super::office_word_2010_wordml::CntxtAlts>>,
     pub content: Vec<super::RunPropertiesContent>,
-    pub extra: (),
     pub glow: Option<Box<super::super::office_word_2010_wordml::Glow>>,
     pub ligatures: Option<Box<super::super::office_word_2010_wordml::Ligatures>>,
     pub num_form: Option<Box<super::super::office_word_2010_wordml::NumForm>>,
@@ -6274,6 +6273,7 @@ pub struct RunPropertiesMirror {
     pub text_fill: Option<Box<super::super::office_word_2010_wordml::TextFill>>,
     pub text_outline: Option<Box<super::super::office_word_2010_wordml::TextOutline>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6283,7 +6283,6 @@ pub struct RunPropertiesForTheParagraphMarkMirror {
     pub cntxt_alts: Option<Box<super::super::office_word_2010_wordml::CntxtAlts>>,
     pub conflict_change_content: Option<Box<super::ConflictChangeContent>>,
     pub deleted_table_row: Option<Box<super::DeletedTableRow>>,
-    pub extra: (),
     pub glow: Option<Box<super::super::office_word_2010_wordml::Glow>>,
     pub inserted_table_row: Option<Box<super::InsertedTableRow>>,
     pub ligatures: Option<Box<super::super::office_word_2010_wordml::Ligatures>>,
@@ -6301,14 +6300,15 @@ pub struct RunPropertiesForTheParagraphMarkMirror {
     pub text_fill: Option<Box<super::super::office_word_2010_wordml::TextFill>>,
     pub text_outline: Option<Box<super::super::office_word_2010_wordml::TextOutline>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SaveSmartTagData)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SaveSmartTagDataMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6316,8 +6316,8 @@ pub struct SaveSmartTagDataMirror {
 #[rkyv(remote = super::SaveThroughCustomXSLTransform)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SaveThroughCustomXSLTransformMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6325,8 +6325,8 @@ pub struct SaveThroughCustomXSLTransformMirror {
 #[rkyv(remote = super::ScrollbarDisplayOption)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScrollbarDisplayOptionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::FrameScrollbarVisibility>,
 }
 
@@ -6334,8 +6334,8 @@ pub struct ScrollbarDisplayOptionMirror {
 #[rkyv(remote = super::SectionType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SectionTypeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StSectionMark>,
 }
 
@@ -6344,20 +6344,19 @@ pub struct SectionTypeMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SectionWideEndnotePropertiesMirror {
     pub endnote_placement: Option<Box<super::EndnotePlacement>>,
-    pub extra: (),
     pub footnote_and_endnote_numbering_restart_location:
         Option<Box<super::FootnoteAndEndnoteNumberingRestartLocation>>,
     pub footnote_and_endnote_numbering_starting_value:
         Option<Box<super::FootnoteAndEndnoteNumberingStartingValue>>,
     pub numbering_format: Option<Box<super::NumberingFormat>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SectionWideFootnoteProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SectionWideFootnotePropertiesMirror {
-    pub extra: (),
     pub footnote_and_endnote_numbering_restart_location:
         Option<Box<super::FootnoteAndEndnoteNumberingRestartLocation>>,
     pub footnote_and_endnote_numbering_starting_value:
@@ -6365,14 +6364,15 @@ pub struct SectionWideFootnotePropertiesMirror {
     pub footnote_placement: Option<Box<super::FootnotePlacement>>,
     pub numbering_format: Option<Box<super::NumberingFormat>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SelectFldWithFirstOrLastChar)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SelectFldWithFirstOrLastCharMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6380,7 +6380,6 @@ pub struct SelectFldWithFirstOrLastCharMirror {
 #[rkyv(remote = super::SetOfBordersForHTMLDiv)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SetOfBordersForHTMLDivMirror {
-    pub extra: (),
     pub left_paragraph_border: Option<Box<super::LeftParagraphBorder>>,
     pub paragraph_border_above_identical_paragraphs:
         Option<Box<super::ParagraphBorderAboveIdenticalParagraphs>>,
@@ -6388,6 +6387,7 @@ pub struct SetOfBordersForHTMLDivMirror {
         Option<Box<super::ParagraphBorderBelowIdenticalParagraphs>>,
     pub right_paragraph_border: Option<Box<super::RightParagraphBorder>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6395,16 +6395,16 @@ pub struct SetOfBordersForHTMLDivMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SetOfCustomTabStopsMirror {
     pub custom_tab_stop: Vec<super::CustomTabStop>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Shadow)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShadowMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6412,8 +6412,8 @@ pub struct ShadowMirror {
 #[rkyv(remote = super::ShowEMailMessageHeader)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShowEMailMessageHeaderMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6421,8 +6421,8 @@ pub struct ShowEMailMessageHeaderMirror {
 #[rkyv(remote = super::ShowXMLTags)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShowXMLTagsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6437,10 +6437,10 @@ pub struct SimpleFieldMirror {
     pub content: Vec<super::ParagraphContent>,
     pub custom_field_data: Option<Box<super::CustomFieldData>>,
     pub dirty: Option<common_simple_types::OnOffValue>,
-    pub extra: (),
     pub fld_lock: Option<common_simple_types::OnOffValue>,
     pub instr: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6448,9 +6448,9 @@ pub struct SimpleFieldMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SingleAutomaticCaptioningSettingMirror {
     pub caption: Option<String>,
-    pub extra: (),
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6458,7 +6458,6 @@ pub struct SingleAutomaticCaptioningSettingMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SingleCaptionTypeDefinitionMirror {
     pub chap_num: Option<common_simple_types::OnOffValue>,
-    pub extra: (),
     pub heading: Option<super::DecimalNumberValue>,
     pub name: Option<String>,
     pub no_label: Option<common_simple_types::OnOffValue>,
@@ -6466,15 +6465,16 @@ pub struct SingleCaptionTypeDefinitionMirror {
     pub pos: Option<super::AutomaticCaptionPositioningValues>,
     pub sep: Option<super::ChapterSeparatorTypes>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SingleColumnDefinition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SingleColumnDefinitionMirror {
-    pub extra: (),
     pub space: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -6482,9 +6482,9 @@ pub struct SingleColumnDefinitionMirror {
 #[rkyv(remote = super::SingleDocumentVariable)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SingleDocumentVariableMirror {
-    pub extra: (),
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -6492,7 +6492,6 @@ pub struct SingleDocumentVariableMirror {
 #[rkyv(remote = super::SingleFrameProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SingleFramePropertiesMirror {
-    pub extra: (),
     pub frame_cannot_be_resized: Option<Box<super::FrameCannotBeResized>>,
     pub frame_long_description: Option<Box<super::FrameLongDescription>>,
     pub frame_or_frameset_title: Option<Box<super::FrameOrFramesetTitle>>,
@@ -6504,14 +6503,15 @@ pub struct SingleFramePropertiesMirror {
     pub source_file_for_frame: Option<Box<super::SourceFileForFrame>>,
     pub top_and_bottom_margin_for_frame: Option<Box<super::TopAndBottomMarginForFrame>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SingleStrikethrough)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SingleStrikethroughMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6519,7 +6519,6 @@ pub struct SingleStrikethroughMirror {
 #[rkyv(remote = super::SingleTableCellMargins)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SingleTableCellMarginsMirror {
-    pub extra: (),
     pub left_paragraph_border_tbl_width: Option<Box<super::LeftParagraphBorderTblWidth>>,
     pub paragraph_border_above_identical_paragraphs_tbl_width:
         Option<Box<super::ParagraphBorderAboveIdenticalParagraphsTblWidth>>,
@@ -6531,14 +6530,15 @@ pub struct SingleTableCellMarginsMirror {
     pub table_cell_trailing_margin_exception_tbl_width:
         Option<Box<super::TableCellTrailingMarginExceptionTblWidth>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SmallCaps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SmallCapsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6547,16 +6547,16 @@ pub struct SmallCapsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SmartTagPropertiesMirror {
     pub custom_xml_attribute: Vec<super::CustomXMLAttribute>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SourceDocumentType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SourceDocumentTypeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::SourceDocumentTypes>,
 }
 
@@ -6564,9 +6564,9 @@ pub struct SourceDocumentTypeMirror {
 #[rkyv(remote = super::SourceFileForFrame)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SourceFileForFrameMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6579,46 +6579,46 @@ pub struct SpacingBetweenLinesAndAboveBelowParagraphMirror {
     pub before: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub before_autospacing: Option<common_simple_types::OnOffValue>,
     pub before_lines: Option<super::DecimalNumberValue>,
-    pub extra: (),
     pub line: Option<super::SignedMeasurementInTwentiethsOfPoint>,
     pub line_rule: Option<super::LineSpacingRule>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SpecialEndnoteList)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SpecialEndnoteListMirror {
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SpecialFootnoteList)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SpecialFootnoteListMirror {
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SpellingAndGrammaticalCheckingState)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SpellingAndGrammaticalCheckingStateMirror {
-    pub extra: (),
     pub grammar: Option<super::ProofingStateValues>,
     pub spelling: Option<super::ProofingStateValues>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SplitPgBreakAndParaMark)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SplitPgBreakAndParaMarkMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6626,8 +6626,8 @@ pub struct SplitPgBreakAndParaMarkMirror {
 #[rkyv(remote = super::StartParagraphOnNextPage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StartParagraphOnNextPageMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6635,8 +6635,8 @@ pub struct StartParagraphOnNextPageMirror {
 #[rkyv(remote = super::StartingValue)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StartingValueMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -6644,8 +6644,8 @@ pub struct StartingValueMirror {
 #[rkyv(remote = super::StrictKinsokuRules)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StrictKinsokuRulesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6653,17 +6653,17 @@ pub struct StrictKinsokuRulesMirror {
 #[rkyv(remote = super::StructuredDocumentTagEndCharacterProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StructuredDocumentTagEndCharacterPropertiesMirror {
-    pub extra: (),
     pub run_properties: Vec<super::RunProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::StructuredDocumentTagLabel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StructuredDocumentTagLabelMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -6671,8 +6671,8 @@ pub struct StructuredDocumentTagLabelMirror {
 #[rkyv(remote = super::StructuredDocumentTagNavigationOrderIndex)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StructuredDocumentTagNavigationOrderIndexMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::UnsignedDecimalNumberValue>,
 }
 
@@ -6681,8 +6681,8 @@ pub struct StructuredDocumentTagNavigationOrderIndexMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct StructuredDocumentTagPlaceholderTextMirror {
     pub document_part_reference: Box<super::DocumentPartReference>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6695,7 +6695,6 @@ pub struct StructuredDocumentTagPropertiesMirror {
     pub current_contents_are_placeholder_text:
         Option<Box<super::CurrentContentsArePlaceholderText>>,
     pub data_binding: Option<Box<super::super::office_word_2012_wordml::DataBinding>>,
-    pub extra: (),
     pub friendly_name: Option<Box<super::FriendlyName>>,
     pub locking_setting: Option<Box<super::LockingSetting>>,
     pub programmatic_tag: Option<Box<super::ProgrammaticTag>>,
@@ -6709,6 +6708,7 @@ pub struct StructuredDocumentTagPropertiesMirror {
         Option<Box<super::StructuredDocumentTagPlaceholderText>>,
     pub unique_id: Option<Box<super::UniqueID>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub web_extension_created:
         Option<Box<super::super::office_word_2012_wordml::WebExtensionCreated>>,
     pub web_extension_linked:
@@ -6720,8 +6720,8 @@ pub struct StructuredDocumentTagPropertiesMirror {
 #[rkyv(remote = super::StyleCannotBeApplied)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StyleCannotBeAppliedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6729,7 +6729,6 @@ pub struct StyleCannotBeAppliedMirror {
 #[rkyv(remote = super::StyleConditionalTableFormattingProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StyleConditionalTableFormattingPropertiesMirror {
-    pub extra: (),
     pub paragraph_properties_p_pr_general: Option<Box<super::ParagraphPropertiesPPrGeneral>>,
     pub previous_table_properties: Option<Box<super::PreviousTableProperties>>,
     pub run_properties: Option<Box<super::RunProperties>>,
@@ -6737,6 +6736,7 @@ pub struct StyleConditionalTableFormattingPropertiesMirror {
     pub table_row_properties: Option<Box<super::TableRowProperties>>,
     pub r#type: Option<super::ConditionalTableStyleFormattingTypes>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6750,7 +6750,6 @@ pub struct StyleDefinitionMirror {
     pub e_mail_message_composition_style: Option<Box<super::EMailMessageCompositionStyle>>,
     pub e_mail_message_reply_style: Option<Box<super::EMailMessageReplyStyle>>,
     pub e_mail_message_text_style: Option<Box<super::EMailMessageTextStyle>>,
-    pub extra: (),
     pub hidden_table_row_marker: Option<Box<super::HiddenTableRowMarker>>,
     pub hide_style_from_main_user_interface: Option<Box<super::HideStyleFromMainUserInterface>>,
     pub linked_style_reference: Option<Box<super::LinkedStyleReference>>,
@@ -6773,6 +6772,7 @@ pub struct StyleDefinitionMirror {
     pub table_row_properties: Option<Box<super::TableRowProperties>>,
     pub r#type: Option<super::StyleTypes>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6781,18 +6781,18 @@ pub struct StyleDefinitionMirror {
 pub struct StyleDefinitionsMirror {
     pub document_default_paragraph_and_run_properties:
         Option<Box<super::DocumentDefaultParagraphAndRunProperties>>,
-    pub extra: (),
     pub latent_style_information: Option<Box<super::LatentStyleInformation>>,
     pub style_definition: Vec<super::StyleDefinition>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::StyleForNextParagraph)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StyleForNextParagraphMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -6800,8 +6800,8 @@ pub struct StyleForNextParagraphMirror {
 #[rkyv(remote = super::SubscriptSuperscriptText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SubscriptSuperscriptTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::VerticalPositioningLocation>,
 }
 
@@ -6809,8 +6809,8 @@ pub struct SubscriptSuperscriptTextMirror {
 #[rkyv(remote = super::SubsetFontsWhenEmbedding)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SubsetFontsWhenEmbeddingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6826,7 +6826,6 @@ pub struct SuggestedFilteringMirror {
     pub direct_formatting_on_paragraphs: Option<common_simple_types::OnOffValue>,
     pub direct_formatting_on_runs: Option<common_simple_types::OnOffValue>,
     pub direct_formatting_on_tables: Option<common_simple_types::OnOffValue>,
-    pub extra: (),
     pub heading_styles: Option<common_simple_types::OnOffValue>,
     pub latent_styles: Option<common_simple_types::OnOffValue>,
     pub numbering_styles: Option<common_simple_types::OnOffValue>,
@@ -6834,6 +6833,7 @@ pub struct SuggestedFilteringMirror {
     pub table_styles: Option<common_simple_types::OnOffValue>,
     pub top3_heading_styles: Option<common_simple_types::OnOffValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::FourDigitHexadecimalValue>,
     pub visible_styles: Option<common_simple_types::OnOffValue>,
 }
@@ -6842,8 +6842,8 @@ pub struct SuggestedFilteringMirror {
 #[rkyv(remote = super::SuggestedSorting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SuggestedSortingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StyleSortSettings>,
 }
 
@@ -6851,11 +6851,11 @@ pub struct SuggestedSortingMirror {
 #[rkyv(remote = super::SupplementarySmartTagInformation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SupplementarySmartTagInformationMirror {
-    pub extra: (),
     pub name: Option<String>,
     pub namespaceuri: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
     pub url: Option<String>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6864,20 +6864,20 @@ pub struct SupplementarySmartTagInformationMirror {
 pub struct SupportedUnicodeSubrangesAndCodePagesMirror {
     pub csb0: Option<super::EightDigitHexadecimalValue>,
     pub csb1: Option<super::EightDigitHexadecimalValue>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
     pub usb0: Option<super::EightDigitHexadecimalValue>,
     pub usb1: Option<super::EightDigitHexadecimalValue>,
     pub usb2: Option<super::EightDigitHexadecimalValue>,
     pub usb3: Option<super::EightDigitHexadecimalValue>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SuppressEndnotesInDocument)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SuppressEndnotesInDocumentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6885,8 +6885,8 @@ pub struct SuppressEndnotesInDocumentMirror {
 #[rkyv(remote = super::SuppressHyphenationForParagraph)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SuppressHyphenationForParagraphMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6894,8 +6894,8 @@ pub struct SuppressHyphenationForParagraphMirror {
 #[rkyv(remote = super::SuppressLineNumbersForParagraph)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SuppressLineNumbersForParagraphMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6903,8 +6903,8 @@ pub struct SuppressLineNumbersForParagraphMirror {
 #[rkyv(remote = super::SuppressSpBfAfterPgBrk)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SuppressSpBfAfterPgBrkMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6912,8 +6912,8 @@ pub struct SuppressSpBfAfterPgBrkMirror {
 #[rkyv(remote = super::SuppressTopSpacing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SuppressTopSpacingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6921,8 +6921,8 @@ pub struct SuppressTopSpacingMirror {
 #[rkyv(remote = super::SwapParagraphBordersOnOddNumberedPages)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SwapParagraphBordersOnOddNumberedPagesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -6931,17 +6931,17 @@ pub struct SwapParagraphBordersOnOddNumberedPagesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SymbolCharacterMirror {
     pub char: Option<super::FourDigitHexadecimalValue>,
-    pub extra: (),
     pub font: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TabCharacter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TabCharacterMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6953,19 +6953,19 @@ pub struct TabCharacterMirror {
 pub struct TableMirror {
     #[rkyv(omit_bounds)]
     pub content_row_content: Vec<super::ContentRowContent>,
-    pub extra: (),
     pub grid: Box<super::TableGrid>,
     pub properties: Box<super::TableProperties>,
     pub range_markup_content: Vec<super::RangeMarkupContent>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TableAlignmentException)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableAlignmentExceptionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::TableAlignmentType>,
 }
 
@@ -6973,7 +6973,6 @@ pub struct TableAlignmentExceptionMirror {
 #[rkyv(remote = super::TableBorders)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableBordersMirror {
-    pub extra: (),
     pub left_paragraph_border: Option<Box<super::LeftParagraphBorder>>,
     pub paragraph_border_above_identical_paragraphs:
         Option<Box<super::ParagraphBorderAboveIdenticalParagraphs>>,
@@ -6985,14 +6984,15 @@ pub struct TableBordersMirror {
     pub table_inside_horizontal_edges_border: Option<Box<super::TableInsideHorizontalEdgesBorder>>,
     pub table_inside_vertical_edges_border: Option<Box<super::TableInsideVerticalEdgesBorder>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TableCaption)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableCaptionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -7005,17 +7005,16 @@ pub struct TableCaptionMirror {
 pub struct TableCellMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::BlockContent>,
-    pub extra: (),
     pub id: Option<String>,
     pub properties: Option<Box<super::TableCellProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TableCellBorders)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableCellBordersMirror {
-    pub extra: (),
     pub left_paragraph_border: Option<Box<super::LeftParagraphBorder>>,
     pub paragraph_border_above_identical_paragraphs:
         Option<Box<super::ParagraphBorderAboveIdenticalParagraphs>>,
@@ -7029,6 +7028,7 @@ pub struct TableCellBordersMirror {
     pub top_left_bottom_right_diagonal_border: Option<Box<super::TopLeftBottomRightDiagonalBorder>>,
     pub top_right_bottom_left_diagonal_border: Option<Box<super::TopRightBottomLeftDiagonalBorder>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -7037,9 +7037,9 @@ pub struct TableCellBordersMirror {
 pub struct TableCellDeletionMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -7048,9 +7048,9 @@ pub struct TableCellDeletionMirror {
 pub struct TableCellInsertionMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -7058,7 +7058,6 @@ pub struct TableCellInsertionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TableCellLeadingEdgeBorderMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub shadow: Option<common_simple_types::OnOffValue>,
     pub space: Option<super::MeasurementInPoints>,
@@ -7067,6 +7066,7 @@ pub struct TableCellLeadingEdgeBorderMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -7074,9 +7074,9 @@ pub struct TableCellLeadingEdgeBorderMirror {
 #[rkyv(remote = super::TableCellLeadingEdgeBorderTblWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableCellLeadingEdgeBorderTblWidthMirror {
-    pub extra: (),
     pub r#type: Option<super::TableWidthUnits>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
 
@@ -7084,7 +7084,6 @@ pub struct TableCellLeadingEdgeBorderTblWidthMirror {
 #[rkyv(remote = super::TableCellMarginExceptions)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableCellMarginExceptionsMirror {
-    pub extra: (),
     pub left_paragraph_border_tbl_width: Option<Box<super::LeftParagraphBorderTblWidth>>,
     pub paragraph_border_above_identical_paragraphs_tbl_width:
         Option<Box<super::ParagraphBorderAboveIdenticalParagraphsTblWidth>>,
@@ -7096,6 +7095,7 @@ pub struct TableCellMarginExceptionsMirror {
     pub table_cell_trailing_margin_exception_tbl_width:
         Option<Box<super::TableCellTrailingMarginExceptionTblWidth>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -7104,7 +7104,6 @@ pub struct TableCellMarginExceptionsMirror {
 pub struct TableCellPropertiesMirror {
     pub content: Option<Box<super::CellMarkupContent>>,
     pub dont_wrap_cell_content: Option<Box<super::DontWrapCellContent>>,
-    pub extra: (),
     pub fit_text_within_cell: Option<Box<super::FitTextWithinCell>>,
     pub grid_columns_spanned: Option<Box<super::GridColumnsSpanned>>,
     pub header_cells_associated_with_table_cell:
@@ -7120,6 +7119,7 @@ pub struct TableCellPropertiesMirror {
     pub table_cell_borders: Option<Box<super::TableCellBorders>>,
     pub table_cell_vertical_alignment: Option<Box<super::TableCellVerticalAlignment>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub vertically_merged_cell: Option<Box<super::VerticallyMergedCell>>,
 }
 
@@ -7128,7 +7128,6 @@ pub struct TableCellPropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TableCellTrailingMarginExceptionMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub shadow: Option<common_simple_types::OnOffValue>,
     pub space: Option<super::MeasurementInPoints>,
@@ -7137,6 +7136,7 @@ pub struct TableCellTrailingMarginExceptionMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -7144,9 +7144,9 @@ pub struct TableCellTrailingMarginExceptionMirror {
 #[rkyv(remote = super::TableCellTrailingMarginExceptionTblWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableCellTrailingMarginExceptionTblWidthMirror {
-    pub extra: (),
     pub r#type: Option<super::TableWidthUnits>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
 
@@ -7154,8 +7154,8 @@ pub struct TableCellTrailingMarginExceptionTblWidthMirror {
 #[rkyv(remote = super::TableCellVerticalAlignment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableCellVerticalAlignmentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::VerticalAlignmentType>,
 }
 
@@ -7163,8 +7163,8 @@ pub struct TableCellVerticalAlignmentMirror {
 #[rkyv(remote = super::TableDescription)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableDescriptionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -7174,27 +7174,27 @@ pub struct TableDescriptionMirror {
 pub struct TableGridMirror {
     pub column_definition: Vec<super::GridColumnDefinition>,
     pub column_revision_information: Option<Box<super::TableGridColumnRevisionInformation>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TableGridColumnRevisionInformation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableGridColumnRevisionInformationMirror {
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub previous_table_grid: Box<super::PreviousTableGrid>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TableIndentFromLeadingMargin)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableIndentFromLeadingMarginMirror {
-    pub extra: (),
     pub r#type: Option<super::TableWidthUnits>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
 
@@ -7203,7 +7203,6 @@ pub struct TableIndentFromLeadingMarginMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TableInsideHorizontalEdgesBorderMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub shadow: Option<common_simple_types::OnOffValue>,
     pub space: Option<super::MeasurementInPoints>,
@@ -7212,6 +7211,7 @@ pub struct TableInsideHorizontalEdgesBorderMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -7220,7 +7220,6 @@ pub struct TableInsideHorizontalEdgesBorderMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TableInsideVerticalEdgesBorderMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub shadow: Option<common_simple_types::OnOffValue>,
     pub space: Option<super::MeasurementInPoints>,
@@ -7229,6 +7228,7 @@ pub struct TableInsideVerticalEdgesBorderMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -7236,16 +7236,15 @@ pub struct TableInsideVerticalEdgesBorderMirror {
 #[rkyv(remote = super::TableLayout)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableLayoutMirror {
-    pub extra: (),
     pub r#type: Option<super::TableLayoutType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TableLevelPropertyExceptions)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableLevelPropertyExceptionsMirror {
-    pub extra: (),
     pub paragraph_shading: Option<Box<super::ParagraphShading>>,
     pub preferred_table_width: Option<Box<super::PreferredTableWidth>>,
     pub revision_information:
@@ -7259,13 +7258,13 @@ pub struct TableLevelPropertyExceptionsMirror {
     pub table_style_conditional_formatting_settings_exception:
         Option<Box<super::TableStyleConditionalFormattingSettingsException>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TableProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TablePropertiesMirror {
-    pub extra: (),
     pub floating_table_allows_overlap: Option<Box<super::FloatingTableAllowsOverlap>>,
     pub floating_table_positioning: Option<Box<super::FloatingTablePositioning>>,
     pub number_of_columns_in_column_band: Option<Box<super::NumberOfColumnsInColumnBand>>,
@@ -7285,6 +7284,7 @@ pub struct TablePropertiesMirror {
     pub table_style_conditional_formatting_settings_exception:
         Option<Box<super::TableStyleConditionalFormattingSettingsException>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visually_right_to_left_table: Option<Box<super::VisuallyRightToLeftTable>>,
 }
 
@@ -7297,7 +7297,6 @@ pub struct TablePropertiesMirror {
 pub struct TableRowMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ContentCellContent>,
-    pub extra: (),
     pub para_id: Option<String>,
     pub properties: Option<Box<super::TableRowProperties>>,
     pub rsid_del: Option<super::EightDigitHexadecimalValue>,
@@ -7307,14 +7306,15 @@ pub struct TableRowMirror {
     pub table_level_property_exceptions: Option<Box<super::TableLevelPropertyExceptions>>,
     pub text_id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TableRowCannotBreakAcrossPages)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableRowCannotBreakAcrossPagesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7322,9 +7322,9 @@ pub struct TableRowCannotBreakAcrossPagesMirror {
 #[rkyv(remote = super::TableRowCellSpacing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableRowCellSpacingMirror {
-    pub extra: (),
     pub r#type: Option<super::TableWidthUnits>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
 
@@ -7332,9 +7332,9 @@ pub struct TableRowCellSpacingMirror {
 #[rkyv(remote = super::TableRowHeight)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableRowHeightMirror {
-    pub extra: (),
     pub h_rule: Option<super::HeightRule>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -7345,17 +7345,16 @@ pub struct TableRowPropertiesMirror {
     pub conflict_change_content: Option<Box<super::ConflictChangeContent>>,
     pub content: Vec<super::TableRowPropertiesContent>,
     pub deleted_table_row: Option<Box<super::DeletedTableRow>>,
-    pub extra: (),
     pub inserted_table_row: Option<Box<super::InsertedTableRow>>,
     pub revision_information: Option<Box<super::RevisionInformationForTableRowProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TableStyleConditionalFormattingSettingsException)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableStyleConditionalFormattingSettingsExceptionMirror {
-    pub extra: (),
     pub first_column: Option<common_simple_types::OnOffValue>,
     pub first_row: Option<common_simple_types::OnOffValue>,
     pub last_column: Option<common_simple_types::OnOffValue>,
@@ -7363,6 +7362,7 @@ pub struct TableStyleConditionalFormattingSettingsExceptionMirror {
     pub no_h_band: Option<common_simple_types::OnOffValue>,
     pub no_v_band: Option<common_simple_types::OnOffValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::FourDigitHexadecimalValue>,
 }
 
@@ -7370,8 +7370,8 @@ pub struct TableStyleConditionalFormattingSettingsExceptionMirror {
 #[rkyv(remote = super::TargetScreenSizeForWebPage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TargetScreenSizeForWebPageMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::TargetScreenSizes>,
 }
 
@@ -7379,9 +7379,9 @@ pub struct TargetScreenSizeForWebPageMirror {
 #[rkyv(remote = super::Text)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextMirror {
-    pub extra: (),
     pub space: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -7390,7 +7390,6 @@ pub struct TextMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TextBorderMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub shadow: Option<common_simple_types::OnOffValue>,
     pub space: Option<super::MeasurementInPoints>,
@@ -7399,6 +7398,7 @@ pub struct TextBorderMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -7406,8 +7406,8 @@ pub struct TextBorderMirror {
 #[rkyv(remote = super::TextBoxFormFieldFormatting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextBoxFormFieldFormattingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -7415,8 +7415,8 @@ pub struct TextBoxFormFieldFormattingMirror {
 #[rkyv(remote = super::TextBoxFormFieldMaximumLength)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextBoxFormFieldMaximumLengthMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -7425,19 +7425,19 @@ pub struct TextBoxFormFieldMaximumLengthMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TextBoxFormFieldPropertiesMirror {
     pub default_text_box_form_field_string: Option<Box<super::DefaultTextBoxFormFieldString>>,
-    pub extra: (),
     pub text_box_form_field_formatting: Option<Box<super::TextBoxFormFieldFormatting>>,
     pub text_box_form_field_maximum_length: Option<Box<super::TextBoxFormFieldMaximumLength>>,
     pub text_box_form_field_type: Option<Box<super::TextBoxFormFieldType>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextBoxFormFieldType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextBoxFormFieldTypeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::TextBoxFormFieldTypeValues>,
 }
 
@@ -7447,13 +7447,13 @@ pub struct TextBoxFormFieldTypeMirror {
 pub struct TextFramePropertiesMirror {
     pub anchor_lock: Option<common_simple_types::OnOffValue>,
     pub drop_cap: Option<super::TextFrameDropCapLocation>,
-    pub extra: (),
     pub h: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub h_anchor: Option<super::HorizontalAnchorLocation>,
     pub h_rule: Option<super::HeightRule>,
     pub h_space: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub lines: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub v_anchor: Option<super::VerticalAnchorLocation>,
     pub v_space: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub w: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
@@ -7468,8 +7468,8 @@ pub struct TextFramePropertiesMirror {
 #[rkyv(remote = super::TextHighlighting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextHighlightingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::TextHighlightColors>,
 }
 
@@ -7482,20 +7482,20 @@ pub struct TextHighlightingMirror {
 pub struct TextRunMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::TextRunContent>,
-    pub extra: (),
     pub properties: Option<Box<super::RunProperties>>,
     pub rsid_del: Option<super::EightDigitHexadecimalValue>,
     pub rsid_r: Option<super::EightDigitHexadecimalValue>,
     pub rsid_r_pr: Option<super::EightDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextboxTightWrap)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextboxTightWrapMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::TightWrapWithinTextBox>,
 }
 
@@ -7511,12 +7511,12 @@ pub struct ThemeColorMappingsMirror {
     pub accent6: Option<super::ThemeColorReference>,
     pub bg1: Option<super::ThemeColorReference>,
     pub bg2: Option<super::ThemeColorReference>,
-    pub extra: (),
     pub followed_hyperlink: Option<super::ThemeColorReference>,
     pub hyperlink: Option<super::ThemeColorReference>,
     pub t1: Option<super::ThemeColorReference>,
     pub t2: Option<super::ThemeColorReference>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -7525,8 +7525,8 @@ pub struct ThemeColorMappingsMirror {
 pub struct ThemeFontLanguagesMirror {
     pub bidi: Option<String>,
     pub east_asia: Option<String>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -7534,8 +7534,8 @@ pub struct ThemeFontLanguagesMirror {
 #[rkyv(remote = super::TopAndBottomMarginForFrame)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TopAndBottomMarginForFrameMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::MeasurementInPixels>,
 }
 
@@ -7544,7 +7544,6 @@ pub struct TopAndBottomMarginForFrameMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TopBorderMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub id: Option<String>,
     pub shadow: Option<common_simple_types::OnOffValue>,
@@ -7556,6 +7555,7 @@ pub struct TopBorderMirror {
     pub top_left: Option<String>,
     pub top_right: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -7564,7 +7564,6 @@ pub struct TopBorderMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TopLeftBottomRightDiagonalBorderMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub shadow: Option<common_simple_types::OnOffValue>,
     pub space: Option<super::MeasurementInPoints>,
@@ -7573,6 +7572,7 @@ pub struct TopLeftBottomRightDiagonalBorderMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -7580,8 +7580,8 @@ pub struct TopLeftBottomRightDiagonalBorderMirror {
 #[rkyv(remote = super::TopMarginForHTMLDiv)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TopMarginForHTMLDivMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::SignedMeasurementInTwentiethsOfPoint>,
 }
 
@@ -7590,7 +7590,6 @@ pub struct TopMarginForHTMLDivMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TopRightBottomLeftDiagonalBorderMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub frame: Option<common_simple_types::OnOffValue>,
     pub shadow: Option<common_simple_types::OnOffValue>,
     pub space: Option<super::MeasurementInPoints>,
@@ -7599,6 +7598,7 @@ pub struct TopRightBottomLeftDiagonalBorderMirror {
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
 
@@ -7606,8 +7606,8 @@ pub struct TopRightBottomLeftDiagonalBorderMirror {
 #[rkyv(remote = super::TrackRevisionsToDocument)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TrackRevisionsToDocumentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7615,8 +7615,8 @@ pub struct TrackRevisionsToDocumentMirror {
 #[rkyv(remote = super::TreatBackslashQuotationDelimiterAsTwoQuotationMarks)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TreatBackslashQuotationDelimiterAsTwoQuotationMarksMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7624,8 +7624,8 @@ pub struct TreatBackslashQuotationDelimiterAsTwoQuotationMarksMirror {
 #[rkyv(remote = super::TruncateFontHeightsLikeWP6)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TruncateFontHeightsLikeWP6Mirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7633,8 +7633,8 @@ pub struct TruncateFontHeightsLikeWP6Mirror {
 #[rkyv(remote = super::UDLConnectionString)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UDLConnectionStringMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -7643,11 +7643,11 @@ pub struct UDLConnectionStringMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct UnderlineMirror {
     pub color: Option<super::ColorValue>,
-    pub extra: (),
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::UnderlinePatterns>,
 }
 
@@ -7655,8 +7655,8 @@ pub struct UnderlineMirror {
 #[rkyv(remote = super::UnderlineAllTrailingSpaces)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnderlineAllTrailingSpacesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7664,8 +7664,8 @@ pub struct UnderlineAllTrailingSpacesMirror {
 #[rkyv(remote = super::UnderlineFollowingCharacterFollowingNumbering)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnderlineFollowingCharacterFollowingNumberingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7673,8 +7673,8 @@ pub struct UnderlineFollowingCharacterFollowingNumberingMirror {
 #[rkyv(remote = super::UniqueID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UniqueIDMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
 
@@ -7682,8 +7682,8 @@ pub struct UniqueIDMirror {
 #[rkyv(remote = super::UniqueValueForRecord)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UniqueValueForRecordMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -7691,16 +7691,16 @@ pub struct UniqueValueForRecordMirror {
 #[rkyv(remote = super::UpgradeDocumentOnOpen)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UpgradeDocumentOnOpenMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::UseANSIKerningPairsFromFonts)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseANSIKerningPairsFromFontsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7708,8 +7708,8 @@ pub struct UseANSIKerningPairsFromFontsMirror {
 #[rkyv(remote = super::UseAltKinsokuLineBreakRules)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseAltKinsokuLineBreakRulesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7717,8 +7717,8 @@ pub struct UseAltKinsokuLineBreakRulesMirror {
 #[rkyv(remote = super::UseCachedParagraphInformationForColumnBalancing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseCachedParagraphInformationForColumnBalancingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7726,8 +7726,8 @@ pub struct UseCachedParagraphInformationForColumnBalancingMirror {
 #[rkyv(remote = super::UseComplexScriptFormattingOnRun)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseComplexScriptFormattingOnRunMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7735,8 +7735,8 @@ pub struct UseComplexScriptFormattingOnRunMirror {
 #[rkyv(remote = super::UseCountryBasedAddressFieldOrdering)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseCountryBasedAddressFieldOrderingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7744,8 +7744,8 @@ pub struct UseCountryBasedAddressFieldOrderingMirror {
 #[rkyv(remote = super::UseIncorrectInterCharacterSpacingRules)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseIncorrectInterCharacterSpacingRulesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7753,8 +7753,8 @@ pub struct UseIncorrectInterCharacterSpacingRulesMirror {
 #[rkyv(remote = super::UseLeftRightIndentsAsInsideOutsideIndents)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseLeftRightIndentsAsInsideOutsideIndentsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7762,8 +7762,8 @@ pub struct UseLeftRightIndentsAsInsideOutsideIndentsMirror {
 #[rkyv(remote = super::UseNormalStyleForList)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseNormalStyleForListMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7771,8 +7771,8 @@ pub struct UseNormalStyleForListMirror {
 #[rkyv(remote = super::UsePrinterMetricsToDisplayDocuments)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UsePrinterMetricsToDisplayDocumentsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7780,8 +7780,8 @@ pub struct UsePrinterMetricsToDisplayDocumentsMirror {
 #[rkyv(remote = super::UseSingleBorderforContiguousCells)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseSingleBorderforContiguousCellsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7789,8 +7789,8 @@ pub struct UseSingleBorderforContiguousCellsMirror {
 #[rkyv(remote = super::UseSpecificSmallCapsAlgorithm)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseSpecificSmallCapsAlgorithmMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7798,8 +7798,8 @@ pub struct UseSpecificSmallCapsAlgorithmMirror {
 #[rkyv(remote = super::UseSpecificSpaceWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseSpecificSpaceWidthMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7807,8 +7807,8 @@ pub struct UseSpecificSpaceWidthMirror {
 #[rkyv(remote = super::UseStaticTextLeading)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseStaticTextLeadingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7816,8 +7816,8 @@ pub struct UseStaticTextLeadingMirror {
 #[rkyv(remote = super::UseWord2002TableStyleRules)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseWord2002TableStyleRulesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7825,8 +7825,8 @@ pub struct UseWord2002TableStyleRulesMirror {
 #[rkyv(remote = super::UtilizeVMLWhenSavingAsWebPage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UtilizeVMLWhenSavingAsWebPageMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7842,16 +7842,16 @@ pub struct VMLObjectMirror {
     pub content: Vec<super::VmlElementContent>,
     pub embedded_control: Option<Box<super::EmbeddedControl>>,
     pub embedded_video: Option<Box<super::EmbeddedVideo>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::VerticalCharacterAlignmentOnLine)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VerticalCharacterAlignmentOnLineMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::VerticalTextAlignmentTypes>,
 }
 
@@ -7859,8 +7859,8 @@ pub struct VerticalCharacterAlignmentOnLineMirror {
 #[rkyv(remote = super::VerticallyMergedCell)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VerticallyMergedCellMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::MergedCellType>,
 }
 
@@ -7871,9 +7871,9 @@ pub struct VerticallyMergedSplitTableCellsMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub date_utc: Option<String>,
-    pub extra: (),
     pub id: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub v_merge: Option<super::TableCellVerticalMergeRevisionType>,
     pub v_merge_orig: Option<super::TableCellVerticalMergeRevisionType>,
 }
@@ -7882,8 +7882,8 @@ pub struct VerticallyMergedSplitTableCellsMirror {
 #[rkyv(remote = super::VerticallyRaisedOrLoweredText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VerticallyRaisedOrLoweredTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::SignedMeasurementInHalfPoints>,
 }
 
@@ -7891,8 +7891,8 @@ pub struct VerticallyRaisedOrLoweredTextMirror {
 #[rkyv(remote = super::ViewMergedDataWithinDocument)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ViewMergedDataWithinDocumentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7901,20 +7901,20 @@ pub struct ViewMergedDataWithinDocumentMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct VisibilityOfAnnotationTypesMirror {
     pub comments: Option<common_simple_types::OnOffValue>,
-    pub extra: (),
     pub formatting: Option<common_simple_types::OnOffValue>,
     pub ink_annotations: Option<common_simple_types::OnOffValue>,
     pub ins_del: Option<common_simple_types::OnOffValue>,
     pub markup: Option<common_simple_types::OnOffValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::VisuallyRightToLeftTable)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VisuallyRightToLeftTableMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7922,8 +7922,8 @@ pub struct VisuallyRightToLeftTableMirror {
 #[rkyv(remote = super::WebHiddenText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WebHiddenTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -7936,7 +7936,6 @@ pub struct WebPageSettingsMirror {
     pub do_not_place_supporting_files: Option<Box<super::DoNotPlaceSupportingFiles>>,
     pub do_not_rely_on_css: Option<Box<super::DoNotRelyOnCSS>>,
     pub do_not_use_file_names: Option<Box<super::DoNotUseFileNames>>,
-    pub extra: (),
     pub information_about_html_div_elements: Option<Box<super::InformationAboutHTMLDivElements>>,
     pub nested_frameset_definition: Option<Box<super::NestedFramesetDefinition>>,
     pub output_encoding: Option<Box<super::OutputEncoding>>,
@@ -7945,6 +7944,7 @@ pub struct WebPageSettingsMirror {
     pub save_smart_tag_data: Option<Box<super::SaveSmartTagData>>,
     pub target_screen_size_for_web_page: Option<Box<super::TargetScreenSizeForWebPage>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub utilize_vml_when_saving_as_web_page: Option<Box<super::UtilizeVMLWhenSavingAsWebPage>>,
 }
 
@@ -7963,7 +7963,6 @@ pub struct WriteProtectionMirror {
     pub crypt_provider_type_ext: Option<super::EightDigitHexadecimalValue>,
     pub crypt_provider_type_ext_source: Option<String>,
     pub crypt_spin_count: Option<super::DecimalNumberValue>,
-    pub extra: (),
     pub hash: Option<String>,
     pub hash_value: Option<String>,
     pub recommended: Option<common_simple_types::OnOffValue>,
@@ -7971,16 +7970,17 @@ pub struct WriteProtectionMirror {
     pub salt_value: Option<String>,
     pub spin_count: Option<super::DecimalNumberValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::XMLMapping)]
 #[rkyv(attr(non_exhaustive))]
 pub struct XMLMappingMirror {
-    pub extra: (),
     pub prefix_mappings: Option<String>,
     pub store_item_id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xpath: Option<String>,
 }
 
@@ -8800,10 +8800,10 @@ impl From<AbsolutePositionTabCharacterMirror> for super::AbsolutePositionTabChar
     fn from(item: AbsolutePositionTabCharacterMirror) -> Self {
         Self {
             alignment: item.alignment,
-            extra: item.extra,
             leader: item.leader,
             relative_to: item.relative_to,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8845,7 +8845,6 @@ impl From<AbstractNumberingDefinitionMirror> for super::AbstractNumberingDefinit
     fn from(item: AbstractNumberingDefinitionMirror) -> Self {
         Self {
             abstract_num_id: item.abstract_num_id,
-            extra: item.extra,
             identifier: item.identifier,
             numbering_level_override_definition: item.numbering_level_override_definition,
             numbering_style_definition: item.numbering_style_definition,
@@ -8854,6 +8853,7 @@ impl From<AbstractNumberingDefinitionMirror> for super::AbstractNumberingDefinit
             primary_style_name: item.primary_style_name,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8896,8 +8896,8 @@ impl From<AbstractNumberingDefinitionIdentifierMirror>
 {
     fn from(item: AbstractNumberingDefinitionIdentifierMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -8941,8 +8941,8 @@ impl From<AbstractNumberingDefinitionReferenceMirror>
 {
     fn from(item: AbstractNumberingDefinitionReferenceMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -8984,8 +8984,8 @@ where
 impl From<AbstractNumberingDefinitionTypeMirror> for super::AbstractNumberingDefinitionType {
     fn from(item: AbstractNumberingDefinitionTypeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9027,8 +9027,8 @@ where
 impl From<AddDocumentGridLinePitchMirror> for super::AddDocumentGridLinePitch {
     fn from(item: AddDocumentGridLinePitchMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9070,8 +9070,8 @@ where
 impl From<AddSpaceBelowUnderlinedTextMirror> for super::AddSpaceBelowUnderlinedText {
     fn from(item: AddSpaceBelowUnderlinedTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9113,8 +9113,8 @@ where
 impl From<AdjustSpacingEastAsianTextNumbersMirror> for super::AdjustSpacingEastAsianTextNumbers {
     fn from(item: AdjustSpacingEastAsianTextNumbersMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9156,8 +9156,8 @@ where
 impl From<AdjustSpacingLatinEastAsianTextMirror> for super::AdjustSpacingLatinEastAsianText {
     fn from(item: AdjustSpacingLatinEastAsianTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9199,8 +9199,8 @@ where
 impl From<AlignParagraphAndTableBordersMirror> for super::AlignParagraphAndTableBorders {
     fn from(item: AlignParagraphAndTableBordersMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9242,8 +9242,8 @@ where
 impl From<AlignTableRowsIndependentlyMirror> for super::AlignTableRowsIndependently {
     fn from(item: AlignTableRowsIndependentlyMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9285,8 +9285,8 @@ where
 impl From<AllowAutomaticFormattingOverrideMirror> for super::AllowAutomaticFormattingOverride {
     fn from(item: AllowAutomaticFormattingOverrideMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9330,8 +9330,8 @@ impl From<AllowContextualSpacingOfParagraphsInTablesMirror>
 {
     fn from(item: AllowContextualSpacingOfParagraphsInTablesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9373,8 +9373,8 @@ where
 impl From<AllowFirstLastLineDisplayMirror> for super::AllowFirstLastLineDisplay {
     fn from(item: AllowFirstLastLineDisplayMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9416,8 +9416,8 @@ where
 impl From<AllowLineBreakingAtCharacterLevelMirror> for super::AllowLineBreakingAtCharacterLevel {
     fn from(item: AllowLineBreakingAtCharacterLevelMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9459,8 +9459,8 @@ where
 impl From<AllowPNGAsGraphicFormatMirror> for super::AllowPNGAsGraphicFormat {
     fn from(item: AllowPNGAsGraphicFormatMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9504,8 +9504,8 @@ impl From<AllowPunctuationExtendPastTextExtentsMirror>
 {
     fn from(item: AllowPunctuationExtendPastTextExtentsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9547,8 +9547,8 @@ where
 impl From<AllowSavingDocumentAsXMLFileMirror> for super::AllowSavingDocumentAsXMLFile {
     fn from(item: AllowSavingDocumentAsXMLFileMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9592,8 +9592,8 @@ impl From<AllowTableRowsToWrapInlineObjectsIndependentlyMirror>
 {
     fn from(item: AllowTableRowsToWrapInlineObjectsIndependentlyMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9637,8 +9637,8 @@ impl From<AllowTablesToAutoFitIntoPageMarginsMirror>
 {
     fn from(item: AllowTablesToAutoFitIntoPageMarginsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9680,8 +9680,8 @@ where
 impl From<AlternateNamesForFontMirror> for super::AlternateNamesForFont {
     fn from(item: AlternateNamesForFontMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9723,8 +9723,8 @@ where
 impl From<AlternateStyleNamesMirror> for super::AlternateStyleNames {
     fn from(item: AlternateStyleNamesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9765,8 +9765,8 @@ where
 impl From<AlwaysMergeEmptyNamespaceMirror> for super::AlwaysMergeEmptyNamespace {
     fn from(item: AlwaysMergeEmptyNamespaceMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9808,8 +9808,8 @@ where
 impl From<AlwaysShowPlaceholderTextMirror> for super::AlwaysShowPlaceholderText {
     fn from(item: AlwaysShowPlaceholderTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9853,8 +9853,8 @@ impl From<AlwaysUseFixedWidthForHangulCharactersMirror>
 {
     fn from(item: AlwaysUseFixedWidthForHangulCharactersMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -9896,10 +9896,10 @@ where
 impl From<AnchorForImportedExternalContentMirror> for super::AnchorForImportedExternalContent {
     fn from(item: AnchorForImportedExternalContentMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             import_properties: item.import_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9940,9 +9940,9 @@ where
 impl From<AnchorForSubdocumentLocationMirror> for super::AnchorForSubdocumentLocation {
     fn from(item: AnchorForSubdocumentLocationMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9983,8 +9983,8 @@ where
 impl From<AnimatedTextEffectMirror> for super::AnimatedTextEffect {
     fn from(item: AnimatedTextEffectMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10022,8 +10022,8 @@ where
 impl From<AssociatedHTMLDivIDMirror> for super::AssociatedHTMLDivID {
     fn from(item: AssociatedHTMLDivIDMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10064,9 +10064,9 @@ where
 impl From<AssociatedHelpTextMirror> for super::AssociatedHelpText {
     fn from(item: AssociatedHelpTextMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10104,8 +10104,8 @@ where
 impl From<AssociatedOutlineLevelMirror> for super::AssociatedOutlineLevel {
     fn from(item: AssociatedOutlineLevelMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10147,8 +10147,8 @@ where
 impl From<AssociatedParagraphStyleNameMirror> for super::AssociatedParagraphStyleName {
     fn from(item: AssociatedParagraphStyleNameMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10190,9 +10190,9 @@ where
 impl From<AssociatedStatusTextMirror> for super::AssociatedStatusText {
     fn from(item: AssociatedStatusTextMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10233,8 +10233,8 @@ where
 impl From<AttachedCustomXMLSchemaMirror> for super::AttachedCustomXMLSchema {
     fn from(item: AttachedCustomXMLSchemaMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10276,9 +10276,9 @@ where
 impl From<AttachedDocumentTemplateMirror> for super::AttachedDocumentTemplate {
     fn from(item: AttachedDocumentTemplateMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10319,8 +10319,8 @@ where
 impl From<AutoSpaceLikeWord95Mirror> for super::AutoSpaceLikeWord95 {
     fn from(item: AutoSpaceLikeWord95Mirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10361,8 +10361,8 @@ where
 impl From<AutofitToFirstFixedWidthCellMirror> for super::AutofitToFirstFixedWidthCell {
     fn from(item: AutofitToFirstFixedWidthCellMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10404,9 +10404,9 @@ where
 impl From<AutomaticCaptioningSettingsMirror> for super::AutomaticCaptioningSettings {
     fn from(item: AutomaticCaptioningSettingsMirror) -> Self {
         Self {
-            extra: item.extra,
             single_automatic_captioning_setting: item.single_automatic_captioning_setting,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10447,8 +10447,8 @@ where
 impl From<AutomaticallyAdjustRightIndentMirror> for super::AutomaticallyAdjustRightIndent {
     fn from(item: AutomaticallyAdjustRightIndentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10492,8 +10492,8 @@ impl From<AutomaticallyHyphenateDocumentContentsWhenDisplayedMirror>
 {
     fn from(item: AutomaticallyHyphenateDocumentContentsWhenDisplayedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10540,8 +10540,8 @@ where
 impl From<AutomaticallyMergeUserFormattingMirror> for super::AutomaticallyMergeUserFormatting {
     fn from(item: AutomaticallyMergeUserFormattingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10585,8 +10585,8 @@ impl From<AutomaticallyRecalculateFieldsOnOpenMirror>
 {
     fn from(item: AutomaticallyRecalculateFieldsOnOpenMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10628,8 +10628,8 @@ where
 impl From<AutomaticallySizeFormFieldMirror> for super::AutomaticallySizeFormField {
     fn from(item: AutomaticallySizeFormFieldMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10673,8 +10673,8 @@ impl From<AutomaticallyUpdateStylesFromDocumentTemplateMirror>
 {
     fn from(item: AutomaticallyUpdateStylesFromDocumentTemplateMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10716,8 +10716,8 @@ where
 impl From<BalanceSingleByteDoubleByteWidthMirror> for super::BalanceSingleByteDoubleByteWidth {
     fn from(item: BalanceSingleByteDoubleByteWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10759,8 +10759,8 @@ where
 impl From<BibliographyStructuredDocumentTagMirror> for super::BibliographyStructuredDocumentTag {
     fn from(item: BibliographyStructuredDocumentTagMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10802,8 +10802,8 @@ impl From<BidirectionalEmbeddingLevelMirror> for super::BidirectionalEmbeddingLe
     fn from(item: BidirectionalEmbeddingLevelMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10846,8 +10846,8 @@ impl From<BidirectionalOverrideMirror> for super::BidirectionalOverride {
     fn from(item: BidirectionalOverrideMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -10891,10 +10891,10 @@ impl From<BlockLevelCustomXMLElementMirror> for super::BlockLevelCustomXMLElemen
         Self {
             content: item.content,
             element: item.element,
-            extra: item.extra,
             properties: item.properties,
             unknown: item.unknown,
             uri: item.uri,
+            user_data: item.user_data,
         }
     }
 }
@@ -10941,9 +10941,9 @@ impl From<BlockLevelStructuredDocumentTagMirror> for super::BlockLevelStructured
             custom_xml_conflict_ins_range_end: item.custom_xml_conflict_ins_range_end,
             custom_xml_conflict_ins_range_start: item.custom_xml_conflict_ins_range_start,
             end_character_properties: item.end_character_properties,
-            extra: item.extra,
             properties: item.properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10987,8 +10987,8 @@ impl From<BlockLevelStructuredDocumentTagContentMirror>
     fn from(item: BlockLevelStructuredDocumentTagContentMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11029,8 +11029,8 @@ where
 impl From<BoldMirror> for super::Bold {
     fn from(item: BoldMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -11068,11 +11068,11 @@ where
 impl From<BoldItalicFontStyleEmbeddingMirror> for super::BoldItalicFontStyleEmbedding {
     fn from(item: BoldItalicFontStyleEmbeddingMirror) -> Self {
         Self {
-            extra: item.extra,
             font_key: item.font_key,
             id: item.id,
             subsetted: item.subsetted,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11113,11 +11113,11 @@ where
 impl From<BoldStyleFontStyleEmbeddingMirror> for super::BoldStyleFontStyleEmbedding {
     fn from(item: BoldStyleFontStyleEmbeddingMirror) -> Self {
         Self {
-            extra: item.extra,
             font_key: item.font_key,
             id: item.id,
             subsetted: item.subsetted,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11158,8 +11158,8 @@ where
 impl From<BookFoldPrintingMirror> for super::BookFoldPrinting {
     fn from(item: BookFoldPrintingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -11198,9 +11198,9 @@ impl From<BookmarkEndMirror> for super::BookmarkEnd {
     fn from(item: BookmarkEndMirror) -> Self {
         Self {
             displaced_by_custom_xml: item.displaced_by_custom_xml,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11240,10 +11240,10 @@ impl From<BookmarkStartMirror> for super::BookmarkStart {
             col_first: item.col_first,
             col_last: item.col_last,
             displaced_by_custom_xml: item.displaced_by_custom_xml,
-            extra: item.extra,
             id: item.id,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11283,7 +11283,6 @@ impl From<BottomBorderMirror> for super::BottomBorder {
             bottom_left: item.bottom_left,
             bottom_right: item.bottom_right,
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             id: item.id,
             shadow: item.shadow,
@@ -11293,6 +11292,7 @@ impl From<BottomBorderMirror> for super::BottomBorder {
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -11330,8 +11330,8 @@ where
 impl From<BottomMarginForHTMLDivMirror> for super::BottomMarginForHTMLDiv {
     fn from(item: BottomMarginForHTMLDivMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -11374,9 +11374,9 @@ impl From<BreakMirror> for super::Break {
     fn from(item: BreakMirror) -> Self {
         Self {
             clear: item.clear,
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11413,8 +11413,8 @@ where
 impl From<BuiltInDocumentPartMirror> for super::BuiltInDocumentPart {
     fn from(item: BuiltInDocumentPartMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -11460,8 +11460,8 @@ impl From<BuiltInDocumentPartStructuredDocumentTagMirror>
             built_in_document_part: item.built_in_document_part,
             document_part_category_filter: item.document_part_category_filter,
             document_part_gallery_filter: item.document_part_gallery_filter,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11503,9 +11503,9 @@ impl From<CaptionSettingsMirror> for super::CaptionSettings {
     fn from(item: CaptionSettingsMirror) -> Self {
         Self {
             automatic_captioning_settings: item.automatic_captioning_settings,
-            extra: item.extra,
             single_caption_type_definition: item.single_caption_type_definition,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11542,8 +11542,8 @@ where
 impl From<CarriageReturnMirror> for super::CarriageReturn {
     fn from(item: CarriageReturnMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11582,10 +11582,10 @@ impl From<CellLevelCustomXMLElementMirror> for super::CellLevelCustomXMLElement 
         Self {
             content: item.content,
             element: item.element,
-            extra: item.extra,
             properties: item.properties,
             unknown: item.unknown,
             uri: item.uri,
+            user_data: item.user_data,
         }
     }
 }
@@ -11632,9 +11632,9 @@ impl From<CellLevelStructuredDocumentTagMirror> for super::CellLevelStructuredDo
             custom_xml_conflict_ins_range_end: item.custom_xml_conflict_ins_range_end,
             custom_xml_conflict_ins_range_start: item.custom_xml_conflict_ins_range_start,
             end_character_properties: item.end_character_properties,
-            extra: item.extra,
             properties: item.properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11678,8 +11678,8 @@ impl From<CellLevelStructuredDocumentTagContentMirror>
     fn from(item: CellLevelStructuredDocumentTagContentMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11722,8 +11722,8 @@ impl From<CharacterLevelWhitespaceCompressionMirror>
 {
     fn from(item: CharacterLevelWhitespaceCompressionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -11766,8 +11766,8 @@ impl From<CharacterSetSupportedByFontMirror> for super::CharacterSetSupportedByF
     fn from(item: CharacterSetSupportedByFontMirror) -> Self {
         Self {
             character_set: item.character_set,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -11809,8 +11809,8 @@ where
 impl From<CharacterSpacingAdjustmentMirror> for super::CharacterSpacingAdjustment {
     fn from(item: CharacterSpacingAdjustmentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -11852,9 +11852,9 @@ where
 impl From<CharactersWhichCannotBeginALineMirror> for super::CharactersWhichCannotBeginALine {
     fn from(item: CharactersWhichCannotBeginALineMirror) -> Self {
         Self {
-            extra: item.extra,
             lang: item.lang,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -11896,9 +11896,9 @@ where
 impl From<CharactersWhichCannotEndALineMirror> for super::CharactersWhichCannotEndALine {
     fn from(item: CharactersWhichCannotEndALineMirror) -> Self {
         Self {
-            extra: item.extra,
             lang: item.lang,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -11943,8 +11943,8 @@ impl From<CheckboxFormFieldPropertiesMirror> for super::CheckboxFormFieldPropert
             checkbox_form_field_state: item.checkbox_form_field_state,
             content: item.content,
             default_checkbox_form_field_state: item.default_checkbox_form_field_state,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11985,8 +11985,8 @@ where
 impl From<CheckboxFormFieldSizeMirror> for super::CheckboxFormFieldSize {
     fn from(item: CheckboxFormFieldSizeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -12028,8 +12028,8 @@ where
 impl From<CheckboxFormFieldStateMirror> for super::CheckboxFormFieldState {
     fn from(item: CheckboxFormFieldStateMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -12071,10 +12071,10 @@ where
 impl From<ChildDivElementsMirror> for super::ChildDivElements {
     fn from(item: ChildDivElementsMirror) -> Self {
         Self {
-            extra: item.extra,
             information_about_single_html_div_element: item
                 .information_about_single_html_div_element,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12111,8 +12111,8 @@ where
 impl From<CitationStructuredDocumentTagMirror> for super::CitationStructuredDocumentTag {
     fn from(item: CitationStructuredDocumentTagMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12153,8 +12153,8 @@ where
 impl From<ClickAndTypeStyleMirror> for super::ClickAndTypeStyle {
     fn from(item: ClickAndTypeStyleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -12192,8 +12192,8 @@ where
 impl From<ColumnContainingEMailAddressMirror> for super::ColumnContainingEMailAddress {
     fn from(item: ColumnContainingEMailAddressMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -12236,12 +12236,12 @@ impl From<ColumnDefinitionsMirror> for super::ColumnDefinitions {
     fn from(item: ColumnDefinitionsMirror) -> Self {
         Self {
             equal_width: item.equal_width,
-            extra: item.extra,
             num: item.num,
             sep: item.sep,
             single_column_definition: item.single_column_definition,
             space: item.space,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12278,8 +12278,8 @@ where
 impl From<ColumnDelimiterForDataSourceMirror> for super::ColumnDelimiterForDataSource {
     fn from(item: ColumnDelimiterForDataSourceMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -12322,8 +12322,8 @@ impl From<ComboBoxListItemMirror> for super::ComboBoxListItem {
     fn from(item: ComboBoxListItemMirror) -> Self {
         Self {
             display_text: item.display_text,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -12362,9 +12362,9 @@ impl From<ComboBoxStructuredDocumentTagMirror> for super::ComboBoxStructuredDocu
     fn from(item: ComboBoxStructuredDocumentTagMirror) -> Self {
         Self {
             combo_box_list_item: item.combo_box_list_item,
-            extra: item.extra,
             last_value: item.last_value,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12406,9 +12406,9 @@ impl From<CommentAnchorRangeEndMirror> for super::CommentAnchorRangeEnd {
     fn from(item: CommentAnchorRangeEndMirror) -> Self {
         Self {
             displaced_by_custom_xml: item.displaced_by_custom_xml,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12450,9 +12450,9 @@ impl From<CommentAnchorRangeStartMirror> for super::CommentAnchorRangeStart {
     fn from(item: CommentAnchorRangeStartMirror) -> Self {
         Self {
             displaced_by_custom_xml: item.displaced_by_custom_xml,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12497,10 +12497,10 @@ impl From<CommentContentMirror> for super::CommentContent {
             content: item.content,
             date: item.date,
             date_utc: item.date_utc,
-            extra: item.extra,
             id: item.id,
             initials: item.initials,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12537,9 +12537,9 @@ where
 impl From<CommentContentReferenceMarkMirror> for super::CommentContentReferenceMark {
     fn from(item: CommentContentReferenceMarkMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12580,8 +12580,8 @@ where
 impl From<CommentInformationBlockMirror> for super::CommentInformationBlock {
     fn from(item: CommentInformationBlockMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12623,8 +12623,8 @@ impl From<CommentsCollectionMirror> for super::CommentsCollection {
     fn from(item: CommentsCollectionMirror) -> Self {
         Self {
             comment_content: item.comment_content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12704,7 +12704,6 @@ impl From<CompatibilitySettingsMirror> for super::CompatibilitySettings {
             do_not_vert_align_cell_with_sp: item.do_not_vert_align_cell_with_sp,
             do_not_wrap_text_with_punct: item.do_not_wrap_text_with_punct,
             dont_justify_soft_line_break_lines: item.dont_justify_soft_line_break_lines,
-            extra: item.extra,
             fit_to_expanded_width_when_performing_full_justification: item
                 .fit_to_expanded_width_when_performing_full_justification,
             forget_last_tab_alignment: item.forget_last_tab_alignment,
@@ -12756,6 +12755,7 @@ impl From<CompatibilitySettingsMirror> for super::CompatibilitySettings {
             use_specific_space_width: item.use_specific_space_width,
             use_static_text_leading: item.use_static_text_leading,
             use_word2002table_style_rules: item.use_word2002table_style_rules,
+            user_data: item.user_data,
         }
     }
 }
@@ -12798,10 +12798,10 @@ impl From<ComplexFieldCharacterMirror> for super::ComplexFieldCharacter {
         Self {
             content: item.content,
             dirty: item.dirty,
-            extra: item.extra,
             fld_char_type: item.fld_char_type,
             fld_lock: item.fld_lock,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12842,8 +12842,8 @@ where
 impl From<ComplexScriptBoldMirror> for super::ComplexScriptBold {
     fn from(item: ComplexScriptBoldMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -12881,8 +12881,8 @@ where
 impl From<ComplexScriptFontSizeMirror> for super::ComplexScriptFontSize {
     fn from(item: ComplexScriptFontSizeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -12924,8 +12924,8 @@ where
 impl From<ComplexScriptItalicsMirror> for super::ComplexScriptItalics {
     fn from(item: ComplexScriptItalicsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -12966,8 +12966,8 @@ where
 impl From<CompressPunctuationAtStartOfLineMirror> for super::CompressPunctuationAtStartOfLine {
     fn from(item: CompressPunctuationAtStartOfLineMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -13011,8 +13011,8 @@ impl From<ContentBetweenNumberingSymbolAndTextMirror>
 {
     fn from(item: ContentBetweenNumberingSymbolAndTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -13054,9 +13054,9 @@ where
 impl From<ContentPartMirror> for super::ContentPart {
     fn from(item: ContentPartMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13095,8 +13095,8 @@ impl From<ContentsOfGlossaryDocumentEntryMirror> for super::ContentsOfGlossaryDo
         Self {
             content: item.content,
             document_final_section_properties: item.document_final_section_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13137,8 +13137,8 @@ where
 impl From<ContinuationSeparatorMarkMirror> for super::ContinuationSeparatorMark {
     fn from(item: ContinuationSeparatorMarkMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13179,8 +13179,8 @@ where
 impl From<CurrentContentsArePlaceholderTextMirror> for super::CurrentContentsArePlaceholderText {
     fn from(item: CurrentContentsArePlaceholderTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -13222,10 +13222,10 @@ where
 impl From<CustomCompatibilitySettingMirror> for super::CustomCompatibilitySetting {
     fn from(item: CustomCompatibilitySettingMirror) -> Self {
         Self {
-            extra: item.extra,
             name: item.name,
             unknown: item.unknown,
             uri: item.uri,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -13267,9 +13267,9 @@ where
 impl From<CustomFieldDataMirror> for super::CustomFieldData {
     fn from(item: CustomFieldDataMirror) -> Self {
         Self {
-            extra: item.extra,
             space: item.space,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -13307,10 +13307,10 @@ where
 impl From<CustomTabStopMirror> for super::CustomTabStop {
     fn from(item: CustomTabStopMirror) -> Self {
         Self {
-            extra: item.extra,
             leader: item.leader,
             pos: item.pos,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -13348,10 +13348,10 @@ where
 impl From<CustomXMLAttributeMirror> for super::CustomXMLAttribute {
     fn from(item: CustomXMLAttributeMirror) -> Self {
         Self {
-            extra: item.extra,
             name: item.name,
             unknown: item.unknown,
             uri: item.uri,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -13389,8 +13389,8 @@ where
 impl From<CustomXMLDataDateStorageFormatMirror> for super::CustomXMLDataDateStorageFormat {
     fn from(item: CustomXMLDataDateStorageFormatMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -13432,8 +13432,8 @@ where
 impl From<CustomXMLElementPlaceholderTextMirror> for super::CustomXMLElementPlaceholderText {
     fn from(item: CustomXMLElementPlaceholderTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -13477,8 +13477,8 @@ impl From<CustomXMLElementPropertiesMirror> for super::CustomXMLElementPropertie
         Self {
             custom_xml_attribute: item.custom_xml_attribute,
             custom_xml_element_placeholder_text: item.custom_xml_element_placeholder_text,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13519,9 +13519,9 @@ where
 impl From<CustomXMLMarkupDeletionEndMirror> for super::CustomXMLMarkupDeletionEnd {
     fn from(item: CustomXMLMarkupDeletionEndMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13564,9 +13564,9 @@ impl From<CustomXMLMarkupDeletionStartMirror> for super::CustomXMLMarkupDeletion
         Self {
             author: item.author,
             date: item.date,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13607,9 +13607,9 @@ where
 impl From<CustomXMLMarkupInsertionEndMirror> for super::CustomXMLMarkupInsertionEnd {
     fn from(item: CustomXMLMarkupInsertionEndMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13652,9 +13652,9 @@ impl From<CustomXMLMarkupInsertionStartMirror> for super::CustomXMLMarkupInserti
         Self {
             author: item.author,
             date: item.date,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13695,9 +13695,9 @@ where
 impl From<CustomXMLMarkupMoveSourceEndMirror> for super::CustomXMLMarkupMoveSourceEnd {
     fn from(item: CustomXMLMarkupMoveSourceEndMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13740,9 +13740,9 @@ impl From<CustomXMLMarkupMoveSourceStartMirror> for super::CustomXMLMarkupMoveSo
         Self {
             author: item.author,
             date: item.date,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13783,10 +13783,10 @@ where
 impl From<CustomXSLTransformMirror> for super::CustomXSLTransform {
     fn from(item: CustomXSLTransformMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             solution_id: item.solution_id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13823,9 +13823,9 @@ where
 impl From<CustomXmlMoveToRangeEndMirror> for super::CustomXmlMoveToRangeEnd {
     fn from(item: CustomXmlMoveToRangeEndMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13868,9 +13868,9 @@ impl From<CustomXmlMoveToRangeStartMirror> for super::CustomXmlMoveToRangeStart 
         Self {
             author: item.author,
             date: item.date,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13911,11 +13911,11 @@ where
 impl From<DataAboutSingleDataSourceRecordMirror> for super::DataAboutSingleDataSourceRecord {
     fn from(item: DataAboutSingleDataSourceRecordMirror) -> Self {
         Self {
-            extra: item.extra,
             index_of_column_being_mapped: item.index_of_column_being_mapped,
             is_included_in_mail_merge: item.is_included_in_mail_merge,
             unique_value_for_record: item.unique_value_for_record,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13956,8 +13956,8 @@ where
 impl From<DataForHTMLBlockquoteElementMirror> for super::DataForHTMLBlockquoteElement {
     fn from(item: DataForHTMLBlockquoteElementMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -13999,8 +13999,8 @@ where
 impl From<DataForHTMLBodyElementMirror> for super::DataForHTMLBodyElement {
     fn from(item: DataForHTMLBodyElementMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -14042,8 +14042,8 @@ where
 impl From<DataSourceConnectionStringMirror> for super::DataSourceConnectionString {
     fn from(item: DataSourceConnectionStringMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -14085,9 +14085,9 @@ where
 impl From<DataSourceFilePathMirror> for super::DataSourceFilePath {
     fn from(item: DataSourceFilePathMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14124,8 +14124,8 @@ where
 impl From<DataSourceTableNameMirror> for super::DataSourceTableName {
     fn from(item: DataSourceTableNameMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -14166,8 +14166,8 @@ where
 impl From<DataSourceTypeMirror> for super::DataSourceType {
     fn from(item: DataSourceTypeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -14205,8 +14205,8 @@ where
 impl From<DateBlockLongDayFormatMirror> for super::DateBlockLongDayFormat {
     fn from(item: DateBlockLongDayFormatMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14247,8 +14247,8 @@ where
 impl From<DateBlockLongMonthFormatMirror> for super::DateBlockLongMonthFormat {
     fn from(item: DateBlockLongMonthFormatMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14289,8 +14289,8 @@ where
 impl From<DateBlockLongYearFormatMirror> for super::DateBlockLongYearFormat {
     fn from(item: DateBlockLongYearFormatMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14331,8 +14331,8 @@ where
 impl From<DateBlockShortDayFormatMirror> for super::DateBlockShortDayFormat {
     fn from(item: DateBlockShortDayFormatMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14373,8 +14373,8 @@ where
 impl From<DateBlockShortMonthFormatMirror> for super::DateBlockShortMonthFormat {
     fn from(item: DateBlockShortMonthFormatMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14415,8 +14415,8 @@ where
 impl From<DateBlockShortYearFormatMirror> for super::DateBlockShortYearFormat {
     fn from(item: DateBlockShortYearFormatMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14457,8 +14457,8 @@ where
 impl From<DateDisplayMaskMirror> for super::DateDisplayMask {
     fn from(item: DateDisplayMaskMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -14496,8 +14496,8 @@ where
 impl From<DatePickerCalendarTypeMirror> for super::DatePickerCalendarType {
     fn from(item: DatePickerCalendarTypeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -14542,10 +14542,10 @@ impl From<DateStructuredDocumentTagMirror> for super::DateStructuredDocumentTag 
             custom_xml_data_date_storage_format: item.custom_xml_data_date_storage_format,
             date_display_mask: item.date_display_mask,
             date_picker_calendar_type: item.date_picker_calendar_type,
-            extra: item.extra,
             full_date: item.full_date,
             language_id_for_phonetic_guide: item.language_id_for_phonetic_guide,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14586,8 +14586,8 @@ where
 impl From<DefaultCheckboxFormFieldStateMirror> for super::DefaultCheckboxFormFieldState {
     fn from(item: DefaultCheckboxFormFieldStateMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -14629,8 +14629,8 @@ where
 impl From<DefaultDropDownListItemIndexMirror> for super::DefaultDropDownListItemIndex {
     fn from(item: DefaultDropDownListItemIndexMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -14672,9 +14672,9 @@ where
 impl From<DefaultParagraphPropertiesMirror> for super::DefaultParagraphProperties {
     fn from(item: DefaultParagraphPropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             p_pr_general: item.p_pr_general,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14718,8 +14718,8 @@ impl From<DefaultPropertiesForVMLObjectsInHeaderAndFooterMirror>
     fn from(item: DefaultPropertiesForVMLObjectsInHeaderAndFooterMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14763,8 +14763,8 @@ impl From<DefaultPropertiesForVMLObjectsInMainDocumentMirror>
     fn from(item: DefaultPropertiesForVMLObjectsInMainDocumentMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14805,9 +14805,9 @@ where
 impl From<DefaultRunPropertiesMirror> for super::DefaultRunProperties {
     fn from(item: DefaultRunPropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             run_properties: item.run_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14847,8 +14847,8 @@ where
 impl From<DefaultTableStyleMirror> for super::DefaultTableStyle {
     fn from(item: DefaultTableStyleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -14886,8 +14886,8 @@ where
 impl From<DefaultTextBoxFormFieldStringMirror> for super::DefaultTextBoxFormFieldString {
     fn from(item: DefaultTextBoxFormFieldStringMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -14931,10 +14931,10 @@ impl From<DelMirror> for super::Del {
         Self {
             author: item.author,
             date: item.date,
-            extra: item.extra,
             id: item.id,
             previous_run_properties: item.previous_run_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14971,9 +14971,9 @@ where
 impl From<DeletedFieldCodeMirror> for super::DeletedFieldCode {
     fn from(item: DeletedFieldCodeMirror) -> Self {
         Self {
-            extra: item.extra,
             space: item.space,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -15014,10 +15014,10 @@ impl From<DeletedMathControlCharacterMirror> for super::DeletedMathControlCharac
             author: item.author,
             date: item.date,
             date_utc: item.date_utc,
-            extra: item.extra,
             id: item.id,
             run_properties: item.run_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15061,9 +15061,9 @@ impl From<DeletedRunContentMirror> for super::DeletedRunContent {
             author: item.author,
             content: item.content,
             date: item.date,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15102,9 +15102,9 @@ impl From<DeletedTableRowMirror> for super::DeletedTableRow {
         Self {
             author: item.author,
             date: item.date,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15141,9 +15141,9 @@ where
 impl From<DeletedTextMirror> for super::DeletedText {
     fn from(item: DeletedTextMirror) -> Self {
         Self {
-            extra: item.extra,
             space: item.space,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -15181,8 +15181,8 @@ where
 impl From<DescriptionForEntryMirror> for super::DescriptionForEntry {
     fn from(item: DescriptionForEntryMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15225,8 +15225,8 @@ impl From<DifferentEvenOddPageHeadersAndFootersMirror>
 {
     fn from(item: DifferentEvenOddPageHeadersAndFootersMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15270,8 +15270,8 @@ impl From<DifferentFirstPageHeadersAndFootersMirror>
 {
     fn from(item: DifferentFirstPageHeadersAndFootersMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15313,9 +15313,9 @@ where
 impl From<DisableFeaturesNotSupportedMirror> for super::DisableFeaturesNotSupported {
     fn from(item: DisableFeaturesNotSupportedMirror) -> Self {
         Self {
-            extra: item.extra,
             target: item.target,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15359,8 +15359,8 @@ impl From<DisplayAllCharactersAsCapitalLettersMirror>
 {
     fn from(item: DisplayAllCharactersAsCapitalLettersMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15404,8 +15404,8 @@ impl From<DisplayAllLevelsUsingArabicNumeralsMirror>
 {
     fn from(item: DisplayAllLevelsUsingArabicNumeralsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15447,8 +15447,8 @@ where
 impl From<DisplayBackgroundShapeMirror> for super::DisplayBackgroundShape {
     fn from(item: DisplayBackgroundShapeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15490,8 +15490,8 @@ where
 impl From<DisplayBackslashAsYenSignMirror> for super::DisplayBackslashAsYenSign {
     fn from(item: DisplayBackslashAsYenSignMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15533,8 +15533,8 @@ where
 impl From<DisplayCharacterOutlineMirror> for super::DisplayCharacterOutline {
     fn from(item: DisplayCharacterOutlineMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15578,8 +15578,8 @@ impl From<DisplayPageColumnBreaksPresentInFramesMirror>
 {
     fn from(item: DisplayPageColumnBreaksPresentInFramesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15621,8 +15621,8 @@ where
 impl From<DistanceBetweenAutomaticTabStopsMirror> for super::DistanceBetweenAutomaticTabStops {
     fn from(item: DistanceBetweenAutomaticTabStopsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15664,8 +15664,8 @@ where
 impl From<DistanceBetweenHorizontalGridlinesMirror> for super::DistanceBetweenHorizontalGridlines {
     fn from(item: DistanceBetweenHorizontalGridlinesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15707,8 +15707,8 @@ where
 impl From<DistanceBetweenPhoneticGuideTextMirror> for super::DistanceBetweenPhoneticGuideText {
     fn from(item: DistanceBetweenPhoneticGuideTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15750,8 +15750,8 @@ where
 impl From<DistanceBetweenVerticalGridlinesMirror> for super::DistanceBetweenVerticalGridlines {
     fn from(item: DistanceBetweenVerticalGridlinesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15793,8 +15793,8 @@ where
 impl From<DoNotAddLeadingBetweenLinesOfTextMirror> for super::DoNotAddLeadingBetweenLinesOfText {
     fn from(item: DoNotAddLeadingBetweenLinesOfTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15838,8 +15838,8 @@ impl From<DoNotAllowFloatingTablesToBreakAcrossPagesMirror>
 {
     fn from(item: DoNotAllowFloatingTablesToBreakAcrossPagesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15881,8 +15881,8 @@ where
 impl From<DoNotAutofitConstrainedTablesMirror> for super::DoNotAutofitConstrainedTables {
     fn from(item: DoNotAutofitConstrainedTablesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15924,8 +15924,8 @@ where
 impl From<DoNotAutomaticallyCompressImagesMirror> for super::DoNotAutomaticallyCompressImages {
     fn from(item: DoNotAutomaticallyCompressImagesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15969,8 +15969,8 @@ impl From<DoNotBalanceTextColumnsWithinASectionMirror>
 {
     fn from(item: DoNotBalanceTextColumnsWithinASectionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16012,8 +16012,8 @@ where
 impl From<DoNotBreakConstrainedForcedTableMirror> for super::DoNotBreakConstrainedForcedTable {
     fn from(item: DoNotBreakConstrainedForcedTableMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16057,8 +16057,8 @@ impl From<DoNotBypassEastAsianComplexScriptLayoutCodeMirror>
 {
     fn from(item: DoNotBypassEastAsianComplexScriptLayoutCodeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16102,8 +16102,8 @@ impl From<DoNotCenterContentOnLinesWithExactLineHeightMirror>
 {
     fn from(item: DoNotCenterContentOnLinesWithExactLineHeightMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16145,8 +16145,8 @@ where
 impl From<DoNotCheckSpellingOrGrammarMirror> for super::DoNotCheckSpellingOrGrammar {
     fn from(item: DoNotCheckSpellingOrGrammarMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16190,8 +16190,8 @@ impl From<DoNotCreateCustomTabStopForHangingIndentMirror>
 {
     fn from(item: DoNotCreateCustomTabStopForHangingIndentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16233,8 +16233,8 @@ where
 impl From<DoNotDisplayFramesetSplittersMirror> for super::DoNotDisplayFramesetSplitters {
     fn from(item: DoNotDisplayFramesetSplittersMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16276,8 +16276,8 @@ where
 impl From<DoNotDisplayGrammaticalErrorsMirror> for super::DoNotDisplayGrammaticalErrors {
     fn from(item: DoNotDisplayGrammaticalErrorsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16319,8 +16319,8 @@ where
 impl From<DoNotDisplayPageBoundariesMirror> for super::DoNotDisplayPageBoundaries {
     fn from(item: DoNotDisplayPageBoundariesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16362,8 +16362,8 @@ where
 impl From<DoNotDisplaySpellingErrorsMirror> for super::DoNotDisplaySpellingErrors {
     fn from(item: DoNotDisplaySpellingErrorsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16405,8 +16405,8 @@ where
 impl From<DoNotHyphenateCapitalLettersMirror> for super::DoNotHyphenateCapitalLetters {
     fn from(item: DoNotHyphenateCapitalLettersMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16448,8 +16448,8 @@ where
 impl From<DoNotIncludeSubdocsInStatsMirror> for super::DoNotIncludeSubdocsInStats {
     fn from(item: DoNotIncludeSubdocsInStatsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16493,8 +16493,8 @@ impl From<DoNotIncreaseLineHeightForRaisedLoweredTextMirror>
 {
     fn from(item: DoNotIncreaseLineHeightForRaisedLoweredTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16536,8 +16536,8 @@ where
 impl From<DoNotPlaceSupportingFilesMirror> for super::DoNotPlaceSupportingFiles {
     fn from(item: DoNotPlaceSupportingFilesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16579,8 +16579,8 @@ where
 impl From<DoNotRelyOnCSSMirror> for super::DoNotRelyOnCSS {
     fn from(item: DoNotRelyOnCSSMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16618,8 +16618,8 @@ where
 impl From<DoNotShowFormFieldIndicatorMirror> for super::DoNotShowFormFieldIndicator {
     fn from(item: DoNotShowFormFieldIndicatorMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16661,8 +16661,8 @@ where
 impl From<DoNotShowInvalidMarkupIndicatorMirror> for super::DoNotShowInvalidMarkupIndicator {
     fn from(item: DoNotShowInvalidMarkupIndicatorMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16706,8 +16706,8 @@ impl From<DoNotSnapToDocumentGridInTableCellsWithObjectsMirror>
 {
     fn from(item: DoNotSnapToDocumentGridInTableCellsWithObjectsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16749,8 +16749,8 @@ where
 impl From<DoNotSuppressBlankLinesMirror> for super::DoNotSuppressBlankLines {
     fn from(item: DoNotSuppressBlankLinesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16792,8 +16792,8 @@ where
 impl From<DoNotSuppressIndentationMirror> for super::DoNotSuppressIndentation {
     fn from(item: DoNotSuppressIndentationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16835,8 +16835,8 @@ where
 impl From<DoNotSuppressParagraphBordersMirror> for super::DoNotSuppressParagraphBorders {
     fn from(item: DoNotSuppressParagraphBordersMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16878,8 +16878,8 @@ where
 impl From<DoNotTrackFormattingMirror> for super::DoNotTrackFormatting {
     fn from(item: DoNotTrackFormattingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16920,8 +16920,8 @@ where
 impl From<DoNotUseEastAsianBreakRulesMirror> for super::DoNotUseEastAsianBreakRules {
     fn from(item: DoNotUseEastAsianBreakRulesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16963,8 +16963,8 @@ where
 impl From<DoNotUseFileNamesMirror> for super::DoNotUseFileNames {
     fn from(item: DoNotUseFileNamesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -17002,8 +17002,8 @@ where
 impl From<DoNotUseHTMLParagraphAutoSpacingMirror> for super::DoNotUseHTMLParagraphAutoSpacing {
     fn from(item: DoNotUseHTMLParagraphAutoSpacingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -17045,8 +17045,8 @@ where
 impl From<DoNotUseIndentAsNumberingTabStopMirror> for super::DoNotUseIndentAsNumberingTabStop {
     fn from(item: DoNotUseIndentAsNumberingTabStopMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -17090,8 +17090,8 @@ impl From<DoNotUseMarginsForDrawingGridOriginMirror>
 {
     fn from(item: DoNotUseMarginsForDrawingGridOriginMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -17133,8 +17133,8 @@ where
 impl From<DoNotUseMoveSyntaxMirror> for super::DoNotUseMoveSyntax {
     fn from(item: DoNotUseMoveSyntaxMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -17172,8 +17172,8 @@ where
 impl From<DoNotValidateAgainstSchemaMirror> for super::DoNotValidateAgainstSchema {
     fn from(item: DoNotValidateAgainstSchemaMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -17215,8 +17215,8 @@ where
 impl From<DoNotVertAlignCellWithSpMirror> for super::DoNotVertAlignCellWithSp {
     fn from(item: DoNotVertAlignCellWithSpMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -17258,8 +17258,8 @@ where
 impl From<DoNotWrapTextWithPunctMirror> for super::DoNotWrapTextWithPunct {
     fn from(item: DoNotWrapTextWithPunctMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -17304,8 +17304,8 @@ impl From<DocumentMirror> for super::Document {
             background: item.background,
             body: item.body,
             conformance: item.conformance,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17345,11 +17345,11 @@ impl From<DocumentBackgroundMirror> for super::DocumentBackground {
             color: item.color,
             content: item.content,
             drawingml_object: item.drawingml_object,
-            extra: item.extra,
             theme_color: item.theme_color,
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17388,8 +17388,8 @@ impl From<DocumentBodyMirror> for super::DocumentBody {
         Self {
             content: item.content,
             document_final_section_properties: item.document_final_section_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17426,8 +17426,8 @@ where
 impl From<DocumentClassificationMirror> for super::DocumentClassification {
     fn from(item: DocumentClassificationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -17473,8 +17473,8 @@ impl From<DocumentDefaultParagraphAndRunPropertiesMirror>
         Self {
             default_paragraph_properties: item.default_paragraph_properties,
             default_run_properties: item.default_run_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17528,7 +17528,6 @@ impl From<DocumentEditingRestrictionsMirror> for super::DocumentEditingRestricti
             crypt_spin_count: item.crypt_spin_count,
             edit: item.edit,
             enforcement: item.enforcement,
-            extra: item.extra,
             formatting: item.formatting,
             hash: item.hash,
             hash_value: item.hash_value,
@@ -17536,6 +17535,7 @@ impl From<DocumentEditingRestrictionsMirror> for super::DocumentEditingRestricti
             salt_value: item.salt_value,
             spin_count: item.spin_count,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17577,8 +17577,8 @@ impl From<DocumentEndnotesMirror> for super::DocumentEndnotes {
     fn from(item: DocumentEndnotesMirror) -> Self {
         Self {
             endnote_content: item.endnote_content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17619,7 +17619,6 @@ impl From<DocumentFinalSectionPropertiesMirror> for super::DocumentFinalSectionP
             content: item.content,
             different_first_page_headers_and_footers: item.different_first_page_headers_and_footers,
             document_grid: item.document_grid,
-            extra: item.extra,
             footnote_columns: item.footnote_columns,
             gutter_on_right_side_of_page: item.gutter_on_right_side_of_page,
             line_numbering_settings: item.line_numbering_settings,
@@ -17644,6 +17643,7 @@ impl From<DocumentFinalSectionPropertiesMirror> for super::DocumentFinalSectionP
             suppress_endnotes_in_document: item.suppress_endnotes_in_document,
             table_cell_vertical_alignment: item.table_cell_vertical_alignment,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17684,9 +17684,9 @@ where
 impl From<DocumentFootnotesMirror> for super::DocumentFootnotes {
     fn from(item: DocumentFootnotesMirror) -> Self {
         Self {
-            extra: item.extra,
             footnote_content: item.footnote_content,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17724,10 +17724,10 @@ impl From<DocumentGridMirror> for super::DocumentGrid {
     fn from(item: DocumentGridMirror) -> Self {
         Self {
             char_space: item.char_space,
-            extra: item.extra,
             line_pitch: item.line_pitch,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17766,8 +17766,8 @@ impl From<DocumentGridInterLineParagraphSpacingMirror>
 {
     fn from(item: DocumentGridInterLineParagraphSpacingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -17809,8 +17809,8 @@ where
 impl From<DocumentPartCategoryFilterMirror> for super::DocumentPartCategoryFilter {
     fn from(item: DocumentPartCategoryFilterMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -17852,8 +17852,8 @@ where
 impl From<DocumentPartGalleryFilterMirror> for super::DocumentPartGalleryFilter {
     fn from(item: DocumentPartGalleryFilterMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -17900,8 +17900,8 @@ impl From<DocumentPartGalleryStructuredDocumentTagMirror>
             built_in_document_part: item.built_in_document_part,
             document_part_category_filter: item.document_part_category_filter,
             document_part_gallery_filter: item.document_part_gallery_filter,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17942,8 +17942,8 @@ where
 impl From<DocumentPartReferenceMirror> for super::DocumentPartReference {
     fn from(item: DocumentPartReferenceMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -18011,7 +18011,7 @@ impl From<DocumentSettingsMirror> for super::DocumentSettings {
             drawing_grid_horizontal_grid_unit_size, drawing_grid_horizontal_origin_point,
             drawing_grid_vertical_grid_unit_size, drawing_grid_vertical_origin_point,
             embed_common_system_fonts, embed_truetype_fonts,
-            embedded_custom_xml_schema_supplementary_data, extra, freeze_document_layout,
+            embedded_custom_xml_schema_supplementary_data, freeze_document_layout,
             generate_thumbnail_for_document_on_save, grammar_checking_settings, hyphenation_zone,
             ignore_mixed_content, list_separator_for_field_code_evaluation, magnification_setting,
             mail_merge_settings, math_properties, maximum_number_of_consecutively_hyphenated_lines,
@@ -18028,7 +18028,7 @@ impl From<DocumentSettingsMirror> for super::DocumentSettings {
             show_xml_tags, spelling_and_grammatical_checking_state, strict_kinsoku_rules,
             subset_fonts_when_embedding, suggested_filtering, suggested_sorting,
             supplementary_smart_tag_information, theme_color_mappings, theme_font_languages,
-            track_revisions_to_document, unknown, upgrade_document_on_open,
+            track_revisions_to_document, unknown, upgrade_document_on_open, user_data,
             visibility_of_annotation_types, w14_doc_id, w15_doc_id, write_protection,
         )
     }
@@ -18066,9 +18066,9 @@ where
 impl From<DocumentVariablesMirror> for super::DocumentVariables {
     fn from(item: DocumentVariablesMirror) -> Self {
         Self {
-            extra: item.extra,
             single_document_variable: item.single_document_variable,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18105,8 +18105,8 @@ where
 impl From<DocumentViewSettingMirror> for super::DocumentViewSetting {
     fn from(item: DocumentViewSettingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -18148,7 +18148,6 @@ impl From<DocumentWideEndnotePropertiesMirror> for super::DocumentWideEndnotePro
     fn from(item: DocumentWideEndnotePropertiesMirror) -> Self {
         Self {
             endnote_placement: item.endnote_placement,
-            extra: item.extra,
             footnote_and_endnote_numbering_restart_location: item
                 .footnote_and_endnote_numbering_restart_location,
             footnote_and_endnote_numbering_starting_value: item
@@ -18156,6 +18155,7 @@ impl From<DocumentWideEndnotePropertiesMirror> for super::DocumentWideEndnotePro
             numbering_format: item.numbering_format,
             special_endnote_list: item.special_endnote_list,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18196,7 +18196,6 @@ where
 impl From<DocumentWideFootnotePropertiesMirror> for super::DocumentWideFootnoteProperties {
     fn from(item: DocumentWideFootnotePropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             footnote_and_endnote_numbering_restart_location: item
                 .footnote_and_endnote_numbering_restart_location,
             footnote_and_endnote_numbering_starting_value: item
@@ -18205,6 +18204,7 @@ impl From<DocumentWideFootnotePropertiesMirror> for super::DocumentWideFootnoteP
             numbering_format: item.numbering_format,
             special_footnote_list: item.special_footnote_list,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18245,8 +18245,8 @@ where
 impl From<DontJustifySoftLineBreakLinesMirror> for super::DontJustifySoftLineBreakLines {
     fn from(item: DontJustifySoftLineBreakLinesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -18288,8 +18288,8 @@ where
 impl From<DontWrapCellContentMirror> for super::DontWrapCellContent {
     fn from(item: DontWrapCellContentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -18330,8 +18330,8 @@ where
 impl From<DoubleStrikethroughMirror> for super::DoubleStrikethrough {
     fn from(item: DoubleStrikethroughMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -18372,8 +18372,8 @@ where
 impl From<DrawingGridHorizontalGridUnitSizeMirror> for super::DrawingGridHorizontalGridUnitSize {
     fn from(item: DrawingGridHorizontalGridUnitSizeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -18415,8 +18415,8 @@ where
 impl From<DrawingGridHorizontalOriginPointMirror> for super::DrawingGridHorizontalOriginPoint {
     fn from(item: DrawingGridHorizontalOriginPointMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -18458,8 +18458,8 @@ where
 impl From<DrawingGridVerticalGridUnitSizeMirror> for super::DrawingGridVerticalGridUnitSize {
     fn from(item: DrawingGridVerticalGridUnitSizeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -18501,8 +18501,8 @@ where
 impl From<DrawingGridVerticalOriginPointMirror> for super::DrawingGridVerticalOriginPoint {
     fn from(item: DrawingGridVerticalOriginPointMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -18545,8 +18545,8 @@ impl From<DrawingMLObjectMirror> for super::DrawingMLObject {
     fn from(item: DrawingMLObjectMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18583,8 +18583,8 @@ where
 impl From<DropDownListEntryMirror> for super::DropDownListEntry {
     fn from(item: DropDownListEntryMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -18625,8 +18625,8 @@ impl From<DropDownListFormFieldPropertiesMirror> for super::DropDownListFormFiel
             default_drop_down_list_item_index: item.default_drop_down_list_item_index,
             drop_down_list_entry: item.drop_down_list_entry,
             drop_down_list_selection: item.drop_down_list_selection,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18667,8 +18667,8 @@ where
 impl From<DropDownListSelectionMirror> for super::DropDownListSelection {
     fn from(item: DropDownListSelectionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -18711,9 +18711,9 @@ impl From<DropDownListStructuredDocumentTagMirror> for super::DropDownListStruct
     fn from(item: DropDownListStructuredDocumentTagMirror) -> Self {
         Self {
             combo_box_list_item: item.combo_box_list_item,
-            extra: item.extra,
             last_value: item.last_value,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18754,8 +18754,8 @@ where
 impl From<EMailMessageCompositionStyleMirror> for super::EMailMessageCompositionStyle {
     fn from(item: EMailMessageCompositionStyleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -18797,8 +18797,8 @@ where
 impl From<EMailMessageReplyStyleMirror> for super::EMailMessageReplyStyle {
     fn from(item: EMailMessageReplyStyleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -18840,8 +18840,8 @@ where
 impl From<EMailMessageTextStyleMirror> for super::EMailMessageTextStyle {
     fn from(item: EMailMessageTextStyleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -18883,8 +18883,8 @@ where
 impl From<EastAsianTypographyRulesMirror> for super::EastAsianTypographyRules {
     fn from(item: EastAsianTypographyRulesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -18928,9 +18928,9 @@ impl From<EastAsianTypographySettingsMirror> for super::EastAsianTypographySetti
         Self {
             combine: item.combine,
             combine_brackets: item.combine_brackets,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
             vert: item.vert,
             vert_compress: item.vert_compress,
         }
@@ -18973,8 +18973,8 @@ where
 impl From<EmbedCommonSystemFontsMirror> for super::EmbedCommonSystemFonts {
     fn from(item: EmbedCommonSystemFontsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -19016,8 +19016,8 @@ where
 impl From<EmbedTrueTypeFontsMirror> for super::EmbedTrueTypeFonts {
     fn from(item: EmbedTrueTypeFontsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -19055,11 +19055,11 @@ where
 impl From<EmbeddedControlMirror> for super::EmbeddedControl {
     fn from(item: EmbeddedControlMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             name: item.name,
             shapeid: item.shapeid,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19101,8 +19101,8 @@ impl From<EmbeddedObjectMirror> for super::EmbeddedObject {
             drawingml_object: item.drawingml_object,
             dxa_orig: item.dxa_orig,
             dya_orig: item.dya_orig,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             vml_element_content: item.vml_element_content,
         }
     }
@@ -19141,12 +19141,12 @@ impl From<EmbeddedObjectPropertiesMirror> for super::EmbeddedObjectProperties {
     fn from(item: EmbeddedObjectPropertiesMirror) -> Self {
         Self {
             draw_aspect: item.draw_aspect,
-            extra: item.extra,
             field_codes: item.field_codes,
             id: item.id,
             prog_id: item.prog_id,
             shape_id: item.shape_id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19187,9 +19187,9 @@ where
 impl From<EmbeddedVideoMirror> for super::EmbeddedVideo {
     fn from(item: EmbeddedVideoMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19226,8 +19226,8 @@ where
 impl From<EmbossingMirror> for super::Embossing {
     fn from(item: EmbossingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -19265,8 +19265,8 @@ where
 impl From<EmphasisMarkMirror> for super::EmphasisMark {
     fn from(item: EmphasisMarkMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -19305,10 +19305,10 @@ impl From<EndnoteContentMirror> for super::EndnoteContent {
     fn from(item: EndnoteContentMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             id: item.id,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19345,8 +19345,8 @@ where
 impl From<EndnotePlacementMirror> for super::EndnotePlacement {
     fn from(item: EndnotePlacementMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -19385,9 +19385,9 @@ impl From<EndnoteReferenceMirror> for super::EndnoteReference {
     fn from(item: EndnoteReferenceMirror) -> Self {
         Self {
             custom_mark_follows: item.custom_mark_follows,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19424,8 +19424,8 @@ where
 impl From<EndnoteReferenceMarkMirror> for super::EndnoteReferenceMark {
     fn from(item: EndnoteReferenceMarkMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19465,10 +19465,10 @@ where
 impl From<EntryCategorizationMirror> for super::EntryCategorization {
     fn from(item: EntryCategorizationMirror) -> Self {
         Self {
-            extra: item.extra,
             gallery_associated_with_entry: item.gallery_associated_with_entry,
             primary_style_name: item.primary_style_name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19508,8 +19508,8 @@ where
 impl From<EntryIDMirror> for super::EntryID {
     fn from(item: EntryIDMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -19547,8 +19547,8 @@ where
 impl From<EntryInsertionBehaviorMirror> for super::EntryInsertionBehavior {
     fn from(item: EntryInsertionBehaviorMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -19591,8 +19591,8 @@ impl From<EntryInsertionBehaviorsMirror> for super::EntryInsertionBehaviors {
     fn from(item: EntryInsertionBehaviorsMirror) -> Self {
         Self {
             entry_insertion_behavior: item.entry_insertion_behavior,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19634,8 +19634,8 @@ impl From<EntryNameMirror> for super::EntryName {
     fn from(item: EntryNameMirror) -> Self {
         Self {
             decorated: item.decorated,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -19673,8 +19673,8 @@ where
 impl From<EntryTypeMirror> for super::EntryType {
     fn from(item: EntryTypeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -19714,8 +19714,8 @@ impl From<EntryTypesMirror> for super::EntryTypes {
         Self {
             all: item.all,
             entry_type: item.entry_type,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19752,8 +19752,8 @@ where
 impl From<EquationStructuredDocumentTagMirror> for super::EquationStructuredDocumentTag {
     fn from(item: EquationStructuredDocumentTagMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19794,8 +19794,8 @@ where
 impl From<ExecuteOnFormFieldEntryMirror> for super::ExecuteOnFormFieldEntry {
     fn from(item: ExecuteOnFormFieldEntryMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -19837,8 +19837,8 @@ where
 impl From<ExecuteOnFormFieldExitMirror> for super::ExecuteOnFormFieldExit {
     fn from(item: ExecuteOnFormFieldExitMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -19880,8 +19880,8 @@ where
 impl From<ExpandedCompressedTextMirror> for super::ExpandedCompressedText {
     fn from(item: ExpandedCompressedTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -19923,9 +19923,9 @@ where
 impl From<ExternalContentImportPropertiesMirror> for super::ExternalContentImportProperties {
     fn from(item: ExternalContentImportPropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             keep_source_formatting_on_import: item.keep_source_formatting_on_import,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19968,7 +19968,6 @@ impl From<ExternalDataSourceMergeFieldMappingMirror>
 {
     fn from(item: ExternalDataSourceMergeFieldMappingMirror) -> Self {
         Self {
-            extra: item.extra,
             index_of_column_being_mapped: item.index_of_column_being_mapped,
             language_id_for_phonetic_guide: item.language_id_for_phonetic_guide,
             merge_field_mapping: item.merge_field_mapping,
@@ -19976,6 +19975,7 @@ impl From<ExternalDataSourceMergeFieldMappingMirror>
             primary_style_name: item.primary_style_name,
             unknown: item.unknown,
             use_country_based_address_field_ordering: item.use_country_based_address_field_ordering,
+            user_data: item.user_data,
         }
     }
 }
@@ -20016,9 +20016,9 @@ where
 impl From<FieldCodeMirror> for super::FieldCode {
     fn from(item: FieldCodeMirror) -> Self {
         Self {
-            extra: item.extra,
             space: item.space,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -20056,8 +20056,8 @@ where
 impl From<FirstRowContainsColumnNamesMirror> for super::FirstRowContainsColumnNames {
     fn from(item: FirstRowContainsColumnNamesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -20099,8 +20099,8 @@ where
 impl From<FitTextWithinCellMirror> for super::FitTextWithinCell {
     fn from(item: FitTextWithinCellMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -20140,8 +20140,8 @@ impl From<FitToExpandedWidthWhenPerformingFullJustificationMirror>
 {
     fn from(item: FitToExpandedWidthWhenPerformingFullJustificationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -20186,8 +20186,8 @@ where
 impl From<FloatingTableAllowsOverlapMirror> for super::FloatingTableAllowsOverlap {
     fn from(item: FloatingTableAllowsOverlapMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -20230,7 +20230,6 @@ impl From<FloatingTablePositioningMirror> for super::FloatingTablePositioning {
     fn from(item: FloatingTablePositioningMirror) -> Self {
         Self {
             bottom_from_text: item.bottom_from_text,
-            extra: item.extra,
             horz_anchor: item.horz_anchor,
             left_from_text: item.left_from_text,
             right_from_text: item.right_from_text,
@@ -20240,6 +20239,7 @@ impl From<FloatingTablePositioningMirror> for super::FloatingTablePositioning {
             tblp_y_spec: item.tblp_y_spec,
             top_from_text: item.top_from_text,
             unknown: item.unknown,
+            user_data: item.user_data,
             vert_anchor: item.vert_anchor,
         }
     }
@@ -20281,8 +20281,8 @@ where
 impl From<FontFamilyMirror> for super::FontFamily {
     fn from(item: FontFamilyMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -20320,8 +20320,8 @@ where
 impl From<FontKerningMirror> for super::FontKerning {
     fn from(item: FontKerningMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -20359,8 +20359,8 @@ where
 impl From<FontPitchMirror> for super::FontPitch {
     fn from(item: FontPitchMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -20398,9 +20398,9 @@ where
 impl From<FontTableRootElementMirror> for super::FontTableRootElement {
     fn from(item: FontTableRootElementMirror) -> Self {
         Self {
-            extra: item.extra,
             properties_for_a_single_font: item.properties_for_a_single_font,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -20441,8 +20441,8 @@ impl From<FooterMirror> for super::Footer {
     fn from(item: FooterMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -20479,10 +20479,10 @@ where
 impl From<FooterReferenceMirror> for super::FooterReference {
     fn from(item: FooterReferenceMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -20521,8 +20521,8 @@ impl From<FootnoteAndEndnoteNumberingRestartLocationMirror>
 {
     fn from(item: FootnoteAndEndnoteNumberingRestartLocationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -20566,8 +20566,8 @@ impl From<FootnoteAndEndnoteNumberingStartingValueMirror>
 {
     fn from(item: FootnoteAndEndnoteNumberingStartingValueMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -20610,10 +20610,10 @@ impl From<FootnoteContentMirror> for super::FootnoteContent {
     fn from(item: FootnoteContentMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             id: item.id,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -20650,8 +20650,8 @@ where
 impl From<FootnoteEndnoteSeparatorMarkMirror> for super::FootnoteEndnoteSeparatorMark {
     fn from(item: FootnoteEndnoteSeparatorMarkMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -20692,8 +20692,8 @@ where
 impl From<FootnotePlacementMirror> for super::FootnotePlacement {
     fn from(item: FootnotePlacementMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -20732,9 +20732,9 @@ impl From<FootnoteReferenceMirror> for super::FootnoteReference {
     fn from(item: FootnoteReferenceMirror) -> Self {
         Self {
             custom_mark_follows: item.custom_mark_follows,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -20771,8 +20771,8 @@ where
 impl From<FootnoteReferenceMarkMirror> for super::FootnoteReferenceMark {
     fn from(item: FootnoteReferenceMarkMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -20813,8 +20813,8 @@ where
 impl From<ForgetLastTabAlignmentMirror> for super::ForgetLastTabAlignment {
     fn from(item: ForgetLastTabAlignmentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -20856,8 +20856,8 @@ where
 impl From<FormFieldEnabledMirror> for super::FormFieldEnabled {
     fn from(item: FormFieldEnabledMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -20895,8 +20895,8 @@ where
 impl From<FormFieldNameMirror> for super::FormFieldName {
     fn from(item: FormFieldNameMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -20935,8 +20935,8 @@ impl From<FormFieldPropertiesMirror> for super::FormFieldProperties {
     fn from(item: FormFieldPropertiesMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -20976,8 +20976,8 @@ where
 impl From<FrameCannotBeResizedMirror> for super::FrameCannotBeResized {
     fn from(item: FrameCannotBeResizedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -21018,9 +21018,9 @@ where
 impl From<FrameLongDescriptionMirror> for super::FrameLongDescription {
     fn from(item: FrameLongDescriptionMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -21060,8 +21060,8 @@ where
 impl From<FrameOrFramesetTitleMirror> for super::FrameOrFramesetTitle {
     fn from(item: FrameOrFramesetTitleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -21102,8 +21102,8 @@ where
 impl From<FrameSizeMirror> for super::FrameSize {
     fn from(item: FrameSizeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -21141,8 +21141,8 @@ where
 impl From<FramesetLayoutMirror> for super::FramesetLayout {
     fn from(item: FramesetLayoutMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -21180,8 +21180,8 @@ where
 impl From<FramesetSplitterBorderStyleMirror> for super::FramesetSplitterBorderStyle {
     fn from(item: FramesetSplitterBorderStyleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -21224,11 +21224,11 @@ impl From<FramesetSplitterPropertiesMirror> for super::FramesetSplitterPropertie
     fn from(item: FramesetSplitterPropertiesMirror) -> Self {
         Self {
             do_not_display_frameset_splitters: item.do_not_display_frameset_splitters,
-            extra: item.extra,
             frameset_splitter_border_style: item.frameset_splitter_border_style,
             frameset_splitter_width: item.frameset_splitter_width,
             run_content_color: item.run_content_color,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -21269,8 +21269,8 @@ where
 impl From<FramesetSplitterWidthMirror> for super::FramesetSplitterWidth {
     fn from(item: FramesetSplitterWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -21313,10 +21313,10 @@ impl From<FreezeDocumentLayoutMirror> for super::FreezeDocumentLayout {
     fn from(item: FreezeDocumentLayoutMirror) -> Self {
         Self {
             actual_pg: item.actual_pg,
-            extra: item.extra,
             font_sz: item.font_sz,
             h: item.h,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -21357,8 +21357,8 @@ where
 impl From<FriendlyNameMirror> for super::FriendlyName {
     fn from(item: FriendlyNameMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -21396,8 +21396,8 @@ where
 impl From<GalleryAssociatedWithEntryMirror> for super::GalleryAssociatedWithEntry {
     fn from(item: GalleryAssociatedWithEntryMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -21439,8 +21439,8 @@ where
 impl From<GenerateThumbnailForDocumentOnSaveMirror> for super::GenerateThumbnailForDocumentOnSave {
     fn from(item: GenerateThumbnailForDocumentOnSaveMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -21483,9 +21483,9 @@ impl From<GlossaryDocumentEntryMirror> for super::GlossaryDocumentEntry {
     fn from(item: GlossaryDocumentEntryMirror) -> Self {
         Self {
             contents: item.contents,
-            extra: item.extra,
             properties: item.properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -21527,8 +21527,8 @@ impl From<GlossaryDocumentEntryPropertiesMirror> for super::GlossaryDocumentEntr
     fn from(item: GlossaryDocumentEntryPropertiesMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -21570,9 +21570,9 @@ impl From<GlossaryDocumentRootElementMirror> for super::GlossaryDocumentRootElem
     fn from(item: GlossaryDocumentRootElementMirror) -> Self {
         Self {
             document_background: item.document_background,
-            extra: item.extra,
             list_of_glossary_document_entries: item.list_of_glossary_document_entries,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -21616,10 +21616,10 @@ impl From<GrammarCheckingSettingsMirror> for super::GrammarCheckingSettings {
             app_name: item.app_name,
             check_style: item.check_style,
             dll_version: item.dll_version,
-            extra: item.extra,
             lang: item.lang,
             nl_check: item.nl_check,
             unknown: item.unknown,
+            user_data: item.user_data,
             vendor_id: item.vendor_id,
         }
     }
@@ -21661,8 +21661,8 @@ where
 impl From<GridColumnDefinitionMirror> for super::GridColumnDefinition {
     fn from(item: GridColumnDefinitionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -21703,8 +21703,8 @@ where
 impl From<GridColumnsAfterLastCellMirror> for super::GridColumnsAfterLastCell {
     fn from(item: GridColumnsAfterLastCellMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -21746,8 +21746,8 @@ where
 impl From<GridColumnsBeforeFirstCellMirror> for super::GridColumnsBeforeFirstCell {
     fn from(item: GridColumnsBeforeFirstCellMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -21789,8 +21789,8 @@ where
 impl From<GridColumnsSpannedMirror> for super::GridColumnsSpanned {
     fn from(item: GridColumnsSpannedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -21828,8 +21828,8 @@ where
 impl From<GroupStructuredDocumentTagMirror> for super::GroupStructuredDocumentTag {
     fn from(item: GroupStructuredDocumentTagMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -21870,8 +21870,8 @@ where
 impl From<GutterOnRightSideOfPageMirror> for super::GutterOnRightSideOfPage {
     fn from(item: GutterOnRightSideOfPageMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -21914,8 +21914,8 @@ impl From<HeaderMirror> for super::Header {
     fn from(item: HeaderMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -21952,8 +21952,8 @@ where
 impl From<HeaderCellReferenceMirror> for super::HeaderCellReference {
     fn from(item: HeaderCellReferenceMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -21994,9 +21994,9 @@ where
 impl From<HeaderCellsAssociatedWithTableCellMirror> for super::HeaderCellsAssociatedWithTableCell {
     fn from(item: HeaderCellsAssociatedWithTableCellMirror) -> Self {
         Self {
-            extra: item.extra,
             header_cell_reference: item.header_cell_reference,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -22037,9 +22037,9 @@ where
 impl From<HeaderDefinitionFilePathMirror> for super::HeaderDefinitionFilePath {
     fn from(item: HeaderDefinitionFilePathMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -22080,10 +22080,10 @@ where
 impl From<HeaderReferenceMirror> for super::HeaderReference {
     fn from(item: HeaderReferenceMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -22120,8 +22120,8 @@ where
 impl From<HiddenTableRowMarkerMirror> for super::HiddenTableRowMarker {
     fn from(item: HiddenTableRowMarkerMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -22162,8 +22162,8 @@ where
 impl From<HiddenTextMirror> for super::HiddenText {
     fn from(item: HiddenTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -22201,8 +22201,8 @@ where
 impl From<HideStyleFromMainUserInterfaceMirror> for super::HideStyleFromMainUserInterface {
     fn from(item: HideStyleFromMainUserInterfaceMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -22244,8 +22244,8 @@ where
 impl From<HorizontallyMergedCellMirror> for super::HorizontallyMergedCell {
     fn from(item: HorizontallyMergedCellMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -22290,12 +22290,12 @@ impl From<HyperlinkMirror> for super::Hyperlink {
             anchor: item.anchor,
             content: item.content,
             doc_location: item.doc_location,
-            extra: item.extra,
             history: item.history,
             id: item.id,
             tgt_frame: item.tgt_frame,
             tooltip: item.tooltip,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -22332,8 +22332,8 @@ where
 impl From<HyphenationZoneMirror> for super::HyphenationZone {
     fn from(item: HyphenationZoneMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -22371,8 +22371,8 @@ where
 impl From<IgnoreEndOfCellMarkerMirror> for super::IgnoreEndOfCellMarker {
     fn from(item: IgnoreEndOfCellMarkerMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -22416,8 +22416,8 @@ impl From<IgnoreExactLineHeightForLastLineOnPageMirror>
 {
     fn from(item: IgnoreExactLineHeightForLastLineOnPageMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -22461,8 +22461,8 @@ impl From<IgnoreMinimumLineHeightForFirstLineOnPageMirror>
 {
     fn from(item: IgnoreMinimumLineHeightForFirstLineOnPageMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -22504,8 +22504,8 @@ where
 impl From<IgnoreMixedContentMirror> for super::IgnoreMixedContent {
     fn from(item: IgnoreMixedContentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -22545,8 +22545,8 @@ impl From<IgnorePageBreakFromContinuousSectionBreakMirror>
 {
     fn from(item: IgnorePageBreakFromContinuousSectionBreakMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -22588,8 +22588,8 @@ where
 impl From<IgnoreSpacingAboveAndBelowMirror> for super::IgnoreSpacingAboveAndBelow {
     fn from(item: IgnoreSpacingAboveAndBelowMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -22633,8 +22633,8 @@ impl From<IgnoreTextWrappingAroundObjectsAtBottomOfPageMirror>
 {
     fn from(item: IgnoreTextWrappingAroundObjectsAtBottomOfPageMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -22676,8 +22676,8 @@ where
 impl From<IgnoreVerticalAlignmentInTextboxesMirror> for super::IgnoreVerticalAlignmentInTextboxes {
     fn from(item: IgnoreVerticalAlignmentInTextboxesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -22719,8 +22719,8 @@ where
 impl From<ImprintingMirror> for super::Imprinting {
     fn from(item: ImprintingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -22761,8 +22761,8 @@ impl From<InclusionExclusionDataForDataSourceMirror>
     fn from(item: InclusionExclusionDataForDataSourceMirror) -> Self {
         Self {
             data_about_single_data_source_record: item.data_about_single_data_source_record,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -22803,8 +22803,8 @@ where
 impl From<IndexOfColumnBeingMappedMirror> for super::IndexOfColumnBeingMapped {
     fn from(item: IndexOfColumnBeingMappedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -22846,10 +22846,10 @@ where
 impl From<InformationAboutHTMLDivElementsMirror> for super::InformationAboutHTMLDivElements {
     fn from(item: InformationAboutHTMLDivElementsMirror) -> Self {
         Self {
-            extra: item.extra,
             information_about_single_html_div_element: item
                 .information_about_single_html_div_element,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -22896,13 +22896,13 @@ impl From<InformationAboutSingleHTMLDivElementMirror>
             child_div_elements: item.child_div_elements,
             data_for_html_blockquote_element: item.data_for_html_blockquote_element,
             data_for_html_body_element: item.data_for_html_body_element,
-            extra: item.extra,
             id: item.id,
             left_margin_for_html_div: item.left_margin_for_html_div,
             right_margin_for_html_div: item.right_margin_for_html_div,
             set_of_borders_for_html_div: item.set_of_borders_for_html_div,
             top_margin_for_html_div: item.top_margin_for_html_div,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -22945,10 +22945,10 @@ impl From<InlineLevelCustomXMLElementMirror> for super::InlineLevelCustomXMLElem
         Self {
             content: item.content,
             element: item.element,
-            extra: item.extra,
             properties: item.properties,
             unknown: item.unknown,
             uri: item.uri,
+            user_data: item.user_data,
         }
     }
 }
@@ -22991,10 +22991,10 @@ impl From<InlineLevelSmartTagMirror> for super::InlineLevelSmartTag {
         Self {
             content: item.content,
             element: item.element,
-            extra: item.extra,
             properties: item.properties,
             unknown: item.unknown,
             uri: item.uri,
+            user_data: item.user_data,
         }
     }
 }
@@ -23040,9 +23040,9 @@ impl From<InlineLevelStructuredDocumentTagMirror> for super::InlineLevelStructur
             custom_xml_conflict_ins_range_end: item.custom_xml_conflict_ins_range_end,
             custom_xml_conflict_ins_range_start: item.custom_xml_conflict_ins_range_start,
             end_character_properties: item.end_character_properties,
-            extra: item.extra,
             properties: item.properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -23086,8 +23086,8 @@ impl From<InlineLevelStructuredDocumentTagContentMirror>
     fn from(item: InlineLevelStructuredDocumentTagContentMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -23132,9 +23132,9 @@ impl From<InsertedMathControlCharacterMirror> for super::InsertedMathControlChar
             content: item.content,
             date: item.date,
             date_utc: item.date_utc,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -23178,9 +23178,9 @@ impl From<InsertedRunContentMirror> for super::InsertedRunContent {
             author: item.author,
             content: item.content,
             date: item.date,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -23219,9 +23219,9 @@ impl From<InsertedTableRowMirror> for super::InsertedTableRow {
         Self {
             author: item.author,
             date: item.date,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -23258,8 +23258,8 @@ where
 impl From<InvalidatedFieldCacheMirror> for super::InvalidatedFieldCache {
     fn from(item: InvalidatedFieldCacheMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -23301,11 +23301,11 @@ where
 impl From<ItalicFontStyleEmbeddingMirror> for super::ItalicFontStyleEmbedding {
     fn from(item: ItalicFontStyleEmbeddingMirror) -> Self {
         Self {
-            extra: item.extra,
             font_key: item.font_key,
             id: item.id,
             subsetted: item.subsetted,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -23346,8 +23346,8 @@ where
 impl From<ItalicsMirror> for super::Italics {
     fn from(item: ItalicsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -23385,8 +23385,8 @@ where
 impl From<JustificationMirror> for super::Justification {
     fn from(item: JustificationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -23424,8 +23424,8 @@ where
 impl From<KeepAllLinesOnOnePageMirror> for super::KeepAllLinesOnOnePage {
     fn from(item: KeepAllLinesOnOnePageMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -23467,8 +23467,8 @@ where
 impl From<KeepParagraphWithNextParagraphMirror> for super::KeepParagraphWithNextParagraph {
     fn from(item: KeepParagraphWithNextParagraphMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -23510,8 +23510,8 @@ where
 impl From<KeepSourceFormattingOnImportMirror> for super::KeepSourceFormattingOnImport {
     fn from(item: KeepSourceFormattingOnImportMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -23553,8 +23553,8 @@ where
 impl From<LanguageIDForPhoneticGuideMirror> for super::LanguageIDForPhoneticGuide {
     fn from(item: LanguageIDForPhoneticGuideMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -23598,8 +23598,8 @@ impl From<LanguagesForRunContentMirror> for super::LanguagesForRunContent {
         Self {
             bidi: item.bidi,
             east_asia: item.east_asia,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -23643,8 +23643,8 @@ impl From<LastReviewedAbstractNumberingDefinitionMirror>
 {
     fn from(item: LastReviewedAbstractNumberingDefinitionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -23686,7 +23686,6 @@ where
 impl From<LatentStyleExceptionMirror> for super::LatentStyleException {
     fn from(item: LatentStyleExceptionMirror) -> Self {
         Self {
-            extra: item.extra,
             locked: item.locked,
             name: item.name,
             q_format: item.q_format,
@@ -23694,6 +23693,7 @@ impl From<LatentStyleExceptionMirror> for super::LatentStyleException {
             ui_priority: item.ui_priority,
             unhide_when_used: item.unhide_when_used,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -23739,9 +23739,9 @@ impl From<LatentStyleInformationMirror> for super::LatentStyleInformation {
             def_semi_hidden: item.def_semi_hidden,
             def_ui_priority: item.def_ui_priority,
             def_unhide_when_used: item.def_unhide_when_used,
-            extra: item.extra,
             latent_style_exception: item.latent_style_exception,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -23782,8 +23782,8 @@ where
 impl From<LayoutRawTableWidthMirror> for super::LayoutRawTableWidth {
     fn from(item: LayoutRawTableWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -23824,8 +23824,8 @@ where
 impl From<LeftAndRightMarginForFrameMirror> for super::LeftAndRightMarginForFrame {
     fn from(item: LeftAndRightMarginForFrameMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -23868,7 +23868,6 @@ impl From<LeftBorderMirror> for super::LeftBorder {
     fn from(item: LeftBorderMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             id: item.id,
             shadow: item.shadow,
@@ -23878,6 +23877,7 @@ impl From<LeftBorderMirror> for super::LeftBorder {
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -23915,8 +23915,8 @@ where
 impl From<LeftMarginForHTMLDivMirror> for super::LeftMarginForHTMLDiv {
     fn from(item: LeftMarginForHTMLDivMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -23958,7 +23958,6 @@ impl From<LeftParagraphBorderMirror> for super::LeftParagraphBorder {
     fn from(item: LeftParagraphBorderMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             shadow: item.shadow,
             space: item.space,
@@ -23967,6 +23966,7 @@ impl From<LeftParagraphBorderMirror> for super::LeftParagraphBorder {
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24007,9 +24007,9 @@ where
 impl From<LeftParagraphBorderTblWidthMirror> for super::LeftParagraphBorderTblWidth {
     fn from(item: LeftParagraphBorderTblWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -24053,8 +24053,8 @@ impl From<LegacyEthiopicAmharicLineBreakingRulesMirror>
 {
     fn from(item: LegacyEthiopicAmharicLineBreakingRulesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24096,11 +24096,11 @@ where
 impl From<LegacyNumberingLevelPropertiesMirror> for super::LegacyNumberingLevelProperties {
     fn from(item: LegacyNumberingLevelPropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             legacy: item.legacy,
             legacy_indent: item.legacy_indent,
             legacy_space: item.legacy_space,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -24143,10 +24143,10 @@ impl From<LineNumberingSettingsMirror> for super::LineNumberingSettings {
         Self {
             count_by: item.count_by,
             distance: item.distance,
-            extra: item.extra,
             restart: item.restart,
             start: item.start,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -24187,8 +24187,8 @@ where
 impl From<LineWrapLikeWord6Mirror> for super::LineWrapLikeWord6 {
     fn from(item: LineWrapLikeWord6Mirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24226,8 +24226,8 @@ where
 impl From<LineWrapTrailingSpacesMirror> for super::LineWrapTrailingSpaces {
     fn from(item: LineWrapTrailingSpacesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24269,8 +24269,8 @@ where
 impl From<LinkToExternalQueryFileMirror> for super::LinkToExternalQueryFile {
     fn from(item: LinkToExternalQueryFileMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24313,7 +24313,6 @@ impl From<LinkedObjectPropertiesMirror> for super::LinkedObjectProperties {
     fn from(item: LinkedObjectPropertiesMirror) -> Self {
         Self {
             draw_aspect: item.draw_aspect,
-            extra: item.extra,
             field_codes: item.field_codes,
             id: item.id,
             locked_field: item.locked_field,
@@ -24321,6 +24320,7 @@ impl From<LinkedObjectPropertiesMirror> for super::LinkedObjectProperties {
             shape_id: item.shape_id,
             unknown: item.unknown,
             update_mode: item.update_mode,
+            user_data: item.user_data,
         }
     }
 }
@@ -24361,8 +24361,8 @@ where
 impl From<LinkedStyleReferenceMirror> for super::LinkedStyleReference {
     fn from(item: LinkedStyleReferenceMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24403,9 +24403,9 @@ where
 impl From<ListOfGlossaryDocumentEntriesMirror> for super::ListOfGlossaryDocumentEntries {
     fn from(item: ListOfGlossaryDocumentEntriesMirror) -> Self {
         Self {
-            extra: item.extra,
             glossary_document_entry: item.glossary_document_entry,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -24448,8 +24448,8 @@ impl From<ListSeparatorForFieldCodeEvaluationMirror>
 {
     fn from(item: ListSeparatorForFieldCodeEvaluationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24491,8 +24491,8 @@ where
 impl From<LockingSettingMirror> for super::LockingSetting {
     fn from(item: LockingSettingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24530,9 +24530,9 @@ where
 impl From<MagnificationSettingMirror> for super::MagnificationSetting {
     fn from(item: MagnificationSettingMirror) -> Self {
         Self {
-            extra: item.extra,
             percent: item.percent,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24573,8 +24573,8 @@ where
 impl From<MailMergeErrorReportingSettingMirror> for super::MailMergeErrorReportingSetting {
     fn from(item: MailMergeErrorReportingSettingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24621,7 +24621,6 @@ impl From<MailMergeSettingsMirror> for super::MailMergeSettings {
             data_source_file_path: item.data_source_file_path,
             data_source_type: item.data_source_type,
             do_not_suppress_blank_lines: item.do_not_suppress_blank_lines,
-            extra: item.extra,
             header_definition_file_path: item.header_definition_file_path,
             link_to_external_query_file: item.link_to_external_query_file,
             mail_merge_error_reporting_setting: item.mail_merge_error_reporting_setting,
@@ -24634,6 +24633,7 @@ impl From<MailMergeSettingsMirror> for super::MailMergeSettings {
                 .record_currently_displayed_in_merged_document,
             source_document_type: item.source_document_type,
             unknown: item.unknown,
+            user_data: item.user_data,
             view_merged_data_within_document: item.view_merged_data_within_document,
         }
     }
@@ -24671,8 +24671,8 @@ where
 impl From<MaintainLinkToExistingFileMirror> for super::MaintainLinkToExistingFile {
     fn from(item: MaintainLinkToExistingFileMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24714,9 +24714,9 @@ where
 impl From<ManualRunWidthMirror> for super::ManualRunWidth {
     fn from(item: ManualRunWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24756,8 +24756,8 @@ impl From<MaximumNumberOfConsecutivelyHyphenatedLinesMirror>
 {
     fn from(item: MaximumNumberOfConsecutivelyHyphenatedLinesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24799,8 +24799,8 @@ where
 impl From<MergeFieldMappingMirror> for super::MergeFieldMapping {
     fn from(item: MergeFieldMappingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24838,8 +24838,8 @@ where
 impl From<MergedDocumentDestinationMirror> for super::MergedDocumentDestination {
     fn from(item: MergedDocumentDestinationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24881,8 +24881,8 @@ where
 impl From<MergedDocumentToEMailAttachmentMirror> for super::MergedDocumentToEMailAttachment {
     fn from(item: MergedDocumentToEMailAttachmentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24924,8 +24924,8 @@ where
 impl From<MergedEMailOrFaxSubjectLineMirror> for super::MergedEMailOrFaxSubjectLine {
     fn from(item: MergedEMailOrFaxSubjectLineMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -24967,8 +24967,8 @@ where
 impl From<MirrorPageMarginsMirror> for super::MirrorPageMargins {
     fn from(item: MirrorPageMarginsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -25009,9 +25009,9 @@ impl From<MoveDestinationLocationContainerEndMirror>
     fn from(item: MoveDestinationLocationContainerEndMirror) -> Self {
         Self {
             displaced_by_custom_xml: item.displaced_by_custom_xml,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -25059,10 +25059,10 @@ impl From<MoveDestinationLocationContainerStartMirror>
             col_last: item.col_last,
             date: item.date,
             displaced_by_custom_xml: item.displaced_by_custom_xml,
-            extra: item.extra,
             id: item.id,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -25105,9 +25105,9 @@ impl From<MoveDestinationParagraphMirror> for super::MoveDestinationParagraph {
         Self {
             author: item.author,
             date: item.date,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -25151,9 +25151,9 @@ impl From<MoveDestinationRunContentMirror> for super::MoveDestinationRunContent 
             author: item.author,
             content: item.content,
             date: item.date,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -25195,9 +25195,9 @@ impl From<MoveSourceLocationContainerEndMirror> for super::MoveSourceLocationCon
     fn from(item: MoveSourceLocationContainerEndMirror) -> Self {
         Self {
             displaced_by_custom_xml: item.displaced_by_custom_xml,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -25243,10 +25243,10 @@ impl From<MoveSourceLocationContainerStartMirror> for super::MoveSourceLocationC
             col_last: item.col_last,
             date: item.date,
             displaced_by_custom_xml: item.displaced_by_custom_xml,
-            extra: item.extra,
             id: item.id,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -25289,9 +25289,9 @@ impl From<MoveSourceParagraphMirror> for super::MoveSourceParagraph {
         Self {
             author: item.author,
             date: item.date,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -25334,9 +25334,9 @@ impl From<MoveSourceRunContentMirror> for super::MoveSourceRunContent {
             author: item.author,
             content: item.content,
             date: item.date,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -25377,12 +25377,12 @@ impl From<NestedFramesetDefinitionMirror> for super::NestedFramesetDefinition {
     fn from(item: NestedFramesetDefinitionMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             frame_or_frameset_title: item.frame_or_frameset_title,
             frame_size: item.frame_size,
             frameset_layout: item.frameset_layout,
             frameset_splitter_properties: item.frameset_splitter_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -25423,8 +25423,8 @@ where
 impl From<NeverKernPunctuationCharactersMirror> for super::NeverKernPunctuationCharacters {
     fn from(item: NeverKernPunctuationCharactersMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -25466,8 +25466,8 @@ where
 impl From<NonBreakingHyphenCharacterMirror> for super::NonBreakingHyphenCharacter {
     fn from(item: NonBreakingHyphenCharacterMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -25508,8 +25508,8 @@ where
 impl From<NonComplexScriptFontSizeMirror> for super::NonComplexScriptFontSize {
     fn from(item: NonComplexScriptFontSizeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -25551,8 +25551,8 @@ where
 impl From<NotATrueTypeOutlineFontMirror> for super::NotATrueTypeOutlineFont {
     fn from(item: NotATrueTypeOutlineFontMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -25594,8 +25594,8 @@ where
 impl From<NumberOfColumnsInColumnBandMirror> for super::NumberOfColumnsInColumnBand {
     fn from(item: NumberOfColumnsInColumnBandMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -25637,8 +25637,8 @@ where
 impl From<NumberOfPagesPerBookletMirror> for super::NumberOfPagesPerBooklet {
     fn from(item: NumberOfPagesPerBookletMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -25680,8 +25680,8 @@ where
 impl From<NumberOfRowsInRowBandMirror> for super::NumberOfRowsInRowBand {
     fn from(item: NumberOfRowsInRowBandMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -25724,10 +25724,10 @@ impl From<NumberingDefinitionInstanceMirror> for super::NumberingDefinitionInsta
     fn from(item: NumberingDefinitionInstanceMirror) -> Self {
         Self {
             abstract_numbering_definition_reference: item.abstract_numbering_definition_reference,
-            extra: item.extra,
             num_id: item.num_id,
             numbering_level_definition_override: item.numbering_level_definition_override,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -25770,8 +25770,8 @@ impl From<NumberingDefinitionInstanceReferenceNumIdMirror>
 {
     fn from(item: NumberingDefinitionInstanceReferenceNumIdMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -25815,13 +25815,13 @@ impl From<NumberingDefinitionInstanceReferenceNumPrMirror>
 {
     fn from(item: NumberingDefinitionInstanceReferenceNumPrMirror) -> Self {
         Self {
-            extra: item.extra,
             inserted_table_row: item.inserted_table_row,
             numbering_definition_instance_reference_num_id: item
                 .numbering_definition_instance_reference_num_id,
             numbering_level_reference: item.numbering_level_reference,
             previous_numbering_field_properties: item.previous_numbering_field_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -25863,12 +25863,12 @@ impl From<NumberingDefinitionsMirror> for super::NumberingDefinitions {
     fn from(item: NumberingDefinitionsMirror) -> Self {
         Self {
             abstract_numbering_definition: item.abstract_numbering_definition,
-            extra: item.extra,
             last_reviewed_abstract_numbering_definition: item
                 .last_reviewed_abstract_numbering_definition,
             numbering_definition_instance: item.numbering_definition_instance,
             picture_numbering_symbol_definition: item.picture_numbering_symbol_definition,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -25908,9 +25908,9 @@ where
 impl From<NumberingFormatMirror> for super::NumberingFormat {
     fn from(item: NumberingFormatMirror) -> Self {
         Self {
-            extra: item.extra,
             format: item.format,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -25948,11 +25948,11 @@ where
 impl From<NumberingLevelDefinitionOverrideMirror> for super::NumberingLevelDefinitionOverride {
     fn from(item: NumberingLevelDefinitionOverrideMirror) -> Self {
         Self {
-            extra: item.extra,
             ilvl: item.ilvl,
             numbering_level_override_definition: item.numbering_level_override_definition,
             numbering_level_starting_value_override: item.numbering_level_starting_value_override,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -25996,7 +25996,6 @@ impl From<NumberingLevelOverrideDefinitionMirror> for super::NumberingLevelOverr
             content_between_numbering_symbol_and_text: item
                 .content_between_numbering_symbol_and_text,
             display_all_levels_using_arabic_numerals: item.display_all_levels_using_arabic_numerals,
-            extra: item.extra,
             ilvl: item.ilvl,
             justification: item.justification,
             legacy_numbering_level_properties: item.legacy_numbering_level_properties,
@@ -26012,6 +26011,7 @@ impl From<NumberingLevelOverrideDefinitionMirror> for super::NumberingLevelOverr
             tentative: item.tentative,
             tplc: item.tplc,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -26052,8 +26052,8 @@ where
 impl From<NumberingLevelReferenceMirror> for super::NumberingLevelReference {
     fn from(item: NumberingLevelReferenceMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26097,8 +26097,8 @@ impl From<NumberingLevelStartingValueOverrideMirror>
 {
     fn from(item: NumberingLevelStartingValueOverrideMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26140,9 +26140,9 @@ where
 impl From<NumberingLevelTextMirror> for super::NumberingLevelText {
     fn from(item: NumberingLevelTextMirror) -> Self {
         Self {
-            extra: item.extra,
             null: item.null,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26180,8 +26180,8 @@ where
 impl From<NumberingStyleDefinitionMirror> for super::NumberingStyleDefinition {
     fn from(item: NumberingStyleDefinitionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26223,8 +26223,8 @@ where
 impl From<NumberingStyleReferenceMirror> for super::NumberingStyleReference {
     fn from(item: NumberingStyleReferenceMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26266,8 +26266,8 @@ where
 impl From<NumberingTemplateCodeMirror> for super::NumberingTemplateCode {
     fn from(item: NumberingTemplateCodeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26309,9 +26309,9 @@ where
 impl From<ODSODataSourceFilePathMirror> for super::ODSODataSourceFilePath {
     fn from(item: ODSODataSourceFilePathMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -26352,8 +26352,8 @@ where
 impl From<ODSODataSourceTypeMirror> for super::ODSODataSourceType {
     fn from(item: ODSODataSourceTypeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26394,13 +26394,13 @@ impl From<OfficeDataSourceObjectSettingsMirror> for super::OfficeDataSourceObjec
             column_delimiter_for_data_source: item.column_delimiter_for_data_source,
             data_source_table_name: item.data_source_table_name,
             external_data_source_merge_field_mapping: item.external_data_source_merge_field_mapping,
-            extra: item.extra,
             first_row_contains_column_names: item.first_row_contains_column_names,
             odso_data_source_file_path: item.odso_data_source_file_path,
             odso_data_source_type: item.odso_data_source_type,
             reference_to_inclusion_exclusion_data: item.reference_to_inclusion_exclusion_data,
             udl_connection_string: item.udl_connection_string,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -26441,8 +26441,8 @@ where
 impl From<OfficeOpenXMLMathMirror> for super::OfficeOpenXMLMath {
     fn from(item: OfficeOpenXMLMathMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26480,8 +26480,8 @@ where
 impl From<OnlyAllowEditingOfFormFieldsMirror> for super::OnlyAllowEditingOfFormFields {
     fn from(item: OnlyAllowEditingOfFormFieldsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26525,8 +26525,8 @@ impl From<OnlyExpandCondenseTextByWholePointsMirror>
 {
     fn from(item: OnlyExpandCondenseTextByWholePointsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26568,8 +26568,8 @@ where
 impl From<OnlyPrintFormFieldContentMirror> for super::OnlyPrintFormFieldContent {
     fn from(item: OnlyPrintFormFieldContentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26611,8 +26611,8 @@ where
 impl From<OnlySaveCustomXMLMarkupMirror> for super::OnlySaveCustomXMLMarkup {
     fn from(item: OnlySaveCustomXMLMarkupMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26654,8 +26654,8 @@ where
 impl From<OnlySaveFormFieldContentMirror> for super::OnlySaveFormFieldContent {
     fn from(item: OnlySaveFormFieldContentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26697,8 +26697,8 @@ where
 impl From<OptionalHyphenCharacterMirror> for super::OptionalHyphenCharacter {
     fn from(item: OptionalHyphenCharacterMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -26739,8 +26739,8 @@ where
 impl From<OptionalUserInterfaceSortingOrderMirror> for super::OptionalUserInterfaceSortingOrder {
     fn from(item: OptionalUserInterfaceSortingOrderMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26782,8 +26782,8 @@ where
 impl From<OriginalDocumentRevisionSaveIDMirror> for super::OriginalDocumentRevisionSaveID {
     fn from(item: OriginalDocumentRevisionSaveIDMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26825,8 +26825,8 @@ where
 impl From<OutputEncodingMirror> for super::OutputEncoding {
     fn from(item: OutputEncodingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26864,8 +26864,8 @@ where
 impl From<PageBorderExcludesFooterMirror> for super::PageBorderExcludesFooter {
     fn from(item: PageBorderExcludesFooterMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26907,8 +26907,8 @@ where
 impl From<PageBorderExcludesHeaderMirror> for super::PageBorderExcludesHeader {
     fn from(item: PageBorderExcludesHeaderMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -26952,12 +26952,12 @@ impl From<PageBordersMirror> for super::PageBorders {
         Self {
             bottom_border: item.bottom_border,
             display: item.display,
-            extra: item.extra,
             left_border: item.left_border,
             offset_from: item.offset_from,
             right_border: item.right_border,
             top_border: item.top_border,
             unknown: item.unknown,
+            user_data: item.user_data,
             z_order: item.z_order,
         }
     }
@@ -26996,7 +26996,6 @@ impl From<PageMarginsMirror> for super::PageMargins {
     fn from(item: PageMarginsMirror) -> Self {
         Self {
             bottom: item.bottom,
-            extra: item.extra,
             footer: item.footer,
             gutter: item.gutter,
             header: item.header,
@@ -27004,6 +27003,7 @@ impl From<PageMarginsMirror> for super::PageMargins {
             right: item.right,
             top: item.top,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -27040,8 +27040,8 @@ where
 impl From<PageNumberBlockMirror> for super::PageNumberBlock {
     fn from(item: PageNumberBlockMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -27080,10 +27080,10 @@ impl From<PageNumberingSettingsMirror> for super::PageNumberingSettings {
         Self {
             chap_sep: item.chap_sep,
             chap_style: item.chap_style,
-            extra: item.extra,
             fmt: item.fmt,
             start: item.start,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -27125,10 +27125,10 @@ impl From<PageSizeMirror> for super::PageSize {
     fn from(item: PageSizeMirror) -> Self {
         Self {
             code: item.code,
-            extra: item.extra,
             h: item.h,
             orient: item.orient,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -27168,8 +27168,8 @@ impl From<Panose1TypefaceClassificationNumberMirror>
 {
     fn from(item: Panose1TypefaceClassificationNumberMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -27211,10 +27211,10 @@ where
 impl From<PaperSourceInformationMirror> for super::PaperSourceInformation {
     fn from(item: PaperSourceInformationMirror) -> Self {
         Self {
-            extra: item.extra,
             first: item.first,
             other: item.other,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -27256,7 +27256,6 @@ impl From<ParagraphMirror> for super::Paragraph {
     fn from(item: ParagraphMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             no_spell_err: item.no_spell_err,
             para_id: item.para_id,
             properties: item.properties,
@@ -27267,6 +27266,7 @@ impl From<ParagraphMirror> for super::Paragraph {
             rsid_r_pr: item.rsid_r_pr,
             text_id: item.text_id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -27303,8 +27303,8 @@ where
 impl From<ParagraphAlignmentMirror> for super::ParagraphAlignment {
     fn from(item: ParagraphAlignmentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -27345,7 +27345,6 @@ impl From<ParagraphBorderAboveIdenticalParagraphsMirror>
     fn from(item: ParagraphBorderAboveIdenticalParagraphsMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             shadow: item.shadow,
             space: item.space,
@@ -27354,6 +27353,7 @@ impl From<ParagraphBorderAboveIdenticalParagraphsMirror>
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -27397,9 +27397,9 @@ impl From<ParagraphBorderAboveIdenticalParagraphsTblWidthMirror>
 {
     fn from(item: ParagraphBorderAboveIdenticalParagraphsTblWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -27444,7 +27444,6 @@ impl From<ParagraphBorderBelowIdenticalParagraphsMirror>
     fn from(item: ParagraphBorderBelowIdenticalParagraphsMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             shadow: item.shadow,
             space: item.space,
@@ -27453,6 +27452,7 @@ impl From<ParagraphBorderBelowIdenticalParagraphsMirror>
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -27496,9 +27496,9 @@ impl From<ParagraphBorderBelowIdenticalParagraphsTblWidthMirror>
 {
     fn from(item: ParagraphBorderBelowIdenticalParagraphsTblWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -27541,7 +27541,6 @@ impl From<ParagraphBorderBetweenFacingPagesMirror> for super::ParagraphBorderBet
     fn from(item: ParagraphBorderBetweenFacingPagesMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             shadow: item.shadow,
             space: item.space,
@@ -27550,6 +27549,7 @@ impl From<ParagraphBorderBetweenFacingPagesMirror> for super::ParagraphBorderBet
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -27594,7 +27594,6 @@ impl From<ParagraphBorderBetweenIdenticalParagraphsMirror>
     fn from(item: ParagraphBorderBetweenIdenticalParagraphsMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             shadow: item.shadow,
             space: item.space,
@@ -27603,6 +27602,7 @@ impl From<ParagraphBorderBetweenIdenticalParagraphsMirror>
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -27644,7 +27644,6 @@ where
 impl From<ParagraphBordersMirror> for super::ParagraphBorders {
     fn from(item: ParagraphBordersMirror) -> Self {
         Self {
-            extra: item.extra,
             left_paragraph_border: item.left_paragraph_border,
             paragraph_border_above_identical_paragraphs: item
                 .paragraph_border_above_identical_paragraphs,
@@ -27655,6 +27654,7 @@ impl From<ParagraphBordersMirror> for super::ParagraphBorders {
                 .paragraph_border_between_identical_paragraphs,
             right_paragraph_border: item.right_paragraph_border,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -27693,7 +27693,6 @@ impl From<ParagraphConditionalFormattingMirror> for super::ParagraphConditionalF
         Self {
             even_h_band: item.even_h_band,
             even_v_band: item.even_v_band,
-            extra: item.extra,
             first_column: item.first_column,
             first_row: item.first_row,
             first_row_first_column: item.first_row_first_column,
@@ -27705,6 +27704,7 @@ impl From<ParagraphConditionalFormattingMirror> for super::ParagraphConditionalF
             odd_h_band: item.odd_h_band,
             odd_v_band: item.odd_v_band,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -27748,7 +27748,6 @@ impl From<ParagraphIndentationMirror> for super::ParagraphIndentation {
         Self {
             end: item.end,
             end_chars: item.end_chars,
-            extra: item.extra,
             first_line: item.first_line,
             first_line_chars: item.first_line_chars,
             hanging: item.hanging,
@@ -27760,6 +27759,7 @@ impl From<ParagraphIndentationMirror> for super::ParagraphIndentation {
             start: item.start,
             start_chars: item.start_chars,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -27799,8 +27799,8 @@ where
 impl From<ParagraphMarkIsAlwaysHiddenMirror> for super::ParagraphMarkIsAlwaysHidden {
     fn from(item: ParagraphMarkIsAlwaysHiddenMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -27845,10 +27845,10 @@ impl From<ParagraphMarkRunPropertiesRevisionMirror> for super::ParagraphMarkRunP
             author: item.author,
             date: item.date,
             date_utc: item.date_utc,
-            extra: item.extra,
             id: item.id,
             previous_paragraph_mark_run_properties: item.previous_paragraph_mark_run_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -27903,7 +27903,6 @@ impl From<ParagraphPropertiesMirror> for super::ParagraphProperties {
             document_grid_inter_line_paragraph_spacing: item
                 .document_grid_inter_line_paragraph_spacing,
             east_asian_typography_rules: item.east_asian_typography_rules,
-            extra: item.extra,
             ignore_spacing_above_and_below: item.ignore_spacing_above_and_below,
             keep_all_lines_on_one_page: item.keep_all_lines_on_one_page,
             keep_paragraph_with_next_paragraph: item.keep_paragraph_with_next_paragraph,
@@ -27931,6 +27930,7 @@ impl From<ParagraphPropertiesMirror> for super::ParagraphProperties {
             unknown: item.unknown,
             use_left_right_indents_as_inside_outside_indents: item
                 .use_left_right_indents_as_inside_outside_indents,
+            user_data: item.user_data,
             vertical_character_alignment_on_line: item.vertical_character_alignment_on_line,
         }
     }
@@ -27984,7 +27984,6 @@ impl From<ParagraphPropertiesPPrGeneralMirror> for super::ParagraphPropertiesPPr
             document_grid_inter_line_paragraph_spacing: item
                 .document_grid_inter_line_paragraph_spacing,
             east_asian_typography_rules: item.east_asian_typography_rules,
-            extra: item.extra,
             ignore_spacing_above_and_below: item.ignore_spacing_above_and_below,
             keep_all_lines_on_one_page: item.keep_all_lines_on_one_page,
             keep_paragraph_with_next_paragraph: item.keep_paragraph_with_next_paragraph,
@@ -28012,6 +28011,7 @@ impl From<ParagraphPropertiesPPrGeneralMirror> for super::ParagraphPropertiesPPr
             unknown: item.unknown,
             use_left_right_indents_as_inside_outside_indents: item
                 .use_left_right_indents_as_inside_outside_indents,
+            user_data: item.user_data,
             vertical_character_alignment_on_line: item.vertical_character_alignment_on_line,
         }
     }
@@ -28054,7 +28054,6 @@ impl From<ParagraphShadingMirror> for super::ParagraphShading {
     fn from(item: ParagraphShadingMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             fill: item.fill,
             theme_color: item.theme_color,
             theme_fill: item.theme_fill,
@@ -28063,6 +28062,7 @@ impl From<ParagraphShadingMirror> for super::ParagraphShading {
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -28100,8 +28100,8 @@ where
 impl From<ParagraphTextFlowDirectionMirror> for super::ParagraphTextFlowDirection {
     fn from(item: ParagraphTextFlowDirectionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -28143,8 +28143,8 @@ where
 impl From<ParentStyleIDMirror> for super::ParentStyleID {
     fn from(item: ParentStyleIDMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -28182,8 +28182,8 @@ where
 impl From<PercentageOfDocumentToUseMirror> for super::PercentageOfDocumentToUse {
     fn from(item: PercentageOfDocumentToUseMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -28226,10 +28226,10 @@ impl From<PhoneticGuideMirror> for super::PhoneticGuide {
     fn from(item: PhoneticGuideMirror) -> Self {
         Self {
             base_text: item.base_text,
-            extra: item.extra,
             properties: item.properties,
             text: item.text,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -28267,8 +28267,8 @@ impl From<PhoneticGuideBaseTextMirror> for super::PhoneticGuideBaseText {
     fn from(item: PhoneticGuideBaseTextMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -28309,8 +28309,8 @@ where
 impl From<PhoneticGuideBaseTextFontSizeMirror> for super::PhoneticGuideBaseTextFontSize {
     fn from(item: PhoneticGuideBaseTextFontSizeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -28353,13 +28353,13 @@ impl From<PhoneticGuidePropertiesMirror> for super::PhoneticGuideProperties {
     fn from(item: PhoneticGuidePropertiesMirror) -> Self {
         Self {
             distance_between_phonetic_guide_text: item.distance_between_phonetic_guide_text,
-            extra: item.extra,
             invalidated_field_cache: item.invalidated_field_cache,
             language_id_for_phonetic_guide: item.language_id_for_phonetic_guide,
             phonetic_guide_base_text_font_size: item.phonetic_guide_base_text_font_size,
             phonetic_guide_text_alignment: item.phonetic_guide_text_alignment,
             phonetic_guide_text_font_size: item.phonetic_guide_text_font_size,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -28401,8 +28401,8 @@ impl From<PhoneticGuideTextMirror> for super::PhoneticGuideText {
     fn from(item: PhoneticGuideTextMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -28439,8 +28439,8 @@ where
 impl From<PhoneticGuideTextAlignmentMirror> for super::PhoneticGuideTextAlignment {
     fn from(item: PhoneticGuideTextAlignmentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -28482,8 +28482,8 @@ where
 impl From<PhoneticGuideTextFontSizeMirror> for super::PhoneticGuideTextFontSize {
     fn from(item: PhoneticGuideTextFontSizeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -28526,9 +28526,9 @@ impl From<PictureNumberingSymbolDefinitionMirror> for super::PictureNumberingSym
     fn from(item: PictureNumberingSymbolDefinitionMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             num_pic_bullet_id: item.num_pic_bullet_id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -28571,8 +28571,8 @@ impl From<PictureNumberingSymbolDefinitionReferenceMirror>
 {
     fn from(item: PictureNumberingSymbolDefinitionReferenceMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -28614,8 +28614,8 @@ where
 impl From<PictureStructuredDocumentTagMirror> for super::PictureStructuredDocumentTag {
     fn from(item: PictureStructuredDocumentTagMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -28656,8 +28656,8 @@ where
 impl From<PixelsPerInchForGraphicsImagesMirror> for super::PixelsPerInchForGraphicsImages {
     fn from(item: PixelsPerInchForGraphicsImagesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -28699,8 +28699,8 @@ where
 impl From<PlaceholderTextShouldBeResavedMirror> for super::PlaceholderTextShouldBeResaved {
     fn from(item: PlaceholderTextShouldBeResavedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -28742,9 +28742,9 @@ where
 impl From<PlainTextStructuredDocumentTagMirror> for super::PlainTextStructuredDocumentTag {
     fn from(item: PlainTextStructuredDocumentTagMirror) -> Self {
         Self {
-            extra: item.extra,
             multi_line: item.multi_line,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -28785,8 +28785,8 @@ where
 impl From<PositionGutterAtTopOfPageMirror> for super::PositionGutterAtTopOfPage {
     fn from(item: PositionGutterAtTopOfPageMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -28828,8 +28828,8 @@ where
 impl From<PositionOfLastCalculatedPageBreakMirror> for super::PositionOfLastCalculatedPageBreak {
     fn from(item: PositionOfLastCalculatedPageBreakMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -28870,8 +28870,8 @@ where
 impl From<PredefinedMergeFieldNameMirror> for super::PredefinedMergeFieldName {
     fn from(item: PredefinedMergeFieldNameMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -28913,9 +28913,9 @@ where
 impl From<PreferredTableCellWidthMirror> for super::PreferredTableCellWidth {
     fn from(item: PreferredTableCellWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -28957,9 +28957,9 @@ where
 impl From<PreferredTableWidthMirror> for super::PreferredTableWidth {
     fn from(item: PreferredTableWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -29000,9 +29000,9 @@ where
 impl From<PreferredWidthAfterTableRowMirror> for super::PreferredWidthAfterTableRow {
     fn from(item: PreferredWidthAfterTableRowMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -29044,9 +29044,9 @@ where
 impl From<PreferredWidthBeforeTableRowMirror> for super::PreferredWidthBeforeTableRow {
     fn from(item: PreferredWidthBeforeTableRowMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -29088,8 +29088,8 @@ where
 impl From<PreventModificationOfThemesPartMirror> for super::PreventModificationOfThemesPart {
     fn from(item: PreventModificationOfThemesPartMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -29131,8 +29131,8 @@ where
 impl From<PreventReplacementOfStylesPartMirror> for super::PreventReplacementOfStylesPart {
     fn from(item: PreventReplacementOfStylesPartMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -29174,8 +29174,8 @@ where
 impl From<PreventTextFramesFromOverlappingMirror> for super::PreventTextFramesFromOverlapping {
     fn from(item: PreventTextFramesFromOverlappingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -29220,10 +29220,10 @@ impl From<PreviousNumberingFieldPropertiesMirror> for super::PreviousNumberingFi
             author: item.author,
             date: item.date,
             date_utc: item.date_utc,
-            extra: item.extra,
             id: item.id,
             original: item.original,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -29268,7 +29268,6 @@ impl From<PreviousParagraphMarkRunPropertiesMirror> for super::PreviousParagraph
             conflict_change_content: item.conflict_change_content,
             content: item.content,
             deleted_table_row: item.deleted_table_row,
-            extra: item.extra,
             glow: item.glow,
             inserted_table_row: item.inserted_table_row,
             ligatures: item.ligatures,
@@ -29284,6 +29283,7 @@ impl From<PreviousParagraphMarkRunPropertiesMirror> for super::PreviousParagraph
             text_fill: item.text_fill,
             text_outline: item.text_outline,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -29337,7 +29337,6 @@ impl From<PreviousParagraphPropertiesMirror> for super::PreviousParagraphPropert
             document_grid_inter_line_paragraph_spacing: item
                 .document_grid_inter_line_paragraph_spacing,
             east_asian_typography_rules: item.east_asian_typography_rules,
-            extra: item.extra,
             ignore_spacing_above_and_below: item.ignore_spacing_above_and_below,
             keep_all_lines_on_one_page: item.keep_all_lines_on_one_page,
             keep_paragraph_with_next_paragraph: item.keep_paragraph_with_next_paragraph,
@@ -29363,6 +29362,7 @@ impl From<PreviousParagraphPropertiesMirror> for super::PreviousParagraphPropert
             unknown: item.unknown,
             use_left_right_indents_as_inside_outside_indents: item
                 .use_left_right_indents_as_inside_outside_indents,
+            user_data: item.user_data,
             vertical_character_alignment_on_line: item.vertical_character_alignment_on_line,
         }
     }
@@ -29406,7 +29406,6 @@ impl From<PreviousRunPropertiesMirror> for super::PreviousRunProperties {
         Self {
             cntxt_alts: item.cntxt_alts,
             content: item.content,
-            extra: item.extra,
             glow: item.glow,
             ligatures: item.ligatures,
             num_form: item.num_form,
@@ -29419,6 +29418,7 @@ impl From<PreviousRunPropertiesMirror> for super::PreviousRunProperties {
             text_fill: item.text_fill,
             text_outline: item.text_outline,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -29462,7 +29462,6 @@ impl From<PreviousSectionPropertiesMirror> for super::PreviousSectionProperties 
             column_definitions: item.column_definitions,
             different_first_page_headers_and_footers: item.different_first_page_headers_and_footers,
             document_grid: item.document_grid,
-            extra: item.extra,
             footnote_columns: item.footnote_columns,
             gutter_on_right_side_of_page: item.gutter_on_right_side_of_page,
             line_numbering_settings: item.line_numbering_settings,
@@ -29485,6 +29484,7 @@ impl From<PreviousSectionPropertiesMirror> for super::PreviousSectionProperties 
             suppress_endnotes_in_document: item.suppress_endnotes_in_document,
             table_cell_vertical_alignment: item.table_cell_vertical_alignment,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -29527,7 +29527,6 @@ impl From<PreviousTableCellPropertiesMirror> for super::PreviousTableCellPropert
         Self {
             content: item.content,
             dont_wrap_cell_content: item.dont_wrap_cell_content,
-            extra: item.extra,
             fit_text_within_cell: item.fit_text_within_cell,
             grid_columns_spanned: item.grid_columns_spanned,
             header_cells_associated_with_table_cell: item.header_cells_associated_with_table_cell,
@@ -29541,6 +29540,7 @@ impl From<PreviousTableCellPropertiesMirror> for super::PreviousTableCellPropert
             table_cell_borders: item.table_cell_borders,
             table_cell_vertical_alignment: item.table_cell_vertical_alignment,
             unknown: item.unknown,
+            user_data: item.user_data,
             vertically_merged_cell: item.vertically_merged_cell,
         }
     }
@@ -29583,8 +29583,8 @@ impl From<PreviousTableGridMirror> for super::PreviousTableGrid {
     fn from(item: PreviousTableGridMirror) -> Self {
         Self {
             column_definition: item.column_definition,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -29623,7 +29623,6 @@ impl From<PreviousTableLevelPropertyExceptionsMirror>
 {
     fn from(item: PreviousTableLevelPropertyExceptionsMirror) -> Self {
         Self {
-            extra: item.extra,
             paragraph_shading: item.paragraph_shading,
             preferred_table_width: item.preferred_table_width,
             table_alignment_exception: item.table_alignment_exception,
@@ -29635,6 +29634,7 @@ impl From<PreviousTableLevelPropertyExceptionsMirror>
             table_style_conditional_formatting_settings_exception: item
                 .table_style_conditional_formatting_settings_exception,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -29675,7 +29675,6 @@ where
 impl From<PreviousTablePropertiesMirror> for super::PreviousTableProperties {
     fn from(item: PreviousTablePropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             floating_table_allows_overlap: item.floating_table_allows_overlap,
             floating_table_positioning: item.floating_table_positioning,
             number_of_columns_in_column_band: item.number_of_columns_in_column_band,
@@ -29694,6 +29693,7 @@ impl From<PreviousTablePropertiesMirror> for super::PreviousTableProperties {
             table_style_conditional_formatting_settings_exception: item
                 .table_style_conditional_formatting_settings_exception,
             unknown: item.unknown,
+            user_data: item.user_data,
             visually_right_to_left_table: item.visually_right_to_left_table,
         }
     }
@@ -29736,8 +29736,8 @@ impl From<PreviousTableRowPropertiesMirror> for super::PreviousTableRowPropertie
     fn from(item: PreviousTableRowPropertiesMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -29778,8 +29778,8 @@ where
 impl From<PrimaryStyleMirror> for super::PrimaryStyle {
     fn from(item: PrimaryStyleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -29817,8 +29817,8 @@ where
 impl From<PrimaryStyleNameMirror> for super::PrimaryStyleName {
     fn from(item: PrimaryStyleNameMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -29858,8 +29858,8 @@ impl From<PrintBodyTextBeforeHeaderFooterContentsMirror>
 {
     fn from(item: PrintBodyTextBeforeHeaderFooterContentsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -29903,8 +29903,8 @@ impl From<PrintColorsAsBlackAndWhiteWithoutDitheringMirror>
 {
     fn from(item: PrintColorsAsBlackAndWhiteWithoutDitheringMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -29946,8 +29946,8 @@ where
 impl From<PrintFractionalCharacterWidthsMirror> for super::PrintFractionalCharacterWidths {
     fn from(item: PrintFractionalCharacterWidthsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -29991,8 +29991,8 @@ impl From<PrintPostScriptCodesWithDocumentTextMirror>
 {
     fn from(item: PrintPostScriptCodesWithDocumentTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -30034,8 +30034,8 @@ where
 impl From<PrintTwoPagesPerSheetMirror> for super::PrintTwoPagesPerSheet {
     fn from(item: PrintTwoPagesPerSheetMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -30077,8 +30077,8 @@ where
 impl From<ProgrammaticTagMirror> for super::ProgrammaticTag {
     fn from(item: ProgrammaticTagMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -30116,9 +30116,9 @@ where
 impl From<ProofingErrorAnchorMirror> for super::ProofingErrorAnchor {
     fn from(item: ProofingErrorAnchorMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -30162,7 +30162,6 @@ impl From<PropertiesForASingleFontMirror> for super::PropertiesForASingleFont {
             bold_italic_font_style_embedding: item.bold_italic_font_style_embedding,
             bold_style_font_style_embedding: item.bold_style_font_style_embedding,
             character_set_supported_by_font: item.character_set_supported_by_font,
-            extra: item.extra,
             family: item.family,
             italic_font_style_embedding: item.italic_font_style_embedding,
             name: item.name,
@@ -30173,6 +30172,7 @@ impl From<PropertiesForASingleFontMirror> for super::PropertiesForASingleFont {
             supported_unicode_subranges_and_code_pages: item
                 .supported_unicode_subranges_and_code_pages,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -30213,8 +30213,8 @@ where
 impl From<QueryForDataSourceRecordsMirror> for super::QueryForDataSourceRecords {
     fn from(item: QueryForDataSourceRecordsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -30256,8 +30256,8 @@ where
 impl From<RadixPointForFieldCodeEvaluationMirror> for super::RadixPointForFieldCodeEvaluation {
     fn from(item: RadixPointForFieldCodeEvaluationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -30300,9 +30300,9 @@ impl From<RangePermissionEndMirror> for super::RangePermissionEnd {
     fn from(item: RangePermissionEndMirror) -> Self {
         Self {
             displaced_by_custom_xml: item.displaced_by_custom_xml,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -30344,9 +30344,9 @@ impl From<RangePermissionStartMirror> for super::RangePermissionStart {
             displaced_by_custom_xml: item.displaced_by_custom_xml,
             ed: item.ed,
             ed_grp: item.ed_grp,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -30386,8 +30386,8 @@ where
 impl From<RecalculateFieldsWhenModifiedMirror> for super::RecalculateFieldsWhenModified {
     fn from(item: RecalculateFieldsWhenModifiedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -30429,8 +30429,8 @@ where
 impl From<RecommendWebPageFormatMirror> for super::RecommendWebPageFormat {
     fn from(item: RecommendWebPageFormatMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -30474,8 +30474,8 @@ impl From<RecordCurrentlyDisplayedInMergedDocumentMirror>
 {
     fn from(item: RecordCurrentlyDisplayedInMergedDocumentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -30517,8 +30517,8 @@ where
 impl From<RecordIsIncludedInMailMergeMirror> for super::RecordIsIncludedInMailMerge {
     fn from(item: RecordIsIncludedInMailMergeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -30560,9 +30560,9 @@ where
 impl From<ReferenceToInclusionExclusionDataMirror> for super::ReferenceToInclusionExclusionData {
     fn from(item: ReferenceToInclusionExclusionDataMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -30603,9 +30603,9 @@ where
 impl From<ReferenceToPrinterSettingsDataMirror> for super::ReferenceToPrinterSettingsData {
     fn from(item: ReferenceToPrinterSettingsDataMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -30646,8 +30646,8 @@ where
 impl From<ReferencedCharacterStyleMirror> for super::ReferencedCharacterStyle {
     fn from(item: ReferencedCharacterStyleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -30689,8 +30689,8 @@ where
 impl From<ReferencedParagraphStyleMirror> for super::ReferencedParagraphStyle {
     fn from(item: ReferencedParagraphStyleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -30732,8 +30732,8 @@ where
 impl From<ReferencedTableStyleMirror> for super::ReferencedTableStyle {
     fn from(item: ReferencedTableStyleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -30774,11 +30774,11 @@ where
 impl From<RegularFontStyleEmbeddingMirror> for super::RegularFontStyleEmbedding {
     fn from(item: RegularFontStyleEmbeddingMirror) -> Self {
         Self {
-            extra: item.extra,
             font_key: item.font_key,
             id: item.id,
             subsetted: item.subsetted,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -30819,8 +30819,8 @@ where
 impl From<RemoveDateAndTimeFromAnnotationsMirror> for super::RemoveDateAndTimeFromAnnotations {
     fn from(item: RemoveDateAndTimeFromAnnotationsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -30862,8 +30862,8 @@ where
 impl From<RemovePersonalInformationMirror> for super::RemovePersonalInformation {
     fn from(item: RemovePersonalInformationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -30905,8 +30905,8 @@ where
 impl From<RemoveSemiHiddenPropertyMirror> for super::RemoveSemiHiddenProperty {
     fn from(item: RemoveSemiHiddenPropertyMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -30948,8 +30948,8 @@ where
 impl From<RemoveSmartTagsWhenSavingMirror> for super::RemoveSmartTagsWhenSaving {
     fn from(item: RemoveSmartTagsWhenSavingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -30993,8 +30993,8 @@ impl From<RemoveStructuredDocumentTagWhenEditedMirror>
 {
     fn from(item: RemoveStructuredDocumentTagWhenEditedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -31036,8 +31036,8 @@ where
 impl From<RepeatTableRowMirror> for super::RepeatTableRow {
     fn from(item: RepeatTableRowMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -31077,8 +31077,8 @@ impl From<RequireExactSizeDuringFontSubstitutionMirror>
 {
     fn from(item: RequireExactSizeDuringFontSubstitutionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -31120,8 +31120,8 @@ where
 impl From<RestartNumberingLevelSymbolMirror> for super::RestartNumberingLevelSymbol {
     fn from(item: RestartNumberingLevelSymbolMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -31163,8 +31163,8 @@ where
 impl From<ReverseBookFoldPrintingMirror> for super::ReverseBookFoldPrinting {
     fn from(item: ReverseBookFoldPrintingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -31208,8 +31208,8 @@ impl From<RevisionIdentifierForStyleDefinitionMirror>
 {
     fn from(item: RevisionIdentifierForStyleDefinitionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -31256,10 +31256,10 @@ impl From<RevisionInformationForParagraphPropertiesMirror>
             author: item.author,
             date: item.date,
             date_utc: item.date_utc,
-            extra: item.extra,
             id: item.id,
             previous_paragraph_properties: item.previous_paragraph_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -31305,10 +31305,10 @@ impl From<RevisionInformationForRunPropertiesMirror>
             author: item.author,
             date: item.date,
             date_utc: item.date_utc,
-            extra: item.extra,
             id: item.id,
             previous_run_properties: item.previous_run_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -31354,10 +31354,10 @@ impl From<RevisionInformationForSectionPropertiesMirror>
             author: item.author,
             date: item.date,
             date_utc: item.date_utc,
-            extra: item.extra,
             id: item.id,
             previous_section_properties: item.previous_section_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -31403,10 +31403,10 @@ impl From<RevisionInformationForTableCellPropertiesMirror>
             author: item.author,
             date: item.date,
             date_utc: item.date_utc,
-            extra: item.extra,
             id: item.id,
             previous_table_cell_properties: item.previous_table_cell_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -31452,10 +31452,10 @@ impl From<RevisionInformationForTableLevelPropertyExceptionsMirror>
             author: item.author,
             date: item.date,
             date_utc: item.date_utc,
-            extra: item.extra,
             id: item.id,
             previous_table_level_property_exceptions: item.previous_table_level_property_exceptions,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -31504,10 +31504,10 @@ impl From<RevisionInformationForTablePropertiesMirror>
             author: item.author,
             date: item.date,
             date_utc: item.date_utc,
-            extra: item.extra,
             id: item.id,
             previous_table_properties: item.previous_table_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -31553,10 +31553,10 @@ impl From<RevisionInformationForTableRowPropertiesMirror>
             author: item.author,
             date: item.date,
             date_utc: item.date_utc,
-            extra: item.extra,
             id: item.id,
             previous_table_row_properties: item.previous_table_row_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -31597,10 +31597,10 @@ where
 impl From<RevisionSaveIDValuesMirror> for super::RevisionSaveIDValues {
     fn from(item: RevisionSaveIDValuesMirror) -> Self {
         Self {
-            extra: item.extra,
             original_document_revision_save_id: item.original_document_revision_save_id,
             revision_identifier_for_style_definition: item.revision_identifier_for_style_definition,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -31641,8 +31641,8 @@ impl From<RichTextBoxContentContainerMirror> for super::RichTextBoxContentContai
     fn from(item: RichTextBoxContentContainerMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -31683,8 +31683,8 @@ where
 impl From<RichTextStructuredDocumentTagMirror> for super::RichTextStructuredDocumentTag {
     fn from(item: RichTextStructuredDocumentTagMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -31726,7 +31726,6 @@ impl From<RightBorderMirror> for super::RightBorder {
     fn from(item: RightBorderMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             id: item.id,
             shadow: item.shadow,
@@ -31736,6 +31735,7 @@ impl From<RightBorderMirror> for super::RightBorder {
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -31773,8 +31773,8 @@ where
 impl From<RightMarginForHTMLDivMirror> for super::RightMarginForHTMLDiv {
     fn from(item: RightMarginForHTMLDivMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -31817,7 +31817,6 @@ impl From<RightParagraphBorderMirror> for super::RightParagraphBorder {
     fn from(item: RightParagraphBorderMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             shadow: item.shadow,
             space: item.space,
@@ -31826,6 +31825,7 @@ impl From<RightParagraphBorderMirror> for super::RightParagraphBorder {
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -31866,9 +31866,9 @@ where
 impl From<RightParagraphBorderTblWidthMirror> for super::RightParagraphBorderTblWidth {
     fn from(item: RightParagraphBorderTblWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -31910,8 +31910,8 @@ where
 impl From<RightToLeftParagraphLayoutMirror> for super::RightToLeftParagraphLayout {
     fn from(item: RightToLeftParagraphLayoutMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -31953,8 +31953,8 @@ where
 impl From<RightToLeftTextMirror> for super::RightToLeftText {
     fn from(item: RightToLeftTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -31994,10 +31994,10 @@ impl From<RowLevelCustomXMLElementMirror> for super::RowLevelCustomXMLElement {
         Self {
             content: item.content,
             element: item.element,
-            extra: item.extra,
             properties: item.properties,
             unknown: item.unknown,
             uri: item.uri,
+            user_data: item.user_data,
         }
     }
 }
@@ -32044,9 +32044,9 @@ impl From<RowLevelStructuredDocumentTagMirror> for super::RowLevelStructuredDocu
             custom_xml_conflict_ins_range_end: item.custom_xml_conflict_ins_range_end,
             custom_xml_conflict_ins_range_start: item.custom_xml_conflict_ins_range_start,
             end_character_properties: item.end_character_properties,
-            extra: item.extra,
             properties: item.properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -32090,8 +32090,8 @@ impl From<RowLevelStructuredDocumentTagContentMirror>
     fn from(item: RowLevelStructuredDocumentTagContentMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -32132,11 +32132,11 @@ where
 impl From<RunContentColorMirror> for super::RunContentColor {
     fn from(item: RunContentColorMirror) -> Self {
         Self {
-            extra: item.extra,
             theme_color: item.theme_color,
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -32180,11 +32180,11 @@ impl From<RunFontsMirror> for super::RunFonts {
             cstheme: item.cstheme,
             east_asia: item.east_asia,
             east_asia_theme: item.east_asia_theme,
-            extra: item.extra,
             h_ansi: item.h_ansi,
             h_ansi_theme: item.h_ansi_theme,
             hint: item.hint,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -32223,7 +32223,6 @@ impl From<RunPropertiesMirror> for super::RunProperties {
         Self {
             cntxt_alts: item.cntxt_alts,
             content: item.content,
-            extra: item.extra,
             glow: item.glow,
             ligatures: item.ligatures,
             num_form: item.num_form,
@@ -32237,6 +32236,7 @@ impl From<RunPropertiesMirror> for super::RunProperties {
             text_fill: item.text_fill,
             text_outline: item.text_outline,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -32276,7 +32276,6 @@ impl From<RunPropertiesForTheParagraphMarkMirror> for super::RunPropertiesForThe
             cntxt_alts: item.cntxt_alts,
             conflict_change_content: item.conflict_change_content,
             deleted_table_row: item.deleted_table_row,
-            extra: item.extra,
             glow: item.glow,
             inserted_table_row: item.inserted_table_row,
             ligatures: item.ligatures,
@@ -32294,6 +32293,7 @@ impl From<RunPropertiesForTheParagraphMarkMirror> for super::RunPropertiesForThe
             text_fill: item.text_fill,
             text_outline: item.text_outline,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -32334,8 +32334,8 @@ where
 impl From<SaveSmartTagDataMirror> for super::SaveSmartTagData {
     fn from(item: SaveSmartTagDataMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -32373,8 +32373,8 @@ where
 impl From<SaveThroughCustomXSLTransformMirror> for super::SaveThroughCustomXSLTransform {
     fn from(item: SaveThroughCustomXSLTransformMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -32416,8 +32416,8 @@ where
 impl From<ScrollbarDisplayOptionMirror> for super::ScrollbarDisplayOption {
     fn from(item: ScrollbarDisplayOptionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -32459,8 +32459,8 @@ where
 impl From<SectionTypeMirror> for super::SectionType {
     fn from(item: SectionTypeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -32499,13 +32499,13 @@ impl From<SectionWideEndnotePropertiesMirror> for super::SectionWideEndnotePrope
     fn from(item: SectionWideEndnotePropertiesMirror) -> Self {
         Self {
             endnote_placement: item.endnote_placement,
-            extra: item.extra,
             footnote_and_endnote_numbering_restart_location: item
                 .footnote_and_endnote_numbering_restart_location,
             footnote_and_endnote_numbering_starting_value: item
                 .footnote_and_endnote_numbering_starting_value,
             numbering_format: item.numbering_format,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -32546,7 +32546,6 @@ where
 impl From<SectionWideFootnotePropertiesMirror> for super::SectionWideFootnoteProperties {
     fn from(item: SectionWideFootnotePropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             footnote_and_endnote_numbering_restart_location: item
                 .footnote_and_endnote_numbering_restart_location,
             footnote_and_endnote_numbering_starting_value: item
@@ -32554,6 +32553,7 @@ impl From<SectionWideFootnotePropertiesMirror> for super::SectionWideFootnotePro
             footnote_placement: item.footnote_placement,
             numbering_format: item.numbering_format,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -32594,8 +32594,8 @@ where
 impl From<SelectFldWithFirstOrLastCharMirror> for super::SelectFldWithFirstOrLastChar {
     fn from(item: SelectFldWithFirstOrLastCharMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -32637,7 +32637,6 @@ where
 impl From<SetOfBordersForHTMLDivMirror> for super::SetOfBordersForHTMLDiv {
     fn from(item: SetOfBordersForHTMLDivMirror) -> Self {
         Self {
-            extra: item.extra,
             left_paragraph_border: item.left_paragraph_border,
             paragraph_border_above_identical_paragraphs: item
                 .paragraph_border_above_identical_paragraphs,
@@ -32645,6 +32644,7 @@ impl From<SetOfBordersForHTMLDivMirror> for super::SetOfBordersForHTMLDiv {
                 .paragraph_border_below_identical_paragraphs,
             right_paragraph_border: item.right_paragraph_border,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -32686,8 +32686,8 @@ impl From<SetOfCustomTabStopsMirror> for super::SetOfCustomTabStops {
     fn from(item: SetOfCustomTabStopsMirror) -> Self {
         Self {
             custom_tab_stop: item.custom_tab_stop,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -32727,8 +32727,8 @@ where
 impl From<ShadowMirror> for super::Shadow {
     fn from(item: ShadowMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -32766,8 +32766,8 @@ where
 impl From<ShowEMailMessageHeaderMirror> for super::ShowEMailMessageHeader {
     fn from(item: ShowEMailMessageHeaderMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -32809,8 +32809,8 @@ where
 impl From<ShowXMLTagsMirror> for super::ShowXMLTags {
     fn from(item: ShowXMLTagsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -32851,10 +32851,10 @@ impl From<SimpleFieldMirror> for super::SimpleField {
             content: item.content,
             custom_field_data: item.custom_field_data,
             dirty: item.dirty,
-            extra: item.extra,
             fld_lock: item.fld_lock,
             instr: item.instr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -32892,9 +32892,9 @@ impl From<SingleAutomaticCaptioningSettingMirror> for super::SingleAutomaticCapt
     fn from(item: SingleAutomaticCaptioningSettingMirror) -> Self {
         Self {
             caption: item.caption,
-            extra: item.extra,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -32936,7 +32936,6 @@ impl From<SingleCaptionTypeDefinitionMirror> for super::SingleCaptionTypeDefinit
     fn from(item: SingleCaptionTypeDefinitionMirror) -> Self {
         Self {
             chap_num: item.chap_num,
-            extra: item.extra,
             heading: item.heading,
             name: item.name,
             no_label: item.no_label,
@@ -32944,6 +32943,7 @@ impl From<SingleCaptionTypeDefinitionMirror> for super::SingleCaptionTypeDefinit
             pos: item.pos,
             sep: item.sep,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -32984,9 +32984,9 @@ where
 impl From<SingleColumnDefinitionMirror> for super::SingleColumnDefinition {
     fn from(item: SingleColumnDefinitionMirror) -> Self {
         Self {
-            extra: item.extra,
             space: item.space,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -33028,9 +33028,9 @@ where
 impl From<SingleDocumentVariableMirror> for super::SingleDocumentVariable {
     fn from(item: SingleDocumentVariableMirror) -> Self {
         Self {
-            extra: item.extra,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -33072,7 +33072,6 @@ where
 impl From<SingleFramePropertiesMirror> for super::SingleFrameProperties {
     fn from(item: SingleFramePropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             frame_cannot_be_resized: item.frame_cannot_be_resized,
             frame_long_description: item.frame_long_description,
             frame_or_frameset_title: item.frame_or_frameset_title,
@@ -33084,6 +33083,7 @@ impl From<SingleFramePropertiesMirror> for super::SingleFrameProperties {
             source_file_for_frame: item.source_file_for_frame,
             top_and_bottom_margin_for_frame: item.top_and_bottom_margin_for_frame,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -33124,8 +33124,8 @@ where
 impl From<SingleStrikethroughMirror> for super::SingleStrikethrough {
     fn from(item: SingleStrikethroughMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -33166,7 +33166,6 @@ where
 impl From<SingleTableCellMarginsMirror> for super::SingleTableCellMargins {
     fn from(item: SingleTableCellMarginsMirror) -> Self {
         Self {
-            extra: item.extra,
             left_paragraph_border_tbl_width: item.left_paragraph_border_tbl_width,
             paragraph_border_above_identical_paragraphs_tbl_width: item
                 .paragraph_border_above_identical_paragraphs_tbl_width,
@@ -33177,6 +33176,7 @@ impl From<SingleTableCellMarginsMirror> for super::SingleTableCellMargins {
             table_cell_trailing_margin_exception_tbl_width: item
                 .table_cell_trailing_margin_exception_tbl_width,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -33217,8 +33217,8 @@ where
 impl From<SmallCapsMirror> for super::SmallCaps {
     fn from(item: SmallCapsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -33257,8 +33257,8 @@ impl From<SmartTagPropertiesMirror> for super::SmartTagProperties {
     fn from(item: SmartTagPropertiesMirror) -> Self {
         Self {
             custom_xml_attribute: item.custom_xml_attribute,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -33295,8 +33295,8 @@ where
 impl From<SourceDocumentTypeMirror> for super::SourceDocumentType {
     fn from(item: SourceDocumentTypeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -33334,9 +33334,9 @@ where
 impl From<SourceFileForFrameMirror> for super::SourceFileForFrame {
     fn from(item: SourceFileForFrameMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -33381,10 +33381,10 @@ impl From<SpacingBetweenLinesAndAboveBelowParagraphMirror>
             before: item.before,
             before_autospacing: item.before_autospacing,
             before_lines: item.before_lines,
-            extra: item.extra,
             line: item.line,
             line_rule: item.line_rule,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -33425,9 +33425,9 @@ where
 impl From<SpecialEndnoteListMirror> for super::SpecialEndnoteList {
     fn from(item: SpecialEndnoteListMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -33464,9 +33464,9 @@ where
 impl From<SpecialFootnoteListMirror> for super::SpecialFootnoteList {
     fn from(item: SpecialFootnoteListMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -33508,10 +33508,10 @@ impl From<SpellingAndGrammaticalCheckingStateMirror>
 {
     fn from(item: SpellingAndGrammaticalCheckingStateMirror) -> Self {
         Self {
-            extra: item.extra,
             grammar: item.grammar,
             spelling: item.spelling,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -33552,8 +33552,8 @@ where
 impl From<SplitPgBreakAndParaMarkMirror> for super::SplitPgBreakAndParaMark {
     fn from(item: SplitPgBreakAndParaMarkMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -33595,8 +33595,8 @@ where
 impl From<StartParagraphOnNextPageMirror> for super::StartParagraphOnNextPage {
     fn from(item: StartParagraphOnNextPageMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -33638,8 +33638,8 @@ where
 impl From<StartingValueMirror> for super::StartingValue {
     fn from(item: StartingValueMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -33677,8 +33677,8 @@ where
 impl From<StrictKinsokuRulesMirror> for super::StrictKinsokuRules {
     fn from(item: StrictKinsokuRulesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -33718,9 +33718,9 @@ impl From<StructuredDocumentTagEndCharacterPropertiesMirror>
 {
     fn from(item: StructuredDocumentTagEndCharacterPropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             run_properties: item.run_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -33761,8 +33761,8 @@ where
 impl From<StructuredDocumentTagLabelMirror> for super::StructuredDocumentTagLabel {
     fn from(item: StructuredDocumentTagLabelMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -33806,8 +33806,8 @@ impl From<StructuredDocumentTagNavigationOrderIndexMirror>
 {
     fn from(item: StructuredDocumentTagNavigationOrderIndexMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -33852,8 +33852,8 @@ impl From<StructuredDocumentTagPlaceholderTextMirror>
     fn from(item: StructuredDocumentTagPlaceholderTextMirror) -> Self {
         Self {
             document_part_reference: item.document_part_reference,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -33899,7 +33899,6 @@ impl From<StructuredDocumentTagPropertiesMirror> for super::StructuredDocumentTa
             content: item.content,
             current_contents_are_placeholder_text: item.current_contents_are_placeholder_text,
             data_binding: item.data_binding,
-            extra: item.extra,
             friendly_name: item.friendly_name,
             locking_setting: item.locking_setting,
             programmatic_tag: item.programmatic_tag,
@@ -33912,6 +33911,7 @@ impl From<StructuredDocumentTagPropertiesMirror> for super::StructuredDocumentTa
             structured_document_tag_placeholder_text: item.structured_document_tag_placeholder_text,
             unique_id: item.unique_id,
             unknown: item.unknown,
+            user_data: item.user_data,
             web_extension_created: item.web_extension_created,
             web_extension_linked: item.web_extension_linked,
             xml_mapping: item.xml_mapping,
@@ -33955,8 +33955,8 @@ where
 impl From<StyleCannotBeAppliedMirror> for super::StyleCannotBeApplied {
     fn from(item: StyleCannotBeAppliedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -33999,7 +33999,6 @@ impl From<StyleConditionalTableFormattingPropertiesMirror>
 {
     fn from(item: StyleConditionalTableFormattingPropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             paragraph_properties_p_pr_general: item.paragraph_properties_p_pr_general,
             previous_table_properties: item.previous_table_properties,
             run_properties: item.run_properties,
@@ -34007,6 +34006,7 @@ impl From<StyleConditionalTableFormattingPropertiesMirror>
             table_row_properties: item.table_row_properties,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -34054,7 +34054,6 @@ impl From<StyleDefinitionMirror> for super::StyleDefinition {
             e_mail_message_composition_style: item.e_mail_message_composition_style,
             e_mail_message_reply_style: item.e_mail_message_reply_style,
             e_mail_message_text_style: item.e_mail_message_text_style,
-            extra: item.extra,
             hidden_table_row_marker: item.hidden_table_row_marker,
             hide_style_from_main_user_interface: item.hide_style_from_main_user_interface,
             linked_style_reference: item.linked_style_reference,
@@ -34076,6 +34075,7 @@ impl From<StyleDefinitionMirror> for super::StyleDefinition {
             table_row_properties: item.table_row_properties,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -34114,10 +34114,10 @@ impl From<StyleDefinitionsMirror> for super::StyleDefinitions {
         Self {
             document_default_paragraph_and_run_properties: item
                 .document_default_paragraph_and_run_properties,
-            extra: item.extra,
             latent_style_information: item.latent_style_information,
             style_definition: item.style_definition,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -34154,8 +34154,8 @@ where
 impl From<StyleForNextParagraphMirror> for super::StyleForNextParagraph {
     fn from(item: StyleForNextParagraphMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -34197,8 +34197,8 @@ where
 impl From<SubscriptSuperscriptTextMirror> for super::SubscriptSuperscriptText {
     fn from(item: SubscriptSuperscriptTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -34240,8 +34240,8 @@ where
 impl From<SubsetFontsWhenEmbeddingMirror> for super::SubsetFontsWhenEmbedding {
     fn from(item: SubsetFontsWhenEmbeddingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -34291,7 +34291,6 @@ impl From<SuggestedFilteringMirror> for super::SuggestedFiltering {
             direct_formatting_on_paragraphs: item.direct_formatting_on_paragraphs,
             direct_formatting_on_runs: item.direct_formatting_on_runs,
             direct_formatting_on_tables: item.direct_formatting_on_tables,
-            extra: item.extra,
             heading_styles: item.heading_styles,
             latent_styles: item.latent_styles,
             numbering_styles: item.numbering_styles,
@@ -34299,6 +34298,7 @@ impl From<SuggestedFilteringMirror> for super::SuggestedFiltering {
             table_styles: item.table_styles,
             top3_heading_styles: item.top3_heading_styles,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
             visible_styles: item.visible_styles,
         }
@@ -34337,8 +34337,8 @@ where
 impl From<SuggestedSortingMirror> for super::SuggestedSorting {
     fn from(item: SuggestedSortingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -34376,11 +34376,11 @@ where
 impl From<SupplementarySmartTagInformationMirror> for super::SupplementarySmartTagInformation {
     fn from(item: SupplementarySmartTagInformationMirror) -> Self {
         Self {
-            extra: item.extra,
             name: item.name,
             namespaceuri: item.namespaceuri,
             unknown: item.unknown,
             url: item.url,
+            user_data: item.user_data,
         }
     }
 }
@@ -34425,12 +34425,12 @@ impl From<SupportedUnicodeSubrangesAndCodePagesMirror>
         Self {
             csb0: item.csb0,
             csb1: item.csb1,
-            extra: item.extra,
             unknown: item.unknown,
             usb0: item.usb0,
             usb1: item.usb1,
             usb2: item.usb2,
             usb3: item.usb3,
+            user_data: item.user_data,
         }
     }
 }
@@ -34471,8 +34471,8 @@ where
 impl From<SuppressEndnotesInDocumentMirror> for super::SuppressEndnotesInDocument {
     fn from(item: SuppressEndnotesInDocumentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -34514,8 +34514,8 @@ where
 impl From<SuppressHyphenationForParagraphMirror> for super::SuppressHyphenationForParagraph {
     fn from(item: SuppressHyphenationForParagraphMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -34557,8 +34557,8 @@ where
 impl From<SuppressLineNumbersForParagraphMirror> for super::SuppressLineNumbersForParagraph {
     fn from(item: SuppressLineNumbersForParagraphMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -34600,8 +34600,8 @@ where
 impl From<SuppressSpBfAfterPgBrkMirror> for super::SuppressSpBfAfterPgBrk {
     fn from(item: SuppressSpBfAfterPgBrkMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -34643,8 +34643,8 @@ where
 impl From<SuppressTopSpacingMirror> for super::SuppressTopSpacing {
     fn from(item: SuppressTopSpacingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -34684,8 +34684,8 @@ impl From<SwapParagraphBordersOnOddNumberedPagesMirror>
 {
     fn from(item: SwapParagraphBordersOnOddNumberedPagesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -34728,9 +34728,9 @@ impl From<SymbolCharacterMirror> for super::SymbolCharacter {
     fn from(item: SymbolCharacterMirror) -> Self {
         Self {
             char: item.char,
-            extra: item.extra,
             font: item.font,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -34767,8 +34767,8 @@ where
 impl From<TabCharacterMirror> for super::TabCharacter {
     fn from(item: TabCharacterMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -34806,11 +34806,11 @@ impl From<TableMirror> for super::Table {
     fn from(item: TableMirror) -> Self {
         Self {
             content_row_content: item.content_row_content,
-            extra: item.extra,
             grid: item.grid,
             properties: item.properties,
             range_markup_content: item.range_markup_content,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -34847,8 +34847,8 @@ where
 impl From<TableAlignmentExceptionMirror> for super::TableAlignmentException {
     fn from(item: TableAlignmentExceptionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -34890,7 +34890,6 @@ where
 impl From<TableBordersMirror> for super::TableBorders {
     fn from(item: TableBordersMirror) -> Self {
         Self {
-            extra: item.extra,
             left_paragraph_border: item.left_paragraph_border,
             paragraph_border_above_identical_paragraphs: item
                 .paragraph_border_above_identical_paragraphs,
@@ -34902,6 +34901,7 @@ impl From<TableBordersMirror> for super::TableBorders {
             table_inside_horizontal_edges_border: item.table_inside_horizontal_edges_border,
             table_inside_vertical_edges_border: item.table_inside_vertical_edges_border,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -34938,8 +34938,8 @@ where
 impl From<TableCaptionMirror> for super::TableCaption {
     fn from(item: TableCaptionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -34978,10 +34978,10 @@ impl From<TableCellMirror> for super::TableCell {
     fn from(item: TableCellMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             id: item.id,
             properties: item.properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -35018,7 +35018,6 @@ where
 impl From<TableCellBordersMirror> for super::TableCellBorders {
     fn from(item: TableCellBordersMirror) -> Self {
         Self {
-            extra: item.extra,
             left_paragraph_border: item.left_paragraph_border,
             paragraph_border_above_identical_paragraphs: item
                 .paragraph_border_above_identical_paragraphs,
@@ -35032,6 +35031,7 @@ impl From<TableCellBordersMirror> for super::TableCellBorders {
             top_left_bottom_right_diagonal_border: item.top_left_bottom_right_diagonal_border,
             top_right_bottom_left_diagonal_border: item.top_right_bottom_left_diagonal_border,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -35070,9 +35070,9 @@ impl From<TableCellDeletionMirror> for super::TableCellDeletion {
         Self {
             author: item.author,
             date: item.date,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -35111,9 +35111,9 @@ impl From<TableCellInsertionMirror> for super::TableCellInsertion {
         Self {
             author: item.author,
             date: item.date,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -35151,7 +35151,6 @@ impl From<TableCellLeadingEdgeBorderMirror> for super::TableCellLeadingEdgeBorde
     fn from(item: TableCellLeadingEdgeBorderMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             shadow: item.shadow,
             space: item.space,
@@ -35160,6 +35159,7 @@ impl From<TableCellLeadingEdgeBorderMirror> for super::TableCellLeadingEdgeBorde
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -35201,9 +35201,9 @@ where
 impl From<TableCellLeadingEdgeBorderTblWidthMirror> for super::TableCellLeadingEdgeBorderTblWidth {
     fn from(item: TableCellLeadingEdgeBorderTblWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -35245,7 +35245,6 @@ where
 impl From<TableCellMarginExceptionsMirror> for super::TableCellMarginExceptions {
     fn from(item: TableCellMarginExceptionsMirror) -> Self {
         Self {
-            extra: item.extra,
             left_paragraph_border_tbl_width: item.left_paragraph_border_tbl_width,
             paragraph_border_above_identical_paragraphs_tbl_width: item
                 .paragraph_border_above_identical_paragraphs_tbl_width,
@@ -35256,6 +35255,7 @@ impl From<TableCellMarginExceptionsMirror> for super::TableCellMarginExceptions 
             table_cell_trailing_margin_exception_tbl_width: item
                 .table_cell_trailing_margin_exception_tbl_width,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -35298,7 +35298,6 @@ impl From<TableCellPropertiesMirror> for super::TableCellProperties {
         Self {
             content: item.content,
             dont_wrap_cell_content: item.dont_wrap_cell_content,
-            extra: item.extra,
             fit_text_within_cell: item.fit_text_within_cell,
             grid_columns_spanned: item.grid_columns_spanned,
             header_cells_associated_with_table_cell: item.header_cells_associated_with_table_cell,
@@ -35313,6 +35312,7 @@ impl From<TableCellPropertiesMirror> for super::TableCellProperties {
             table_cell_borders: item.table_cell_borders,
             table_cell_vertical_alignment: item.table_cell_vertical_alignment,
             unknown: item.unknown,
+            user_data: item.user_data,
             vertically_merged_cell: item.vertically_merged_cell,
         }
     }
@@ -35354,7 +35354,6 @@ impl From<TableCellTrailingMarginExceptionMirror> for super::TableCellTrailingMa
     fn from(item: TableCellTrailingMarginExceptionMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             shadow: item.shadow,
             space: item.space,
@@ -35363,6 +35362,7 @@ impl From<TableCellTrailingMarginExceptionMirror> for super::TableCellTrailingMa
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -35406,9 +35406,9 @@ impl From<TableCellTrailingMarginExceptionTblWidthMirror>
 {
     fn from(item: TableCellTrailingMarginExceptionTblWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -35450,8 +35450,8 @@ where
 impl From<TableCellVerticalAlignmentMirror> for super::TableCellVerticalAlignment {
     fn from(item: TableCellVerticalAlignmentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -35493,8 +35493,8 @@ where
 impl From<TableDescriptionMirror> for super::TableDescription {
     fn from(item: TableDescriptionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -35534,8 +35534,8 @@ impl From<TableGridMirror> for super::TableGrid {
         Self {
             column_definition: item.column_definition,
             column_revision_information: item.column_revision_information,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -35572,10 +35572,10 @@ where
 impl From<TableGridColumnRevisionInformationMirror> for super::TableGridColumnRevisionInformation {
     fn from(item: TableGridColumnRevisionInformationMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             previous_table_grid: item.previous_table_grid,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -35616,9 +35616,9 @@ where
 impl From<TableIndentFromLeadingMarginMirror> for super::TableIndentFromLeadingMargin {
     fn from(item: TableIndentFromLeadingMarginMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -35661,7 +35661,6 @@ impl From<TableInsideHorizontalEdgesBorderMirror> for super::TableInsideHorizont
     fn from(item: TableInsideHorizontalEdgesBorderMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             shadow: item.shadow,
             space: item.space,
@@ -35670,6 +35669,7 @@ impl From<TableInsideHorizontalEdgesBorderMirror> for super::TableInsideHorizont
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -35712,7 +35712,6 @@ impl From<TableInsideVerticalEdgesBorderMirror> for super::TableInsideVerticalEd
     fn from(item: TableInsideVerticalEdgesBorderMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             shadow: item.shadow,
             space: item.space,
@@ -35721,6 +35720,7 @@ impl From<TableInsideVerticalEdgesBorderMirror> for super::TableInsideVerticalEd
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -35762,9 +35762,9 @@ where
 impl From<TableLayoutMirror> for super::TableLayout {
     fn from(item: TableLayoutMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -35801,7 +35801,6 @@ where
 impl From<TableLevelPropertyExceptionsMirror> for super::TableLevelPropertyExceptions {
     fn from(item: TableLevelPropertyExceptionsMirror) -> Self {
         Self {
-            extra: item.extra,
             paragraph_shading: item.paragraph_shading,
             preferred_table_width: item.preferred_table_width,
             revision_information: item.revision_information,
@@ -35814,6 +35813,7 @@ impl From<TableLevelPropertyExceptionsMirror> for super::TableLevelPropertyExcep
             table_style_conditional_formatting_settings_exception: item
                 .table_style_conditional_formatting_settings_exception,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -35854,7 +35854,6 @@ where
 impl From<TablePropertiesMirror> for super::TableProperties {
     fn from(item: TablePropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             floating_table_allows_overlap: item.floating_table_allows_overlap,
             floating_table_positioning: item.floating_table_positioning,
             number_of_columns_in_column_band: item.number_of_columns_in_column_band,
@@ -35874,6 +35873,7 @@ impl From<TablePropertiesMirror> for super::TableProperties {
             table_style_conditional_formatting_settings_exception: item
                 .table_style_conditional_formatting_settings_exception,
             unknown: item.unknown,
+            user_data: item.user_data,
             visually_right_to_left_table: item.visually_right_to_left_table,
         }
     }
@@ -35912,7 +35912,6 @@ impl From<TableRowMirror> for super::TableRow {
     fn from(item: TableRowMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             para_id: item.para_id,
             properties: item.properties,
             rsid_del: item.rsid_del,
@@ -35922,6 +35921,7 @@ impl From<TableRowMirror> for super::TableRow {
             table_level_property_exceptions: item.table_level_property_exceptions,
             text_id: item.text_id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -35958,8 +35958,8 @@ where
 impl From<TableRowCannotBreakAcrossPagesMirror> for super::TableRowCannotBreakAcrossPages {
     fn from(item: TableRowCannotBreakAcrossPagesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -36001,9 +36001,9 @@ where
 impl From<TableRowCellSpacingMirror> for super::TableRowCellSpacing {
     fn from(item: TableRowCellSpacingMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -36044,9 +36044,9 @@ where
 impl From<TableRowHeightMirror> for super::TableRowHeight {
     fn from(item: TableRowHeightMirror) -> Self {
         Self {
-            extra: item.extra,
             h_rule: item.h_rule,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -36087,10 +36087,10 @@ impl From<TableRowPropertiesMirror> for super::TableRowProperties {
             conflict_change_content: item.conflict_change_content,
             content: item.content,
             deleted_table_row: item.deleted_table_row,
-            extra: item.extra,
             inserted_table_row: item.inserted_table_row,
             revision_information: item.revision_information,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -36129,7 +36129,6 @@ impl From<TableStyleConditionalFormattingSettingsExceptionMirror>
 {
     fn from(item: TableStyleConditionalFormattingSettingsExceptionMirror) -> Self {
         Self {
-            extra: item.extra,
             first_column: item.first_column,
             first_row: item.first_row,
             last_column: item.last_column,
@@ -36137,6 +36136,7 @@ impl From<TableStyleConditionalFormattingSettingsExceptionMirror>
             no_h_band: item.no_h_band,
             no_v_band: item.no_v_band,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -36178,8 +36178,8 @@ where
 impl From<TargetScreenSizeForWebPageMirror> for super::TargetScreenSizeForWebPage {
     fn from(item: TargetScreenSizeForWebPageMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -36221,9 +36221,9 @@ where
 impl From<TextMirror> for super::Text {
     fn from(item: TextMirror) -> Self {
         Self {
-            extra: item.extra,
             space: item.space,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -36262,7 +36262,6 @@ impl From<TextBorderMirror> for super::TextBorder {
     fn from(item: TextBorderMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             shadow: item.shadow,
             space: item.space,
@@ -36271,6 +36270,7 @@ impl From<TextBorderMirror> for super::TextBorder {
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -36308,8 +36308,8 @@ where
 impl From<TextBoxFormFieldFormattingMirror> for super::TextBoxFormFieldFormatting {
     fn from(item: TextBoxFormFieldFormattingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -36351,8 +36351,8 @@ where
 impl From<TextBoxFormFieldMaximumLengthMirror> for super::TextBoxFormFieldMaximumLength {
     fn from(item: TextBoxFormFieldMaximumLengthMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -36395,11 +36395,11 @@ impl From<TextBoxFormFieldPropertiesMirror> for super::TextBoxFormFieldPropertie
     fn from(item: TextBoxFormFieldPropertiesMirror) -> Self {
         Self {
             default_text_box_form_field_string: item.default_text_box_form_field_string,
-            extra: item.extra,
             text_box_form_field_formatting: item.text_box_form_field_formatting,
             text_box_form_field_maximum_length: item.text_box_form_field_maximum_length,
             text_box_form_field_type: item.text_box_form_field_type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -36440,8 +36440,8 @@ where
 impl From<TextBoxFormFieldTypeMirror> for super::TextBoxFormFieldType {
     fn from(item: TextBoxFormFieldTypeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -36484,13 +36484,13 @@ impl From<TextFramePropertiesMirror> for super::TextFrameProperties {
         Self {
             anchor_lock: item.anchor_lock,
             drop_cap: item.drop_cap,
-            extra: item.extra,
             h: item.h,
             h_anchor: item.h_anchor,
             h_rule: item.h_rule,
             h_space: item.h_space,
             lines: item.lines,
             unknown: item.unknown,
+            user_data: item.user_data,
             v_anchor: item.v_anchor,
             v_space: item.v_space,
             w: item.w,
@@ -36538,8 +36538,8 @@ where
 impl From<TextHighlightingMirror> for super::TextHighlighting {
     fn from(item: TextHighlightingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -36578,12 +36578,12 @@ impl From<TextRunMirror> for super::TextRun {
     fn from(item: TextRunMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             properties: item.properties,
             rsid_del: item.rsid_del,
             rsid_r: item.rsid_r,
             rsid_r_pr: item.rsid_r_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -36620,8 +36620,8 @@ where
 impl From<TextboxTightWrapMirror> for super::TextboxTightWrap {
     fn from(item: TextboxTightWrapMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -36667,12 +36667,12 @@ impl From<ThemeColorMappingsMirror> for super::ThemeColorMappings {
             accent6: item.accent6,
             bg1: item.bg1,
             bg2: item.bg2,
-            extra: item.extra,
             followed_hyperlink: item.followed_hyperlink,
             hyperlink: item.hyperlink,
             t1: item.t1,
             t2: item.t2,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -36711,8 +36711,8 @@ impl From<ThemeFontLanguagesMirror> for super::ThemeFontLanguages {
         Self {
             bidi: item.bidi,
             east_asia: item.east_asia,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -36750,8 +36750,8 @@ where
 impl From<TopAndBottomMarginForFrameMirror> for super::TopAndBottomMarginForFrame {
     fn from(item: TopAndBottomMarginForFrameMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -36794,7 +36794,6 @@ impl From<TopBorderMirror> for super::TopBorder {
     fn from(item: TopBorderMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             id: item.id,
             shadow: item.shadow,
@@ -36806,6 +36805,7 @@ impl From<TopBorderMirror> for super::TopBorder {
             top_left: item.top_left,
             top_right: item.top_right,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -36844,7 +36844,6 @@ impl From<TopLeftBottomRightDiagonalBorderMirror> for super::TopLeftBottomRightD
     fn from(item: TopLeftBottomRightDiagonalBorderMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             shadow: item.shadow,
             space: item.space,
@@ -36853,6 +36852,7 @@ impl From<TopLeftBottomRightDiagonalBorderMirror> for super::TopLeftBottomRightD
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -36894,8 +36894,8 @@ where
 impl From<TopMarginForHTMLDivMirror> for super::TopMarginForHTMLDiv {
     fn from(item: TopMarginForHTMLDivMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -36937,7 +36937,6 @@ impl From<TopRightBottomLeftDiagonalBorderMirror> for super::TopRightBottomLeftD
     fn from(item: TopRightBottomLeftDiagonalBorderMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             frame: item.frame,
             shadow: item.shadow,
             space: item.space,
@@ -36946,6 +36945,7 @@ impl From<TopRightBottomLeftDiagonalBorderMirror> for super::TopRightBottomLeftD
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -36987,8 +36987,8 @@ where
 impl From<TrackRevisionsToDocumentMirror> for super::TrackRevisionsToDocument {
     fn from(item: TrackRevisionsToDocumentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37032,8 +37032,8 @@ impl From<TreatBackslashQuotationDelimiterAsTwoQuotationMarksMirror>
 {
     fn from(item: TreatBackslashQuotationDelimiterAsTwoQuotationMarksMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37080,8 +37080,8 @@ where
 impl From<TruncateFontHeightsLikeWP6Mirror> for super::TruncateFontHeightsLikeWP6 {
     fn from(item: TruncateFontHeightsLikeWP6Mirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37123,8 +37123,8 @@ where
 impl From<UDLConnectionStringMirror> for super::UDLConnectionString {
     fn from(item: UDLConnectionStringMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37166,11 +37166,11 @@ impl From<UnderlineMirror> for super::Underline {
     fn from(item: UnderlineMirror) -> Self {
         Self {
             color: item.color,
-            extra: item.extra,
             theme_color: item.theme_color,
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37208,8 +37208,8 @@ where
 impl From<UnderlineAllTrailingSpacesMirror> for super::UnderlineAllTrailingSpaces {
     fn from(item: UnderlineAllTrailingSpacesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37253,8 +37253,8 @@ impl From<UnderlineFollowingCharacterFollowingNumberingMirror>
 {
     fn from(item: UnderlineFollowingCharacterFollowingNumberingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37296,8 +37296,8 @@ where
 impl From<UniqueIDMirror> for super::UniqueID {
     fn from(item: UniqueIDMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37335,8 +37335,8 @@ where
 impl From<UniqueValueForRecordMirror> for super::UniqueValueForRecord {
     fn from(item: UniqueValueForRecordMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37377,8 +37377,8 @@ where
 impl From<UpgradeDocumentOnOpenMirror> for super::UpgradeDocumentOnOpen {
     fn from(item: UpgradeDocumentOnOpenMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -37419,8 +37419,8 @@ where
 impl From<UseANSIKerningPairsFromFontsMirror> for super::UseANSIKerningPairsFromFonts {
     fn from(item: UseANSIKerningPairsFromFontsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37462,8 +37462,8 @@ where
 impl From<UseAltKinsokuLineBreakRulesMirror> for super::UseAltKinsokuLineBreakRules {
     fn from(item: UseAltKinsokuLineBreakRulesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37507,8 +37507,8 @@ impl From<UseCachedParagraphInformationForColumnBalancingMirror>
 {
     fn from(item: UseCachedParagraphInformationForColumnBalancingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37550,8 +37550,8 @@ where
 impl From<UseComplexScriptFormattingOnRunMirror> for super::UseComplexScriptFormattingOnRun {
     fn from(item: UseComplexScriptFormattingOnRunMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37595,8 +37595,8 @@ impl From<UseCountryBasedAddressFieldOrderingMirror>
 {
     fn from(item: UseCountryBasedAddressFieldOrderingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37640,8 +37640,8 @@ impl From<UseIncorrectInterCharacterSpacingRulesMirror>
 {
     fn from(item: UseIncorrectInterCharacterSpacingRulesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37685,8 +37685,8 @@ impl From<UseLeftRightIndentsAsInsideOutsideIndentsMirror>
 {
     fn from(item: UseLeftRightIndentsAsInsideOutsideIndentsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37728,8 +37728,8 @@ where
 impl From<UseNormalStyleForListMirror> for super::UseNormalStyleForList {
     fn from(item: UseNormalStyleForListMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37773,8 +37773,8 @@ impl From<UsePrinterMetricsToDisplayDocumentsMirror>
 {
     fn from(item: UsePrinterMetricsToDisplayDocumentsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37816,8 +37816,8 @@ where
 impl From<UseSingleBorderforContiguousCellsMirror> for super::UseSingleBorderforContiguousCells {
     fn from(item: UseSingleBorderforContiguousCellsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37859,8 +37859,8 @@ where
 impl From<UseSpecificSmallCapsAlgorithmMirror> for super::UseSpecificSmallCapsAlgorithm {
     fn from(item: UseSpecificSmallCapsAlgorithmMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37902,8 +37902,8 @@ where
 impl From<UseSpecificSpaceWidthMirror> for super::UseSpecificSpaceWidth {
     fn from(item: UseSpecificSpaceWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37945,8 +37945,8 @@ where
 impl From<UseStaticTextLeadingMirror> for super::UseStaticTextLeading {
     fn from(item: UseStaticTextLeadingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -37987,8 +37987,8 @@ where
 impl From<UseWord2002TableStyleRulesMirror> for super::UseWord2002TableStyleRules {
     fn from(item: UseWord2002TableStyleRulesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -38030,8 +38030,8 @@ where
 impl From<UtilizeVMLWhenSavingAsWebPageMirror> for super::UtilizeVMLWhenSavingAsWebPage {
     fn from(item: UtilizeVMLWhenSavingAsWebPageMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -38077,8 +38077,8 @@ impl From<VMLObjectMirror> for super::VMLObject {
             content: item.content,
             embedded_control: item.embedded_control,
             embedded_video: item.embedded_video,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -38115,8 +38115,8 @@ where
 impl From<VerticalCharacterAlignmentOnLineMirror> for super::VerticalCharacterAlignmentOnLine {
     fn from(item: VerticalCharacterAlignmentOnLineMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -38158,8 +38158,8 @@ where
 impl From<VerticallyMergedCellMirror> for super::VerticallyMergedCell {
     fn from(item: VerticallyMergedCellMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -38203,9 +38203,9 @@ impl From<VerticallyMergedSplitTableCellsMirror> for super::VerticallyMergedSpli
             author: item.author,
             date: item.date,
             date_utc: item.date_utc,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
             v_merge: item.v_merge,
             v_merge_orig: item.v_merge_orig,
         }
@@ -38248,8 +38248,8 @@ where
 impl From<VerticallyRaisedOrLoweredTextMirror> for super::VerticallyRaisedOrLoweredText {
     fn from(item: VerticallyRaisedOrLoweredTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -38291,8 +38291,8 @@ where
 impl From<ViewMergedDataWithinDocumentMirror> for super::ViewMergedDataWithinDocument {
     fn from(item: ViewMergedDataWithinDocumentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -38335,12 +38335,12 @@ impl From<VisibilityOfAnnotationTypesMirror> for super::VisibilityOfAnnotationTy
     fn from(item: VisibilityOfAnnotationTypesMirror) -> Self {
         Self {
             comments: item.comments,
-            extra: item.extra,
             formatting: item.formatting,
             ink_annotations: item.ink_annotations,
             ins_del: item.ins_del,
             markup: item.markup,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -38381,8 +38381,8 @@ where
 impl From<VisuallyRightToLeftTableMirror> for super::VisuallyRightToLeftTable {
     fn from(item: VisuallyRightToLeftTableMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -38424,8 +38424,8 @@ where
 impl From<WebHiddenTextMirror> for super::WebHiddenText {
     fn from(item: WebHiddenTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -38468,7 +38468,6 @@ impl From<WebPageSettingsMirror> for super::WebPageSettings {
             do_not_place_supporting_files: item.do_not_place_supporting_files,
             do_not_rely_on_css: item.do_not_rely_on_css,
             do_not_use_file_names: item.do_not_use_file_names,
-            extra: item.extra,
             information_about_html_div_elements: item.information_about_html_div_elements,
             nested_frameset_definition: item.nested_frameset_definition,
             output_encoding: item.output_encoding,
@@ -38477,6 +38476,7 @@ impl From<WebPageSettingsMirror> for super::WebPageSettings {
             save_smart_tag_data: item.save_smart_tag_data,
             target_screen_size_for_web_page: item.target_screen_size_for_web_page,
             unknown: item.unknown,
+            user_data: item.user_data,
             utilize_vml_when_saving_as_web_page: item.utilize_vml_when_saving_as_web_page,
         }
     }
@@ -38525,7 +38525,6 @@ impl From<WriteProtectionMirror> for super::WriteProtection {
             crypt_provider_type_ext: item.crypt_provider_type_ext,
             crypt_provider_type_ext_source: item.crypt_provider_type_ext_source,
             crypt_spin_count: item.crypt_spin_count,
-            extra: item.extra,
             hash: item.hash,
             hash_value: item.hash_value,
             recommended: item.recommended,
@@ -38533,6 +38532,7 @@ impl From<WriteProtectionMirror> for super::WriteProtection {
             salt_value: item.salt_value,
             spin_count: item.spin_count,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -38569,10 +38569,10 @@ where
 impl From<XMLMappingMirror> for super::XMLMapping {
     fn from(item: XMLMappingMirror) -> Self {
         Self {
-            extra: item.extra,
             prefix_mappings: item.prefix_mappings,
             store_item_id: item.store_item_id,
             unknown: item.unknown,
+            user_data: item.user_data,
             xpath: item.xpath,
         }
     }

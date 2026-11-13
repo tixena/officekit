@@ -258,7 +258,7 @@ pub fn auto_filter(element: &Element) -> super::AutoFilter {
 pub fn bounds(element: &Element) -> super::Bounds {
     let reader = officekit_markup_base::Reader::new(element, &super::BOUNDS_SHAPE);
     super::Bounds {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -914,7 +914,7 @@ pub fn range_pr(element: &Element) -> super::RangePr {
 pub fn selection(element: &Element) -> super::Selection {
     let reader = officekit_markup_base::Reader::new(element, &super::SELECTION_SHAPE);
     super::Selection {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }

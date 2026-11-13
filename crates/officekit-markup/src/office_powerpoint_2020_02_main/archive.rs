@@ -226,17 +226,17 @@ pub struct DesignPrMirror {
     pub design_tag_lst: Option<Box<super::DesignTagLst>>,
     pub edt_design_elem: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DesignTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DesignTagMirror {
-    pub extra: (),
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -245,8 +245,8 @@ pub struct DesignTagMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DesignTagLstMirror {
     pub design_tag: Vec<super::DesignTag>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -254,8 +254,8 @@ pub struct DesignTagLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<presentation::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<DesignPrMirror> for super::DesignPr {
@@ -264,8 +264,8 @@ impl From<DesignPrMirror> for super::DesignPr {
             design_tag_lst: item.design_tag_lst,
             edt_design_elem: item.edt_design_elem,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -302,9 +302,9 @@ where
 impl From<DesignTagMirror> for super::DesignTag {
     fn from(item: DesignTagMirror) -> Self {
         Self {
-            extra: item.extra,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -343,8 +343,8 @@ impl From<DesignTagLstMirror> for super::DesignTagLst {
     fn from(item: DesignTagLstMirror) -> Self {
         Self {
             design_tag: item.design_tag,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -382,8 +382,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

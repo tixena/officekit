@@ -322,7 +322,7 @@ pub fn bounds(element: &Element) -> super::Bounds {
 pub fn bw_mode(element: &Element) -> super::BwMode {
     let reader = officekit_markup_base::Reader::new(element, &super::BW_MODE_SHAPE);
     super::BwMode {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -717,7 +717,7 @@ pub fn de_mk_lst(element: &Element) -> super::DeMkLst {
 pub fn de_pkg(element: &Element) -> super::DePkg {
     let reader = officekit_markup_base::Reader::new(element, &super::DE_PKG_SHAPE);
     super::DePkg {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -769,7 +769,7 @@ pub fn dg_mk_lst(element: &Element) -> super::DgMkLst {
 pub fn dpi(element: &Element) -> super::Dpi {
     let reader = officekit_markup_base::Reader::new(element, &super::DPI_SHAPE);
     super::Dpi {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -807,7 +807,7 @@ pub fn editor_sel_lst(element: &Element) -> super::EditorSelLst {
 pub fn effect(element: &Element) -> super::Effect {
     let reader = officekit_markup_base::Reader::new(element, &super::EFFECT_SHAPE);
     super::Effect {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -849,7 +849,7 @@ pub fn end_cxn_connection(element: &Element) -> super::EndCxnConnection {
 pub fn end_cxn_empty(element: &Element) -> super::EndCxnEmpty {
     let reader = officekit_markup_base::Reader::new(element, &super::END_CXN_EMPTY_SHAPE);
     super::EndCxnEmpty {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -859,7 +859,7 @@ pub fn end_cxn_empty(element: &Element) -> super::EndCxnEmpty {
 pub fn ext_lst(element: &Element) -> super::ExtLst {
     let reader = officekit_markup_base::Reader::new(element, &super::EXT_LST_SHAPE);
     super::ExtLst {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -869,7 +869,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 pub fn fill(element: &Element) -> super::Fill {
     let reader = officekit_markup_base::Reader::new(element, &super::FILL_SHAPE);
     super::Fill {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -879,7 +879,7 @@ pub fn fill(element: &Element) -> super::Fill {
 pub fn fill_mode(element: &Element) -> super::FillMode {
     let reader = officekit_markup_base::Reader::new(element, &super::FILL_MODE_SHAPE);
     super::FillMode {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -889,7 +889,7 @@ pub fn fill_mode(element: &Element) -> super::FillMode {
 pub fn fill_rect(element: &Element) -> super::FillRect {
     let reader = officekit_markup_base::Reader::new(element, &super::FILL_RECT_SHAPE);
     super::FillRect {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -931,7 +931,7 @@ pub fn font_ref(element: &Element) -> super::FontRef {
 pub fn geom(element: &Element) -> super::Geom {
     let reader = officekit_markup_base::Reader::new(element, &super::GEOM_SHAPE);
     super::Geom {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1105,7 +1105,7 @@ pub fn grp_sp_pr_reset_group_shape_properties(
 pub fn hlink_click_empty(element: &Element) -> super::HlinkClickEmpty {
     let reader = officekit_markup_base::Reader::new(element, &super::HLINK_CLICK_EMPTY_SHAPE);
     super::HlinkClickEmpty {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1130,7 +1130,7 @@ pub fn hlink_click_hyperlink_props(element: &Element) -> super::HlinkClickHyperl
 pub fn hlink_hover_empty(element: &Element) -> super::HlinkHoverEmpty {
     let reader = officekit_markup_base::Reader::new(element, &super::HLINK_HOVER_EMPTY_SHAPE);
     super::HlinkHoverEmpty {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1277,7 +1277,7 @@ pub fn ink_mk_lst(element: &Element) -> super::InkMkLst {
 pub fn lf_pr(element: &Element) -> super::LfPr {
     let reader = officekit_markup_base::Reader::new(element, &super::LF_PR_SHAPE);
     super::LfPr {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1311,7 +1311,7 @@ pub fn line_props(element: &Element) -> super::LineProps {
 pub fn ln(element: &Element) -> super::Ln {
     let reader = officekit_markup_base::Reader::new(element, &super::LN_SHAPE);
     super::Ln {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1351,7 +1351,7 @@ pub fn model3d_mk_lst(element: &Element) -> super::Model3DMkLst {
 pub fn no_adjust_handles(element: &Element) -> super::NoAdjustHandles {
     let reader = officekit_markup_base::Reader::new(element, &super::NO_ADJUST_HANDLES_SHAPE);
     super::NoAdjustHandles {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1361,7 +1361,7 @@ pub fn no_adjust_handles(element: &Element) -> super::NoAdjustHandles {
 pub fn no_change_arrowheads(element: &Element) -> super::NoChangeArrowheads {
     let reader = officekit_markup_base::Reader::new(element, &super::NO_CHANGE_ARROWHEADS_SHAPE);
     super::NoChangeArrowheads {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1371,7 +1371,7 @@ pub fn no_change_arrowheads(element: &Element) -> super::NoChangeArrowheads {
 pub fn no_change_aspect(element: &Element) -> super::NoChangeAspect {
     let reader = officekit_markup_base::Reader::new(element, &super::NO_CHANGE_ASPECT_SHAPE);
     super::NoChangeAspect {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1381,7 +1381,7 @@ pub fn no_change_aspect(element: &Element) -> super::NoChangeAspect {
 pub fn no_change_shape_type(element: &Element) -> super::NoChangeShapeType {
     let reader = officekit_markup_base::Reader::new(element, &super::NO_CHANGE_SHAPE_TYPE_SHAPE);
     super::NoChangeShapeType {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1391,7 +1391,7 @@ pub fn no_change_shape_type(element: &Element) -> super::NoChangeShapeType {
 pub fn no_edit_points(element: &Element) -> super::NoEditPoints {
     let reader = officekit_markup_base::Reader::new(element, &super::NO_EDIT_POINTS_SHAPE);
     super::NoEditPoints {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1401,7 +1401,7 @@ pub fn no_edit_points(element: &Element) -> super::NoEditPoints {
 pub fn no_grp(element: &Element) -> super::NoGrp {
     let reader = officekit_markup_base::Reader::new(element, &super::NO_GRP_SHAPE);
     super::NoGrp {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1411,7 +1411,7 @@ pub fn no_grp(element: &Element) -> super::NoGrp {
 pub fn no_move(element: &Element) -> super::NoMove {
     let reader = officekit_markup_base::Reader::new(element, &super::NO_MOVE_SHAPE);
     super::NoMove {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1421,7 +1421,7 @@ pub fn no_move(element: &Element) -> super::NoMove {
 pub fn no_resize(element: &Element) -> super::NoResize {
     let reader = officekit_markup_base::Reader::new(element, &super::NO_RESIZE_SHAPE);
     super::NoResize {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1431,7 +1431,7 @@ pub fn no_resize(element: &Element) -> super::NoResize {
 pub fn no_rot(element: &Element) -> super::NoRot {
     let reader = officekit_markup_base::Reader::new(element, &super::NO_ROT_SHAPE);
     super::NoRot {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1441,7 +1441,7 @@ pub fn no_rot(element: &Element) -> super::NoRot {
 pub fn no_select(element: &Element) -> super::NoSelect {
     let reader = officekit_markup_base::Reader::new(element, &super::NO_SELECT_SHAPE);
     super::NoSelect {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1560,7 +1560,7 @@ pub fn reset(element: &Element) -> super::Reset {
 pub fn rot_with_shape(element: &Element) -> super::RotWithShape {
     let reader = officekit_markup_base::Reader::new(element, &super::ROT_WITH_SHAPE_SHAPE);
     super::RotWithShape {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1570,7 +1570,7 @@ pub fn rot_with_shape(element: &Element) -> super::RotWithShape {
 pub fn scene3d(element: &Element) -> super::Scene3d {
     let reader = officekit_markup_base::Reader::new(element, &super::SCENE3D_SHAPE);
     super::Scene3d {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1594,7 +1594,7 @@ pub fn snd_data(element: &Element) -> super::SndData {
 pub fn sp3d(element: &Element) -> super::Sp3d {
     let reader = officekit_markup_base::Reader::new(element, &super::SP3D_SHAPE);
     super::Sp3d {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1702,7 +1702,7 @@ pub fn sp_pr_shape_properties(element: &Element) -> super::SpPrShapeProperties {
 pub fn src_rect_empty(element: &Element) -> super::SrcRectEmpty {
     let reader = officekit_markup_base::Reader::new(element, &super::SRC_RECT_EMPTY_SHAPE);
     super::SrcRectEmpty {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1713,7 +1713,7 @@ pub fn src_rect_relative_rect_props(element: &Element) -> super::SrcRectRelative
     let reader =
         officekit_markup_base::Reader::new(element, &super::SRC_RECT_RELATIVE_RECT_PROPS_SHAPE);
     super::SrcRectRelativeRectProps {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1739,7 +1739,7 @@ pub fn st_cxn_connection(element: &Element) -> super::StCxnConnection {
 pub fn st_cxn_empty(element: &Element) -> super::StCxnEmpty {
     let reader = officekit_markup_base::Reader::new(element, &super::ST_CXN_EMPTY_SHAPE);
     super::StCxnEmpty {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1837,7 +1837,7 @@ pub fn tx_body_mk_lst(element: &Element) -> super::TxBodyMkLst {
 pub fn tx_body_pkg(element: &Element) -> super::TxBodyPkg {
     let reader = officekit_markup_base::Reader::new(element, &super::TX_BODY_PKG_SHAPE);
     super::TxBodyPkg {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1889,7 +1889,7 @@ pub fn view_sel_lst(element: &Element) -> super::ViewSelLst {
 pub fn xfrm_empty(element: &Element) -> super::XfrmEmpty {
     let reader = officekit_markup_base::Reader::new(element, &super::XFRM_EMPTY_SHAPE);
     super::XfrmEmpty {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }

@@ -227,9 +227,9 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct BgMirror {
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
-    pub extra: (),
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -237,8 +237,8 @@ pub struct BgMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -248,9 +248,9 @@ pub struct GraphicFrameMirror {
     pub c_nv_fr_pr: Box<super::super::office_word_2010_wordprocessing_group::CNvFrPr>,
     pub c_nv_pr: Box<super::super::office_word_2010_wordprocessing_group::CNvPr>,
     pub ext_lst: Option<Box<super::super::office_word_2010_wordprocessing_group::ExtLst>>,
-    pub extra: (),
     pub graphic_object: Box<drawing::GraphicObject>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xfrm: Box<super::super::office_word_2010_wordprocessing_group::Xfrm>,
 }
 
@@ -259,9 +259,9 @@ pub struct GraphicFrameMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct WholeMirror {
     pub content: Option<Box<drawing::EffectPropertiesContent>>,
-    pub extra: (),
     pub outline: Option<Box<drawing::Outline>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -271,8 +271,8 @@ pub struct WpcMirror {
     pub bg: Option<Box<super::Bg>>,
     pub content: Vec<super::WordprocessingCanvasContent>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub whole: Option<Box<super::Whole>>,
 }
 
@@ -292,9 +292,9 @@ impl From<BgMirror> for super::Bg {
     fn from(item: BgMirror) -> Self {
         Self {
             effect_properties_content: item.effect_properties_content,
-            extra: item.extra,
             fill_properties_content: item.fill_properties_content,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -332,8 +332,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -373,9 +373,9 @@ impl From<GraphicFrameMirror> for super::GraphicFrame {
             c_nv_fr_pr: item.c_nv_fr_pr,
             c_nv_pr: item.c_nv_pr,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             graphic_object: item.graphic_object,
             unknown: item.unknown,
+            user_data: item.user_data,
             xfrm: item.xfrm,
         }
     }
@@ -414,9 +414,9 @@ impl From<WholeMirror> for super::Whole {
     fn from(item: WholeMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             outline: item.outline,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -456,8 +456,8 @@ impl From<WpcMirror> for super::Wpc {
             bg: item.bg,
             content: item.content,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             whole: item.whole,
         }
     }

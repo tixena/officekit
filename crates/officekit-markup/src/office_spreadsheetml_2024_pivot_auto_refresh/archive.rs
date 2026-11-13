@@ -222,16 +222,16 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::AutoRefresh)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutoRefreshMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
 impl From<AutoRefreshMirror> for super::AutoRefresh {
     fn from(item: AutoRefreshMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }

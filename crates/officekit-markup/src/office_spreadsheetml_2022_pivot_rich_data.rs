@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -279,9 +279,7 @@ pub trait Context: crate::Context {
 /// schema type is `CT_PivotCacheRichInfo`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RichInfoWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022PivotRichDataRichInfo,
+pub struct RichInfoWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `pivotCacheGuid`, when the element has it.
@@ -290,10 +288,12 @@ pub struct RichInfoWith<X: NodeExtra> {
     pub pivot_ignore_invalid_cache: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022PivotRichDataRichInfo,
 }
 
 /// The `xprd:richInfo` element of the tree a read gives: [`RichInfoWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type RichInfo = RichInfoWith<()>;
 
 impl Eq for RichInfoWith<()> {}
@@ -310,20 +310,20 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> RichInfoWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RichInfoWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RichInfoWith<Y>
+    pub fn into_user_data<Y>(self) -> RichInfoWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RichInfoWith {
-            extra: Default::default(),
             id: self.id,
             pivot_cache_guid: self.pivot_cache_guid,
             pivot_ignore_invalid_cache: self.pivot_ignore_invalid_cache,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

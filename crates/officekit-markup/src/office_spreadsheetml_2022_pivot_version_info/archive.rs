@@ -222,18 +222,18 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::CacheVersionInfo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CacheVersionInfoMirror {
-    pub extra: (),
     pub last_refresh_feature: Vec<super::LastRefreshFeature>,
     pub required_feature: Vec<super::RequiredFeature>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LastRefreshFeature)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LastRefreshFeatureMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -241,8 +241,8 @@ pub struct LastRefreshFeatureMirror {
 #[rkyv(remote = super::LastUpdateFeature)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LastUpdateFeatureMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -250,28 +250,28 @@ pub struct LastUpdateFeatureMirror {
 #[rkyv(remote = super::PivotVersionInfo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotVersionInfoMirror {
-    pub extra: (),
     pub last_update_feature: Vec<super::LastUpdateFeature>,
     pub required_feature: Vec<super::RequiredFeature>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RequiredFeature)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RequiredFeatureMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
 impl From<CacheVersionInfoMirror> for super::CacheVersionInfo {
     fn from(item: CacheVersionInfoMirror) -> Self {
         Self {
-            extra: item.extra,
             last_refresh_feature: item.last_refresh_feature,
             required_feature: item.required_feature,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -308,8 +308,8 @@ where
 impl From<LastRefreshFeatureMirror> for super::LastRefreshFeature {
     fn from(item: LastRefreshFeatureMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -347,8 +347,8 @@ where
 impl From<LastUpdateFeatureMirror> for super::LastUpdateFeature {
     fn from(item: LastUpdateFeatureMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -386,10 +386,10 @@ where
 impl From<PivotVersionInfoMirror> for super::PivotVersionInfo {
     fn from(item: PivotVersionInfoMirror) -> Self {
         Self {
-            extra: item.extra,
             last_update_feature: item.last_update_feature,
             required_feature: item.required_feature,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -426,8 +426,8 @@ where
 impl From<RequiredFeatureMirror> for super::RequiredFeature {
     fn from(item: RequiredFeatureMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }

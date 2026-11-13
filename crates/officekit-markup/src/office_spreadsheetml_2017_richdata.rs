@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::spreadsheet;
 use officekit_xml::element::Element;
@@ -469,16 +469,17 @@ pub trait Context: crate::Context {
 /// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017RichdataExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017RichdataExtLst,
 }
 
-/// The `xlrd:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `xlrd:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -487,18 +488,18 @@ impl Eq for ExtLstWith<()> {}
 /// schema type is `CT_RichValueFallback`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FbWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017RichdataFb,
+pub struct FbWith<X: UserData> {
     /// The attribute `t`, when the element has it.
     pub t: Option<RichValueFallbackType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017RichdataFb,
     /// The element's text.
     pub value: String,
 }
 
-/// The `xlrd:fb` element of the tree a read gives: [`FbWith`] holding nothing in `extra`.
+/// The `xlrd:fb` element of the tree a read gives: [`FbWith`] holding nothing in `user_data`.
 pub type Fb = FbWith<()>;
 
 impl Eq for FbWith<()> {}
@@ -507,18 +508,18 @@ impl Eq for FbWith<()> {}
 /// type is `CT_Key`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct KWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017RichdataK,
+pub struct KWith<X: UserData> {
     /// The attribute `n`, when the element has it.
     pub n: Option<String>,
     /// The attribute `t`, when the element has it.
     pub t: Option<RichValueValueType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017RichdataK,
 }
 
-/// The `xlrd:k` element of the tree a read gives: [`KWith`] holding nothing in `extra`.
+/// The `xlrd:k` element of the tree a read gives: [`KWith`] holding nothing in `user_data`.
 pub type K = KWith<()>;
 
 impl Eq for KWith<()> {}
@@ -589,20 +590,20 @@ pub enum RichValueValueTypeMember {
 /// schema type is `CT_RichValue`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RvWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017RichdataRv,
+pub struct RvWith<X: UserData> {
     /// The child that is `Fb`, when there is one.
     pub fb: Option<Box<FbWith<X>>>,
     /// The attribute `s`, when the element has it.
     pub s: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017RichdataRv,
     /// The children that are `V`, in order.
     pub v: Vec<VWith<X>>,
 }
 
-/// The `xlrd:rv` element of the tree a read gives: [`RvWith`] holding nothing in `extra`.
+/// The `xlrd:rv` element of the tree a read gives: [`RvWith`] holding nothing in `user_data`.
 pub type Rv = RvWith<()>;
 
 impl Eq for RvWith<()> {}
@@ -611,20 +612,21 @@ impl Eq for RvWith<()> {}
 /// schema type is `CT_RichValueData`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RvDataWith<X: NodeExtra> {
+pub struct RvDataWith<X: UserData> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017RichdataRvData,
     /// The children that are `Rv`, in order.
     pub rv: Vec<RvWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017RichdataRvData,
 }
 
-/// The `xlrd:rvData` element of the tree a read gives: [`RvDataWith`] holding nothing in `extra`.
+/// The `xlrd:rvData` element of the tree a read gives: [`RvDataWith`] holding nothing in
+/// `user_data`.
 pub type RvData = RvDataWith<()>;
 
 impl Eq for RvDataWith<()> {}
@@ -633,21 +635,21 @@ impl Eq for RvDataWith<()> {}
 /// Its schema type is `CT_RichValueStructures`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RvStructuresWith<X: NodeExtra> {
+pub struct RvStructuresWith<X: UserData> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017RichdataRvStructures,
     /// The children that are `S`, in order.
     pub s: Vec<SWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017RichdataRvStructures,
 }
 
 /// The `xlrd:rvStructures` element of the tree a read gives: [`RvStructuresWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type RvStructures = RvStructuresWith<()>;
 
 impl Eq for RvStructuresWith<()> {}
@@ -656,16 +658,16 @@ impl Eq for RvStructuresWith<()> {}
 /// schema type is `CT_RichValueBlock`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RvbWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017RichdataRvb,
+pub struct RvbWith<X: UserData> {
     /// The attribute `i`, when the element has it.
     pub i: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017RichdataRvb,
 }
 
-/// The `xlrd:rvb` element of the tree a read gives: [`RvbWith`] holding nothing in `extra`.
+/// The `xlrd:rvb` element of the tree a read gives: [`RvbWith`] holding nothing in `user_data`.
 pub type Rvb = RvbWith<()>;
 
 impl Eq for RvbWith<()> {}
@@ -674,18 +676,18 @@ impl Eq for RvbWith<()> {}
 /// type is `CT_RichValueStructure`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017RichdataS,
+pub struct SWith<X: UserData> {
     /// The children that are `K`, in order.
     pub k: Vec<KWith<X>>,
     /// The attribute `t`, when the element has it.
     pub t: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017RichdataS,
 }
 
-/// The `xlrd:s` element of the tree a read gives: [`SWith`] holding nothing in `extra`.
+/// The `xlrd:s` element of the tree a read gives: [`SWith`] holding nothing in `user_data`.
 pub type S = SWith<()>;
 
 impl Eq for SWith<()> {}
@@ -694,16 +696,16 @@ impl Eq for SWith<()> {}
 /// type is `CT_Value`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017RichdataV,
+pub struct VWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017RichdataV,
     /// The element's text.
     pub value: String,
 }
 
-/// The `xlrd:v` element of the tree a read gives: [`VWith`] holding nothing in `extra`.
+/// The `xlrd:v` element of the tree a read gives: [`VWith`] holding nothing in `user_data`.
 pub type V = VWith<()>;
 
 impl Eq for VWith<()> {}
@@ -761,21 +763,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                spreadsheet::ExtensionWith::into_extra,
+                spreadsheet::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -799,18 +801,18 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> FbWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FbWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FbWith<Y>
+    pub fn into_user_data<Y>(self) -> FbWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FbWith {
-            extra: Default::default(),
             t: self.t,
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -839,19 +841,19 @@ impl officekit_markup_base::Write for Fb {
     }
 }
 
-impl<X: NodeExtra> KWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> KWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> KWith<Y>
+    pub fn into_user_data<Y>(self) -> KWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         KWith {
-            extra: Default::default(),
             n: self.n,
             t: self.t,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -993,20 +995,23 @@ impl RichValueValueType {
     }
 }
 
-impl<X: NodeExtra> RvWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RvWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> RvWith<Y>
+    pub fn into_user_data<Y>(mut self) -> RvWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RvWith {
-            extra: Default::default(),
-            fb: officekit_markup_base::into_extra_optional(&mut self.fb, FbWith::into_extra),
+            fb: officekit_markup_base::into_user_data_optional(
+                &mut self.fb,
+                FbWith::into_user_data,
+            ),
             s: self.s,
             unknown: self.unknown,
-            v: officekit_markup_base::into_extra_list(self.v, VWith::into_extra),
+            user_data: Default::default(),
+            v: officekit_markup_base::into_user_data_list(self.v, VWith::into_user_data),
         }
     }
 
@@ -1033,23 +1038,23 @@ impl officekit_markup_base::Write for Rv {
     }
 }
 
-impl<X: NodeExtra> RvDataWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RvDataWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> RvDataWith<Y>
+    pub fn into_user_data<Y>(mut self) -> RvDataWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RvDataWith {
             count: self.count,
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            rv: officekit_markup_base::into_extra_list(self.rv, RvWith::into_extra),
+            rv: officekit_markup_base::into_user_data_list(self.rv, RvWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1076,23 +1081,23 @@ impl officekit_markup_base::Write for RvData {
     }
 }
 
-impl<X: NodeExtra> RvStructuresWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RvStructuresWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> RvStructuresWith<Y>
+    pub fn into_user_data<Y>(mut self) -> RvStructuresWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RvStructuresWith {
             count: self.count,
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            s: officekit_markup_base::into_extra_list(self.s, SWith::into_extra),
+            s: officekit_markup_base::into_user_data_list(self.s, SWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1119,18 +1124,18 @@ impl officekit_markup_base::Write for RvStructures {
     }
 }
 
-impl<X: NodeExtra> RvbWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RvbWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RvbWith<Y>
+    pub fn into_user_data<Y>(self) -> RvbWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RvbWith {
-            extra: Default::default(),
             i: self.i,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1157,19 +1162,19 @@ impl officekit_markup_base::Write for Rvb {
     }
 }
 
-impl<X: NodeExtra> SWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SWith<Y>
+    pub fn into_user_data<Y>(self) -> SWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SWith {
-            extra: Default::default(),
-            k: officekit_markup_base::into_extra_list(self.k, KWith::into_extra),
+            k: officekit_markup_base::into_user_data_list(self.k, KWith::into_user_data),
             t: self.t,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1196,17 +1201,17 @@ impl officekit_markup_base::Write for S {
     }
 }
 
-impl<X: NodeExtra> VWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> VWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> VWith<Y>
+    pub fn into_user_data<Y>(self) -> VWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         VWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }

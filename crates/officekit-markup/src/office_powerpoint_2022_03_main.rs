@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::presentation;
 use officekit_xml::element::Element;
@@ -348,16 +348,17 @@ pub trait Context: crate::Context {
 /// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `presentation::Extension`, in order.
     pub extension: Vec<presentation::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint202203MainExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint202203MainExtLst,
 }
 
-/// The `p223:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `p223:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -366,21 +367,21 @@ impl Eq for ExtLstWith<()> {}
 /// schema type is `CT_ReactionInstance`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InstanceWith<X: NodeExtra> {
+pub struct InstanceWith<X: UserData> {
     /// The attribute `authorId`, when the element has it.
     pub author_id: Option<String>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint202203MainInstance,
     /// The attribute `time`, when the element has it.
     pub time: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint202203MainInstance,
 }
 
 /// The `p223:instance` element of the tree a read gives: [`InstanceWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Instance = InstanceWith<()>;
 
 impl Eq for InstanceWith<()> {}
@@ -389,17 +390,17 @@ impl Eq for InstanceWith<()> {}
 /// Its schema type is `CT_Reactions`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ReactionsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint202203MainReactions,
+pub struct ReactionsWith<X: UserData> {
     /// The children that are `Rxn`, in order.
     pub rxn: Vec<RxnWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint202203MainReactions,
 }
 
 /// The `p223:reactions` element of the tree a read gives: [`ReactionsWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Reactions = ReactionsWith<()>;
 
 impl Eq for ReactionsWith<()> {}
@@ -408,18 +409,18 @@ impl Eq for ReactionsWith<()> {}
 /// schema type is `CT_Reaction`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RxnWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint202203MainRxn,
+pub struct RxnWith<X: UserData> {
     /// The children that are `Instance`, in order.
     pub instance: Vec<InstanceWith<X>>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint202203MainRxn,
 }
 
-/// The `p223:rxn` element of the tree a read gives: [`RxnWith`] holding nothing in `extra`.
+/// The `p223:rxn` element of the tree a read gives: [`RxnWith`] holding nothing in `user_data`.
 pub type Rxn = RxnWith<()>;
 
 impl Eq for RxnWith<()> {}
@@ -452,21 +453,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                presentation::ExtensionWith::into_extra,
+                presentation::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -490,23 +491,23 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> InstanceWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> InstanceWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> InstanceWith<Y>
+    pub fn into_user_data<Y>(mut self) -> InstanceWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         InstanceWith {
             author_id: self.author_id,
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             time: self.time,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -534,18 +535,18 @@ impl officekit_markup_base::Write for Instance {
     }
 }
 
-impl<X: NodeExtra> ReactionsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ReactionsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ReactionsWith<Y>
+    pub fn into_user_data<Y>(self) -> ReactionsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ReactionsWith {
-            extra: Default::default(),
-            rxn: officekit_markup_base::into_extra_list(self.rxn, RxnWith::into_extra),
+            rxn: officekit_markup_base::into_user_data_list(self.rxn, RxnWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -569,22 +570,22 @@ impl officekit_markup_base::Write for Reactions {
     }
 }
 
-impl<X: NodeExtra> RxnWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RxnWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RxnWith<Y>
+    pub fn into_user_data<Y>(self) -> RxnWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RxnWith {
-            extra: Default::default(),
-            instance: officekit_markup_base::into_extra_list(
+            instance: officekit_markup_base::into_user_data_list(
                 self.instance,
-                InstanceWith::into_extra,
+                InstanceWith::into_user_data,
             ),
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

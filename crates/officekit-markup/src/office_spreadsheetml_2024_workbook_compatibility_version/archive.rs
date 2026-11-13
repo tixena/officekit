@@ -222,18 +222,18 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Version)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VersionMirror {
-    pub extra: (),
     pub set_version: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub warn_below_version: Option<String>,
 }
 
 impl From<VersionMirror> for super::Version {
     fn from(item: VersionMirror) -> Self {
         Self {
-            extra: item.extra,
             set_version: item.set_version,
             unknown: item.unknown,
+            user_data: item.user_data,
             warn_below_version: item.warn_below_version,
         }
     }

@@ -222,8 +222,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::ChartTrackingRefBased)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ChartTrackingRefBasedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -232,8 +232,8 @@ pub struct ChartTrackingRefBasedMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ClrMirror {
     pub content: Box<super::super::drawing::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -241,8 +241,8 @@ pub struct ClrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<super::super::presentation::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -251,12 +251,12 @@ pub struct ExtLstMirror {
 pub struct GuideMirror {
     pub clr: Box<super::Clr>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub id: Option<String>,
     pub name: Option<String>,
     pub orient: Option<super::super::presentation::Direction>,
     pub pos: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub user_drawn: Option<String>,
 }
 
@@ -265,9 +265,9 @@ pub struct GuideMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct NotesGuideLstMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub guide: Vec<super::Guide>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -275,18 +275,18 @@ pub struct NotesGuideLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ParentCmMirror {
     pub author_id: Option<String>,
-    pub extra: (),
     pub idx: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PresenceInfo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PresenceInfoMirror {
-    pub extra: (),
     pub provider_id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub user_id: Option<String>,
 }
 
@@ -294,11 +294,11 @@ pub struct PresenceInfoMirror {
 #[rkyv(remote = super::PrstTrans)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrstTransMirror {
-    pub extra: (),
     pub inv_x: Option<String>,
     pub inv_y: Option<String>,
     pub prst: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -306,26 +306,26 @@ pub struct PrstTransMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SldGuideLstMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub guide: Vec<super::Guide>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ThreadingInfo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ThreadingInfoMirror {
-    pub extra: (),
     pub parent_cm: Option<Box<super::ParentCm>>,
     pub time_zone_bias: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<ChartTrackingRefBasedMirror> for super::ChartTrackingRefBased {
     fn from(item: ChartTrackingRefBasedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -368,8 +368,8 @@ impl From<ClrMirror> for super::Clr {
     fn from(item: ClrMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -407,8 +407,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -447,12 +447,12 @@ impl From<GuideMirror> for super::Guide {
         Self {
             clr: item.clr,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             id: item.id,
             name: item.name,
             orient: item.orient,
             pos: item.pos,
             unknown: item.unknown,
+            user_data: item.user_data,
             user_drawn: item.user_drawn,
         }
     }
@@ -491,9 +491,9 @@ impl From<NotesGuideLstMirror> for super::NotesGuideLst {
     fn from(item: NotesGuideLstMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             guide: item.guide,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -531,9 +531,9 @@ impl From<ParentCmMirror> for super::ParentCm {
     fn from(item: ParentCmMirror) -> Self {
         Self {
             author_id: item.author_id,
-            extra: item.extra,
             idx: item.idx,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -570,9 +570,9 @@ where
 impl From<PresenceInfoMirror> for super::PresenceInfo {
     fn from(item: PresenceInfoMirror) -> Self {
         Self {
-            extra: item.extra,
             provider_id: item.provider_id,
             unknown: item.unknown,
+            user_data: item.user_data,
             user_id: item.user_id,
         }
     }
@@ -610,11 +610,11 @@ where
 impl From<PrstTransMirror> for super::PrstTrans {
     fn from(item: PrstTransMirror) -> Self {
         Self {
-            extra: item.extra,
             inv_x: item.inv_x,
             inv_y: item.inv_y,
             prst: item.prst,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -652,9 +652,9 @@ impl From<SldGuideLstMirror> for super::SldGuideLst {
     fn from(item: SldGuideLstMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             guide: item.guide,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -691,10 +691,10 @@ where
 impl From<ThreadingInfoMirror> for super::ThreadingInfo {
     fn from(item: ThreadingInfoMirror) -> Self {
         Self {
-            extra: item.extra,
             parent_cm: item.parent_cm,
             time_zone_bias: item.time_zone_bias,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

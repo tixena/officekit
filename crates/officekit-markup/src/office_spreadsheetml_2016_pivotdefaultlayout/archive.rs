@@ -223,20 +223,20 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotTableDefinition16Mirror {
     pub enabled_subtotals_default: Option<String>,
-    pub extra: (),
     pub insert_blank_row_default: Option<String>,
     pub subtotals_on_top_default: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<PivotTableDefinition16Mirror> for super::PivotTableDefinition16 {
     fn from(item: PivotTableDefinition16Mirror) -> Self {
         Self {
             enabled_subtotals_default: item.enabled_subtotals_default,
-            extra: item.extra,
             insert_blank_row_default: item.insert_blank_row_default,
             subtotals_on_top_default: item.subtotals_on_top_default,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

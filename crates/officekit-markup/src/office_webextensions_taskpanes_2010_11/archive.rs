@@ -224,8 +224,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -234,10 +234,10 @@ pub struct ExtLstMirror {
 pub struct TaskpaneMirror {
     pub dockstate: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub locked: Option<String>,
     pub row: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visibility: Option<String>,
     pub webextensionref: Box<super::Webextensionref>,
     pub width: Option<String>,
@@ -247,26 +247,26 @@ pub struct TaskpaneMirror {
 #[rkyv(remote = super::Taskpanes)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TaskpanesMirror {
-    pub extra: (),
     pub taskpane: Vec<super::Taskpane>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Webextensionref)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WebextensionrefMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -305,10 +305,10 @@ impl From<TaskpaneMirror> for super::Taskpane {
         Self {
             dockstate: item.dockstate,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             locked: item.locked,
             row: item.row,
             unknown: item.unknown,
+            user_data: item.user_data,
             visibility: item.visibility,
             webextensionref: item.webextensionref,
             width: item.width,
@@ -348,9 +348,9 @@ where
 impl From<TaskpanesMirror> for super::Taskpanes {
     fn from(item: TaskpanesMirror) -> Self {
         Self {
-            extra: item.extra,
             taskpane: item.taskpane,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -387,9 +387,9 @@ where
 impl From<WebextensionrefMirror> for super::Webextensionref {
     fn from(item: WebextensionrefMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

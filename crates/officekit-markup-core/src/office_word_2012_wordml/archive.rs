@@ -223,8 +223,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Appearance)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AppearanceMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::SdtAppearance>,
 }
 
@@ -232,8 +232,8 @@ pub struct AppearanceMirror {
 #[rkyv(remote = super::ChartTrackingRefBased)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ChartTrackingRefBasedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -241,8 +241,8 @@ pub struct ChartTrackingRefBasedMirror {
 #[rkyv(remote = super::Collapsed)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CollapsedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -250,11 +250,11 @@ pub struct CollapsedMirror {
 #[rkyv(remote = super::Color)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ColorMirror {
-    pub extra: (),
     pub theme_color: Option<super::super::wordprocessing::ThemeColor>,
     pub theme_shade: Option<super::super::wordprocessing::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::super::wordprocessing::TwoDigitHexadecimalValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::super::wordprocessing::ColorValue>,
 }
 
@@ -263,10 +263,10 @@ pub struct ColorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentExMirror {
     pub done: Option<common_simple_types::OnOffValue>,
-    pub extra: (),
     pub para_id: Option<String>,
     pub para_id_parent: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -274,18 +274,18 @@ pub struct CommentExMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentsExMirror {
     pub comment_ex: Vec<super::CommentEx>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DataBinding)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataBindingMirror {
-    pub extra: (),
     pub prefix_mappings: Option<String>,
     pub store_item_id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xpath: Option<String>,
 }
 
@@ -293,8 +293,8 @@ pub struct DataBindingMirror {
 #[rkyv(remote = super::DoNotAllowInsertDeleteSection)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotAllowInsertDeleteSectionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -302,8 +302,8 @@ pub struct DoNotAllowInsertDeleteSectionMirror {
 #[rkyv(remote = super::DocId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocIdMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -311,8 +311,8 @@ pub struct DocIdMirror {
 #[rkyv(remote = super::FootnoteColumns)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FootnoteColumnsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::super::wordprocessing::DecimalNumberValue>,
 }
 
@@ -320,9 +320,9 @@ pub struct FootnoteColumnsMirror {
 #[rkyv(remote = super::People)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PeopleMirror {
-    pub extra: (),
     pub person: Vec<super::Person>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -330,18 +330,18 @@ pub struct PeopleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PersonMirror {
     pub author: Option<String>,
-    pub extra: (),
     pub presence_info: Option<Box<super::PresenceInfo>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PresenceInfo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PresenceInfoMirror {
-    pub extra: (),
     pub provider_id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub user_id: Option<String>,
 }
 
@@ -350,25 +350,25 @@ pub struct PresenceInfoMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RepeatingSectionMirror {
     pub do_not_allow_insert_delete_section: Option<Box<super::DoNotAllowInsertDeleteSection>>,
-    pub extra: (),
     pub title: Option<Box<super::SectionTitle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RepeatingSectionItem)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RepeatingSectionItemMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SectionTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SectionTitleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -376,8 +376,8 @@ pub struct SectionTitleMirror {
 #[rkyv(remote = super::WebExtensionCreated)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WebExtensionCreatedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -385,16 +385,16 @@ pub struct WebExtensionCreatedMirror {
 #[rkyv(remote = super::WebExtensionLinked)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WebExtensionLinkedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
 impl From<AppearanceMirror> for super::Appearance {
     fn from(item: AppearanceMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -432,8 +432,8 @@ where
 impl From<ChartTrackingRefBasedMirror> for super::ChartTrackingRefBased {
     fn from(item: ChartTrackingRefBasedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -475,8 +475,8 @@ where
 impl From<CollapsedMirror> for super::Collapsed {
     fn from(item: CollapsedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -514,11 +514,11 @@ where
 impl From<ColorMirror> for super::Color {
     fn from(item: ColorMirror) -> Self {
         Self {
-            extra: item.extra,
             theme_color: item.theme_color,
             theme_shade: item.theme_shade,
             theme_tint: item.theme_tint,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -557,10 +557,10 @@ impl From<CommentExMirror> for super::CommentEx {
     fn from(item: CommentExMirror) -> Self {
         Self {
             done: item.done,
-            extra: item.extra,
             para_id: item.para_id,
             para_id_parent: item.para_id_parent,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -598,8 +598,8 @@ impl From<CommentsExMirror> for super::CommentsEx {
     fn from(item: CommentsExMirror) -> Self {
         Self {
             comment_ex: item.comment_ex,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -636,10 +636,10 @@ where
 impl From<DataBindingMirror> for super::DataBinding {
     fn from(item: DataBindingMirror) -> Self {
         Self {
-            extra: item.extra,
             prefix_mappings: item.prefix_mappings,
             store_item_id: item.store_item_id,
             unknown: item.unknown,
+            user_data: item.user_data,
             xpath: item.xpath,
         }
     }
@@ -677,8 +677,8 @@ where
 impl From<DoNotAllowInsertDeleteSectionMirror> for super::DoNotAllowInsertDeleteSection {
     fn from(item: DoNotAllowInsertDeleteSectionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -720,8 +720,8 @@ where
 impl From<DocIdMirror> for super::DocId {
     fn from(item: DocIdMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -759,8 +759,8 @@ where
 impl From<FootnoteColumnsMirror> for super::FootnoteColumns {
     fn from(item: FootnoteColumnsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -798,9 +798,9 @@ where
 impl From<PeopleMirror> for super::People {
     fn from(item: PeopleMirror) -> Self {
         Self {
-            extra: item.extra,
             person: item.person,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -838,9 +838,9 @@ impl From<PersonMirror> for super::Person {
     fn from(item: PersonMirror) -> Self {
         Self {
             author: item.author,
-            extra: item.extra,
             presence_info: item.presence_info,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -877,9 +877,9 @@ where
 impl From<PresenceInfoMirror> for super::PresenceInfo {
     fn from(item: PresenceInfoMirror) -> Self {
         Self {
-            extra: item.extra,
             provider_id: item.provider_id,
             unknown: item.unknown,
+            user_data: item.user_data,
             user_id: item.user_id,
         }
     }
@@ -918,9 +918,9 @@ impl From<RepeatingSectionMirror> for super::RepeatingSection {
     fn from(item: RepeatingSectionMirror) -> Self {
         Self {
             do_not_allow_insert_delete_section: item.do_not_allow_insert_delete_section,
-            extra: item.extra,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -957,8 +957,8 @@ where
 impl From<RepeatingSectionItemMirror> for super::RepeatingSectionItem {
     fn from(item: RepeatingSectionItemMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -998,8 +998,8 @@ where
 impl From<SectionTitleMirror> for super::SectionTitle {
     fn from(item: SectionTitleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -1037,8 +1037,8 @@ where
 impl From<WebExtensionCreatedMirror> for super::WebExtensionCreated {
     fn from(item: WebExtensionCreatedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -1079,8 +1079,8 @@ where
 impl From<WebExtensionLinkedMirror> for super::WebExtensionLinked {
     fn from(item: WebExtensionLinkedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }

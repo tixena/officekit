@@ -222,16 +222,16 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Classification)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ClassificationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::ClassificationOutcomeType>,
 }
 
 impl From<ClassificationMirror> for super::Classification {
     fn from(item: ClassificationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }

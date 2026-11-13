@@ -222,17 +222,17 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::ColId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ColIdMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CreationId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CreationIdMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -240,33 +240,33 @@ pub struct CreationIdMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CxnDERefsMirror {
     pub end: Option<String>,
-    pub extra: (),
     pub st: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PredDERef)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PredDERefMirror {
-    pub extra: (),
     pub pred: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RowId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RowIdMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<ColIdMirror> for super::ColId {
     fn from(item: ColIdMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -303,9 +303,9 @@ where
 impl From<CreationIdMirror> for super::CreationId {
     fn from(item: CreationIdMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -343,9 +343,9 @@ impl From<CxnDERefsMirror> for super::CxnDERefs {
     fn from(item: CxnDERefsMirror) -> Self {
         Self {
             end: item.end,
-            extra: item.extra,
             st: item.st,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -382,9 +382,9 @@ where
 impl From<PredDERefMirror> for super::PredDERef {
     fn from(item: PredDERefMirror) -> Self {
         Self {
-            extra: item.extra,
             pred: item.pred,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -421,8 +421,8 @@ where
 impl From<RowIdMirror> for super::RowId {
     fn from(item: RowIdMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

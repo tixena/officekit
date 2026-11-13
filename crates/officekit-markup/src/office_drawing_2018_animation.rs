@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -260,7 +260,7 @@ pub static ANIM_PR_SHAPE: officekit_markup_base::Shape = officekit_markup_base::
 /// schema type is `CT_AnimationProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AnimPrWith<X: NodeExtra> {
+pub struct AnimPrWith<X: UserData> {
     /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
     /// The attribute `count`, when the element has it.
@@ -269,8 +269,6 @@ pub struct AnimPrWith<X: NodeExtra> {
     pub end: Option<String>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2018AnimationAnimPr,
     /// The attribute `length`, when the element has it.
     pub length: Option<String>,
     /// The attribute `name`, when the element has it.
@@ -281,9 +279,12 @@ pub struct AnimPrWith<X: NodeExtra> {
     pub st: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2018AnimationAnimPr,
 }
 
-/// The `aanim:animPr` element of the tree a read gives: [`AnimPrWith`] holding nothing in `extra`.
+/// The `aanim:animPr` element of the tree a read gives: [`AnimPrWith`] holding nothing in
+/// `user_data`.
 pub type AnimPr = AnimPrWith<()>;
 
 impl Eq for AnimPrWith<()> {}
@@ -334,16 +335,17 @@ pub trait Context: crate::Context {
 /// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2018AnimationExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2018AnimationExtLst,
 }
 
-/// The `aanim:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `aanim:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -365,28 +367,28 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> AnimPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AnimPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> AnimPrWith<Y>
+    pub fn into_user_data<Y>(mut self) -> AnimPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AnimPrWith {
             auto: self.auto,
             count: self.count,
             end: self.end,
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             length: self.length,
             name: self.name,
             offset: self.offset,
             st: self.st,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -419,21 +421,21 @@ impl officekit_markup_base::Write for AnimPr {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                drawing::ExtensionWith::into_extra,
+                drawing::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

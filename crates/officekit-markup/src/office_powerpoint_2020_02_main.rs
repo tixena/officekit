@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::presentation;
 use officekit_xml::element::Element;
@@ -355,21 +355,21 @@ pub trait Context: crate::Context {
 /// schema type is `CT_DesignerDrawingProps`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DesignPrWith<X: NodeExtra> {
+pub struct DesignPrWith<X: UserData> {
     /// The child that is `DesignTagLst`, when there is one.
     pub design_tag_lst: Option<Box<DesignTagLstWith<X>>>,
     /// The attribute `edtDesignElem`, when the element has it.
     pub edt_design_elem: Option<String>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint202002MainDesignPr,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint202002MainDesignPr,
 }
 
 /// The `p202:designPr` element of the tree a read gives: [`DesignPrWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type DesignPr = DesignPrWith<()>;
 
 impl Eq for DesignPrWith<()> {}
@@ -378,19 +378,19 @@ impl Eq for DesignPrWith<()> {}
 /// Its schema type is `CT_DesignerTag`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DesignTagWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint202002MainDesignTag,
+pub struct DesignTagWith<X: UserData> {
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint202002MainDesignTag,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `p202:designTag` element of the tree a read gives: [`DesignTagWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type DesignTag = DesignTagWith<()>;
 
 impl Eq for DesignTagWith<()> {}
@@ -399,17 +399,17 @@ impl Eq for DesignTagWith<()> {}
 /// Its schema type is `CT_DesignerTagList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DesignTagLstWith<X: NodeExtra> {
+pub struct DesignTagLstWith<X: UserData> {
     /// The children that are `DesignTag`, in order.
     pub design_tag: Vec<DesignTagWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint202002MainDesignTagLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint202002MainDesignTagLst,
 }
 
 /// The `p202:designTagLst` element of the tree a read gives: [`DesignTagLstWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type DesignTagLst = DesignTagLstWith<()>;
 
 impl Eq for DesignTagLstWith<()> {}
@@ -418,16 +418,17 @@ impl Eq for DesignTagLstWith<()> {}
 /// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `presentation::Extension`, in order.
     pub extension: Vec<presentation::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint202002MainExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint202002MainExtLst,
 }
 
-/// The `p202:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `p202:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -461,26 +462,26 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> DesignPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DesignPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> DesignPrWith<Y>
+    pub fn into_user_data<Y>(mut self) -> DesignPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DesignPrWith {
-            design_tag_lst: officekit_markup_base::into_extra_optional(
+            design_tag_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.design_tag_lst,
-                DesignTagLstWith::into_extra,
+                DesignTagLstWith::into_user_data,
             ),
             edt_design_elem: self.edt_design_elem,
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -507,18 +508,18 @@ impl officekit_markup_base::Write for DesignPr {
     }
 }
 
-impl<X: NodeExtra> DesignTagWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DesignTagWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DesignTagWith<Y>
+    pub fn into_user_data<Y>(self) -> DesignTagWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DesignTagWith {
-            extra: Default::default(),
             name: self.name,
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -547,21 +548,21 @@ impl officekit_markup_base::Write for DesignTag {
     }
 }
 
-impl<X: NodeExtra> DesignTagLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DesignTagLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DesignTagLstWith<Y>
+    pub fn into_user_data<Y>(self) -> DesignTagLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DesignTagLstWith {
-            design_tag: officekit_markup_base::into_extra_list(
+            design_tag: officekit_markup_base::into_user_data_list(
                 self.design_tag,
-                DesignTagWith::into_extra,
+                DesignTagWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -585,21 +586,21 @@ impl officekit_markup_base::Write for DesignTagLst {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                presentation::ExtensionWith::into_extra,
+                presentation::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

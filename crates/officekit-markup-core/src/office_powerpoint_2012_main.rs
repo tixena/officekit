@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -320,17 +320,17 @@ pub static EXT_LST_SHAPE: officekit_markup_base::Shape = officekit_markup_base::
 /// version 3.5.1. Its schema type is `CT_ChartTrackingRefBased`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ChartTrackingRefBasedWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint2012MainChartTrackingRefBased,
+pub struct ChartTrackingRefBasedWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint2012MainChartTrackingRefBased,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `p15:chartTrackingRefBased` element of the tree a read gives: [`ChartTrackingRefBasedWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ChartTrackingRefBased = ChartTrackingRefBasedWith<()>;
 
 impl Eq for ChartTrackingRefBasedWith<()> {}
@@ -339,16 +339,16 @@ impl Eq for ChartTrackingRefBasedWith<()> {}
 /// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ClrWith<X: NodeExtra> {
+pub struct ClrWith<X: UserData> {
     /// The child that is an item of `super::drawing::ColorContent`, which the schema requires.
     pub content: Box<super::drawing::ColorContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint2012MainClr,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint2012MainClr,
 }
 
-/// The `p15:clr` element of the tree a read gives: [`ClrWith`] holding nothing in `extra`.
+/// The `p15:clr` element of the tree a read gives: [`ClrWith`] holding nothing in `user_data`.
 pub type Clr = ClrWith<()>;
 
 impl Eq for ClrWith<()> {}
@@ -357,16 +357,17 @@ impl Eq for ClrWith<()> {}
 /// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `super::presentation::Extension`, in order.
     pub extension: Vec<super::presentation::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint2012MainExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint2012MainExtLst,
 }
 
-/// The `p15:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `p15:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -375,13 +376,11 @@ impl Eq for ExtLstWith<()> {}
 /// schema type is `CT_ExtendedGuide`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GuideWith<X: NodeExtra> {
+pub struct GuideWith<X: UserData> {
     /// The child that is `Clr`, which the schema requires.
     pub clr: Box<ClrWith<X>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint2012MainGuide,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `name`, when the element has it.
@@ -392,11 +391,13 @@ pub struct GuideWith<X: NodeExtra> {
     pub pos: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint2012MainGuide,
     /// The attribute `userDrawn`, when the element has it.
     pub user_drawn: Option<String>,
 }
 
-/// The `p15:guide` element of the tree a read gives: [`GuideWith`] holding nothing in `extra`.
+/// The `p15:guide` element of the tree a read gives: [`GuideWith`] holding nothing in `user_data`.
 pub type Guide = GuideWith<()>;
 
 impl Eq for GuideWith<()> {}
@@ -405,19 +406,19 @@ impl Eq for GuideWith<()> {}
 /// Its schema type is `CT_ExtendedGuideList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NotesGuideLstWith<X: NodeExtra> {
+pub struct NotesGuideLstWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint2012MainNotesGuideLst,
     /// The children that are `Guide`, in order.
     pub guide: Vec<GuideWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint2012MainNotesGuideLst,
 }
 
 /// The `p15:notesGuideLst` element of the tree a read gives: [`NotesGuideLstWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type NotesGuideLst = NotesGuideLstWith<()>;
 
 impl Eq for NotesGuideLstWith<()> {}
@@ -426,19 +427,19 @@ impl Eq for NotesGuideLstWith<()> {}
 /// schema type is `CT_ParentCommentIdentifier`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ParentCmWith<X: NodeExtra> {
+pub struct ParentCmWith<X: UserData> {
     /// The attribute `authorId`, when the element has it.
     pub author_id: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint2012MainParentCm,
     /// The attribute `idx`, when the element has it.
     pub idx: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint2012MainParentCm,
 }
 
 /// The `p15:parentCm` element of the tree a read gives: [`ParentCmWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ParentCm = ParentCmWith<()>;
 
 impl Eq for ParentCmWith<()> {}
@@ -447,19 +448,19 @@ impl Eq for ParentCmWith<()> {}
 /// Its schema type is `CT_PresenceInfo`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PresenceInfoWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint2012MainPresenceInfo,
+pub struct PresenceInfoWith<X: UserData> {
     /// The attribute `providerId`, when the element has it.
     pub provider_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint2012MainPresenceInfo,
     /// The attribute `userId`, when the element has it.
     pub user_id: Option<String>,
 }
 
 /// The `p15:presenceInfo` element of the tree a read gives: [`PresenceInfoWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PresenceInfo = PresenceInfoWith<()>;
 
 impl Eq for PresenceInfoWith<()> {}
@@ -468,9 +469,7 @@ impl Eq for PresenceInfoWith<()> {}
 /// schema type is `CT_PresetTransition`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PrstTransWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint2012MainPrstTrans,
+pub struct PrstTransWith<X: UserData> {
     /// The attribute `invX`, when the element has it.
     pub inv_x: Option<String>,
     /// The attribute `invY`, when the element has it.
@@ -479,10 +478,12 @@ pub struct PrstTransWith<X: NodeExtra> {
     pub prst: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint2012MainPrstTrans,
 }
 
 /// The `p15:prstTrans` element of the tree a read gives: [`PrstTransWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PrstTrans = PrstTransWith<()>;
 
 impl Eq for PrstTransWith<()> {}
@@ -491,19 +492,19 @@ impl Eq for PrstTransWith<()> {}
 /// Its schema type is `CT_ExtendedGuideList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SldGuideLstWith<X: NodeExtra> {
+pub struct SldGuideLstWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint2012MainSldGuideLst,
     /// The children that are `Guide`, in order.
     pub guide: Vec<GuideWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint2012MainSldGuideLst,
 }
 
 /// The `p15:sldGuideLst` element of the tree a read gives: [`SldGuideLstWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SldGuideLst = SldGuideLstWith<()>;
 
 impl Eq for SldGuideLstWith<()> {}
@@ -512,34 +513,34 @@ impl Eq for SldGuideLstWith<()> {}
 /// Its schema type is `CT_CommentThreading`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ThreadingInfoWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint2012MainThreadingInfo,
+pub struct ThreadingInfoWith<X: UserData> {
     /// The child that is `ParentCm`, when there is one.
     pub parent_cm: Option<Box<ParentCmWith<X>>>,
     /// The attribute `timeZoneBias`, when the element has it.
     pub time_zone_bias: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint2012MainThreadingInfo,
 }
 
 /// The `p15:threadingInfo` element of the tree a read gives: [`ThreadingInfoWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type ThreadingInfo = ThreadingInfoWith<()>;
 
 impl Eq for ThreadingInfoWith<()> {}
 
-impl<X: NodeExtra> ChartTrackingRefBasedWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ChartTrackingRefBasedWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ChartTrackingRefBasedWith<Y>
+    pub fn into_user_data<Y>(self) -> ChartTrackingRefBasedWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ChartTrackingRefBasedWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -567,21 +568,21 @@ impl officekit_markup_base::Write for ChartTrackingRefBased {
     }
 }
 
-impl<X: NodeExtra> ClrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ClrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ClrWith<Y>
+    pub fn into_user_data<Y>(self) -> ClrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ClrWith {
-            content: officekit_markup_base::into_extra_required(
+            content: officekit_markup_base::into_user_data_required(
                 *self.content,
-                super::drawing::ColorContentWith::into_extra,
+                super::drawing::ColorContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -605,21 +606,21 @@ impl officekit_markup_base::Write for Clr {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                super::presentation::ExtensionWith::into_extra,
+                super::presentation::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -643,26 +644,26 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> GuideWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> GuideWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> GuideWith<Y>
+    pub fn into_user_data<Y>(mut self) -> GuideWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         GuideWith {
-            clr: officekit_markup_base::into_extra_required(*self.clr, ClrWith::into_extra),
-            ext_lst: officekit_markup_base::into_extra_optional(
+            clr: officekit_markup_base::into_user_data_required(*self.clr, ClrWith::into_user_data),
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             id: self.id,
             name: self.name,
             orient: self.orient,
             pos: self.pos,
             unknown: self.unknown,
+            user_data: Default::default(),
             user_drawn: self.user_drawn,
         }
     }
@@ -694,22 +695,25 @@ impl officekit_markup_base::Write for Guide {
     }
 }
 
-impl<X: NodeExtra> NotesGuideLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> NotesGuideLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> NotesGuideLstWith<Y>
+    pub fn into_user_data<Y>(mut self) -> NotesGuideLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         NotesGuideLstWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            guide: officekit_markup_base::into_extra_list(self.guide, GuideWith::into_extra),
+            guide: officekit_markup_base::into_user_data_list(
+                self.guide,
+                GuideWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -733,19 +737,19 @@ impl officekit_markup_base::Write for NotesGuideLst {
     }
 }
 
-impl<X: NodeExtra> ParentCmWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ParentCmWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ParentCmWith<Y>
+    pub fn into_user_data<Y>(self) -> ParentCmWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ParentCmWith {
             author_id: self.author_id,
-            extra: Default::default(),
             idx: self.idx,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -773,18 +777,18 @@ impl officekit_markup_base::Write for ParentCm {
     }
 }
 
-impl<X: NodeExtra> PresenceInfoWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PresenceInfoWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PresenceInfoWith<Y>
+    pub fn into_user_data<Y>(self) -> PresenceInfoWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PresenceInfoWith {
-            extra: Default::default(),
             provider_id: self.provider_id,
             unknown: self.unknown,
+            user_data: Default::default(),
             user_id: self.user_id,
         }
     }
@@ -813,20 +817,20 @@ impl officekit_markup_base::Write for PresenceInfo {
     }
 }
 
-impl<X: NodeExtra> PrstTransWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PrstTransWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PrstTransWith<Y>
+    pub fn into_user_data<Y>(self) -> PrstTransWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PrstTransWith {
-            extra: Default::default(),
             inv_x: self.inv_x,
             inv_y: self.inv_y,
             prst: self.prst,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -855,22 +859,25 @@ impl officekit_markup_base::Write for PrstTrans {
     }
 }
 
-impl<X: NodeExtra> SldGuideLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SldGuideLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SldGuideLstWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SldGuideLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SldGuideLstWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            guide: officekit_markup_base::into_extra_list(self.guide, GuideWith::into_extra),
+            guide: officekit_markup_base::into_user_data_list(
+                self.guide,
+                GuideWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -894,22 +901,22 @@ impl officekit_markup_base::Write for SldGuideLst {
     }
 }
 
-impl<X: NodeExtra> ThreadingInfoWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ThreadingInfoWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ThreadingInfoWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ThreadingInfoWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ThreadingInfoWith {
-            extra: Default::default(),
-            parent_cm: officekit_markup_base::into_extra_optional(
+            parent_cm: officekit_markup_base::into_user_data_optional(
                 &mut self.parent_cm,
-                ParentCmWith::into_extra,
+                ParentCmWith::into_user_data,
             ),
             time_zone_bias: self.time_zone_bias,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

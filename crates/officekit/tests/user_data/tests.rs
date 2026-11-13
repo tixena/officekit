@@ -6,7 +6,7 @@ use officekit_markup::wordprocessing::{
     PageSize, Paragraph, ParagraphContent, ParagraphWith, Table, TableCell, TableRow, Text,
     TextRun, TextRunContent,
 };
-use officekit_markup::{Extra, NodeExtra, node_extra};
+use officekit_markup::{Extra, UserData, user_data};
 use officekit_xml::element::{Element, NamespaceDeclaration, Node};
 use officekit_xml::name::QName;
 
@@ -25,8 +25,8 @@ struct PageBox {
 #[derive(Clone, Debug, Default, PartialEq)]
 struct Placement;
 
-#[node_extra]
-impl NodeExtra for Placement {
+#[user_data]
+impl UserData for Placement {
     type WordprocessingParagraph = Vec<PageBox>;
 }
 
@@ -92,7 +92,7 @@ fn place_paragraphs(document: &mut DocumentWith<Placement>) {
         }
     });
     for (paragraph, y) in paragraphs.zip(FIRST_LINES) {
-        paragraph.extra.push(PageBox {
+        paragraph.user_data.push(PageBox {
             height: 14.0,
             page: 1,
             width: 468.0,
@@ -105,20 +105,20 @@ fn place_paragraphs(document: &mut DocumentWith<Placement>) {
 #[test]
 fn a_document_goes_to_a_tree_with_slots_and_comes_back_unchanged() {
     let document = document();
-    let laid_out: DocumentWith<Placement> = document.clone().into_extra();
-    let back: Document = laid_out.into_extra();
+    let laid_out: DocumentWith<Placement> = document.clone().into_user_data();
+    let back: Document = laid_out.into_user_data();
     assert_eq!(back, document);
 }
 
 #[test]
 fn the_plain_tree_converted_to_the_plain_tree_is_the_identity() {
     let document = document();
-    assert_eq!(document.clone().into_extra::<()>(), document);
+    assert_eq!(document.clone().into_user_data::<()>(), document);
 }
 
 #[test]
 fn the_unknown_content_survives_the_conversion() {
-    let laid_out: DocumentWith<Placement> = document().into_extra();
+    let laid_out: DocumentWith<Placement> = document().into_user_data();
     let body = laid_out.body.as_deref().unwrap();
     assert_eq!(body.unknown.children.len(), 1);
 }
@@ -143,7 +143,7 @@ fn paragraph_in_cell(document: &DocumentWith<Placement>) -> Option<&ParagraphWit
 
 #[test]
 fn the_walk_fills_the_body_paragraphs_and_leaves_the_cell_paragraph_empty() {
-    let mut laid_out: DocumentWith<Placement> = document().into_extra();
+    let mut laid_out: DocumentWith<Placement> = document().into_user_data();
     place_paragraphs(&mut laid_out);
     let body = laid_out.body.as_deref().unwrap();
     let held: Vec<usize> = body
@@ -151,7 +151,7 @@ fn the_walk_fills_the_body_paragraphs_and_leaves_the_cell_paragraph_empty() {
         .iter()
         .filter_map(|item| {
             if let BlockContentWith::Paragraph(paragraph) = item {
-                Some(paragraph.extra.len())
+                Some(paragraph.user_data.len())
             } else {
                 None
             }
@@ -159,15 +159,15 @@ fn the_walk_fills_the_body_paragraphs_and_leaves_the_cell_paragraph_empty() {
         .collect();
     assert_eq!(held, [1, 1]);
     let in_cell = paragraph_in_cell(&laid_out).unwrap();
-    assert_eq!(in_cell.extra, Vec::new());
+    assert_eq!(in_cell.user_data, Vec::new());
 }
 
 #[test]
 fn a_document_brought_back_after_the_walk_is_written_as_the_original() {
     let document = document();
-    let mut laid_out: DocumentWith<Placement> = document.clone().into_extra();
+    let mut laid_out: DocumentWith<Placement> = document.clone().into_user_data();
     place_paragraphs(&mut laid_out);
-    let back: Document = laid_out.into_extra();
+    let back: Document = laid_out.into_user_data();
     let mut original = Docx::new(WordprocessingKind::Document).unwrap();
     original.set_main_document(&document).unwrap();
     let mut returned = Docx::new(WordprocessingKind::Document).unwrap();

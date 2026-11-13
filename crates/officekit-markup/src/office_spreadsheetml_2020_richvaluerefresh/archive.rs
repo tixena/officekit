@@ -222,30 +222,30 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::RefreshInterval)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RefreshIntervalMirror {
-    pub extra: (),
     pub interval: Option<String>,
     pub resource_id_int: Option<String>,
     pub resource_id_str: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RefreshIntervals)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RefreshIntervalsMirror {
-    pub extra: (),
     pub refresh_interval: Vec<super::RefreshInterval>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<RefreshIntervalMirror> for super::RefreshInterval {
     fn from(item: RefreshIntervalMirror) -> Self {
         Self {
-            extra: item.extra,
             interval: item.interval,
             resource_id_int: item.resource_id_int,
             resource_id_str: item.resource_id_str,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -282,9 +282,9 @@ where
 impl From<RefreshIntervalsMirror> for super::RefreshIntervals {
     fn from(item: RefreshIntervalsMirror) -> Self {
         Self {
-            extra: item.extra,
             refresh_interval: item.refresh_interval,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

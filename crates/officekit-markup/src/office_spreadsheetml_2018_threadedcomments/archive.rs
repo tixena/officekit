@@ -224,29 +224,29 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<spreadsheet::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Mention)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MentionMirror {
-    pub extra: (),
     pub length: Option<String>,
     pub mention_id: Option<String>,
     pub mentionperson_id: Option<String>,
     pub start_index: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Mentions)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MentionsMirror {
-    pub extra: (),
     pub mention: Vec<super::Mention>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -255,10 +255,10 @@ pub struct MentionsMirror {
 pub struct PersonMirror {
     pub display_name: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub id: Option<String>,
     pub provider_id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub user_id: Option<String>,
 }
 
@@ -267,17 +267,17 @@ pub struct PersonMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PersonListMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub person: Vec<super::Person>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Text)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -288,7 +288,6 @@ pub struct ThreadedCommentMirror {
     pub d_t: Option<String>,
     pub done: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub id: Option<String>,
     pub mentions: Option<Box<super::Mentions>>,
     pub parent_id: Option<String>,
@@ -296,6 +295,7 @@ pub struct ThreadedCommentMirror {
     pub r#ref: Option<String>,
     pub text: Option<Box<super::Text>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -303,17 +303,17 @@ pub struct ThreadedCommentMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ThreadedCommentsMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub threaded_comment: Vec<super::ThreadedComment>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -350,12 +350,12 @@ where
 impl From<MentionMirror> for super::Mention {
     fn from(item: MentionMirror) -> Self {
         Self {
-            extra: item.extra,
             length: item.length,
             mention_id: item.mention_id,
             mentionperson_id: item.mentionperson_id,
             start_index: item.start_index,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -392,9 +392,9 @@ where
 impl From<MentionsMirror> for super::Mentions {
     fn from(item: MentionsMirror) -> Self {
         Self {
-            extra: item.extra,
             mention: item.mention,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -433,10 +433,10 @@ impl From<PersonMirror> for super::Person {
         Self {
             display_name: item.display_name,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             id: item.id,
             provider_id: item.provider_id,
             unknown: item.unknown,
+            user_data: item.user_data,
             user_id: item.user_id,
         }
     }
@@ -475,9 +475,9 @@ impl From<PersonListMirror> for super::PersonList {
     fn from(item: PersonListMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             person: item.person,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -514,8 +514,8 @@ where
 impl From<TextMirror> for super::Text {
     fn from(item: TextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -556,7 +556,6 @@ impl From<ThreadedCommentMirror> for super::ThreadedComment {
             d_t: item.d_t,
             done: item.done,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             id: item.id,
             mentions: item.mentions,
             parent_id: item.parent_id,
@@ -564,6 +563,7 @@ impl From<ThreadedCommentMirror> for super::ThreadedComment {
             r#ref: item.r#ref,
             text: item.text,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -601,9 +601,9 @@ impl From<ThreadedCommentsMirror> for super::ThreadedComments {
     fn from(item: ThreadedCommentsMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             threaded_comment: item.threaded_comment,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

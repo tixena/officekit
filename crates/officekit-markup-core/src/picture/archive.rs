@@ -231,7 +231,6 @@ pub struct NonVisualDrawingPropertiesMirror {
     pub descr: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     pub hidden: Option<String>,
     #[rkyv(omit_bounds)]
     pub hyperlink_for_hover: Option<Box<super::super::drawing::HyperlinkForHover>>,
@@ -239,6 +238,7 @@ pub struct NonVisualDrawingPropertiesMirror {
     pub name: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -250,11 +250,11 @@ pub struct NonVisualDrawingPropertiesMirror {
 pub struct NonVisualPictureDrawingPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub picture_locks: Option<Box<super::super::drawing::PictureLocks>>,
     pub prefer_relative_resize: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -264,12 +264,12 @@ pub struct NonVisualPictureDrawingPropertiesMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonVisualPicturePropertiesMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
     #[rkyv(omit_bounds)]
     pub non_visual_picture_drawing_properties: Box<super::NonVisualPictureDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -281,7 +281,6 @@ pub struct NonVisualPicturePropertiesMirror {
 pub struct PictureMirror {
     #[rkyv(omit_bounds)]
     pub ext_lst: Option<Box<super::super::office_drawing_2010_picture::ExtLst>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub fill: Box<super::PictureFill>,
     #[rkyv(omit_bounds)]
@@ -290,6 +289,7 @@ pub struct PictureMirror {
     pub shape_properties: Box<super::ShapeProperties>,
     pub style: Option<Box<super::super::office_drawing_2010_picture::Style>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -303,10 +303,10 @@ pub struct PictureFillMirror {
     pub blip: Option<Box<super::super::drawing::Blip>>,
     pub content: Option<Box<super::super::drawing::FillModeContent>>,
     pub dpi: Option<String>,
-    pub extra: (),
     pub rot_with_shape: Option<String>,
     pub source_rectangle: Option<Box<super::super::drawing::SourceRectangle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -323,7 +323,6 @@ pub struct ShapePropertiesMirror {
     pub effect_properties_content: Option<Box<super::super::drawing::EffectPropertiesContent>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::super::drawing::FillPropertiesContent>>,
     pub geometry_content: Option<Box<super::super::drawing::GeometryContent>>,
@@ -332,6 +331,7 @@ pub struct ShapePropertiesMirror {
     #[rkyv(omit_bounds)]
     pub scene3d: Option<Box<super::super::drawing::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xfrm_transform2d: Option<Box<super::super::drawing::XfrmTransform2D>>,
 }
 
@@ -341,13 +341,13 @@ impl From<NonVisualDrawingPropertiesMirror> for super::NonVisualDrawingPropertie
             click_hyperlink: item.click_hyperlink,
             descr: item.descr,
             extension_list: item.extension_list,
-            extra: item.extra,
             hidden: item.hidden,
             hyperlink_for_hover: item.hyperlink_for_hover,
             id: item.id,
             name: item.name,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -389,10 +389,10 @@ impl From<NonVisualPictureDrawingPropertiesMirror> for super::NonVisualPictureDr
     fn from(item: NonVisualPictureDrawingPropertiesMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             picture_locks: item.picture_locks,
             prefer_relative_resize: item.prefer_relative_resize,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -433,10 +433,10 @@ where
 impl From<NonVisualPicturePropertiesMirror> for super::NonVisualPictureProperties {
     fn from(item: NonVisualPicturePropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             non_visual_drawing_properties: item.non_visual_drawing_properties,
             non_visual_picture_drawing_properties: item.non_visual_picture_drawing_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -478,12 +478,12 @@ impl From<PictureMirror> for super::Picture {
     fn from(item: PictureMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill: item.fill,
             non_visual_picture_properties: item.non_visual_picture_properties,
             shape_properties: item.shape_properties,
             style: item.style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -523,10 +523,10 @@ impl From<PictureFillMirror> for super::PictureFill {
             blip: item.blip,
             content: item.content,
             dpi: item.dpi,
-            extra: item.extra,
             rot_with_shape: item.rot_with_shape,
             source_rectangle: item.source_rectangle,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -567,12 +567,12 @@ impl From<ShapePropertiesMirror> for super::ShapeProperties {
             bw_mode: item.bw_mode,
             effect_properties_content: item.effect_properties_content,
             extension_list: item.extension_list,
-            extra: item.extra,
             fill_properties_content: item.fill_properties_content,
             geometry_content: item.geometry_content,
             outline: item.outline,
             scene3d: item.scene3d,
             unknown: item.unknown,
+            user_data: item.user_data,
             xfrm_transform2d: item.xfrm_transform2d,
         }
     }

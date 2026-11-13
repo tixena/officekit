@@ -223,21 +223,21 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct TrackMirror {
     pub embed: Option<String>,
-    pub extra: (),
     pub id: Option<String>,
     pub label: Option<String>,
     pub lang: Option<String>,
     pub link: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TrackLst)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TrackLstMirror {
-    pub extra: (),
     pub track: Vec<super::Track>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -245,21 +245,21 @@ pub struct TrackLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TracksInfoMirror {
     pub display_loc: Option<super::DisplayLocation>,
-    pub extra: (),
     pub track_lst: Option<Box<super::TrackLst>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<TrackMirror> for super::Track {
     fn from(item: TrackMirror) -> Self {
         Self {
             embed: item.embed,
-            extra: item.extra,
             id: item.id,
             label: item.label,
             lang: item.lang,
             link: item.link,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -296,9 +296,9 @@ where
 impl From<TrackLstMirror> for super::TrackLst {
     fn from(item: TrackLstMirror) -> Self {
         Self {
-            extra: item.extra,
             track: item.track,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -336,9 +336,9 @@ impl From<TracksInfoMirror> for super::TracksInfo {
     fn from(item: TracksInfoMirror) -> Self {
         Self {
             display_loc: item.display_loc,
-            extra: item.extra,
             track_lst: item.track_lst,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

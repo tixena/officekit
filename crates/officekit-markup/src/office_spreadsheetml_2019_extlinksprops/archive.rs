@@ -223,16 +223,16 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExternalLinksPrMirror {
     pub auto_refresh: Option<String>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<ExternalLinksPrMirror> for super::ExternalLinksPr {
     fn from(item: ExternalLinksPrMirror) -> Self {
         Self {
             auto_refresh: item.auto_refresh,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

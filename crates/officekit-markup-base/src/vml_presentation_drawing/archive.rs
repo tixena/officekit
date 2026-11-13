@@ -222,24 +222,24 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::InkAnnotationFlag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InkAnnotationFlagMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::VMLDiagramText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VMLDiagramTextMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 impl From<InkAnnotationFlagMirror> for super::InkAnnotationFlag {
     fn from(item: InkAnnotationFlagMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -276,9 +276,9 @@ where
 impl From<VMLDiagramTextMirror> for super::VMLDiagramText {
     fn from(item: VMLDiagramTextMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

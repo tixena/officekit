@@ -249,18 +249,18 @@ pub struct AmbientLightMirror {
     pub clr: Box<super::Clr>,
     pub enabled: Option<String>,
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
-    pub extra: (),
     pub illuminance: Box<super::Illuminance>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::AttrSrcUrl)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AttrSrcUrlMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -271,9 +271,9 @@ pub struct BlipMirror {
     pub cstate: Option<drawing::BlipCompressionType>,
     pub embed: Option<String>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub extra: (),
     pub link: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -282,11 +282,11 @@ pub struct BlipMirror {
 pub struct CameraMirror {
     pub content: Box<super::Model3DCameraContent>,
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
-    pub extra: (),
     pub look_at: Box<super::LookAt>,
     pub pos: Box<super::Pos>,
     pub unknown: officekit_markup_base::Unknown,
     pub up: Box<super::Up>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -294,8 +294,8 @@ pub struct CameraMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ClrMirror {
     pub content: Box<drawing::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -306,11 +306,11 @@ pub struct DirLightMirror {
     pub clr: Box<super::Clr>,
     pub enabled: Option<String>,
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
-    pub extra: (),
     pub illuminance: Box<super::Illuminance>,
     pub look_at: Box<super::LookAt>,
     pub pos: Box<super::Pos>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -318,9 +318,9 @@ pub struct DirLightMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtMirror {
     pub content: Box<super::Model3DExtensionContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
     pub uri: Option<String>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -328,8 +328,8 @@ pub struct ExtMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstModel3DExtensionListMirror {
     pub ext: Vec<super::Ext>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -337,32 +337,32 @@ pub struct ExtLstModel3DExtensionListMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstOfficeArtExtensionListMirror {
     pub extension: Vec<drawing::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Illuminance)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IlluminanceMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Intensity)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IntensityMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LookAt)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LookAtMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub x: Option<drawing::Coordinate>,
     pub y: Option<drawing::Coordinate>,
     pub z: Option<drawing::Coordinate>,
@@ -372,8 +372,8 @@ pub struct LookAtMirror {
 #[rkyv(remote = super::MeterPerModelUnit)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MeterPerModelUnitMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -385,13 +385,13 @@ pub struct Model3dMirror {
     pub camera: Box<super::Camera>,
     pub embed: Option<String>,
     pub ext_lst_model3d_extension_list: Option<Box<super::ExtLstModel3DExtensionList>>,
-    pub extra: (),
     pub light_content: Vec<super::Model3DLightContent>,
     pub link: Option<String>,
     pub raster: Option<Box<super::Raster>>,
     pub sp_pr: Box<super::SpPr>,
     pub trans: Box<super::Trans>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub viewport_content: Box<super::Model3DViewportContent>,
 }
 
@@ -400,8 +400,8 @@ pub struct Model3dMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ObjViewportMirror {
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub viewport_sz: Option<String>,
 }
 
@@ -410,9 +410,9 @@ pub struct ObjViewportMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct OrthographicMirror {
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
-    pub extra: (),
     pub sz_positive_ratio: Box<super::SzPositiveRatio>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -420,17 +420,17 @@ pub struct OrthographicMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PerspectiveMirror {
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
-    pub extra: (),
     pub fov: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Pos)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PosMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub x: Option<drawing::Coordinate>,
     pub y: Option<drawing::Coordinate>,
     pub z: Option<drawing::Coordinate>,
@@ -443,8 +443,8 @@ pub struct PostTransMirror {
     pub dx: Option<drawing::Coordinate>,
     pub dy: Option<drawing::Coordinate>,
     pub dz: Option<drawing::Coordinate>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -454,8 +454,8 @@ pub struct PreTransMirror {
     pub dx: Option<drawing::Coordinate>,
     pub dy: Option<drawing::Coordinate>,
     pub dz: Option<drawing::Coordinate>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -465,11 +465,11 @@ pub struct PtLightMirror {
     pub clr: Box<super::Clr>,
     pub enabled: Option<String>,
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
-    pub extra: (),
     pub intensity: Box<super::Intensity>,
     pub pos: Box<super::Pos>,
     pub rad: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -477,10 +477,10 @@ pub struct PtLightMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RasterMirror {
     pub blip: Option<Box<super::Blip>>,
-    pub extra: (),
     pub r_name: Option<String>,
     pub r_ver: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -490,19 +490,19 @@ pub struct RotMirror {
     pub ax: Option<String>,
     pub ay: Option<String>,
     pub az: Option<String>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Scale)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScaleMirror {
-    pub extra: (),
     pub sx: Box<super::Sx>,
     pub sy: Box<super::Sy>,
     pub sz_ratio: Box<super::SzRatio>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -513,12 +513,12 @@ pub struct SpPrMirror {
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub extra: (),
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
     pub outline: Option<Box<drawing::Outline>>,
     pub scene3d: Option<Box<drawing::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }
 
@@ -529,13 +529,13 @@ pub struct SpotLightMirror {
     pub clr: Box<super::Clr>,
     pub enabled: Option<String>,
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
-    pub extra: (),
     pub intensity: Box<super::Intensity>,
     pub look_at: Box<super::LookAt>,
     pub pos: Box<super::Pos>,
     pub rad: Option<String>,
     pub spot_ang: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -543,9 +543,9 @@ pub struct SpotLightMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SxMirror {
     pub d: Option<String>,
-    pub extra: (),
     pub n: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -553,17 +553,17 @@ pub struct SxMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SyMirror {
     pub d: Option<String>,
-    pub extra: (),
     pub n: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SzPositiveRatio)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SzPositiveRatioMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -571,9 +571,9 @@ pub struct SzPositiveRatioMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SzRatioMirror {
     pub d: Option<String>,
-    pub extra: (),
     pub n: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -581,21 +581,21 @@ pub struct SzRatioMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TransMirror {
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
-    pub extra: (),
     pub meter_per_model_unit: Option<Box<super::MeterPerModelUnit>>,
     pub post: Option<Box<super::PostTrans>>,
     pub pre: Option<Box<super::PreTrans>>,
     pub rot: Option<Box<super::Rot>>,
     pub scale: Option<Box<super::Scale>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::UnkLight)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnkLightMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -605,8 +605,8 @@ pub struct UpMirror {
     pub dx: Option<drawing::Coordinate>,
     pub dy: Option<drawing::Coordinate>,
     pub dz: Option<drawing::Coordinate>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -614,8 +614,8 @@ pub struct UpMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct WinViewportMirror {
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -840,9 +840,9 @@ impl From<AmbientLightMirror> for super::AmbientLight {
             clr: item.clr,
             enabled: item.enabled,
             ext_lst_office_art_extension_list: item.ext_lst_office_art_extension_list,
-            extra: item.extra,
             illuminance: item.illuminance,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -879,9 +879,9 @@ where
 impl From<AttrSrcUrlMirror> for super::AttrSrcUrl {
     fn from(item: AttrSrcUrlMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -922,9 +922,9 @@ impl From<BlipMirror> for super::Blip {
             cstate: item.cstate,
             embed: item.embed,
             extension_list: item.extension_list,
-            extra: item.extra,
             link: item.link,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -963,11 +963,11 @@ impl From<CameraMirror> for super::Camera {
         Self {
             content: item.content,
             ext_lst_office_art_extension_list: item.ext_lst_office_art_extension_list,
-            extra: item.extra,
             look_at: item.look_at,
             pos: item.pos,
             unknown: item.unknown,
             up: item.up,
+            user_data: item.user_data,
         }
     }
 }
@@ -1005,8 +1005,8 @@ impl From<ClrMirror> for super::Clr {
     fn from(item: ClrMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1047,11 +1047,11 @@ impl From<DirLightMirror> for super::DirLight {
             clr: item.clr,
             enabled: item.enabled,
             ext_lst_office_art_extension_list: item.ext_lst_office_art_extension_list,
-            extra: item.extra,
             illuminance: item.illuminance,
             look_at: item.look_at,
             pos: item.pos,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1089,9 +1089,9 @@ impl From<ExtMirror> for super::Ext {
     fn from(item: ExtMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
             uri: item.uri,
+            user_data: item.user_data,
         }
     }
 }
@@ -1129,8 +1129,8 @@ impl From<ExtLstModel3DExtensionListMirror> for super::ExtLstModel3DExtensionLis
     fn from(item: ExtLstModel3DExtensionListMirror) -> Self {
         Self {
             ext: item.ext,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1172,8 +1172,8 @@ impl From<ExtLstOfficeArtExtensionListMirror> for super::ExtLstOfficeArtExtensio
     fn from(item: ExtLstOfficeArtExtensionListMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1214,8 +1214,8 @@ where
 impl From<IlluminanceMirror> for super::Illuminance {
     fn from(item: IlluminanceMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1252,8 +1252,8 @@ where
 impl From<IntensityMirror> for super::Intensity {
     fn from(item: IntensityMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1290,8 +1290,8 @@ where
 impl From<LookAtMirror> for super::LookAt {
     fn from(item: LookAtMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             x: item.x,
             y: item.y,
             z: item.z,
@@ -1331,8 +1331,8 @@ where
 impl From<MeterPerModelUnitMirror> for super::MeterPerModelUnit {
     fn from(item: MeterPerModelUnitMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1374,13 +1374,13 @@ impl From<Model3dMirror> for super::Model3d {
             camera: item.camera,
             embed: item.embed,
             ext_lst_model3d_extension_list: item.ext_lst_model3d_extension_list,
-            extra: item.extra,
             light_content: item.light_content,
             link: item.link,
             raster: item.raster,
             sp_pr: item.sp_pr,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
             viewport_content: item.viewport_content,
         }
     }
@@ -1419,8 +1419,8 @@ impl From<ObjViewportMirror> for super::ObjViewport {
     fn from(item: ObjViewportMirror) -> Self {
         Self {
             ext_lst_office_art_extension_list: item.ext_lst_office_art_extension_list,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             viewport_sz: item.viewport_sz,
         }
     }
@@ -1459,9 +1459,9 @@ impl From<OrthographicMirror> for super::Orthographic {
     fn from(item: OrthographicMirror) -> Self {
         Self {
             ext_lst_office_art_extension_list: item.ext_lst_office_art_extension_list,
-            extra: item.extra,
             sz_positive_ratio: item.sz_positive_ratio,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1499,9 +1499,9 @@ impl From<PerspectiveMirror> for super::Perspective {
     fn from(item: PerspectiveMirror) -> Self {
         Self {
             ext_lst_office_art_extension_list: item.ext_lst_office_art_extension_list,
-            extra: item.extra,
             fov: item.fov,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1538,8 +1538,8 @@ where
 impl From<PosMirror> for super::Pos {
     fn from(item: PosMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             x: item.x,
             y: item.y,
             z: item.z,
@@ -1582,8 +1582,8 @@ impl From<PostTransMirror> for super::PostTrans {
             dx: item.dx,
             dy: item.dy,
             dz: item.dz,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1623,8 +1623,8 @@ impl From<PreTransMirror> for super::PreTrans {
             dx: item.dx,
             dy: item.dy,
             dz: item.dz,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1664,11 +1664,11 @@ impl From<PtLightMirror> for super::PtLight {
             clr: item.clr,
             enabled: item.enabled,
             ext_lst_office_art_extension_list: item.ext_lst_office_art_extension_list,
-            extra: item.extra,
             intensity: item.intensity,
             pos: item.pos,
             rad: item.rad,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1706,10 +1706,10 @@ impl From<RasterMirror> for super::Raster {
     fn from(item: RasterMirror) -> Self {
         Self {
             blip: item.blip,
-            extra: item.extra,
             r_name: item.r_name,
             r_ver: item.r_ver,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1749,8 +1749,8 @@ impl From<RotMirror> for super::Rot {
             ax: item.ax,
             ay: item.ay,
             az: item.az,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1787,11 +1787,11 @@ where
 impl From<ScaleMirror> for super::Scale {
     fn from(item: ScaleMirror) -> Self {
         Self {
-            extra: item.extra,
             sx: item.sx,
             sy: item.sy,
             sz_ratio: item.sz_ratio,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1832,12 +1832,12 @@ impl From<SpPrMirror> for super::SpPr {
             bw_mode: item.bw_mode,
             effect_properties_content: item.effect_properties_content,
             extension_list: item.extension_list,
-            extra: item.extra,
             fill_properties_content: item.fill_properties_content,
             geometry_content: item.geometry_content,
             outline: item.outline,
             scene3d: item.scene3d,
             unknown: item.unknown,
+            user_data: item.user_data,
             xfrm_transform2d: item.xfrm_transform2d,
         }
     }
@@ -1878,13 +1878,13 @@ impl From<SpotLightMirror> for super::SpotLight {
             clr: item.clr,
             enabled: item.enabled,
             ext_lst_office_art_extension_list: item.ext_lst_office_art_extension_list,
-            extra: item.extra,
             intensity: item.intensity,
             look_at: item.look_at,
             pos: item.pos,
             rad: item.rad,
             spot_ang: item.spot_ang,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1922,9 +1922,9 @@ impl From<SxMirror> for super::Sx {
     fn from(item: SxMirror) -> Self {
         Self {
             d: item.d,
-            extra: item.extra,
             n: item.n,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1962,9 +1962,9 @@ impl From<SyMirror> for super::Sy {
     fn from(item: SyMirror) -> Self {
         Self {
             d: item.d,
-            extra: item.extra,
             n: item.n,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2001,8 +2001,8 @@ where
 impl From<SzPositiveRatioMirror> for super::SzPositiveRatio {
     fn from(item: SzPositiveRatioMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2040,9 +2040,9 @@ impl From<SzRatioMirror> for super::SzRatio {
     fn from(item: SzRatioMirror) -> Self {
         Self {
             d: item.d,
-            extra: item.extra,
             n: item.n,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2080,13 +2080,13 @@ impl From<TransMirror> for super::Trans {
     fn from(item: TransMirror) -> Self {
         Self {
             ext_lst_office_art_extension_list: item.ext_lst_office_art_extension_list,
-            extra: item.extra,
             meter_per_model_unit: item.meter_per_model_unit,
             post: item.post,
             pre: item.pre,
             rot: item.rot,
             scale: item.scale,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2123,8 +2123,8 @@ where
 impl From<UnkLightMirror> for super::UnkLight {
     fn from(item: UnkLightMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2164,8 +2164,8 @@ impl From<UpMirror> for super::Up {
             dx: item.dx,
             dy: item.dy,
             dz: item.dz,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2203,8 +2203,8 @@ impl From<WinViewportMirror> for super::WinViewport {
     fn from(item: WinViewportMirror) -> Self {
         Self {
             ext_lst_office_art_extension_list: item.ext_lst_office_art_extension_list,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

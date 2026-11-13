@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
@@ -302,19 +302,19 @@ pub static PIVOT_FIELD_SUBTOTAL_LINE_ITEMS_SHAPE: officekit_markup_base::Shape =
 /// 3.5.1. Its schema type is `CT_AggregationInfo`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AggregationInfoWith<X: NodeExtra> {
+pub struct AggregationInfoWith<X: UserData> {
     /// The attribute `aggregationType`, when the element has it.
     pub aggregation_type: Option<AggregationType>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023Pivot2023CalculationAggregationInfo,
     /// The attribute `sourceField`, when the element has it.
     pub source_field: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023Pivot2023CalculationAggregationInfo,
 }
 
 /// The `xlpcalc:aggregationInfo` element of the tree a read gives: [`AggregationInfoWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type AggregationInfo = AggregationInfoWith<()>;
 
 impl Eq for AggregationInfoWith<()> {}
@@ -538,17 +538,17 @@ pub trait Context: crate::Context {
 /// version 3.5.1. Its schema type is `CT_FeatureSupport`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FeatureSupportInfoWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023Pivot2023CalculationFeatureSupportInfo,
+pub struct FeatureSupportInfoWith<X: UserData> {
     /// The attribute `featureName`, when the element has it.
     pub feature_name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023Pivot2023CalculationFeatureSupportInfo,
 }
 
 /// The `xlpcalc:featureSupportInfo` element of the tree a read gives: [`FeatureSupportInfoWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type FeatureSupportInfo = FeatureSupportInfoWith<()>;
 
 impl Eq for FeatureSupportInfoWith<()> {}
@@ -557,17 +557,17 @@ impl Eq for FeatureSupportInfoWith<()> {}
 /// SDK, version 3.5.1. Its schema type is `CT_PivotAreaReferenceSubtotals`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotAreaReferenceSubtotalsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023Pivot2023CalculationPivotAreaReferenceSubtotals,
+pub struct PivotAreaReferenceSubtotalsWith<X: UserData> {
     /// The children that are `SubtotalPivotSubtotalType`, in order.
     pub subtotal_pivot_subtotal_type: Vec<SubtotalPivotSubtotalTypeWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023Pivot2023CalculationPivotAreaReferenceSubtotals,
 }
 
 /// The `xlpcalc:pivotAreaReferenceSubtotals` element of the tree a read gives:
-/// [`PivotAreaReferenceSubtotalsWith`] holding nothing in `extra`.
+/// [`PivotAreaReferenceSubtotalsWith`] holding nothing in `user_data`.
 pub type PivotAreaReferenceSubtotals = PivotAreaReferenceSubtotalsWith<()>;
 
 impl Eq for PivotAreaReferenceSubtotalsWith<()> {}
@@ -576,17 +576,17 @@ impl Eq for PivotAreaReferenceSubtotalsWith<()> {}
 /// SDK, version 3.5.1. Its schema type is `CT_PivotTableSubtotalLineItems`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotFieldSubtotalLineItemsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023Pivot2023CalculationPivotFieldSubtotalLineItems,
+pub struct PivotFieldSubtotalLineItemsWith<X: UserData> {
     /// The children that are `SubtotalLineItem`, in order.
     pub subtotal_line_item: Vec<SubtotalLineItemWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023Pivot2023CalculationPivotFieldSubtotalLineItems,
 }
 
 /// The `xlpcalc:pivotFieldSubtotalLineItems` element of the tree a read gives:
-/// [`PivotFieldSubtotalLineItemsWith`] holding nothing in `extra`.
+/// [`PivotFieldSubtotalLineItemsWith`] holding nothing in `user_data`.
 pub type PivotFieldSubtotalLineItems = PivotFieldSubtotalLineItemsWith<()>;
 
 impl Eq for PivotFieldSubtotalLineItemsWith<()> {}
@@ -595,17 +595,17 @@ impl Eq for PivotFieldSubtotalLineItemsWith<()> {}
 /// version 3.5.1. Its schema type is `CT_PivotFieldSubtotals`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotFieldSubtotalsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023Pivot2023CalculationPivotFieldSubtotals,
+pub struct PivotFieldSubtotalsWith<X: UserData> {
     /// The children that are `SubtotalPivotItemSubtotal`, in order.
     pub subtotal_pivot_item_subtotal: Vec<SubtotalPivotItemSubtotalWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023Pivot2023CalculationPivotFieldSubtotals,
 }
 
 /// The `xlpcalc:pivotFieldSubtotals` element of the tree a read gives: [`PivotFieldSubtotalsWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type PivotFieldSubtotals = PivotFieldSubtotalsWith<()>;
 
 impl Eq for PivotFieldSubtotalsWith<()> {}
@@ -614,15 +614,15 @@ impl Eq for PivotFieldSubtotalsWith<()> {}
 /// 3.5.1. Its schema type is `CT_PivotItemSubtotal`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SubtotalLineItemWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023Pivot2023CalculationSubtotalLineItem,
+pub struct SubtotalLineItemWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023Pivot2023CalculationSubtotalLineItem,
 }
 
 /// The `xlpcalc:subtotalLineItem` element of the tree a read gives: [`SubtotalLineItemWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type SubtotalLineItem = SubtotalLineItemWith<()>;
 
 impl Eq for SubtotalLineItemWith<()> {}
@@ -631,15 +631,15 @@ impl Eq for SubtotalLineItemWith<()> {}
 /// Its schema type is `CT_PivotItemSubtotal`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SubtotalPivotItemSubtotalWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023Pivot2023CalculationSubtotalPivotItemSubtotal,
+pub struct SubtotalPivotItemSubtotalWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023Pivot2023CalculationSubtotalPivotItemSubtotal,
 }
 
 /// The `xlpcalc:subtotal` element of the tree a read gives: [`SubtotalPivotItemSubtotalWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type SubtotalPivotItemSubtotal = SubtotalPivotItemSubtotalWith<()>;
 
 impl Eq for SubtotalPivotItemSubtotalWith<()> {}
@@ -648,17 +648,17 @@ impl Eq for SubtotalPivotItemSubtotalWith<()> {}
 /// Its schema type is `CT_PivotSubtotalType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SubtotalPivotSubtotalTypeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023Pivot2023CalculationSubtotalPivotSubtotalType,
+pub struct SubtotalPivotSubtotalTypeWith<X: UserData> {
     /// The attribute `subtotalType`, when the element has it.
     pub subtotal_type: Option<AggregationType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023Pivot2023CalculationSubtotalPivotSubtotalType,
 }
 
 /// The `xlpcalc:subtotal` element of the tree a read gives: [`SubtotalPivotSubtotalTypeWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type SubtotalPivotSubtotalType = SubtotalPivotSubtotalTypeWith<()>;
 
 impl Eq for SubtotalPivotSubtotalTypeWith<()> {}
@@ -736,19 +736,19 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> AggregationInfoWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AggregationInfoWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AggregationInfoWith<Y>
+    pub fn into_user_data<Y>(self) -> AggregationInfoWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AggregationInfoWith {
             aggregation_type: self.aggregation_type,
-            extra: Default::default(),
             source_field: self.source_field,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -848,18 +848,18 @@ impl AggregationType {
     }
 }
 
-impl<X: NodeExtra> FeatureSupportInfoWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FeatureSupportInfoWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FeatureSupportInfoWith<Y>
+    pub fn into_user_data<Y>(self) -> FeatureSupportInfoWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FeatureSupportInfoWith {
-            extra: Default::default(),
             feature_name: self.feature_name,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -886,21 +886,21 @@ impl officekit_markup_base::Write for FeatureSupportInfo {
     }
 }
 
-impl<X: NodeExtra> PivotAreaReferenceSubtotalsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotAreaReferenceSubtotalsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PivotAreaReferenceSubtotalsWith<Y>
+    pub fn into_user_data<Y>(self) -> PivotAreaReferenceSubtotalsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotAreaReferenceSubtotalsWith {
-            extra: Default::default(),
-            subtotal_pivot_subtotal_type: officekit_markup_base::into_extra_list(
+            subtotal_pivot_subtotal_type: officekit_markup_base::into_user_data_list(
                 self.subtotal_pivot_subtotal_type,
-                SubtotalPivotSubtotalTypeWith::into_extra,
+                SubtotalPivotSubtotalTypeWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -924,21 +924,21 @@ impl officekit_markup_base::Write for PivotAreaReferenceSubtotals {
     }
 }
 
-impl<X: NodeExtra> PivotFieldSubtotalLineItemsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotFieldSubtotalLineItemsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PivotFieldSubtotalLineItemsWith<Y>
+    pub fn into_user_data<Y>(self) -> PivotFieldSubtotalLineItemsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotFieldSubtotalLineItemsWith {
-            extra: Default::default(),
-            subtotal_line_item: officekit_markup_base::into_extra_list(
+            subtotal_line_item: officekit_markup_base::into_user_data_list(
                 self.subtotal_line_item,
-                SubtotalLineItemWith::into_extra,
+                SubtotalLineItemWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -962,21 +962,21 @@ impl officekit_markup_base::Write for PivotFieldSubtotalLineItems {
     }
 }
 
-impl<X: NodeExtra> PivotFieldSubtotalsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotFieldSubtotalsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PivotFieldSubtotalsWith<Y>
+    pub fn into_user_data<Y>(self) -> PivotFieldSubtotalsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotFieldSubtotalsWith {
-            extra: Default::default(),
-            subtotal_pivot_item_subtotal: officekit_markup_base::into_extra_list(
+            subtotal_pivot_item_subtotal: officekit_markup_base::into_user_data_list(
                 self.subtotal_pivot_item_subtotal,
-                SubtotalPivotItemSubtotalWith::into_extra,
+                SubtotalPivotItemSubtotalWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1000,17 +1000,17 @@ impl officekit_markup_base::Write for PivotFieldSubtotals {
     }
 }
 
-impl<X: NodeExtra> SubtotalLineItemWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SubtotalLineItemWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SubtotalLineItemWith<Y>
+    pub fn into_user_data<Y>(self) -> SubtotalLineItemWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SubtotalLineItemWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1034,17 +1034,17 @@ impl officekit_markup_base::Write for SubtotalLineItem {
     }
 }
 
-impl<X: NodeExtra> SubtotalPivotItemSubtotalWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SubtotalPivotItemSubtotalWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SubtotalPivotItemSubtotalWith<Y>
+    pub fn into_user_data<Y>(self) -> SubtotalPivotItemSubtotalWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SubtotalPivotItemSubtotalWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1068,18 +1068,18 @@ impl officekit_markup_base::Write for SubtotalPivotItemSubtotal {
     }
 }
 
-impl<X: NodeExtra> SubtotalPivotSubtotalTypeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SubtotalPivotSubtotalTypeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SubtotalPivotSubtotalTypeWith<Y>
+    pub fn into_user_data<Y>(self) -> SubtotalPivotSubtotalTypeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SubtotalPivotSubtotalTypeWith {
-            extra: Default::default(),
             subtotal_type: self.subtotal_type,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

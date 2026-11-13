@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -358,18 +358,18 @@ pub trait Context: crate::Context {
 /// schema type is `CT_ClassificationExtension`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtWith<X: NodeExtra> {
+pub struct ExtWith<X: UserData> {
     /// The child that is an item of `drawing::AnyElementContent`, which the schema requires.
     pub content: Box<drawing::AnyElementContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office2020MipLabelMetadataExt,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `uri`, when the element has it.
     pub uri: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office2020MipLabelMetadataExt,
 }
 
-/// The `clbl:ext` element of the tree a read gives: [`ExtWith`] holding nothing in `extra`.
+/// The `clbl:ext` element of the tree a read gives: [`ExtWith`] holding nothing in `user_data`.
 pub type Ext = ExtWith<()>;
 
 impl Eq for ExtWith<()> {}
@@ -378,16 +378,17 @@ impl Eq for ExtWith<()> {}
 /// schema type is `CT_ClassificationExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `Ext`, in order.
     pub ext: Vec<ExtWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office2020MipLabelMetadataExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office2020MipLabelMetadataExtLst,
 }
 
-/// The `clbl:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `clbl:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -396,15 +397,13 @@ impl Eq for ExtLstWith<()> {}
 /// schema type is `CT_ClassificationLabel`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LabelWith<X: NodeExtra> {
+pub struct LabelWith<X: UserData> {
     /// The attribute `actionId`, when the element has it.
     pub action_id: Option<String>,
     /// The attribute `contentBits`, when the element has it.
     pub content_bits: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office2020MipLabelMetadataLabel,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `method`, when the element has it.
@@ -419,9 +418,11 @@ pub struct LabelWith<X: NodeExtra> {
     pub site_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office2020MipLabelMetadataLabel,
 }
 
-/// The `clbl:label` element of the tree a read gives: [`LabelWith`] holding nothing in `extra`.
+/// The `clbl:label` element of the tree a read gives: [`LabelWith`] holding nothing in `user_data`.
 pub type Label = LabelWith<()>;
 
 impl Eq for LabelWith<()> {}
@@ -430,19 +431,19 @@ impl Eq for LabelWith<()> {}
 /// Its schema type is `CT_ClassificationLabelList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LabelListWith<X: NodeExtra> {
+pub struct LabelListWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office2020MipLabelMetadataLabelList,
     /// The children that are `Label`, in order.
     pub label: Vec<LabelWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office2020MipLabelMetadataLabelList,
 }
 
 /// The `clbl:labelList` element of the tree a read gives: [`LabelListWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type LabelList = LabelListWith<()>;
 
 impl Eq for LabelListWith<()> {}
@@ -475,22 +476,22 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> ExtWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtWith {
-            content: officekit_markup_base::into_extra_required(
+            content: officekit_markup_base::into_user_data_required(
                 *self.content,
-                drawing::AnyElementContentWith::into_extra,
+                drawing::AnyElementContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
             uri: self.uri,
+            user_data: Default::default(),
         }
     }
 
@@ -517,18 +518,18 @@ impl officekit_markup_base::Write for Ext {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            ext: officekit_markup_base::into_extra_list(self.ext, ExtWith::into_extra),
-            extra: Default::default(),
+            ext: officekit_markup_base::into_user_data_list(self.ext, ExtWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -552,19 +553,18 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> LabelWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LabelWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LabelWith<Y>
+    pub fn into_user_data<Y>(self) -> LabelWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LabelWith {
             action_id: self.action_id,
             content_bits: self.content_bits,
             enabled: self.enabled,
-            extra: Default::default(),
             id: self.id,
             method: self.method,
             name: self.name,
@@ -572,6 +572,7 @@ impl<X: NodeExtra> LabelWith<X> {
             set_date: self.set_date,
             site_id: self.site_id,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -606,22 +607,25 @@ impl officekit_markup_base::Write for Label {
     }
 }
 
-impl<X: NodeExtra> LabelListWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LabelListWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> LabelListWith<Y>
+    pub fn into_user_data<Y>(mut self) -> LabelListWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LabelListWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            label: officekit_markup_base::into_extra_list(self.label, LabelWith::into_extra),
+            label: officekit_markup_base::into_user_data_list(
+                self.label,
+                LabelWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

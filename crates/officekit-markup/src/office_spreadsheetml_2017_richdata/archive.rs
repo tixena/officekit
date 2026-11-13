@@ -224,17 +224,17 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<spreadsheet::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Fb)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FbMirror {
-    pub extra: (),
     pub t: Option<super::RichValueFallbackType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -242,20 +242,20 @@ pub struct FbMirror {
 #[rkyv(remote = super::K)]
 #[rkyv(attr(non_exhaustive))]
 pub struct KMirror {
-    pub extra: (),
     pub n: Option<String>,
     pub t: Option<super::RichValueValueType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Rv)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RvMirror {
-    pub extra: (),
     pub fb: Option<Box<super::Fb>>,
     pub s: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub v: Vec<super::V>,
 }
 
@@ -265,9 +265,9 @@ pub struct RvMirror {
 pub struct RvDataMirror {
     pub count: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub rv: Vec<super::Rv>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -276,36 +276,36 @@ pub struct RvDataMirror {
 pub struct RvStructuresMirror {
     pub count: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub s: Vec<super::S>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Rvb)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RvbMirror {
-    pub extra: (),
     pub i: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::S)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SMirror {
-    pub extra: (),
     pub k: Vec<super::K>,
     pub t: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::V)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -313,8 +313,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -351,9 +351,9 @@ where
 impl From<FbMirror> for super::Fb {
     fn from(item: FbMirror) -> Self {
         Self {
-            extra: item.extra,
             t: item.t,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -391,10 +391,10 @@ where
 impl From<KMirror> for super::K {
     fn from(item: KMirror) -> Self {
         Self {
-            extra: item.extra,
             n: item.n,
             t: item.t,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -431,10 +431,10 @@ where
 impl From<RvMirror> for super::Rv {
     fn from(item: RvMirror) -> Self {
         Self {
-            extra: item.extra,
             fb: item.fb,
             s: item.s,
             unknown: item.unknown,
+            user_data: item.user_data,
             v: item.v,
         }
     }
@@ -474,9 +474,9 @@ impl From<RvDataMirror> for super::RvData {
         Self {
             count: item.count,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             rv: item.rv,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -515,9 +515,9 @@ impl From<RvStructuresMirror> for super::RvStructures {
         Self {
             count: item.count,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             s: item.s,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -554,9 +554,9 @@ where
 impl From<RvbMirror> for super::Rvb {
     fn from(item: RvbMirror) -> Self {
         Self {
-            extra: item.extra,
             i: item.i,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -593,10 +593,10 @@ where
 impl From<SMirror> for super::S {
     fn from(item: SMirror) -> Self {
         Self {
-            extra: item.extra,
             k: item.k,
             t: item.t,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -633,8 +633,8 @@ where
 impl From<VMirror> for super::V {
     fn from(item: VMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }

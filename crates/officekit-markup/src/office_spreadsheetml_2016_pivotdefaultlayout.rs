@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -282,21 +282,21 @@ pub trait Context: crate::Context {
 /// version 3.5.1. Its schema type is `CT_PivotTableDefinition16`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotTableDefinition16With<X: NodeExtra> {
+pub struct PivotTableDefinition16With<X: UserData> {
     /// The attribute `EnabledSubtotalsDefault`, when the element has it.
     pub enabled_subtotals_default: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2016PivotdefaultlayoutPivotTableDefinition16,
     /// The attribute `InsertBlankRowDefault`, when the element has it.
     pub insert_blank_row_default: Option<String>,
     /// The attribute `SubtotalsOnTopDefault`, when the element has it.
     pub subtotals_on_top_default: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2016PivotdefaultlayoutPivotTableDefinition16,
 }
 
 /// The `xpdl:pivotTableDefinition16` element of the tree a read gives:
-/// [`PivotTableDefinition16With`] holding nothing in `extra`.
+/// [`PivotTableDefinition16With`] holding nothing in `user_data`.
 pub type PivotTableDefinition16 = PivotTableDefinition16With<()>;
 
 impl Eq for PivotTableDefinition16With<()> {}
@@ -317,20 +317,20 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> PivotTableDefinition16With<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotTableDefinition16With<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PivotTableDefinition16With<Y>
+    pub fn into_user_data<Y>(self) -> PivotTableDefinition16With<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotTableDefinition16With {
             enabled_subtotals_default: self.enabled_subtotals_default,
-            extra: Default::default(),
             insert_blank_row_default: self.insert_blank_row_default,
             subtotals_on_top_default: self.subtotals_on_top_default,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

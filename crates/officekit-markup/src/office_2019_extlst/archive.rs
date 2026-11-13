@@ -224,18 +224,18 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtMirror {
     pub content: Box<drawing::AnyElementContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
     pub uri: Option<String>,
+    pub user_data: (),
 }
 
 impl From<ExtMirror> for super::Ext {
     fn from(item: ExtMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
             uri: item.uri,
+            user_data: item.user_data,
         }
     }
 }

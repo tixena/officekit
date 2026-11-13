@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use crate::NodeExtra;
+use crate::UserData;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -252,17 +252,17 @@ pub static SET_OF_ASSOCIATED_XML_SCHEMAS_SHAPE: crate::Shape = crate::Shape {
 /// schema type is `CT_DatastoreSchemaRef`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AssociatedXMLSchemaWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::CustomXmlDataPropertiesAssociatedXMLSchema,
+pub struct AssociatedXMLSchemaWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
     /// The attribute `ds:uri`, when the element has it.
     pub uri: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::CustomXmlDataPropertiesAssociatedXMLSchema,
 }
 
 /// The `ds:schemaRef` element of the tree a read gives: [`AssociatedXMLSchemaWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type AssociatedXMLSchema = AssociatedXMLSchemaWith<()>;
 
 impl Eq for AssociatedXMLSchemaWith<()> {}
@@ -271,19 +271,19 @@ impl Eq for AssociatedXMLSchemaWith<()> {}
 /// Its schema type is `CT_DatastoreItem`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CustomXMLDataPropertiesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::CustomXmlDataPropertiesCustomXMLDataProperties,
+pub struct CustomXMLDataPropertiesWith<X: UserData> {
     /// The attribute `ds:itemID`, when the element has it.
     pub item_id: Option<super::common_simple_types::Guid>,
     /// The child that is `SetOfAssociatedXMLSchemas`, when there is one.
     pub set_of_associated_xml_schemas: Option<Box<SetOfAssociatedXMLSchemasWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::CustomXmlDataPropertiesCustomXMLDataProperties,
 }
 
 /// The `ds:datastoreItem` element of the tree a read gives: [`CustomXMLDataPropertiesWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type CustomXMLDataProperties = CustomXMLDataPropertiesWith<()>;
 
 impl Eq for CustomXMLDataPropertiesWith<()> {}
@@ -292,33 +292,33 @@ impl Eq for CustomXMLDataPropertiesWith<()> {}
 /// Its schema type is `CT_DatastoreSchemaRefs`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SetOfAssociatedXMLSchemasWith<X: NodeExtra> {
+pub struct SetOfAssociatedXMLSchemasWith<X: UserData> {
     /// The children that are `AssociatedXMLSchema`, in order.
     pub associated_xml_schema: Vec<AssociatedXMLSchemaWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::CustomXmlDataPropertiesSetOfAssociatedXMLSchemas,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::CustomXmlDataPropertiesSetOfAssociatedXMLSchemas,
 }
 
 /// The `ds:schemaRefs` element of the tree a read gives: [`SetOfAssociatedXMLSchemasWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type SetOfAssociatedXMLSchemas = SetOfAssociatedXMLSchemasWith<()>;
 
 impl Eq for SetOfAssociatedXMLSchemasWith<()> {}
 
-impl<X: NodeExtra> AssociatedXMLSchemaWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AssociatedXMLSchemaWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AssociatedXMLSchemaWith<Y>
+    pub fn into_user_data<Y>(self) -> AssociatedXMLSchemaWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AssociatedXMLSchemaWith {
-            extra: Default::default(),
             unknown: self.unknown,
             uri: self.uri,
+            user_data: Default::default(),
         }
     }
 
@@ -345,22 +345,22 @@ impl crate::Write for AssociatedXMLSchema {
     }
 }
 
-impl<X: NodeExtra> CustomXMLDataPropertiesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CustomXMLDataPropertiesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> CustomXMLDataPropertiesWith<Y>
+    pub fn into_user_data<Y>(mut self) -> CustomXMLDataPropertiesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CustomXMLDataPropertiesWith {
-            extra: Default::default(),
             item_id: self.item_id,
-            set_of_associated_xml_schemas: crate::into_extra_optional(
+            set_of_associated_xml_schemas: crate::into_user_data_optional(
                 &mut self.set_of_associated_xml_schemas,
-                SetOfAssociatedXMLSchemasWith::into_extra,
+                SetOfAssociatedXMLSchemasWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -387,21 +387,21 @@ impl crate::Write for CustomXMLDataProperties {
     }
 }
 
-impl<X: NodeExtra> SetOfAssociatedXMLSchemasWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SetOfAssociatedXMLSchemasWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SetOfAssociatedXMLSchemasWith<Y>
+    pub fn into_user_data<Y>(self) -> SetOfAssociatedXMLSchemasWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SetOfAssociatedXMLSchemasWith {
-            associated_xml_schema: crate::into_extra_list(
+            associated_xml_schema: crate::into_user_data_list(
                 self.associated_xml_schema,
-                AssociatedXMLSchemaWith::into_extra,
+                AssociatedXMLSchemaWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

@@ -223,9 +223,9 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::AlternateReferences)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlternateReferencesMirror {
-    pub extra: (),
     pub reference: Vec<super::Reference>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -234,10 +234,10 @@ pub struct AlternateReferencesMirror {
 pub struct BindingMirror {
     pub appref: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub id: Option<String>,
     pub r#type: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -245,8 +245,8 @@ pub struct BindingMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BindingsMirror {
     pub binding: Vec<super::Binding>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -254,26 +254,26 @@ pub struct BindingsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Properties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PropertiesMirror {
-    pub extra: (),
     pub property: Vec<super::Property>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Property)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PropertyMirror {
-    pub extra: (),
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: Option<String>,
 }
 
@@ -282,11 +282,11 @@ pub struct PropertyMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferenceMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub id: Option<String>,
     pub store: Option<String>,
     pub store_type: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub version: Option<String>,
 }
 
@@ -298,9 +298,9 @@ pub struct SnapshotMirror {
     pub cstate: Option<drawing::BlipCompressionType>,
     pub embed: Option<String>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub extra: (),
     pub link: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -310,30 +310,30 @@ pub struct WebextensionMirror {
     pub alternate_references: Option<Box<super::AlternateReferences>>,
     pub bindings: Box<super::Bindings>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub frozen: Option<String>,
     pub id: Option<String>,
     pub properties: Box<super::Properties>,
     pub reference: Box<super::Reference>,
     pub snapshot: Option<Box<super::Snapshot>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Webextensionref)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WebextensionrefMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<AlternateReferencesMirror> for super::AlternateReferences {
     fn from(item: AlternateReferencesMirror) -> Self {
         Self {
-            extra: item.extra,
             reference: item.reference,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -375,10 +375,10 @@ impl From<BindingMirror> for super::Binding {
         Self {
             appref: item.appref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             id: item.id,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -416,8 +416,8 @@ impl From<BindingsMirror> for super::Bindings {
     fn from(item: BindingsMirror) -> Self {
         Self {
             binding: item.binding,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -455,8 +455,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -493,9 +493,9 @@ where
 impl From<PropertiesMirror> for super::Properties {
     fn from(item: PropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             property: item.property,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -532,9 +532,9 @@ where
 impl From<PropertyMirror> for super::Property {
     fn from(item: PropertyMirror) -> Self {
         Self {
-            extra: item.extra,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -573,11 +573,11 @@ impl From<ReferenceMirror> for super::Reference {
     fn from(item: ReferenceMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             id: item.id,
             store: item.store,
             store_type: item.store_type,
             unknown: item.unknown,
+            user_data: item.user_data,
             version: item.version,
         }
     }
@@ -619,9 +619,9 @@ impl From<SnapshotMirror> for super::Snapshot {
             cstate: item.cstate,
             embed: item.embed,
             extension_list: item.extension_list,
-            extra: item.extra,
             link: item.link,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -661,13 +661,13 @@ impl From<WebextensionMirror> for super::Webextension {
             alternate_references: item.alternate_references,
             bindings: item.bindings,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             frozen: item.frozen,
             id: item.id,
             properties: item.properties,
             reference: item.reference,
             snapshot: item.snapshot,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -704,9 +704,9 @@ where
 impl From<WebextensionrefMirror> for super::Webextensionref {
     fn from(item: WebextensionrefMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

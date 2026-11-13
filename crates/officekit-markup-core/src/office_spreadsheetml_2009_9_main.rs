@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::office_excel_2006_main;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
@@ -1510,19 +1510,19 @@ pub enum AllocationMethodMember {
 /// 3.5.1. Its schema type is `CT_DefinedNameArgumentDescription`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArgumentDescriptionWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainArgumentDescription,
+pub struct ArgumentDescriptionWith<X: UserData> {
     /// The attribute `index`, when the element has it.
     pub index: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainArgumentDescription,
     /// The element's text.
     pub value: String,
 }
 
 /// The `x14:argumentDescription` element of the tree a read gives: [`ArgumentDescriptionWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ArgumentDescription = ArgumentDescriptionWith<()>;
 
 impl Eq for ArgumentDescriptionWith<()> {}
@@ -1531,19 +1531,19 @@ impl Eq for ArgumentDescriptionWith<()> {}
 /// 3.5.1. Its schema type is `CT_DefinedNameArgumentDescriptions`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArgumentDescriptionsWith<X: NodeExtra> {
+pub struct ArgumentDescriptionsWith<X: UserData> {
     /// The children that are `ArgumentDescription`, in order.
     pub argument_description: Vec<ArgumentDescriptionWith<X>>,
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainArgumentDescriptions,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainArgumentDescriptions,
 }
 
 /// The `x14:argumentDescriptions` element of the tree a read gives: [`ArgumentDescriptionsWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ArgumentDescriptions = ArgumentDescriptionsWith<()>;
 
 impl Eq for ArgumentDescriptionsWith<()> {}
@@ -1552,11 +1552,9 @@ impl Eq for ArgumentDescriptionsWith<()> {}
 /// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AxisColorWith<X: NodeExtra> {
+pub struct AxisColorWith<X: UserData> {
     /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainAxisColor,
     /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
     /// The attribute `rgb`, when the element has it.
@@ -1567,10 +1565,12 @@ pub struct AxisColorWith<X: NodeExtra> {
     pub tint: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainAxisColor,
 }
 
 /// The `x14:axisColor` element of the tree a read gives: [`AxisColorWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type AxisColor = AxisColorWith<()>;
 
 impl Eq for AxisColorWith<()> {}
@@ -1579,11 +1579,9 @@ impl Eq for AxisColorWith<()> {}
 /// Its schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BorderColorWith<X: NodeExtra> {
+pub struct BorderColorWith<X: UserData> {
     /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainBorderColor,
     /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
     /// The attribute `rgb`, when the element has it.
@@ -1594,10 +1592,12 @@ pub struct BorderColorWith<X: NodeExtra> {
     pub tint: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainBorderColor,
 }
 
 /// The `x14:borderColor` element of the tree a read gives: [`BorderColorWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type BorderColor = BorderColorWith<()>;
 
 impl Eq for BorderColorWith<()> {}
@@ -1606,17 +1606,17 @@ impl Eq for BorderColorWith<()> {}
 /// Its schema type is `CT_CacheField`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CacheFieldWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainCacheField,
+pub struct CacheFieldWith<X: UserData> {
     /// The attribute `ignore`, when the element has it.
     pub ignore: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainCacheField,
 }
 
 /// The `x14:cacheField` element of the tree a read gives: [`CacheFieldWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CacheField = CacheFieldWith<()>;
 
 impl Eq for CacheFieldWith<()> {}
@@ -1625,9 +1625,7 @@ impl Eq for CacheFieldWith<()> {}
 /// 3.5.1. Its schema type is `CT_CacheHierarchy`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CacheHierarchyWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainCacheHierarchy,
+pub struct CacheHierarchyWith<X: UserData> {
     /// The attribute `flattenHierarchies`, when the element has it.
     pub flatten_hierarchies: Option<String>,
     /// The attribute `hierarchizeDistinct`, when the element has it.
@@ -1640,10 +1638,12 @@ pub struct CacheHierarchyWith<X: NodeExtra> {
     pub set_levels: Option<Box<SetLevelsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainCacheHierarchy,
 }
 
 /// The `x14:cacheHierarchy` element of the tree a read gives: [`CacheHierarchyWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type CacheHierarchy = CacheHierarchyWith<()>;
 
 impl Eq for CacheHierarchyWith<()> {}
@@ -1652,13 +1652,11 @@ impl Eq for CacheHierarchyWith<()> {}
 /// 3.5.1. Its schema type is `CT_CalculatedMember`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CalculatedMemberWith<X: NodeExtra> {
+pub struct CalculatedMemberWith<X: UserData> {
     /// The attribute `displayFolder`, when the element has it.
     pub display_folder: Option<String>,
     /// The attribute `dynamicSet`, when the element has it.
     pub dynamic_set: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainCalculatedMember,
     /// The attribute `flattenHierarchies`, when the element has it.
     pub flatten_hierarchies: Option<String>,
     /// The attribute `hierarchizeDistinct`, when the element has it.
@@ -1669,10 +1667,12 @@ pub struct CalculatedMemberWith<X: NodeExtra> {
     pub tuple_set: Option<Box<TupleSetWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainCalculatedMember,
 }
 
 /// The `x14:calculatedMember` element of the tree a read gives: [`CalculatedMemberWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type CalculatedMember = CalculatedMemberWith<()>;
 
 impl Eq for CalculatedMemberWith<()> {}
@@ -1681,19 +1681,19 @@ impl Eq for CalculatedMemberWith<()> {}
 /// 3.5.1. Its schema type is `CT_CalculatedMembers`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CalculatedMembersWith<X: NodeExtra> {
+pub struct CalculatedMembersWith<X: UserData> {
     /// The children that are `super::spreadsheet::CalculatedMember`, in order.
     pub calculated_member: Vec<super::spreadsheet::CalculatedMemberWith<X>>,
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainCalculatedMembers,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainCalculatedMembers,
 }
 
 /// The `x14:calculatedMembers` element of the tree a read gives: [`CalculatedMembersWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type CalculatedMembers = CalculatedMembersWith<()>;
 
 impl Eq for CalculatedMembersWith<()> {}
@@ -1702,18 +1702,19 @@ impl Eq for CalculatedMembersWith<()> {}
 /// schema type is `CT_CfIcon`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CfIconWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainCfIcon,
+pub struct CfIconWith<X: UserData> {
     /// The attribute `iconId`, when the element has it.
     pub icon_id: Option<String>,
     /// The attribute `iconSet`, when the element has it.
     pub icon_set: Option<IconSetType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainCfIcon,
 }
 
-/// The `x14:cfIcon` element of the tree a read gives: [`CfIconWith`] holding nothing in `extra`.
+/// The `x14:cfIcon` element of the tree a read gives: [`CfIconWith`] holding nothing in
+/// `user_data`.
 pub type CfIcon = CfIconWith<()>;
 
 impl Eq for CfIconWith<()> {}
@@ -1722,7 +1723,7 @@ impl Eq for CfIconWith<()> {}
 /// schema type is `CT_CfRule`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CfRuleWith<X: NodeExtra> {
+pub struct CfRuleWith<X: UserData> {
     /// The attribute `aboveAverage`, when the element has it.
     pub above_average: Option<String>,
     /// The attribute `activePresent`, when the element has it.
@@ -1739,8 +1740,6 @@ pub struct CfRuleWith<X: NodeExtra> {
     pub equal_average: Option<String>,
     /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainCfRule,
     /// The children that are `office_excel_2006_main::F`, in order.
     pub f: Vec<office_excel_2006_main::FWith<X>>,
     /// The child that is `IconSet`, when there is one.
@@ -1767,9 +1766,12 @@ pub struct CfRuleWith<X: NodeExtra> {
     pub r#type: Option<super::spreadsheet::ConditionalFormatType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainCfRule,
 }
 
-/// The `x14:cfRule` element of the tree a read gives: [`CfRuleWith`] holding nothing in `extra`.
+/// The `x14:cfRule` element of the tree a read gives: [`CfRuleWith`] holding nothing in
+/// `user_data`.
 pub type CfRule = CfRuleWith<()>;
 
 impl Eq for CfRuleWith<()> {}
@@ -1778,11 +1780,9 @@ impl Eq for CfRuleWith<()> {}
 /// schema type is `CT_Cfvo`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CfvoWith<X: NodeExtra> {
+pub struct CfvoWith<X: UserData> {
     /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainCfvo,
     /// The child that is `office_excel_2006_main::F`, when there is one.
     pub f: Option<Box<office_excel_2006_main::FWith<X>>>,
     /// The attribute `gte`, when the element has it.
@@ -1791,9 +1791,11 @@ pub struct CfvoWith<X: NodeExtra> {
     pub r#type: Option<CfvoType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainCfvo,
 }
 
-/// The `x14:cfvo` element of the tree a read gives: [`CfvoWith`] holding nothing in `extra`.
+/// The `x14:cfvo` element of the tree a read gives: [`CfvoWith`] holding nothing in `user_data`.
 pub type Cfvo = CfvoWith<()>;
 
 impl Eq for CfvoWith<()> {}
@@ -1862,11 +1864,9 @@ pub enum CheckedMember {
 /// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorWith<X: NodeExtra> {
+pub struct ColorWith<X: UserData> {
     /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainColor,
     /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
     /// The attribute `rgb`, when the element has it.
@@ -1877,9 +1877,11 @@ pub struct ColorWith<X: NodeExtra> {
     pub tint: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainColor,
 }
 
-/// The `x14:color` element of the tree a read gives: [`ColorWith`] holding nothing in `extra`.
+/// The `x14:color` element of the tree a read gives: [`ColorWith`] holding nothing in `user_data`.
 pub type Color = ColorWith<()>;
 
 impl Eq for ColorWith<()> {}
@@ -1888,11 +1890,9 @@ impl Eq for ColorWith<()> {}
 /// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorAxisWith<X: NodeExtra> {
+pub struct ColorAxisWith<X: UserData> {
     /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainColorAxis,
     /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
     /// The attribute `rgb`, when the element has it.
@@ -1903,10 +1903,12 @@ pub struct ColorAxisWith<X: NodeExtra> {
     pub tint: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainColorAxis,
 }
 
 /// The `x14:colorAxis` element of the tree a read gives: [`ColorAxisWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ColorAxis = ColorAxisWith<()>;
 
 impl Eq for ColorAxisWith<()> {}
@@ -1915,11 +1917,9 @@ impl Eq for ColorAxisWith<()> {}
 /// Its schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorFirstWith<X: NodeExtra> {
+pub struct ColorFirstWith<X: UserData> {
     /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainColorFirst,
     /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
     /// The attribute `rgb`, when the element has it.
@@ -1930,10 +1930,12 @@ pub struct ColorFirstWith<X: NodeExtra> {
     pub tint: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainColorFirst,
 }
 
 /// The `x14:colorFirst` element of the tree a read gives: [`ColorFirstWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ColorFirst = ColorFirstWith<()>;
 
 impl Eq for ColorFirstWith<()> {}
@@ -1942,11 +1944,9 @@ impl Eq for ColorFirstWith<()> {}
 /// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorHighWith<X: NodeExtra> {
+pub struct ColorHighWith<X: UserData> {
     /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainColorHigh,
     /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
     /// The attribute `rgb`, when the element has it.
@@ -1957,10 +1957,12 @@ pub struct ColorHighWith<X: NodeExtra> {
     pub tint: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainColorHigh,
 }
 
 /// The `x14:colorHigh` element of the tree a read gives: [`ColorHighWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ColorHigh = ColorHighWith<()>;
 
 impl Eq for ColorHighWith<()> {}
@@ -1969,11 +1971,9 @@ impl Eq for ColorHighWith<()> {}
 /// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorLastWith<X: NodeExtra> {
+pub struct ColorLastWith<X: UserData> {
     /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainColorLast,
     /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
     /// The attribute `rgb`, when the element has it.
@@ -1984,10 +1984,12 @@ pub struct ColorLastWith<X: NodeExtra> {
     pub tint: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainColorLast,
 }
 
 /// The `x14:colorLast` element of the tree a read gives: [`ColorLastWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ColorLast = ColorLastWith<()>;
 
 impl Eq for ColorLastWith<()> {}
@@ -1996,11 +1998,9 @@ impl Eq for ColorLastWith<()> {}
 /// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorLowWith<X: NodeExtra> {
+pub struct ColorLowWith<X: UserData> {
     /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainColorLow,
     /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
     /// The attribute `rgb`, when the element has it.
@@ -2011,10 +2011,12 @@ pub struct ColorLowWith<X: NodeExtra> {
     pub tint: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainColorLow,
 }
 
 /// The `x14:colorLow` element of the tree a read gives: [`ColorLowWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ColorLow = ColorLowWith<()>;
 
 impl Eq for ColorLowWith<()> {}
@@ -2023,11 +2025,9 @@ impl Eq for ColorLowWith<()> {}
 /// Its schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorMarkersWith<X: NodeExtra> {
+pub struct ColorMarkersWith<X: UserData> {
     /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainColorMarkers,
     /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
     /// The attribute `rgb`, when the element has it.
@@ -2038,10 +2038,12 @@ pub struct ColorMarkersWith<X: NodeExtra> {
     pub tint: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainColorMarkers,
 }
 
 /// The `x14:colorMarkers` element of the tree a read gives: [`ColorMarkersWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ColorMarkers = ColorMarkersWith<()>;
 
 impl Eq for ColorMarkersWith<()> {}
@@ -2050,11 +2052,9 @@ impl Eq for ColorMarkersWith<()> {}
 /// Its schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorNegativeWith<X: NodeExtra> {
+pub struct ColorNegativeWith<X: UserData> {
     /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainColorNegative,
     /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
     /// The attribute `rgb`, when the element has it.
@@ -2065,10 +2065,12 @@ pub struct ColorNegativeWith<X: NodeExtra> {
     pub tint: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainColorNegative,
 }
 
 /// The `x14:colorNegative` element of the tree a read gives: [`ColorNegativeWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type ColorNegative = ColorNegativeWith<()>;
 
 impl Eq for ColorNegativeWith<()> {}
@@ -2077,19 +2079,19 @@ impl Eq for ColorNegativeWith<()> {}
 /// Its schema type is `CT_ColorScale`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorScaleWith<X: NodeExtra> {
+pub struct ColorScaleWith<X: UserData> {
     /// The children that are `Cfvo`, in order.
     pub cfvo: Vec<CfvoWith<X>>,
     /// The children that are `Color`, in order.
     pub color: Vec<ColorWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainColorScale,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainColorScale,
 }
 
 /// The `x14:colorScale` element of the tree a read gives: [`ColorScaleWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ColorScale = ColorScaleWith<()>;
 
 impl Eq for ColorScaleWith<()> {}
@@ -2098,11 +2100,9 @@ impl Eq for ColorScaleWith<()> {}
 /// Its schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorSeriesWith<X: NodeExtra> {
+pub struct ColorSeriesWith<X: UserData> {
     /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainColorSeries,
     /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
     /// The attribute `rgb`, when the element has it.
@@ -2113,10 +2113,12 @@ pub struct ColorSeriesWith<X: NodeExtra> {
     pub tint: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainColorSeries,
 }
 
 /// The `x14:colorSeries` element of the tree a read gives: [`ColorSeriesWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ColorSeries = ColorSeriesWith<()>;
 
 impl Eq for ColorSeriesWith<()> {}
@@ -2125,11 +2127,9 @@ impl Eq for ColorSeriesWith<()> {}
 /// 3.5.1. Its schema type is `CT_ConditionalFormat`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ConditionalFormatWith<X: NodeExtra> {
+pub struct ConditionalFormatWith<X: UserData> {
     /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainConditionalFormat,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The child that is `PivotAreas`, when there is one.
@@ -2142,10 +2142,12 @@ pub struct ConditionalFormatWith<X: NodeExtra> {
     pub r#type: Option<super::spreadsheet::TopNEvaluationType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainConditionalFormat,
 }
 
 /// The `x14:conditionalFormat` element of the tree a read gives: [`ConditionalFormatWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ConditionalFormat = ConditionalFormatWith<()>;
 
 impl Eq for ConditionalFormatWith<()> {}
@@ -2154,19 +2156,19 @@ impl Eq for ConditionalFormatWith<()> {}
 /// 3.5.1. Its schema type is `CT_ConditionalFormats`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ConditionalFormatsWith<X: NodeExtra> {
+pub struct ConditionalFormatsWith<X: UserData> {
     /// The children that are `ConditionalFormat`, in order.
     pub conditional_format: Vec<ConditionalFormatWith<X>>,
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainConditionalFormats,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainConditionalFormats,
 }
 
 /// The `x14:conditionalFormats` element of the tree a read gives: [`ConditionalFormatsWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ConditionalFormats = ConditionalFormatsWith<()>;
 
 impl Eq for ConditionalFormatsWith<()> {}
@@ -2175,23 +2177,23 @@ impl Eq for ConditionalFormatsWith<()> {}
 /// version 3.5.1. Its schema type is `CT_ConditionalFormatting`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ConditionalFormattingWith<X: NodeExtra> {
+pub struct ConditionalFormattingWith<X: UserData> {
     /// The children that are `CfRule`, in order.
     pub cf_rule: Vec<CfRuleWith<X>>,
     /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainConditionalFormatting,
     /// The attribute `pivot`, when the element has it.
     pub pivot: Option<String>,
     /// The child that is `office_excel_2006_main::Sqref`, when there is one.
     pub sqref: Option<Box<office_excel_2006_main::SqrefWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainConditionalFormatting,
 }
 
 /// The `x14:conditionalFormatting` element of the tree a read gives: [`ConditionalFormattingWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ConditionalFormatting = ConditionalFormattingWith<()>;
 
 impl Eq for ConditionalFormattingWith<()> {}
@@ -2200,17 +2202,17 @@ impl Eq for ConditionalFormattingWith<()> {}
 /// version 3.5.1. Its schema type is `CT_ConditionalFormattings`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ConditionalFormattingsWith<X: NodeExtra> {
+pub struct ConditionalFormattingsWith<X: UserData> {
     /// The children that are `ConditionalFormatting`, in order.
     pub conditional_formatting: Vec<ConditionalFormattingWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainConditionalFormattings,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainConditionalFormattings,
 }
 
 /// The `x14:conditionalFormattings` element of the tree a read gives:
-/// [`ConditionalFormattingsWith`] holding nothing in `extra`.
+/// [`ConditionalFormattingsWith`] holding nothing in `user_data`.
 pub type ConditionalFormattings = ConditionalFormattingsWith<()>;
 
 impl Eq for ConditionalFormattingsWith<()> {}
@@ -2219,21 +2221,21 @@ impl Eq for ConditionalFormattingsWith<()> {}
 /// Its schema type is `CT_Connection`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ConnectionWith<X: NodeExtra> {
+pub struct ConnectionWith<X: UserData> {
     /// The child that is `CalculatedMembers`, when there is one.
     pub calculated_members: Option<Box<CalculatedMembersWith<X>>>,
     /// The attribute `culture`, when the element has it.
     pub culture: Option<String>,
     /// The attribute `embeddedDataId`, when the element has it.
     pub embedded_data_id: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainConnection,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainConnection,
 }
 
 /// The `x14:connection` element of the tree a read gives: [`ConnectionWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Connection = ConnectionWith<()>;
 
 impl Eq for ConnectionWith<()> {}
@@ -2242,19 +2244,19 @@ impl Eq for ConnectionWith<()> {}
 /// Its schema type is `CT_CustomFilter`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CustomFilterWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainCustomFilter,
+pub struct CustomFilterWith<X: UserData> {
     /// The attribute `operator`, when the element has it.
     pub operator: Option<super::spreadsheet::FilterOperator>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainCustomFilter,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `x14:customFilter` element of the tree a read gives: [`CustomFilterWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CustomFilter = CustomFilterWith<()>;
 
 impl Eq for CustomFilterWith<()> {}
@@ -2263,19 +2265,19 @@ impl Eq for CustomFilterWith<()> {}
 /// Its schema type is `CT_CustomFilters`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CustomFiltersWith<X: NodeExtra> {
+pub struct CustomFiltersWith<X: UserData> {
     /// The attribute `and`, when the element has it.
     pub and: Option<String>,
     /// The children that are `CustomFilter`, in order.
     pub custom_filter: Vec<CustomFilterWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainCustomFilters,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainCustomFilters,
 }
 
 /// The `x14:customFilters` element of the tree a read gives: [`CustomFiltersWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type CustomFilters = CustomFiltersWith<()>;
 
 impl Eq for CustomFiltersWith<()> {}
@@ -2284,16 +2286,16 @@ impl Eq for CustomFiltersWith<()> {}
 /// schema type is `CT_SlicerCacheData`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataWith<X: NodeExtra> {
+pub struct DataWith<X: UserData> {
     /// The child that is an item of `SlicerCacheDataContent`, which the schema requires.
     pub content: Box<SlicerCacheDataContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainData,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainData,
 }
 
-/// The `x14:data` element of the tree a read gives: [`DataWith`] holding nothing in `extra`.
+/// The `x14:data` element of the tree a read gives: [`DataWith`] holding nothing in `user_data`.
 pub type Data = DataWith<()>;
 
 impl Eq for DataWith<()> {}
@@ -2302,7 +2304,7 @@ impl Eq for DataWith<()> {}
 /// schema type is `CT_DataBar`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataBarWith<X: NodeExtra> {
+pub struct DataBarWith<X: UserData> {
     /// The child that is `AxisColor`, when there is one.
     pub axis_color: Option<Box<AxisColorWith<X>>>,
     /// The attribute `axisPosition`, when the element has it.
@@ -2315,8 +2317,6 @@ pub struct DataBarWith<X: NodeExtra> {
     pub cfvo: Vec<CfvoWith<X>>,
     /// The attribute `direction`, when the element has it.
     pub direction: Option<DataBarDirection>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainDataBar,
     /// The child that is `FillColor`, when there is one.
     pub fill_color: Option<Box<FillColorWith<X>>>,
     /// The attribute `gradient`, when the element has it.
@@ -2337,9 +2337,12 @@ pub struct DataBarWith<X: NodeExtra> {
     pub show_value: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainDataBar,
 }
 
-/// The `x14:dataBar` element of the tree a read gives: [`DataBarWith`] holding nothing in `extra`.
+/// The `x14:dataBar` element of the tree a read gives: [`DataBarWith`] holding nothing in
+/// `user_data`.
 pub type DataBar = DataBarWith<()>;
 
 impl Eq for DataBarWith<()> {}
@@ -2398,9 +2401,7 @@ pub enum DataBarDirectionMember {
 /// schema type is `CT_DataField`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataFieldWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainDataField,
+pub struct DataFieldWith<X: UserData> {
     /// The attribute `pivotShowAs`, when the element has it.
     pub pivot_show_as: Option<PivotShowAs>,
     /// The attribute `sourceField`, when the element has it.
@@ -2409,10 +2410,12 @@ pub struct DataFieldWith<X: NodeExtra> {
     pub unique_name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainDataField,
 }
 
 /// The `x14:dataField` element of the tree a read gives: [`DataFieldWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type DataField = DataFieldWith<()>;
 
 impl Eq for DataFieldWith<()> {}
@@ -2421,7 +2424,7 @@ impl Eq for DataFieldWith<()> {}
 /// 3.5.1. Its schema type is `CT_DataValidation`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataValidationWith<X: NodeExtra> {
+pub struct DataValidationWith<X: UserData> {
     /// The attribute `allowBlank`, when the element has it.
     pub allow_blank: Option<String>,
     /// The attribute `error`, when the element has it.
@@ -2430,8 +2433,6 @@ pub struct DataValidationWith<X: NodeExtra> {
     pub error_style: Option<super::spreadsheet::DataValidationErrorStyles>,
     /// The attribute `errorTitle`, when the element has it.
     pub error_title: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainDataValidation,
     /// The child that is `Formula1`, when there is one.
     pub formula1: Option<Box<Formula1With<X>>>,
     /// The child that is `Formula2`, when there is one.
@@ -2456,10 +2457,12 @@ pub struct DataValidationWith<X: NodeExtra> {
     pub r#type: Option<super::spreadsheet::DataValidationType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainDataValidation,
 }
 
 /// The `x14:dataValidation` element of the tree a read gives: [`DataValidationWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DataValidation = DataValidationWith<()>;
 
 impl Eq for DataValidationWith<()> {}
@@ -2468,17 +2471,17 @@ impl Eq for DataValidationWith<()> {}
 /// 3.5.1. Its schema type is `CT_DataValidations`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataValidationsWith<X: NodeExtra> {
+pub struct DataValidationsWith<X: UserData> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
     /// The children that are `DataValidation`, in order.
     pub data_validation: Vec<DataValidationWith<X>>,
     /// The attribute `disablePrompts`, when the element has it.
     pub disable_prompts: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainDataValidations,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainDataValidations,
     /// The attribute `xWindow`, when the element has it.
     pub x_window: Option<String>,
     /// The attribute `yWindow`, when the element has it.
@@ -2486,7 +2489,7 @@ pub struct DataValidationsWith<X: NodeExtra> {
 }
 
 /// The `x14:dataValidations` element of the tree a read gives: [`DataValidationsWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DataValidations = DataValidationsWith<()>;
 
 impl Eq for DataValidationsWith<()> {}
@@ -2495,19 +2498,19 @@ impl Eq for DataValidationsWith<()> {}
 /// Its schema type is `CT_DatastoreItem`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DatastoreItemWith<X: NodeExtra> {
+pub struct DatastoreItemWith<X: UserData> {
     /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainDatastoreItem,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainDatastoreItem,
 }
 
 /// The `x14:datastoreItem` element of the tree a read gives: [`DatastoreItemWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type DatastoreItem = DatastoreItemWith<()>;
 
 impl Eq for DatastoreItemWith<()> {}
@@ -2516,19 +2519,19 @@ impl Eq for DatastoreItemWith<()> {}
 /// Its schema type is `CT_DefinedName`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DefinedNameWith<X: NodeExtra> {
+pub struct DefinedNameWith<X: UserData> {
     /// The child that is `ArgumentDescriptions`, when there is one.
     pub argument_descriptions: Option<Box<ArgumentDescriptionsWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainDefinedName,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainDefinedName,
 }
 
 /// The `x14:definedName` element of the tree a read gives: [`DefinedNameWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type DefinedName = DefinedNameWith<()>;
 
 impl Eq for DefinedNameWith<()> {}
@@ -2537,17 +2540,17 @@ impl Eq for DefinedNameWith<()> {}
 /// Its schema type is `CT_DefinedNames`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DefinedNamesWith<X: NodeExtra> {
+pub struct DefinedNamesWith<X: UserData> {
     /// The children that are `DefinedName`, in order.
     pub defined_name: Vec<DefinedNameWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainDefinedNames,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainDefinedNames,
 }
 
 /// The `x14:definedNames` element of the tree a read gives: [`DefinedNamesWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type DefinedNames = DefinedNamesWith<()>;
 
 impl Eq for DefinedNamesWith<()> {}
@@ -2606,13 +2609,11 @@ pub enum DropStyleMember {
 /// schema type is `CT_Dxf`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DxfWith<X: NodeExtra> {
+pub struct DxfWith<X: UserData> {
     /// The child that is `super::spreadsheet::Alignment`, when there is one.
     pub alignment: Option<Box<super::spreadsheet::AlignmentWith<X>>>,
     /// The child that is `super::spreadsheet::Border`, when there is one.
     pub border: Option<Box<super::spreadsheet::BorderWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainDxf,
     /// The child that is `super::spreadsheet::Fill`, when there is one.
     pub fill: Option<Box<super::spreadsheet::FillWith<X>>>,
     /// The child that is `super::spreadsheet::Font`, when there is one.
@@ -2626,9 +2627,11 @@ pub struct DxfWith<X: NodeExtra> {
     pub protection_properties: Option<Box<super::spreadsheet::ProtectionPropertiesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainDxf,
 }
 
-/// The `x14:dxf` element of the tree a read gives: [`DxfWith`] holding nothing in `extra`.
+/// The `x14:dxf` element of the tree a read gives: [`DxfWith`] holding nothing in `user_data`.
 pub type Dxf = DxfWith<()>;
 
 impl Eq for DxfWith<()> {}
@@ -2637,18 +2640,18 @@ impl Eq for DxfWith<()> {}
 /// schema type is `CT_Dxfs`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DxfsWith<X: NodeExtra> {
+pub struct DxfsWith<X: UserData> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainDxfs,
     /// The children that are `super::spreadsheet::Formatting`, in order.
     pub formatting: Vec<super::spreadsheet::FormattingWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainDxfs,
 }
 
-/// The `x14:dxfs` element of the tree a read gives: [`DxfsWith`] holding nothing in `extra`.
+/// The `x14:dxfs` element of the tree a read gives: [`DxfsWith`] holding nothing in `user_data`.
 pub type Dxfs = DxfsWith<()>;
 
 impl Eq for DxfsWith<()> {}
@@ -2686,11 +2689,11 @@ pub enum EditValidationMember {
 /// schema type is `CT_PivotEditValue`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EditValueWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainEditValue,
+pub struct EditValueWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainEditValue,
     /// The element's text.
     pub value: String,
     /// The attribute `valueType`, when the element has it.
@@ -2698,7 +2701,7 @@ pub struct EditValueWith<X: NodeExtra> {
 }
 
 /// The `x14:editValue` element of the tree a read gives: [`EditValueWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type EditValue = EditValueWith<()>;
 
 impl Eq for EditValueWith<()> {}
@@ -2707,17 +2710,17 @@ impl Eq for EditValueWith<()> {}
 /// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstExtensionListWith<X: NodeExtra> {
+pub struct ExtLstExtensionListWith<X: UserData> {
     /// The children that are `super::spreadsheet::Extension`, in order.
     pub extension: Vec<super::spreadsheet::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainExtLstExtensionList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainExtLstExtensionList,
 }
 
 /// The `x14:extLst` element of the tree a read gives: [`ExtLstExtensionListWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type ExtLstExtensionList = ExtLstExtensionListWith<()>;
 
 impl Eq for ExtLstExtensionListWith<()> {}
@@ -2726,17 +2729,17 @@ impl Eq for ExtLstExtensionListWith<()> {}
 /// schema type is `CT_SlicerCacheDefinitionExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstSlicerCacheDefinitionExtensionListWith<X: NodeExtra> {
+pub struct ExtLstSlicerCacheDefinitionExtensionListWith<X: UserData> {
     /// The children that are `super::spreadsheet::Extension`, in order.
     pub extension: Vec<super::spreadsheet::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainExtLstSlicerCacheDefinitionExtensionList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainExtLstSlicerCacheDefinitionExtensionList,
 }
 
 /// The `x14:extLst` element of the tree a read gives:
-/// [`ExtLstSlicerCacheDefinitionExtensionListWith`] holding nothing in `extra`.
+/// [`ExtLstSlicerCacheDefinitionExtensionListWith`] holding nothing in `user_data`.
 pub type ExtLstSlicerCacheDefinitionExtensionList =
     ExtLstSlicerCacheDefinitionExtensionListWith<()>;
 
@@ -2746,11 +2749,9 @@ impl Eq for ExtLstSlicerCacheDefinitionExtensionListWith<()> {}
 /// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FillColorWith<X: NodeExtra> {
+pub struct FillColorWith<X: UserData> {
     /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainFillColor,
     /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
     /// The attribute `rgb`, when the element has it.
@@ -2761,10 +2762,12 @@ pub struct FillColorWith<X: NodeExtra> {
     pub tint: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainFillColor,
 }
 
 /// The `x14:fillColor` element of the tree a read gives: [`FillColorWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type FillColor = FillColorWith<()>;
 
 impl Eq for FillColorWith<()> {}
@@ -2773,16 +2776,17 @@ impl Eq for FillColorWith<()> {}
 /// schema type is `CT_Filter`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilterWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainFilter,
+pub struct FilterWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainFilter,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The `x14:filter` element of the tree a read gives: [`FilterWith`] holding nothing in `extra`.
+/// The `x14:filter` element of the tree a read gives: [`FilterWith`] holding nothing in
+/// `user_data`.
 pub type Filter = FilterWith<()>;
 
 impl Eq for FilterWith<()> {}
@@ -2791,7 +2795,7 @@ impl Eq for FilterWith<()> {}
 /// Its schema type is `CT_FormControlPr`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FormControlPrWith<X: NodeExtra> {
+pub struct FormControlPrWith<X: UserData> {
     /// The attribute `checked`, when the element has it.
     pub checked: Option<Checked>,
     /// The attribute `colored`, when the element has it.
@@ -2806,8 +2810,6 @@ pub struct FormControlPrWith<X: NodeExtra> {
     pub edit_val: Option<EditValidation>,
     /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainFormControlPr,
     /// The attribute `firstButton`, when the element has it.
     pub first_button: Option<String>,
     /// The attribute `fmlaGroup`, when the element has it.
@@ -2856,6 +2858,8 @@ pub struct FormControlPrWith<X: NodeExtra> {
     pub text_v_align: Option<TextVAlign>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainFormControlPr,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
     /// The attribute `verticalBar`, when the element has it.
@@ -2865,7 +2869,7 @@ pub struct FormControlPrWith<X: NodeExtra> {
 }
 
 /// The `x14:formControlPr` element of the tree a read gives: [`FormControlPrWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type FormControlPr = FormControlPrWith<()>;
 
 impl Eq for FormControlPrWith<()> {}
@@ -2874,17 +2878,17 @@ impl Eq for FormControlPrWith<()> {}
 /// schema type is `CT_DataValidationFormula`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Formula1With<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainFormula1,
+pub struct Formula1With<X: UserData> {
     /// The child that is `office_excel_2006_main::F`, which the schema requires.
     pub f: Box<office_excel_2006_main::FWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainFormula1,
 }
 
 /// The `x14:formula1` element of the tree a read gives: [`Formula1With`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Formula1 = Formula1With<()>;
 
 impl Eq for Formula1With<()> {}
@@ -2893,17 +2897,17 @@ impl Eq for Formula1With<()> {}
 /// schema type is `CT_DataValidationFormula`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Formula2With<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainFormula2,
+pub struct Formula2With<X: UserData> {
     /// The child that is `office_excel_2006_main::F`, which the schema requires.
     pub f: Box<office_excel_2006_main::FWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainFormula2,
 }
 
 /// The `x14:formula2` element of the tree a read gives: [`Formula2With`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Formula2 = Formula2With<()>;
 
 impl Eq for Formula2With<()> {}
@@ -2912,18 +2916,19 @@ impl Eq for Formula2With<()> {}
 /// schema type is `CT_TupleSetHeader`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HeaderWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainHeader,
+pub struct HeaderWith<X: UserData> {
     /// The attribute `hierarchyName`, when the element has it.
     pub hierarchy_name: Option<String>,
     /// The attribute `uniqueName`, when the element has it.
     pub unique_name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainHeader,
 }
 
-/// The `x14:header` element of the tree a read gives: [`HeaderWith`] holding nothing in `extra`.
+/// The `x14:header` element of the tree a read gives: [`HeaderWith`] holding nothing in
+/// `user_data`.
 pub type Header = HeaderWith<()>;
 
 impl Eq for HeaderWith<()> {}
@@ -2932,16 +2937,17 @@ impl Eq for HeaderWith<()> {}
 /// schema type is `CT_TupleSetHeaders`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HeadersWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainHeaders,
+pub struct HeadersWith<X: UserData> {
     /// The children that are `Header`, in order.
     pub header: Vec<HeaderWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainHeaders,
 }
 
-/// The `x14:headers` element of the tree a read gives: [`HeadersWith`] holding nothing in `extra`.
+/// The `x14:headers` element of the tree a read gives: [`HeadersWith`] holding nothing in
+/// `user_data`.
 pub type Headers = HeadersWith<()>;
 
 impl Eq for HeadersWith<()> {}
@@ -2950,11 +2956,9 @@ impl Eq for HeadersWith<()> {}
 /// type is `CT_OlapSlicerCacheItem`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IOlapSlicerCacheItemWith<X: NodeExtra> {
+pub struct IOlapSlicerCacheItemWith<X: UserData> {
     /// The attribute `c`, when the element has it.
     pub c: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainIOlapSlicerCacheItem,
     /// The attribute `n`, when the element has it.
     pub n: Option<String>,
     /// The attribute `nd`, when the element has it.
@@ -2963,10 +2967,12 @@ pub struct IOlapSlicerCacheItemWith<X: NodeExtra> {
     pub p: Vec<PWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainIOlapSlicerCacheItem,
 }
 
 /// The `x14:i` element of the tree a read gives: [`IOlapSlicerCacheItemWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type IOlapSlicerCacheItem = IOlapSlicerCacheItemWith<()>;
 
 impl Eq for IOlapSlicerCacheItemWith<()> {}
@@ -2975,21 +2981,21 @@ impl Eq for IOlapSlicerCacheItemWith<()> {}
 /// type is `CT_TabularSlicerCacheItem`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ITabularSlicerCacheItemWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainITabularSlicerCacheItem,
+pub struct ITabularSlicerCacheItemWith<X: UserData> {
     /// The attribute `nd`, when the element has it.
     pub nd: Option<String>,
     /// The attribute `s`, when the element has it.
     pub s: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainITabularSlicerCacheItem,
     /// The attribute `x`, when the element has it.
     pub x: Option<String>,
 }
 
 /// The `x14:i` element of the tree a read gives: [`ITabularSlicerCacheItemWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ITabularSlicerCacheItem = ITabularSlicerCacheItemWith<()>;
 
 impl Eq for ITabularSlicerCacheItemWith<()> {}
@@ -2998,19 +3004,19 @@ impl Eq for ITabularSlicerCacheItemWith<()> {}
 /// Its schema type is `CT_IconFilter`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IconFilterWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainIconFilter,
+pub struct IconFilterWith<X: UserData> {
     /// The attribute `iconId`, when the element has it.
     pub icon_id: Option<String>,
     /// The attribute `iconSet`, when the element has it.
     pub icon_set: Option<IconSetType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainIconFilter,
 }
 
 /// The `x14:iconFilter` element of the tree a read gives: [`IconFilterWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type IconFilter = IconFilterWith<()>;
 
 impl Eq for IconFilterWith<()> {}
@@ -3019,15 +3025,13 @@ impl Eq for IconFilterWith<()> {}
 /// schema type is `CT_IconSet`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IconSetWith<X: NodeExtra> {
+pub struct IconSetWith<X: UserData> {
     /// The children that are `CfIcon`, in order.
     pub cf_icon: Vec<CfIconWith<X>>,
     /// The children that are `Cfvo`, in order.
     pub cfvo: Vec<CfvoWith<X>>,
     /// The attribute `custom`, when the element has it.
     pub custom: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainIconSet,
     /// The attribute `iconSet`, when the element has it.
     pub icon_set: Option<IconSetType>,
     /// The attribute `percent`, when the element has it.
@@ -3038,9 +3042,12 @@ pub struct IconSetWith<X: NodeExtra> {
     pub show_value: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainIconSet,
 }
 
-/// The `x14:iconSet` element of the tree a read gives: [`IconSetWith`] holding nothing in `extra`.
+/// The `x14:iconSet` element of the tree a read gives: [`IconSetWith`] holding nothing in
+/// `user_data`.
 pub type IconSet = IconSetWith<()>;
 
 impl Eq for IconSetWith<()> {}
@@ -3110,16 +3117,16 @@ pub enum IconSetTypeMember {
 /// type is `ST_Guid`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IdWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainId,
+pub struct IdWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainId,
     /// The element's text.
     pub value: String,
 }
 
-/// The `x14:id` element of the tree a read gives: [`IdWith`] holding nothing in `extra`.
+/// The `x14:id` element of the tree a read gives: [`IdWith`] holding nothing in `user_data`.
 pub type Id = IdWith<()>;
 
 impl Eq for IdWith<()> {}
@@ -3128,15 +3135,13 @@ impl Eq for IdWith<()> {}
 /// Its schema type is `CT_IgnoredError`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IgnoredErrorWith<X: NodeExtra> {
+pub struct IgnoredErrorWith<X: UserData> {
     /// The attribute `calculatedColumn`, when the element has it.
     pub calculated_column: Option<String>,
     /// The attribute `emptyCellReference`, when the element has it.
     pub empty_cell_reference: Option<String>,
     /// The attribute `evalError`, when the element has it.
     pub eval_error: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainIgnoredError,
     /// The attribute `formula`, when the element has it.
     pub formula: Option<String>,
     /// The attribute `formulaRange`, when the element has it.
@@ -3153,10 +3158,12 @@ pub struct IgnoredErrorWith<X: NodeExtra> {
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `unlockedFormula`, when the element has it.
     pub unlocked_formula: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainIgnoredError,
 }
 
 /// The `x14:ignoredError` element of the tree a read gives: [`IgnoredErrorWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type IgnoredError = IgnoredErrorWith<()>;
 
 impl Eq for IgnoredErrorWith<()> {}
@@ -3165,19 +3172,19 @@ impl Eq for IgnoredErrorWith<()> {}
 /// Its schema type is `CT_IgnoredErrors`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IgnoredErrorsWith<X: NodeExtra> {
+pub struct IgnoredErrorsWith<X: UserData> {
     /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainIgnoredErrors,
     /// The children that are `IgnoredError`, in order.
     pub ignored_error: Vec<IgnoredErrorWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainIgnoredErrors,
 }
 
 /// The `x14:ignoredErrors` element of the tree a read gives: [`IgnoredErrorsWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type IgnoredErrors = IgnoredErrorsWith<()>;
 
 impl Eq for IgnoredErrorsWith<()> {}
@@ -3186,16 +3193,16 @@ impl Eq for IgnoredErrorsWith<()> {}
 /// schema type is `CT_ListItem`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ItemWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainItem,
+pub struct ItemWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainItem,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The `x14:item` element of the tree a read gives: [`ItemWith`] holding nothing in `extra`.
+/// The `x14:item` element of the tree a read gives: [`ItemWith`] holding nothing in `user_data`.
 pub type Item = ItemWith<()>;
 
 impl Eq for ItemWith<()> {}
@@ -3204,18 +3211,19 @@ impl Eq for ItemWith<()> {}
 /// schema type is `CT_ListItems`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ItemLstWith<X: NodeExtra> {
+pub struct ItemLstWith<X: UserData> {
     /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainItemLst,
     /// The children that are `Item`, in order.
     pub item: Vec<ItemWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainItemLst,
 }
 
-/// The `x14:itemLst` element of the tree a read gives: [`ItemLstWith`] holding nothing in `extra`.
+/// The `x14:itemLst` element of the tree a read gives: [`ItemLstWith`] holding nothing in
+/// `user_data`.
 pub type ItemLst = ItemLstWith<()>;
 
 impl Eq for ItemLstWith<()> {}
@@ -3224,18 +3232,18 @@ impl Eq for ItemLstWith<()> {}
 /// schema type is `CT_TabularSlicerCacheItems`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ItemsWith<X: NodeExtra> {
+pub struct ItemsWith<X: UserData> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainItems,
     /// The children that are `ITabularSlicerCacheItem`, in order.
     pub i_tabular_slicer_cache_item: Vec<ITabularSlicerCacheItemWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainItems,
 }
 
-/// The `x14:items` element of the tree a read gives: [`ItemsWith`] holding nothing in `extra`.
+/// The `x14:items` element of the tree a read gives: [`ItemsWith`] holding nothing in `user_data`.
 pub type Items = ItemsWith<()>;
 
 impl Eq for ItemsWith<()> {}
@@ -3244,13 +3252,11 @@ impl Eq for ItemsWith<()> {}
 /// schema type is `CT_OlapSlicerCacheLevelData`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LevelWith<X: NodeExtra> {
+pub struct LevelWith<X: UserData> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
     /// The attribute `crossFilter`, when the element has it.
     pub cross_filter: Option<SlicerCacheCrossFilter>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainLevel,
     /// The child that is `Ranges`, when there is one.
     pub ranges: Option<Box<RangesWith<X>>>,
     /// The attribute `sortOrder`, when the element has it.
@@ -3261,9 +3267,11 @@ pub struct LevelWith<X: NodeExtra> {
     pub unique_name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainLevel,
 }
 
-/// The `x14:level` element of the tree a read gives: [`LevelWith`] holding nothing in `extra`.
+/// The `x14:level` element of the tree a read gives: [`LevelWith`] holding nothing in `user_data`.
 pub type Level = LevelWith<()>;
 
 impl Eq for LevelWith<()> {}
@@ -3272,18 +3280,19 @@ impl Eq for LevelWith<()> {}
 /// schema type is `CT_OlapSlicerCacheLevelsData`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LevelsWith<X: NodeExtra> {
+pub struct LevelsWith<X: UserData> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainLevels,
     /// The children that are `Level`, in order.
     pub level: Vec<LevelWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainLevels,
 }
 
-/// The `x14:levels` element of the tree a read gives: [`LevelsWith`] holding nothing in `extra`.
+/// The `x14:levels` element of the tree a read gives: [`LevelsWith`] holding nothing in
+/// `user_data`.
 pub type Levels = LevelsWith<()>;
 
 impl Eq for LevelsWith<()> {}
@@ -3292,11 +3301,9 @@ impl Eq for LevelsWith<()> {}
 /// 3.5.1. Its schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NegativeBorderColorWith<X: NodeExtra> {
+pub struct NegativeBorderColorWith<X: UserData> {
     /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainNegativeBorderColor,
     /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
     /// The attribute `rgb`, when the element has it.
@@ -3307,10 +3314,12 @@ pub struct NegativeBorderColorWith<X: NodeExtra> {
     pub tint: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainNegativeBorderColor,
 }
 
 /// The `x14:negativeBorderColor` element of the tree a read gives: [`NegativeBorderColorWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type NegativeBorderColor = NegativeBorderColorWith<()>;
 
 impl Eq for NegativeBorderColorWith<()> {}
@@ -3319,11 +3328,9 @@ impl Eq for NegativeBorderColorWith<()> {}
 /// 3.5.1. Its schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NegativeFillColorWith<X: NodeExtra> {
+pub struct NegativeFillColorWith<X: UserData> {
     /// The attribute `auto`, when the element has it.
     pub auto: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainNegativeFillColor,
     /// The attribute `indexed`, when the element has it.
     pub indexed: Option<String>,
     /// The attribute `rgb`, when the element has it.
@@ -3334,10 +3341,12 @@ pub struct NegativeFillColorWith<X: NodeExtra> {
     pub tint: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainNegativeFillColor,
 }
 
 /// The `x14:negativeFillColor` element of the tree a read gives: [`NegativeFillColorWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type NegativeFillColor = NegativeFillColorWith<()>;
 
 impl Eq for NegativeFillColorWith<()> {}
@@ -3387,11 +3396,9 @@ pub enum ObjectTypeMember {
 /// schema type is `CT_OlapSlicerCache`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct OlapWith<X: NodeExtra> {
+pub struct OlapWith<X: UserData> {
     /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainOlap,
     /// The child that is `Levels`, which the schema requires.
     pub levels: Box<LevelsWith<X>>,
     /// The attribute `pivotCacheId`, when the element has it.
@@ -3400,9 +3407,11 @@ pub struct OlapWith<X: NodeExtra> {
     pub selections: Box<SelectionsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainOlap,
 }
 
-/// The `x14:olap` element of the tree a read gives: [`OlapWith`] holding nothing in `extra`.
+/// The `x14:olap` element of the tree a read gives: [`OlapWith`] holding nothing in `user_data`.
 pub type Olap = OlapWith<()>;
 
 impl Eq for OlapWith<()> {}
@@ -3436,11 +3445,9 @@ pub enum OlapSlicerCacheSortOrderMember {
 /// schema type is `CT_OleItem`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct OleItemWith<X: NodeExtra> {
+pub struct OleItemWith<X: UserData> {
     /// The attribute `advise`, when the element has it.
     pub advise: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainOleItem,
     /// The attribute `icon`, when the element has it.
     pub icon: Option<String>,
     /// The attribute `name`, when the element has it.
@@ -3449,11 +3456,14 @@ pub struct OleItemWith<X: NodeExtra> {
     pub prefer_pic: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainOleItem,
     /// The child that is `Values`, when there is one.
     pub values: Option<Box<ValuesWith<X>>>,
 }
 
-/// The `x14:oleItem` element of the tree a read gives: [`OleItemWith`] holding nothing in `extra`.
+/// The `x14:oleItem` element of the tree a read gives: [`OleItemWith`] holding nothing in
+/// `user_data`.
 pub type OleItem = OleItemWith<()>;
 
 impl Eq for OleItemWith<()> {}
@@ -3462,16 +3472,16 @@ impl Eq for OleItemWith<()> {}
 /// type is `CT_OlapSlicerCacheItemParent`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainP,
+pub struct PWith<X: UserData> {
     /// The attribute `n`, when the element has it.
     pub n: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainP,
 }
 
-/// The `x14:p` element of the tree a read gives: [`PWith`] holding nothing in `extra`.
+/// The `x14:p` element of the tree a read gives: [`PWith`] holding nothing in `user_data`.
 pub type P = PWith<()>;
 
 impl Eq for PWith<()> {}
@@ -3480,7 +3490,7 @@ impl Eq for PWith<()> {}
 /// schema type is `CT_PivotArea`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotAreaWith<X: NodeExtra> {
+pub struct PivotAreaWith<X: UserData> {
     /// The attribute `axis`, when the element has it.
     pub axis: Option<super::spreadsheet::PivotTableAxis>,
     /// The attribute `cacheIndex`, when the element has it.
@@ -3489,8 +3499,6 @@ pub struct PivotAreaWith<X: NodeExtra> {
     pub collapsed_levels_are_subtotals: Option<String>,
     /// The attribute `dataOnly`, when the element has it.
     pub data_only: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainPivotArea,
     /// The attribute `field`, when the element has it.
     pub field: Option<String>,
     /// The attribute `fieldPosition`, when the element has it.
@@ -3514,10 +3522,12 @@ pub struct PivotAreaWith<X: NodeExtra> {
     pub r#type: Option<super::spreadsheet::RuleType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainPivotArea,
 }
 
 /// The `x14:pivotArea` element of the tree a read gives: [`PivotAreaWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PivotArea = PivotAreaWith<()>;
 
 impl Eq for PivotAreaWith<()> {}
@@ -3526,19 +3536,19 @@ impl Eq for PivotAreaWith<()> {}
 /// Its schema type is `CT_PivotAreas`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotAreasWith<X: NodeExtra> {
+pub struct PivotAreasWith<X: UserData> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainPivotAreas,
     /// The children that are `super::spreadsheet::PivotArea`, in order.
     pub pivot_area: Vec<super::spreadsheet::PivotAreaWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainPivotAreas,
 }
 
 /// The `x14:pivotAreas` element of the tree a read gives: [`PivotAreasWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PivotAreas = PivotAreasWith<()>;
 
 impl Eq for PivotAreasWith<()> {}
@@ -3547,9 +3557,7 @@ impl Eq for PivotAreasWith<()> {}
 /// 3.5.1. Its schema type is `CT_PivotCacheDefinition`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotCacheDefinitionWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainPivotCacheDefinition,
+pub struct PivotCacheDefinitionWith<X: UserData> {
     /// The attribute `pivotCacheId`, when the element has it.
     pub pivot_cache_id: Option<String>,
     /// The attribute `slicerData`, when the element has it.
@@ -3562,10 +3570,12 @@ pub struct PivotCacheDefinitionWith<X: NodeExtra> {
     pub support_subquery_non_visual: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainPivotCacheDefinition,
 }
 
 /// The `x14:pivotCacheDefinition` element of the tree a read gives: [`PivotCacheDefinitionWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type PivotCacheDefinition = PivotCacheDefinitionWith<()>;
 
 impl Eq for PivotCacheDefinitionWith<()> {}
@@ -3574,17 +3584,17 @@ impl Eq for PivotCacheDefinitionWith<()> {}
 /// Its schema type is `CT_PivotCaches`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotCachesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainPivotCaches,
+pub struct PivotCachesWith<X: UserData> {
     /// The children that are `super::spreadsheet::PivotCache`, in order.
     pub pivotcache: Vec<super::spreadsheet::PivotCacheWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainPivotCaches,
 }
 
 /// The `x14:pivotCaches` element of the tree a read gives: [`PivotCachesWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PivotCaches = PivotCachesWith<()>;
 
 impl Eq for PivotCachesWith<()> {}
@@ -3593,25 +3603,25 @@ impl Eq for PivotCachesWith<()> {}
 /// Its schema type is `CT_PivotChange`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotChangeWith<X: NodeExtra> {
+pub struct PivotChangeWith<X: UserData> {
     /// The attribute `allocationMethod`, when the element has it.
     pub allocation_method: Option<AllocationMethod>,
     /// The child that is `EditValue`, which the schema requires.
     pub edit_value: Box<EditValueWith<X>>,
     /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainPivotChange,
     /// The child that is `TupleItems`, which the schema requires.
     pub tuple_items: Box<TupleItemsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainPivotChange,
     /// The attribute `weightExpression`, when the element has it.
     pub weight_expression: Option<String>,
 }
 
 /// The `x14:pivotChange` element of the tree a read gives: [`PivotChangeWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PivotChange = PivotChangeWith<()>;
 
 impl Eq for PivotChangeWith<()> {}
@@ -3620,17 +3630,17 @@ impl Eq for PivotChangeWith<()> {}
 /// Its schema type is `CT_PivotChanges`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotChangesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainPivotChanges,
+pub struct PivotChangesWith<X: UserData> {
     /// The children that are `PivotChange`, in order.
     pub pivot_change: Vec<PivotChangeWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainPivotChanges,
 }
 
 /// The `x14:pivotChanges` element of the tree a read gives: [`PivotChangesWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PivotChanges = PivotChangesWith<()>;
 
 impl Eq for PivotChangesWith<()> {}
@@ -3639,23 +3649,23 @@ impl Eq for PivotChangesWith<()> {}
 /// schema type is `CT_PivotEdit`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotEditWith<X: NodeExtra> {
+pub struct PivotEditWith<X: UserData> {
     /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainPivotEdit,
     /// The child that is `PivotArea`, which the schema requires.
     pub pivot_area: Box<PivotAreaWith<X>>,
     /// The child that is `TupleItems`, which the schema requires.
     pub tuple_items: Box<TupleItemsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainPivotEdit,
     /// The child that is `UserEdit`, which the schema requires.
     pub user_edit: Box<UserEditWith<X>>,
 }
 
 /// The `x14:pivotEdit` element of the tree a read gives: [`PivotEditWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PivotEdit = PivotEditWith<()>;
 
 impl Eq for PivotEditWith<()> {}
@@ -3693,17 +3703,17 @@ pub enum PivotEditValueTypeMember {
 /// Its schema type is `CT_PivotEdits`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotEditsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainPivotEdits,
+pub struct PivotEditsWith<X: UserData> {
     /// The children that are `PivotEdit`, in order.
     pub pivot_edit: Vec<PivotEditWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainPivotEdits,
 }
 
 /// The `x14:pivotEdits` element of the tree a read gives: [`PivotEditsWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PivotEdits = PivotEditsWith<()>;
 
 impl Eq for PivotEditsWith<()> {}
@@ -3712,19 +3722,19 @@ impl Eq for PivotEditsWith<()> {}
 /// Its schema type is `CT_PivotField`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotFieldWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainPivotField,
+pub struct PivotFieldWith<X: UserData> {
     /// The attribute `fillDownLabels`, when the element has it.
     pub fill_down_labels: Option<String>,
     /// The attribute `ignore`, when the element has it.
     pub ignore: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainPivotField,
 }
 
 /// The `x14:pivotField` element of the tree a read gives: [`PivotFieldWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PivotField = PivotFieldWith<()>;
 
 impl Eq for PivotFieldWith<()> {}
@@ -3733,17 +3743,17 @@ impl Eq for PivotFieldWith<()> {}
 /// 3.5.1. Its schema type is `CT_PivotHierarchy`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotHierarchyWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainPivotHierarchy,
+pub struct PivotHierarchyWith<X: UserData> {
     /// The attribute `ignore`, when the element has it.
     pub ignore: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainPivotHierarchy,
 }
 
 /// The `x14:pivotHierarchy` element of the tree a read gives: [`PivotHierarchyWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type PivotHierarchy = PivotHierarchyWith<()>;
 
 impl Eq for PivotHierarchyWith<()> {}
@@ -3783,19 +3793,19 @@ pub enum PivotShowAsMember {
 /// Its schema type is `CT_SlicerCachePivotTable`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotTableWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainPivotTable,
+pub struct PivotTableWith<X: UserData> {
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// The attribute `tabId`, when the element has it.
     pub tab_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainPivotTable,
 }
 
 /// The `x14:pivotTable` element of the tree a read gives: [`PivotTableWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PivotTable = PivotTableWith<()>;
 
 impl Eq for PivotTableWith<()> {}
@@ -3804,7 +3814,7 @@ impl Eq for PivotTableWith<()> {}
 /// 3.5.1. Its schema type is `CT_PivotTableDefinition`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotTableDefinitionWith<X: NodeExtra> {
+pub struct PivotTableDefinitionWith<X: UserData> {
     /// The attribute `allocationMethod`, when the element has it.
     pub allocation_method: Option<AllocationMethod>,
     /// The attribute `altText`, when the element has it.
@@ -3819,8 +3829,6 @@ pub struct PivotTableDefinitionWith<X: NodeExtra> {
     pub conditional_formats: Option<Box<ConditionalFormatsWith<X>>>,
     /// The attribute `enableEdit`, when the element has it.
     pub enable_edit: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainPivotTableDefinition,
     /// The attribute `fillDownLabelsDefault`, when the element has it.
     pub fill_down_labels_default: Option<String>,
     /// The attribute `hideValuesRow`, when the element has it.
@@ -3831,6 +3839,8 @@ pub struct PivotTableDefinitionWith<X: NodeExtra> {
     pub pivot_edits: Option<Box<PivotEditsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainPivotTableDefinition,
     /// The attribute `visualTotalsForSets`, when the element has it.
     pub visual_totals_for_sets: Option<String>,
     /// The attribute `weightExpression`, when the element has it.
@@ -3838,7 +3848,7 @@ pub struct PivotTableDefinitionWith<X: NodeExtra> {
 }
 
 /// The `x14:pivotTableDefinition` element of the tree a read gives: [`PivotTableDefinitionWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type PivotTableDefinition = PivotTableDefinitionWith<()>;
 
 impl Eq for PivotTableDefinitionWith<()> {}
@@ -3847,17 +3857,17 @@ impl Eq for PivotTableDefinitionWith<()> {}
 /// Its schema type is `CT_SlicerCachePivotTables`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotTablesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainPivotTables,
+pub struct PivotTablesWith<X: UserData> {
     /// The children that are `PivotTable`, in order.
     pub pivot_table: Vec<PivotTableWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainPivotTables,
 }
 
 /// The `x14:pivotTables` element of the tree a read gives: [`PivotTablesWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PivotTables = PivotTablesWith<()>;
 
 impl Eq for PivotTablesWith<()> {}
@@ -3869,7 +3879,7 @@ impl Eq for PivotTablesWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum PivotUserEditContentWith<X: NodeExtra> {
+pub enum PivotUserEditContentWith<X: UserData> {
     /// The element `x14:editValue`, a `EditValue`.
     EditValue(EditValueWith<X>),
     /// The element `xne:f`, a `F`.
@@ -3878,7 +3888,8 @@ pub enum PivotUserEditContentWith<X: NodeExtra> {
     Other(Node),
 }
 
-/// [`PivotUserEditContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`PivotUserEditContentWith`] of the tree a read gives, where no node holds anything in
+/// `user_data`.
 pub type PivotUserEditContent = PivotUserEditContentWith<()>;
 
 impl Eq for PivotUserEditContentWith<()> {}
@@ -3887,11 +3898,9 @@ impl Eq for PivotUserEditContentWith<()> {}
 /// 3.5.1. Its schema type is `CT_ProtectedRange`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ProtectedRangeWith<X: NodeExtra> {
+pub struct ProtectedRangeWith<X: UserData> {
     /// The attribute `algorithmName`, when the element has it.
     pub algorithm_name: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainProtectedRange,
     /// The attribute `hashValue`, when the element has it.
     pub hash_value: Option<String>,
     /// The attribute `name`, when the element has it.
@@ -3908,10 +3917,12 @@ pub struct ProtectedRangeWith<X: NodeExtra> {
     pub sqref: Box<office_excel_2006_main::SqrefWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainProtectedRange,
 }
 
 /// The `x14:protectedRange` element of the tree a read gives: [`ProtectedRangeWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ProtectedRange = ProtectedRangeWith<()>;
 
 impl Eq for ProtectedRangeWith<()> {}
@@ -3920,17 +3931,17 @@ impl Eq for ProtectedRangeWith<()> {}
 /// 3.5.1. Its schema type is `CT_ProtectedRanges`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ProtectedRangesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainProtectedRanges,
+pub struct ProtectedRangesWith<X: UserData> {
     /// The children that are `ProtectedRange`, in order.
     pub protected_range: Vec<ProtectedRangeWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainProtectedRanges,
 }
 
 /// The `x14:protectedRanges` element of the tree a read gives: [`ProtectedRangesWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ProtectedRanges = ProtectedRangesWith<()>;
 
 impl Eq for ProtectedRangesWith<()> {}
@@ -3939,18 +3950,18 @@ impl Eq for ProtectedRangesWith<()> {}
 /// schema type is `CT_OlapSlicerCacheRange`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RangeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainRange,
+pub struct RangeWith<X: UserData> {
     /// The children that are `IOlapSlicerCacheItem`, in order.
     pub i_olap_slicer_cache_item: Vec<IOlapSlicerCacheItemWith<X>>,
     /// The attribute `startItem`, when the element has it.
     pub start_item: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainRange,
 }
 
-/// The `x14:range` element of the tree a read gives: [`RangeWith`] holding nothing in `extra`.
+/// The `x14:range` element of the tree a read gives: [`RangeWith`] holding nothing in `user_data`.
 pub type Range = RangeWith<()>;
 
 impl Eq for RangeWith<()> {}
@@ -3959,16 +3970,17 @@ impl Eq for RangeWith<()> {}
 /// schema type is `CT_OlapSlicerCacheRanges`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RangesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainRanges,
+pub struct RangesWith<X: UserData> {
     /// The children that are `Range`, in order.
     pub range: Vec<RangeWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainRanges,
 }
 
-/// The `x14:ranges` element of the tree a read gives: [`RangesWith`] holding nothing in `extra`.
+/// The `x14:ranges` element of the tree a read gives: [`RangesWith`] holding nothing in
+/// `user_data`.
 pub type Ranges = RangesWith<()>;
 
 impl Eq for RangesWith<()> {}
@@ -3977,16 +3989,16 @@ impl Eq for RangesWith<()> {}
 /// schema type is `CT_TupleSetRow`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RowWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainRow,
+pub struct RowWith<X: UserData> {
     /// The children that are `RowItem`, in order.
     pub item: Vec<RowItemWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainRow,
 }
 
-/// The `x14:row` element of the tree a read gives: [`RowWith`] holding nothing in `extra`.
+/// The `x14:row` element of the tree a read gives: [`RowWith`] holding nothing in `user_data`.
 pub type Row = RowWith<()>;
 
 impl Eq for RowWith<()> {}
@@ -3995,18 +4007,19 @@ impl Eq for RowWith<()> {}
 /// schema type is `CT_TupleSetRowItem`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RowItemWith<X: NodeExtra> {
+pub struct RowItemWith<X: UserData> {
     /// The attribute `d`, when the element has it.
     pub d: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainRowItem,
     /// The attribute `u`, when the element has it.
     pub u: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainRowItem,
 }
 
-/// The `x14:rowItem` element of the tree a read gives: [`RowItemWith`] holding nothing in `extra`.
+/// The `x14:rowItem` element of the tree a read gives: [`RowItemWith`] holding nothing in
+/// `user_data`.
 pub type RowItem = RowItemWith<()>;
 
 impl Eq for RowItemWith<()> {}
@@ -4015,16 +4028,16 @@ impl Eq for RowItemWith<()> {}
 /// schema type is `CT_TupleSetRows`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RowsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainRows,
+pub struct RowsWith<X: UserData> {
     /// The children that are `Row`, in order.
     pub row: Vec<RowWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainRows,
 }
 
-/// The `x14:rows` element of the tree a read gives: [`RowsWith`] holding nothing in `extra`.
+/// The `x14:rows` element of the tree a read gives: [`RowsWith`] holding nothing in `user_data`.
 pub type Rows = RowsWith<()>;
 
 impl Eq for RowsWith<()> {}
@@ -4058,19 +4071,19 @@ pub enum SelTypeMember {
 /// schema type is `CT_OlapSlicerCacheSelection`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SelectionWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSelection,
+pub struct SelectionWith<X: UserData> {
     /// The attribute `n`, when the element has it.
     pub n: Option<String>,
     /// The children that are `P`, in order.
     pub p: Vec<PWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSelection,
 }
 
 /// The `x14:selection` element of the tree a read gives: [`SelectionWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Selection = SelectionWith<()>;
 
 impl Eq for SelectionWith<()> {}
@@ -4079,19 +4092,19 @@ impl Eq for SelectionWith<()> {}
 /// Its schema type is `CT_OlapSlicerCacheSelections`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SelectionsWith<X: NodeExtra> {
+pub struct SelectionsWith<X: UserData> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSelections,
     /// The children that are `Selection`, in order.
     pub selection: Vec<SelectionWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSelections,
 }
 
 /// The `x14:selections` element of the tree a read gives: [`SelectionsWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Selections = SelectionsWith<()>;
 
 impl Eq for SelectionsWith<()> {}
@@ -4100,17 +4113,17 @@ impl Eq for SelectionsWith<()> {}
 /// schema type is `CT_SetLevel`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SetLevelWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSetLevel,
+pub struct SetLevelWith<X: UserData> {
     /// The attribute `hierarchy`, when the element has it.
     pub hierarchy: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSetLevel,
 }
 
 /// The `x14:setLevel` element of the tree a read gives: [`SetLevelWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SetLevel = SetLevelWith<()>;
 
 impl Eq for SetLevelWith<()> {}
@@ -4119,19 +4132,19 @@ impl Eq for SetLevelWith<()> {}
 /// schema type is `CT_SetLevels`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SetLevelsWith<X: NodeExtra> {
+pub struct SetLevelsWith<X: UserData> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSetLevels,
     /// The children that are `SetLevel`, in order.
     pub set_level: Vec<SetLevelWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSetLevels,
 }
 
 /// The `x14:setLevels` element of the tree a read gives: [`SetLevelsWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SetLevels = SetLevelsWith<()>;
 
 impl Eq for SetLevelsWith<()> {}
@@ -4140,17 +4153,17 @@ impl Eq for SetLevelsWith<()> {}
 /// Its schema type is `CT_SlicerCache`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SlicerCacheWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSlicerCache,
+pub struct SlicerCacheWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSlicerCache,
 }
 
 /// The `x14:slicerCache` element of the tree a read gives: [`SlicerCacheWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SlicerCache = SlicerCacheWith<()>;
 
 impl Eq for SlicerCacheWith<()> {}
@@ -4187,7 +4200,7 @@ pub enum SlicerCacheCrossFilterMember {
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum SlicerCacheDataContentWith<X: NodeExtra> {
+pub enum SlicerCacheDataContentWith<X: UserData> {
     /// The element `x14:olap`, a `Olap`.
     Olap(OlapWith<X>),
     /// An element or node the schemas do not declare at this position.
@@ -4197,7 +4210,7 @@ pub enum SlicerCacheDataContentWith<X: NodeExtra> {
 }
 
 /// [`SlicerCacheDataContentWith`] of the tree a read gives, where no node holds anything in
-/// `extra`.
+/// `user_data`.
 pub type SlicerCacheDataContent = SlicerCacheDataContentWith<()>;
 
 impl Eq for SlicerCacheDataContentWith<()> {}
@@ -4206,14 +4219,12 @@ impl Eq for SlicerCacheDataContentWith<()> {}
 /// version 3.5.1. Its schema type is `CT_SlicerCacheDefinition`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SlicerCacheDefinitionWith<X: NodeExtra> {
+pub struct SlicerCacheDefinitionWith<X: UserData> {
     /// The child that is `Data`, when there is one.
     pub data: Option<Box<DataWith<X>>>,
     /// The child that is `ExtLstSlicerCacheDefinitionExtensionList`, when there is one.
     pub ext_lst_slicer_cache_definition_extension_list:
         Option<Box<ExtLstSlicerCacheDefinitionExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSlicerCacheDefinition,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// The child that is `PivotTables`, when there is one.
@@ -4222,10 +4233,12 @@ pub struct SlicerCacheDefinitionWith<X: NodeExtra> {
     pub source_name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSlicerCacheDefinition,
 }
 
 /// The `x14:slicerCacheDefinition` element of the tree a read gives: [`SlicerCacheDefinitionWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type SlicerCacheDefinition = SlicerCacheDefinitionWith<()>;
 
 impl Eq for SlicerCacheDefinitionWith<()> {}
@@ -4234,17 +4247,17 @@ impl Eq for SlicerCacheDefinitionWith<()> {}
 /// Its schema type is `CT_SlicerCaches`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SlicerCachesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSlicerCaches,
+pub struct SlicerCachesWith<X: UserData> {
     /// The children that are `SlicerCache`, in order.
     pub slicer_cache: Vec<SlicerCacheWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSlicerCaches,
 }
 
 /// The `x14:slicerCaches` element of the tree a read gives: [`SlicerCachesWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SlicerCaches = SlicerCachesWith<()>;
 
 impl Eq for SlicerCachesWith<()> {}
@@ -4253,17 +4266,17 @@ impl Eq for SlicerCachesWith<()> {}
 /// Its schema type is `CT_SlicerRefs`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SlicerListWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSlicerList,
+pub struct SlicerListWith<X: UserData> {
     /// The children that are `SlicerSlicerRef`, in order.
     pub slicer_slicer_ref: Vec<SlicerSlicerRefWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSlicerList,
 }
 
 /// The `x14:slicerList` element of the tree a read gives: [`SlicerListWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SlicerList = SlicerListWith<()>;
 
 impl Eq for SlicerListWith<()> {}
@@ -4272,7 +4285,7 @@ impl Eq for SlicerListWith<()> {}
 /// schema type is `CT_Slicer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SlicerSlicerWith<X: NodeExtra> {
+pub struct SlicerSlicerWith<X: UserData> {
     /// The attribute `cache`, when the element has it.
     pub cache: Option<String>,
     /// The attribute `caption`, when the element has it.
@@ -4281,8 +4294,6 @@ pub struct SlicerSlicerWith<X: NodeExtra> {
     pub column_count: Option<String>,
     /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSlicerSlicer,
     /// The attribute `level`, when the element has it.
     pub level: Option<String>,
     /// The attribute `lockedPosition`, when the element has it.
@@ -4299,10 +4310,12 @@ pub struct SlicerSlicerWith<X: NodeExtra> {
     pub style: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSlicerSlicer,
 }
 
 /// The `x14:slicer` element of the tree a read gives: [`SlicerSlicerWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SlicerSlicer = SlicerSlicerWith<()>;
 
 impl Eq for SlicerSlicerWith<()> {}
@@ -4311,17 +4324,17 @@ impl Eq for SlicerSlicerWith<()> {}
 /// schema type is `CT_SlicerRef`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SlicerSlicerRefWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSlicerSlicerRef,
+pub struct SlicerSlicerRefWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSlicerSlicerRef,
 }
 
 /// The `x14:slicer` element of the tree a read gives: [`SlicerSlicerRefWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SlicerSlicerRef = SlicerSlicerRefWith<()>;
 
 impl Eq for SlicerSlicerRefWith<()> {}
@@ -4330,19 +4343,19 @@ impl Eq for SlicerSlicerRefWith<()> {}
 /// Its schema type is `CT_SlicerStyle`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SlicerStyleWith<X: NodeExtra> {
+pub struct SlicerStyleWith<X: UserData> {
     /// The child that is `SlicerStyleElements`, when there is one.
     pub elements: Option<Box<SlicerStyleElementsWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSlicerStyle,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSlicerStyle,
 }
 
 /// The `x14:slicerStyle` element of the tree a read gives: [`SlicerStyleWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SlicerStyle = SlicerStyleWith<()>;
 
 impl Eq for SlicerStyleWith<()> {}
@@ -4351,19 +4364,19 @@ impl Eq for SlicerStyleWith<()> {}
 /// 3.5.1. Its schema type is `CT_SlicerStyleElement`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SlicerStyleElementWith<X: NodeExtra> {
+pub struct SlicerStyleElementWith<X: UserData> {
     /// The attribute `dxfId`, when the element has it.
     pub dxf_id: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSlicerStyleElement,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<SlicerStyleType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSlicerStyleElement,
 }
 
 /// The `x14:slicerStyleElement` element of the tree a read gives: [`SlicerStyleElementWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type SlicerStyleElement = SlicerStyleElementWith<()>;
 
 impl Eq for SlicerStyleElementWith<()> {}
@@ -4372,17 +4385,17 @@ impl Eq for SlicerStyleElementWith<()> {}
 /// 3.5.1. Its schema type is `CT_SlicerStyleElements`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SlicerStyleElementsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSlicerStyleElements,
+pub struct SlicerStyleElementsWith<X: UserData> {
     /// The children that are `SlicerStyleElement`, in order.
     pub slicer_style_element: Vec<SlicerStyleElementWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSlicerStyleElements,
 }
 
 /// The `x14:slicerStyleElements` element of the tree a read gives: [`SlicerStyleElementsWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type SlicerStyleElements = SlicerStyleElementsWith<()>;
 
 impl Eq for SlicerStyleElementsWith<()> {}
@@ -4426,19 +4439,19 @@ pub enum SlicerStyleTypeMember {
 /// Its schema type is `CT_SlicerStyles`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SlicerStylesWith<X: NodeExtra> {
+pub struct SlicerStylesWith<X: UserData> {
     /// The attribute `defaultSlicerStyle`, when the element has it.
     pub default_slicer_style: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSlicerStyles,
     /// The children that are `SlicerStyle`, in order.
     pub slicer_style: Vec<SlicerStyleWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSlicerStyles,
 }
 
 /// The `x14:slicerStyles` element of the tree a read gives: [`SlicerStylesWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SlicerStyles = SlicerStylesWith<()>;
 
 impl Eq for SlicerStylesWith<()> {}
@@ -4447,16 +4460,17 @@ impl Eq for SlicerStylesWith<()> {}
 /// schema type is `CT_Slicers`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SlicersWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSlicers,
+pub struct SlicersWith<X: UserData> {
     /// The children that are `SlicerSlicer`, in order.
     pub slicer_slicer: Vec<SlicerSlicerWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSlicers,
 }
 
-/// The `x14:slicers` element of the tree a read gives: [`SlicersWith`] holding nothing in `extra`.
+/// The `x14:slicers` element of the tree a read gives: [`SlicersWith`] holding nothing in
+/// `user_data`.
 pub type Slicers = SlicersWith<()>;
 
 impl Eq for SlicersWith<()> {}
@@ -4465,15 +4479,13 @@ impl Eq for SlicersWith<()> {}
 /// Its schema type is `CT_SortCondition`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SortConditionWith<X: NodeExtra> {
+pub struct SortConditionWith<X: UserData> {
     /// The attribute `customList`, when the element has it.
     pub custom_list: Option<String>,
     /// The attribute `descending`, when the element has it.
     pub descending: Option<String>,
     /// The attribute `dxfId`, when the element has it.
     pub dxf_id: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSortCondition,
     /// The attribute `iconId`, when the element has it.
     pub icon_id: Option<String>,
     /// The attribute `iconSet`, when the element has it.
@@ -4484,10 +4496,12 @@ pub struct SortConditionWith<X: NodeExtra> {
     pub sort_by: Option<super::spreadsheet::SortBy>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSortCondition,
 }
 
 /// The `x14:sortCondition` element of the tree a read gives: [`SortConditionWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type SortCondition = SortConditionWith<()>;
 
 impl Eq for SortConditionWith<()> {}
@@ -4496,17 +4510,17 @@ impl Eq for SortConditionWith<()> {}
 /// 3.5.1. Its schema type is `CT_SourceConnection`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SourceConnectionWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSourceConnection,
+pub struct SourceConnectionWith<X: UserData> {
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSourceConnection,
 }
 
 /// The `x14:sourceConnection` element of the tree a read gives: [`SourceConnectionWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type SourceConnection = SourceConnectionWith<()>;
 
 impl Eq for SourceConnectionWith<()> {}
@@ -4515,19 +4529,19 @@ impl Eq for SourceConnectionWith<()> {}
 /// schema type is `CT_Sparkline`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SparklineWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSparkline,
+pub struct SparklineWith<X: UserData> {
     /// The child that is `office_excel_2006_main::F`, when there is one.
     pub f: Option<Box<office_excel_2006_main::FWith<X>>>,
     /// The child that is `office_excel_2006_main::Sqref`, which the schema requires.
     pub sqref: Box<office_excel_2006_main::SqrefWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSparkline,
 }
 
 /// The `x14:sparkline` element of the tree a read gives: [`SparklineWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Sparkline = SparklineWith<()>;
 
 impl Eq for SparklineWith<()> {}
@@ -4561,7 +4575,7 @@ pub enum SparklineAxisMinMaxMember {
 /// 3.5.1. Its schema type is `CT_SparklineGroup`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SparklineGroupWith<X: NodeExtra> {
+pub struct SparklineGroupWith<X: UserData> {
     /// The child that is `ColorAxis`, when there is one.
     pub color_axis: Option<Box<ColorAxisWith<X>>>,
     /// The child that is `ColorFirst`, when there is one.
@@ -4586,8 +4600,6 @@ pub struct SparklineGroupWith<X: NodeExtra> {
     pub display_hidden: Option<String>,
     /// The attribute `displayXAxis`, when the element has it.
     pub display_x_axis: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSparklineGroup,
     /// The child that is `office_excel_2006_main::F`, when there is one.
     pub f: Option<Box<office_excel_2006_main::FWith<X>>>,
     /// The attribute `first`, when the element has it.
@@ -4620,10 +4632,12 @@ pub struct SparklineGroupWith<X: NodeExtra> {
     pub r#type: Option<SparklineType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSparklineGroup,
 }
 
 /// The `x14:sparklineGroup` element of the tree a read gives: [`SparklineGroupWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type SparklineGroup = SparklineGroupWith<()>;
 
 impl Eq for SparklineGroupWith<()> {}
@@ -4632,17 +4646,17 @@ impl Eq for SparklineGroupWith<()> {}
 /// 3.5.1. Its schema type is `CT_SparklineGroups`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SparklineGroupsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSparklineGroups,
+pub struct SparklineGroupsWith<X: UserData> {
     /// The children that are `SparklineGroup`, in order.
     pub sparkline_group: Vec<SparklineGroupWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSparklineGroups,
 }
 
 /// The `x14:sparklineGroups` element of the tree a read gives: [`SparklineGroupsWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type SparklineGroups = SparklineGroupsWith<()>;
 
 impl Eq for SparklineGroupsWith<()> {}
@@ -4676,17 +4690,17 @@ pub enum SparklineTypeMember {
 /// Its schema type is `CT_Sparklines`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SparklinesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainSparklines,
+pub struct SparklinesWith<X: UserData> {
     /// The children that are `Sparkline`, in order.
     pub sparkline: Vec<SparklineWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainSparklines,
 }
 
 /// The `x14:sparklines` element of the tree a read gives: [`SparklinesWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Sparklines = SparklinesWith<()>;
 
 impl Eq for SparklinesWith<()> {}
@@ -4695,18 +4709,18 @@ impl Eq for SparklinesWith<()> {}
 /// schema type is `CT_Table`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TableWith<X: NodeExtra> {
+pub struct TableWith<X: UserData> {
     /// The attribute `altText`, when the element has it.
     pub alt_text: Option<String>,
     /// The attribute `altTextSummary`, when the element has it.
     pub alt_text_summary: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainTable,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainTable,
 }
 
-/// The `x14:table` element of the tree a read gives: [`TableWith`] holding nothing in `extra`.
+/// The `x14:table` element of the tree a read gives: [`TableWith`] holding nothing in `user_data`.
 pub type Table = TableWith<()>;
 
 impl Eq for TableWith<()> {}
@@ -4715,15 +4729,13 @@ impl Eq for TableWith<()> {}
 /// schema type is `CT_TabularSlicerCache`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TabularWith<X: NodeExtra> {
+pub struct TabularWith<X: UserData> {
     /// The attribute `crossFilter`, when the element has it.
     pub cross_filter: Option<SlicerCacheCrossFilter>,
     /// The attribute `customListSort`, when the element has it.
     pub custom_list_sort: Option<String>,
     /// The child that is `ExtLstExtensionList`, when there is one.
     pub ext_lst_extension_list: Option<Box<ExtLstExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainTabular,
     /// The child that is `Items`, which the schema requires.
     pub items: Box<ItemsWith<X>>,
     /// The attribute `pivotCacheId`, when the element has it.
@@ -4734,9 +4746,12 @@ pub struct TabularWith<X: NodeExtra> {
     pub sort_order: Option<TabularSlicerCacheSortOrder>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainTabular,
 }
 
-/// The `x14:tabular` element of the tree a read gives: [`TabularWith`] holding nothing in `extra`.
+/// The `x14:tabular` element of the tree a read gives: [`TabularWith`] holding nothing in
+/// `user_data`.
 pub type Tabular = TabularWith<()>;
 
 impl Eq for TabularWith<()> {}
@@ -4826,17 +4841,17 @@ pub enum TextVAlignMember {
 /// schema type is `ST_Xstring`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TupleItemWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainTupleItem,
+pub struct TupleItemWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainTupleItem,
     /// The element's text.
     pub value: String,
 }
 
 /// The `x14:tupleItem` element of the tree a read gives: [`TupleItemWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type TupleItem = TupleItemWith<()>;
 
 impl Eq for TupleItemWith<()> {}
@@ -4845,17 +4860,17 @@ impl Eq for TupleItemWith<()> {}
 /// Its schema type is `CT_TupleItems`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TupleItemsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainTupleItems,
+pub struct TupleItemsWith<X: UserData> {
     /// The children that are `TupleItem`, in order.
     pub tuple_item: Vec<TupleItemWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainTupleItems,
 }
 
 /// The `x14:tupleItems` element of the tree a read gives: [`TupleItemsWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type TupleItems = TupleItemsWith<()>;
 
 impl Eq for TupleItemsWith<()> {}
@@ -4864,11 +4879,9 @@ impl Eq for TupleItemsWith<()> {}
 /// schema type is `CT_TupleSet`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TupleSetWith<X: NodeExtra> {
+pub struct TupleSetWith<X: UserData> {
     /// The attribute `columnCount`, when the element has it.
     pub column_count: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainTupleSet,
     /// The child that is `Headers`, which the schema requires.
     pub headers: Box<HeadersWith<X>>,
     /// The attribute `rowCount`, when the element has it.
@@ -4877,10 +4890,12 @@ pub struct TupleSetWith<X: NodeExtra> {
     pub rows: Box<RowsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainTupleSet,
 }
 
 /// The `x14:tupleSet` element of the tree a read gives: [`TupleSetWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type TupleSet = TupleSetWith<()>;
 
 impl Eq for TupleSetWith<()> {}
@@ -4889,17 +4904,17 @@ impl Eq for TupleSetWith<()> {}
 /// schema type is `CT_PivotUserEdit`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct UserEditWith<X: NodeExtra> {
+pub struct UserEditWith<X: UserData> {
     /// The child that is an item of `PivotUserEditContent`, which the schema requires.
     pub content: Box<PivotUserEditContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainUserEdit,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainUserEdit,
 }
 
 /// The `x14:userEdit` element of the tree a read gives: [`UserEditWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type UserEdit = UserEditWith<()>;
 
 impl Eq for UserEditWith<()> {}
@@ -4908,20 +4923,21 @@ impl Eq for UserEditWith<()> {}
 /// schema type is `CT_DdeValues`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ValuesWith<X: NodeExtra> {
+pub struct ValuesWith<X: UserData> {
     /// The attribute `cols`, when the element has it.
     pub cols: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainValues,
     /// The attribute `rows`, when the element has it.
     pub rows: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainValues,
     /// The children that are `super::spreadsheet::Value`, in order.
     pub value: Vec<super::spreadsheet::ValueWith<X>>,
 }
 
-/// The `x14:values` element of the tree a read gives: [`ValuesWith`] holding nothing in `extra`.
+/// The `x14:values` element of the tree a read gives: [`ValuesWith`] holding nothing in
+/// `user_data`.
 pub type Values = ValuesWith<()>;
 
 impl Eq for ValuesWith<()> {}
@@ -4930,21 +4946,21 @@ impl Eq for ValuesWith<()> {}
 /// Its schema type is `CT_WorkbookPr`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WorkbookPrWith<X: NodeExtra> {
+pub struct WorkbookPrWith<X: UserData> {
     /// The attribute `accuracyVersion`, when the element has it.
     pub accuracy_version: Option<String>,
     /// The attribute `defaultImageDpi`, when the element has it.
     pub default_image_dpi: Option<String>,
     /// The attribute `discardImageEditData`, when the element has it.
     pub discard_image_edit_data: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20099MainWorkbookPr,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20099MainWorkbookPr,
 }
 
 /// The `x14:workbookPr` element of the tree a read gives: [`WorkbookPrWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type WorkbookPr = WorkbookPrWith<()>;
 
 impl Eq for WorkbookPrWith<()> {}
@@ -5020,18 +5036,18 @@ impl AllocationMethod {
     }
 }
 
-impl<X: NodeExtra> ArgumentDescriptionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArgumentDescriptionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArgumentDescriptionWith<Y>
+    pub fn into_user_data<Y>(self) -> ArgumentDescriptionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArgumentDescriptionWith {
-            extra: Default::default(),
             index: self.index,
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5060,22 +5076,22 @@ impl officekit_markup_base::Write for ArgumentDescription {
     }
 }
 
-impl<X: NodeExtra> ArgumentDescriptionsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArgumentDescriptionsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArgumentDescriptionsWith<Y>
+    pub fn into_user_data<Y>(self) -> ArgumentDescriptionsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArgumentDescriptionsWith {
-            argument_description: officekit_markup_base::into_extra_list(
+            argument_description: officekit_markup_base::into_user_data_list(
                 self.argument_description,
-                ArgumentDescriptionWith::into_extra,
+                ArgumentDescriptionWith::into_user_data,
             ),
             count: self.count,
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5102,22 +5118,22 @@ impl officekit_markup_base::Write for ArgumentDescriptions {
     }
 }
 
-impl<X: NodeExtra> AxisColorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AxisColorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AxisColorWith<Y>
+    pub fn into_user_data<Y>(self) -> AxisColorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AxisColorWith {
             auto: self.auto,
-            extra: Default::default(),
             indexed: self.indexed,
             rgb: self.rgb,
             theme: self.theme,
             tint: self.tint,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5148,22 +5164,22 @@ impl officekit_markup_base::Write for AxisColor {
     }
 }
 
-impl<X: NodeExtra> BorderColorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BorderColorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BorderColorWith<Y>
+    pub fn into_user_data<Y>(self) -> BorderColorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BorderColorWith {
             auto: self.auto,
-            extra: Default::default(),
             indexed: self.indexed,
             rgb: self.rgb,
             theme: self.theme,
             tint: self.tint,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5194,18 +5210,18 @@ impl officekit_markup_base::Write for BorderColor {
     }
 }
 
-impl<X: NodeExtra> CacheFieldWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CacheFieldWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CacheFieldWith<Y>
+    pub fn into_user_data<Y>(self) -> CacheFieldWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CacheFieldWith {
-            extra: Default::default(),
             ignore: self.ignore,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5232,25 +5248,25 @@ impl officekit_markup_base::Write for CacheField {
     }
 }
 
-impl<X: NodeExtra> CacheHierarchyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CacheHierarchyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> CacheHierarchyWith<Y>
+    pub fn into_user_data<Y>(mut self) -> CacheHierarchyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CacheHierarchyWith {
-            extra: Default::default(),
             flatten_hierarchies: self.flatten_hierarchies,
             hierarchize_distinct: self.hierarchize_distinct,
             ignore: self.ignore,
             measures_set: self.measures_set,
-            set_levels: officekit_markup_base::into_extra_optional(
+            set_levels: officekit_markup_base::into_user_data_optional(
                 &mut self.set_levels,
-                SetLevelsWith::into_extra,
+                SetLevelsWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5280,26 +5296,26 @@ impl officekit_markup_base::Write for CacheHierarchy {
     }
 }
 
-impl<X: NodeExtra> CalculatedMemberWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CalculatedMemberWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> CalculatedMemberWith<Y>
+    pub fn into_user_data<Y>(mut self) -> CalculatedMemberWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CalculatedMemberWith {
             display_folder: self.display_folder,
             dynamic_set: self.dynamic_set,
-            extra: Default::default(),
             flatten_hierarchies: self.flatten_hierarchies,
             hierarchize_distinct: self.hierarchize_distinct,
             mdx_long: self.mdx_long,
-            tuple_set: officekit_markup_base::into_extra_optional(
+            tuple_set: officekit_markup_base::into_user_data_optional(
                 &mut self.tuple_set,
-                TupleSetWith::into_extra,
+                TupleSetWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5330,22 +5346,22 @@ impl officekit_markup_base::Write for CalculatedMember {
     }
 }
 
-impl<X: NodeExtra> CalculatedMembersWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CalculatedMembersWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CalculatedMembersWith<Y>
+    pub fn into_user_data<Y>(self) -> CalculatedMembersWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CalculatedMembersWith {
-            calculated_member: officekit_markup_base::into_extra_list(
+            calculated_member: officekit_markup_base::into_user_data_list(
                 self.calculated_member,
-                super::spreadsheet::CalculatedMemberWith::into_extra,
+                super::spreadsheet::CalculatedMemberWith::into_user_data,
             ),
             count: self.count,
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5372,19 +5388,19 @@ impl officekit_markup_base::Write for CalculatedMembers {
     }
 }
 
-impl<X: NodeExtra> CfIconWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CfIconWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CfIconWith<Y>
+    pub fn into_user_data<Y>(self) -> CfIconWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CfIconWith {
-            extra: Default::default(),
             icon_id: self.icon_id,
             icon_set: self.icon_set,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5412,40 +5428,42 @@ impl officekit_markup_base::Write for CfIcon {
     }
 }
 
-impl<X: NodeExtra> CfRuleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CfRuleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> CfRuleWith<Y>
+    pub fn into_user_data<Y>(mut self) -> CfRuleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CfRuleWith {
             above_average: self.above_average,
             active_present: self.active_present,
             bottom: self.bottom,
-            color_scale: officekit_markup_base::into_extra_optional(
+            color_scale: officekit_markup_base::into_user_data_optional(
                 &mut self.color_scale,
-                ColorScaleWith::into_extra,
+                ColorScaleWith::into_user_data,
             ),
-            data_bar: officekit_markup_base::into_extra_optional(
+            data_bar: officekit_markup_base::into_user_data_optional(
                 &mut self.data_bar,
-                DataBarWith::into_extra,
+                DataBarWith::into_user_data,
             ),
-            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
+            dxf: officekit_markup_base::into_user_data_optional(
+                &mut self.dxf,
+                DxfWith::into_user_data,
+            ),
             equal_average: self.equal_average,
-            ext_lst_extension_list: officekit_markup_base::into_extra_optional(
+            ext_lst_extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst_extension_list,
-                ExtLstExtensionListWith::into_extra,
+                ExtLstExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            f: officekit_markup_base::into_extra_list(
+            f: officekit_markup_base::into_user_data_list(
                 self.f,
-                office_excel_2006_main::FWith::into_extra,
+                office_excel_2006_main::FWith::into_user_data,
             ),
-            icon_set: officekit_markup_base::into_extra_optional(
+            icon_set: officekit_markup_base::into_user_data_optional(
                 &mut self.icon_set,
-                IconSetWith::into_extra,
+                IconSetWith::into_user_data,
             ),
             id: self.id,
             operator: self.operator,
@@ -5458,6 +5476,7 @@ impl<X: NodeExtra> CfRuleWith<X> {
             time_period: self.time_period,
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5497,27 +5516,27 @@ impl officekit_markup_base::Write for CfRule {
     }
 }
 
-impl<X: NodeExtra> CfvoWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CfvoWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> CfvoWith<Y>
+    pub fn into_user_data<Y>(mut self) -> CfvoWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CfvoWith {
-            ext_lst_extension_list: officekit_markup_base::into_extra_optional(
+            ext_lst_extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst_extension_list,
-                ExtLstExtensionListWith::into_extra,
+                ExtLstExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            f: officekit_markup_base::into_extra_optional(
+            f: officekit_markup_base::into_user_data_optional(
                 &mut self.f,
-                office_excel_2006_main::FWith::into_extra,
+                office_excel_2006_main::FWith::into_user_data,
             ),
             gte: self.gte,
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5658,22 +5677,22 @@ impl Checked {
     }
 }
 
-impl<X: NodeExtra> ColorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ColorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ColorWith<Y>
+    pub fn into_user_data<Y>(self) -> ColorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ColorWith {
             auto: self.auto,
-            extra: Default::default(),
             indexed: self.indexed,
             rgb: self.rgb,
             theme: self.theme,
             tint: self.tint,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5704,22 +5723,22 @@ impl officekit_markup_base::Write for Color {
     }
 }
 
-impl<X: NodeExtra> ColorAxisWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ColorAxisWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ColorAxisWith<Y>
+    pub fn into_user_data<Y>(self) -> ColorAxisWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ColorAxisWith {
             auto: self.auto,
-            extra: Default::default(),
             indexed: self.indexed,
             rgb: self.rgb,
             theme: self.theme,
             tint: self.tint,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5750,22 +5769,22 @@ impl officekit_markup_base::Write for ColorAxis {
     }
 }
 
-impl<X: NodeExtra> ColorFirstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ColorFirstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ColorFirstWith<Y>
+    pub fn into_user_data<Y>(self) -> ColorFirstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ColorFirstWith {
             auto: self.auto,
-            extra: Default::default(),
             indexed: self.indexed,
             rgb: self.rgb,
             theme: self.theme,
             tint: self.tint,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5796,22 +5815,22 @@ impl officekit_markup_base::Write for ColorFirst {
     }
 }
 
-impl<X: NodeExtra> ColorHighWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ColorHighWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ColorHighWith<Y>
+    pub fn into_user_data<Y>(self) -> ColorHighWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ColorHighWith {
             auto: self.auto,
-            extra: Default::default(),
             indexed: self.indexed,
             rgb: self.rgb,
             theme: self.theme,
             tint: self.tint,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5842,22 +5861,22 @@ impl officekit_markup_base::Write for ColorHigh {
     }
 }
 
-impl<X: NodeExtra> ColorLastWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ColorLastWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ColorLastWith<Y>
+    pub fn into_user_data<Y>(self) -> ColorLastWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ColorLastWith {
             auto: self.auto,
-            extra: Default::default(),
             indexed: self.indexed,
             rgb: self.rgb,
             theme: self.theme,
             tint: self.tint,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5888,22 +5907,22 @@ impl officekit_markup_base::Write for ColorLast {
     }
 }
 
-impl<X: NodeExtra> ColorLowWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ColorLowWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ColorLowWith<Y>
+    pub fn into_user_data<Y>(self) -> ColorLowWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ColorLowWith {
             auto: self.auto,
-            extra: Default::default(),
             indexed: self.indexed,
             rgb: self.rgb,
             theme: self.theme,
             tint: self.tint,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5934,22 +5953,22 @@ impl officekit_markup_base::Write for ColorLow {
     }
 }
 
-impl<X: NodeExtra> ColorMarkersWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ColorMarkersWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ColorMarkersWith<Y>
+    pub fn into_user_data<Y>(self) -> ColorMarkersWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ColorMarkersWith {
             auto: self.auto,
-            extra: Default::default(),
             indexed: self.indexed,
             rgb: self.rgb,
             theme: self.theme,
             tint: self.tint,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5980,22 +5999,22 @@ impl officekit_markup_base::Write for ColorMarkers {
     }
 }
 
-impl<X: NodeExtra> ColorNegativeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ColorNegativeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ColorNegativeWith<Y>
+    pub fn into_user_data<Y>(self) -> ColorNegativeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ColorNegativeWith {
             auto: self.auto,
-            extra: Default::default(),
             indexed: self.indexed,
             rgb: self.rgb,
             theme: self.theme,
             tint: self.tint,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -6026,19 +6045,22 @@ impl officekit_markup_base::Write for ColorNegative {
     }
 }
 
-impl<X: NodeExtra> ColorScaleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ColorScaleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ColorScaleWith<Y>
+    pub fn into_user_data<Y>(self) -> ColorScaleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ColorScaleWith {
-            cfvo: officekit_markup_base::into_extra_list(self.cfvo, CfvoWith::into_extra),
-            color: officekit_markup_base::into_extra_list(self.color, ColorWith::into_extra),
-            extra: Default::default(),
+            cfvo: officekit_markup_base::into_user_data_list(self.cfvo, CfvoWith::into_user_data),
+            color: officekit_markup_base::into_user_data_list(
+                self.color,
+                ColorWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -6062,22 +6084,22 @@ impl officekit_markup_base::Write for ColorScale {
     }
 }
 
-impl<X: NodeExtra> ColorSeriesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ColorSeriesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ColorSeriesWith<Y>
+    pub fn into_user_data<Y>(self) -> ColorSeriesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ColorSeriesWith {
             auto: self.auto,
-            extra: Default::default(),
             indexed: self.indexed,
             rgb: self.rgb,
             theme: self.theme,
             tint: self.tint,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -6108,29 +6130,29 @@ impl officekit_markup_base::Write for ColorSeries {
     }
 }
 
-impl<X: NodeExtra> ConditionalFormatWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ConditionalFormatWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ConditionalFormatWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ConditionalFormatWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ConditionalFormatWith {
-            ext_lst_extension_list: officekit_markup_base::into_extra_optional(
+            ext_lst_extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst_extension_list,
-                ExtLstExtensionListWith::into_extra,
+                ExtLstExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
             id: self.id,
-            pivot_areas: officekit_markup_base::into_extra_optional(
+            pivot_areas: officekit_markup_base::into_user_data_optional(
                 &mut self.pivot_areas,
-                PivotAreasWith::into_extra,
+                PivotAreasWith::into_user_data,
             ),
             priority: self.priority,
             scope: self.scope,
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -6160,22 +6182,22 @@ impl officekit_markup_base::Write for ConditionalFormat {
     }
 }
 
-impl<X: NodeExtra> ConditionalFormatsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ConditionalFormatsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ConditionalFormatsWith<Y>
+    pub fn into_user_data<Y>(self) -> ConditionalFormatsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ConditionalFormatsWith {
-            conditional_format: officekit_markup_base::into_extra_list(
+            conditional_format: officekit_markup_base::into_user_data_list(
                 self.conditional_format,
-                ConditionalFormatWith::into_extra,
+                ConditionalFormatWith::into_user_data,
             ),
             count: self.count,
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -6202,27 +6224,30 @@ impl officekit_markup_base::Write for ConditionalFormats {
     }
 }
 
-impl<X: NodeExtra> ConditionalFormattingWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ConditionalFormattingWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ConditionalFormattingWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ConditionalFormattingWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ConditionalFormattingWith {
-            cf_rule: officekit_markup_base::into_extra_list(self.cf_rule, CfRuleWith::into_extra),
-            ext_lst_extension_list: officekit_markup_base::into_extra_optional(
-                &mut self.ext_lst_extension_list,
-                ExtLstExtensionListWith::into_extra,
+            cf_rule: officekit_markup_base::into_user_data_list(
+                self.cf_rule,
+                CfRuleWith::into_user_data,
             ),
-            extra: Default::default(),
+            ext_lst_extension_list: officekit_markup_base::into_user_data_optional(
+                &mut self.ext_lst_extension_list,
+                ExtLstExtensionListWith::into_user_data,
+            ),
             pivot: self.pivot,
-            sqref: officekit_markup_base::into_extra_optional(
+            sqref: officekit_markup_base::into_user_data_optional(
                 &mut self.sqref,
-                office_excel_2006_main::SqrefWith::into_extra,
+                office_excel_2006_main::SqrefWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -6249,21 +6274,21 @@ impl officekit_markup_base::Write for ConditionalFormatting {
     }
 }
 
-impl<X: NodeExtra> ConditionalFormattingsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ConditionalFormattingsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ConditionalFormattingsWith<Y>
+    pub fn into_user_data<Y>(self) -> ConditionalFormattingsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ConditionalFormattingsWith {
-            conditional_formatting: officekit_markup_base::into_extra_list(
+            conditional_formatting: officekit_markup_base::into_user_data_list(
                 self.conditional_formatting,
-                ConditionalFormattingWith::into_extra,
+                ConditionalFormattingWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -6287,23 +6312,23 @@ impl officekit_markup_base::Write for ConditionalFormattings {
     }
 }
 
-impl<X: NodeExtra> ConnectionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ConnectionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ConnectionWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ConnectionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ConnectionWith {
-            calculated_members: officekit_markup_base::into_extra_optional(
+            calculated_members: officekit_markup_base::into_user_data_optional(
                 &mut self.calculated_members,
-                CalculatedMembersWith::into_extra,
+                CalculatedMembersWith::into_user_data,
             ),
             culture: self.culture,
             embedded_data_id: self.embedded_data_id,
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -6331,18 +6356,18 @@ impl officekit_markup_base::Write for Connection {
     }
 }
 
-impl<X: NodeExtra> CustomFilterWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CustomFilterWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CustomFilterWith<Y>
+    pub fn into_user_data<Y>(self) -> CustomFilterWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CustomFilterWith {
-            extra: Default::default(),
             operator: self.operator,
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -6371,22 +6396,22 @@ impl officekit_markup_base::Write for CustomFilter {
     }
 }
 
-impl<X: NodeExtra> CustomFiltersWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CustomFiltersWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CustomFiltersWith<Y>
+    pub fn into_user_data<Y>(self) -> CustomFiltersWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CustomFiltersWith {
             and: self.and,
-            custom_filter: officekit_markup_base::into_extra_list(
+            custom_filter: officekit_markup_base::into_user_data_list(
                 self.custom_filter,
-                CustomFilterWith::into_extra,
+                CustomFilterWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -6413,21 +6438,21 @@ impl officekit_markup_base::Write for CustomFilters {
     }
 }
 
-impl<X: NodeExtra> DataWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DataWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DataWith<Y>
+    pub fn into_user_data<Y>(self) -> DataWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DataWith {
-            content: officekit_markup_base::into_extra_required(
+            content: officekit_markup_base::into_user_data_required(
                 *self.content,
-                SlicerCacheDataContentWith::into_extra,
+                SlicerCacheDataContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -6451,31 +6476,30 @@ impl officekit_markup_base::Write for Data {
     }
 }
 
-impl<X: NodeExtra> DataBarWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DataBarWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> DataBarWith<Y>
+    pub fn into_user_data<Y>(mut self) -> DataBarWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DataBarWith {
-            axis_color: officekit_markup_base::into_extra_optional(
+            axis_color: officekit_markup_base::into_user_data_optional(
                 &mut self.axis_color,
-                AxisColorWith::into_extra,
+                AxisColorWith::into_user_data,
             ),
             axis_position: self.axis_position,
             border: self.border,
-            border_color: officekit_markup_base::into_extra_optional(
+            border_color: officekit_markup_base::into_user_data_optional(
                 &mut self.border_color,
-                BorderColorWith::into_extra,
+                BorderColorWith::into_user_data,
             ),
-            cfvo: officekit_markup_base::into_extra_list(self.cfvo, CfvoWith::into_extra),
+            cfvo: officekit_markup_base::into_user_data_list(self.cfvo, CfvoWith::into_user_data),
             direction: self.direction,
-            extra: Default::default(),
-            fill_color: officekit_markup_base::into_extra_optional(
+            fill_color: officekit_markup_base::into_user_data_optional(
                 &mut self.fill_color,
-                FillColorWith::into_extra,
+                FillColorWith::into_user_data,
             ),
             gradient: self.gradient,
             max_length: self.max_length,
@@ -6483,16 +6507,17 @@ impl<X: NodeExtra> DataBarWith<X> {
             negative_bar_border_color_same_as_positive: self
                 .negative_bar_border_color_same_as_positive,
             negative_bar_color_same_as_positive: self.negative_bar_color_same_as_positive,
-            negative_border_color: officekit_markup_base::into_extra_optional(
+            negative_border_color: officekit_markup_base::into_user_data_optional(
                 &mut self.negative_border_color,
-                NegativeBorderColorWith::into_extra,
+                NegativeBorderColorWith::into_user_data,
             ),
-            negative_fill_color: officekit_markup_base::into_extra_optional(
+            negative_fill_color: officekit_markup_base::into_user_data_optional(
                 &mut self.negative_fill_color,
-                NegativeFillColorWith::into_extra,
+                NegativeFillColorWith::into_user_data,
             ),
             show_value: self.show_value,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -6649,20 +6674,20 @@ impl DataBarDirection {
     }
 }
 
-impl<X: NodeExtra> DataFieldWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DataFieldWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DataFieldWith<Y>
+    pub fn into_user_data<Y>(self) -> DataFieldWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DataFieldWith {
-            extra: Default::default(),
             pivot_show_as: self.pivot_show_as,
             source_field: self.source_field,
             unique_name: self.unique_name,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -6691,27 +6716,26 @@ impl officekit_markup_base::Write for DataField {
     }
 }
 
-impl<X: NodeExtra> DataValidationWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DataValidationWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> DataValidationWith<Y>
+    pub fn into_user_data<Y>(mut self) -> DataValidationWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DataValidationWith {
             allow_blank: self.allow_blank,
             error: self.error,
             error_style: self.error_style,
             error_title: self.error_title,
-            extra: Default::default(),
-            formula1: officekit_markup_base::into_extra_optional(
+            formula1: officekit_markup_base::into_user_data_optional(
                 &mut self.formula1,
-                Formula1With::into_extra,
+                Formula1With::into_user_data,
             ),
-            formula2: officekit_markup_base::into_extra_optional(
+            formula2: officekit_markup_base::into_user_data_optional(
                 &mut self.formula2,
-                Formula2With::into_extra,
+                Formula2With::into_user_data,
             ),
             ime_mode: self.ime_mode,
             operator: self.operator,
@@ -6720,12 +6744,13 @@ impl<X: NodeExtra> DataValidationWith<X> {
             show_drop_down: self.show_drop_down,
             show_error_message: self.show_error_message,
             show_input_message: self.show_input_message,
-            sqref: officekit_markup_base::into_extra_required(
+            sqref: officekit_markup_base::into_user_data_required(
                 *self.sqref,
-                office_excel_2006_main::SqrefWith::into_extra,
+                office_excel_2006_main::SqrefWith::into_user_data,
             ),
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -6763,23 +6788,23 @@ impl officekit_markup_base::Write for DataValidation {
     }
 }
 
-impl<X: NodeExtra> DataValidationsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DataValidationsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DataValidationsWith<Y>
+    pub fn into_user_data<Y>(self) -> DataValidationsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DataValidationsWith {
             count: self.count,
-            data_validation: officekit_markup_base::into_extra_list(
+            data_validation: officekit_markup_base::into_user_data_list(
                 self.data_validation,
-                DataValidationWith::into_extra,
+                DataValidationWith::into_user_data,
             ),
             disable_prompts: self.disable_prompts,
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             x_window: self.x_window,
             y_window: self.y_window,
         }
@@ -6811,22 +6836,22 @@ impl officekit_markup_base::Write for DataValidations {
     }
 }
 
-impl<X: NodeExtra> DatastoreItemWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DatastoreItemWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> DatastoreItemWith<Y>
+    pub fn into_user_data<Y>(mut self) -> DatastoreItemWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DatastoreItemWith {
-            ext_lst_extension_list: officekit_markup_base::into_extra_optional(
+            ext_lst_extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst_extension_list,
-                ExtLstExtensionListWith::into_extra,
+                ExtLstExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
             id: self.id,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -6853,22 +6878,22 @@ impl officekit_markup_base::Write for DatastoreItem {
     }
 }
 
-impl<X: NodeExtra> DefinedNameWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DefinedNameWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> DefinedNameWith<Y>
+    pub fn into_user_data<Y>(mut self) -> DefinedNameWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DefinedNameWith {
-            argument_descriptions: officekit_markup_base::into_extra_optional(
+            argument_descriptions: officekit_markup_base::into_user_data_optional(
                 &mut self.argument_descriptions,
-                ArgumentDescriptionsWith::into_extra,
+                ArgumentDescriptionsWith::into_user_data,
             ),
-            extra: Default::default(),
             name: self.name,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -6895,21 +6920,21 @@ impl officekit_markup_base::Write for DefinedName {
     }
 }
 
-impl<X: NodeExtra> DefinedNamesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DefinedNamesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DefinedNamesWith<Y>
+    pub fn into_user_data<Y>(self) -> DefinedNamesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DefinedNamesWith {
-            defined_name: officekit_markup_base::into_extra_list(
+            defined_name: officekit_markup_base::into_user_data_list(
                 self.defined_name,
-                DefinedNameWith::into_extra,
+                DefinedNameWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -7037,45 +7062,45 @@ impl DropStyle {
     }
 }
 
-impl<X: NodeExtra> DxfWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DxfWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> DxfWith<Y>
+    pub fn into_user_data<Y>(mut self) -> DxfWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DxfWith {
-            alignment: officekit_markup_base::into_extra_optional(
+            alignment: officekit_markup_base::into_user_data_optional(
                 &mut self.alignment,
-                super::spreadsheet::AlignmentWith::into_extra,
+                super::spreadsheet::AlignmentWith::into_user_data,
             ),
-            border: officekit_markup_base::into_extra_optional(
+            border: officekit_markup_base::into_user_data_optional(
                 &mut self.border,
-                super::spreadsheet::BorderWith::into_extra,
+                super::spreadsheet::BorderWith::into_user_data,
             ),
-            extra: Default::default(),
-            fill: officekit_markup_base::into_extra_optional(
+            fill: officekit_markup_base::into_user_data_optional(
                 &mut self.fill,
-                super::spreadsheet::FillWith::into_extra,
+                super::spreadsheet::FillWith::into_user_data,
             ),
-            font: officekit_markup_base::into_extra_optional(
+            font: officekit_markup_base::into_user_data_optional(
                 &mut self.font,
-                super::spreadsheet::FontWith::into_extra,
+                super::spreadsheet::FontWith::into_user_data,
             ),
-            future_feature_data_storage_area: officekit_markup_base::into_extra_optional(
+            future_feature_data_storage_area: officekit_markup_base::into_user_data_optional(
                 &mut self.future_feature_data_storage_area,
-                super::spreadsheet::FutureFeatureDataStorageAreaWith::into_extra,
+                super::spreadsheet::FutureFeatureDataStorageAreaWith::into_user_data,
             ),
-            number_format: officekit_markup_base::into_extra_optional(
+            number_format: officekit_markup_base::into_user_data_optional(
                 &mut self.number_format,
-                super::spreadsheet::NumberFormatWith::into_extra,
+                super::spreadsheet::NumberFormatWith::into_user_data,
             ),
-            protection_properties: officekit_markup_base::into_extra_optional(
+            protection_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.protection_properties,
-                super::spreadsheet::ProtectionPropertiesWith::into_extra,
+                super::spreadsheet::ProtectionPropertiesWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -7099,22 +7124,22 @@ impl officekit_markup_base::Write for Dxf {
     }
 }
 
-impl<X: NodeExtra> DxfsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DxfsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DxfsWith<Y>
+    pub fn into_user_data<Y>(self) -> DxfsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DxfsWith {
             count: self.count,
-            extra: Default::default(),
-            formatting: officekit_markup_base::into_extra_list(
+            formatting: officekit_markup_base::into_user_data_list(
                 self.formatting,
-                super::spreadsheet::FormattingWith::into_extra,
+                super::spreadsheet::FormattingWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -7197,17 +7222,17 @@ impl EditValidation {
     }
 }
 
-impl<X: NodeExtra> EditValueWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> EditValueWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> EditValueWith<Y>
+    pub fn into_user_data<Y>(self) -> EditValueWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         EditValueWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
             value_type: self.value_type,
         }
@@ -7237,21 +7262,21 @@ impl officekit_markup_base::Write for EditValue {
     }
 }
 
-impl<X: NodeExtra> ExtLstExtensionListWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstExtensionListWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstExtensionListWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstExtensionListWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstExtensionListWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                super::spreadsheet::ExtensionWith::into_extra,
+                super::spreadsheet::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -7275,21 +7300,21 @@ impl officekit_markup_base::Write for ExtLstExtensionList {
     }
 }
 
-impl<X: NodeExtra> ExtLstSlicerCacheDefinitionExtensionListWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstSlicerCacheDefinitionExtensionListWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstSlicerCacheDefinitionExtensionListWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstSlicerCacheDefinitionExtensionListWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstSlicerCacheDefinitionExtensionListWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                super::spreadsheet::ExtensionWith::into_extra,
+                super::spreadsheet::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -7313,22 +7338,22 @@ impl officekit_markup_base::Write for ExtLstSlicerCacheDefinitionExtensionList {
     }
 }
 
-impl<X: NodeExtra> FillColorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FillColorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FillColorWith<Y>
+    pub fn into_user_data<Y>(self) -> FillColorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FillColorWith {
             auto: self.auto,
-            extra: Default::default(),
             indexed: self.indexed,
             rgb: self.rgb,
             theme: self.theme,
             tint: self.tint,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -7359,17 +7384,17 @@ impl officekit_markup_base::Write for FillColor {
     }
 }
 
-impl<X: NodeExtra> FilterWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FilterWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FilterWith<Y>
+    pub fn into_user_data<Y>(self) -> FilterWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FilterWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -7397,13 +7422,13 @@ impl officekit_markup_base::Write for Filter {
     }
 }
 
-impl<X: NodeExtra> FormControlPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FormControlPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> FormControlPrWith<Y>
+    pub fn into_user_data<Y>(mut self) -> FormControlPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FormControlPrWith {
             checked: self.checked,
@@ -7412,11 +7437,10 @@ impl<X: NodeExtra> FormControlPrWith<X> {
             drop_style: self.drop_style,
             dx: self.dx,
             edit_val: self.edit_val,
-            ext_lst_extension_list: officekit_markup_base::into_extra_optional(
+            ext_lst_extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst_extension_list,
-                ExtLstExtensionListWith::into_extra,
+                ExtLstExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
             first_button: self.first_button,
             fmla_group: self.fmla_group,
             fmla_link: self.fmla_link,
@@ -7424,9 +7448,9 @@ impl<X: NodeExtra> FormControlPrWith<X> {
             fmla_txbx: self.fmla_txbx,
             horiz: self.horiz,
             inc: self.inc,
-            item_lst: officekit_markup_base::into_extra_optional(
+            item_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.item_lst,
-                ItemLstWith::into_extra,
+                ItemLstWith::into_user_data,
             ),
             just_last_x: self.just_last_x,
             lock_text: self.lock_text,
@@ -7444,6 +7468,7 @@ impl<X: NodeExtra> FormControlPrWith<X> {
             text_h_align: self.text_h_align,
             text_v_align: self.text_v_align,
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
             vertical_bar: self.vertical_bar,
             width_min: self.width_min,
@@ -7503,21 +7528,21 @@ impl officekit_markup_base::Write for FormControlPr {
     }
 }
 
-impl<X: NodeExtra> Formula1With<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> Formula1With<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> Formula1With<Y>
+    pub fn into_user_data<Y>(self) -> Formula1With<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         Formula1With {
-            extra: Default::default(),
-            f: officekit_markup_base::into_extra_required(
+            f: officekit_markup_base::into_user_data_required(
                 *self.f,
-                office_excel_2006_main::FWith::into_extra,
+                office_excel_2006_main::FWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -7541,21 +7566,21 @@ impl officekit_markup_base::Write for Formula1 {
     }
 }
 
-impl<X: NodeExtra> Formula2With<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> Formula2With<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> Formula2With<Y>
+    pub fn into_user_data<Y>(self) -> Formula2With<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         Formula2With {
-            extra: Default::default(),
-            f: officekit_markup_base::into_extra_required(
+            f: officekit_markup_base::into_user_data_required(
                 *self.f,
-                office_excel_2006_main::FWith::into_extra,
+                office_excel_2006_main::FWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -7579,19 +7604,19 @@ impl officekit_markup_base::Write for Formula2 {
     }
 }
 
-impl<X: NodeExtra> HeaderWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HeaderWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> HeaderWith<Y>
+    pub fn into_user_data<Y>(self) -> HeaderWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HeaderWith {
-            extra: Default::default(),
             hierarchy_name: self.hierarchy_name,
             unique_name: self.unique_name,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -7619,18 +7644,21 @@ impl officekit_markup_base::Write for Header {
     }
 }
 
-impl<X: NodeExtra> HeadersWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HeadersWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> HeadersWith<Y>
+    pub fn into_user_data<Y>(self) -> HeadersWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HeadersWith {
-            extra: Default::default(),
-            header: officekit_markup_base::into_extra_list(self.header, HeaderWith::into_extra),
+            header: officekit_markup_base::into_user_data_list(
+                self.header,
+                HeaderWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -7654,21 +7682,21 @@ impl officekit_markup_base::Write for Headers {
     }
 }
 
-impl<X: NodeExtra> IOlapSlicerCacheItemWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> IOlapSlicerCacheItemWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> IOlapSlicerCacheItemWith<Y>
+    pub fn into_user_data<Y>(self) -> IOlapSlicerCacheItemWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         IOlapSlicerCacheItemWith {
             c: self.c,
-            extra: Default::default(),
             n: self.n,
             nd: self.nd,
-            p: officekit_markup_base::into_extra_list(self.p, PWith::into_extra),
+            p: officekit_markup_base::into_user_data_list(self.p, PWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -7697,19 +7725,19 @@ impl officekit_markup_base::Write for IOlapSlicerCacheItem {
     }
 }
 
-impl<X: NodeExtra> ITabularSlicerCacheItemWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ITabularSlicerCacheItemWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ITabularSlicerCacheItemWith<Y>
+    pub fn into_user_data<Y>(self) -> ITabularSlicerCacheItemWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ITabularSlicerCacheItemWith {
-            extra: Default::default(),
             nd: self.nd,
             s: self.s,
             unknown: self.unknown,
+            user_data: Default::default(),
             x: self.x,
         }
     }
@@ -7739,19 +7767,19 @@ impl officekit_markup_base::Write for ITabularSlicerCacheItem {
     }
 }
 
-impl<X: NodeExtra> IconFilterWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> IconFilterWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> IconFilterWith<Y>
+    pub fn into_user_data<Y>(self) -> IconFilterWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         IconFilterWith {
-            extra: Default::default(),
             icon_id: self.icon_id,
             icon_set: self.icon_set,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -7779,24 +7807,27 @@ impl officekit_markup_base::Write for IconFilter {
     }
 }
 
-impl<X: NodeExtra> IconSetWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> IconSetWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> IconSetWith<Y>
+    pub fn into_user_data<Y>(self) -> IconSetWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         IconSetWith {
-            cf_icon: officekit_markup_base::into_extra_list(self.cf_icon, CfIconWith::into_extra),
-            cfvo: officekit_markup_base::into_extra_list(self.cfvo, CfvoWith::into_extra),
+            cf_icon: officekit_markup_base::into_user_data_list(
+                self.cf_icon,
+                CfIconWith::into_user_data,
+            ),
+            cfvo: officekit_markup_base::into_user_data_list(self.cfvo, CfvoWith::into_user_data),
             custom: self.custom,
-            extra: Default::default(),
             icon_set: self.icon_set,
             percent: self.percent,
             reverse: self.reverse,
             show_value: self.show_value,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -7959,17 +7990,17 @@ impl IconSetType {
     }
 }
 
-impl<X: NodeExtra> IdWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> IdWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> IdWith<Y>
+    pub fn into_user_data<Y>(self) -> IdWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         IdWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -7997,30 +8028,30 @@ impl officekit_markup_base::Write for Id {
     }
 }
 
-impl<X: NodeExtra> IgnoredErrorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> IgnoredErrorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> IgnoredErrorWith<Y>
+    pub fn into_user_data<Y>(self) -> IgnoredErrorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         IgnoredErrorWith {
             calculated_column: self.calculated_column,
             empty_cell_reference: self.empty_cell_reference,
             eval_error: self.eval_error,
-            extra: Default::default(),
             formula: self.formula,
             formula_range: self.formula_range,
             list_data_validation: self.list_data_validation,
             number_stored_as_text: self.number_stored_as_text,
-            sqref: officekit_markup_base::into_extra_required(
+            sqref: officekit_markup_base::into_user_data_required(
                 *self.sqref,
-                office_excel_2006_main::SqrefWith::into_extra,
+                office_excel_2006_main::SqrefWith::into_user_data,
             ),
             two_digit_text_year: self.two_digit_text_year,
             unknown: self.unknown,
             unlocked_formula: self.unlocked_formula,
+            user_data: Default::default(),
         }
     }
 
@@ -8055,25 +8086,25 @@ impl officekit_markup_base::Write for IgnoredError {
     }
 }
 
-impl<X: NodeExtra> IgnoredErrorsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> IgnoredErrorsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> IgnoredErrorsWith<Y>
+    pub fn into_user_data<Y>(mut self) -> IgnoredErrorsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         IgnoredErrorsWith {
-            ext_lst_extension_list: officekit_markup_base::into_extra_optional(
+            ext_lst_extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst_extension_list,
-                ExtLstExtensionListWith::into_extra,
+                ExtLstExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            ignored_error: officekit_markup_base::into_extra_list(
+            ignored_error: officekit_markup_base::into_user_data_list(
                 self.ignored_error,
-                IgnoredErrorWith::into_extra,
+                IgnoredErrorWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -8097,17 +8128,17 @@ impl officekit_markup_base::Write for IgnoredErrors {
     }
 }
 
-impl<X: NodeExtra> ItemWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ItemWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ItemWith<Y>
+    pub fn into_user_data<Y>(self) -> ItemWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ItemWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -8135,22 +8166,22 @@ impl officekit_markup_base::Write for Item {
     }
 }
 
-impl<X: NodeExtra> ItemLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ItemLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ItemLstWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ItemLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ItemLstWith {
-            ext_lst_extension_list: officekit_markup_base::into_extra_optional(
+            ext_lst_extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst_extension_list,
-                ExtLstExtensionListWith::into_extra,
+                ExtLstExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            item: officekit_markup_base::into_extra_list(self.item, ItemWith::into_extra),
+            item: officekit_markup_base::into_user_data_list(self.item, ItemWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -8174,22 +8205,22 @@ impl officekit_markup_base::Write for ItemLst {
     }
 }
 
-impl<X: NodeExtra> ItemsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ItemsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ItemsWith<Y>
+    pub fn into_user_data<Y>(self) -> ItemsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ItemsWith {
             count: self.count,
-            extra: Default::default(),
-            i_tabular_slicer_cache_item: officekit_markup_base::into_extra_list(
+            i_tabular_slicer_cache_item: officekit_markup_base::into_user_data_list(
                 self.i_tabular_slicer_cache_item,
-                ITabularSlicerCacheItemWith::into_extra,
+                ITabularSlicerCacheItemWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -8216,26 +8247,26 @@ impl officekit_markup_base::Write for Items {
     }
 }
 
-impl<X: NodeExtra> LevelWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LevelWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> LevelWith<Y>
+    pub fn into_user_data<Y>(mut self) -> LevelWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LevelWith {
             count: self.count,
             cross_filter: self.cross_filter,
-            extra: Default::default(),
-            ranges: officekit_markup_base::into_extra_optional(
+            ranges: officekit_markup_base::into_user_data_optional(
                 &mut self.ranges,
-                RangesWith::into_extra,
+                RangesWith::into_user_data,
             ),
             sort_order: self.sort_order,
             source_caption: self.source_caption,
             unique_name: self.unique_name,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -8266,19 +8297,22 @@ impl officekit_markup_base::Write for Level {
     }
 }
 
-impl<X: NodeExtra> LevelsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LevelsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LevelsWith<Y>
+    pub fn into_user_data<Y>(self) -> LevelsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LevelsWith {
             count: self.count,
-            extra: Default::default(),
-            level: officekit_markup_base::into_extra_list(self.level, LevelWith::into_extra),
+            level: officekit_markup_base::into_user_data_list(
+                self.level,
+                LevelWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -8305,22 +8339,22 @@ impl officekit_markup_base::Write for Levels {
     }
 }
 
-impl<X: NodeExtra> NegativeBorderColorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> NegativeBorderColorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> NegativeBorderColorWith<Y>
+    pub fn into_user_data<Y>(self) -> NegativeBorderColorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         NegativeBorderColorWith {
             auto: self.auto,
-            extra: Default::default(),
             indexed: self.indexed,
             rgb: self.rgb,
             theme: self.theme,
             tint: self.tint,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -8351,22 +8385,22 @@ impl officekit_markup_base::Write for NegativeBorderColor {
     }
 }
 
-impl<X: NodeExtra> NegativeFillColorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> NegativeFillColorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> NegativeFillColorWith<Y>
+    pub fn into_user_data<Y>(self) -> NegativeFillColorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         NegativeFillColorWith {
             auto: self.auto,
-            extra: Default::default(),
             indexed: self.indexed,
             rgb: self.rgb,
             theme: self.theme,
             tint: self.tint,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -8455,30 +8489,30 @@ impl ObjectType {
     }
 }
 
-impl<X: NodeExtra> OlapWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> OlapWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> OlapWith<Y>
+    pub fn into_user_data<Y>(mut self) -> OlapWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         OlapWith {
-            ext_lst_extension_list: officekit_markup_base::into_extra_optional(
+            ext_lst_extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst_extension_list,
-                ExtLstExtensionListWith::into_extra,
+                ExtLstExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            levels: officekit_markup_base::into_extra_required(
+            levels: officekit_markup_base::into_user_data_required(
                 *self.levels,
-                LevelsWith::into_extra,
+                LevelsWith::into_user_data,
             ),
             pivot_cache_id: self.pivot_cache_id,
-            selections: officekit_markup_base::into_extra_required(
+            selections: officekit_markup_base::into_user_data_required(
                 *self.selections,
-                SelectionsWith::into_extra,
+                SelectionsWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -8567,24 +8601,24 @@ impl OlapSlicerCacheSortOrder {
     }
 }
 
-impl<X: NodeExtra> OleItemWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> OleItemWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> OleItemWith<Y>
+    pub fn into_user_data<Y>(mut self) -> OleItemWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         OleItemWith {
             advise: self.advise,
-            extra: Default::default(),
             icon: self.icon,
             name: self.name,
             prefer_pic: self.prefer_pic,
             unknown: self.unknown,
-            values: officekit_markup_base::into_extra_optional(
+            user_data: Default::default(),
+            values: officekit_markup_base::into_user_data_optional(
                 &mut self.values,
-                ValuesWith::into_extra,
+                ValuesWith::into_user_data,
             ),
         }
     }
@@ -8615,18 +8649,18 @@ impl officekit_markup_base::Write for OleItem {
     }
 }
 
-impl<X: NodeExtra> PWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PWith<Y>
+    pub fn into_user_data<Y>(self) -> PWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PWith {
-            extra: Default::default(),
             n: self.n,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -8653,37 +8687,37 @@ impl officekit_markup_base::Write for P {
     }
 }
 
-impl<X: NodeExtra> PivotAreaWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotAreaWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> PivotAreaWith<Y>
+    pub fn into_user_data<Y>(mut self) -> PivotAreaWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotAreaWith {
             axis: self.axis,
             cache_index: self.cache_index,
             collapsed_levels_are_subtotals: self.collapsed_levels_are_subtotals,
             data_only: self.data_only,
-            extra: Default::default(),
             field: self.field,
             field_position: self.field_position,
-            future_feature_data_storage_area: officekit_markup_base::into_extra_optional(
+            future_feature_data_storage_area: officekit_markup_base::into_user_data_optional(
                 &mut self.future_feature_data_storage_area,
-                super::spreadsheet::FutureFeatureDataStorageAreaWith::into_extra,
+                super::spreadsheet::FutureFeatureDataStorageAreaWith::into_user_data,
             ),
             grand_col: self.grand_col,
             grand_row: self.grand_row,
             label_only: self.label_only,
             offset: self.offset,
             outline: self.outline,
-            references: officekit_markup_base::into_extra_optional(
+            references: officekit_markup_base::into_user_data_optional(
                 &mut self.references,
-                super::spreadsheet::ReferencesWith::into_extra,
+                super::spreadsheet::ReferencesWith::into_user_data,
             ),
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -8721,22 +8755,22 @@ impl officekit_markup_base::Write for PivotArea {
     }
 }
 
-impl<X: NodeExtra> PivotAreasWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotAreasWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PivotAreasWith<Y>
+    pub fn into_user_data<Y>(self) -> PivotAreasWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotAreasWith {
             count: self.count,
-            extra: Default::default(),
-            pivot_area: officekit_markup_base::into_extra_list(
+            pivot_area: officekit_markup_base::into_user_data_list(
                 self.pivot_area,
-                super::spreadsheet::PivotAreaWith::into_extra,
+                super::spreadsheet::PivotAreaWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -8763,22 +8797,22 @@ impl officekit_markup_base::Write for PivotAreas {
     }
 }
 
-impl<X: NodeExtra> PivotCacheDefinitionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotCacheDefinitionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PivotCacheDefinitionWith<Y>
+    pub fn into_user_data<Y>(self) -> PivotCacheDefinitionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotCacheDefinitionWith {
-            extra: Default::default(),
             pivot_cache_id: self.pivot_cache_id,
             slicer_data: self.slicer_data,
             support_add_calc_mems: self.support_add_calc_mems,
             support_subquery_calc_mem: self.support_subquery_calc_mem,
             support_subquery_non_visual: self.support_subquery_non_visual,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -8809,21 +8843,21 @@ impl officekit_markup_base::Write for PivotCacheDefinition {
     }
 }
 
-impl<X: NodeExtra> PivotCachesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotCachesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PivotCachesWith<Y>
+    pub fn into_user_data<Y>(self) -> PivotCachesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotCachesWith {
-            extra: Default::default(),
-            pivotcache: officekit_markup_base::into_extra_list(
+            pivotcache: officekit_markup_base::into_user_data_list(
                 self.pivotcache,
-                super::spreadsheet::PivotCacheWith::into_extra,
+                super::spreadsheet::PivotCacheWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -8847,30 +8881,30 @@ impl officekit_markup_base::Write for PivotCaches {
     }
 }
 
-impl<X: NodeExtra> PivotChangeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotChangeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> PivotChangeWith<Y>
+    pub fn into_user_data<Y>(mut self) -> PivotChangeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotChangeWith {
             allocation_method: self.allocation_method,
-            edit_value: officekit_markup_base::into_extra_required(
+            edit_value: officekit_markup_base::into_user_data_required(
                 *self.edit_value,
-                EditValueWith::into_extra,
+                EditValueWith::into_user_data,
             ),
-            ext_lst_extension_list: officekit_markup_base::into_extra_optional(
+            ext_lst_extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst_extension_list,
-                ExtLstExtensionListWith::into_extra,
+                ExtLstExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            tuple_items: officekit_markup_base::into_extra_required(
+            tuple_items: officekit_markup_base::into_user_data_required(
                 *self.tuple_items,
-                TupleItemsWith::into_extra,
+                TupleItemsWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
             weight_expression: self.weight_expression,
         }
     }
@@ -8899,21 +8933,21 @@ impl officekit_markup_base::Write for PivotChange {
     }
 }
 
-impl<X: NodeExtra> PivotChangesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotChangesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PivotChangesWith<Y>
+    pub fn into_user_data<Y>(self) -> PivotChangesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotChangesWith {
-            extra: Default::default(),
-            pivot_change: officekit_markup_base::into_extra_list(
+            pivot_change: officekit_markup_base::into_user_data_list(
                 self.pivot_change,
-                PivotChangeWith::into_extra,
+                PivotChangeWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -8937,32 +8971,32 @@ impl officekit_markup_base::Write for PivotChanges {
     }
 }
 
-impl<X: NodeExtra> PivotEditWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotEditWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> PivotEditWith<Y>
+    pub fn into_user_data<Y>(mut self) -> PivotEditWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotEditWith {
-            ext_lst_extension_list: officekit_markup_base::into_extra_optional(
+            ext_lst_extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst_extension_list,
-                ExtLstExtensionListWith::into_extra,
+                ExtLstExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            pivot_area: officekit_markup_base::into_extra_required(
+            pivot_area: officekit_markup_base::into_user_data_required(
                 *self.pivot_area,
-                PivotAreaWith::into_extra,
+                PivotAreaWith::into_user_data,
             ),
-            tuple_items: officekit_markup_base::into_extra_required(
+            tuple_items: officekit_markup_base::into_user_data_required(
                 *self.tuple_items,
-                TupleItemsWith::into_extra,
+                TupleItemsWith::into_user_data,
             ),
             unknown: self.unknown,
-            user_edit: officekit_markup_base::into_extra_required(
+            user_data: Default::default(),
+            user_edit: officekit_markup_base::into_user_data_required(
                 *self.user_edit,
-                UserEditWith::into_extra,
+                UserEditWith::into_user_data,
             ),
         }
     }
@@ -9043,21 +9077,21 @@ impl PivotEditValueType {
     }
 }
 
-impl<X: NodeExtra> PivotEditsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotEditsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PivotEditsWith<Y>
+    pub fn into_user_data<Y>(self) -> PivotEditsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotEditsWith {
-            extra: Default::default(),
-            pivot_edit: officekit_markup_base::into_extra_list(
+            pivot_edit: officekit_markup_base::into_user_data_list(
                 self.pivot_edit,
-                PivotEditWith::into_extra,
+                PivotEditWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -9081,19 +9115,19 @@ impl officekit_markup_base::Write for PivotEdits {
     }
 }
 
-impl<X: NodeExtra> PivotFieldWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotFieldWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PivotFieldWith<Y>
+    pub fn into_user_data<Y>(self) -> PivotFieldWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotFieldWith {
-            extra: Default::default(),
             fill_down_labels: self.fill_down_labels,
             ignore: self.ignore,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -9121,18 +9155,18 @@ impl officekit_markup_base::Write for PivotField {
     }
 }
 
-impl<X: NodeExtra> PivotHierarchyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotHierarchyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PivotHierarchyWith<Y>
+    pub fn into_user_data<Y>(self) -> PivotHierarchyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotHierarchyWith {
-            extra: Default::default(),
             ignore: self.ignore,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -9236,19 +9270,19 @@ impl PivotShowAs {
     }
 }
 
-impl<X: NodeExtra> PivotTableWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotTableWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PivotTableWith<Y>
+    pub fn into_user_data<Y>(self) -> PivotTableWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotTableWith {
-            extra: Default::default(),
             name: self.name,
             tab_id: self.tab_id,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -9276,13 +9310,13 @@ impl officekit_markup_base::Write for PivotTable {
     }
 }
 
-impl<X: NodeExtra> PivotTableDefinitionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotTableDefinitionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> PivotTableDefinitionWith<Y>
+    pub fn into_user_data<Y>(mut self) -> PivotTableDefinitionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotTableDefinitionWith {
             allocation_method: self.allocation_method,
@@ -9290,23 +9324,23 @@ impl<X: NodeExtra> PivotTableDefinitionWith<X> {
             alt_text_summary: self.alt_text_summary,
             auto_apply: self.auto_apply,
             calculated_members_in_filters: self.calculated_members_in_filters,
-            conditional_formats: officekit_markup_base::into_extra_optional(
+            conditional_formats: officekit_markup_base::into_user_data_optional(
                 &mut self.conditional_formats,
-                ConditionalFormatsWith::into_extra,
+                ConditionalFormatsWith::into_user_data,
             ),
             enable_edit: self.enable_edit,
-            extra: Default::default(),
             fill_down_labels_default: self.fill_down_labels_default,
             hide_values_row: self.hide_values_row,
-            pivot_changes: officekit_markup_base::into_extra_optional(
+            pivot_changes: officekit_markup_base::into_user_data_optional(
                 &mut self.pivot_changes,
-                PivotChangesWith::into_extra,
+                PivotChangesWith::into_user_data,
             ),
-            pivot_edits: officekit_markup_base::into_extra_optional(
+            pivot_edits: officekit_markup_base::into_user_data_optional(
                 &mut self.pivot_edits,
-                PivotEditsWith::into_extra,
+                PivotEditsWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
             visual_totals_for_sets: self.visual_totals_for_sets,
             weight_expression: self.weight_expression,
         }
@@ -9344,21 +9378,21 @@ impl officekit_markup_base::Write for PivotTableDefinition {
     }
 }
 
-impl<X: NodeExtra> PivotTablesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotTablesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PivotTablesWith<Y>
+    pub fn into_user_data<Y>(self) -> PivotTablesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotTablesWith {
-            extra: Default::default(),
-            pivot_table: officekit_markup_base::into_extra_list(
+            pivot_table: officekit_markup_base::into_user_data_list(
                 self.pivot_table,
-                PivotTableWith::into_extra,
+                PivotTableWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -9382,22 +9416,22 @@ impl officekit_markup_base::Write for PivotTables {
     }
 }
 
-impl<X: NodeExtra> PivotUserEditContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> PivotUserEditContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PivotUserEditContentWith<Y>
+    pub fn into_user_data<Y>(self) -> PivotUserEditContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
-            Self::EditValue(node) => PivotUserEditContentWith::EditValue(node.into_extra()),
-            Self::F(node) => PivotUserEditContentWith::F(node.into_extra()),
+            Self::EditValue(node) => PivotUserEditContentWith::EditValue(node.into_user_data()),
+            Self::F(node) => PivotUserEditContentWith::F(node.into_user_data()),
             Self::Other(node) => PivotUserEditContentWith::Other(node),
         }
     }
 }
 
-impl<X: NodeExtra> Default for PivotUserEditContentWith<X> {
+impl<X: UserData> Default for PivotUserEditContentWith<X> {
     fn default() -> Self {
         Self::EditValue(EditValueWith::default())
     }
@@ -9427,28 +9461,28 @@ impl officekit_markup_base::Write for PivotUserEditContent {
     }
 }
 
-impl<X: NodeExtra> ProtectedRangeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ProtectedRangeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ProtectedRangeWith<Y>
+    pub fn into_user_data<Y>(self) -> ProtectedRangeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ProtectedRangeWith {
             algorithm_name: self.algorithm_name,
-            extra: Default::default(),
             hash_value: self.hash_value,
             name: self.name,
             password: self.password,
             salt_value: self.salt_value,
             security_descriptor: self.security_descriptor,
             spin_count: self.spin_count,
-            sqref: officekit_markup_base::into_extra_required(
+            sqref: officekit_markup_base::into_user_data_required(
                 *self.sqref,
-                office_excel_2006_main::SqrefWith::into_extra,
+                office_excel_2006_main::SqrefWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -9481,21 +9515,21 @@ impl officekit_markup_base::Write for ProtectedRange {
     }
 }
 
-impl<X: NodeExtra> ProtectedRangesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ProtectedRangesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ProtectedRangesWith<Y>
+    pub fn into_user_data<Y>(self) -> ProtectedRangesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ProtectedRangesWith {
-            extra: Default::default(),
-            protected_range: officekit_markup_base::into_extra_list(
+            protected_range: officekit_markup_base::into_user_data_list(
                 self.protected_range,
-                ProtectedRangeWith::into_extra,
+                ProtectedRangeWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -9519,22 +9553,22 @@ impl officekit_markup_base::Write for ProtectedRanges {
     }
 }
 
-impl<X: NodeExtra> RangeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RangeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RangeWith<Y>
+    pub fn into_user_data<Y>(self) -> RangeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RangeWith {
-            extra: Default::default(),
-            i_olap_slicer_cache_item: officekit_markup_base::into_extra_list(
+            i_olap_slicer_cache_item: officekit_markup_base::into_user_data_list(
                 self.i_olap_slicer_cache_item,
-                IOlapSlicerCacheItemWith::into_extra,
+                IOlapSlicerCacheItemWith::into_user_data,
             ),
             start_item: self.start_item,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -9561,18 +9595,21 @@ impl officekit_markup_base::Write for Range {
     }
 }
 
-impl<X: NodeExtra> RangesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RangesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RangesWith<Y>
+    pub fn into_user_data<Y>(self) -> RangesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RangesWith {
-            extra: Default::default(),
-            range: officekit_markup_base::into_extra_list(self.range, RangeWith::into_extra),
+            range: officekit_markup_base::into_user_data_list(
+                self.range,
+                RangeWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -9596,18 +9633,21 @@ impl officekit_markup_base::Write for Ranges {
     }
 }
 
-impl<X: NodeExtra> RowWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RowWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RowWith<Y>
+    pub fn into_user_data<Y>(self) -> RowWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RowWith {
-            extra: Default::default(),
-            item: officekit_markup_base::into_extra_list(self.item, RowItemWith::into_extra),
+            item: officekit_markup_base::into_user_data_list(
+                self.item,
+                RowItemWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -9631,19 +9671,19 @@ impl officekit_markup_base::Write for Row {
     }
 }
 
-impl<X: NodeExtra> RowItemWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RowItemWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RowItemWith<Y>
+    pub fn into_user_data<Y>(self) -> RowItemWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RowItemWith {
             d: self.d,
-            extra: Default::default(),
             u: self.u,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -9671,18 +9711,18 @@ impl officekit_markup_base::Write for RowItem {
     }
 }
 
-impl<X: NodeExtra> RowsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RowsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RowsWith<Y>
+    pub fn into_user_data<Y>(self) -> RowsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RowsWith {
-            extra: Default::default(),
-            row: officekit_markup_base::into_extra_list(self.row, RowWith::into_extra),
+            row: officekit_markup_base::into_user_data_list(self.row, RowWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -9756,19 +9796,19 @@ impl SelType {
     }
 }
 
-impl<X: NodeExtra> SelectionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SelectionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SelectionWith<Y>
+    pub fn into_user_data<Y>(self) -> SelectionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SelectionWith {
-            extra: Default::default(),
             n: self.n,
-            p: officekit_markup_base::into_extra_list(self.p, PWith::into_extra),
+            p: officekit_markup_base::into_user_data_list(self.p, PWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -9795,22 +9835,22 @@ impl officekit_markup_base::Write for Selection {
     }
 }
 
-impl<X: NodeExtra> SelectionsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SelectionsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SelectionsWith<Y>
+    pub fn into_user_data<Y>(self) -> SelectionsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SelectionsWith {
             count: self.count,
-            extra: Default::default(),
-            selection: officekit_markup_base::into_extra_list(
+            selection: officekit_markup_base::into_user_data_list(
                 self.selection,
-                SelectionWith::into_extra,
+                SelectionWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -9837,18 +9877,18 @@ impl officekit_markup_base::Write for Selections {
     }
 }
 
-impl<X: NodeExtra> SetLevelWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SetLevelWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SetLevelWith<Y>
+    pub fn into_user_data<Y>(self) -> SetLevelWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SetLevelWith {
-            extra: Default::default(),
             hierarchy: self.hierarchy,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -9875,22 +9915,22 @@ impl officekit_markup_base::Write for SetLevel {
     }
 }
 
-impl<X: NodeExtra> SetLevelsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SetLevelsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SetLevelsWith<Y>
+    pub fn into_user_data<Y>(self) -> SetLevelsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SetLevelsWith {
             count: self.count,
-            extra: Default::default(),
-            set_level: officekit_markup_base::into_extra_list(
+            set_level: officekit_markup_base::into_user_data_list(
                 self.set_level,
-                SetLevelWith::into_extra,
+                SetLevelWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -9917,18 +9957,18 @@ impl officekit_markup_base::Write for SetLevels {
     }
 }
 
-impl<X: NodeExtra> SlicerCacheWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SlicerCacheWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SlicerCacheWith<Y>
+    pub fn into_user_data<Y>(self) -> SlicerCacheWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SlicerCacheWith {
-            extra: Default::default(),
             id: self.id,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10017,22 +10057,22 @@ impl SlicerCacheCrossFilter {
     }
 }
 
-impl<X: NodeExtra> SlicerCacheDataContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> SlicerCacheDataContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SlicerCacheDataContentWith<Y>
+    pub fn into_user_data<Y>(self) -> SlicerCacheDataContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
-            Self::Olap(node) => SlicerCacheDataContentWith::Olap(node.into_extra()),
+            Self::Olap(node) => SlicerCacheDataContentWith::Olap(node.into_user_data()),
             Self::Other(node) => SlicerCacheDataContentWith::Other(node),
-            Self::Tabular(node) => SlicerCacheDataContentWith::Tabular(node.into_extra()),
+            Self::Tabular(node) => SlicerCacheDataContentWith::Tabular(node.into_user_data()),
         }
     }
 }
 
-impl<X: NodeExtra> Default for SlicerCacheDataContentWith<X> {
+impl<X: UserData> Default for SlicerCacheDataContentWith<X> {
     fn default() -> Self {
         Self::Olap(OlapWith::default())
     }
@@ -10062,29 +10102,32 @@ impl officekit_markup_base::Write for SlicerCacheDataContent {
     }
 }
 
-impl<X: NodeExtra> SlicerCacheDefinitionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SlicerCacheDefinitionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SlicerCacheDefinitionWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SlicerCacheDefinitionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SlicerCacheDefinitionWith {
-            data: officekit_markup_base::into_extra_optional(&mut self.data, DataWith::into_extra),
+            data: officekit_markup_base::into_user_data_optional(
+                &mut self.data,
+                DataWith::into_user_data,
+            ),
             ext_lst_slicer_cache_definition_extension_list:
-                officekit_markup_base::into_extra_optional(
+                officekit_markup_base::into_user_data_optional(
                     &mut self.ext_lst_slicer_cache_definition_extension_list,
-                    ExtLstSlicerCacheDefinitionExtensionListWith::into_extra,
+                    ExtLstSlicerCacheDefinitionExtensionListWith::into_user_data,
                 ),
-            extra: Default::default(),
             name: self.name,
-            pivot_tables: officekit_markup_base::into_extra_optional(
+            pivot_tables: officekit_markup_base::into_user_data_optional(
                 &mut self.pivot_tables,
-                PivotTablesWith::into_extra,
+                PivotTablesWith::into_user_data,
             ),
             source_name: self.source_name,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10112,21 +10155,21 @@ impl officekit_markup_base::Write for SlicerCacheDefinition {
     }
 }
 
-impl<X: NodeExtra> SlicerCachesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SlicerCachesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SlicerCachesWith<Y>
+    pub fn into_user_data<Y>(self) -> SlicerCachesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SlicerCachesWith {
-            extra: Default::default(),
-            slicer_cache: officekit_markup_base::into_extra_list(
+            slicer_cache: officekit_markup_base::into_user_data_list(
                 self.slicer_cache,
-                SlicerCacheWith::into_extra,
+                SlicerCacheWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10150,21 +10193,21 @@ impl officekit_markup_base::Write for SlicerCaches {
     }
 }
 
-impl<X: NodeExtra> SlicerListWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SlicerListWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SlicerListWith<Y>
+    pub fn into_user_data<Y>(self) -> SlicerListWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SlicerListWith {
-            extra: Default::default(),
-            slicer_slicer_ref: officekit_markup_base::into_extra_list(
+            slicer_slicer_ref: officekit_markup_base::into_user_data_list(
                 self.slicer_slicer_ref,
-                SlicerSlicerRefWith::into_extra,
+                SlicerSlicerRefWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10188,23 +10231,22 @@ impl officekit_markup_base::Write for SlicerList {
     }
 }
 
-impl<X: NodeExtra> SlicerSlicerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SlicerSlicerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SlicerSlicerWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SlicerSlicerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SlicerSlicerWith {
             cache: self.cache,
             caption: self.caption,
             column_count: self.column_count,
-            ext_lst_extension_list: officekit_markup_base::into_extra_optional(
+            ext_lst_extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst_extension_list,
-                ExtLstExtensionListWith::into_extra,
+                ExtLstExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
             level: self.level,
             locked_position: self.locked_position,
             name: self.name,
@@ -10213,6 +10255,7 @@ impl<X: NodeExtra> SlicerSlicerWith<X> {
             start_item: self.start_item,
             style: self.style,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10248,18 +10291,18 @@ impl officekit_markup_base::Write for SlicerSlicer {
     }
 }
 
-impl<X: NodeExtra> SlicerSlicerRefWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SlicerSlicerRefWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SlicerSlicerRefWith<Y>
+    pub fn into_user_data<Y>(self) -> SlicerSlicerRefWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SlicerSlicerRefWith {
-            extra: Default::default(),
             id: self.id,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10286,22 +10329,22 @@ impl officekit_markup_base::Write for SlicerSlicerRef {
     }
 }
 
-impl<X: NodeExtra> SlicerStyleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SlicerStyleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SlicerStyleWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SlicerStyleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SlicerStyleWith {
-            elements: officekit_markup_base::into_extra_optional(
+            elements: officekit_markup_base::into_user_data_optional(
                 &mut self.elements,
-                SlicerStyleElementsWith::into_extra,
+                SlicerStyleElementsWith::into_user_data,
             ),
-            extra: Default::default(),
             name: self.name,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10328,19 +10371,19 @@ impl officekit_markup_base::Write for SlicerStyle {
     }
 }
 
-impl<X: NodeExtra> SlicerStyleElementWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SlicerStyleElementWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SlicerStyleElementWith<Y>
+    pub fn into_user_data<Y>(self) -> SlicerStyleElementWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SlicerStyleElementWith {
             dxf_id: self.dxf_id,
-            extra: Default::default(),
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10368,21 +10411,21 @@ impl officekit_markup_base::Write for SlicerStyleElement {
     }
 }
 
-impl<X: NodeExtra> SlicerStyleElementsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SlicerStyleElementsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SlicerStyleElementsWith<Y>
+    pub fn into_user_data<Y>(self) -> SlicerStyleElementsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SlicerStyleElementsWith {
-            extra: Default::default(),
-            slicer_style_element: officekit_markup_base::into_extra_list(
+            slicer_style_element: officekit_markup_base::into_user_data_list(
                 self.slicer_style_element,
-                SlicerStyleElementWith::into_extra,
+                SlicerStyleElementWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10497,22 +10540,22 @@ impl SlicerStyleType {
     }
 }
 
-impl<X: NodeExtra> SlicerStylesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SlicerStylesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SlicerStylesWith<Y>
+    pub fn into_user_data<Y>(self) -> SlicerStylesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SlicerStylesWith {
             default_slicer_style: self.default_slicer_style,
-            extra: Default::default(),
-            slicer_style: officekit_markup_base::into_extra_list(
+            slicer_style: officekit_markup_base::into_user_data_list(
                 self.slicer_style,
-                SlicerStyleWith::into_extra,
+                SlicerStyleWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10539,21 +10582,21 @@ impl officekit_markup_base::Write for SlicerStyles {
     }
 }
 
-impl<X: NodeExtra> SlicersWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SlicersWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SlicersWith<Y>
+    pub fn into_user_data<Y>(self) -> SlicersWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SlicersWith {
-            extra: Default::default(),
-            slicer_slicer: officekit_markup_base::into_extra_list(
+            slicer_slicer: officekit_markup_base::into_user_data_list(
                 self.slicer_slicer,
-                SlicerSlicerWith::into_extra,
+                SlicerSlicerWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10577,24 +10620,24 @@ impl officekit_markup_base::Write for Slicers {
     }
 }
 
-impl<X: NodeExtra> SortConditionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SortConditionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SortConditionWith<Y>
+    pub fn into_user_data<Y>(self) -> SortConditionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SortConditionWith {
             custom_list: self.custom_list,
             descending: self.descending,
             dxf_id: self.dxf_id,
-            extra: Default::default(),
             icon_id: self.icon_id,
             icon_set: self.icon_set,
             r#ref: self.r#ref,
             sort_by: self.sort_by,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10627,18 +10670,18 @@ impl officekit_markup_base::Write for SortCondition {
     }
 }
 
-impl<X: NodeExtra> SourceConnectionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SourceConnectionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SourceConnectionWith<Y>
+    pub fn into_user_data<Y>(self) -> SourceConnectionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SourceConnectionWith {
-            extra: Default::default(),
             name: self.name,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10665,25 +10708,25 @@ impl officekit_markup_base::Write for SourceConnection {
     }
 }
 
-impl<X: NodeExtra> SparklineWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SparklineWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SparklineWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SparklineWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SparklineWith {
-            extra: Default::default(),
-            f: officekit_markup_base::into_extra_optional(
+            f: officekit_markup_base::into_user_data_optional(
                 &mut self.f,
-                office_excel_2006_main::FWith::into_extra,
+                office_excel_2006_main::FWith::into_user_data,
             ),
-            sqref: officekit_markup_base::into_extra_required(
+            sqref: officekit_markup_base::into_user_data_required(
                 *self.sqref,
-                office_excel_2006_main::SqrefWith::into_extra,
+                office_excel_2006_main::SqrefWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10765,55 +10808,54 @@ impl SparklineAxisMinMax {
     }
 }
 
-impl<X: NodeExtra> SparklineGroupWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SparklineGroupWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SparklineGroupWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SparklineGroupWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SparklineGroupWith {
-            color_axis: officekit_markup_base::into_extra_optional(
+            color_axis: officekit_markup_base::into_user_data_optional(
                 &mut self.color_axis,
-                ColorAxisWith::into_extra,
+                ColorAxisWith::into_user_data,
             ),
-            color_first: officekit_markup_base::into_extra_optional(
+            color_first: officekit_markup_base::into_user_data_optional(
                 &mut self.color_first,
-                ColorFirstWith::into_extra,
+                ColorFirstWith::into_user_data,
             ),
-            color_high: officekit_markup_base::into_extra_optional(
+            color_high: officekit_markup_base::into_user_data_optional(
                 &mut self.color_high,
-                ColorHighWith::into_extra,
+                ColorHighWith::into_user_data,
             ),
-            color_last: officekit_markup_base::into_extra_optional(
+            color_last: officekit_markup_base::into_user_data_optional(
                 &mut self.color_last,
-                ColorLastWith::into_extra,
+                ColorLastWith::into_user_data,
             ),
-            color_low: officekit_markup_base::into_extra_optional(
+            color_low: officekit_markup_base::into_user_data_optional(
                 &mut self.color_low,
-                ColorLowWith::into_extra,
+                ColorLowWith::into_user_data,
             ),
-            color_markers: officekit_markup_base::into_extra_optional(
+            color_markers: officekit_markup_base::into_user_data_optional(
                 &mut self.color_markers,
-                ColorMarkersWith::into_extra,
+                ColorMarkersWith::into_user_data,
             ),
-            color_negative: officekit_markup_base::into_extra_optional(
+            color_negative: officekit_markup_base::into_user_data_optional(
                 &mut self.color_negative,
-                ColorNegativeWith::into_extra,
+                ColorNegativeWith::into_user_data,
             ),
-            color_series: officekit_markup_base::into_extra_optional(
+            color_series: officekit_markup_base::into_user_data_optional(
                 &mut self.color_series,
-                ColorSeriesWith::into_extra,
+                ColorSeriesWith::into_user_data,
             ),
             date_axis: self.date_axis,
             display_empty_cells_as: self.display_empty_cells_as,
             display_hidden: self.display_hidden,
             display_x_axis: self.display_x_axis,
-            extra: Default::default(),
-            f: officekit_markup_base::into_extra_optional(
+            f: officekit_markup_base::into_user_data_optional(
                 &mut self.f,
-                office_excel_2006_main::FWith::into_extra,
+                office_excel_2006_main::FWith::into_user_data,
             ),
             first: self.first,
             high: self.high,
@@ -10827,12 +10869,13 @@ impl<X: NodeExtra> SparklineGroupWith<X> {
             min_axis_type: self.min_axis_type,
             negative: self.negative,
             right_to_left: self.right_to_left,
-            sparklines: officekit_markup_base::into_extra_required(
+            sparklines: officekit_markup_base::into_user_data_required(
                 *self.sparklines,
-                SparklinesWith::into_extra,
+                SparklinesWith::into_user_data,
             ),
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10875,21 +10918,21 @@ impl officekit_markup_base::Write for SparklineGroup {
     }
 }
 
-impl<X: NodeExtra> SparklineGroupsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SparklineGroupsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SparklineGroupsWith<Y>
+    pub fn into_user_data<Y>(self) -> SparklineGroupsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SparklineGroupsWith {
-            extra: Default::default(),
-            sparkline_group: officekit_markup_base::into_extra_list(
+            sparkline_group: officekit_markup_base::into_user_data_list(
                 self.sparkline_group,
-                SparklineGroupWith::into_extra,
+                SparklineGroupWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10963,21 +11006,21 @@ impl SparklineType {
     }
 }
 
-impl<X: NodeExtra> SparklinesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SparklinesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SparklinesWith<Y>
+    pub fn into_user_data<Y>(self) -> SparklinesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SparklinesWith {
-            extra: Default::default(),
-            sparkline: officekit_markup_base::into_extra_list(
+            sparkline: officekit_markup_base::into_user_data_list(
                 self.sparkline,
-                SparklineWith::into_extra,
+                SparklineWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -11001,19 +11044,19 @@ impl officekit_markup_base::Write for Sparklines {
     }
 }
 
-impl<X: NodeExtra> TableWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TableWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TableWith<Y>
+    pub fn into_user_data<Y>(self) -> TableWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TableWith {
             alt_text: self.alt_text,
             alt_text_summary: self.alt_text_summary,
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -11041,27 +11084,30 @@ impl officekit_markup_base::Write for Table {
     }
 }
 
-impl<X: NodeExtra> TabularWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TabularWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> TabularWith<Y>
+    pub fn into_user_data<Y>(mut self) -> TabularWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TabularWith {
             cross_filter: self.cross_filter,
             custom_list_sort: self.custom_list_sort,
-            ext_lst_extension_list: officekit_markup_base::into_extra_optional(
+            ext_lst_extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst_extension_list,
-                ExtLstExtensionListWith::into_extra,
+                ExtLstExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            items: officekit_markup_base::into_extra_required(*self.items, ItemsWith::into_extra),
+            items: officekit_markup_base::into_user_data_required(
+                *self.items,
+                ItemsWith::into_user_data,
+            ),
             pivot_cache_id: self.pivot_cache_id,
             show_missing: self.show_missing,
             sort_order: self.sort_order,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -11265,17 +11311,17 @@ impl TextVAlign {
     }
 }
 
-impl<X: NodeExtra> TupleItemWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TupleItemWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TupleItemWith<Y>
+    pub fn into_user_data<Y>(self) -> TupleItemWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TupleItemWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -11303,21 +11349,21 @@ impl officekit_markup_base::Write for TupleItem {
     }
 }
 
-impl<X: NodeExtra> TupleItemsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TupleItemsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TupleItemsWith<Y>
+    pub fn into_user_data<Y>(self) -> TupleItemsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TupleItemsWith {
-            extra: Default::default(),
-            tuple_item: officekit_markup_base::into_extra_list(
+            tuple_item: officekit_markup_base::into_user_data_list(
                 self.tuple_item,
-                TupleItemWith::into_extra,
+                TupleItemWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -11341,24 +11387,27 @@ impl officekit_markup_base::Write for TupleItems {
     }
 }
 
-impl<X: NodeExtra> TupleSetWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TupleSetWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TupleSetWith<Y>
+    pub fn into_user_data<Y>(self) -> TupleSetWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TupleSetWith {
             column_count: self.column_count,
-            extra: Default::default(),
-            headers: officekit_markup_base::into_extra_required(
+            headers: officekit_markup_base::into_user_data_required(
                 *self.headers,
-                HeadersWith::into_extra,
+                HeadersWith::into_user_data,
             ),
             row_count: self.row_count,
-            rows: officekit_markup_base::into_extra_required(*self.rows, RowsWith::into_extra),
+            rows: officekit_markup_base::into_user_data_required(
+                *self.rows,
+                RowsWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -11386,21 +11435,21 @@ impl officekit_markup_base::Write for TupleSet {
     }
 }
 
-impl<X: NodeExtra> UserEditWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> UserEditWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> UserEditWith<Y>
+    pub fn into_user_data<Y>(self) -> UserEditWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         UserEditWith {
-            content: officekit_markup_base::into_extra_required(
+            content: officekit_markup_base::into_user_data_required(
                 *self.content,
-                PivotUserEditContentWith::into_extra,
+                PivotUserEditContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -11424,22 +11473,22 @@ impl officekit_markup_base::Write for UserEdit {
     }
 }
 
-impl<X: NodeExtra> ValuesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ValuesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ValuesWith<Y>
+    pub fn into_user_data<Y>(self) -> ValuesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ValuesWith {
             cols: self.cols,
-            extra: Default::default(),
             rows: self.rows,
             unknown: self.unknown,
-            value: officekit_markup_base::into_extra_list(
+            user_data: Default::default(),
+            value: officekit_markup_base::into_user_data_list(
                 self.value,
-                super::spreadsheet::ValueWith::into_extra,
+                super::spreadsheet::ValueWith::into_user_data,
             ),
         }
     }
@@ -11468,20 +11517,20 @@ impl officekit_markup_base::Write for Values {
     }
 }
 
-impl<X: NodeExtra> WorkbookPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> WorkbookPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> WorkbookPrWith<Y>
+    pub fn into_user_data<Y>(self) -> WorkbookPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         WorkbookPrWith {
             accuracy_version: self.accuracy_version,
             default_image_dpi: self.default_image_dpi,
             discard_image_edit_data: self.discard_image_edit_data,
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

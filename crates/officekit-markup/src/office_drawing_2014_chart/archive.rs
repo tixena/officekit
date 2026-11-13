@@ -224,8 +224,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Bubble3D)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Bubble3DMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -236,12 +236,12 @@ pub struct CategoryFilterExceptionMirror {
     pub bubble3d: Option<Box<super::Bubble3D>>,
     pub d_lbl: Option<Box<super::DLbl>>,
     pub explosion: Option<Box<super::Explosion>>,
-    pub extra: (),
     pub invert_if_negative: Option<Box<super::InvertIfNegative>>,
     pub marker: Option<Box<super::Marker>>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unique_id: Box<super::UniqueId>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -249,8 +249,8 @@ pub struct CategoryFilterExceptionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CategoryFilterExceptionsMirror {
     pub category_filter_exception: Vec<super::CategoryFilterException>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -259,26 +259,26 @@ pub struct CategoryFilterExceptionsMirror {
 pub struct DLblMirror {
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
     pub content: Vec<chart::DataLabelContent>,
-    pub extra: (),
     pub index: Box<chart::Index>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Datapointuniqueidmap)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DatapointuniqueidmapMirror {
-    pub extra: (),
     pub ptentry: Vec<super::Ptentry>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Explosion)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ExplosionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -286,35 +286,35 @@ pub struct ExplosionMirror {
 #[rkyv(remote = super::FilteredLitCacheMultiLvlStrFilteredLiteralCache)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FilteredLitCacheMultiLvlStrFilteredLiteralCacheMirror {
-    pub extra: (),
     pub multi_lvl_str_cache: Box<super::MultiLvlStrCache>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FilteredLitCacheNumFilteredLiteralCache)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FilteredLitCacheNumFilteredLiteralCacheMirror {
-    pub extra: (),
     pub num_cache: Box<super::NumCache>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FilteredLitCacheStrFilteredLiteralCache)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FilteredLitCacheStrFilteredLiteralCacheMirror {
-    pub extra: (),
     pub str_cache: Box<super::StrCache>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::InvertIfNegative)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InvertIfNegativeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -322,8 +322,8 @@ pub struct InvertIfNegativeMirror {
 #[rkyv(remote = super::LiteralDataChart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LiteralDataChartMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -332,11 +332,11 @@ pub struct LiteralDataChartMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct MarkerMirror {
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
-    pub extra: (),
     pub shape_properties: Option<Box<chart::ShapeProperties>>,
     pub size: Option<Box<chart::Size>>,
     pub symbol: Option<Box<chart::Symbol>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -344,10 +344,10 @@ pub struct MarkerMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct MultiLvlStrCacheMirror {
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
-    pub extra: (),
     pub level: Vec<chart::Level>,
     pub point_count: Option<Box<chart::PointCount>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -355,38 +355,38 @@ pub struct MultiLvlStrCacheMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct NumCacheMirror {
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
-    pub extra: (),
     pub format_code: Option<Box<chart::FormatCode>>,
     pub numeric_point: Vec<chart::NumericPoint>,
     pub point_count: Option<Box<chart::PointCount>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PivotOptions16)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotOptions16Mirror {
-    pub extra: (),
     pub show_expand_collapse_field_buttons: Option<Box<super::ShowExpandCollapseFieldButtons>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Ptentry)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PtentryMirror {
-    pub extra: (),
     pub ptidx: Box<super::Ptidx>,
     pub unique_id: Box<super::UniqueID>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Ptidx)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PtidxMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -394,8 +394,8 @@ pub struct PtidxMirror {
 #[rkyv(remote = super::ShowExpandCollapseFieldButtons)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShowExpandCollapseFieldButtonsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -407,12 +407,12 @@ pub struct SpPrMirror {
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub extra: (),
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
     pub outline: Option<Box<drawing::Outline>>,
     pub scene3d: Option<Box<drawing::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }
 
@@ -421,33 +421,33 @@ pub struct SpPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct StrCacheMirror {
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
-    pub extra: (),
     pub point_count: Option<Box<chart::PointCount>>,
     pub string_point: Vec<chart::StringPoint>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::UniqueID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UniqueIDMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::UniqueId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UniqueIdMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<Bubble3DMirror> for super::Bubble3D {
     fn from(item: Bubble3DMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -488,12 +488,12 @@ impl From<CategoryFilterExceptionMirror> for super::CategoryFilterException {
             bubble3d: item.bubble3d,
             d_lbl: item.d_lbl,
             explosion: item.explosion,
-            extra: item.extra,
             invert_if_negative: item.invert_if_negative,
             marker: item.marker,
             sp_pr: item.sp_pr,
             unique_id: item.unique_id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -535,8 +535,8 @@ impl From<CategoryFilterExceptionsMirror> for super::CategoryFilterExceptions {
     fn from(item: CategoryFilterExceptionsMirror) -> Self {
         Self {
             category_filter_exception: item.category_filter_exception,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -579,9 +579,9 @@ impl From<DLblMirror> for super::DLbl {
         Self {
             chart_extensibility: item.chart_extensibility,
             content: item.content,
-            extra: item.extra,
             index: item.index,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -618,9 +618,9 @@ where
 impl From<DatapointuniqueidmapMirror> for super::Datapointuniqueidmap {
     fn from(item: DatapointuniqueidmapMirror) -> Self {
         Self {
-            extra: item.extra,
             ptentry: item.ptentry,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -660,8 +660,8 @@ where
 impl From<ExplosionMirror> for super::Explosion {
     fn from(item: ExplosionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -701,9 +701,9 @@ impl From<FilteredLitCacheMultiLvlStrFilteredLiteralCacheMirror>
 {
     fn from(item: FilteredLitCacheMultiLvlStrFilteredLiteralCacheMirror) -> Self {
         Self {
-            extra: item.extra,
             multi_lvl_str_cache: item.multi_lvl_str_cache,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -746,9 +746,9 @@ impl From<FilteredLitCacheNumFilteredLiteralCacheMirror>
 {
     fn from(item: FilteredLitCacheNumFilteredLiteralCacheMirror) -> Self {
         Self {
-            extra: item.extra,
             num_cache: item.num_cache,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -791,9 +791,9 @@ impl From<FilteredLitCacheStrFilteredLiteralCacheMirror>
 {
     fn from(item: FilteredLitCacheStrFilteredLiteralCacheMirror) -> Self {
         Self {
-            extra: item.extra,
             str_cache: item.str_cache,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -834,8 +834,8 @@ where
 impl From<InvertIfNegativeMirror> for super::InvertIfNegative {
     fn from(item: InvertIfNegativeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -873,8 +873,8 @@ where
 impl From<LiteralDataChartMirror> for super::LiteralDataChart {
     fn from(item: LiteralDataChartMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -913,11 +913,11 @@ impl From<MarkerMirror> for super::Marker {
     fn from(item: MarkerMirror) -> Self {
         Self {
             chart_extensibility: item.chart_extensibility,
-            extra: item.extra,
             shape_properties: item.shape_properties,
             size: item.size,
             symbol: item.symbol,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -955,10 +955,10 @@ impl From<MultiLvlStrCacheMirror> for super::MultiLvlStrCache {
     fn from(item: MultiLvlStrCacheMirror) -> Self {
         Self {
             chart_extensibility: item.chart_extensibility,
-            extra: item.extra,
             level: item.level,
             point_count: item.point_count,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -996,11 +996,11 @@ impl From<NumCacheMirror> for super::NumCache {
     fn from(item: NumCacheMirror) -> Self {
         Self {
             chart_extensibility: item.chart_extensibility,
-            extra: item.extra,
             format_code: item.format_code,
             numeric_point: item.numeric_point,
             point_count: item.point_count,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1037,9 +1037,9 @@ where
 impl From<PivotOptions16Mirror> for super::PivotOptions16 {
     fn from(item: PivotOptions16Mirror) -> Self {
         Self {
-            extra: item.extra,
             show_expand_collapse_field_buttons: item.show_expand_collapse_field_buttons,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1076,10 +1076,10 @@ where
 impl From<PtentryMirror> for super::Ptentry {
     fn from(item: PtentryMirror) -> Self {
         Self {
-            extra: item.extra,
             ptidx: item.ptidx,
             unique_id: item.unique_id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1116,8 +1116,8 @@ where
 impl From<PtidxMirror> for super::Ptidx {
     fn from(item: PtidxMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1155,8 +1155,8 @@ where
 impl From<ShowExpandCollapseFieldButtonsMirror> for super::ShowExpandCollapseFieldButtons {
     fn from(item: ShowExpandCollapseFieldButtonsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -1202,12 +1202,12 @@ impl From<SpPrMirror> for super::SpPr {
             bw_mode: item.bw_mode,
             effect_properties_content: item.effect_properties_content,
             extension_list: item.extension_list,
-            extra: item.extra,
             fill_properties_content: item.fill_properties_content,
             geometry_content: item.geometry_content,
             outline: item.outline,
             scene3d: item.scene3d,
             unknown: item.unknown,
+            user_data: item.user_data,
             xfrm_transform2d: item.xfrm_transform2d,
         }
     }
@@ -1246,10 +1246,10 @@ impl From<StrCacheMirror> for super::StrCache {
     fn from(item: StrCacheMirror) -> Self {
         Self {
             chart_extensibility: item.chart_extensibility,
-            extra: item.extra,
             point_count: item.point_count,
             string_point: item.string_point,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1286,8 +1286,8 @@ where
 impl From<UniqueIDMirror> for super::UniqueID {
     fn from(item: UniqueIDMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1324,8 +1324,8 @@ where
 impl From<UniqueIdMirror> for super::UniqueId {
     fn from(item: UniqueIdMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

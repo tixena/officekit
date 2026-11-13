@@ -230,18 +230,18 @@ pub struct ArrayMirror {
     pub base_type: Option<super::ArrayBaseTypeSimpleType>,
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ArrayContent>,
-    pub extra: (),
     pub l_bounds: Option<String>,
     pub u_bounds: Option<String>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BasicString)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BasicStringMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -249,8 +249,8 @@ pub struct BasicStringMirror {
 #[rkyv(remote = super::BinaryBlob)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BinaryBlobMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -258,8 +258,8 @@ pub struct BinaryBlobMirror {
 #[rkyv(remote = super::BinaryBlobObject)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BinaryBlobObjectMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -267,8 +267,8 @@ pub struct BinaryBlobObjectMirror {
 #[rkyv(remote = super::BinaryStorage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BinaryStorageMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -276,8 +276,8 @@ pub struct BinaryStorageMirror {
 #[rkyv(remote = super::BinaryStorageObject)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BinaryStorageObjectMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -285,8 +285,8 @@ pub struct BinaryStorageObjectMirror {
 #[rkyv(remote = super::BinaryStream)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BinaryStreamMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -294,8 +294,8 @@ pub struct BinaryStreamMirror {
 #[rkyv(remote = super::BinaryStreamObject)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BinaryStreamObjectMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -303,8 +303,8 @@ pub struct BinaryStreamObjectMirror {
 #[rkyv(remote = super::BinaryVersionedStream)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BinaryVersionedStreamMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
     pub version: Option<super::super::common_simple_types::Guid>,
 }
@@ -313,8 +313,8 @@ pub struct BinaryVersionedStreamMirror {
 #[rkyv(remote = super::Boolean)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BooleanMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -322,8 +322,8 @@ pub struct BooleanMirror {
 #[rkyv(remote = super::ClassID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ClassIDMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::Guid,
 }
 
@@ -331,8 +331,8 @@ pub struct ClassIDMirror {
 #[rkyv(remote = super::Currency)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CurrencyMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::CurrencySimpleType,
 }
 
@@ -340,8 +340,8 @@ pub struct CurrencyMirror {
 #[rkyv(remote = super::DateAndTime)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateAndTimeMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -349,8 +349,8 @@ pub struct DateAndTimeMirror {
 #[rkyv(remote = super::Decimal)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DecimalMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -358,16 +358,16 @@ pub struct DecimalMirror {
 #[rkyv(remote = super::Empty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmptyMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ErrorStatusCode)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ErrorStatusCodeMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::ErrorStatusCodeSimpleType,
 }
 
@@ -375,8 +375,8 @@ pub struct ErrorStatusCodeMirror {
 #[rkyv(remote = super::FileTime)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FileTimeMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -384,8 +384,8 @@ pub struct FileTimeMirror {
 #[rkyv(remote = super::I1)]
 #[rkyv(attr(non_exhaustive))]
 pub struct I1Mirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -393,8 +393,8 @@ pub struct I1Mirror {
 #[rkyv(remote = super::I2)]
 #[rkyv(attr(non_exhaustive))]
 pub struct I2Mirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -402,8 +402,8 @@ pub struct I2Mirror {
 #[rkyv(remote = super::I4)]
 #[rkyv(attr(non_exhaustive))]
 pub struct I4Mirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -411,8 +411,8 @@ pub struct I4Mirror {
 #[rkyv(remote = super::I8)]
 #[rkyv(attr(non_exhaustive))]
 pub struct I8Mirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -420,8 +420,8 @@ pub struct I8Mirror {
 #[rkyv(remote = super::Integer)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IntegerMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -429,8 +429,8 @@ pub struct IntegerMirror {
 #[rkyv(remote = super::Lpstr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LpstrMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -438,8 +438,8 @@ pub struct LpstrMirror {
 #[rkyv(remote = super::Lpwstr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LpwstrMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -447,16 +447,16 @@ pub struct LpwstrMirror {
 #[rkyv(remote = super::Null)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NullMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::R4)]
 #[rkyv(attr(non_exhaustive))]
 pub struct R4Mirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -464,8 +464,8 @@ pub struct R4Mirror {
 #[rkyv(remote = super::R8)]
 #[rkyv(attr(non_exhaustive))]
 pub struct R8Mirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -473,8 +473,8 @@ pub struct R8Mirror {
 #[rkyv(remote = super::Ui1)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Ui1Mirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -482,8 +482,8 @@ pub struct Ui1Mirror {
 #[rkyv(remote = super::Ui2)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Ui2Mirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -491,8 +491,8 @@ pub struct Ui2Mirror {
 #[rkyv(remote = super::Ui4)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Ui4Mirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -500,8 +500,8 @@ pub struct Ui4Mirror {
 #[rkyv(remote = super::Ui8)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Ui8Mirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -509,8 +509,8 @@ pub struct Ui8Mirror {
 #[rkyv(remote = super::UnsignedInteger)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnsignedIntegerMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -523,8 +523,8 @@ pub struct UnsignedIntegerMirror {
 pub struct VariantMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::VariantContent>,
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -537,9 +537,9 @@ pub struct VectorMirror {
     pub base_type: Option<super::VectorBaseTypeSimpleType>,
     #[rkyv(omit_bounds)]
     pub content: Vec<super::VectorContent>,
-    pub extra: (),
     pub size: Option<String>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -648,10 +648,10 @@ impl From<ArrayMirror> for super::Array {
         Self {
             base_type: item.base_type,
             content: item.content,
-            extra: item.extra,
             l_bounds: item.l_bounds,
             u_bounds: item.u_bounds,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -688,8 +688,8 @@ where
 impl From<BasicStringMirror> for super::BasicString {
     fn from(item: BasicStringMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -727,8 +727,8 @@ where
 impl From<BinaryBlobMirror> for super::BinaryBlob {
     fn from(item: BinaryBlobMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -766,8 +766,8 @@ where
 impl From<BinaryBlobObjectMirror> for super::BinaryBlobObject {
     fn from(item: BinaryBlobObjectMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -805,8 +805,8 @@ where
 impl From<BinaryStorageMirror> for super::BinaryStorage {
     fn from(item: BinaryStorageMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -844,8 +844,8 @@ where
 impl From<BinaryStorageObjectMirror> for super::BinaryStorageObject {
     fn from(item: BinaryStorageObjectMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -886,8 +886,8 @@ where
 impl From<BinaryStreamMirror> for super::BinaryStream {
     fn from(item: BinaryStreamMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -925,8 +925,8 @@ where
 impl From<BinaryStreamObjectMirror> for super::BinaryStreamObject {
     fn from(item: BinaryStreamObjectMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -964,8 +964,8 @@ where
 impl From<BinaryVersionedStreamMirror> for super::BinaryVersionedStream {
     fn from(item: BinaryVersionedStreamMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
             version: item.version,
         }
@@ -1008,8 +1008,8 @@ where
 impl From<BooleanMirror> for super::Boolean {
     fn from(item: BooleanMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1047,8 +1047,8 @@ where
 impl From<ClassIDMirror> for super::ClassID {
     fn from(item: ClassIDMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1086,8 +1086,8 @@ where
 impl From<CurrencyMirror> for super::Currency {
     fn from(item: CurrencyMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1125,8 +1125,8 @@ where
 impl From<DateAndTimeMirror> for super::DateAndTime {
     fn from(item: DateAndTimeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1164,8 +1164,8 @@ where
 impl From<DecimalMirror> for super::Decimal {
     fn from(item: DecimalMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1203,8 +1203,8 @@ where
 impl From<EmptyMirror> for super::Empty {
     fn from(item: EmptyMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1241,8 +1241,8 @@ where
 impl From<ErrorStatusCodeMirror> for super::ErrorStatusCode {
     fn from(item: ErrorStatusCodeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1280,8 +1280,8 @@ where
 impl From<FileTimeMirror> for super::FileTime {
     fn from(item: FileTimeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1319,8 +1319,8 @@ where
 impl From<I1Mirror> for super::I1 {
     fn from(item: I1Mirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1358,8 +1358,8 @@ where
 impl From<I2Mirror> for super::I2 {
     fn from(item: I2Mirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1397,8 +1397,8 @@ where
 impl From<I4Mirror> for super::I4 {
     fn from(item: I4Mirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1436,8 +1436,8 @@ where
 impl From<I8Mirror> for super::I8 {
     fn from(item: I8Mirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1475,8 +1475,8 @@ where
 impl From<IntegerMirror> for super::Integer {
     fn from(item: IntegerMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1514,8 +1514,8 @@ where
 impl From<LpstrMirror> for super::Lpstr {
     fn from(item: LpstrMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1553,8 +1553,8 @@ where
 impl From<LpwstrMirror> for super::Lpwstr {
     fn from(item: LpwstrMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1592,8 +1592,8 @@ where
 impl From<NullMirror> for super::Null {
     fn from(item: NullMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1630,8 +1630,8 @@ where
 impl From<R4Mirror> for super::R4 {
     fn from(item: R4Mirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1669,8 +1669,8 @@ where
 impl From<R8Mirror> for super::R8 {
     fn from(item: R8Mirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1708,8 +1708,8 @@ where
 impl From<Ui1Mirror> for super::Ui1 {
     fn from(item: Ui1Mirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1747,8 +1747,8 @@ where
 impl From<Ui2Mirror> for super::Ui2 {
     fn from(item: Ui2Mirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1786,8 +1786,8 @@ where
 impl From<Ui4Mirror> for super::Ui4 {
     fn from(item: Ui4Mirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1825,8 +1825,8 @@ where
 impl From<Ui8Mirror> for super::Ui8 {
     fn from(item: Ui8Mirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1864,8 +1864,8 @@ where
 impl From<UnsignedIntegerMirror> for super::UnsignedInteger {
     fn from(item: UnsignedIntegerMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1904,8 +1904,8 @@ impl From<VariantMirror> for super::Variant {
     fn from(item: VariantMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1944,9 +1944,9 @@ impl From<VectorMirror> for super::Vector {
         Self {
             base_type: item.base_type,
             content: item.content,
-            extra: item.extra,
             size: item.size,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

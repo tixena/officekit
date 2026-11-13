@@ -224,17 +224,17 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<spreadsheet::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Rel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RelMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -242,17 +242,17 @@ pub struct RelMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RichValueRelsMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub rel: Vec<super::Rel>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -289,9 +289,9 @@ where
 impl From<RelMirror> for super::Rel {
     fn from(item: RelMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -329,9 +329,9 @@ impl From<RichValueRelsMirror> for super::RichValueRels {
     fn from(item: RichValueRelsMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             rel: item.rel,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

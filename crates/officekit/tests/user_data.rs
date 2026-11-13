@@ -3,5 +3,5 @@
 
 #[cfg(test)]
 #[cfg(feature = "transitional")]
-#[path = "extra_slots/tests.rs"]
+#[path = "user_data/tests.rs"]
 mod tests;

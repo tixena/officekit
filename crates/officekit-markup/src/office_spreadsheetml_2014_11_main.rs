@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
@@ -275,23 +275,23 @@ pub static MODEL_TIME_GROUPINGS_SHAPE: officekit_markup_base::Shape =
 /// 3.5.1. Its schema type is `CT_CalculatedTimeColumn`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CalculatedTimeColumnWith<X: NodeExtra> {
+pub struct CalculatedTimeColumnWith<X: UserData> {
     /// The attribute `columnId`, when the element has it.
     pub column_id: Option<String>,
     /// The attribute `columnName`, when the element has it.
     pub column_name: Option<String>,
     /// The attribute `contentType`, when the element has it.
     pub content_type: Option<ModelTimeGroupingContentType>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml201411MainCalculatedTimeColumn,
     /// The attribute `isSelected`, when the element has it.
     pub is_selected: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml201411MainCalculatedTimeColumn,
 }
 
 /// The `x16:calculatedTimeColumn` element of the tree a read gives: [`CalculatedTimeColumnWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type CalculatedTimeColumn = CalculatedTimeColumnWith<()>;
 
 impl Eq for CalculatedTimeColumnWith<()> {}
@@ -373,23 +373,23 @@ pub trait Context: crate::Context {
 /// 3.5.1. Its schema type is `CT_ModelTimeGrouping`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ModelTimeGroupingWith<X: NodeExtra> {
+pub struct ModelTimeGroupingWith<X: UserData> {
     /// The children that are `CalculatedTimeColumn`, in order.
     pub calculated_time_column: Vec<CalculatedTimeColumnWith<X>>,
     /// The attribute `columnId`, when the element has it.
     pub column_id: Option<String>,
     /// The attribute `columnName`, when the element has it.
     pub column_name: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml201411MainModelTimeGrouping,
     /// The attribute `tableName`, when the element has it.
     pub table_name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml201411MainModelTimeGrouping,
 }
 
 /// The `x16:modelTimeGrouping` element of the tree a read gives: [`ModelTimeGroupingWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ModelTimeGrouping = ModelTimeGroupingWith<()>;
 
 impl Eq for ModelTimeGroupingWith<()> {}
@@ -435,17 +435,17 @@ pub enum ModelTimeGroupingContentTypeMember {
 /// 3.5.1. Its schema type is `CT_ModelTimeGroupings`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ModelTimeGroupingsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml201411MainModelTimeGroupings,
+pub struct ModelTimeGroupingsWith<X: UserData> {
     /// The children that are `ModelTimeGrouping`, in order.
     pub model_time_grouping: Vec<ModelTimeGroupingWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml201411MainModelTimeGroupings,
 }
 
 /// The `x16:modelTimeGroupings` element of the tree a read gives: [`ModelTimeGroupingsWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ModelTimeGroupings = ModelTimeGroupingsWith<()>;
 
 impl Eq for ModelTimeGroupingsWith<()> {}
@@ -481,21 +481,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> CalculatedTimeColumnWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CalculatedTimeColumnWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CalculatedTimeColumnWith<Y>
+    pub fn into_user_data<Y>(self) -> CalculatedTimeColumnWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CalculatedTimeColumnWith {
             column_id: self.column_id,
             column_name: self.column_name,
             content_type: self.content_type,
-            extra: Default::default(),
             is_selected: self.is_selected,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -525,24 +525,24 @@ impl officekit_markup_base::Write for CalculatedTimeColumn {
     }
 }
 
-impl<X: NodeExtra> ModelTimeGroupingWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ModelTimeGroupingWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ModelTimeGroupingWith<Y>
+    pub fn into_user_data<Y>(self) -> ModelTimeGroupingWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ModelTimeGroupingWith {
-            calculated_time_column: officekit_markup_base::into_extra_list(
+            calculated_time_column: officekit_markup_base::into_user_data_list(
                 self.calculated_time_column,
-                CalculatedTimeColumnWith::into_extra,
+                CalculatedTimeColumnWith::into_user_data,
             ),
             column_id: self.column_id,
             column_name: self.column_name,
-            extra: Default::default(),
             table_name: self.table_name,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -639,21 +639,21 @@ impl ModelTimeGroupingContentType {
     }
 }
 
-impl<X: NodeExtra> ModelTimeGroupingsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ModelTimeGroupingsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ModelTimeGroupingsWith<Y>
+    pub fn into_user_data<Y>(self) -> ModelTimeGroupingsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ModelTimeGroupingsWith {
-            extra: Default::default(),
-            model_time_grouping: officekit_markup_base::into_extra_list(
+            model_time_grouping: officekit_markup_base::into_user_data_list(
                 self.model_time_grouping,
-                ModelTimeGroupingWith::into_extra,
+                ModelTimeGroupingWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

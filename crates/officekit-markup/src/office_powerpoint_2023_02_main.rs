@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
@@ -272,14 +272,14 @@ pub static PLACEHOLDER_TYPE_CONTENT_TAGS: officekit_markup_base::Accept =
 /// schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CameoWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint202302MainCameo,
+pub struct CameoWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint202302MainCameo,
 }
 
-/// The `p232:cameo` element of the tree a read gives: [`CameoWith`] holding nothing in `extra`.
+/// The `p232:cameo` element of the tree a read gives: [`CameoWith`] holding nothing in `user_data`.
 pub type Cameo = CameoWith<()>;
 
 impl Eq for CameoWith<()> {}
@@ -389,17 +389,17 @@ pub trait Context: crate::Context {
 /// Its schema type is `CT_PlaceholderTypeExtension`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PhTypeExtWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint202302MainPhTypeExt,
+pub struct PhTypeExtWith<X: UserData> {
     /// The child that is `Type`, which the schema requires.
     pub r#type: Box<TypeWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint202302MainPhTypeExt,
 }
 
 /// The `p232:phTypeExt` element of the tree a read gives: [`PhTypeExtWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PhTypeExt = PhTypeExtWith<()>;
 
 impl Eq for PhTypeExtWith<()> {}
@@ -411,7 +411,7 @@ impl Eq for PhTypeExtWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum PlaceholderTypeContentWith<X: NodeExtra> {
+pub enum PlaceholderTypeContentWith<X: UserData> {
     /// The element `p232:cameo`, a `Cameo`.
     Cameo(CameoWith<X>),
     /// An element or node the schemas do not declare at this position.
@@ -421,7 +421,7 @@ pub enum PlaceholderTypeContentWith<X: NodeExtra> {
 }
 
 /// [`PlaceholderTypeContentWith`] of the tree a read gives, where no node holds anything in
-/// `extra`.
+/// `user_data`.
 pub type PlaceholderTypeContent = PlaceholderTypeContentWith<()>;
 
 impl Eq for PlaceholderTypeContentWith<()> {}
@@ -430,16 +430,16 @@ impl Eq for PlaceholderTypeContentWith<()> {}
 /// schema type is `CT_PlaceholderTypeACB`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TypeWith<X: NodeExtra> {
+pub struct TypeWith<X: UserData> {
     /// The child that is an item of `PlaceholderTypeContent`, which the schema requires.
     pub content: Box<PlaceholderTypeContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint202302MainType,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint202302MainType,
 }
 
-/// The `p232:type` element of the tree a read gives: [`TypeWith`] holding nothing in `extra`.
+/// The `p232:type` element of the tree a read gives: [`TypeWith`] holding nothing in `user_data`.
 pub type Type = TypeWith<()>;
 
 impl Eq for TypeWith<()> {}
@@ -448,14 +448,15 @@ impl Eq for TypeWith<()> {}
 /// schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct UnknownWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint202302MainUnknown,
+pub struct UnknownWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint202302MainUnknown,
 }
 
-/// The `p232:unknown` element of the tree a read gives: [`UnknownWith`] holding nothing in `extra`.
+/// The `p232:unknown` element of the tree a read gives: [`UnknownWith`] holding nothing in
+/// `user_data`.
 pub type Unknown = UnknownWith<()>;
 
 impl Eq for UnknownWith<()> {}
@@ -497,17 +498,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> CameoWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CameoWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CameoWith<Y>
+    pub fn into_user_data<Y>(self) -> CameoWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CameoWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -531,18 +532,21 @@ impl officekit_markup_base::Write for Cameo {
     }
 }
 
-impl<X: NodeExtra> PhTypeExtWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PhTypeExtWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PhTypeExtWith<Y>
+    pub fn into_user_data<Y>(self) -> PhTypeExtWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PhTypeExtWith {
-            extra: Default::default(),
-            r#type: officekit_markup_base::into_extra_required(*self.r#type, TypeWith::into_extra),
+            r#type: officekit_markup_base::into_user_data_required(
+                *self.r#type,
+                TypeWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -566,22 +570,22 @@ impl officekit_markup_base::Write for PhTypeExt {
     }
 }
 
-impl<X: NodeExtra> PlaceholderTypeContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> PlaceholderTypeContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PlaceholderTypeContentWith<Y>
+    pub fn into_user_data<Y>(self) -> PlaceholderTypeContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
-            Self::Cameo(node) => PlaceholderTypeContentWith::Cameo(node.into_extra()),
+            Self::Cameo(node) => PlaceholderTypeContentWith::Cameo(node.into_user_data()),
             Self::Other(node) => PlaceholderTypeContentWith::Other(node),
-            Self::Unknown(node) => PlaceholderTypeContentWith::Unknown(node.into_extra()),
+            Self::Unknown(node) => PlaceholderTypeContentWith::Unknown(node.into_user_data()),
         }
     }
 }
 
-impl<X: NodeExtra> Default for PlaceholderTypeContentWith<X> {
+impl<X: UserData> Default for PlaceholderTypeContentWith<X> {
     fn default() -> Self {
         Self::Cameo(CameoWith::default())
     }
@@ -611,21 +615,21 @@ impl officekit_markup_base::Write for PlaceholderTypeContent {
     }
 }
 
-impl<X: NodeExtra> TypeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TypeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TypeWith<Y>
+    pub fn into_user_data<Y>(self) -> TypeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TypeWith {
-            content: officekit_markup_base::into_extra_required(
+            content: officekit_markup_base::into_user_data_required(
                 *self.content,
-                PlaceholderTypeContentWith::into_extra,
+                PlaceholderTypeContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -649,17 +653,17 @@ impl officekit_markup_base::Write for Type {
     }
 }
 
-impl<X: NodeExtra> UnknownWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> UnknownWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> UnknownWith<Y>
+    pub fn into_user_data<Y>(self) -> UnknownWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         UnknownWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

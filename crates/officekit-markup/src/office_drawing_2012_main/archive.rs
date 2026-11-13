@@ -226,29 +226,29 @@ pub struct BackgroundPrMirror {
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
     pub bw_normal: Option<drawing::BlackAndWhiteMode>,
     pub bw_pure: Option<drawing::BlackAndWhiteMode>,
-    pub extra: (),
     pub target_screen_size: Option<super::TargetScreenSz>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::NonVisualGroupProps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonVisualGroupPropsMirror {
-    pub extra: (),
     pub is_legacy_group: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ObjectPr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ObjectPrMirror {
-    pub extra: (),
     pub is_active_x: Option<String>,
     pub link_type: Option<String>,
     pub object_id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -257,7 +257,6 @@ pub struct ObjectPrMirror {
 pub struct SignatureLineMirror {
     pub addl_xml: Option<String>,
     pub allow_comments: Option<String>,
-    pub extra: (),
     pub id: Option<String>,
     pub is_signature_line: Option<String>,
     pub prov_id: Option<String>,
@@ -269,6 +268,7 @@ pub struct SignatureLineMirror {
     pub suggested_signer2: Option<String>,
     pub suggested_signer_email: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<BackgroundPrMirror> for super::BackgroundPr {
@@ -277,9 +277,9 @@ impl From<BackgroundPrMirror> for super::BackgroundPr {
             bw_mode: item.bw_mode,
             bw_normal: item.bw_normal,
             bw_pure: item.bw_pure,
-            extra: item.extra,
             target_screen_size: item.target_screen_size,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -316,9 +316,9 @@ where
 impl From<NonVisualGroupPropsMirror> for super::NonVisualGroupProps {
     fn from(item: NonVisualGroupPropsMirror) -> Self {
         Self {
-            extra: item.extra,
             is_legacy_group: item.is_legacy_group,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -358,11 +358,11 @@ where
 impl From<ObjectPrMirror> for super::ObjectPr {
     fn from(item: ObjectPrMirror) -> Self {
         Self {
-            extra: item.extra,
             is_active_x: item.is_active_x,
             link_type: item.link_type,
             object_id: item.object_id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -401,7 +401,6 @@ impl From<SignatureLineMirror> for super::SignatureLine {
         Self {
             addl_xml: item.addl_xml,
             allow_comments: item.allow_comments,
-            extra: item.extra,
             id: item.id,
             is_signature_line: item.is_signature_line,
             prov_id: item.prov_id,
@@ -413,6 +412,7 @@ impl From<SignatureLineMirror> for super::SignatureLine {
             suggested_signer2: item.suggested_signer2,
             suggested_signer_email: item.suggested_signer_email,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

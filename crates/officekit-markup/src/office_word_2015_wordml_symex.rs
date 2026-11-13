@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -269,18 +269,19 @@ pub trait Context: crate::Context {
 /// schema type is `CT_SymEx`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SymExWith<X: NodeExtra> {
+pub struct SymExWith<X: UserData> {
     /// The attribute `w16se:char`, when the element has it.
     pub char: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2015WordmlSymexSymEx,
     /// The attribute `w16se:font`, when the element has it.
     pub font: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2015WordmlSymexSymEx,
 }
 
-/// The `w16se:symEx` element of the tree a read gives: [`SymExWith`] holding nothing in `extra`.
+/// The `w16se:symEx` element of the tree a read gives: [`SymExWith`] holding nothing in
+/// `user_data`.
 pub type SymEx = SymExWith<()>;
 
 impl Eq for SymExWith<()> {}
@@ -297,19 +298,19 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> SymExWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SymExWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SymExWith<Y>
+    pub fn into_user_data<Y>(self) -> SymExWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SymExWith {
             char: self.char,
-            extra: Default::default(),
             font: self.font,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

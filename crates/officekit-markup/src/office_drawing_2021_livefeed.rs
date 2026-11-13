@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::{Element, Node};
@@ -304,19 +304,19 @@ pub static LIVE_FEED_BACKGROUND_PROPERTIES_CONTENT_TAGS: officekit_markup_base::
 /// 3.5.1. Its schema type is `CT_LiveFeedBackgroundProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BackgroundPropsWith<X: NodeExtra> {
+pub struct BackgroundPropsWith<X: UserData> {
     /// The child that is an item of `LiveFeedBackgroundPropertiesContent`, when there is one.
     pub content: Option<Box<LiveFeedBackgroundPropertiesContentWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2021LivefeedBackgroundProps,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2021LivefeedBackgroundProps,
 }
 
 /// The `alf:backgroundProps` element of the tree a read gives: [`BackgroundPropsWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type BackgroundProps = BackgroundPropsWith<()>;
 
 impl Eq for BackgroundPropsWith<()> {}
@@ -325,16 +325,16 @@ impl Eq for BackgroundPropsWith<()> {}
 /// schema type is `CT_BackgroundBlurProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BlurWith<X: NodeExtra> {
+pub struct BlurWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2021LivefeedBlur,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2021LivefeedBlur,
 }
 
-/// The `alf:Blur` element of the tree a read gives: [`BlurWith`] holding nothing in `extra`.
+/// The `alf:Blur` element of the tree a read gives: [`BlurWith`] holding nothing in `user_data`.
 pub type Blur = BlurWith<()>;
 
 impl Eq for BlurWith<()> {}
@@ -496,16 +496,17 @@ pub trait Context: crate::Context {
 /// schema type is `CT_BackgroundCustomProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CustomWith<X: NodeExtra> {
+pub struct CustomWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2021LivefeedCustom,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2021LivefeedCustom,
 }
 
-/// The `alf:Custom` element of the tree a read gives: [`CustomWith`] holding nothing in `extra`.
+/// The `alf:Custom` element of the tree a read gives: [`CustomWith`] holding nothing in
+/// `user_data`.
 pub type Custom = CustomWith<()>;
 
 impl Eq for CustomWith<()> {}
@@ -514,16 +515,17 @@ impl Eq for CustomWith<()> {}
 /// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2021LivefeedExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2021LivefeedExtLst,
 }
 
-/// The `alf:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `alf:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -535,7 +537,7 @@ impl Eq for ExtLstWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum LiveFeedBackgroundPropertiesContentWith<X: NodeExtra> {
+pub enum LiveFeedBackgroundPropertiesContentWith<X: UserData> {
     /// The element `alf:Blur`, a `Blur`.
     Blur(BlurWith<X>),
     /// The element `alf:Custom`, a `Custom`.
@@ -549,7 +551,7 @@ pub enum LiveFeedBackgroundPropertiesContentWith<X: NodeExtra> {
 }
 
 /// [`LiveFeedBackgroundPropertiesContentWith`] of the tree a read gives, where no node holds
-/// anything in `extra`.
+/// anything in `user_data`.
 pub type LiveFeedBackgroundPropertiesContent = LiveFeedBackgroundPropertiesContentWith<()>;
 
 impl Eq for LiveFeedBackgroundPropertiesContentWith<()> {}
@@ -558,19 +560,19 @@ impl Eq for LiveFeedBackgroundPropertiesContentWith<()> {}
 /// Its schema type is `CT_LiveFeedProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LiveFeedPropsWith<X: NodeExtra> {
+pub struct LiveFeedPropsWith<X: UserData> {
     /// The child that is `BackgroundProps`, when there is one.
     pub background_props: Option<Box<BackgroundPropsWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2021LivefeedLiveFeedProps,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2021LivefeedLiveFeedProps,
 }
 
 /// The `alf:liveFeedProps` element of the tree a read gives: [`LiveFeedPropsWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type LiveFeedProps = LiveFeedPropsWith<()>;
 
 impl Eq for LiveFeedPropsWith<()> {}
@@ -579,16 +581,17 @@ impl Eq for LiveFeedPropsWith<()> {}
 /// schema type is `CT_BackgroundNormalProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NormalWith<X: NodeExtra> {
+pub struct NormalWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2021LivefeedNormal,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2021LivefeedNormal,
 }
 
-/// The `alf:Normal` element of the tree a read gives: [`NormalWith`] holding nothing in `extra`.
+/// The `alf:Normal` element of the tree a read gives: [`NormalWith`] holding nothing in
+/// `user_data`.
 pub type Normal = NormalWith<()>;
 
 impl Eq for NormalWith<()> {}
@@ -597,16 +600,17 @@ impl Eq for NormalWith<()> {}
 /// schema type is `CT_BackgroundRemovedProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RemovedWith<X: NodeExtra> {
+pub struct RemovedWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2021LivefeedRemoved,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2021LivefeedRemoved,
 }
 
-/// The `alf:Removed` element of the tree a read gives: [`RemovedWith`] holding nothing in `extra`.
+/// The `alf:Removed` element of the tree a read gives: [`RemovedWith`] holding nothing in
+/// `user_data`.
 pub type Removed = RemovedWith<()>;
 
 impl Eq for RemovedWith<()> {}
@@ -664,25 +668,25 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> BackgroundPropsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BackgroundPropsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> BackgroundPropsWith<Y>
+    pub fn into_user_data<Y>(mut self) -> BackgroundPropsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BackgroundPropsWith {
-            content: officekit_markup_base::into_extra_optional(
+            content: officekit_markup_base::into_user_data_optional(
                 &mut self.content,
-                LiveFeedBackgroundPropertiesContentWith::into_extra,
+                LiveFeedBackgroundPropertiesContentWith::into_user_data,
             ),
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -706,21 +710,21 @@ impl officekit_markup_base::Write for BackgroundProps {
     }
 }
 
-impl<X: NodeExtra> BlurWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BlurWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> BlurWith<Y>
+    pub fn into_user_data<Y>(mut self) -> BlurWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BlurWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -744,21 +748,21 @@ impl officekit_markup_base::Write for Blur {
     }
 }
 
-impl<X: NodeExtra> CustomWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CustomWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> CustomWith<Y>
+    pub fn into_user_data<Y>(mut self) -> CustomWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CustomWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -782,21 +786,21 @@ impl officekit_markup_base::Write for Custom {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                drawing::ExtensionWith::into_extra,
+                drawing::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -820,24 +824,26 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> LiveFeedBackgroundPropertiesContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> LiveFeedBackgroundPropertiesContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LiveFeedBackgroundPropertiesContentWith<Y>
+    pub fn into_user_data<Y>(self) -> LiveFeedBackgroundPropertiesContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
-            Self::Blur(node) => LiveFeedBackgroundPropertiesContentWith::Blur(node.into_extra()),
+            Self::Blur(node) => {
+                LiveFeedBackgroundPropertiesContentWith::Blur(node.into_user_data())
+            }
             Self::Custom(node) => {
-                LiveFeedBackgroundPropertiesContentWith::Custom(node.into_extra())
+                LiveFeedBackgroundPropertiesContentWith::Custom(node.into_user_data())
             }
             Self::Normal(node) => {
-                LiveFeedBackgroundPropertiesContentWith::Normal(node.into_extra())
+                LiveFeedBackgroundPropertiesContentWith::Normal(node.into_user_data())
             }
             Self::Other(node) => LiveFeedBackgroundPropertiesContentWith::Other(node),
             Self::Removed(node) => {
-                LiveFeedBackgroundPropertiesContentWith::Removed(node.into_extra())
+                LiveFeedBackgroundPropertiesContentWith::Removed(node.into_user_data())
             }
         }
     }
@@ -871,25 +877,25 @@ impl officekit_markup_base::Write for LiveFeedBackgroundPropertiesContent {
     }
 }
 
-impl<X: NodeExtra> LiveFeedPropsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LiveFeedPropsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> LiveFeedPropsWith<Y>
+    pub fn into_user_data<Y>(mut self) -> LiveFeedPropsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LiveFeedPropsWith {
-            background_props: officekit_markup_base::into_extra_optional(
+            background_props: officekit_markup_base::into_user_data_optional(
                 &mut self.background_props,
-                BackgroundPropsWith::into_extra,
+                BackgroundPropsWith::into_user_data,
             ),
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -913,21 +919,21 @@ impl officekit_markup_base::Write for LiveFeedProps {
     }
 }
 
-impl<X: NodeExtra> NormalWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> NormalWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> NormalWith<Y>
+    pub fn into_user_data<Y>(mut self) -> NormalWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         NormalWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -951,21 +957,21 @@ impl officekit_markup_base::Write for Normal {
     }
 }
 
-impl<X: NodeExtra> RemovedWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RemovedWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> RemovedWith<Y>
+    pub fn into_user_data<Y>(mut self) -> RemovedWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RemovedWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

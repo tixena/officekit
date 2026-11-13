@@ -225,18 +225,18 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct AMirror {
     pub content: Vec<super::ArrayFeaturePropertyContent>,
-    pub extra: (),
     pub k: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BBoolFeatureProperty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BBoolFeaturePropertyMirror {
-    pub extra: (),
     pub k: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -244,8 +244,8 @@ pub struct BBoolFeaturePropertyMirror {
 #[rkyv(remote = super::BBoolean)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BBooleanMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -257,27 +257,27 @@ pub struct BagMirror {
     pub bag_ext_id: Option<String>,
     pub content: Vec<super::FeaturePropertyBagContent>,
     pub ext_ref: Option<String>,
-    pub extra: (),
     pub r#type: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BagExt)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BagExtMirror {
-    pub extra: (),
     pub lst: Option<Box<super::ExtLst>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BagIdBagFeatureProperty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BagIdBagFeaturePropertyMirror {
-    pub extra: (),
     pub k: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -285,8 +285,8 @@ pub struct BagIdBagFeaturePropertyMirror {
 #[rkyv(remote = super::BagIdUnsignedInt)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BagIdUnsignedIntMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -295,9 +295,9 @@ pub struct BagIdUnsignedIntMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ColumnBodyRevDxfMirror {
     pub dxf: Option<Box<super::Dxf>>,
-    pub extra: (),
     pub fpbs: Box<super::Fpbs>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -305,9 +305,9 @@ pub struct ColumnBodyRevDxfMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ColumnHeaderRevDxfMirror {
     pub dxf: Option<Box<super::Dxf>>,
-    pub extra: (),
     pub fpbs: Box<super::Fpbs>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -315,18 +315,18 @@ pub struct ColumnHeaderRevDxfMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ColumnTotalsRevDxfMirror {
     pub dxf: Option<Box<super::Dxf>>,
-    pub extra: (),
     pub fpbs: Box<super::Fpbs>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DDecimalFeatureProperty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DDecimalFeaturePropertyMirror {
-    pub extra: (),
     pub k: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -334,8 +334,8 @@ pub struct DDecimalFeaturePropertyMirror {
 #[rkyv(remote = super::DDouble)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DDoubleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -343,9 +343,9 @@ pub struct DDoubleMirror {
 #[rkyv(remote = super::DXFComplement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DXFComplementMirror {
-    pub extra: (),
     pub i: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -353,9 +353,9 @@ pub struct DXFComplementMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DataRevDxfMirror {
     pub dxf: Option<Box<super::Dxf>>,
-    pub extra: (),
     pub fpbs: Box<super::Fpbs>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -364,13 +364,13 @@ pub struct DataRevDxfMirror {
 pub struct DxfMirror {
     pub alignment: Option<Box<spreadsheet::Alignment>>,
     pub border: Option<Box<spreadsheet::Border>>,
-    pub extra: (),
     pub fill: Option<Box<spreadsheet::Fill>>,
     pub font: Option<Box<spreadsheet::Font>>,
     pub future_feature_data_storage_area: Option<Box<spreadsheet::FutureFeatureDataStorageArea>>,
     pub number_format: Option<Box<spreadsheet::NumberFormat>>,
     pub protection_properties: Option<Box<spreadsheet::ProtectionProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -378,8 +378,8 @@ pub struct DxfMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<spreadsheet::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -390,8 +390,8 @@ pub struct FeaturePropertyBagsMirror {
     pub bag_ext: Vec<super::BagExt>,
     pub count: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -401,8 +401,8 @@ pub struct FpbsMirror {
     pub bag: Vec<super::Bag>,
     pub bag_ext: Vec<super::BagExt>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -410,9 +410,9 @@ pub struct FpbsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct HeaderRowBorderRevDxfMirror {
     pub dxf: Option<Box<super::Dxf>>,
-    pub extra: (),
     pub fpbs: Box<super::Fpbs>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -420,18 +420,18 @@ pub struct HeaderRowBorderRevDxfMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct HeaderRowRevDxfMirror {
     pub dxf: Option<Box<super::Dxf>>,
-    pub extra: (),
     pub fpbs: Box<super::Fpbs>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::IIntFeatureProperty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IIntFeaturePropertyMirror {
-    pub extra: (),
     pub k: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -439,8 +439,8 @@ pub struct IIntFeaturePropertyMirror {
 #[rkyv(remote = super::IInteger)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IIntegerMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -448,9 +448,9 @@ pub struct IIntegerMirror {
 #[rkyv(remote = super::RelRelFeatureProperty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RelRelFeaturePropertyMirror {
-    pub extra: (),
     pub k: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -458,8 +458,8 @@ pub struct RelRelFeaturePropertyMirror {
 #[rkyv(remote = super::RelString)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RelStringMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -468,17 +468,17 @@ pub struct RelStringMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RevdxfMirror {
     pub dxf: Option<Box<super::Dxf>>,
-    pub extra: (),
     pub fpbs: Box<super::Fpbs>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SString)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SStringMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -486,9 +486,9 @@ pub struct SStringMirror {
 #[rkyv(remote = super::SStringFeatureProperty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SStringFeaturePropertyMirror {
-    pub extra: (),
     pub k: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -497,9 +497,9 @@ pub struct SStringFeaturePropertyMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TableBorderRevDxfMirror {
     pub dxf: Option<Box<super::Dxf>>,
-    pub extra: (),
     pub fpbs: Box<super::Fpbs>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -507,9 +507,9 @@ pub struct TableBorderRevDxfMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TotalsRowBorderRevDxfMirror {
     pub dxf: Option<Box<super::Dxf>>,
-    pub extra: (),
     pub fpbs: Box<super::Fpbs>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -517,18 +517,18 @@ pub struct TotalsRowBorderRevDxfMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TotalsRowRevDxfMirror {
     pub dxf: Option<Box<super::Dxf>>,
-    pub extra: (),
     pub fpbs: Box<super::Fpbs>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::XfComplement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct XfComplementMirror {
-    pub extra: (),
     pub i: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -562,9 +562,9 @@ impl From<AMirror> for super::A {
     fn from(item: AMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             k: item.k,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -601,9 +601,9 @@ where
 impl From<BBoolFeaturePropertyMirror> for super::BBoolFeatureProperty {
     fn from(item: BBoolFeaturePropertyMirror) -> Self {
         Self {
-            extra: item.extra,
             k: item.k,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -644,8 +644,8 @@ where
 impl From<BBooleanMirror> for super::BBoolean {
     fn from(item: BBooleanMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -687,9 +687,9 @@ impl From<BagMirror> for super::Bag {
             bag_ext_id: item.bag_ext_id,
             content: item.content,
             ext_ref: item.ext_ref,
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -726,9 +726,9 @@ where
 impl From<BagExtMirror> for super::BagExt {
     fn from(item: BagExtMirror) -> Self {
         Self {
-            extra: item.extra,
             lst: item.lst,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -765,9 +765,9 @@ where
 impl From<BagIdBagFeaturePropertyMirror> for super::BagIdBagFeatureProperty {
     fn from(item: BagIdBagFeaturePropertyMirror) -> Self {
         Self {
-            extra: item.extra,
             k: item.k,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -809,8 +809,8 @@ where
 impl From<BagIdUnsignedIntMirror> for super::BagIdUnsignedInt {
     fn from(item: BagIdUnsignedIntMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -849,9 +849,9 @@ impl From<ColumnBodyRevDxfMirror> for super::ColumnBodyRevDxf {
     fn from(item: ColumnBodyRevDxfMirror) -> Self {
         Self {
             dxf: item.dxf,
-            extra: item.extra,
             fpbs: item.fpbs,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -889,9 +889,9 @@ impl From<ColumnHeaderRevDxfMirror> for super::ColumnHeaderRevDxf {
     fn from(item: ColumnHeaderRevDxfMirror) -> Self {
         Self {
             dxf: item.dxf,
-            extra: item.extra,
             fpbs: item.fpbs,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -929,9 +929,9 @@ impl From<ColumnTotalsRevDxfMirror> for super::ColumnTotalsRevDxf {
     fn from(item: ColumnTotalsRevDxfMirror) -> Self {
         Self {
             dxf: item.dxf,
-            extra: item.extra,
             fpbs: item.fpbs,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -968,9 +968,9 @@ where
 impl From<DDecimalFeaturePropertyMirror> for super::DDecimalFeatureProperty {
     fn from(item: DDecimalFeaturePropertyMirror) -> Self {
         Self {
-            extra: item.extra,
             k: item.k,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1012,8 +1012,8 @@ where
 impl From<DDoubleMirror> for super::DDouble {
     fn from(item: DDoubleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1051,9 +1051,9 @@ where
 impl From<DXFComplementMirror> for super::DXFComplement {
     fn from(item: DXFComplementMirror) -> Self {
         Self {
-            extra: item.extra,
             i: item.i,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1091,9 +1091,9 @@ impl From<DataRevDxfMirror> for super::DataRevDxf {
     fn from(item: DataRevDxfMirror) -> Self {
         Self {
             dxf: item.dxf,
-            extra: item.extra,
             fpbs: item.fpbs,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1132,13 +1132,13 @@ impl From<DxfMirror> for super::Dxf {
         Self {
             alignment: item.alignment,
             border: item.border,
-            extra: item.extra,
             fill: item.fill,
             font: item.font,
             future_feature_data_storage_area: item.future_feature_data_storage_area,
             number_format: item.number_format,
             protection_properties: item.protection_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1176,8 +1176,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1218,8 +1218,8 @@ impl From<FeaturePropertyBagsMirror> for super::FeaturePropertyBags {
             bag_ext: item.bag_ext,
             count: item.count,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1262,8 +1262,8 @@ impl From<FpbsMirror> for super::Fpbs {
             bag: item.bag,
             bag_ext: item.bag_ext,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1301,9 +1301,9 @@ impl From<HeaderRowBorderRevDxfMirror> for super::HeaderRowBorderRevDxf {
     fn from(item: HeaderRowBorderRevDxfMirror) -> Self {
         Self {
             dxf: item.dxf,
-            extra: item.extra,
             fpbs: item.fpbs,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1345,9 +1345,9 @@ impl From<HeaderRowRevDxfMirror> for super::HeaderRowRevDxf {
     fn from(item: HeaderRowRevDxfMirror) -> Self {
         Self {
             dxf: item.dxf,
-            extra: item.extra,
             fpbs: item.fpbs,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1384,9 +1384,9 @@ where
 impl From<IIntFeaturePropertyMirror> for super::IIntFeatureProperty {
     fn from(item: IIntFeaturePropertyMirror) -> Self {
         Self {
-            extra: item.extra,
             k: item.k,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1427,8 +1427,8 @@ where
 impl From<IIntegerMirror> for super::IInteger {
     fn from(item: IIntegerMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1466,9 +1466,9 @@ where
 impl From<RelRelFeaturePropertyMirror> for super::RelRelFeatureProperty {
     fn from(item: RelRelFeaturePropertyMirror) -> Self {
         Self {
-            extra: item.extra,
             k: item.k,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1510,8 +1510,8 @@ where
 impl From<RelStringMirror> for super::RelString {
     fn from(item: RelStringMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1550,9 +1550,9 @@ impl From<RevdxfMirror> for super::Revdxf {
     fn from(item: RevdxfMirror) -> Self {
         Self {
             dxf: item.dxf,
-            extra: item.extra,
             fpbs: item.fpbs,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1589,8 +1589,8 @@ where
 impl From<SStringMirror> for super::SString {
     fn from(item: SStringMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1628,9 +1628,9 @@ where
 impl From<SStringFeaturePropertyMirror> for super::SStringFeatureProperty {
     fn from(item: SStringFeaturePropertyMirror) -> Self {
         Self {
-            extra: item.extra,
             k: item.k,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1673,9 +1673,9 @@ impl From<TableBorderRevDxfMirror> for super::TableBorderRevDxf {
     fn from(item: TableBorderRevDxfMirror) -> Self {
         Self {
             dxf: item.dxf,
-            extra: item.extra,
             fpbs: item.fpbs,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1713,9 +1713,9 @@ impl From<TotalsRowBorderRevDxfMirror> for super::TotalsRowBorderRevDxf {
     fn from(item: TotalsRowBorderRevDxfMirror) -> Self {
         Self {
             dxf: item.dxf,
-            extra: item.extra,
             fpbs: item.fpbs,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1757,9 +1757,9 @@ impl From<TotalsRowRevDxfMirror> for super::TotalsRowRevDxf {
     fn from(item: TotalsRowRevDxfMirror) -> Self {
         Self {
             dxf: item.dxf,
-            extra: item.extra,
             fpbs: item.fpbs,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1796,9 +1796,9 @@ where
 impl From<XfComplementMirror> for super::XfComplement {
     fn from(item: XfComplementMirror) -> Self {
         Self {
-            extra: item.extra,
             i: item.i,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

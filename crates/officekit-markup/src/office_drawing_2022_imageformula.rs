@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -273,17 +273,17 @@ pub trait Context: crate::Context {
 /// Its schema type is `CT_ImageFormula`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ImageFormulaWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2022ImageformulaImageFormula,
+pub struct ImageFormulaWith<X: UserData> {
     /// The attribute `formula`, when the element has it.
     pub formula: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2022ImageformulaImageFormula,
 }
 
 /// The `aif:imageFormula` element of the tree a read gives: [`ImageFormulaWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ImageFormula = ImageFormulaWith<()>;
 
 impl Eq for ImageFormulaWith<()> {}
@@ -301,18 +301,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> ImageFormulaWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ImageFormulaWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ImageFormulaWith<Y>
+    pub fn into_user_data<Y>(self) -> ImageFormulaWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ImageFormulaWith {
-            extra: Default::default(),
             formula: self.formula,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

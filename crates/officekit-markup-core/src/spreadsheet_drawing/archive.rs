@@ -230,28 +230,28 @@ pub struct AbsoluteAnchorShapeSizeMirror {
     pub client_data: Box<super::ClientData>,
     #[rkyv(omit_bounds)]
     pub content: Box<super::ObjectContent>,
-    pub extra: (),
     pub position: Box<super::Position>,
     pub shape_extent: Box<super::ShapeExtent>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ClientData)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ClientDataMirror {
-    pub extra: (),
     pub f_locks_with_sheet: Option<String>,
     pub f_prints_with_sheet: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Col)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ColMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: super::ColumnID,
 }
 
@@ -259,8 +259,8 @@ pub struct ColMirror {
 #[rkyv(remote = super::ColumnOffset)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ColumnOffsetMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: super::super::drawing::Coordinate,
 }
 
@@ -273,11 +273,11 @@ pub struct ColumnOffsetMirror {
 pub struct ConnectionNonVisualShapePropertiesMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub shape_locks: Option<Box<super::super::drawing::ShapeLocks>>,
     pub tx_box: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -287,7 +287,6 @@ pub struct ConnectionNonVisualShapePropertiesMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct ConnectionShapeMirror {
-    pub extra: (),
     pub f_published: Option<String>,
     pub r#macro: Option<String>,
     #[rkyv(omit_bounds)]
@@ -296,15 +295,16 @@ pub struct ConnectionShapeMirror {
     pub properties: Box<super::ShapeProperties>,
     pub style: Option<Box<super::ShapeStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ContentPart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ContentPartMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -313,10 +313,10 @@ pub struct ContentPartMirror {
 pub struct EndingAnchorPointMirror {
     pub col: Box<super::Col>,
     pub column_offset: Box<super::ColumnOffset>,
-    pub extra: (),
     pub row: Box<super::Row>,
     pub row_offset: Box<super::RowOffset>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -326,7 +326,6 @@ pub struct EndingAnchorPointMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct GraphicFrameMirror {
-    pub extra: (),
     pub f_published: Option<String>,
     #[rkyv(omit_bounds)]
     pub graphic_object: Box<super::super::drawing::GraphicObject>,
@@ -334,6 +333,7 @@ pub struct GraphicFrameMirror {
     #[rkyv(omit_bounds)]
     pub non_visual_properties: Box<super::NonVisualPropertiesForAGraphicFrame>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xfrm: Box<super::Xfrm>,
 }
 
@@ -346,12 +346,12 @@ pub struct GraphicFrameMirror {
 pub struct GroupShapeMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::GroupShapeContent>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub non_visual_properties: Box<super::NonVisualPropertiesForAGroupShape>,
     #[rkyv(omit_bounds)]
     pub properties: Box<super::GroupShapeProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -366,12 +366,12 @@ pub struct GroupShapePropertiesMirror {
     pub effect_properties_content: Option<Box<super::super::drawing::EffectPropertiesContent>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::super::drawing::FillPropertiesContent>>,
     #[rkyv(omit_bounds)]
     pub scene3d: Option<Box<super::super::drawing::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xfrm_group_transform2d: Option<Box<super::super::drawing::XfrmGroupTransform2D>>,
 }
 
@@ -388,8 +388,8 @@ pub struct NonVisualConnectorShapeDrawingPropertiesMirror {
     pub connection_start: Option<Box<super::super::drawing::ConnectionStart>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -404,7 +404,6 @@ pub struct NonVisualDrawingPropertiesMirror {
     pub descr: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     pub hidden: Option<String>,
     #[rkyv(omit_bounds)]
     pub hyperlink_for_hover: Option<Box<super::super::drawing::HyperlinkForHover>>,
@@ -412,6 +411,7 @@ pub struct NonVisualDrawingPropertiesMirror {
     pub name: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -423,10 +423,10 @@ pub struct NonVisualDrawingPropertiesMirror {
 pub struct NonVisualGraphicFrameDrawingPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub graphic_frame_locks: Option<Box<super::super::drawing::GraphicFrameLocks>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -438,10 +438,10 @@ pub struct NonVisualGraphicFrameDrawingPropertiesMirror {
 pub struct NonVisualGroupShapeDrawingPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub group_shape_locks: Option<Box<super::super::drawing::GroupShapeLocks>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -453,11 +453,11 @@ pub struct NonVisualGroupShapeDrawingPropertiesMirror {
 pub struct NonVisualPictureDrawingPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub picture_locks: Option<Box<super::super::drawing::PictureLocks>>,
     pub prefer_relative_resize: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -467,13 +467,13 @@ pub struct NonVisualPictureDrawingPropertiesMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonVisualPropertiesForAConnectionShapeMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub non_visual_connector_shape_drawing_properties:
         Box<super::NonVisualConnectorShapeDrawingProperties>,
     #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -483,13 +483,13 @@ pub struct NonVisualPropertiesForAConnectionShapeMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonVisualPropertiesForAGraphicFrameMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
     #[rkyv(omit_bounds)]
     pub non_visual_graphic_frame_drawing_properties:
         Box<super::NonVisualGraphicFrameDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -499,12 +499,12 @@ pub struct NonVisualPropertiesForAGraphicFrameMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonVisualPropertiesForAGroupShapeMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
     #[rkyv(omit_bounds)]
     pub non_visual_group_shape_drawing_properties: Box<super::NonVisualGroupShapeDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -514,12 +514,12 @@ pub struct NonVisualPropertiesForAGroupShapeMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonVisualPropertiesForAPictureMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
     #[rkyv(omit_bounds)]
     pub non_visual_picture_drawing_properties: Box<super::NonVisualPictureDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -531,10 +531,10 @@ pub struct NonVisualPropertiesForAPictureMirror {
 pub struct NonVisualPropertiesForAShapeMirror {
     #[rkyv(omit_bounds)]
     pub connection_non_visual_shape_properties: Box<super::ConnectionNonVisualShapeProperties>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -547,10 +547,10 @@ pub struct OneCellAnchorShapeSizeMirror {
     pub client_data: Box<super::ClientData>,
     #[rkyv(omit_bounds)]
     pub content: Box<super::ObjectContent>,
-    pub extra: (),
     pub shape_extent: Box<super::ShapeExtent>,
     pub starting_anchor_point: Box<super::StartingAnchorPoint>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -560,7 +560,6 @@ pub struct OneCellAnchorShapeSizeMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct PictureMirror {
-    pub extra: (),
     pub f_published: Option<String>,
     #[rkyv(omit_bounds)]
     pub fill: Box<super::PictureFill>,
@@ -571,6 +570,7 @@ pub struct PictureMirror {
     pub shape_properties: Box<super::ShapeProperties>,
     pub shape_style: Option<Box<super::ShapeStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -584,18 +584,18 @@ pub struct PictureFillMirror {
     pub blip: Option<Box<super::super::drawing::Blip>>,
     pub content: Option<Box<super::super::drawing::FillModeContent>>,
     pub dpi: Option<String>,
-    pub extra: (),
     pub rot_with_shape: Option<String>,
     pub source_rectangle: Option<Box<super::super::drawing::SourceRectangle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Position)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PositionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub x: Option<super::super::drawing::Coordinate>,
     pub y: Option<super::super::drawing::Coordinate>,
 }
@@ -604,8 +604,8 @@ pub struct PositionMirror {
 #[rkyv(remote = super::Row)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RowMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: super::RowID,
 }
 
@@ -613,8 +613,8 @@ pub struct RowMirror {
 #[rkyv(remote = super::RowOffset)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RowOffsetMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: super::super::drawing::Coordinate,
 }
 
@@ -625,7 +625,6 @@ pub struct RowOffsetMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeMirror {
-    pub extra: (),
     pub f_locks_text: Option<String>,
     pub f_published: Option<String>,
     pub r#macro: Option<String>,
@@ -638,6 +637,7 @@ pub struct ShapeMirror {
     pub text_body: Option<Box<super::ShapeTextBody>>,
     pub textlink: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -646,8 +646,8 @@ pub struct ShapeMirror {
 pub struct ShapeExtentMirror {
     pub cx: Option<super::super::drawing::PositiveCoordinate>,
     pub cy: Option<super::super::drawing::PositiveCoordinate>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -664,7 +664,6 @@ pub struct ShapePropertiesMirror {
     pub effect_properties_content: Option<Box<super::super::drawing::EffectPropertiesContent>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::super::drawing::FillPropertiesContent>>,
     pub geometry_content: Option<Box<super::super::drawing::GeometryContent>>,
@@ -673,6 +672,7 @@ pub struct ShapePropertiesMirror {
     #[rkyv(omit_bounds)]
     pub scene3d: Option<Box<super::super::drawing::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xfrm_transform2d: Option<Box<super::super::drawing::XfrmTransform2D>>,
 }
 
@@ -681,11 +681,11 @@ pub struct ShapePropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeStyleMirror {
     pub effect_reference: Box<super::super::drawing::EffectReference>,
-    pub extra: (),
     pub fill_reference: Box<super::super::drawing::FillReference>,
     pub font_reference: Box<super::super::drawing::FontReference>,
     pub line_reference: Box<super::super::drawing::LineReference>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -695,7 +695,6 @@ pub struct ShapeStyleMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeTextBodyMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub properties: Box<super::super::drawing::BodyProperties>,
     #[rkyv(omit_bounds)]
@@ -703,6 +702,7 @@ pub struct ShapeTextBodyMirror {
     #[rkyv(omit_bounds)]
     pub text_paragraphs: Vec<super::super::drawing::TextParagraphs>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -711,10 +711,10 @@ pub struct ShapeTextBodyMirror {
 pub struct StartingAnchorPointMirror {
     pub col: Box<super::Col>,
     pub column_offset: Box<super::ColumnOffset>,
-    pub extra: (),
     pub row: Box<super::Row>,
     pub row_offset: Box<super::RowOffset>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -729,9 +729,9 @@ pub struct TwoCellAnchorShapeSizeMirror {
     pub content: Box<super::ObjectContent>,
     pub edit_as: Option<super::ResizingBehaviors>,
     pub ending_anchor_point: Box<super::EndingAnchorPoint>,
-    pub extra: (),
     pub starting_anchor_point: Box<super::StartingAnchorPoint>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -743,8 +743,8 @@ pub struct TwoCellAnchorShapeSizeMirror {
 pub struct WorksheetDrawingMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::WorksheetDrawingContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -752,12 +752,12 @@ pub struct WorksheetDrawingMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct XfrmMirror {
     pub extents: Option<Box<super::super::drawing::Extents>>,
-    pub extra: (),
     pub flip_h: Option<String>,
     pub flip_v: Option<String>,
     pub offset: Option<Box<super::super::drawing::Offset>>,
     pub rot: Option<super::super::drawing::Angle>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -812,10 +812,10 @@ impl From<AbsoluteAnchorShapeSizeMirror> for super::AbsoluteAnchorShapeSize {
         Self {
             client_data: item.client_data,
             content: item.content,
-            extra: item.extra,
             position: item.position,
             shape_extent: item.shape_extent,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -856,10 +856,10 @@ where
 impl From<ClientDataMirror> for super::ClientData {
     fn from(item: ClientDataMirror) -> Self {
         Self {
-            extra: item.extra,
             f_locks_with_sheet: item.f_locks_with_sheet,
             f_prints_with_sheet: item.f_prints_with_sheet,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -896,8 +896,8 @@ where
 impl From<ColMirror> for super::Col {
     fn from(item: ColMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -935,8 +935,8 @@ where
 impl From<ColumnOffsetMirror> for super::ColumnOffset {
     fn from(item: ColumnOffsetMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -975,10 +975,10 @@ impl From<ConnectionNonVisualShapePropertiesMirror> for super::ConnectionNonVisu
     fn from(item: ConnectionNonVisualShapePropertiesMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             shape_locks: item.shape_locks,
             tx_box: item.tx_box,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1019,13 +1019,13 @@ where
 impl From<ConnectionShapeMirror> for super::ConnectionShape {
     fn from(item: ConnectionShapeMirror) -> Self {
         Self {
-            extra: item.extra,
             f_published: item.f_published,
             r#macro: item.r#macro,
             non_visual_properties: item.non_visual_properties,
             properties: item.properties,
             style: item.style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1062,9 +1062,9 @@ where
 impl From<ContentPartMirror> for super::ContentPart {
     fn from(item: ContentPartMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1103,10 +1103,10 @@ impl From<EndingAnchorPointMirror> for super::EndingAnchorPoint {
         Self {
             col: item.col,
             column_offset: item.column_offset,
-            extra: item.extra,
             row: item.row,
             row_offset: item.row_offset,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1143,12 +1143,12 @@ where
 impl From<GraphicFrameMirror> for super::GraphicFrame {
     fn from(item: GraphicFrameMirror) -> Self {
         Self {
-            extra: item.extra,
             f_published: item.f_published,
             graphic_object: item.graphic_object,
             r#macro: item.r#macro,
             non_visual_properties: item.non_visual_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
             xfrm: item.xfrm,
         }
     }
@@ -1187,10 +1187,10 @@ impl From<GroupShapeMirror> for super::GroupShape {
     fn from(item: GroupShapeMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             non_visual_properties: item.non_visual_properties,
             properties: item.properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1230,10 +1230,10 @@ impl From<GroupShapePropertiesMirror> for super::GroupShapeProperties {
             bw_mode: item.bw_mode,
             effect_properties_content: item.effect_properties_content,
             extension_list: item.extension_list,
-            extra: item.extra,
             fill_properties_content: item.fill_properties_content,
             scene3d: item.scene3d,
             unknown: item.unknown,
+            user_data: item.user_data,
             xfrm_group_transform2d: item.xfrm_group_transform2d,
         }
     }
@@ -1280,8 +1280,8 @@ impl From<NonVisualConnectorShapeDrawingPropertiesMirror>
             connection_shape_locks: item.connection_shape_locks,
             connection_start: item.connection_start,
             extension_list: item.extension_list,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1325,13 +1325,13 @@ impl From<NonVisualDrawingPropertiesMirror> for super::NonVisualDrawingPropertie
             click_hyperlink: item.click_hyperlink,
             descr: item.descr,
             extension_list: item.extension_list,
-            extra: item.extra,
             hidden: item.hidden,
             hyperlink_for_hover: item.hyperlink_for_hover,
             id: item.id,
             name: item.name,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1375,9 +1375,9 @@ impl From<NonVisualGraphicFrameDrawingPropertiesMirror>
     fn from(item: NonVisualGraphicFrameDrawingPropertiesMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             graphic_frame_locks: item.graphic_frame_locks,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1421,9 +1421,9 @@ impl From<NonVisualGroupShapeDrawingPropertiesMirror>
     fn from(item: NonVisualGroupShapeDrawingPropertiesMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             group_shape_locks: item.group_shape_locks,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1465,10 +1465,10 @@ impl From<NonVisualPictureDrawingPropertiesMirror> for super::NonVisualPictureDr
     fn from(item: NonVisualPictureDrawingPropertiesMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             picture_locks: item.picture_locks,
             prefer_relative_resize: item.prefer_relative_resize,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1511,11 +1511,11 @@ impl From<NonVisualPropertiesForAConnectionShapeMirror>
 {
     fn from(item: NonVisualPropertiesForAConnectionShapeMirror) -> Self {
         Self {
-            extra: item.extra,
             non_visual_connector_shape_drawing_properties: item
                 .non_visual_connector_shape_drawing_properties,
             non_visual_drawing_properties: item.non_visual_drawing_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1558,11 +1558,11 @@ impl From<NonVisualPropertiesForAGraphicFrameMirror>
 {
     fn from(item: NonVisualPropertiesForAGraphicFrameMirror) -> Self {
         Self {
-            extra: item.extra,
             non_visual_drawing_properties: item.non_visual_drawing_properties,
             non_visual_graphic_frame_drawing_properties: item
                 .non_visual_graphic_frame_drawing_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1603,11 +1603,11 @@ where
 impl From<NonVisualPropertiesForAGroupShapeMirror> for super::NonVisualPropertiesForAGroupShape {
     fn from(item: NonVisualPropertiesForAGroupShapeMirror) -> Self {
         Self {
-            extra: item.extra,
             non_visual_drawing_properties: item.non_visual_drawing_properties,
             non_visual_group_shape_drawing_properties: item
                 .non_visual_group_shape_drawing_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1648,10 +1648,10 @@ where
 impl From<NonVisualPropertiesForAPictureMirror> for super::NonVisualPropertiesForAPicture {
     fn from(item: NonVisualPropertiesForAPictureMirror) -> Self {
         Self {
-            extra: item.extra,
             non_visual_drawing_properties: item.non_visual_drawing_properties,
             non_visual_picture_drawing_properties: item.non_visual_picture_drawing_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1693,9 +1693,9 @@ impl From<NonVisualPropertiesForAShapeMirror> for super::NonVisualPropertiesForA
     fn from(item: NonVisualPropertiesForAShapeMirror) -> Self {
         Self {
             connection_non_visual_shape_properties: item.connection_non_visual_shape_properties,
-            extra: item.extra,
             non_visual_drawing_properties: item.non_visual_drawing_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1738,10 +1738,10 @@ impl From<OneCellAnchorShapeSizeMirror> for super::OneCellAnchorShapeSize {
         Self {
             client_data: item.client_data,
             content: item.content,
-            extra: item.extra,
             shape_extent: item.shape_extent,
             starting_anchor_point: item.starting_anchor_point,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1782,7 +1782,6 @@ where
 impl From<PictureMirror> for super::Picture {
     fn from(item: PictureMirror) -> Self {
         Self {
-            extra: item.extra,
             f_published: item.f_published,
             fill: item.fill,
             r#macro: item.r#macro,
@@ -1790,6 +1789,7 @@ impl From<PictureMirror> for super::Picture {
             shape_properties: item.shape_properties,
             shape_style: item.shape_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1829,10 +1829,10 @@ impl From<PictureFillMirror> for super::PictureFill {
             blip: item.blip,
             content: item.content,
             dpi: item.dpi,
-            extra: item.extra,
             rot_with_shape: item.rot_with_shape,
             source_rectangle: item.source_rectangle,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1869,8 +1869,8 @@ where
 impl From<PositionMirror> for super::Position {
     fn from(item: PositionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             x: item.x,
             y: item.y,
         }
@@ -1909,8 +1909,8 @@ where
 impl From<RowMirror> for super::Row {
     fn from(item: RowMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1948,8 +1948,8 @@ where
 impl From<RowOffsetMirror> for super::RowOffset {
     fn from(item: RowOffsetMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1987,7 +1987,6 @@ where
 impl From<ShapeMirror> for super::Shape {
     fn from(item: ShapeMirror) -> Self {
         Self {
-            extra: item.extra,
             f_locks_text: item.f_locks_text,
             f_published: item.f_published,
             r#macro: item.r#macro,
@@ -1997,6 +1996,7 @@ impl From<ShapeMirror> for super::Shape {
             text_body: item.text_body,
             textlink: item.textlink,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2035,8 +2035,8 @@ impl From<ShapeExtentMirror> for super::ShapeExtent {
         Self {
             cx: item.cx,
             cy: item.cy,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2077,12 +2077,12 @@ impl From<ShapePropertiesMirror> for super::ShapeProperties {
             bw_mode: item.bw_mode,
             effect_properties_content: item.effect_properties_content,
             extension_list: item.extension_list,
-            extra: item.extra,
             fill_properties_content: item.fill_properties_content,
             geometry_content: item.geometry_content,
             outline: item.outline,
             scene3d: item.scene3d,
             unknown: item.unknown,
+            user_data: item.user_data,
             xfrm_transform2d: item.xfrm_transform2d,
         }
     }
@@ -2121,11 +2121,11 @@ impl From<ShapeStyleMirror> for super::ShapeStyle {
     fn from(item: ShapeStyleMirror) -> Self {
         Self {
             effect_reference: item.effect_reference,
-            extra: item.extra,
             fill_reference: item.fill_reference,
             font_reference: item.font_reference,
             line_reference: item.line_reference,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2162,11 +2162,11 @@ where
 impl From<ShapeTextBodyMirror> for super::ShapeTextBody {
     fn from(item: ShapeTextBodyMirror) -> Self {
         Self {
-            extra: item.extra,
             properties: item.properties,
             text_list_styles: item.text_list_styles,
             text_paragraphs: item.text_paragraphs,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2205,10 +2205,10 @@ impl From<StartingAnchorPointMirror> for super::StartingAnchorPoint {
         Self {
             col: item.col,
             column_offset: item.column_offset,
-            extra: item.extra,
             row: item.row,
             row_offset: item.row_offset,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2252,9 +2252,9 @@ impl From<TwoCellAnchorShapeSizeMirror> for super::TwoCellAnchorShapeSize {
             content: item.content,
             edit_as: item.edit_as,
             ending_anchor_point: item.ending_anchor_point,
-            extra: item.extra,
             starting_anchor_point: item.starting_anchor_point,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2296,8 +2296,8 @@ impl From<WorksheetDrawingMirror> for super::WorksheetDrawing {
     fn from(item: WorksheetDrawingMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2335,12 +2335,12 @@ impl From<XfrmMirror> for super::Xfrm {
     fn from(item: XfrmMirror) -> Self {
         Self {
             extents: item.extents,
-            extra: item.extra,
             flip_h: item.flip_h,
             flip_v: item.flip_v,
             offset: item.offset,
             rot: item.rot,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

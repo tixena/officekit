@@ -441,7 +441,7 @@ pub fn repeating_section(element: &Element) -> super::RepeatingSection {
 pub fn repeating_section_item(element: &Element) -> super::RepeatingSectionItem {
     let reader = officekit_markup_base::Reader::new(element, &super::REPEATING_SECTION_ITEM_SHAPE);
     super::RepeatingSectionItem {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }

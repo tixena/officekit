@@ -225,49 +225,49 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct AnchorMirror {
     pub comment: Option<Box<super::Comment>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Assign)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AssignMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Attribution)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AttributionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Comment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Create)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CreateMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Delete)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DeleteMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -278,10 +278,10 @@ pub struct EventMirror {
     pub attribution: Box<super::Attribution>,
     pub content: Option<Box<super::TaskHistoryEventContent>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub id: Option<String>,
     pub time: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -289,8 +289,8 @@ pub struct EventMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub ext: Vec<super::super::office_2019_extlst::Ext>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -298,16 +298,16 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct HistoryMirror {
     pub event: Vec<super::Event>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Priority)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PriorityMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: Option<String>,
 }
 
@@ -315,9 +315,9 @@ pub struct PriorityMirror {
 #[rkyv(remote = super::Progress)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ProgressMirror {
-    pub extra: (),
     pub percent_complete: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -325,18 +325,18 @@ pub struct ProgressMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ScheduleMirror {
     pub due_date: Option<String>,
-    pub extra: (),
     pub start_date: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SetTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SetTitleMirror {
-    pub extra: (),
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -345,10 +345,10 @@ pub struct SetTitleMirror {
 pub struct TaskMirror {
     pub anchor: Option<Box<super::Anchor>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub history: Option<Box<super::History>>,
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -356,42 +356,42 @@ pub struct TaskMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TasksMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub task: Vec<super::Task>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Unassign)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnassignMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::UnassignAll)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnassignAllMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Undelete)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UndeleteMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Undo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UndoMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -417,8 +417,8 @@ impl From<AnchorMirror> for super::Anchor {
         Self {
             comment: item.comment,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -455,8 +455,8 @@ where
 impl From<AssignMirror> for super::Assign {
     fn from(item: AssignMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -493,8 +493,8 @@ where
 impl From<AttributionMirror> for super::Attribution {
     fn from(item: AttributionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -531,9 +531,9 @@ where
 impl From<CommentMirror> for super::Comment {
     fn from(item: CommentMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -570,8 +570,8 @@ where
 impl From<CreateMirror> for super::Create {
     fn from(item: CreateMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -608,8 +608,8 @@ where
 impl From<DeleteMirror> for super::Delete {
     fn from(item: DeleteMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -650,10 +650,10 @@ impl From<EventMirror> for super::Event {
             attribution: item.attribution,
             content: item.content,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             id: item.id,
             time: item.time,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -691,8 +691,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             ext: item.ext,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -730,8 +730,8 @@ impl From<HistoryMirror> for super::History {
     fn from(item: HistoryMirror) -> Self {
         Self {
             event: item.event,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -768,8 +768,8 @@ where
 impl From<PriorityMirror> for super::Priority {
     fn from(item: PriorityMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -807,9 +807,9 @@ where
 impl From<ProgressMirror> for super::Progress {
     fn from(item: ProgressMirror) -> Self {
         Self {
-            extra: item.extra,
             percent_complete: item.percent_complete,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -847,9 +847,9 @@ impl From<ScheduleMirror> for super::Schedule {
     fn from(item: ScheduleMirror) -> Self {
         Self {
             due_date: item.due_date,
-            extra: item.extra,
             start_date: item.start_date,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -886,9 +886,9 @@ where
 impl From<SetTitleMirror> for super::SetTitle {
     fn from(item: SetTitleMirror) -> Self {
         Self {
-            extra: item.extra,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -927,10 +927,10 @@ impl From<TaskMirror> for super::Task {
         Self {
             anchor: item.anchor,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             history: item.history,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -968,9 +968,9 @@ impl From<TasksMirror> for super::Tasks {
     fn from(item: TasksMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             task: item.task,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1007,8 +1007,8 @@ where
 impl From<UnassignMirror> for super::Unassign {
     fn from(item: UnassignMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1045,8 +1045,8 @@ where
 impl From<UnassignAllMirror> for super::UnassignAll {
     fn from(item: UnassignAllMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1083,8 +1083,8 @@ where
 impl From<UndeleteMirror> for super::Undelete {
     fn from(item: UndeleteMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1121,9 +1121,9 @@ where
 impl From<UndoMirror> for super::Undo {
     fn from(item: UndoMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

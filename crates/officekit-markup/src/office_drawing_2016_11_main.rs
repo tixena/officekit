@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -274,17 +274,17 @@ pub trait Context: crate::Context {
 /// 3.5.1. Its schema type is `CT_PictureAttributionSourceURL`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PicAttrSrcUrlWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing201611MainPicAttrSrcUrl,
+pub struct PicAttrSrcUrlWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing201611MainPicAttrSrcUrl,
 }
 
 /// The `a1611:picAttrSrcUrl` element of the tree a read gives: [`PicAttrSrcUrlWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type PicAttrSrcUrl = PicAttrSrcUrlWith<()>;
 
 impl Eq for PicAttrSrcUrlWith<()> {}
@@ -302,18 +302,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> PicAttrSrcUrlWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PicAttrSrcUrlWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PicAttrSrcUrlWith<Y>
+    pub fn into_user_data<Y>(self) -> PicAttrSrcUrlWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PicAttrSrcUrlWith {
-            extra: Default::default(),
             id: self.id,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

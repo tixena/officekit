@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use crate::NodeExtra;
+use crate::UserData;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
@@ -573,22 +573,22 @@ static ERROR_STATUS_CODE_SIMPLE_TYPE_FACETS: crate::Facets = crate::Facets {
 /// `CT_Array`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArrayWith<X: NodeExtra> {
+pub struct ArrayWith<X: UserData> {
     /// The attribute `baseType`, when the element has it.
     pub base_type: Option<ArrayBaseTypeSimpleType>,
     /// The children that are an item of `ArrayContent`, in order.
     pub content: Vec<ArrayContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesArray,
     /// The attribute `lBounds`, when the element has it.
     pub l_bounds: Option<String>,
     /// The attribute `uBounds`, when the element has it.
     pub u_bounds: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesArray,
 }
 
-/// The `vt:array` element of the tree a read gives: [`ArrayWith`] holding nothing in `extra`.
+/// The `vt:array` element of the tree a read gives: [`ArrayWith`] holding nothing in `user_data`.
 pub type Array = ArrayWith<()>;
 
 impl Eq for ArrayWith<()> {}
@@ -653,7 +653,7 @@ pub enum ArrayBaseTypeSimpleTypeMember {
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
-pub enum ArrayContentWith<X: NodeExtra> {
+pub enum ArrayContentWith<X: UserData> {
     /// The element `vt:bstr`, a `BasicString`.
     BasicString(BasicStringWith<X>),
     /// The element `vt:bool`, a `Boolean`.
@@ -692,7 +692,7 @@ pub enum ArrayContentWith<X: NodeExtra> {
     Variant(VariantWith<X>),
 }
 
-/// [`ArrayContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`ArrayContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
 pub type ArrayContent = ArrayContentWith<()>;
 
 impl Eq for ArrayContentWith<()> {}
@@ -701,16 +701,17 @@ impl Eq for ArrayContentWith<()> {}
 /// `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BasicStringWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesBasicString,
+pub struct BasicStringWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesBasicString,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:bstr` element of the tree a read gives: [`BasicStringWith`] holding nothing in `extra`.
+/// The `vt:bstr` element of the tree a read gives: [`BasicStringWith`] holding nothing in
+/// `user_data`.
 pub type BasicString = BasicStringWith<()>;
 
 impl Eq for BasicStringWith<()> {}
@@ -719,16 +720,17 @@ impl Eq for BasicStringWith<()> {}
 /// `base64Binary`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BinaryBlobWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesBinaryBlob,
+pub struct BinaryBlobWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesBinaryBlob,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:blob` element of the tree a read gives: [`BinaryBlobWith`] holding nothing in `extra`.
+/// The `vt:blob` element of the tree a read gives: [`BinaryBlobWith`] holding nothing in
+/// `user_data`.
 pub type BinaryBlob = BinaryBlobWith<()>;
 
 impl Eq for BinaryBlobWith<()> {}
@@ -737,17 +739,17 @@ impl Eq for BinaryBlobWith<()> {}
 /// is `base64Binary`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BinaryBlobObjectWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesBinaryBlobObject,
+pub struct BinaryBlobObjectWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesBinaryBlobObject,
     /// The element's text.
     pub value: String,
 }
 
 /// The `vt:oblob` element of the tree a read gives: [`BinaryBlobObjectWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type BinaryBlobObject = BinaryBlobObjectWith<()>;
 
 impl Eq for BinaryBlobObjectWith<()> {}
@@ -756,17 +758,17 @@ impl Eq for BinaryBlobObjectWith<()> {}
 /// is `base64Binary`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BinaryStorageWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesBinaryStorage,
+pub struct BinaryStorageWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesBinaryStorage,
     /// The element's text.
     pub value: String,
 }
 
 /// The `vt:storage` element of the tree a read gives: [`BinaryStorageWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type BinaryStorage = BinaryStorageWith<()>;
 
 impl Eq for BinaryStorageWith<()> {}
@@ -775,17 +777,17 @@ impl Eq for BinaryStorageWith<()> {}
 /// schema type is `base64Binary`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BinaryStorageObjectWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesBinaryStorageObject,
+pub struct BinaryStorageObjectWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesBinaryStorageObject,
     /// The element's text.
     pub value: String,
 }
 
 /// The `vt:ostorage` element of the tree a read gives: [`BinaryStorageObjectWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type BinaryStorageObject = BinaryStorageObjectWith<()>;
 
 impl Eq for BinaryStorageObjectWith<()> {}
@@ -794,17 +796,17 @@ impl Eq for BinaryStorageObjectWith<()> {}
 /// `base64Binary`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BinaryStreamWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesBinaryStream,
+pub struct BinaryStreamWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesBinaryStream,
     /// The element's text.
     pub value: String,
 }
 
 /// The `vt:stream` element of the tree a read gives: [`BinaryStreamWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type BinaryStream = BinaryStreamWith<()>;
 
 impl Eq for BinaryStreamWith<()> {}
@@ -813,17 +815,17 @@ impl Eq for BinaryStreamWith<()> {}
 /// type is `base64Binary`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BinaryStreamObjectWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesBinaryStreamObject,
+pub struct BinaryStreamObjectWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesBinaryStreamObject,
     /// The element's text.
     pub value: String,
 }
 
 /// The `vt:ostream` element of the tree a read gives: [`BinaryStreamObjectWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type BinaryStreamObject = BinaryStreamObjectWith<()>;
 
 impl Eq for BinaryStreamObjectWith<()> {}
@@ -832,11 +834,11 @@ impl Eq for BinaryStreamObjectWith<()> {}
 /// schema type is `CT_Vstream`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BinaryVersionedStreamWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesBinaryVersionedStream,
+pub struct BinaryVersionedStreamWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesBinaryVersionedStream,
     /// The element's text.
     pub value: String,
     /// The attribute `version`, when the element has it.
@@ -844,7 +846,7 @@ pub struct BinaryVersionedStreamWith<X: NodeExtra> {
 }
 
 /// The `vt:vstream` element of the tree a read gives: [`BinaryVersionedStreamWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type BinaryVersionedStream = BinaryVersionedStreamWith<()>;
 
 impl Eq for BinaryVersionedStreamWith<()> {}
@@ -853,16 +855,16 @@ impl Eq for BinaryVersionedStreamWith<()> {}
 /// `boolean`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BooleanWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesBoolean,
+pub struct BooleanWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesBoolean,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:bool` element of the tree a read gives: [`BooleanWith`] holding nothing in `extra`.
+/// The `vt:bool` element of the tree a read gives: [`BooleanWith`] holding nothing in `user_data`.
 pub type Boolean = BooleanWith<()>;
 
 impl Eq for BooleanWith<()> {}
@@ -871,16 +873,16 @@ impl Eq for BooleanWith<()> {}
 /// `ST_Guid`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ClassIDWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesClassID,
+pub struct ClassIDWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesClassID,
     /// The element's text.
     pub value: super::common_simple_types::Guid,
 }
 
-/// The `vt:clsid` element of the tree a read gives: [`ClassIDWith`] holding nothing in `extra`.
+/// The `vt:clsid` element of the tree a read gives: [`ClassIDWith`] holding nothing in `user_data`.
 pub type ClassID = ClassIDWith<()>;
 
 impl Eq for ClassIDWith<()> {}
@@ -888,16 +890,16 @@ impl Eq for ClassIDWith<()> {}
 /// The `vt:cy` element, Currency (ECMA-376 Part 1, section 22.4.2.6). Its schema type is `ST_Cy`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CurrencyWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesCurrency,
+pub struct CurrencyWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesCurrency,
     /// The element's text.
     pub value: CurrencySimpleType,
 }
 
-/// The `vt:cy` element of the tree a read gives: [`CurrencyWith`] holding nothing in `extra`.
+/// The `vt:cy` element of the tree a read gives: [`CurrencyWith`] holding nothing in `user_data`.
 pub type Currency = CurrencyWith<()>;
 
 impl Eq for CurrencyWith<()> {}
@@ -920,16 +922,17 @@ pub struct CurrencySimpleType(pub String);
 /// `dateTime`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DateAndTimeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesDateAndTime,
+pub struct DateAndTimeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesDateAndTime,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:date` element of the tree a read gives: [`DateAndTimeWith`] holding nothing in `extra`.
+/// The `vt:date` element of the tree a read gives: [`DateAndTimeWith`] holding nothing in
+/// `user_data`.
 pub type DateAndTime = DateAndTimeWith<()>;
 
 impl Eq for DateAndTimeWith<()> {}
@@ -938,16 +941,17 @@ impl Eq for DateAndTimeWith<()> {}
 /// `decimal`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DecimalWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesDecimal,
+pub struct DecimalWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesDecimal,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:decimal` element of the tree a read gives: [`DecimalWith`] holding nothing in `extra`.
+/// The `vt:decimal` element of the tree a read gives: [`DecimalWith`] holding nothing in
+/// `user_data`.
 pub type Decimal = DecimalWith<()>;
 
 impl Eq for DecimalWith<()> {}
@@ -956,14 +960,14 @@ impl Eq for DecimalWith<()> {}
 /// `CT_Empty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EmptyWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesEmpty,
+pub struct EmptyWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesEmpty,
 }
 
-/// The `vt:empty` element of the tree a read gives: [`EmptyWith`] holding nothing in `extra`.
+/// The `vt:empty` element of the tree a read gives: [`EmptyWith`] holding nothing in `user_data`.
 pub type Empty = EmptyWith<()>;
 
 impl Eq for EmptyWith<()> {}
@@ -972,17 +976,17 @@ impl Eq for EmptyWith<()> {}
 /// is `ST_Error`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ErrorStatusCodeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesErrorStatusCode,
+pub struct ErrorStatusCodeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesErrorStatusCode,
     /// The element's text.
     pub value: ErrorStatusCodeSimpleType,
 }
 
 /// The `vt:error` element of the tree a read gives: [`ErrorStatusCodeWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ErrorStatusCode = ErrorStatusCodeWith<()>;
 
 impl Eq for ErrorStatusCodeWith<()> {}
@@ -1005,16 +1009,17 @@ pub struct ErrorStatusCodeSimpleType(pub String);
 /// `dateTime`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FileTimeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesFileTime,
+pub struct FileTimeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesFileTime,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:filetime` element of the tree a read gives: [`FileTimeWith`] holding nothing in `extra`.
+/// The `vt:filetime` element of the tree a read gives: [`FileTimeWith`] holding nothing in
+/// `user_data`.
 pub type FileTime = FileTimeWith<()>;
 
 impl Eq for FileTimeWith<()> {}
@@ -1022,16 +1027,16 @@ impl Eq for FileTimeWith<()> {}
 /// The `vt:i1` element. Its schema type is `byte`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct I1With<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesI1,
+pub struct I1With<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesI1,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:i1` element of the tree a read gives: [`I1With`] holding nothing in `extra`.
+/// The `vt:i1` element of the tree a read gives: [`I1With`] holding nothing in `user_data`.
 pub type I1 = I1With<()>;
 
 impl Eq for I1With<()> {}
@@ -1039,16 +1044,16 @@ impl Eq for I1With<()> {}
 /// The `vt:i2` element. Its schema type is `short`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct I2With<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesI2,
+pub struct I2With<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesI2,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:i2` element of the tree a read gives: [`I2With`] holding nothing in `extra`.
+/// The `vt:i2` element of the tree a read gives: [`I2With`] holding nothing in `user_data`.
 pub type I2 = I2With<()>;
 
 impl Eq for I2With<()> {}
@@ -1056,16 +1061,16 @@ impl Eq for I2With<()> {}
 /// The `vt:i4` element. Its schema type is `int`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct I4With<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesI4,
+pub struct I4With<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesI4,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:i4` element of the tree a read gives: [`I4With`] holding nothing in `extra`.
+/// The `vt:i4` element of the tree a read gives: [`I4With`] holding nothing in `user_data`.
 pub type I4 = I4With<()>;
 
 impl Eq for I4With<()> {}
@@ -1073,16 +1078,16 @@ impl Eq for I4With<()> {}
 /// The `vt:i8` element. Its schema type is `long`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct I8With<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesI8,
+pub struct I8With<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesI8,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:i8` element of the tree a read gives: [`I8With`] holding nothing in `extra`.
+/// The `vt:i8` element of the tree a read gives: [`I8With`] holding nothing in `user_data`.
 pub type I8 = I8With<()>;
 
 impl Eq for I8With<()> {}
@@ -1090,16 +1095,16 @@ impl Eq for I8With<()> {}
 /// The `vt:int` element, Integer (ECMA-376 Part 1, section 22.4.2.16). Its schema type is `int`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IntegerWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesInteger,
+pub struct IntegerWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesInteger,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:int` element of the tree a read gives: [`IntegerWith`] holding nothing in `extra`.
+/// The `vt:int` element of the tree a read gives: [`IntegerWith`] holding nothing in `user_data`.
 pub type Integer = IntegerWith<()>;
 
 impl Eq for IntegerWith<()> {}
@@ -1107,16 +1112,16 @@ impl Eq for IntegerWith<()> {}
 /// The `vt:lpstr` element, LPSTR (ECMA-376 Part 1, section 22.4.2.17). Its schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LpstrWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesLpstr,
+pub struct LpstrWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesLpstr,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:lpstr` element of the tree a read gives: [`LpstrWith`] holding nothing in `extra`.
+/// The `vt:lpstr` element of the tree a read gives: [`LpstrWith`] holding nothing in `user_data`.
 pub type Lpstr = LpstrWith<()>;
 
 impl Eq for LpstrWith<()> {}
@@ -1125,16 +1130,16 @@ impl Eq for LpstrWith<()> {}
 /// `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LpwstrWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesLpwstr,
+pub struct LpwstrWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesLpwstr,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:lpwstr` element of the tree a read gives: [`LpwstrWith`] holding nothing in `extra`.
+/// The `vt:lpwstr` element of the tree a read gives: [`LpwstrWith`] holding nothing in `user_data`.
 pub type Lpwstr = LpwstrWith<()>;
 
 impl Eq for LpwstrWith<()> {}
@@ -1142,14 +1147,14 @@ impl Eq for LpwstrWith<()> {}
 /// The `vt:null` element, Null (ECMA-376 Part 1, section 22.4.2.19). Its schema type is `CT_Null`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NullWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesNull,
+pub struct NullWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesNull,
 }
 
-/// The `vt:null` element of the tree a read gives: [`NullWith`] holding nothing in `extra`.
+/// The `vt:null` element of the tree a read gives: [`NullWith`] holding nothing in `user_data`.
 pub type Null = NullWith<()>;
 
 impl Eq for NullWith<()> {}
@@ -1157,16 +1162,16 @@ impl Eq for NullWith<()> {}
 /// The `vt:r4` element. Its schema type is `float`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct R4With<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesR4,
+pub struct R4With<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesR4,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:r4` element of the tree a read gives: [`R4With`] holding nothing in `extra`.
+/// The `vt:r4` element of the tree a read gives: [`R4With`] holding nothing in `user_data`.
 pub type R4 = R4With<()>;
 
 impl Eq for R4With<()> {}
@@ -1174,16 +1179,16 @@ impl Eq for R4With<()> {}
 /// The `vt:r8` element. Its schema type is `double`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct R8With<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesR8,
+pub struct R8With<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesR8,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:r8` element of the tree a read gives: [`R8With`] holding nothing in `extra`.
+/// The `vt:r8` element of the tree a read gives: [`R8With`] holding nothing in `user_data`.
 pub type R8 = R8With<()>;
 
 impl Eq for R8With<()> {}
@@ -1191,16 +1196,16 @@ impl Eq for R8With<()> {}
 /// The `vt:ui1` element. Its schema type is `unsignedByte`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Ui1With<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesUi1,
+pub struct Ui1With<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesUi1,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:ui1` element of the tree a read gives: [`Ui1With`] holding nothing in `extra`.
+/// The `vt:ui1` element of the tree a read gives: [`Ui1With`] holding nothing in `user_data`.
 pub type Ui1 = Ui1With<()>;
 
 impl Eq for Ui1With<()> {}
@@ -1208,16 +1213,16 @@ impl Eq for Ui1With<()> {}
 /// The `vt:ui2` element. Its schema type is `unsignedShort`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Ui2With<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesUi2,
+pub struct Ui2With<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesUi2,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:ui2` element of the tree a read gives: [`Ui2With`] holding nothing in `extra`.
+/// The `vt:ui2` element of the tree a read gives: [`Ui2With`] holding nothing in `user_data`.
 pub type Ui2 = Ui2With<()>;
 
 impl Eq for Ui2With<()> {}
@@ -1225,16 +1230,16 @@ impl Eq for Ui2With<()> {}
 /// The `vt:ui4` element. Its schema type is `unsignedInt`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Ui4With<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesUi4,
+pub struct Ui4With<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesUi4,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:ui4` element of the tree a read gives: [`Ui4With`] holding nothing in `extra`.
+/// The `vt:ui4` element of the tree a read gives: [`Ui4With`] holding nothing in `user_data`.
 pub type Ui4 = Ui4With<()>;
 
 impl Eq for Ui4With<()> {}
@@ -1242,16 +1247,16 @@ impl Eq for Ui4With<()> {}
 /// The `vt:ui8` element. Its schema type is `unsignedLong`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Ui8With<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesUi8,
+pub struct Ui8With<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesUi8,
     /// The element's text.
     pub value: String,
 }
 
-/// The `vt:ui8` element of the tree a read gives: [`Ui8With`] holding nothing in `extra`.
+/// The `vt:ui8` element of the tree a read gives: [`Ui8With`] holding nothing in `user_data`.
 pub type Ui8 = Ui8With<()>;
 
 impl Eq for Ui8With<()> {}
@@ -1260,17 +1265,17 @@ impl Eq for Ui8With<()> {}
 /// `unsignedInt`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct UnsignedIntegerWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesUnsignedInteger,
+pub struct UnsignedIntegerWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesUnsignedInteger,
     /// The element's text.
     pub value: String,
 }
 
 /// The `vt:uint` element of the tree a read gives: [`UnsignedIntegerWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type UnsignedInteger = UnsignedIntegerWith<()>;
 
 impl Eq for UnsignedIntegerWith<()> {}
@@ -1279,16 +1284,17 @@ impl Eq for UnsignedIntegerWith<()> {}
 /// `CT_Variant`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VariantWith<X: NodeExtra> {
+pub struct VariantWith<X: UserData> {
     /// The child that is an item of `VariantContent`, which the schema requires.
     pub content: Box<VariantContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesVariant,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesVariant,
 }
 
-/// The `vt:variant` element of the tree a read gives: [`VariantWith`] holding nothing in `extra`.
+/// The `vt:variant` element of the tree a read gives: [`VariantWith`] holding nothing in
+/// `user_data`.
 pub type Variant = VariantWith<()>;
 
 impl Eq for VariantWith<()> {}
@@ -1299,7 +1305,7 @@ impl Eq for VariantWith<()> {}
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
-pub enum VariantContentWith<X: NodeExtra> {
+pub enum VariantContentWith<X: UserData> {
     /// The element `vt:array`, a `Array`.
     Array(ArrayWith<X>),
     /// The element `vt:bstr`, a `BasicString`.
@@ -1372,7 +1378,7 @@ pub enum VariantContentWith<X: NodeExtra> {
     Vector(VectorWith<X>),
 }
 
-/// [`VariantContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`VariantContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
 pub type VariantContent = VariantContentWith<()>;
 
 impl Eq for VariantContentWith<()> {}
@@ -1381,20 +1387,20 @@ impl Eq for VariantContentWith<()> {}
 /// `CT_Vector`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VectorWith<X: NodeExtra> {
+pub struct VectorWith<X: UserData> {
     /// The attribute `baseType`, when the element has it.
     pub base_type: Option<VectorBaseTypeSimpleType>,
     /// The children that are an item of `VectorContent`, in order.
     pub content: Vec<VectorContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesVariantTypesVector,
     /// The attribute `size`, when the element has it.
     pub size: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesVariantTypesVector,
 }
 
-/// The `vt:vector` element of the tree a read gives: [`VectorWith`] holding nothing in `extra`.
+/// The `vt:vector` element of the tree a read gives: [`VectorWith`] holding nothing in `user_data`.
 pub type Vector = VectorWith<()>;
 
 impl Eq for VectorWith<()> {}
@@ -1465,7 +1471,7 @@ pub enum VectorBaseTypeSimpleTypeMember {
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
-pub enum VectorContentWith<X: NodeExtra> {
+pub enum VectorContentWith<X: UserData> {
     /// The element `vt:bstr`, a `BasicString`.
     BasicString(BasicStringWith<X>),
     /// The element `vt:bool`, a `Boolean`.
@@ -1510,26 +1516,26 @@ pub enum VectorContentWith<X: NodeExtra> {
     Variant(VariantWith<X>),
 }
 
-/// [`VectorContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`VectorContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
 pub type VectorContent = VectorContentWith<()>;
 
 impl Eq for VectorContentWith<()> {}
 
-impl<X: NodeExtra> ArrayWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArrayWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArrayWith<Y>
+    pub fn into_user_data<Y>(self) -> ArrayWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArrayWith {
             base_type: self.base_type,
-            content: crate::into_extra_list(self.content, ArrayContentWith::into_extra),
-            extra: Default::default(),
+            content: crate::into_user_data_list(self.content, ArrayContentWith::into_user_data),
             l_bounds: self.l_bounds,
             u_bounds: self.u_bounds,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1626,32 +1632,32 @@ impl ArrayBaseTypeSimpleType {
     }
 }
 
-impl<X: NodeExtra> ArrayContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> ArrayContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArrayContentWith<Y>
+    pub fn into_user_data<Y>(self) -> ArrayContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
-            Self::BasicString(node) => ArrayContentWith::BasicString(node.into_extra()),
-            Self::Boolean(node) => ArrayContentWith::Boolean(node.into_extra()),
-            Self::Currency(node) => ArrayContentWith::Currency(node.into_extra()),
-            Self::DateAndTime(node) => ArrayContentWith::DateAndTime(node.into_extra()),
-            Self::Decimal(node) => ArrayContentWith::Decimal(node.into_extra()),
-            Self::ErrorStatusCode(node) => ArrayContentWith::ErrorStatusCode(node.into_extra()),
-            Self::I1(node) => ArrayContentWith::I1(node.into_extra()),
-            Self::I2(node) => ArrayContentWith::I2(node.into_extra()),
-            Self::I4(node) => ArrayContentWith::I4(node.into_extra()),
-            Self::Integer(node) => ArrayContentWith::Integer(node.into_extra()),
+            Self::BasicString(node) => ArrayContentWith::BasicString(node.into_user_data()),
+            Self::Boolean(node) => ArrayContentWith::Boolean(node.into_user_data()),
+            Self::Currency(node) => ArrayContentWith::Currency(node.into_user_data()),
+            Self::DateAndTime(node) => ArrayContentWith::DateAndTime(node.into_user_data()),
+            Self::Decimal(node) => ArrayContentWith::Decimal(node.into_user_data()),
+            Self::ErrorStatusCode(node) => ArrayContentWith::ErrorStatusCode(node.into_user_data()),
+            Self::I1(node) => ArrayContentWith::I1(node.into_user_data()),
+            Self::I2(node) => ArrayContentWith::I2(node.into_user_data()),
+            Self::I4(node) => ArrayContentWith::I4(node.into_user_data()),
+            Self::Integer(node) => ArrayContentWith::Integer(node.into_user_data()),
             Self::Other(node) => ArrayContentWith::Other(node),
-            Self::R4(node) => ArrayContentWith::R4(node.into_extra()),
-            Self::R8(node) => ArrayContentWith::R8(node.into_extra()),
-            Self::Ui1(node) => ArrayContentWith::Ui1(node.into_extra()),
-            Self::Ui2(node) => ArrayContentWith::Ui2(node.into_extra()),
-            Self::Ui4(node) => ArrayContentWith::Ui4(node.into_extra()),
-            Self::UnsignedInteger(node) => ArrayContentWith::UnsignedInteger(node.into_extra()),
-            Self::Variant(node) => ArrayContentWith::Variant(node.into_extra()),
+            Self::R4(node) => ArrayContentWith::R4(node.into_user_data()),
+            Self::R8(node) => ArrayContentWith::R8(node.into_user_data()),
+            Self::Ui1(node) => ArrayContentWith::Ui1(node.into_user_data()),
+            Self::Ui2(node) => ArrayContentWith::Ui2(node.into_user_data()),
+            Self::Ui4(node) => ArrayContentWith::Ui4(node.into_user_data()),
+            Self::UnsignedInteger(node) => ArrayContentWith::UnsignedInteger(node.into_user_data()),
+            Self::Variant(node) => ArrayContentWith::Variant(node.into_user_data()),
         }
     }
 }
@@ -1710,17 +1716,17 @@ impl crate::Write for ArrayContent {
     }
 }
 
-impl<X: NodeExtra> BasicStringWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BasicStringWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BasicStringWith<Y>
+    pub fn into_user_data<Y>(self) -> BasicStringWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BasicStringWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -1748,17 +1754,17 @@ impl crate::Write for BasicString {
     }
 }
 
-impl<X: NodeExtra> BinaryBlobWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BinaryBlobWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BinaryBlobWith<Y>
+    pub fn into_user_data<Y>(self) -> BinaryBlobWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BinaryBlobWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -1786,17 +1792,17 @@ impl crate::Write for BinaryBlob {
     }
 }
 
-impl<X: NodeExtra> BinaryBlobObjectWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BinaryBlobObjectWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BinaryBlobObjectWith<Y>
+    pub fn into_user_data<Y>(self) -> BinaryBlobObjectWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BinaryBlobObjectWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -1824,17 +1830,17 @@ impl crate::Write for BinaryBlobObject {
     }
 }
 
-impl<X: NodeExtra> BinaryStorageWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BinaryStorageWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BinaryStorageWith<Y>
+    pub fn into_user_data<Y>(self) -> BinaryStorageWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BinaryStorageWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -1862,17 +1868,17 @@ impl crate::Write for BinaryStorage {
     }
 }
 
-impl<X: NodeExtra> BinaryStorageObjectWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BinaryStorageObjectWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BinaryStorageObjectWith<Y>
+    pub fn into_user_data<Y>(self) -> BinaryStorageObjectWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BinaryStorageObjectWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -1900,17 +1906,17 @@ impl crate::Write for BinaryStorageObject {
     }
 }
 
-impl<X: NodeExtra> BinaryStreamWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BinaryStreamWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BinaryStreamWith<Y>
+    pub fn into_user_data<Y>(self) -> BinaryStreamWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BinaryStreamWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -1938,17 +1944,17 @@ impl crate::Write for BinaryStream {
     }
 }
 
-impl<X: NodeExtra> BinaryStreamObjectWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BinaryStreamObjectWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BinaryStreamObjectWith<Y>
+    pub fn into_user_data<Y>(self) -> BinaryStreamObjectWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BinaryStreamObjectWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -1976,17 +1982,17 @@ impl crate::Write for BinaryStreamObject {
     }
 }
 
-impl<X: NodeExtra> BinaryVersionedStreamWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BinaryVersionedStreamWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BinaryVersionedStreamWith<Y>
+    pub fn into_user_data<Y>(self) -> BinaryVersionedStreamWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BinaryVersionedStreamWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
             version: self.version,
         }
@@ -2016,17 +2022,17 @@ impl crate::Write for BinaryVersionedStream {
     }
 }
 
-impl<X: NodeExtra> BooleanWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BooleanWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BooleanWith<Y>
+    pub fn into_user_data<Y>(self) -> BooleanWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BooleanWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2054,17 +2060,17 @@ impl crate::Write for Boolean {
     }
 }
 
-impl<X: NodeExtra> ClassIDWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ClassIDWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ClassIDWith<Y>
+    pub fn into_user_data<Y>(self) -> ClassIDWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ClassIDWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2092,17 +2098,17 @@ impl crate::Write for ClassID {
     }
 }
 
-impl<X: NodeExtra> CurrencyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CurrencyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CurrencyWith<Y>
+    pub fn into_user_data<Y>(self) -> CurrencyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CurrencyWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2153,17 +2159,17 @@ impl CurrencySimpleType {
     }
 }
 
-impl<X: NodeExtra> DateAndTimeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DateAndTimeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DateAndTimeWith<Y>
+    pub fn into_user_data<Y>(self) -> DateAndTimeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DateAndTimeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2191,17 +2197,17 @@ impl crate::Write for DateAndTime {
     }
 }
 
-impl<X: NodeExtra> DecimalWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DecimalWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DecimalWith<Y>
+    pub fn into_user_data<Y>(self) -> DecimalWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DecimalWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2229,17 +2235,17 @@ impl crate::Write for Decimal {
     }
 }
 
-impl<X: NodeExtra> EmptyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> EmptyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> EmptyWith<Y>
+    pub fn into_user_data<Y>(self) -> EmptyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         EmptyWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2263,17 +2269,17 @@ impl crate::Write for Empty {
     }
 }
 
-impl<X: NodeExtra> ErrorStatusCodeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ErrorStatusCodeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ErrorStatusCodeWith<Y>
+    pub fn into_user_data<Y>(self) -> ErrorStatusCodeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ErrorStatusCodeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2324,17 +2330,17 @@ impl ErrorStatusCodeSimpleType {
     }
 }
 
-impl<X: NodeExtra> FileTimeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FileTimeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FileTimeWith<Y>
+    pub fn into_user_data<Y>(self) -> FileTimeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FileTimeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2362,17 +2368,17 @@ impl crate::Write for FileTime {
     }
 }
 
-impl<X: NodeExtra> I1With<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> I1With<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> I1With<Y>
+    pub fn into_user_data<Y>(self) -> I1With<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         I1With {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2400,17 +2406,17 @@ impl crate::Write for I1 {
     }
 }
 
-impl<X: NodeExtra> I2With<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> I2With<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> I2With<Y>
+    pub fn into_user_data<Y>(self) -> I2With<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         I2With {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2438,17 +2444,17 @@ impl crate::Write for I2 {
     }
 }
 
-impl<X: NodeExtra> I4With<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> I4With<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> I4With<Y>
+    pub fn into_user_data<Y>(self) -> I4With<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         I4With {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2476,17 +2482,17 @@ impl crate::Write for I4 {
     }
 }
 
-impl<X: NodeExtra> I8With<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> I8With<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> I8With<Y>
+    pub fn into_user_data<Y>(self) -> I8With<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         I8With {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2514,17 +2520,17 @@ impl crate::Write for I8 {
     }
 }
 
-impl<X: NodeExtra> IntegerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> IntegerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> IntegerWith<Y>
+    pub fn into_user_data<Y>(self) -> IntegerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         IntegerWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2552,17 +2558,17 @@ impl crate::Write for Integer {
     }
 }
 
-impl<X: NodeExtra> LpstrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LpstrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LpstrWith<Y>
+    pub fn into_user_data<Y>(self) -> LpstrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LpstrWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2590,17 +2596,17 @@ impl crate::Write for Lpstr {
     }
 }
 
-impl<X: NodeExtra> LpwstrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LpwstrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LpwstrWith<Y>
+    pub fn into_user_data<Y>(self) -> LpwstrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LpwstrWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2628,17 +2634,17 @@ impl crate::Write for Lpwstr {
     }
 }
 
-impl<X: NodeExtra> NullWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> NullWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> NullWith<Y>
+    pub fn into_user_data<Y>(self) -> NullWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         NullWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2662,17 +2668,17 @@ impl crate::Write for Null {
     }
 }
 
-impl<X: NodeExtra> R4With<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> R4With<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> R4With<Y>
+    pub fn into_user_data<Y>(self) -> R4With<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         R4With {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2700,17 +2706,17 @@ impl crate::Write for R4 {
     }
 }
 
-impl<X: NodeExtra> R8With<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> R8With<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> R8With<Y>
+    pub fn into_user_data<Y>(self) -> R8With<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         R8With {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2738,17 +2744,17 @@ impl crate::Write for R8 {
     }
 }
 
-impl<X: NodeExtra> Ui1With<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> Ui1With<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> Ui1With<Y>
+    pub fn into_user_data<Y>(self) -> Ui1With<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         Ui1With {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2776,17 +2782,17 @@ impl crate::Write for Ui1 {
     }
 }
 
-impl<X: NodeExtra> Ui2With<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> Ui2With<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> Ui2With<Y>
+    pub fn into_user_data<Y>(self) -> Ui2With<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         Ui2With {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2814,17 +2820,17 @@ impl crate::Write for Ui2 {
     }
 }
 
-impl<X: NodeExtra> Ui4With<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> Ui4With<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> Ui4With<Y>
+    pub fn into_user_data<Y>(self) -> Ui4With<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         Ui4With {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2852,17 +2858,17 @@ impl crate::Write for Ui4 {
     }
 }
 
-impl<X: NodeExtra> Ui8With<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> Ui8With<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> Ui8With<Y>
+    pub fn into_user_data<Y>(self) -> Ui8With<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         Ui8With {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2890,17 +2896,17 @@ impl crate::Write for Ui8 {
     }
 }
 
-impl<X: NodeExtra> UnsignedIntegerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> UnsignedIntegerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> UnsignedIntegerWith<Y>
+    pub fn into_user_data<Y>(self) -> UnsignedIntegerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         UnsignedIntegerWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2928,18 +2934,21 @@ impl crate::Write for UnsignedInteger {
     }
 }
 
-impl<X: NodeExtra> VariantWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> VariantWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> VariantWith<Y>
+    pub fn into_user_data<Y>(self) -> VariantWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         VariantWith {
-            content: crate::into_extra_required(*self.content, VariantContentWith::into_extra),
-            extra: Default::default(),
+            content: crate::into_user_data_required(
+                *self.content,
+                VariantContentWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2963,60 +2972,66 @@ impl crate::Write for Variant {
     }
 }
 
-impl<X: NodeExtra> VariantContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> VariantContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> VariantContentWith<Y>
+    pub fn into_user_data<Y>(self) -> VariantContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
-            Self::Array(node) => VariantContentWith::Array(node.into_extra()),
-            Self::BasicString(node) => VariantContentWith::BasicString(node.into_extra()),
-            Self::BinaryBlob(node) => VariantContentWith::BinaryBlob(node.into_extra()),
-            Self::BinaryBlobObject(node) => VariantContentWith::BinaryBlobObject(node.into_extra()),
-            Self::BinaryStorage(node) => VariantContentWith::BinaryStorage(node.into_extra()),
-            Self::BinaryStorageObject(node) => {
-                VariantContentWith::BinaryStorageObject(node.into_extra())
+            Self::Array(node) => VariantContentWith::Array(node.into_user_data()),
+            Self::BasicString(node) => VariantContentWith::BasicString(node.into_user_data()),
+            Self::BinaryBlob(node) => VariantContentWith::BinaryBlob(node.into_user_data()),
+            Self::BinaryBlobObject(node) => {
+                VariantContentWith::BinaryBlobObject(node.into_user_data())
             }
-            Self::BinaryStream(node) => VariantContentWith::BinaryStream(node.into_extra()),
+            Self::BinaryStorage(node) => VariantContentWith::BinaryStorage(node.into_user_data()),
+            Self::BinaryStorageObject(node) => {
+                VariantContentWith::BinaryStorageObject(node.into_user_data())
+            }
+            Self::BinaryStream(node) => VariantContentWith::BinaryStream(node.into_user_data()),
             Self::BinaryStreamObject(node) => {
-                VariantContentWith::BinaryStreamObject(node.into_extra())
+                VariantContentWith::BinaryStreamObject(node.into_user_data())
             }
             Self::BinaryVersionedStream(node) => {
-                VariantContentWith::BinaryVersionedStream(node.into_extra())
+                VariantContentWith::BinaryVersionedStream(node.into_user_data())
             }
-            Self::Boolean(node) => VariantContentWith::Boolean(node.into_extra()),
-            Self::ClassID(node) => VariantContentWith::ClassID(node.into_extra()),
-            Self::Currency(node) => VariantContentWith::Currency(node.into_extra()),
-            Self::DateAndTime(node) => VariantContentWith::DateAndTime(node.into_extra()),
-            Self::Decimal(node) => VariantContentWith::Decimal(node.into_extra()),
-            Self::Empty(node) => VariantContentWith::Empty(node.into_extra()),
-            Self::ErrorStatusCode(node) => VariantContentWith::ErrorStatusCode(node.into_extra()),
-            Self::FileTime(node) => VariantContentWith::FileTime(node.into_extra()),
-            Self::I1(node) => VariantContentWith::I1(node.into_extra()),
-            Self::I2(node) => VariantContentWith::I2(node.into_extra()),
-            Self::I4(node) => VariantContentWith::I4(node.into_extra()),
-            Self::I8(node) => VariantContentWith::I8(node.into_extra()),
-            Self::Integer(node) => VariantContentWith::Integer(node.into_extra()),
-            Self::Lpstr(node) => VariantContentWith::Lpstr(node.into_extra()),
-            Self::Lpwstr(node) => VariantContentWith::Lpwstr(node.into_extra()),
-            Self::Null(node) => VariantContentWith::Null(node.into_extra()),
+            Self::Boolean(node) => VariantContentWith::Boolean(node.into_user_data()),
+            Self::ClassID(node) => VariantContentWith::ClassID(node.into_user_data()),
+            Self::Currency(node) => VariantContentWith::Currency(node.into_user_data()),
+            Self::DateAndTime(node) => VariantContentWith::DateAndTime(node.into_user_data()),
+            Self::Decimal(node) => VariantContentWith::Decimal(node.into_user_data()),
+            Self::Empty(node) => VariantContentWith::Empty(node.into_user_data()),
+            Self::ErrorStatusCode(node) => {
+                VariantContentWith::ErrorStatusCode(node.into_user_data())
+            }
+            Self::FileTime(node) => VariantContentWith::FileTime(node.into_user_data()),
+            Self::I1(node) => VariantContentWith::I1(node.into_user_data()),
+            Self::I2(node) => VariantContentWith::I2(node.into_user_data()),
+            Self::I4(node) => VariantContentWith::I4(node.into_user_data()),
+            Self::I8(node) => VariantContentWith::I8(node.into_user_data()),
+            Self::Integer(node) => VariantContentWith::Integer(node.into_user_data()),
+            Self::Lpstr(node) => VariantContentWith::Lpstr(node.into_user_data()),
+            Self::Lpwstr(node) => VariantContentWith::Lpwstr(node.into_user_data()),
+            Self::Null(node) => VariantContentWith::Null(node.into_user_data()),
             Self::Other(node) => VariantContentWith::Other(node),
-            Self::R4(node) => VariantContentWith::R4(node.into_extra()),
-            Self::R8(node) => VariantContentWith::R8(node.into_extra()),
-            Self::Ui1(node) => VariantContentWith::Ui1(node.into_extra()),
-            Self::Ui2(node) => VariantContentWith::Ui2(node.into_extra()),
-            Self::Ui4(node) => VariantContentWith::Ui4(node.into_extra()),
-            Self::Ui8(node) => VariantContentWith::Ui8(node.into_extra()),
-            Self::UnsignedInteger(node) => VariantContentWith::UnsignedInteger(node.into_extra()),
-            Self::Variant(node) => VariantContentWith::Variant(node.into_extra()),
-            Self::Vector(node) => VariantContentWith::Vector(node.into_extra()),
+            Self::R4(node) => VariantContentWith::R4(node.into_user_data()),
+            Self::R8(node) => VariantContentWith::R8(node.into_user_data()),
+            Self::Ui1(node) => VariantContentWith::Ui1(node.into_user_data()),
+            Self::Ui2(node) => VariantContentWith::Ui2(node.into_user_data()),
+            Self::Ui4(node) => VariantContentWith::Ui4(node.into_user_data()),
+            Self::Ui8(node) => VariantContentWith::Ui8(node.into_user_data()),
+            Self::UnsignedInteger(node) => {
+                VariantContentWith::UnsignedInteger(node.into_user_data())
+            }
+            Self::Variant(node) => VariantContentWith::Variant(node.into_user_data()),
+            Self::Vector(node) => VariantContentWith::Vector(node.into_user_data()),
         }
     }
 }
 
-impl<X: NodeExtra> Default for VariantContentWith<X> {
+impl<X: UserData> Default for VariantContentWith<X> {
     fn default() -> Self {
         Self::Array(ArrayWith::default())
     }
@@ -3311,20 +3326,20 @@ impl TryFrom<VariantContent> for VectorContent {
     }
 }
 
-impl<X: NodeExtra> VectorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> VectorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> VectorWith<Y>
+    pub fn into_user_data<Y>(self) -> VectorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         VectorWith {
             base_type: self.base_type,
-            content: crate::into_extra_list(self.content, VectorContentWith::into_extra),
-            extra: Default::default(),
+            content: crate::into_user_data_list(self.content, VectorContentWith::into_user_data),
             size: self.size,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3423,35 +3438,37 @@ impl VectorBaseTypeSimpleType {
     }
 }
 
-impl<X: NodeExtra> VectorContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> VectorContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> VectorContentWith<Y>
+    pub fn into_user_data<Y>(self) -> VectorContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
-            Self::BasicString(node) => VectorContentWith::BasicString(node.into_extra()),
-            Self::Boolean(node) => VectorContentWith::Boolean(node.into_extra()),
-            Self::ClassID(node) => VectorContentWith::ClassID(node.into_extra()),
-            Self::Currency(node) => VectorContentWith::Currency(node.into_extra()),
-            Self::DateAndTime(node) => VectorContentWith::DateAndTime(node.into_extra()),
-            Self::ErrorStatusCode(node) => VectorContentWith::ErrorStatusCode(node.into_extra()),
-            Self::FileTime(node) => VectorContentWith::FileTime(node.into_extra()),
-            Self::I1(node) => VectorContentWith::I1(node.into_extra()),
-            Self::I2(node) => VectorContentWith::I2(node.into_extra()),
-            Self::I4(node) => VectorContentWith::I4(node.into_extra()),
-            Self::I8(node) => VectorContentWith::I8(node.into_extra()),
-            Self::Lpstr(node) => VectorContentWith::Lpstr(node.into_extra()),
-            Self::Lpwstr(node) => VectorContentWith::Lpwstr(node.into_extra()),
+            Self::BasicString(node) => VectorContentWith::BasicString(node.into_user_data()),
+            Self::Boolean(node) => VectorContentWith::Boolean(node.into_user_data()),
+            Self::ClassID(node) => VectorContentWith::ClassID(node.into_user_data()),
+            Self::Currency(node) => VectorContentWith::Currency(node.into_user_data()),
+            Self::DateAndTime(node) => VectorContentWith::DateAndTime(node.into_user_data()),
+            Self::ErrorStatusCode(node) => {
+                VectorContentWith::ErrorStatusCode(node.into_user_data())
+            }
+            Self::FileTime(node) => VectorContentWith::FileTime(node.into_user_data()),
+            Self::I1(node) => VectorContentWith::I1(node.into_user_data()),
+            Self::I2(node) => VectorContentWith::I2(node.into_user_data()),
+            Self::I4(node) => VectorContentWith::I4(node.into_user_data()),
+            Self::I8(node) => VectorContentWith::I8(node.into_user_data()),
+            Self::Lpstr(node) => VectorContentWith::Lpstr(node.into_user_data()),
+            Self::Lpwstr(node) => VectorContentWith::Lpwstr(node.into_user_data()),
             Self::Other(node) => VectorContentWith::Other(node),
-            Self::R4(node) => VectorContentWith::R4(node.into_extra()),
-            Self::R8(node) => VectorContentWith::R8(node.into_extra()),
-            Self::Ui1(node) => VectorContentWith::Ui1(node.into_extra()),
-            Self::Ui2(node) => VectorContentWith::Ui2(node.into_extra()),
-            Self::Ui4(node) => VectorContentWith::Ui4(node.into_extra()),
-            Self::Ui8(node) => VectorContentWith::Ui8(node.into_extra()),
-            Self::Variant(node) => VectorContentWith::Variant(node.into_extra()),
+            Self::R4(node) => VectorContentWith::R4(node.into_user_data()),
+            Self::R8(node) => VectorContentWith::R8(node.into_user_data()),
+            Self::Ui1(node) => VectorContentWith::Ui1(node.into_user_data()),
+            Self::Ui2(node) => VectorContentWith::Ui2(node.into_user_data()),
+            Self::Ui4(node) => VectorContentWith::Ui4(node.into_user_data()),
+            Self::Ui8(node) => VectorContentWith::Ui8(node.into_user_data()),
+            Self::Variant(node) => VectorContentWith::Variant(node.into_user_data()),
         }
     }
 }

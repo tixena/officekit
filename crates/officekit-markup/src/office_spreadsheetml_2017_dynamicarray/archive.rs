@@ -224,10 +224,10 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct DynamicArrayPropertiesMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub f_collapsed: Option<String>,
     pub f_dynamic: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -235,18 +235,18 @@ pub struct DynamicArrayPropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<spreadsheet::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<DynamicArrayPropertiesMirror> for super::DynamicArrayProperties {
     fn from(item: DynamicArrayPropertiesMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             f_collapsed: item.f_collapsed,
             f_dynamic: item.f_dynamic,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -288,8 +288,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

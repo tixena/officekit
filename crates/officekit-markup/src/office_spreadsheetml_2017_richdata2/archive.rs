@@ -226,9 +226,9 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct AArrayMirror {
     pub c: Option<String>,
-    pub extra: (),
     pub r: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub v_array_value: Vec<super::VArrayValue>,
 }
 
@@ -237,8 +237,8 @@ pub struct AArrayMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ASupportingPropertyBagArrayMirror {
     pub count: Option<String>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub v_supporting_property_bag_array_value: Vec<super::VSupportingPropertyBagArrayValue>,
 }
 
@@ -249,18 +249,18 @@ pub struct ArrayDataMirror {
     pub a_array: Vec<super::AArray>,
     pub count: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CustomFilter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomFilterMirror {
-    pub extra: (),
     pub key: Option<String>,
     pub operator: Option<spreadsheet::FilterOperator>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -270,8 +270,8 @@ pub struct CustomFilterMirror {
 pub struct CustomFiltersMirror {
     pub and: Option<String>,
     pub content: Vec<super::CustomRichFiltersContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -280,13 +280,13 @@ pub struct CustomFiltersMirror {
 pub struct DateGroupItemMirror {
     pub date_time_grouping: Option<spreadsheet::DateTimeGrouping>,
     pub day: Option<String>,
-    pub extra: (),
     pub hour: Option<String>,
     pub key: Option<String>,
     pub minute: Option<String>,
     pub month: Option<String>,
     pub second: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub year: Option<String>,
 }
 
@@ -295,21 +295,21 @@ pub struct DateGroupItemMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DxfsMirror {
     pub count: Option<String>,
-    pub extra: (),
     pub formatting: Vec<spreadsheet::Formatting>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DynamicFilter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DynamicFilterMirror {
-    pub extra: (),
     pub key: Option<String>,
     pub max_val: Option<String>,
     pub max_val_iso: Option<String>,
     pub r#type: Option<spreadsheet::StDynamicFilterType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
     pub val_iso: Option<String>,
 }
@@ -319,8 +319,8 @@ pub struct DynamicFilterMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<spreadsheet::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -328,10 +328,10 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FilterMirror {
     pub blank: Option<String>,
-    pub extra: (),
     pub key: Option<String>,
     pub nodata: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -340,8 +340,8 @@ pub struct FilterMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FilterColumnMirror {
     pub content: Option<Box<super::RichFilterColumnContent>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -350,18 +350,18 @@ pub struct FilterColumnMirror {
 pub struct FiltersMirror {
     pub date_group_item: Vec<super::DateGroupItem>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub filter: Vec<super::Filter>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Flag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FlagMirror {
-    pub extra: (),
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: Option<String>,
 }
 
@@ -370,48 +370,48 @@ pub struct FlagMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct GlobalMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub key_flags: Option<Box<super::KeyFlags>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::K)]
 #[rkyv(attr(non_exhaustive))]
 pub struct KMirror {
-    pub extra: (),
     pub n: Option<String>,
     pub t: Option<super::SupportingPropertyBagValueType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Key)]
 #[rkyv(attr(non_exhaustive))]
 pub struct KeyMirror {
-    pub extra: (),
     pub flag: Vec<super::Flag>,
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::KeyFlags)]
 #[rkyv(attr(non_exhaustive))]
 pub struct KeyFlagsMirror {
-    pub extra: (),
     pub key: Vec<super::Key>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RPr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RPrMirror {
-    pub extra: (),
     pub n: Option<String>,
     pub t: Option<super::RichFormatPropertyType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -419,18 +419,18 @@ pub struct RPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RStyMirror {
     pub dxfid: Option<String>,
-    pub extra: (),
     pub rpv: Vec<super::Rpv>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RichProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RichPropertiesMirror {
-    pub extra: (),
     pub r_pr: Vec<super::RPr>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -440,13 +440,13 @@ pub struct RichSortConditionMirror {
     pub custom_list: Option<String>,
     pub descending: Option<String>,
     pub dxf_id: Option<String>,
-    pub extra: (),
     pub icon_id: Option<String>,
     pub icon_set: Option<office_spreadsheetml_2009_9_main::IconSetType>,
     pub r#ref: Option<String>,
     pub rich_sort_key: Option<String>,
     pub sort_by: Option<spreadsheet::SortBy>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -455,28 +455,28 @@ pub struct RichSortConditionMirror {
 pub struct RichStyleSheetMirror {
     pub dxfs: Option<Box<super::Dxfs>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub rich_properties: Option<Box<super::RichProperties>>,
     pub rich_styles: Option<Box<super::RichStyles>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RichStyles)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RichStylesMirror {
-    pub extra: (),
     pub r_sty: Vec<super::RSty>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Rpv)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RpvMirror {
-    pub extra: (),
     pub i: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -485,28 +485,28 @@ pub struct RpvMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RvTypesInfoMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub global: Option<Box<super::Global>>,
     pub types: Option<Box<super::Types>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::S)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SMirror {
-    pub extra: (),
     pub k: Vec<super::K>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Spb)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SpbMirror {
-    pub extra: (),
     pub s: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub v_supporting_property_bag_value: Vec<super::VSupportingPropertyBagValue>,
 }
 
@@ -517,8 +517,8 @@ pub struct SpbArraysMirror {
     pub a_supporting_property_bag_array: Vec<super::ASupportingPropertyBagArray>,
     pub count: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -527,9 +527,9 @@ pub struct SpbArraysMirror {
 pub struct SpbDataMirror {
     pub count: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub spb: Vec<super::Spb>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -538,31 +538,31 @@ pub struct SpbDataMirror {
 pub struct SpbStructuresMirror {
     pub count: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub s: Vec<super::S>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SupportingPropertyBags)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SupportingPropertyBagsMirror {
-    pub extra: (),
     pub spb_arrays: Option<Box<super::SpbArrays>>,
     pub spb_data: Box<super::SpbData>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Top10)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Top10Mirror {
-    pub extra: (),
     pub filter_val: Option<String>,
     pub key: Option<String>,
     pub percent: Option<String>,
     pub top: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -571,28 +571,28 @@ pub struct Top10Mirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TypeMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub key_flags: Option<Box<super::KeyFlags>>,
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Types)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TypesMirror {
-    pub extra: (),
     pub r#type: Vec<super::Type>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::VArrayValue)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VArrayValueMirror {
-    pub extra: (),
     pub t: Option<super::ArrayValueType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -600,9 +600,9 @@ pub struct VArrayValueMirror {
 #[rkyv(remote = super::VSupportingPropertyBagArrayValue)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VSupportingPropertyBagArrayValueMirror {
-    pub extra: (),
     pub t: Option<super::SupportingPropertyBagArrayValueType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -610,8 +610,8 @@ pub struct VSupportingPropertyBagArrayValueMirror {
 #[rkyv(remote = super::VSupportingPropertyBagValue)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VSupportingPropertyBagValueMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -640,9 +640,9 @@ impl From<AArrayMirror> for super::AArray {
     fn from(item: AArrayMirror) -> Self {
         Self {
             c: item.c,
-            extra: item.extra,
             r: item.r,
             unknown: item.unknown,
+            user_data: item.user_data,
             v_array_value: item.v_array_value,
         }
     }
@@ -681,8 +681,8 @@ impl From<ASupportingPropertyBagArrayMirror> for super::ASupportingPropertyBagAr
     fn from(item: ASupportingPropertyBagArrayMirror) -> Self {
         Self {
             count: item.count,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             v_supporting_property_bag_array_value: item.v_supporting_property_bag_array_value,
         }
     }
@@ -727,8 +727,8 @@ impl From<ArrayDataMirror> for super::ArrayData {
             a_array: item.a_array,
             count: item.count,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -765,10 +765,10 @@ where
 impl From<CustomFilterMirror> for super::CustomFilter {
     fn from(item: CustomFilterMirror) -> Self {
         Self {
-            extra: item.extra,
             key: item.key,
             operator: item.operator,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -808,8 +808,8 @@ impl From<CustomFiltersMirror> for super::CustomFilters {
         Self {
             and: item.and,
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -848,13 +848,13 @@ impl From<DateGroupItemMirror> for super::DateGroupItem {
         Self {
             date_time_grouping: item.date_time_grouping,
             day: item.day,
-            extra: item.extra,
             hour: item.hour,
             key: item.key,
             minute: item.minute,
             month: item.month,
             second: item.second,
             unknown: item.unknown,
+            user_data: item.user_data,
             year: item.year,
         }
     }
@@ -893,9 +893,9 @@ impl From<DxfsMirror> for super::Dxfs {
     fn from(item: DxfsMirror) -> Self {
         Self {
             count: item.count,
-            extra: item.extra,
             formatting: item.formatting,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -932,12 +932,12 @@ where
 impl From<DynamicFilterMirror> for super::DynamicFilter {
     fn from(item: DynamicFilterMirror) -> Self {
         Self {
-            extra: item.extra,
             key: item.key,
             max_val: item.max_val,
             max_val_iso: item.max_val_iso,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
             val_iso: item.val_iso,
         }
@@ -977,8 +977,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1016,10 +1016,10 @@ impl From<FilterMirror> for super::Filter {
     fn from(item: FilterMirror) -> Self {
         Self {
             blank: item.blank,
-            extra: item.extra,
             key: item.key,
             nodata: item.nodata,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -1058,8 +1058,8 @@ impl From<FilterColumnMirror> for super::FilterColumn {
     fn from(item: FilterColumnMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1098,9 +1098,9 @@ impl From<FiltersMirror> for super::Filters {
         Self {
             date_group_item: item.date_group_item,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             filter: item.filter,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1137,9 +1137,9 @@ where
 impl From<FlagMirror> for super::Flag {
     fn from(item: FlagMirror) -> Self {
         Self {
-            extra: item.extra,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1178,9 +1178,9 @@ impl From<GlobalMirror> for super::Global {
     fn from(item: GlobalMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             key_flags: item.key_flags,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1217,10 +1217,10 @@ where
 impl From<KMirror> for super::K {
     fn from(item: KMirror) -> Self {
         Self {
-            extra: item.extra,
             n: item.n,
             t: item.t,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1257,10 +1257,10 @@ where
 impl From<KeyMirror> for super::Key {
     fn from(item: KeyMirror) -> Self {
         Self {
-            extra: item.extra,
             flag: item.flag,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1297,9 +1297,9 @@ where
 impl From<KeyFlagsMirror> for super::KeyFlags {
     fn from(item: KeyFlagsMirror) -> Self {
         Self {
-            extra: item.extra,
             key: item.key,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1336,10 +1336,10 @@ where
 impl From<RPrMirror> for super::RPr {
     fn from(item: RPrMirror) -> Self {
         Self {
-            extra: item.extra,
             n: item.n,
             t: item.t,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1377,9 +1377,9 @@ impl From<RStyMirror> for super::RSty {
     fn from(item: RStyMirror) -> Self {
         Self {
             dxfid: item.dxfid,
-            extra: item.extra,
             rpv: item.rpv,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1416,9 +1416,9 @@ where
 impl From<RichPropertiesMirror> for super::RichProperties {
     fn from(item: RichPropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             r_pr: item.r_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1458,13 +1458,13 @@ impl From<RichSortConditionMirror> for super::RichSortCondition {
             custom_list: item.custom_list,
             descending: item.descending,
             dxf_id: item.dxf_id,
-            extra: item.extra,
             icon_id: item.icon_id,
             icon_set: item.icon_set,
             r#ref: item.r#ref,
             rich_sort_key: item.rich_sort_key,
             sort_by: item.sort_by,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1503,10 +1503,10 @@ impl From<RichStyleSheetMirror> for super::RichStyleSheet {
         Self {
             dxfs: item.dxfs,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             rich_properties: item.rich_properties,
             rich_styles: item.rich_styles,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1543,9 +1543,9 @@ where
 impl From<RichStylesMirror> for super::RichStyles {
     fn from(item: RichStylesMirror) -> Self {
         Self {
-            extra: item.extra,
             r_sty: item.r_sty,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1582,9 +1582,9 @@ where
 impl From<RpvMirror> for super::Rpv {
     fn from(item: RpvMirror) -> Self {
         Self {
-            extra: item.extra,
             i: item.i,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1623,10 +1623,10 @@ impl From<RvTypesInfoMirror> for super::RvTypesInfo {
     fn from(item: RvTypesInfoMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             global: item.global,
             types: item.types,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1663,9 +1663,9 @@ where
 impl From<SMirror> for super::S {
     fn from(item: SMirror) -> Self {
         Self {
-            extra: item.extra,
             k: item.k,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1702,9 +1702,9 @@ where
 impl From<SpbMirror> for super::Spb {
     fn from(item: SpbMirror) -> Self {
         Self {
-            extra: item.extra,
             s: item.s,
             unknown: item.unknown,
+            user_data: item.user_data,
             v_supporting_property_bag_value: item.v_supporting_property_bag_value,
         }
     }
@@ -1745,8 +1745,8 @@ impl From<SpbArraysMirror> for super::SpbArrays {
             a_supporting_property_bag_array: item.a_supporting_property_bag_array,
             count: item.count,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1785,9 +1785,9 @@ impl From<SpbDataMirror> for super::SpbData {
         Self {
             count: item.count,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             spb: item.spb,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1826,9 +1826,9 @@ impl From<SpbStructuresMirror> for super::SpbStructures {
         Self {
             count: item.count,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             s: item.s,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1865,10 +1865,10 @@ where
 impl From<SupportingPropertyBagsMirror> for super::SupportingPropertyBags {
     fn from(item: SupportingPropertyBagsMirror) -> Self {
         Self {
-            extra: item.extra,
             spb_arrays: item.spb_arrays,
             spb_data: item.spb_data,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1909,12 +1909,12 @@ where
 impl From<Top10Mirror> for super::Top10 {
     fn from(item: Top10Mirror) -> Self {
         Self {
-            extra: item.extra,
             filter_val: item.filter_val,
             key: item.key,
             percent: item.percent,
             top: item.top,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -1953,10 +1953,10 @@ impl From<TypeMirror> for super::Type {
     fn from(item: TypeMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             key_flags: item.key_flags,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1993,9 +1993,9 @@ where
 impl From<TypesMirror> for super::Types {
     fn from(item: TypesMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2032,9 +2032,9 @@ where
 impl From<VArrayValueMirror> for super::VArrayValue {
     fn from(item: VArrayValueMirror) -> Self {
         Self {
-            extra: item.extra,
             t: item.t,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2072,9 +2072,9 @@ where
 impl From<VSupportingPropertyBagArrayValueMirror> for super::VSupportingPropertyBagArrayValue {
     fn from(item: VSupportingPropertyBagArrayValueMirror) -> Self {
         Self {
-            extra: item.extra,
             t: item.t,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2116,8 +2116,8 @@ where
 impl From<VSupportingPropertyBagValueMirror> for super::VSupportingPropertyBagValue {
     fn from(item: VSupportingPropertyBagValueMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }

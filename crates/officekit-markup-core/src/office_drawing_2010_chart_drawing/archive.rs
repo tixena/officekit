@@ -230,9 +230,9 @@ pub struct CNvContentPartPrMirror {
     pub cp_locks: Option<Box<super::super::office_drawing_2010_main::CpLocks>>,
     #[rkyv(omit_bounds)]
     pub ext_lst: Option<Box<super::super::office_drawing_2010_main::ExtLst>>,
-    pub extra: (),
     pub is_comment: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -247,7 +247,6 @@ pub struct CNvPrMirror {
     pub descr: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     pub hidden: Option<String>,
     #[rkyv(omit_bounds)]
     pub hyperlink_for_hover: Option<Box<super::super::drawing::HyperlinkForHover>>,
@@ -255,6 +254,7 @@ pub struct CNvPrMirror {
     pub name: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -267,12 +267,12 @@ pub struct ContentPartMirror {
     pub bw_mode: Option<super::super::drawing::BlackAndWhiteMode>,
     #[rkyv(omit_bounds)]
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub id: Option<String>,
     #[rkyv(omit_bounds)]
     pub nv_content_part_pr: Option<Box<super::NvContentPartPr>>,
     pub nv_pr: Option<Box<super::NvPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xfrm: Option<Box<super::Xfrm>>,
 }
 
@@ -285,8 +285,8 @@ pub struct ContentPartMirror {
 pub struct ExtLstMirror {
     #[rkyv(omit_bounds)]
     pub extension: Vec<super::super::drawing::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -300,18 +300,18 @@ pub struct NvContentPartPrMirror {
     pub c: Option<Box<super::CNvContentPartPr>>,
     #[rkyv(omit_bounds)]
     pub c_nv_pr: Box<super::CNvPr>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::NvPr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NvPrMirror {
-    pub extra: (),
     pub f_published: Option<String>,
     pub r#macro: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -319,12 +319,12 @@ pub struct NvPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct XfrmMirror {
     pub extents: Option<Box<super::super::drawing::Extents>>,
-    pub extra: (),
     pub flip_h: Option<String>,
     pub flip_v: Option<String>,
     pub offset: Option<Box<super::super::drawing::Offset>>,
     pub rot: Option<super::super::drawing::Angle>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<CNvContentPartPrMirror> for super::CNvContentPartPr {
@@ -332,9 +332,9 @@ impl From<CNvContentPartPrMirror> for super::CNvContentPartPr {
         Self {
             cp_locks: item.cp_locks,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             is_comment: item.is_comment,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -374,13 +374,13 @@ impl From<CNvPrMirror> for super::CNvPr {
             click_hyperlink: item.click_hyperlink,
             descr: item.descr,
             extension_list: item.extension_list,
-            extra: item.extra,
             hidden: item.hidden,
             hyperlink_for_hover: item.hyperlink_for_hover,
             id: item.id,
             name: item.name,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -419,11 +419,11 @@ impl From<ContentPartMirror> for super::ContentPart {
         Self {
             bw_mode: item.bw_mode,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             id: item.id,
             nv_content_part_pr: item.nv_content_part_pr,
             nv_pr: item.nv_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
             xfrm: item.xfrm,
         }
     }
@@ -462,8 +462,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -502,8 +502,8 @@ impl From<NvContentPartPrMirror> for super::NvContentPartPr {
         Self {
             c: item.c,
             c_nv_pr: item.c_nv_pr,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -540,10 +540,10 @@ where
 impl From<NvPrMirror> for super::NvPr {
     fn from(item: NvPrMirror) -> Self {
         Self {
-            extra: item.extra,
             f_published: item.f_published,
             r#macro: item.r#macro,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -581,12 +581,12 @@ impl From<XfrmMirror> for super::Xfrm {
     fn from(item: XfrmMirror) -> Self {
         Self {
             extents: item.extents,
-            extra: item.extra,
             flip_h: item.flip_h,
             flip_v: item.flip_v,
             offset: item.offset,
             rot: item.rot,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

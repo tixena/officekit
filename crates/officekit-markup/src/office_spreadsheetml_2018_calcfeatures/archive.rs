@@ -222,26 +222,26 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::CalcFeatures)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CalcFeaturesMirror {
-    pub extra: (),
     pub feature: Vec<super::Feature>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Feature)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FeatureMirror {
-    pub extra: (),
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<CalcFeaturesMirror> for super::CalcFeatures {
     fn from(item: CalcFeaturesMirror) -> Self {
         Self {
-            extra: item.extra,
             feature: item.feature,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -278,9 +278,9 @@ where
 impl From<FeatureMirror> for super::Feature {
     fn from(item: FeatureMirror) -> Self {
         Self {
-            extra: item.extra,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

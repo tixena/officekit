@@ -231,7 +231,6 @@ pub struct CalloutMirror {
     pub drop: Option<String>,
     pub dropauto: Option<common_simple_types::BooleanValue>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub gap: Option<String>,
     pub length: Option<String>,
     pub lengthspecified: Option<common_simple_types::BooleanValue>,
@@ -241,6 +240,7 @@ pub struct CalloutMirror {
     pub textborder: Option<common_simple_types::BooleanValue>,
     pub r#type: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -248,8 +248,8 @@ pub struct CalloutMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ComplexMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -257,11 +257,11 @@ pub struct ComplexMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DiagramRelationshipMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub idcntr: Option<String>,
     pub iddest: Option<String>,
     pub idsrc: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -270,8 +270,8 @@ pub struct DiagramRelationshipMirror {
 pub struct DiagramRelationshipTableMirror {
     pub diagram_relationship: Vec<super::DiagramRelationship>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -281,7 +281,6 @@ pub struct DigitalSignatureLineMirror {
     pub addlxml: Option<String>,
     pub allowcomments: Option<common_simple_types::BooleanValue>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub id: Option<common_simple_types::Guid>,
     pub issignatureline: Option<common_simple_types::BooleanValue>,
     pub provid: Option<common_simple_types::Guid>,
@@ -293,6 +292,7 @@ pub struct DigitalSignatureLineMirror {
     pub suggestedsigner2: Option<String>,
     pub suggestedsigneremail: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -303,7 +303,6 @@ pub struct EmbeddedOLEObjectMirror {
     pub embedded_object_alternate_image_request:
         Option<Box<super::EmbeddedObjectAlternateImageRequest>>,
     pub embedded_object_cannot_be_refreshed: Option<Box<super::EmbeddedObjectCannotBeRefreshed>>,
-    pub extra: (),
     pub id: Option<String>,
     pub object_id: Option<String>,
     pub prog_id: Option<String>,
@@ -311,6 +310,7 @@ pub struct EmbeddedOLEObjectMirror {
     pub r#type: Option<super::OLEType>,
     pub unknown: officekit_markup_base::Unknown,
     pub update_mode: Option<super::OLEUpdateMode>,
+    pub user_data: (),
     pub wordprocessingml_field_switches: Option<Box<super::WordprocessingMLFieldSwitches>>,
 }
 
@@ -318,8 +318,8 @@ pub struct EmbeddedOLEObjectMirror {
 #[rkyv(remote = super::EmbeddedObjectAlternateImageRequest)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbeddedObjectAlternateImageRequestMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -327,8 +327,8 @@ pub struct EmbeddedObjectAlternateImageRequestMirror {
 #[rkyv(remote = super::EmbeddedObjectCannotBeRefreshed)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbeddedObjectCannotBeRefreshedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -344,7 +344,6 @@ pub struct ExtrusionMirror {
     pub diffusity: Option<String>,
     pub edge: Option<String>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub facet: Option<String>,
     pub foredepth: Option<String>,
     pub lightface: Option<common_simple_types::BooleanValue>,
@@ -369,6 +368,7 @@ pub struct ExtrusionMirror {
     pub specularity: Option<String>,
     pub r#type: Option<super::ExtrusionType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub viewpoint: Option<String>,
     pub viewpointorigin: Option<String>,
 }
@@ -379,9 +379,9 @@ pub struct ExtrusionMirror {
 pub struct InkMirror {
     pub annotation: Option<common_simple_types::BooleanValue>,
     pub content_type: Option<String>,
-    pub extra: (),
     pub i: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -390,8 +390,8 @@ pub struct InkMirror {
 pub struct MostRecentlyUsedColorsMirror {
     pub colors: Option<String>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -405,7 +405,6 @@ pub struct NewShapeDefaultsMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::NewShapeDefaultsContent>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub fill: Option<common_simple_types::BooleanValue>,
     pub fillcolor: Option<String>,
     pub spidmax: Option<String>,
@@ -413,29 +412,30 @@ pub struct NewShapeDefaultsMirror {
     pub strokecolor: Option<String>,
     pub style: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RegroupEntry)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RegroupEntryMirror {
-    pub extra: (),
     pub new: Option<String>,
     pub old: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Rule)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RuleMirror {
-    pub extra: (),
     pub how: Option<super::StHow>,
     pub id: Option<String>,
     pub idref: Option<String>,
     pub shape_reference: Vec<super::ShapeReference>,
     pub r#type: Option<super::RuleType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -443,17 +443,17 @@ pub struct RuleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RuleSetMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub rule: Vec<super::Rule>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ShapeClippingPath)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeClippingPathMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub v: Option<String>,
 }
 
@@ -462,9 +462,9 @@ pub struct ShapeClippingPathMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeFillExtendedPropertiesMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub r#type: Option<super::ShapeFillType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -472,9 +472,9 @@ pub struct ShapeFillExtendedPropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeGroupingHistoryMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub regroup_entry: Vec<super::RegroupEntry>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -483,8 +483,8 @@ pub struct ShapeGroupingHistoryMirror {
 pub struct ShapeIDMapMirror {
     pub data: Option<String>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -493,8 +493,8 @@ pub struct ShapeIDMapMirror {
 pub struct ShapeLayoutPropertiesMirror {
     pub content: Vec<super::ShapeLayoutPropertiesContent>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -505,7 +505,6 @@ pub struct ShapeProtectionsMirror {
     pub aspectratio: Option<common_simple_types::BooleanValue>,
     pub cropping: Option<common_simple_types::BooleanValue>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub grouping: Option<common_simple_types::BooleanValue>,
     pub position: Option<common_simple_types::BooleanValue>,
     pub rotation: Option<common_simple_types::BooleanValue>,
@@ -514,6 +513,7 @@ pub struct ShapeProtectionsMirror {
     pub text: Option<common_simple_types::BooleanValue>,
     pub ungrouping: Option<common_simple_types::BooleanValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub verticies: Option<common_simple_types::BooleanValue>,
 }
 
@@ -523,10 +523,10 @@ pub struct ShapeProtectionsMirror {
 pub struct ShapeReferenceMirror {
     pub connectloc: Option<String>,
     pub end: Option<common_simple_types::BooleanValueWithBlankFalseState>,
-    pub extra: (),
     pub idref: Option<String>,
     pub start: Option<common_simple_types::BooleanValueWithBlankFalseState>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -534,13 +534,13 @@ pub struct ShapeReferenceMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SkewTransformMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub id: Option<String>,
     pub matrix: Option<String>,
     pub offset: Option<String>,
     pub on: Option<common_simple_types::BooleanValue>,
     pub origin: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -553,8 +553,8 @@ pub struct StorageForAlternateMathContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::super::drawing::AnyElementContent>,
     pub content_type: Option<String>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -570,7 +570,6 @@ pub struct TextBoxBottomStrokeMirror {
     pub endarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
     pub endcap: Option<super::super::vml::StrokeEndCapType>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub filltype: Option<super::super::vml::ShapeFillType>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
     pub href: Option<String>,
@@ -589,6 +588,7 @@ pub struct TextBoxBottomStrokeMirror {
     pub startarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub weight: Option<String>,
 }
 
@@ -605,7 +605,6 @@ pub struct TextBoxInteriorStrokeMirror {
     pub endarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
     pub endcap: Option<super::super::vml::StrokeEndCapType>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub filltype: Option<super::super::vml::ShapeFillType>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
     pub href: Option<String>,
@@ -624,6 +623,7 @@ pub struct TextBoxInteriorStrokeMirror {
     pub startarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub weight: Option<String>,
 }
 
@@ -640,7 +640,6 @@ pub struct TextBoxLeftStrokeMirror {
     pub endarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
     pub endcap: Option<super::super::vml::StrokeEndCapType>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub filltype: Option<super::super::vml::ShapeFillType>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
     pub href: Option<String>,
@@ -659,6 +658,7 @@ pub struct TextBoxLeftStrokeMirror {
     pub startarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub weight: Option<String>,
 }
 
@@ -675,7 +675,6 @@ pub struct TextBoxRightStrokeMirror {
     pub endarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
     pub endcap: Option<super::super::vml::StrokeEndCapType>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub filltype: Option<super::super::vml::ShapeFillType>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
     pub href: Option<String>,
@@ -694,6 +693,7 @@ pub struct TextBoxRightStrokeMirror {
     pub startarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub weight: Option<String>,
 }
 
@@ -710,7 +710,6 @@ pub struct TextBoxTopStrokeMirror {
     pub endarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
     pub endcap: Option<super::super::vml::StrokeEndCapType>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub filltype: Option<super::super::vml::ShapeFillType>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
     pub href: Option<String>,
@@ -729,6 +728,7 @@ pub struct TextBoxTopStrokeMirror {
     pub startarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub weight: Option<String>,
 }
 
@@ -737,12 +737,12 @@ pub struct TextBoxTopStrokeMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct UIDefaultColorsMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub extrusioncolor: Option<String>,
     pub fillcolor: Option<String>,
     pub shadowcolor: Option<String>,
     pub strokecolor: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -758,18 +758,18 @@ pub struct VMLDiagramMirror {
     pub dgmscaley: Option<String>,
     pub dgmstyle: Option<String>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub extra: (),
     pub relationship_table: Option<Box<super::DiagramRelationshipTable>>,
     pub reverse: Option<common_simple_types::BooleanValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::WordprocessingMLFieldSwitches)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WordprocessingMLFieldSwitchesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -812,7 +812,6 @@ impl From<CalloutMirror> for super::Callout {
             drop: item.drop,
             dropauto: item.dropauto,
             ext: item.ext,
-            extra: item.extra,
             gap: item.gap,
             length: item.length,
             lengthspecified: item.lengthspecified,
@@ -822,6 +821,7 @@ impl From<CalloutMirror> for super::Callout {
             textborder: item.textborder,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -859,8 +859,8 @@ impl From<ComplexMirror> for super::Complex {
     fn from(item: ComplexMirror) -> Self {
         Self {
             ext: item.ext,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -898,11 +898,11 @@ impl From<DiagramRelationshipMirror> for super::DiagramRelationship {
     fn from(item: DiagramRelationshipMirror) -> Self {
         Self {
             ext: item.ext,
-            extra: item.extra,
             idcntr: item.idcntr,
             iddest: item.iddest,
             idsrc: item.idsrc,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -944,8 +944,8 @@ impl From<DiagramRelationshipTableMirror> for super::DiagramRelationshipTable {
         Self {
             diagram_relationship: item.diagram_relationship,
             ext: item.ext,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -989,7 +989,6 @@ impl From<DigitalSignatureLineMirror> for super::DigitalSignatureLine {
             addlxml: item.addlxml,
             allowcomments: item.allowcomments,
             ext: item.ext,
-            extra: item.extra,
             id: item.id,
             issignatureline: item.issignatureline,
             provid: item.provid,
@@ -1001,6 +1000,7 @@ impl From<DigitalSignatureLineMirror> for super::DigitalSignatureLine {
             suggestedsigner2: item.suggestedsigner2,
             suggestedsigneremail: item.suggestedsigneremail,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1043,7 +1043,6 @@ impl From<EmbeddedOLEObjectMirror> for super::EmbeddedOLEObject {
             draw_aspect: item.draw_aspect,
             embedded_object_alternate_image_request: item.embedded_object_alternate_image_request,
             embedded_object_cannot_be_refreshed: item.embedded_object_cannot_be_refreshed,
-            extra: item.extra,
             id: item.id,
             object_id: item.object_id,
             prog_id: item.prog_id,
@@ -1051,6 +1050,7 @@ impl From<EmbeddedOLEObjectMirror> for super::EmbeddedOLEObject {
             r#type: item.r#type,
             unknown: item.unknown,
             update_mode: item.update_mode,
+            user_data: item.user_data,
             wordprocessingml_field_switches: item.wordprocessingml_field_switches,
         }
     }
@@ -1090,8 +1090,8 @@ impl From<EmbeddedObjectAlternateImageRequestMirror>
 {
     fn from(item: EmbeddedObjectAlternateImageRequestMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1133,8 +1133,8 @@ where
 impl From<EmbeddedObjectCannotBeRefreshedMirror> for super::EmbeddedObjectCannotBeRefreshed {
     fn from(item: EmbeddedObjectCannotBeRefreshedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1184,7 +1184,6 @@ impl From<ExtrusionMirror> for super::Extrusion {
             diffusity: item.diffusity,
             edge: item.edge,
             ext: item.ext,
-            extra: item.extra,
             facet: item.facet,
             foredepth: item.foredepth,
             lightface: item.lightface,
@@ -1209,6 +1208,7 @@ impl From<ExtrusionMirror> for super::Extrusion {
             specularity: item.specularity,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             viewpoint: item.viewpoint,
             viewpointorigin: item.viewpointorigin,
         }
@@ -1249,9 +1249,9 @@ impl From<InkMirror> for super::Ink {
         Self {
             annotation: item.annotation,
             content_type: item.content_type,
-            extra: item.extra,
             i: item.i,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1290,8 +1290,8 @@ impl From<MostRecentlyUsedColorsMirror> for super::MostRecentlyUsedColors {
         Self {
             colors: item.colors,
             ext: item.ext,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1335,7 +1335,6 @@ impl From<NewShapeDefaultsMirror> for super::NewShapeDefaults {
             allowincell: item.allowincell,
             content: item.content,
             ext: item.ext,
-            extra: item.extra,
             fill: item.fill,
             fillcolor: item.fillcolor,
             spidmax: item.spidmax,
@@ -1343,6 +1342,7 @@ impl From<NewShapeDefaultsMirror> for super::NewShapeDefaults {
             strokecolor: item.strokecolor,
             style: item.style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1379,10 +1379,10 @@ where
 impl From<RegroupEntryMirror> for super::RegroupEntry {
     fn from(item: RegroupEntryMirror) -> Self {
         Self {
-            extra: item.extra,
             new: item.new,
             old: item.old,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1419,13 +1419,13 @@ where
 impl From<RuleMirror> for super::Rule {
     fn from(item: RuleMirror) -> Self {
         Self {
-            extra: item.extra,
             how: item.how,
             id: item.id,
             idref: item.idref,
             shape_reference: item.shape_reference,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1463,9 +1463,9 @@ impl From<RuleSetMirror> for super::RuleSet {
     fn from(item: RuleSetMirror) -> Self {
         Self {
             ext: item.ext,
-            extra: item.extra,
             rule: item.rule,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1502,8 +1502,8 @@ where
 impl From<ShapeClippingPathMirror> for super::ShapeClippingPath {
     fn from(item: ShapeClippingPathMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             v: item.v,
         }
     }
@@ -1542,9 +1542,9 @@ impl From<ShapeFillExtendedPropertiesMirror> for super::ShapeFillExtendedPropert
     fn from(item: ShapeFillExtendedPropertiesMirror) -> Self {
         Self {
             ext: item.ext,
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1586,9 +1586,9 @@ impl From<ShapeGroupingHistoryMirror> for super::ShapeGroupingHistory {
     fn from(item: ShapeGroupingHistoryMirror) -> Self {
         Self {
             ext: item.ext,
-            extra: item.extra,
             regroup_entry: item.regroup_entry,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1630,8 +1630,8 @@ impl From<ShapeIDMapMirror> for super::ShapeIDMap {
         Self {
             data: item.data,
             ext: item.ext,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1670,8 +1670,8 @@ impl From<ShapeLayoutPropertiesMirror> for super::ShapeLayoutProperties {
         Self {
             content: item.content,
             ext: item.ext,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1716,7 +1716,6 @@ impl From<ShapeProtectionsMirror> for super::ShapeProtections {
             aspectratio: item.aspectratio,
             cropping: item.cropping,
             ext: item.ext,
-            extra: item.extra,
             grouping: item.grouping,
             position: item.position,
             rotation: item.rotation,
@@ -1725,6 +1724,7 @@ impl From<ShapeProtectionsMirror> for super::ShapeProtections {
             text: item.text,
             ungrouping: item.ungrouping,
             unknown: item.unknown,
+            user_data: item.user_data,
             verticies: item.verticies,
         }
     }
@@ -1764,10 +1764,10 @@ impl From<ShapeReferenceMirror> for super::ShapeReference {
         Self {
             connectloc: item.connectloc,
             end: item.end,
-            extra: item.extra,
             idref: item.idref,
             start: item.start,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1805,13 +1805,13 @@ impl From<SkewTransformMirror> for super::SkewTransform {
     fn from(item: SkewTransformMirror) -> Self {
         Self {
             ext: item.ext,
-            extra: item.extra,
             id: item.id,
             matrix: item.matrix,
             offset: item.offset,
             on: item.on,
             origin: item.origin,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1850,8 +1850,8 @@ impl From<StorageForAlternateMathContentMirror> for super::StorageForAlternateMa
         Self {
             content: item.content,
             content_type: item.content_type,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1901,7 +1901,6 @@ impl From<TextBoxBottomStrokeMirror> for super::TextBoxBottomStroke {
             endarrowwidth: item.endarrowwidth,
             endcap: item.endcap,
             ext: item.ext,
-            extra: item.extra,
             filltype: item.filltype,
             forcedash: item.forcedash,
             href: item.href,
@@ -1920,6 +1919,7 @@ impl From<TextBoxBottomStrokeMirror> for super::TextBoxBottomStroke {
             startarrowwidth: item.startarrowwidth,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
             weight: item.weight,
         }
     }
@@ -1969,7 +1969,6 @@ impl From<TextBoxInteriorStrokeMirror> for super::TextBoxInteriorStroke {
             endarrowwidth: item.endarrowwidth,
             endcap: item.endcap,
             ext: item.ext,
-            extra: item.extra,
             filltype: item.filltype,
             forcedash: item.forcedash,
             href: item.href,
@@ -1988,6 +1987,7 @@ impl From<TextBoxInteriorStrokeMirror> for super::TextBoxInteriorStroke {
             startarrowwidth: item.startarrowwidth,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
             weight: item.weight,
         }
     }
@@ -2038,7 +2038,6 @@ impl From<TextBoxLeftStrokeMirror> for super::TextBoxLeftStroke {
             endarrowwidth: item.endarrowwidth,
             endcap: item.endcap,
             ext: item.ext,
-            extra: item.extra,
             filltype: item.filltype,
             forcedash: item.forcedash,
             href: item.href,
@@ -2057,6 +2056,7 @@ impl From<TextBoxLeftStrokeMirror> for super::TextBoxLeftStroke {
             startarrowwidth: item.startarrowwidth,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
             weight: item.weight,
         }
     }
@@ -2103,7 +2103,6 @@ impl From<TextBoxRightStrokeMirror> for super::TextBoxRightStroke {
             endarrowwidth: item.endarrowwidth,
             endcap: item.endcap,
             ext: item.ext,
-            extra: item.extra,
             filltype: item.filltype,
             forcedash: item.forcedash,
             href: item.href,
@@ -2122,6 +2121,7 @@ impl From<TextBoxRightStrokeMirror> for super::TextBoxRightStroke {
             startarrowwidth: item.startarrowwidth,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
             weight: item.weight,
         }
     }
@@ -2168,7 +2168,6 @@ impl From<TextBoxTopStrokeMirror> for super::TextBoxTopStroke {
             endarrowwidth: item.endarrowwidth,
             endcap: item.endcap,
             ext: item.ext,
-            extra: item.extra,
             filltype: item.filltype,
             forcedash: item.forcedash,
             href: item.href,
@@ -2187,6 +2186,7 @@ impl From<TextBoxTopStrokeMirror> for super::TextBoxTopStroke {
             startarrowwidth: item.startarrowwidth,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
             weight: item.weight,
         }
     }
@@ -2225,12 +2225,12 @@ impl From<UIDefaultColorsMirror> for super::UIDefaultColors {
     fn from(item: UIDefaultColorsMirror) -> Self {
         Self {
             ext: item.ext,
-            extra: item.extra,
             extrusioncolor: item.extrusioncolor,
             fillcolor: item.fillcolor,
             shadowcolor: item.shadowcolor,
             strokecolor: item.strokecolor,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2276,10 +2276,10 @@ impl From<VMLDiagramMirror> for super::VMLDiagram {
             dgmscaley: item.dgmscaley,
             dgmstyle: item.dgmstyle,
             ext: item.ext,
-            extra: item.extra,
             relationship_table: item.relationship_table,
             reverse: item.reverse,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2316,8 +2316,8 @@ where
 impl From<WordprocessingMLFieldSwitchesMirror> for super::WordprocessingMLFieldSwitches {
     fn from(item: WordprocessingMLFieldSwitchesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }

@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -313,15 +313,13 @@ pub static SHAPE_PROPERTIES_SHAPE: officekit_markup_base::Shape = officekit_mark
 /// schema type is `CT_NonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualDrawingPropertiesWith<X: NodeExtra> {
+pub struct NonVisualDrawingPropertiesWith<X: UserData> {
     /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::PictureNonVisualDrawingProperties,
     /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
     /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
@@ -334,10 +332,12 @@ pub struct NonVisualDrawingPropertiesWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::PictureNonVisualDrawingProperties,
 }
 
 /// The `pic:cNvPr` element of the tree a read gives: [`NonVisualDrawingPropertiesWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type NonVisualDrawingProperties = NonVisualDrawingPropertiesWith<()>;
 
 impl Eq for NonVisualDrawingPropertiesWith<()> {}
@@ -346,21 +346,21 @@ impl Eq for NonVisualDrawingPropertiesWith<()> {}
 /// 20.2.2.2). Its schema type is `CT_NonVisualPictureProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualPictureDrawingPropertiesWith<X: NodeExtra> {
+pub struct NonVisualPictureDrawingPropertiesWith<X: UserData> {
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::PictureNonVisualPictureDrawingProperties,
     /// The child that is `super::drawing::PictureLocks`, when there is one.
     pub picture_locks: Option<Box<super::drawing::PictureLocksWith<X>>>,
     /// The attribute `preferRelativeResize`, when the element has it.
     pub prefer_relative_resize: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::PictureNonVisualPictureDrawingProperties,
 }
 
 /// The `pic:cNvPicPr` element of the tree a read gives: [`NonVisualPictureDrawingPropertiesWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type NonVisualPictureDrawingProperties = NonVisualPictureDrawingPropertiesWith<()>;
 
 impl Eq for NonVisualPictureDrawingPropertiesWith<()> {}
@@ -369,19 +369,19 @@ impl Eq for NonVisualPictureDrawingPropertiesWith<()> {}
 /// Its schema type is `CT_PictureNonVisual`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualPicturePropertiesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::PictureNonVisualPictureProperties,
+pub struct NonVisualPicturePropertiesWith<X: UserData> {
     /// The child that is `NonVisualDrawingProperties`, which the schema requires.
     pub non_visual_drawing_properties: Box<NonVisualDrawingPropertiesWith<X>>,
     /// The child that is `NonVisualPictureDrawingProperties`, which the schema requires.
     pub non_visual_picture_drawing_properties: Box<NonVisualPictureDrawingPropertiesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::PictureNonVisualPictureProperties,
 }
 
 /// The `pic:nvPicPr` element of the tree a read gives: [`NonVisualPicturePropertiesWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type NonVisualPictureProperties = NonVisualPicturePropertiesWith<()>;
 
 impl Eq for NonVisualPicturePropertiesWith<()> {}
@@ -390,11 +390,9 @@ impl Eq for NonVisualPicturePropertiesWith<()> {}
 /// `CT_Picture`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PictureWith<X: NodeExtra> {
+pub struct PictureWith<X: UserData> {
     /// The child that is `super::office_drawing_2010_picture::ExtLst`, when there is one.
     pub ext_lst: Option<Box<super::office_drawing_2010_picture::ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::PicturePicture,
     /// The child that is `PictureFill`, which the schema requires.
     pub fill: Box<PictureFillWith<X>>,
     /// The child that is `NonVisualPictureProperties`, which the schema requires.
@@ -405,9 +403,11 @@ pub struct PictureWith<X: NodeExtra> {
     pub style: Option<Box<super::office_drawing_2010_picture::StyleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::PicturePicture,
 }
 
-/// The `pic:pic` element of the tree a read gives: [`PictureWith`] holding nothing in `extra`.
+/// The `pic:pic` element of the tree a read gives: [`PictureWith`] holding nothing in `user_data`.
 pub type Picture = PictureWith<()>;
 
 impl Eq for PictureWith<()> {}
@@ -416,25 +416,25 @@ impl Eq for PictureWith<()> {}
 /// `CT_BlipFillProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PictureFillWith<X: NodeExtra> {
+pub struct PictureFillWith<X: UserData> {
     /// The child that is `super::drawing::Blip`, when there is one.
     pub blip: Option<Box<super::drawing::BlipWith<X>>>,
     /// The child that is an item of `super::drawing::FillModeContent`, when there is one.
     pub content: Option<Box<super::drawing::FillModeContentWith<X>>>,
     /// The attribute `dpi`, when the element has it.
     pub dpi: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::PicturePictureFill,
     /// The attribute `rotWithShape`, when the element has it.
     pub rot_with_shape: Option<String>,
     /// The child that is `super::drawing::SourceRectangle`, when there is one.
     pub source_rectangle: Option<Box<super::drawing::SourceRectangleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::PicturePictureFill,
 }
 
 /// The `pic:blipFill` element of the tree a read gives: [`PictureFillWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PictureFill = PictureFillWith<()>;
 
 impl Eq for PictureFillWith<()> {}
@@ -443,7 +443,7 @@ impl Eq for PictureFillWith<()> {}
 /// `CT_ShapeProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapePropertiesWith<X: NodeExtra> {
+pub struct ShapePropertiesWith<X: UserData> {
     /// The child that is `super::drawing::Apply3DShapeProperties`, when there is one.
     pub apply_3d: Option<Box<super::drawing::Apply3DShapePropertiesWith<X>>>,
     /// The attribute `bwMode`, when the element has it.
@@ -452,8 +452,6 @@ pub struct ShapePropertiesWith<X: NodeExtra> {
     pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::PictureShapeProperties,
     /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContentWith<X>>>,
     /// The child that is an item of `super::drawing::GeometryContent`, when there is one.
@@ -464,44 +462,46 @@ pub struct ShapePropertiesWith<X: NodeExtra> {
     pub scene3d: Option<Box<super::drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::PictureShapeProperties,
     /// The child that is `super::drawing::XfrmTransform2D`, when there is one.
     pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2DWith<X>>>,
 }
 
 /// The `pic:spPr` element of the tree a read gives: [`ShapePropertiesWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ShapeProperties = ShapePropertiesWith<()>;
 
 impl Eq for ShapePropertiesWith<()> {}
 
-impl<X: NodeExtra> NonVisualDrawingPropertiesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> NonVisualDrawingPropertiesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> NonVisualDrawingPropertiesWith<Y>
+    pub fn into_user_data<Y>(mut self) -> NonVisualDrawingPropertiesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         NonVisualDrawingPropertiesWith {
-            click_hyperlink: officekit_markup_base::into_extra_optional(
+            click_hyperlink: officekit_markup_base::into_user_data_optional(
                 &mut self.click_hyperlink,
-                super::drawing::ClickHyperlinkWith::into_extra,
+                super::drawing::ClickHyperlinkWith::into_user_data,
             ),
             descr: self.descr,
-            extension_list: officekit_markup_base::into_extra_optional(
+            extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.extension_list,
-                super::drawing::ExtensionListWith::into_extra,
+                super::drawing::ExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
             hidden: self.hidden,
-            hyperlink_for_hover: officekit_markup_base::into_extra_optional(
+            hyperlink_for_hover: officekit_markup_base::into_user_data_optional(
                 &mut self.hyperlink_for_hover,
-                super::drawing::HyperlinkForHoverWith::into_extra,
+                super::drawing::HyperlinkForHoverWith::into_user_data,
             ),
             id: self.id,
             name: self.name,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -532,26 +532,26 @@ impl officekit_markup_base::Write for NonVisualDrawingProperties {
     }
 }
 
-impl<X: NodeExtra> NonVisualPictureDrawingPropertiesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> NonVisualPictureDrawingPropertiesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> NonVisualPictureDrawingPropertiesWith<Y>
+    pub fn into_user_data<Y>(mut self) -> NonVisualPictureDrawingPropertiesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         NonVisualPictureDrawingPropertiesWith {
-            extension_list: officekit_markup_base::into_extra_optional(
+            extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.extension_list,
-                super::drawing::ExtensionListWith::into_extra,
+                super::drawing::ExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            picture_locks: officekit_markup_base::into_extra_optional(
+            picture_locks: officekit_markup_base::into_user_data_optional(
                 &mut self.picture_locks,
-                super::drawing::PictureLocksWith::into_extra,
+                super::drawing::PictureLocksWith::into_user_data,
             ),
             prefer_relative_resize: self.prefer_relative_resize,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -578,25 +578,25 @@ impl officekit_markup_base::Write for NonVisualPictureDrawingProperties {
     }
 }
 
-impl<X: NodeExtra> NonVisualPicturePropertiesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> NonVisualPicturePropertiesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> NonVisualPicturePropertiesWith<Y>
+    pub fn into_user_data<Y>(self) -> NonVisualPicturePropertiesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         NonVisualPicturePropertiesWith {
-            extra: Default::default(),
-            non_visual_drawing_properties: officekit_markup_base::into_extra_required(
+            non_visual_drawing_properties: officekit_markup_base::into_user_data_required(
                 *self.non_visual_drawing_properties,
-                NonVisualDrawingPropertiesWith::into_extra,
+                NonVisualDrawingPropertiesWith::into_user_data,
             ),
-            non_visual_picture_drawing_properties: officekit_markup_base::into_extra_required(
+            non_visual_picture_drawing_properties: officekit_markup_base::into_user_data_required(
                 *self.non_visual_picture_drawing_properties,
-                NonVisualPictureDrawingPropertiesWith::into_extra,
+                NonVisualPictureDrawingPropertiesWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -620,37 +620,37 @@ impl officekit_markup_base::Write for NonVisualPictureProperties {
     }
 }
 
-impl<X: NodeExtra> PictureWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PictureWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> PictureWith<Y>
+    pub fn into_user_data<Y>(mut self) -> PictureWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PictureWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                super::office_drawing_2010_picture::ExtLstWith::into_extra,
+                super::office_drawing_2010_picture::ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            fill: officekit_markup_base::into_extra_required(
+            fill: officekit_markup_base::into_user_data_required(
                 *self.fill,
-                PictureFillWith::into_extra,
+                PictureFillWith::into_user_data,
             ),
-            non_visual_picture_properties: officekit_markup_base::into_extra_required(
+            non_visual_picture_properties: officekit_markup_base::into_user_data_required(
                 *self.non_visual_picture_properties,
-                NonVisualPicturePropertiesWith::into_extra,
+                NonVisualPicturePropertiesWith::into_user_data,
             ),
-            shape_properties: officekit_markup_base::into_extra_required(
+            shape_properties: officekit_markup_base::into_user_data_required(
                 *self.shape_properties,
-                ShapePropertiesWith::into_extra,
+                ShapePropertiesWith::into_user_data,
             ),
-            style: officekit_markup_base::into_extra_optional(
+            style: officekit_markup_base::into_user_data_optional(
                 &mut self.style,
-                super::office_drawing_2010_picture::StyleWith::into_extra,
+                super::office_drawing_2010_picture::StyleWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -674,31 +674,31 @@ impl officekit_markup_base::Write for Picture {
     }
 }
 
-impl<X: NodeExtra> PictureFillWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PictureFillWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> PictureFillWith<Y>
+    pub fn into_user_data<Y>(mut self) -> PictureFillWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PictureFillWith {
-            blip: officekit_markup_base::into_extra_optional(
+            blip: officekit_markup_base::into_user_data_optional(
                 &mut self.blip,
-                super::drawing::BlipWith::into_extra,
+                super::drawing::BlipWith::into_user_data,
             ),
-            content: officekit_markup_base::into_extra_optional(
+            content: officekit_markup_base::into_user_data_optional(
                 &mut self.content,
-                super::drawing::FillModeContentWith::into_extra,
+                super::drawing::FillModeContentWith::into_user_data,
             ),
             dpi: self.dpi,
-            extra: Default::default(),
             rot_with_shape: self.rot_with_shape,
-            source_rectangle: officekit_markup_base::into_extra_optional(
+            source_rectangle: officekit_markup_base::into_user_data_optional(
                 &mut self.source_rectangle,
-                super::drawing::SourceRectangleWith::into_extra,
+                super::drawing::SourceRectangleWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -726,49 +726,49 @@ impl officekit_markup_base::Write for PictureFill {
     }
 }
 
-impl<X: NodeExtra> ShapePropertiesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ShapePropertiesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ShapePropertiesWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ShapePropertiesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ShapePropertiesWith {
-            apply_3d: officekit_markup_base::into_extra_optional(
+            apply_3d: officekit_markup_base::into_user_data_optional(
                 &mut self.apply_3d,
-                super::drawing::Apply3DShapePropertiesWith::into_extra,
+                super::drawing::Apply3DShapePropertiesWith::into_user_data,
             ),
             bw_mode: self.bw_mode,
-            effect_properties_content: officekit_markup_base::into_extra_optional(
+            effect_properties_content: officekit_markup_base::into_user_data_optional(
                 &mut self.effect_properties_content,
-                super::drawing::EffectPropertiesContentWith::into_extra,
+                super::drawing::EffectPropertiesContentWith::into_user_data,
             ),
-            extension_list: officekit_markup_base::into_extra_optional(
+            extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.extension_list,
-                super::drawing::ExtensionListWith::into_extra,
+                super::drawing::ExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            fill_properties_content: officekit_markup_base::into_extra_optional(
+            fill_properties_content: officekit_markup_base::into_user_data_optional(
                 &mut self.fill_properties_content,
-                super::drawing::FillPropertiesContentWith::into_extra,
+                super::drawing::FillPropertiesContentWith::into_user_data,
             ),
-            geometry_content: officekit_markup_base::into_extra_optional(
+            geometry_content: officekit_markup_base::into_user_data_optional(
                 &mut self.geometry_content,
-                super::drawing::GeometryContentWith::into_extra,
+                super::drawing::GeometryContentWith::into_user_data,
             ),
-            outline: officekit_markup_base::into_extra_optional(
+            outline: officekit_markup_base::into_user_data_optional(
                 &mut self.outline,
-                super::drawing::OutlineWith::into_extra,
+                super::drawing::OutlineWith::into_user_data,
             ),
-            scene3d: officekit_markup_base::into_extra_optional(
+            scene3d: officekit_markup_base::into_user_data_optional(
                 &mut self.scene3d,
-                super::drawing::Scene3dWith::into_extra,
+                super::drawing::Scene3dWith::into_user_data,
             ),
             unknown: self.unknown,
-            xfrm_transform2d: officekit_markup_base::into_extra_optional(
+            user_data: Default::default(),
+            xfrm_transform2d: officekit_markup_base::into_user_data_optional(
                 &mut self.xfrm_transform2d,
-                super::drawing::XfrmTransform2DWith::into_extra,
+                super::drawing::XfrmTransform2DWith::into_user_data,
             ),
         }
     }

@@ -210,7667 +210,7667 @@
 //   6833bb8339d1dc179b970db58c13333ff6139e649ef9e044ef10623bed172323  crates/xtask/data/sdk_corrections.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! What each kind of node of the typed tree holds in its `extra` field.
+//! What each kind of node of the typed tree holds in its `user_data` field.
 
 use core::fmt::Debug;
 
-/// A type the `extra` field of a node can hold.
-pub trait ExtraSlot: Clone + Debug + Default + PartialEq {}
+/// A type the `user_data` field of a node can hold.
+pub trait UserDataSlot: Clone + Debug + Default + PartialEq {}
 
-impl<T: Clone + Debug + Default + PartialEq> ExtraSlot for T {}
+impl<T: Clone + Debug + Default + PartialEq> UserDataSlot for T {}
 
-/// What each kind of node of the typed tree holds in its `extra` field: one associated type
+/// What each kind of node of the typed tree holds in its `user_data` field: one associated type
 /// for each element struct, named after the struct's namespace module and the struct.
 ///
 /// `()` holds nothing in every node; it is the tree a read gives.
-pub trait NodeExtra: Clone + Debug + Default + PartialEq {
+pub trait UserData: Clone + Debug + Default + PartialEq {
     /// What a `additional_characteristics::SetOfAdditionalCharacteristicsWith` holds.
-    type AdditionalCharacteristicsSetOfAdditionalCharacteristics: ExtraSlot;
+    type AdditionalCharacteristicsSetOfAdditionalCharacteristics: UserDataSlot;
     /// What a `additional_characteristics::SingleCharacteristicWith` holds.
-    type AdditionalCharacteristicsSingleCharacteristic: ExtraSlot;
+    type AdditionalCharacteristicsSingleCharacteristic: UserDataSlot;
     /// What a `bibliography::AbbreviatedCaseNumberWith` holds.
-    type BibliographyAbbreviatedCaseNumber: ExtraSlot;
+    type BibliographyAbbreviatedCaseNumber: UserDataSlot;
     /// What a `bibliography::AlbumTitleWith` holds.
-    type BibliographyAlbumTitle: ExtraSlot;
+    type BibliographyAlbumTitle: UserDataSlot;
     /// What a `bibliography::ArtistWith` holds.
-    type BibliographyArtist: ExtraSlot;
+    type BibliographyArtist: UserDataSlot;
     /// What a `bibliography::AuthorWith` holds.
-    type BibliographyAuthor: ExtraSlot;
+    type BibliographyAuthor: UserDataSlot;
     /// What a `bibliography::BookAuthorWith` holds.
-    type BibliographyBookAuthor: ExtraSlot;
+    type BibliographyBookAuthor: UserDataSlot;
     /// What a `bibliography::BookTitleWith` holds.
-    type BibliographyBookTitle: ExtraSlot;
+    type BibliographyBookTitle: UserDataSlot;
     /// What a `bibliography::BroadcastTitleWith` holds.
-    type BibliographyBroadcastTitle: ExtraSlot;
+    type BibliographyBroadcastTitle: UserDataSlot;
     /// What a `bibliography::BroadcasterWith` holds.
-    type BibliographyBroadcaster: ExtraSlot;
+    type BibliographyBroadcaster: UserDataSlot;
     /// What a `bibliography::CaseNumberWith` holds.
-    type BibliographyCaseNumber: ExtraSlot;
+    type BibliographyCaseNumber: UserDataSlot;
     /// What a `bibliography::ChapterNumberWith` holds.
-    type BibliographyChapterNumber: ExtraSlot;
+    type BibliographyChapterNumber: UserDataSlot;
     /// What a `bibliography::CityWith` holds.
-    type BibliographyCity: ExtraSlot;
+    type BibliographyCity: UserDataSlot;
     /// What a `bibliography::CommentsWith` holds.
-    type BibliographyComments: ExtraSlot;
+    type BibliographyComments: UserDataSlot;
     /// What a `bibliography::CompilerWith` holds.
-    type BibliographyCompiler: ExtraSlot;
+    type BibliographyCompiler: UserDataSlot;
     /// What a `bibliography::ComposerWith` holds.
-    type BibliographyComposer: ExtraSlot;
+    type BibliographyComposer: UserDataSlot;
     /// What a `bibliography::ConductorWith` holds.
-    type BibliographyConductor: ExtraSlot;
+    type BibliographyConductor: UserDataSlot;
     /// What a `bibliography::ConferenceOrProceedingsNameWith` holds.
-    type BibliographyConferenceOrProceedingsName: ExtraSlot;
+    type BibliographyConferenceOrProceedingsName: UserDataSlot;
     /// What a `bibliography::ContributorsListWith` holds.
-    type BibliographyContributorsList: ExtraSlot;
+    type BibliographyContributorsList: UserDataSlot;
     /// What a `bibliography::CorporateAuthorWith` holds.
-    type BibliographyCorporateAuthor: ExtraSlot;
+    type BibliographyCorporateAuthor: UserDataSlot;
     /// What a `bibliography::CounselWith` holds.
-    type BibliographyCounsel: ExtraSlot;
+    type BibliographyCounsel: UserDataSlot;
     /// What a `bibliography::CountryOrRegionWith` holds.
-    type BibliographyCountryOrRegion: ExtraSlot;
+    type BibliographyCountryOrRegion: UserDataSlot;
     /// What a `bibliography::CourtWith` holds.
-    type BibliographyCourt: ExtraSlot;
+    type BibliographyCourt: UserDataSlot;
     /// What a `bibliography::DayWith` holds.
-    type BibliographyDay: ExtraSlot;
+    type BibliographyDay: UserDataSlot;
     /// What a `bibliography::DayAccessedWith` holds.
-    type BibliographyDayAccessed: ExtraSlot;
+    type BibliographyDayAccessed: UserDataSlot;
     /// What a `bibliography::DepartmentWith` holds.
-    type BibliographyDepartment: ExtraSlot;
+    type BibliographyDepartment: UserDataSlot;
     /// What a `bibliography::DirectorWith` holds.
-    type BibliographyDirector: ExtraSlot;
+    type BibliographyDirector: UserDataSlot;
     /// What a `bibliography::DistributorWith` holds.
-    type BibliographyDistributor: ExtraSlot;
+    type BibliographyDistributor: UserDataSlot;
     /// What a `bibliography::EditorWith` holds.
-    type BibliographyEditor: ExtraSlot;
+    type BibliographyEditor: UserDataSlot;
     /// What a `bibliography::EditorEditionWith` holds.
-    type BibliographyEditorEdition: ExtraSlot;
+    type BibliographyEditorEdition: UserDataSlot;
     /// What a `bibliography::GuidWith` holds.
-    type BibliographyGuid: ExtraSlot;
+    type BibliographyGuid: UserDataSlot;
     /// What a `bibliography::InstitutionWith` holds.
-    type BibliographyInstitution: ExtraSlot;
+    type BibliographyInstitution: UserDataSlot;
     /// What a `bibliography::InternetSiteTitleWith` holds.
-    type BibliographyInternetSiteTitle: ExtraSlot;
+    type BibliographyInternetSiteTitle: UserDataSlot;
     /// What a `bibliography::IntervieweeWith` holds.
-    type BibliographyInterviewee: ExtraSlot;
+    type BibliographyInterviewee: UserDataSlot;
     /// What a `bibliography::InterviewerWith` holds.
-    type BibliographyInterviewer: ExtraSlot;
+    type BibliographyInterviewer: UserDataSlot;
     /// What a `bibliography::InventorWith` holds.
-    type BibliographyInventor: ExtraSlot;
+    type BibliographyInventor: UserDataSlot;
     /// What a `bibliography::IssueWith` holds.
-    type BibliographyIssue: ExtraSlot;
+    type BibliographyIssue: UserDataSlot;
     /// What a `bibliography::JournalNameWith` holds.
-    type BibliographyJournalName: ExtraSlot;
+    type BibliographyJournalName: UserDataSlot;
     /// What a `bibliography::LocaleIDWith` holds.
-    type BibliographyLocaleID: ExtraSlot;
+    type BibliographyLocaleID: UserDataSlot;
     /// What a `bibliography::MediumWith` holds.
-    type BibliographyMedium: ExtraSlot;
+    type BibliographyMedium: UserDataSlot;
     /// What a `bibliography::MonthWith` holds.
-    type BibliographyMonth: ExtraSlot;
+    type BibliographyMonth: UserDataSlot;
     /// What a `bibliography::MonthAccessedWith` holds.
-    type BibliographyMonthAccessed: ExtraSlot;
+    type BibliographyMonthAccessed: UserDataSlot;
     /// What a `bibliography::NameListWith` holds.
-    type BibliographyNameList: ExtraSlot;
+    type BibliographyNameList: UserDataSlot;
     /// What a `bibliography::NumberOfVolumesWith` holds.
-    type BibliographyNumberOfVolumes: ExtraSlot;
+    type BibliographyNumberOfVolumes: UserDataSlot;
     /// What a `bibliography::PagesWith` holds.
-    type BibliographyPages: ExtraSlot;
+    type BibliographyPages: UserDataSlot;
     /// What a `bibliography::PatentNumberWith` holds.
-    type BibliographyPatentNumber: ExtraSlot;
+    type BibliographyPatentNumber: UserDataSlot;
     /// What a `bibliography::PatentTypeWith` holds.
-    type BibliographyPatentType: ExtraSlot;
+    type BibliographyPatentType: UserDataSlot;
     /// What a `bibliography::PerformerWith` holds.
-    type BibliographyPerformer: ExtraSlot;
+    type BibliographyPerformer: UserDataSlot;
     /// What a `bibliography::PeriodicalTitleWith` holds.
-    type BibliographyPeriodicalTitle: ExtraSlot;
+    type BibliographyPeriodicalTitle: UserDataSlot;
     /// What a `bibliography::PersonWith` holds.
-    type BibliographyPerson: ExtraSlot;
+    type BibliographyPerson: UserDataSlot;
     /// What a `bibliography::PersonsFirstOrGivenNameWith` holds.
-    type BibliographyPersonsFirstOrGivenName: ExtraSlot;
+    type BibliographyPersonsFirstOrGivenName: UserDataSlot;
     /// What a `bibliography::PersonsLastOrFamilyNameWith` holds.
-    type BibliographyPersonsLastOrFamilyName: ExtraSlot;
+    type BibliographyPersonsLastOrFamilyName: UserDataSlot;
     /// What a `bibliography::PersonsMiddleOrOtherNameWith` holds.
-    type BibliographyPersonsMiddleOrOtherName: ExtraSlot;
+    type BibliographyPersonsMiddleOrOtherName: UserDataSlot;
     /// What a `bibliography::ProducerNameWith` holds.
-    type BibliographyProducerName: ExtraSlot;
+    type BibliographyProducerName: UserDataSlot;
     /// What a `bibliography::ProductionCompanyWith` holds.
-    type BibliographyProductionCompany: ExtraSlot;
+    type BibliographyProductionCompany: UserDataSlot;
     /// What a `bibliography::PublicationTitleWith` holds.
-    type BibliographyPublicationTitle: ExtraSlot;
+    type BibliographyPublicationTitle: UserDataSlot;
     /// What a `bibliography::PublisherWith` holds.
-    type BibliographyPublisher: ExtraSlot;
+    type BibliographyPublisher: UserDataSlot;
     /// What a `bibliography::RecordingNumberWith` holds.
-    type BibliographyRecordingNumber: ExtraSlot;
+    type BibliographyRecordingNumber: UserDataSlot;
     /// What a `bibliography::ReferenceOrderWith` holds.
-    type BibliographyReferenceOrder: ExtraSlot;
+    type BibliographyReferenceOrder: UserDataSlot;
     /// What a `bibliography::ReporterWith` holds.
-    type BibliographyReporter: ExtraSlot;
+    type BibliographyReporter: UserDataSlot;
     /// What a `bibliography::ShortTitleWith` holds.
-    type BibliographyShortTitle: ExtraSlot;
+    type BibliographyShortTitle: UserDataSlot;
     /// What a `bibliography::SourceWith` holds.
-    type BibliographySource: ExtraSlot;
+    type BibliographySource: UserDataSlot;
     /// What a `bibliography::SourceTypeWith` holds.
-    type BibliographySourceType: ExtraSlot;
+    type BibliographySourceType: UserDataSlot;
     /// What a `bibliography::SourcesWith` holds.
-    type BibliographySources: ExtraSlot;
+    type BibliographySources: UserDataSlot;
     /// What a `bibliography::StandardNumberWith` holds.
-    type BibliographyStandardNumber: ExtraSlot;
+    type BibliographyStandardNumber: UserDataSlot;
     /// What a `bibliography::StateOrProvinceWith` holds.
-    type BibliographyStateOrProvince: ExtraSlot;
+    type BibliographyStateOrProvince: UserDataSlot;
     /// What a `bibliography::StationWith` holds.
-    type BibliographyStation: ExtraSlot;
+    type BibliographyStation: UserDataSlot;
     /// What a `bibliography::TagWith` holds.
-    type BibliographyTag: ExtraSlot;
+    type BibliographyTag: UserDataSlot;
     /// What a `bibliography::TheaterWith` holds.
-    type BibliographyTheater: ExtraSlot;
+    type BibliographyTheater: UserDataSlot;
     /// What a `bibliography::ThesisTypeWith` holds.
-    type BibliographyThesisType: ExtraSlot;
+    type BibliographyThesisType: UserDataSlot;
     /// What a `bibliography::TitleWith` holds.
-    type BibliographyTitle: ExtraSlot;
+    type BibliographyTitle: UserDataSlot;
     /// What a `bibliography::TranslatorWith` holds.
-    type BibliographyTranslator: ExtraSlot;
+    type BibliographyTranslator: UserDataSlot;
     /// What a `bibliography::UrlWith` holds.
-    type BibliographyUrl: ExtraSlot;
+    type BibliographyUrl: UserDataSlot;
     /// What a `bibliography::VersionWith` holds.
-    type BibliographyVersion: ExtraSlot;
+    type BibliographyVersion: UserDataSlot;
     /// What a `bibliography::VolumeWith` holds.
-    type BibliographyVolume: ExtraSlot;
+    type BibliographyVolume: UserDataSlot;
     /// What a `bibliography::WriterWith` holds.
-    type BibliographyWriter: ExtraSlot;
+    type BibliographyWriter: UserDataSlot;
     /// What a `bibliography::YearWith` holds.
-    type BibliographyYear: ExtraSlot;
+    type BibliographyYear: UserDataSlot;
     /// What a `bibliography::YearAccessedWith` holds.
-    type BibliographyYearAccessed: ExtraSlot;
+    type BibliographyYearAccessed: UserDataSlot;
     /// What a `chart::ApplyToEndWith` holds.
-    type ChartApplyToEnd: ExtraSlot;
+    type ChartApplyToEnd: UserDataSlot;
     /// What a `chart::ApplyToFrontWith` holds.
-    type ChartApplyToFront: ExtraSlot;
+    type ChartApplyToFront: UserDataSlot;
     /// What a `chart::ApplyToSidesWith` holds.
-    type ChartApplyToSides: ExtraSlot;
+    type ChartApplyToSides: UserDataSlot;
     /// What a `chart::Area3DChartWith` holds.
-    type ChartArea3DChart: ExtraSlot;
+    type ChartArea3DChart: UserDataSlot;
     /// What a `chart::AreaChartSeriesWith` holds.
-    type ChartAreaChartSeries: ExtraSlot;
+    type ChartAreaChartSeries: UserDataSlot;
     /// What a `chart::AreaChartsWith` holds.
-    type ChartAreaCharts: ExtraSlot;
+    type ChartAreaCharts: UserDataSlot;
     /// What a `chart::AutoTitleIsDeletedWith` holds.
-    type ChartAutoTitleIsDeleted: ExtraSlot;
+    type ChartAutoTitleIsDeleted: UserDataSlot;
     /// What a `chart::AutomaticCategoryAxisWith` holds.
-    type ChartAutomaticCategoryAxis: ExtraSlot;
+    type ChartAutomaticCategoryAxis: UserDataSlot;
     /// What a `chart::AxisIDWith` holds.
-    type ChartAxisID: ExtraSlot;
+    type ChartAxisID: UserDataSlot;
     /// What a `chart::AxisOrientationWith` holds.
-    type ChartAxisOrientation: ExtraSlot;
+    type ChartAxisOrientation: UserDataSlot;
     /// What a `chart::AxisPositionWith` holds.
-    type ChartAxisPosition: ExtraSlot;
+    type ChartAxisPosition: UserDataSlot;
     /// What a `chart::BackWallWith` holds.
-    type ChartBackWall: ExtraSlot;
+    type ChartBackWall: UserDataSlot;
     /// What a `chart::BackwardWith` holds.
-    type ChartBackward: ExtraSlot;
+    type ChartBackward: UserDataSlot;
     /// What a `chart::BandFormatWith` holds.
-    type ChartBandFormat: ExtraSlot;
+    type ChartBandFormat: UserDataSlot;
     /// What a `chart::BandFormatsWith` holds.
-    type ChartBandFormats: ExtraSlot;
+    type ChartBandFormats: UserDataSlot;
     /// What a `chart::Bar3DChartWith` holds.
-    type ChartBar3DChart: ExtraSlot;
+    type ChartBar3DChart: UserDataSlot;
     /// What a `chart::BarChartSeriesWith` holds.
-    type ChartBarChartSeries: ExtraSlot;
+    type ChartBarChartSeries: UserDataSlot;
     /// What a `chart::BarChartsWith` holds.
-    type ChartBarCharts: ExtraSlot;
+    type ChartBarCharts: UserDataSlot;
     /// What a `chart::BarDirectionWith` holds.
-    type ChartBarDirection: ExtraSlot;
+    type ChartBarDirection: UserDataSlot;
     /// What a `chart::BarGroupingWith` holds.
-    type ChartBarGrouping: ExtraSlot;
+    type ChartBarGrouping: UserDataSlot;
     /// What a `chart::BaseTimeUnitWith` holds.
-    type ChartBaseTimeUnit: ExtraSlot;
+    type ChartBaseTimeUnit: UserDataSlot;
     /// What a `chart::Bubble3DWith` holds.
-    type ChartBubble3D: ExtraSlot;
+    type ChartBubble3D: UserDataSlot;
     /// What a `chart::BubbleChartSeriesWith` holds.
-    type ChartBubbleChartSeries: ExtraSlot;
+    type ChartBubbleChartSeries: UserDataSlot;
     /// What a `chart::BubbleChartsWith` holds.
-    type ChartBubbleCharts: ExtraSlot;
+    type ChartBubbleCharts: UserDataSlot;
     /// What a `chart::BubbleScaleWith` holds.
-    type ChartBubbleScale: ExtraSlot;
+    type ChartBubbleScale: UserDataSlot;
     /// What a `chart::BubbleSizeWith` holds.
-    type ChartBubbleSize: ExtraSlot;
+    type ChartBubbleSize: UserDataSlot;
     /// What a `chart::BuiltInDisplayUnitValueWith` holds.
-    type ChartBuiltInDisplayUnitValue: ExtraSlot;
+    type ChartBuiltInDisplayUnitValue: UserDataSlot;
     /// What a `chart::CategoryAxisDataCatWith` holds.
-    type ChartCategoryAxisDataCat: ExtraSlot;
+    type ChartCategoryAxisDataCat: UserDataSlot;
     /// What a `chart::CategoryAxisDataCatAxWith` holds.
-    type ChartCategoryAxisDataCatAx: ExtraSlot;
+    type ChartCategoryAxisDataCatAx: UserDataSlot;
     /// What a `chart::ChartWith` holds.
-    type ChartChart: ExtraSlot;
+    type ChartChart: UserDataSlot;
     /// What a `chart::ChartExtensibilityWith` holds.
-    type ChartChartExtensibility: ExtraSlot;
+    type ChartChartExtensibility: UserDataSlot;
     /// What a `chart::ChartObjectWith` holds.
-    type ChartChartObject: ExtraSlot;
+    type ChartChartObject: UserDataSlot;
     /// What a `chart::ChartSpaceWith` holds.
-    type ChartChartSpace: ExtraSlot;
+    type ChartChartSpace: UserDataSlot;
     /// What a `chart::ChartTextWith` holds.
-    type ChartChartText: ExtraSlot;
+    type ChartChartText: UserDataSlot;
     /// What a `chart::ColorMapOverrideWith` holds.
-    type ChartColorMapOverride: ExtraSlot;
+    type ChartColorMapOverride: UserDataSlot;
     /// What a `chart::CrossBetweenWith` holds.
-    type ChartCrossBetween: ExtraSlot;
+    type ChartCrossBetween: UserDataSlot;
     /// What a `chart::CrossesWith` holds.
-    type ChartCrosses: ExtraSlot;
+    type ChartCrosses: UserDataSlot;
     /// What a `chart::CrossingAxisIDWith` holds.
-    type ChartCrossingAxisID: ExtraSlot;
+    type ChartCrossingAxisID: UserDataSlot;
     /// What a `chart::CrossingValueWith` holds.
-    type ChartCrossingValue: ExtraSlot;
+    type ChartCrossingValue: UserDataSlot;
     /// What a `chart::CustomDisplayUnitWith` holds.
-    type ChartCustomDisplayUnit: ExtraSlot;
+    type ChartCustomDisplayUnit: UserDataSlot;
     /// What a `chart::CustomSplitWith` holds.
-    type ChartCustomSplit: ExtraSlot;
+    type ChartCustomSplit: UserDataSlot;
     /// What a `chart::DataCannotBeChangedWith` holds.
-    type ChartDataCannotBeChanged: ExtraSlot;
+    type ChartDataCannotBeChanged: UserDataSlot;
     /// What a `chart::DataLabelWith` holds.
-    type ChartDataLabel: ExtraSlot;
+    type ChartDataLabel: UserDataSlot;
     /// What a `chart::DataLabelPositionWith` holds.
-    type ChartDataLabelPosition: ExtraSlot;
+    type ChartDataLabelPosition: UserDataSlot;
     /// What a `chart::DataLabelsWith` holds.
-    type ChartDataLabels: ExtraSlot;
+    type ChartDataLabels: UserDataSlot;
     /// What a `chart::DataPointWith` holds.
-    type ChartDataPoint: ExtraSlot;
+    type ChartDataPoint: UserDataSlot;
     /// What a `chart::DataTableWith` holds.
-    type ChartDataTable: ExtraSlot;
+    type ChartDataTable: UserDataSlot;
     /// What a `chart::Date1904With` holds.
-    type ChartDate1904: ExtraSlot;
+    type ChartDate1904: UserDataSlot;
     /// What a `chart::DateAxisWith` holds.
-    type ChartDateAxis: ExtraSlot;
+    type ChartDateAxis: UserDataSlot;
     /// What a `chart::DeleteWith` holds.
-    type ChartDelete: ExtraSlot;
+    type ChartDelete: UserDataSlot;
     /// What a `chart::DepthPercentWith` holds.
-    type ChartDepthPercent: ExtraSlot;
+    type ChartDepthPercent: UserDataSlot;
     /// What a `chart::DisplayBlanksAsWith` holds.
-    type ChartDisplayBlanksAs: ExtraSlot;
+    type ChartDisplayBlanksAs: UserDataSlot;
     /// What a `chart::DisplayEquationWith` holds.
-    type ChartDisplayEquation: ExtraSlot;
+    type ChartDisplayEquation: UserDataSlot;
     /// What a `chart::DisplayRSquaredValueWith` holds.
-    type ChartDisplayRSquaredValue: ExtraSlot;
+    type ChartDisplayRSquaredValue: UserDataSlot;
     /// What a `chart::DisplayUnitsWith` holds.
-    type ChartDisplayUnits: ExtraSlot;
+    type ChartDisplayUnits: UserDataSlot;
     /// What a `chart::DisplayUnitsLabelWith` holds.
-    type ChartDisplayUnitsLabel: ExtraSlot;
+    type ChartDisplayUnitsLabel: UserDataSlot;
     /// What a `chart::DoughnutChartsWith` holds.
-    type ChartDoughnutCharts: ExtraSlot;
+    type ChartDoughnutCharts: UserDataSlot;
     /// What a `chart::DownBarsWith` holds.
-    type ChartDownBars: ExtraSlot;
+    type ChartDownBars: UserDataSlot;
     /// What a `chart_drawing::AbsoluteAnchorShapeSizeWith` holds.
-    type ChartDrawingAbsoluteAnchorShapeSize: ExtraSlot;
+    type ChartDrawingAbsoluteAnchorShapeSize: UserDataSlot;
     /// What a `chart_drawing::ConnectionShapeWith` holds.
-    type ChartDrawingConnectionShape: ExtraSlot;
+    type ChartDrawingConnectionShape: UserDataSlot;
     /// What a `chart_drawing::ConnectorNonVisualPropertiesWith` holds.
-    type ChartDrawingConnectorNonVisualProperties: ExtraSlot;
+    type ChartDrawingConnectorNonVisualProperties: UserDataSlot;
     /// What a `chart_drawing::EndingAnchorPointWith` holds.
-    type ChartDrawingEndingAnchorPoint: ExtraSlot;
+    type ChartDrawingEndingAnchorPoint: UserDataSlot;
     /// What a `chart_drawing::GraphicFrameWith` holds.
-    type ChartDrawingGraphicFrame: ExtraSlot;
+    type ChartDrawingGraphicFrame: UserDataSlot;
     /// What a `chart_drawing::GraphicFrameTransformWith` holds.
-    type ChartDrawingGraphicFrameTransform: ExtraSlot;
+    type ChartDrawingGraphicFrameTransform: UserDataSlot;
     /// What a `chart_drawing::GroupShapeWith` holds.
-    type ChartDrawingGroupShape: ExtraSlot;
+    type ChartDrawingGroupShape: UserDataSlot;
     /// What a `chart_drawing::GroupShapePropertiesWith` holds.
-    type ChartDrawingGroupShapeProperties: ExtraSlot;
+    type ChartDrawingGroupShapeProperties: UserDataSlot;
     /// What a `chart_drawing::NonVisualConnectionShapeDrawingPropertiesWith` holds.
-    type ChartDrawingNonVisualConnectionShapeDrawingProperties: ExtraSlot;
+    type ChartDrawingNonVisualConnectionShapeDrawingProperties: UserDataSlot;
     /// What a `chart_drawing::NonVisualDrawingPropertiesWith` holds.
-    type ChartDrawingNonVisualDrawingProperties: ExtraSlot;
+    type ChartDrawingNonVisualDrawingProperties: UserDataSlot;
     /// What a `chart_drawing::NonVisualGraphicFrameDrawingPropertiesWith` holds.
-    type ChartDrawingNonVisualGraphicFrameDrawingProperties: ExtraSlot;
+    type ChartDrawingNonVisualGraphicFrameDrawingProperties: UserDataSlot;
     /// What a `chart_drawing::NonVisualGraphicFramePropertiesWith` holds.
-    type ChartDrawingNonVisualGraphicFrameProperties: ExtraSlot;
+    type ChartDrawingNonVisualGraphicFrameProperties: UserDataSlot;
     /// What a `chart_drawing::NonVisualGroupShapeDrawingPropertiesWith` holds.
-    type ChartDrawingNonVisualGroupShapeDrawingProperties: ExtraSlot;
+    type ChartDrawingNonVisualGroupShapeDrawingProperties: UserDataSlot;
     /// What a `chart_drawing::NonVisualGroupShapePropertiesWith` holds.
-    type ChartDrawingNonVisualGroupShapeProperties: ExtraSlot;
+    type ChartDrawingNonVisualGroupShapeProperties: UserDataSlot;
     /// What a `chart_drawing::NonVisualPictureDrawingPropertiesWith` holds.
-    type ChartDrawingNonVisualPictureDrawingProperties: ExtraSlot;
+    type ChartDrawingNonVisualPictureDrawingProperties: UserDataSlot;
     /// What a `chart_drawing::NonVisualPicturePropertiesWith` holds.
-    type ChartDrawingNonVisualPictureProperties: ExtraSlot;
+    type ChartDrawingNonVisualPictureProperties: UserDataSlot;
     /// What a `chart_drawing::NonVisualShapeDrawingPropertiesWith` holds.
-    type ChartDrawingNonVisualShapeDrawingProperties: ExtraSlot;
+    type ChartDrawingNonVisualShapeDrawingProperties: UserDataSlot;
     /// What a `chart_drawing::NonVisualShapePropertiesWith` holds.
-    type ChartDrawingNonVisualShapeProperties: ExtraSlot;
+    type ChartDrawingNonVisualShapeProperties: UserDataSlot;
     /// What a `chart_drawing::PictureWith` holds.
-    type ChartDrawingPicture: ExtraSlot;
+    type ChartDrawingPicture: UserDataSlot;
     /// What a `chart_drawing::PictureFillWith` holds.
-    type ChartDrawingPictureFill: ExtraSlot;
+    type ChartDrawingPictureFill: UserDataSlot;
     /// What a `chart_drawing::RelativeAnchorShapeSizeWith` holds.
-    type ChartDrawingRelativeAnchorShapeSize: ExtraSlot;
+    type ChartDrawingRelativeAnchorShapeSize: UserDataSlot;
     /// What a `chart_drawing::RelativeXCoordinateWith` holds.
-    type ChartDrawingRelativeXCoordinate: ExtraSlot;
+    type ChartDrawingRelativeXCoordinate: UserDataSlot;
     /// What a `chart_drawing::RelativeYCoordinateWith` holds.
-    type ChartDrawingRelativeYCoordinate: ExtraSlot;
+    type ChartDrawingRelativeYCoordinate: UserDataSlot;
     /// What a `chart_drawing::ShapeWith` holds.
-    type ChartDrawingShape: ExtraSlot;
+    type ChartDrawingShape: UserDataSlot;
     /// What a `chart_drawing::ShapeExtentWith` holds.
-    type ChartDrawingShapeExtent: ExtraSlot;
+    type ChartDrawingShapeExtent: UserDataSlot;
     /// What a `chart_drawing::ShapePropertiesWith` holds.
-    type ChartDrawingShapeProperties: ExtraSlot;
+    type ChartDrawingShapeProperties: UserDataSlot;
     /// What a `chart_drawing::ShapeStyleWith` holds.
-    type ChartDrawingShapeStyle: ExtraSlot;
+    type ChartDrawingShapeStyle: UserDataSlot;
     /// What a `chart_drawing::ShapeTextBodyWith` holds.
-    type ChartDrawingShapeTextBody: ExtraSlot;
+    type ChartDrawingShapeTextBody: UserDataSlot;
     /// What a `chart_drawing::StartingAnchorPointWith` holds.
-    type ChartDrawingStartingAnchorPoint: ExtraSlot;
+    type ChartDrawingStartingAnchorPoint: UserDataSlot;
     /// What a `chart::DropLinesWith` holds.
-    type ChartDropLines: ExtraSlot;
+    type ChartDropLines: UserDataSlot;
     /// What a `chart::EditingLanguageWith` holds.
-    type ChartEditingLanguage: ExtraSlot;
+    type ChartEditingLanguage: UserDataSlot;
     /// What a `chart::ErrorBarDirectionWith` holds.
-    type ChartErrorBarDirection: ExtraSlot;
+    type ChartErrorBarDirection: UserDataSlot;
     /// What a `chart::ErrorBarTypeWith` holds.
-    type ChartErrorBarType: ExtraSlot;
+    type ChartErrorBarType: UserDataSlot;
     /// What a `chart::ErrorBarValueWith` holds.
-    type ChartErrorBarValue: ExtraSlot;
+    type ChartErrorBarValue: UserDataSlot;
     /// What a `chart::ErrorBarValueTypeWith` holds.
-    type ChartErrorBarValueType: ExtraSlot;
+    type ChartErrorBarValueType: UserDataSlot;
     /// What a `chart::ErrorBarsWith` holds.
-    type ChartErrorBars: ExtraSlot;
+    type ChartErrorBars: UserDataSlot;
     /// What a `chart::EvenFooterWith` holds.
-    type ChartEvenFooter: ExtraSlot;
+    type ChartEvenFooter: UserDataSlot;
     /// What a `chart::EvenHeaderWith` holds.
-    type ChartEvenHeader: ExtraSlot;
+    type ChartEvenHeader: UserDataSlot;
     /// What a `chart::ExplosionWith` holds.
-    type ChartExplosion: ExtraSlot;
+    type ChartExplosion: UserDataSlot;
     /// What a `chart::ExtensionWith` holds.
-    type ChartExtension: ExtraSlot;
+    type ChartExtension: UserDataSlot;
     /// What a `chart::ExternalDataRelationshipWith` holds.
-    type ChartExternalDataRelationship: ExtraSlot;
+    type ChartExternalDataRelationship: UserDataSlot;
     /// What a `chart::FirstFooterWith` holds.
-    type ChartFirstFooter: ExtraSlot;
+    type ChartFirstFooter: UserDataSlot;
     /// What a `chart::FirstHeaderWith` holds.
-    type ChartFirstHeader: ExtraSlot;
+    type ChartFirstHeader: UserDataSlot;
     /// What a `chart::FirstSliceAngleWith` holds.
-    type ChartFirstSliceAngle: ExtraSlot;
+    type ChartFirstSliceAngle: UserDataSlot;
     /// What a `chart::FloorWith` holds.
-    type ChartFloor: ExtraSlot;
+    type ChartFloor: UserDataSlot;
     /// What a `chart::FormatCodeWith` holds.
-    type ChartFormatCode: ExtraSlot;
+    type ChartFormatCode: UserDataSlot;
     /// What a `chart::FormatIDWith` holds.
-    type ChartFormatID: ExtraSlot;
+    type ChartFormatID: UserDataSlot;
     /// What a `chart::FormattingWith` holds.
-    type ChartFormatting: ExtraSlot;
+    type ChartFormatting: UserDataSlot;
     /// What a `chart::FormulaWith` holds.
-    type ChartFormula: ExtraSlot;
+    type ChartFormula: UserDataSlot;
     /// What a `chart::ForwardWith` holds.
-    type ChartForward: ExtraSlot;
+    type ChartForward: UserDataSlot;
     /// What a `chart::GapDepthWith` holds.
-    type ChartGapDepth: ExtraSlot;
+    type ChartGapDepth: UserDataSlot;
     /// What a `chart::GapWidthWith` holds.
-    type ChartGapWidth: ExtraSlot;
+    type ChartGapWidth: UserDataSlot;
     /// What a `chart::GroupingWith` holds.
-    type ChartGrouping: ExtraSlot;
+    type ChartGrouping: UserDataSlot;
     /// What a `chart::HeaderAndFooterWith` holds.
-    type ChartHeaderAndFooter: ExtraSlot;
+    type ChartHeaderAndFooter: UserDataSlot;
     /// What a `chart::HeightWith` holds.
-    type ChartHeight: ExtraSlot;
+    type ChartHeight: UserDataSlot;
     /// What a `chart::HeightModeWith` holds.
-    type ChartHeightMode: ExtraSlot;
+    type ChartHeightMode: UserDataSlot;
     /// What a `chart::HeightPercentWith` holds.
-    type ChartHeightPercent: ExtraSlot;
+    type ChartHeightPercent: UserDataSlot;
     /// What a `chart::HighLowLinesWith` holds.
-    type ChartHighLowLines: ExtraSlot;
+    type ChartHighLowLines: UserDataSlot;
     /// What a `chart::HoleSizeWith` holds.
-    type ChartHoleSize: ExtraSlot;
+    type ChartHoleSize: UserDataSlot;
     /// What a `chart::IndexWith` holds.
-    type ChartIndex: ExtraSlot;
+    type ChartIndex: UserDataSlot;
     /// What a `chart::InterceptWith` holds.
-    type ChartIntercept: ExtraSlot;
+    type ChartIntercept: UserDataSlot;
     /// What a `chart::InvertIfNegativeWith` holds.
-    type ChartInvertIfNegative: ExtraSlot;
+    type ChartInvertIfNegative: UserDataSlot;
     /// What a `chart::LabelAlignmentWith` holds.
-    type ChartLabelAlignment: ExtraSlot;
+    type ChartLabelAlignment: UserDataSlot;
     /// What a `chart::LabelOffsetWith` holds.
-    type ChartLabelOffset: ExtraSlot;
+    type ChartLabelOffset: UserDataSlot;
     /// What a `chart::LayoutWith` holds.
-    type ChartLayout: ExtraSlot;
+    type ChartLayout: UserDataSlot;
     /// What a `chart::LayoutTargetWith` holds.
-    type ChartLayoutTarget: ExtraSlot;
+    type ChartLayoutTarget: UserDataSlot;
     /// What a `chart::LeaderLinesWith` holds.
-    type ChartLeaderLines: ExtraSlot;
+    type ChartLeaderLines: UserDataSlot;
     /// What a `chart::LeftWith` holds.
-    type ChartLeft: ExtraSlot;
+    type ChartLeft: UserDataSlot;
     /// What a `chart::LeftModeWith` holds.
-    type ChartLeftMode: ExtraSlot;
+    type ChartLeftMode: UserDataSlot;
     /// What a `chart::LegacyDrawingForHeadersAndFootersWith` holds.
-    type ChartLegacyDrawingForHeadersAndFooters: ExtraSlot;
+    type ChartLegacyDrawingForHeadersAndFooters: UserDataSlot;
     /// What a `chart::LegendWith` holds.
-    type ChartLegend: ExtraSlot;
+    type ChartLegend: UserDataSlot;
     /// What a `chart::LegendEntryWith` holds.
-    type ChartLegendEntry: ExtraSlot;
+    type ChartLegendEntry: UserDataSlot;
     /// What a `chart::LegendPositionWith` holds.
-    type ChartLegendPosition: ExtraSlot;
+    type ChartLegendPosition: UserDataSlot;
     /// What a `chart::LevelWith` holds.
-    type ChartLevel: ExtraSlot;
+    type ChartLevel: UserDataSlot;
     /// What a `chart::Line3DChartWith` holds.
-    type ChartLine3DChart: ExtraSlot;
+    type ChartLine3DChart: UserDataSlot;
     /// What a `chart::LineChartSeriesWith` holds.
-    type ChartLineChartSeries: ExtraSlot;
+    type ChartLineChartSeries: UserDataSlot;
     /// What a `chart::LineChartsWith` holds.
-    type ChartLineCharts: ExtraSlot;
+    type ChartLineCharts: UserDataSlot;
     /// What a `chart::LogarithmicBaseWith` holds.
-    type ChartLogarithmicBase: ExtraSlot;
+    type ChartLogarithmicBase: UserDataSlot;
     /// What a `chart::MajorGridlinesWith` holds.
-    type ChartMajorGridlines: ExtraSlot;
+    type ChartMajorGridlines: UserDataSlot;
     /// What a `chart::MajorTickMarkWith` holds.
-    type ChartMajorTickMark: ExtraSlot;
+    type ChartMajorTickMark: UserDataSlot;
     /// What a `chart::MajorTimeUnitWith` holds.
-    type ChartMajorTimeUnit: ExtraSlot;
+    type ChartMajorTimeUnit: UserDataSlot;
     /// What a `chart::MajorUnitWith` holds.
-    type ChartMajorUnit: ExtraSlot;
+    type ChartMajorUnit: UserDataSlot;
     /// What a `chart::ManualLayoutWith` holds.
-    type ChartManualLayout: ExtraSlot;
+    type ChartManualLayout: UserDataSlot;
     /// What a `chart::MarkerWith` holds.
-    type ChartMarker: ExtraSlot;
+    type ChartMarker: UserDataSlot;
     /// What a `chart::MaximumWith` holds.
-    type ChartMaximum: ExtraSlot;
+    type ChartMaximum: UserDataSlot;
     /// What a `chart::MinimumWith` holds.
-    type ChartMinimum: ExtraSlot;
+    type ChartMinimum: UserDataSlot;
     /// What a `chart::MinorGridlinesWith` holds.
-    type ChartMinorGridlines: ExtraSlot;
+    type ChartMinorGridlines: UserDataSlot;
     /// What a `chart::MinorTickMarkWith` holds.
-    type ChartMinorTickMark: ExtraSlot;
+    type ChartMinorTickMark: UserDataSlot;
     /// What a `chart::MinorTimeUnitWith` holds.
-    type ChartMinorTimeUnit: ExtraSlot;
+    type ChartMinorTimeUnit: UserDataSlot;
     /// What a `chart::MinorUnitWith` holds.
-    type ChartMinorUnit: ExtraSlot;
+    type ChartMinorUnit: UserDataSlot;
     /// What a `chart::MinusWith` holds.
-    type ChartMinus: ExtraSlot;
+    type ChartMinus: UserDataSlot;
     /// What a `chart::MultiLevelStringCacheWith` holds.
-    type ChartMultiLevelStringCache: ExtraSlot;
+    type ChartMultiLevelStringCache: UserDataSlot;
     /// What a `chart::MultiLevelStringReferenceWith` holds.
-    type ChartMultiLevelStringReference: ExtraSlot;
+    type ChartMultiLevelStringReference: UserDataSlot;
     /// What a `chart::NoEndCapWith` holds.
-    type ChartNoEndCap: ExtraSlot;
+    type ChartNoEndCap: UserDataSlot;
     /// What a `chart::NoMultiLevelLabelsWith` holds.
-    type ChartNoMultiLevelLabels: ExtraSlot;
+    type ChartNoMultiLevelLabels: UserDataSlot;
     /// What a `chart::NumberCacheWith` holds.
-    type ChartNumberCache: ExtraSlot;
+    type ChartNumberCache: UserDataSlot;
     /// What a `chart::NumberFormatWith` holds.
-    type ChartNumberFormat: ExtraSlot;
+    type ChartNumberFormat: UserDataSlot;
     /// What a `chart::NumberLiteralWith` holds.
-    type ChartNumberLiteral: ExtraSlot;
+    type ChartNumberLiteral: UserDataSlot;
     /// What a `chart::NumberReferenceWith` holds.
-    type ChartNumberReference: ExtraSlot;
+    type ChartNumberReference: UserDataSlot;
     /// What a `chart::NumericPointWith` holds.
-    type ChartNumericPoint: ExtraSlot;
+    type ChartNumericPoint: UserDataSlot;
     /// What a `chart::NumericValueWith` holds.
-    type ChartNumericValue: ExtraSlot;
+    type ChartNumericValue: UserDataSlot;
     /// What a `chart::OddFooterWith` holds.
-    type ChartOddFooter: ExtraSlot;
+    type ChartOddFooter: UserDataSlot;
     /// What a `chart::OddHeaderWith` holds.
-    type ChartOddHeader: ExtraSlot;
+    type ChartOddHeader: UserDataSlot;
     /// What a `chart::OrderWith` holds.
-    type ChartOrder: ExtraSlot;
+    type ChartOrder: UserDataSlot;
     /// What a `chart::OverlapWith` holds.
-    type ChartOverlap: ExtraSlot;
+    type ChartOverlap: UserDataSlot;
     /// What a `chart::OverlayWith` holds.
-    type ChartOverlay: ExtraSlot;
+    type ChartOverlay: UserDataSlot;
     /// What a `chart::PageMarginsWith` holds.
-    type ChartPageMargins: ExtraSlot;
+    type ChartPageMargins: UserDataSlot;
     /// What a `chart::PageSetupWith` holds.
-    type ChartPageSetup: ExtraSlot;
+    type ChartPageSetup: UserDataSlot;
     /// What a `chart::PeriodWith` holds.
-    type ChartPeriod: ExtraSlot;
+    type ChartPeriod: UserDataSlot;
     /// What a `chart::PerspectiveWith` holds.
-    type ChartPerspective: ExtraSlot;
+    type ChartPerspective: UserDataSlot;
     /// What a `chart::PictureFormatWith` holds.
-    type ChartPictureFormat: ExtraSlot;
+    type ChartPictureFormat: UserDataSlot;
     /// What a `chart::PictureOptionsWith` holds.
-    type ChartPictureOptions: ExtraSlot;
+    type ChartPictureOptions: UserDataSlot;
     /// What a `chart::PictureStackUnitWith` holds.
-    type ChartPictureStackUnit: ExtraSlot;
+    type ChartPictureStackUnit: UserDataSlot;
     /// What a `chart::Pie3DChartWith` holds.
-    type ChartPie3DChart: ExtraSlot;
+    type ChartPie3DChart: UserDataSlot;
     /// What a `chart::PieChartSeriesWith` holds.
-    type ChartPieChartSeries: ExtraSlot;
+    type ChartPieChartSeries: UserDataSlot;
     /// What a `chart::PieChartsWith` holds.
-    type ChartPieCharts: ExtraSlot;
+    type ChartPieCharts: UserDataSlot;
     /// What a `chart::PieOfPieChartsWith` holds.
-    type ChartPieOfPieCharts: ExtraSlot;
+    type ChartPieOfPieCharts: UserDataSlot;
     /// What a `chart::PieOfPieTypeWith` holds.
-    type ChartPieOfPieType: ExtraSlot;
+    type ChartPieOfPieType: UserDataSlot;
     /// What a `chart::PivotFormatWith` holds.
-    type ChartPivotFormat: ExtraSlot;
+    type ChartPivotFormat: UserDataSlot;
     /// What a `chart::PivotFormatsWith` holds.
-    type ChartPivotFormats: ExtraSlot;
+    type ChartPivotFormats: UserDataSlot;
     /// What a `chart::PivotNameWith` holds.
-    type ChartPivotName: ExtraSlot;
+    type ChartPivotName: UserDataSlot;
     /// What a `chart::PivotSourceWith` holds.
-    type ChartPivotSource: ExtraSlot;
+    type ChartPivotSource: UserDataSlot;
     /// What a `chart::PlotAreaWith` holds.
-    type ChartPlotArea: ExtraSlot;
+    type ChartPlotArea: UserDataSlot;
     /// What a `chart::PlotVisibleOnlyWith` holds.
-    type ChartPlotVisibleOnly: ExtraSlot;
+    type ChartPlotVisibleOnly: UserDataSlot;
     /// What a `chart::PlusWith` holds.
-    type ChartPlus: ExtraSlot;
+    type ChartPlus: UserDataSlot;
     /// What a `chart::PointCountWith` holds.
-    type ChartPointCount: ExtraSlot;
+    type ChartPointCount: UserDataSlot;
     /// What a `chart::PolynomialTrendlineOrderWith` holds.
-    type ChartPolynomialTrendlineOrder: ExtraSlot;
+    type ChartPolynomialTrendlineOrder: UserDataSlot;
     /// What a `chart::PrintSettingsWith` holds.
-    type ChartPrintSettings: ExtraSlot;
+    type ChartPrintSettings: UserDataSlot;
     /// What a `chart::ProtectionWith` holds.
-    type ChartProtection: ExtraSlot;
+    type ChartProtection: UserDataSlot;
     /// What a `chart::RadarChartSeriesWith` holds.
-    type ChartRadarChartSeries: ExtraSlot;
+    type ChartRadarChartSeries: UserDataSlot;
     /// What a `chart::RadarChartsWith` holds.
-    type ChartRadarCharts: ExtraSlot;
+    type ChartRadarCharts: UserDataSlot;
     /// What a `chart::RadarStyleWith` holds.
-    type ChartRadarStyle: ExtraSlot;
+    type ChartRadarStyle: UserDataSlot;
     /// What a `chart::ReferenceToChartDrawingPartWith` holds.
-    type ChartReferenceToChartDrawingPart: ExtraSlot;
+    type ChartReferenceToChartDrawingPart: UserDataSlot;
     /// What a `chart::ReferenceToChartPartWith` holds.
-    type ChartReferenceToChartPart: ExtraSlot;
+    type ChartReferenceToChartPart: UserDataSlot;
     /// What a `chart::RichTextWith` holds.
-    type ChartRichText: ExtraSlot;
+    type ChartRichText: UserDataSlot;
     /// What a `chart::RightAngleAxesWith` holds.
-    type ChartRightAngleAxes: ExtraSlot;
+    type ChartRightAngleAxes: UserDataSlot;
     /// What a `chart::RoundedCornersWith` holds.
-    type ChartRoundedCorners: ExtraSlot;
+    type ChartRoundedCorners: UserDataSlot;
     /// What a `chart::ScalingWith` holds.
-    type ChartScaling: ExtraSlot;
+    type ChartScaling: UserDataSlot;
     /// What a `chart::ScatterChartSeriesWith` holds.
-    type ChartScatterChartSeries: ExtraSlot;
+    type ChartScatterChartSeries: UserDataSlot;
     /// What a `chart::ScatterChartsWith` holds.
-    type ChartScatterCharts: ExtraSlot;
+    type ChartScatterCharts: UserDataSlot;
     /// What a `chart::ScatterStyleWith` holds.
-    type ChartScatterStyle: ExtraSlot;
+    type ChartScatterStyle: UserDataSlot;
     /// What a `chart::SecondPiePointWith` holds.
-    type ChartSecondPiePoint: ExtraSlot;
+    type ChartSecondPiePoint: UserDataSlot;
     /// What a `chart::SecondPieSizeWith` holds.
-    type ChartSecondPieSize: ExtraSlot;
+    type ChartSecondPieSize: UserDataSlot;
     /// What a `chart::SelectionWith` holds.
-    type ChartSelection: ExtraSlot;
+    type ChartSelection: UserDataSlot;
     /// What a `chart::SeparatorWith` holds.
-    type ChartSeparator: ExtraSlot;
+    type ChartSeparator: UserDataSlot;
     /// What a `chart::SeriesAxisWith` holds.
-    type ChartSeriesAxis: ExtraSlot;
+    type ChartSeriesAxis: UserDataSlot;
     /// What a `chart::SeriesLinesWith` holds.
-    type ChartSeriesLines: ExtraSlot;
+    type ChartSeriesLines: UserDataSlot;
     /// What a `chart::SeriesTextWith` holds.
-    type ChartSeriesText: ExtraSlot;
+    type ChartSeriesText: UserDataSlot;
     /// What a `chart::ShapeWith` holds.
-    type ChartShape: ExtraSlot;
+    type ChartShape: UserDataSlot;
     /// What a `chart::ShapePropertiesWith` holds.
-    type ChartShapeProperties: ExtraSlot;
+    type ChartShapeProperties: UserDataSlot;
     /// What a `chart::ShowBubbleSizeWith` holds.
-    type ChartShowBubbleSize: ExtraSlot;
+    type ChartShowBubbleSize: UserDataSlot;
     /// What a `chart::ShowCategoryNameWith` holds.
-    type ChartShowCategoryName: ExtraSlot;
+    type ChartShowCategoryName: UserDataSlot;
     /// What a `chart::ShowDataLabelsOverMaximumWith` holds.
-    type ChartShowDataLabelsOverMaximum: ExtraSlot;
+    type ChartShowDataLabelsOverMaximum: UserDataSlot;
     /// What a `chart::ShowHorizontalBorderWith` holds.
-    type ChartShowHorizontalBorder: ExtraSlot;
+    type ChartShowHorizontalBorder: UserDataSlot;
     /// What a `chart::ShowLeaderLinesWith` holds.
-    type ChartShowLeaderLines: ExtraSlot;
+    type ChartShowLeaderLines: UserDataSlot;
     /// What a `chart::ShowLegendKeyWith` holds.
-    type ChartShowLegendKey: ExtraSlot;
+    type ChartShowLegendKey: UserDataSlot;
     /// What a `chart::ShowLegendKeysWith` holds.
-    type ChartShowLegendKeys: ExtraSlot;
+    type ChartShowLegendKeys: UserDataSlot;
     /// What a `chart::ShowMarkerWith` holds.
-    type ChartShowMarker: ExtraSlot;
+    type ChartShowMarker: UserDataSlot;
     /// What a `chart::ShowNegativeBubblesWith` holds.
-    type ChartShowNegativeBubbles: ExtraSlot;
+    type ChartShowNegativeBubbles: UserDataSlot;
     /// What a `chart::ShowOutlineBorderWith` holds.
-    type ChartShowOutlineBorder: ExtraSlot;
+    type ChartShowOutlineBorder: UserDataSlot;
     /// What a `chart::ShowPercentWith` holds.
-    type ChartShowPercent: ExtraSlot;
+    type ChartShowPercent: UserDataSlot;
     /// What a `chart::ShowSeriesNameWith` holds.
-    type ChartShowSeriesName: ExtraSlot;
+    type ChartShowSeriesName: UserDataSlot;
     /// What a `chart::ShowValueWith` holds.
-    type ChartShowValue: ExtraSlot;
+    type ChartShowValue: UserDataSlot;
     /// What a `chart::ShowVerticalBorderWith` holds.
-    type ChartShowVerticalBorder: ExtraSlot;
+    type ChartShowVerticalBorder: UserDataSlot;
     /// What a `chart::SideWallWith` holds.
-    type ChartSideWall: ExtraSlot;
+    type ChartSideWall: UserDataSlot;
     /// What a `chart::SizeWith` holds.
-    type ChartSize: ExtraSlot;
+    type ChartSize: UserDataSlot;
     /// What a `chart::SizeRepresentsWith` holds.
-    type ChartSizeRepresents: ExtraSlot;
+    type ChartSizeRepresents: UserDataSlot;
     /// What a `chart::SmoothingWith` holds.
-    type ChartSmoothing: ExtraSlot;
+    type ChartSmoothing: UserDataSlot;
     /// What a `chart::SplitPositionWith` holds.
-    type ChartSplitPosition: ExtraSlot;
+    type ChartSplitPosition: UserDataSlot;
     /// What a `chart::SplitTypeWith` holds.
-    type ChartSplitType: ExtraSlot;
+    type ChartSplitType: UserDataSlot;
     /// What a `chart::StockChartsWith` holds.
-    type ChartStockCharts: ExtraSlot;
+    type ChartStockCharts: UserDataSlot;
     /// What a `chart::StringCacheWith` holds.
-    type ChartStringCache: ExtraSlot;
+    type ChartStringCache: UserDataSlot;
     /// What a `chart::StringLiteralWith` holds.
-    type ChartStringLiteral: ExtraSlot;
+    type ChartStringLiteral: UserDataSlot;
     /// What a `chart::StringPointWith` holds.
-    type ChartStringPoint: ExtraSlot;
+    type ChartStringPoint: UserDataSlot;
     /// What a `chart::StringReferenceWith` holds.
-    type ChartStringReference: ExtraSlot;
+    type ChartStringReference: UserDataSlot;
     /// What a `chart::StyleWith` holds.
-    type ChartStyle: ExtraSlot;
+    type ChartStyle: UserDataSlot;
     /// What a `chart::Surface3DChartWith` holds.
-    type ChartSurface3DChart: ExtraSlot;
+    type ChartSurface3DChart: UserDataSlot;
     /// What a `chart::SurfaceChartSeriesWith` holds.
-    type ChartSurfaceChartSeries: ExtraSlot;
+    type ChartSurfaceChartSeries: UserDataSlot;
     /// What a `chart::SurfaceChartsWith` holds.
-    type ChartSurfaceCharts: ExtraSlot;
+    type ChartSurfaceCharts: UserDataSlot;
     /// What a `chart::SymbolWith` holds.
-    type ChartSymbol: ExtraSlot;
+    type ChartSymbol: UserDataSlot;
     /// What a `chart::TextPropertiesWith` holds.
-    type ChartTextProperties: ExtraSlot;
+    type ChartTextProperties: UserDataSlot;
     /// What a `chart::ThicknessWith` holds.
-    type ChartThickness: ExtraSlot;
+    type ChartThickness: UserDataSlot;
     /// What a `chart::TickLabelPositionWith` holds.
-    type ChartTickLabelPosition: ExtraSlot;
+    type ChartTickLabelPosition: UserDataSlot;
     /// What a `chart::TickLabelSkipWith` holds.
-    type ChartTickLabelSkip: ExtraSlot;
+    type ChartTickLabelSkip: UserDataSlot;
     /// What a `chart::TickMarkSkipWith` holds.
-    type ChartTickMarkSkip: ExtraSlot;
+    type ChartTickMarkSkip: UserDataSlot;
     /// What a `chart::TitleWith` holds.
-    type ChartTitle: ExtraSlot;
+    type ChartTitle: UserDataSlot;
     /// What a `chart::TopWith` holds.
-    type ChartTop: ExtraSlot;
+    type ChartTop: UserDataSlot;
     /// What a `chart::TopModeWith` holds.
-    type ChartTopMode: ExtraSlot;
+    type ChartTopMode: UserDataSlot;
     /// What a `chart::TrendlineLabelWith` holds.
-    type ChartTrendlineLabel: ExtraSlot;
+    type ChartTrendlineLabel: UserDataSlot;
     /// What a `chart::TrendlineNameWith` holds.
-    type ChartTrendlineName: ExtraSlot;
+    type ChartTrendlineName: UserDataSlot;
     /// What a `chart::TrendlineTypeWith` holds.
-    type ChartTrendlineType: ExtraSlot;
+    type ChartTrendlineType: UserDataSlot;
     /// What a `chart::TrendlinesWith` holds.
-    type ChartTrendlines: ExtraSlot;
+    type ChartTrendlines: UserDataSlot;
     /// What a `chart::UpBarsWith` holds.
-    type ChartUpBars: ExtraSlot;
+    type ChartUpBars: UserDataSlot;
     /// What a `chart::UpDownBarsWith` holds.
-    type ChartUpDownBars: ExtraSlot;
+    type ChartUpDownBars: UserDataSlot;
     /// What a `chart::UpdateAutomaticallyWith` holds.
-    type ChartUpdateAutomatically: ExtraSlot;
+    type ChartUpdateAutomatically: UserDataSlot;
     /// What a `chart::UserInterfaceWith` holds.
-    type ChartUserInterface: ExtraSlot;
+    type ChartUserInterface: UserDataSlot;
     /// What a `chart::UserShapesWith` holds.
-    type ChartUserShapes: ExtraSlot;
+    type ChartUserShapes: UserDataSlot;
     /// What a `chart::ValueAxisWith` holds.
-    type ChartValueAxis: ExtraSlot;
+    type ChartValueAxis: UserDataSlot;
     /// What a `chart::ValuesWith` holds.
-    type ChartValues: ExtraSlot;
+    type ChartValues: UserDataSlot;
     /// What a `chart::VaryColorsByPointWith` holds.
-    type ChartVaryColorsByPoint: ExtraSlot;
+    type ChartVaryColorsByPoint: UserDataSlot;
     /// What a `chart::ViewIn3DWith` holds.
-    type ChartViewIn3D: ExtraSlot;
+    type ChartViewIn3D: UserDataSlot;
     /// What a `chart::WidthWith` holds.
-    type ChartWidth: ExtraSlot;
+    type ChartWidth: UserDataSlot;
     /// What a `chart::WidthModeWith` holds.
-    type ChartWidthMode: ExtraSlot;
+    type ChartWidthMode: UserDataSlot;
     /// What a `chart::WireframeWith` holds.
-    type ChartWireframe: ExtraSlot;
+    type ChartWireframe: UserDataSlot;
     /// What a `chart::XRotationWith` holds.
-    type ChartXRotation: ExtraSlot;
+    type ChartXRotation: UserDataSlot;
     /// What a `chart::XValuesWith` holds.
-    type ChartXValues: ExtraSlot;
+    type ChartXValues: UserDataSlot;
     /// What a `chart::YRotationWith` holds.
-    type ChartYRotation: ExtraSlot;
+    type ChartYRotation: UserDataSlot;
     /// What a `chart::YValuesWith` holds.
-    type ChartYValues: ExtraSlot;
+    type ChartYValues: UserDataSlot;
     /// What a `custom_xml_data_properties::AssociatedXMLSchemaWith` holds.
-    type CustomXmlDataPropertiesAssociatedXMLSchema: ExtraSlot;
+    type CustomXmlDataPropertiesAssociatedXMLSchema: UserDataSlot;
     /// What a `custom_xml_data_properties::CustomXMLDataPropertiesWith` holds.
-    type CustomXmlDataPropertiesCustomXMLDataProperties: ExtraSlot;
+    type CustomXmlDataPropertiesCustomXMLDataProperties: UserDataSlot;
     /// What a `custom_xml_data_properties::SetOfAssociatedXMLSchemasWith` holds.
-    type CustomXmlDataPropertiesSetOfAssociatedXMLSchemas: ExtraSlot;
+    type CustomXmlDataPropertiesSetOfAssociatedXMLSchemas: UserDataSlot;
     /// What a `custom_xml_schema_properties::CustomXMLSchemaReferenceWith` holds.
-    type CustomXmlSchemaPropertiesCustomXMLSchemaReference: ExtraSlot;
+    type CustomXmlSchemaPropertiesCustomXMLSchemaReference: UserDataSlot;
     /// What a `custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryDataWith` holds.
-    type CustomXmlSchemaPropertiesEmbeddedCustomXMLSchemaSupplementaryData: ExtraSlot;
+    type CustomXmlSchemaPropertiesEmbeddedCustomXMLSchemaSupplementaryData: UserDataSlot;
     /// What a `diagram::AlgorithmWith` holds.
-    type DiagramAlgorithm: ExtraSlot;
+    type DiagramAlgorithm: UserDataSlot;
     /// What a `diagram::BackgroundFormattingWith` holds.
-    type DiagramBackgroundFormatting: ExtraSlot;
+    type DiagramBackgroundFormatting: UserDataSlot;
     /// What a `diagram::CategoryWith` holds.
-    type DiagramCategory: ExtraSlot;
+    type DiagramCategory: UserDataSlot;
     /// What a `diagram::CategoryListWith` holds.
-    type DiagramCategoryList: ExtraSlot;
+    type DiagramCategoryList: UserDataSlot;
     /// What a `diagram::CategoryListSDCategoriesWith` holds.
-    type DiagramCategoryListSDCategories: ExtraSlot;
+    type DiagramCategoryListSDCategories: UserDataSlot;
     /// What a `diagram::CategorySDCategoryWith` holds.
-    type DiagramCategorySDCategory: ExtraSlot;
+    type DiagramCategorySDCategory: UserDataSlot;
     /// What a `diagram::ChooseElementWith` holds.
-    type DiagramChooseElement: ExtraSlot;
+    type DiagramChooseElement: UserDataSlot;
     /// What a `diagram::ColorTransformCategoryWith` holds.
-    type DiagramColorTransformCategory: ExtraSlot;
+    type DiagramColorTransformCategory: UserDataSlot;
     /// What a `diagram::ColorTransformCategoryListWith` holds.
-    type DiagramColorTransformCategoryList: ExtraSlot;
+    type DiagramColorTransformCategoryList: UserDataSlot;
     /// What a `diagram::ColorTransformDefinitionHeaderWith` holds.
-    type DiagramColorTransformDefinitionHeader: ExtraSlot;
+    type DiagramColorTransformDefinitionHeader: UserDataSlot;
     /// What a `diagram::ColorTransformDefinitionsWith` holds.
-    type DiagramColorTransformDefinitions: ExtraSlot;
+    type DiagramColorTransformDefinitions: UserDataSlot;
     /// What a `diagram::ColorTransformHeaderListWith` holds.
-    type DiagramColorTransformHeaderList: ExtraSlot;
+    type DiagramColorTransformHeaderList: UserDataSlot;
     /// What a `diagram::ColorTransformSampleDataWith` holds.
-    type DiagramColorTransformSampleData: ExtraSlot;
+    type DiagramColorTransformSampleData: UserDataSlot;
     /// What a `diagram::ConnectionWith` holds.
-    type DiagramConnection: ExtraSlot;
+    type DiagramConnection: UserDataSlot;
     /// What a `diagram::ConnectionListWith` holds.
-    type DiagramConnectionList: ExtraSlot;
+    type DiagramConnectionList: UserDataSlot;
     /// What a `diagram::ConstraintWith` holds.
-    type DiagramConstraint: ExtraSlot;
+    type DiagramConstraint: UserDataSlot;
     /// What a `diagram::ConstraintListWith` holds.
-    type DiagramConstraintList: ExtraSlot;
+    type DiagramConstraintList: UserDataSlot;
     /// What a `diagram::DataModelWith` holds.
-    type DiagramDataModel: ExtraSlot;
+    type DiagramDataModel: UserDataSlot;
     /// What a `diagram::DescriptionWith` holds.
-    type DiagramDescription: ExtraSlot;
+    type DiagramDescription: UserDataSlot;
     /// What a `diagram::DescriptionCTDescriptionWith` holds.
-    type DiagramDescriptionCTDescription: ExtraSlot;
+    type DiagramDescriptionCTDescription: UserDataSlot;
     /// What a `diagram::DiagramDirectionWith` holds.
-    type DiagramDiagramDirection: ExtraSlot;
+    type DiagramDiagramDirection: UserDataSlot;
     /// What a `diagram::DiagramLayoutHeaderListWith` holds.
-    type DiagramDiagramLayoutHeaderList: ExtraSlot;
+    type DiagramDiagramLayoutHeaderList: UserDataSlot;
     /// What a `diagram::EffectColorListWith` holds.
-    type DiagramEffectColorList: ExtraSlot;
+    type DiagramEffectColorList: UserDataSlot;
     /// What a `diagram::ElseWith` holds.
-    type DiagramElse: ExtraSlot;
+    type DiagramElse: UserDataSlot;
     /// What a `diagram::ExplicitRelationshipsToDiagramPartsWith` holds.
-    type DiagramExplicitRelationshipsToDiagramParts: ExtraSlot;
+    type DiagramExplicitRelationshipsToDiagramParts: UserDataSlot;
     /// What a `diagram::ExtensionListWith` holds.
-    type DiagramExtensionList: ExtraSlot;
+    type DiagramExtensionList: UserDataSlot;
     /// What a `diagram::FillColorListWith` holds.
-    type DiagramFillColorList: ExtraSlot;
+    type DiagramFillColorList: UserDataSlot;
     /// What a `diagram::ForEachWith` holds.
-    type DiagramForEach: ExtraSlot;
+    type DiagramForEach: UserDataSlot;
     /// What a `diagram::IfWith` holds.
-    type DiagramIf: ExtraSlot;
+    type DiagramIf: UserDataSlot;
     /// What a `diagram::LayoutDefinitionWith` holds.
-    type DiagramLayoutDefinition: ExtraSlot;
+    type DiagramLayoutDefinition: UserDataSlot;
     /// What a `diagram::LayoutDefinitionHeaderWith` holds.
-    type DiagramLayoutDefinitionHeader: ExtraSlot;
+    type DiagramLayoutDefinitionHeader: UserDataSlot;
     /// What a `diagram::LayoutNodeWith` holds.
-    type DiagramLayoutNode: ExtraSlot;
+    type DiagramLayoutNode: UserDataSlot;
     /// What a `diagram::LevelAnimationWith` holds.
-    type DiagramLevelAnimation: ExtraSlot;
+    type DiagramLevelAnimation: UserDataSlot;
     /// What a `diagram::LineColorListWith` holds.
-    type DiagramLineColorList: ExtraSlot;
+    type DiagramLineColorList: UserDataSlot;
     /// What a `diagram::ListOfStyleDefinitionHeadersWith` holds.
-    type DiagramListOfStyleDefinitionHeaders: ExtraSlot;
+    type DiagramListOfStyleDefinitionHeaders: UserDataSlot;
     /// What a `diagram::MaximumChildrenWith` holds.
-    type DiagramMaximumChildren: ExtraSlot;
+    type DiagramMaximumChildren: UserDataSlot;
     /// What a `diagram::OneByOneAnimationStringWith` holds.
-    type DiagramOneByOneAnimationString: ExtraSlot;
+    type DiagramOneByOneAnimationString: UserDataSlot;
     /// What a `diagram::OrganizationChartBranchStyleWith` holds.
-    type DiagramOrganizationChartBranchStyle: ExtraSlot;
+    type DiagramOrganizationChartBranchStyle: UserDataSlot;
     /// What a `diagram::ParameterWith` holds.
-    type DiagramParameter: ExtraSlot;
+    type DiagramParameter: UserDataSlot;
     /// What a `diagram::PointWith` holds.
-    type DiagramPoint: ExtraSlot;
+    type DiagramPoint: UserDataSlot;
     /// What a `diagram::PointListWith` holds.
-    type DiagramPointList: ExtraSlot;
+    type DiagramPointList: UserDataSlot;
     /// What a `diagram::PreferredNumberOfChildrenWith` holds.
-    type DiagramPreferredNumberOfChildren: ExtraSlot;
+    type DiagramPreferredNumberOfChildren: UserDataSlot;
     /// What a `diagram::PresentationLayoutVariablesWith` holds.
-    type DiagramPresentationLayoutVariables: ExtraSlot;
+    type DiagramPresentationLayoutVariables: UserDataSlot;
     /// What a `diagram::PresentationOfWith` holds.
-    type DiagramPresentationOf: ExtraSlot;
+    type DiagramPresentationOf: UserDataSlot;
     /// What a `diagram::PropertySetWith` holds.
-    type DiagramPropertySet: ExtraSlot;
+    type DiagramPropertySet: UserDataSlot;
     /// What a `diagram::RuleWith` holds.
-    type DiagramRule: ExtraSlot;
+    type DiagramRule: UserDataSlot;
     /// What a `diagram::RuleListWith` holds.
-    type DiagramRuleList: ExtraSlot;
+    type DiagramRuleList: UserDataSlot;
     /// What a `diagram::SampleDataWith` holds.
-    type DiagramSampleData: ExtraSlot;
+    type DiagramSampleData: UserDataSlot;
     /// What a `diagram::Scene3dWith` holds.
-    type DiagramScene3d: ExtraSlot;
+    type DiagramScene3d: UserDataSlot;
     /// What a `diagram::ShapeWith` holds.
-    type DiagramShape: ExtraSlot;
+    type DiagramShape: UserDataSlot;
     /// What a `diagram::ShapeAdjustWith` holds.
-    type DiagramShapeAdjust: ExtraSlot;
+    type DiagramShapeAdjust: UserDataSlot;
     /// What a `diagram::ShapeAdjustListWith` holds.
-    type DiagramShapeAdjustList: ExtraSlot;
+    type DiagramShapeAdjustList: UserDataSlot;
     /// What a `diagram::ShapePropertiesWith` holds.
-    type DiagramShapeProperties: ExtraSlot;
+    type DiagramShapeProperties: UserDataSlot;
     /// What a `diagram::ShapeResizeStyleWith` holds.
-    type DiagramShapeResizeStyle: ExtraSlot;
+    type DiagramShapeResizeStyle: UserDataSlot;
     /// What a `diagram::ShapeStyleWith` holds.
-    type DiagramShapeStyle: ExtraSlot;
+    type DiagramShapeStyle: UserDataSlot;
     /// What a `diagram::ShowInsertNodeWith` holds.
-    type DiagramShowInsertNode: ExtraSlot;
+    type DiagramShowInsertNode: UserDataSlot;
     /// What a `diagram::ShowOrganizationChartUserInterfaceWith` holds.
-    type DiagramShowOrganizationChartUserInterface: ExtraSlot;
+    type DiagramShowOrganizationChartUserInterface: UserDataSlot;
     /// What a `diagram::Sp3dWith` holds.
-    type DiagramSp3d: ExtraSlot;
+    type DiagramSp3d: UserDataSlot;
     /// What a `diagram::StyleDataWith` holds.
-    type DiagramStyleData: ExtraSlot;
+    type DiagramStyleData: UserDataSlot;
     /// What a `diagram::StyleDefinitionWith` holds.
-    type DiagramStyleDefinition: ExtraSlot;
+    type DiagramStyleDefinition: UserDataSlot;
     /// What a `diagram::StyleDefinitionHeaderWith` holds.
-    type DiagramStyleDefinitionHeader: ExtraSlot;
+    type DiagramStyleDefinitionHeader: UserDataSlot;
     /// What a `diagram::StyleLabelWith` holds.
-    type DiagramStyleLabel: ExtraSlot;
+    type DiagramStyleLabel: UserDataSlot;
     /// What a `diagram::StyleLabelDescriptionWith` holds.
-    type DiagramStyleLabelDescription: ExtraSlot;
+    type DiagramStyleLabelDescription: UserDataSlot;
     /// What a `diagram::StyleLabelStyleLabelWith` holds.
-    type DiagramStyleLabelStyleLabel: ExtraSlot;
+    type DiagramStyleLabelStyleLabel: UserDataSlot;
     /// What a `diagram::TextBodyWith` holds.
-    type DiagramTextBody: ExtraSlot;
+    type DiagramTextBody: UserDataSlot;
     /// What a `diagram::TextEffectColorListWith` holds.
-    type DiagramTextEffectColorList: ExtraSlot;
+    type DiagramTextEffectColorList: UserDataSlot;
     /// What a `diagram::TextFillColorListWith` holds.
-    type DiagramTextFillColorList: ExtraSlot;
+    type DiagramTextFillColorList: UserDataSlot;
     /// What a `diagram::TextLineColorListWith` holds.
-    type DiagramTextLineColorList: ExtraSlot;
+    type DiagramTextLineColorList: UserDataSlot;
     /// What a `diagram::TextPropertiesWith` holds.
-    type DiagramTextProperties: ExtraSlot;
+    type DiagramTextProperties: UserDataSlot;
     /// What a `diagram::TitleWith` holds.
-    type DiagramTitle: ExtraSlot;
+    type DiagramTitle: UserDataSlot;
     /// What a `diagram::TitleCTNameWith` holds.
-    type DiagramTitleCTName: ExtraSlot;
+    type DiagramTitleCTName: UserDataSlot;
     /// What a `diagram::TitleSDNameWith` holds.
-    type DiagramTitleSDName: ExtraSlot;
+    type DiagramTitleSDName: UserDataSlot;
     /// What a `diagram::VariableListWith` holds.
-    type DiagramVariableList: ExtraSlot;
+    type DiagramVariableList: UserDataSlot;
     /// What a `diagram::WholeE2OFormattingWith` holds.
-    type DiagramWholeE2OFormatting: ExtraSlot;
+    type DiagramWholeE2OFormatting: UserDataSlot;
     /// What a `document_properties_custom::CustomFilePropertiesWith` holds.
-    type DocumentPropertiesCustomCustomFileProperties: ExtraSlot;
+    type DocumentPropertiesCustomCustomFileProperties: UserDataSlot;
     /// What a `document_properties_custom::CustomFilePropertyWith` holds.
-    type DocumentPropertiesCustomCustomFileProperty: ExtraSlot;
+    type DocumentPropertiesCustomCustomFileProperty: UserDataSlot;
     /// What a `document_properties_extended::ApplicationNameWith` holds.
-    type DocumentPropertiesExtendedApplicationName: ExtraSlot;
+    type DocumentPropertiesExtendedApplicationName: UserDataSlot;
     /// What a `document_properties_extended::ApplicationSpecificFilePropertiesWith` holds.
-    type DocumentPropertiesExtendedApplicationSpecificFileProperties: ExtraSlot;
+    type DocumentPropertiesExtendedApplicationSpecificFileProperties: UserDataSlot;
     /// What a `document_properties_extended::ApplicationVersionWith` holds.
-    type DocumentPropertiesExtendedApplicationVersion: ExtraSlot;
+    type DocumentPropertiesExtendedApplicationVersion: UserDataSlot;
     /// What a `document_properties_extended::CharactersWithSpacesWith` holds.
-    type DocumentPropertiesExtendedCharactersWithSpaces: ExtraSlot;
+    type DocumentPropertiesExtendedCharactersWithSpaces: UserDataSlot;
     /// What a `document_properties_extended::DigitalSignatureWith` holds.
-    type DocumentPropertiesExtendedDigitalSignature: ExtraSlot;
+    type DocumentPropertiesExtendedDigitalSignature: UserDataSlot;
     /// What a `document_properties_extended::DocumentSecurityWith` holds.
-    type DocumentPropertiesExtendedDocumentSecurity: ExtraSlot;
+    type DocumentPropertiesExtendedDocumentSecurity: UserDataSlot;
     /// What a `document_properties_extended::HeadingPairsWith` holds.
-    type DocumentPropertiesExtendedHeadingPairs: ExtraSlot;
+    type DocumentPropertiesExtendedHeadingPairs: UserDataSlot;
     /// What a `document_properties_extended::HyperlinkListWith` holds.
-    type DocumentPropertiesExtendedHyperlinkList: ExtraSlot;
+    type DocumentPropertiesExtendedHyperlinkList: UserDataSlot;
     /// What a `document_properties_extended::HyperlinksChangedWith` holds.
-    type DocumentPropertiesExtendedHyperlinksChanged: ExtraSlot;
+    type DocumentPropertiesExtendedHyperlinksChanged: UserDataSlot;
     /// What a `document_properties_extended::IntendedFormatOfPresentationWith` holds.
-    type DocumentPropertiesExtendedIntendedFormatOfPresentation: ExtraSlot;
+    type DocumentPropertiesExtendedIntendedFormatOfPresentation: UserDataSlot;
     /// What a `document_properties_extended::LinksUpToDateWith` holds.
-    type DocumentPropertiesExtendedLinksUpToDate: ExtraSlot;
+    type DocumentPropertiesExtendedLinksUpToDate: UserDataSlot;
     /// What a `document_properties_extended::NameOfCompanyWith` holds.
-    type DocumentPropertiesExtendedNameOfCompany: ExtraSlot;
+    type DocumentPropertiesExtendedNameOfCompany: UserDataSlot;
     /// What a `document_properties_extended::NameOfDocumentTemplateWith` holds.
-    type DocumentPropertiesExtendedNameOfDocumentTemplate: ExtraSlot;
+    type DocumentPropertiesExtendedNameOfDocumentTemplate: UserDataSlot;
     /// What a `document_properties_extended::NameOfManagerWith` holds.
-    type DocumentPropertiesExtendedNameOfManager: ExtraSlot;
+    type DocumentPropertiesExtendedNameOfManager: UserDataSlot;
     /// What a `document_properties_extended::NumberOfHiddenSlidesWith` holds.
-    type DocumentPropertiesExtendedNumberOfHiddenSlides: ExtraSlot;
+    type DocumentPropertiesExtendedNumberOfHiddenSlides: UserDataSlot;
     /// What a `document_properties_extended::NumberOfLinesWith` holds.
-    type DocumentPropertiesExtendedNumberOfLines: ExtraSlot;
+    type DocumentPropertiesExtendedNumberOfLines: UserDataSlot;
     /// What a `document_properties_extended::NumberOfSlidesContainingNotesWith` holds.
-    type DocumentPropertiesExtendedNumberOfSlidesContainingNotes: ExtraSlot;
+    type DocumentPropertiesExtendedNumberOfSlidesContainingNotes: UserDataSlot;
     /// What a `document_properties_extended::PartTitlesWith` holds.
-    type DocumentPropertiesExtendedPartTitles: ExtraSlot;
+    type DocumentPropertiesExtendedPartTitles: UserDataSlot;
     /// What a `document_properties_extended::RelativeHyperlinkBaseWith` holds.
-    type DocumentPropertiesExtendedRelativeHyperlinkBase: ExtraSlot;
+    type DocumentPropertiesExtendedRelativeHyperlinkBase: UserDataSlot;
     /// What a `document_properties_extended::SharedDocumentWith` holds.
-    type DocumentPropertiesExtendedSharedDocument: ExtraSlot;
+    type DocumentPropertiesExtendedSharedDocument: UserDataSlot;
     /// What a `document_properties_extended::SlidesMetadataElementWith` holds.
-    type DocumentPropertiesExtendedSlidesMetadataElement: ExtraSlot;
+    type DocumentPropertiesExtendedSlidesMetadataElement: UserDataSlot;
     /// What a `document_properties_extended::ThumbnailDisplayModeWith` holds.
-    type DocumentPropertiesExtendedThumbnailDisplayMode: ExtraSlot;
+    type DocumentPropertiesExtendedThumbnailDisplayMode: UserDataSlot;
     /// What a `document_properties_extended::TotalEditTimeMetadataElementWith` holds.
-    type DocumentPropertiesExtendedTotalEditTimeMetadataElement: ExtraSlot;
+    type DocumentPropertiesExtendedTotalEditTimeMetadataElement: UserDataSlot;
     /// What a `document_properties_extended::TotalNumberOfCharactersWith` holds.
-    type DocumentPropertiesExtendedTotalNumberOfCharacters: ExtraSlot;
+    type DocumentPropertiesExtendedTotalNumberOfCharacters: UserDataSlot;
     /// What a `document_properties_extended::TotalNumberOfMultimediaClipsWith` holds.
-    type DocumentPropertiesExtendedTotalNumberOfMultimediaClips: ExtraSlot;
+    type DocumentPropertiesExtendedTotalNumberOfMultimediaClips: UserDataSlot;
     /// What a `document_properties_extended::TotalNumberOfPagesWith` holds.
-    type DocumentPropertiesExtendedTotalNumberOfPages: ExtraSlot;
+    type DocumentPropertiesExtendedTotalNumberOfPages: UserDataSlot;
     /// What a `document_properties_extended::TotalNumberOfParagraphsWith` holds.
-    type DocumentPropertiesExtendedTotalNumberOfParagraphs: ExtraSlot;
+    type DocumentPropertiesExtendedTotalNumberOfParagraphs: UserDataSlot;
     /// What a `document_properties_extended::WordCountWith` holds.
-    type DocumentPropertiesExtendedWordCount: ExtraSlot;
+    type DocumentPropertiesExtendedWordCount: UserDataSlot;
     /// What a `document_properties_variant_types::ArrayWith` holds.
-    type DocumentPropertiesVariantTypesArray: ExtraSlot;
+    type DocumentPropertiesVariantTypesArray: UserDataSlot;
     /// What a `document_properties_variant_types::BasicStringWith` holds.
-    type DocumentPropertiesVariantTypesBasicString: ExtraSlot;
+    type DocumentPropertiesVariantTypesBasicString: UserDataSlot;
     /// What a `document_properties_variant_types::BinaryBlobWith` holds.
-    type DocumentPropertiesVariantTypesBinaryBlob: ExtraSlot;
+    type DocumentPropertiesVariantTypesBinaryBlob: UserDataSlot;
     /// What a `document_properties_variant_types::BinaryBlobObjectWith` holds.
-    type DocumentPropertiesVariantTypesBinaryBlobObject: ExtraSlot;
+    type DocumentPropertiesVariantTypesBinaryBlobObject: UserDataSlot;
     /// What a `document_properties_variant_types::BinaryStorageWith` holds.
-    type DocumentPropertiesVariantTypesBinaryStorage: ExtraSlot;
+    type DocumentPropertiesVariantTypesBinaryStorage: UserDataSlot;
     /// What a `document_properties_variant_types::BinaryStorageObjectWith` holds.
-    type DocumentPropertiesVariantTypesBinaryStorageObject: ExtraSlot;
+    type DocumentPropertiesVariantTypesBinaryStorageObject: UserDataSlot;
     /// What a `document_properties_variant_types::BinaryStreamWith` holds.
-    type DocumentPropertiesVariantTypesBinaryStream: ExtraSlot;
+    type DocumentPropertiesVariantTypesBinaryStream: UserDataSlot;
     /// What a `document_properties_variant_types::BinaryStreamObjectWith` holds.
-    type DocumentPropertiesVariantTypesBinaryStreamObject: ExtraSlot;
+    type DocumentPropertiesVariantTypesBinaryStreamObject: UserDataSlot;
     /// What a `document_properties_variant_types::BinaryVersionedStreamWith` holds.
-    type DocumentPropertiesVariantTypesBinaryVersionedStream: ExtraSlot;
+    type DocumentPropertiesVariantTypesBinaryVersionedStream: UserDataSlot;
     /// What a `document_properties_variant_types::BooleanWith` holds.
-    type DocumentPropertiesVariantTypesBoolean: ExtraSlot;
+    type DocumentPropertiesVariantTypesBoolean: UserDataSlot;
     /// What a `document_properties_variant_types::ClassIDWith` holds.
-    type DocumentPropertiesVariantTypesClassID: ExtraSlot;
+    type DocumentPropertiesVariantTypesClassID: UserDataSlot;
     /// What a `document_properties_variant_types::CurrencyWith` holds.
-    type DocumentPropertiesVariantTypesCurrency: ExtraSlot;
+    type DocumentPropertiesVariantTypesCurrency: UserDataSlot;
     /// What a `document_properties_variant_types::DateAndTimeWith` holds.
-    type DocumentPropertiesVariantTypesDateAndTime: ExtraSlot;
+    type DocumentPropertiesVariantTypesDateAndTime: UserDataSlot;
     /// What a `document_properties_variant_types::DecimalWith` holds.
-    type DocumentPropertiesVariantTypesDecimal: ExtraSlot;
+    type DocumentPropertiesVariantTypesDecimal: UserDataSlot;
     /// What a `document_properties_variant_types::EmptyWith` holds.
-    type DocumentPropertiesVariantTypesEmpty: ExtraSlot;
+    type DocumentPropertiesVariantTypesEmpty: UserDataSlot;
     /// What a `document_properties_variant_types::ErrorStatusCodeWith` holds.
-    type DocumentPropertiesVariantTypesErrorStatusCode: ExtraSlot;
+    type DocumentPropertiesVariantTypesErrorStatusCode: UserDataSlot;
     /// What a `document_properties_variant_types::FileTimeWith` holds.
-    type DocumentPropertiesVariantTypesFileTime: ExtraSlot;
+    type DocumentPropertiesVariantTypesFileTime: UserDataSlot;
     /// What a `document_properties_variant_types::I1With` holds.
-    type DocumentPropertiesVariantTypesI1: ExtraSlot;
+    type DocumentPropertiesVariantTypesI1: UserDataSlot;
     /// What a `document_properties_variant_types::I2With` holds.
-    type DocumentPropertiesVariantTypesI2: ExtraSlot;
+    type DocumentPropertiesVariantTypesI2: UserDataSlot;
     /// What a `document_properties_variant_types::I4With` holds.
-    type DocumentPropertiesVariantTypesI4: ExtraSlot;
+    type DocumentPropertiesVariantTypesI4: UserDataSlot;
     /// What a `document_properties_variant_types::I8With` holds.
-    type DocumentPropertiesVariantTypesI8: ExtraSlot;
+    type DocumentPropertiesVariantTypesI8: UserDataSlot;
     /// What a `document_properties_variant_types::IntegerWith` holds.
-    type DocumentPropertiesVariantTypesInteger: ExtraSlot;
+    type DocumentPropertiesVariantTypesInteger: UserDataSlot;
     /// What a `document_properties_variant_types::LpstrWith` holds.
-    type DocumentPropertiesVariantTypesLpstr: ExtraSlot;
+    type DocumentPropertiesVariantTypesLpstr: UserDataSlot;
     /// What a `document_properties_variant_types::LpwstrWith` holds.
-    type DocumentPropertiesVariantTypesLpwstr: ExtraSlot;
+    type DocumentPropertiesVariantTypesLpwstr: UserDataSlot;
     /// What a `document_properties_variant_types::NullWith` holds.
-    type DocumentPropertiesVariantTypesNull: ExtraSlot;
+    type DocumentPropertiesVariantTypesNull: UserDataSlot;
     /// What a `document_properties_variant_types::R4With` holds.
-    type DocumentPropertiesVariantTypesR4: ExtraSlot;
+    type DocumentPropertiesVariantTypesR4: UserDataSlot;
     /// What a `document_properties_variant_types::R8With` holds.
-    type DocumentPropertiesVariantTypesR8: ExtraSlot;
+    type DocumentPropertiesVariantTypesR8: UserDataSlot;
     /// What a `document_properties_variant_types::Ui1With` holds.
-    type DocumentPropertiesVariantTypesUi1: ExtraSlot;
+    type DocumentPropertiesVariantTypesUi1: UserDataSlot;
     /// What a `document_properties_variant_types::Ui2With` holds.
-    type DocumentPropertiesVariantTypesUi2: ExtraSlot;
+    type DocumentPropertiesVariantTypesUi2: UserDataSlot;
     /// What a `document_properties_variant_types::Ui4With` holds.
-    type DocumentPropertiesVariantTypesUi4: ExtraSlot;
+    type DocumentPropertiesVariantTypesUi4: UserDataSlot;
     /// What a `document_properties_variant_types::Ui8With` holds.
-    type DocumentPropertiesVariantTypesUi8: ExtraSlot;
+    type DocumentPropertiesVariantTypesUi8: UserDataSlot;
     /// What a `document_properties_variant_types::UnsignedIntegerWith` holds.
-    type DocumentPropertiesVariantTypesUnsignedInteger: ExtraSlot;
+    type DocumentPropertiesVariantTypesUnsignedInteger: UserDataSlot;
     /// What a `document_properties_variant_types::VariantWith` holds.
-    type DocumentPropertiesVariantTypesVariant: ExtraSlot;
+    type DocumentPropertiesVariantTypesVariant: UserDataSlot;
     /// What a `document_properties_variant_types::VectorWith` holds.
-    type DocumentPropertiesVariantTypesVector: ExtraSlot;
+    type DocumentPropertiesVariantTypesVector: UserDataSlot;
     /// What a `drawing::Accent1With` holds.
-    type DrawingAccent1: ExtraSlot;
+    type DrawingAccent1: UserDataSlot;
     /// What a `drawing::Accent2With` holds.
-    type DrawingAccent2: ExtraSlot;
+    type DrawingAccent2: UserDataSlot;
     /// What a `drawing::Accent3With` holds.
-    type DrawingAccent3: ExtraSlot;
+    type DrawingAccent3: UserDataSlot;
     /// What a `drawing::Accent4With` holds.
-    type DrawingAccent4: ExtraSlot;
+    type DrawingAccent4: UserDataSlot;
     /// What a `drawing::Accent5With` holds.
-    type DrawingAccent5: ExtraSlot;
+    type DrawingAccent5: UserDataSlot;
     /// What a `drawing::Accent6With` holds.
-    type DrawingAccent6: ExtraSlot;
+    type DrawingAccent6: UserDataSlot;
     /// What a `drawing::AlphaWith` holds.
-    type DrawingAlpha: ExtraSlot;
+    type DrawingAlpha: UserDataSlot;
     /// What a `drawing::AlphaBiLevelEffectWith` holds.
-    type DrawingAlphaBiLevelEffect: ExtraSlot;
+    type DrawingAlphaBiLevelEffect: UserDataSlot;
     /// What a `drawing::AlphaCeilingEffectWith` holds.
-    type DrawingAlphaCeilingEffect: ExtraSlot;
+    type DrawingAlphaCeilingEffect: UserDataSlot;
     /// What a `drawing::AlphaFloorEffectWith` holds.
-    type DrawingAlphaFloorEffect: ExtraSlot;
+    type DrawingAlphaFloorEffect: UserDataSlot;
     /// What a `drawing::AlphaInsetOutsetEffectWith` holds.
-    type DrawingAlphaInsetOutsetEffect: ExtraSlot;
+    type DrawingAlphaInsetOutsetEffect: UserDataSlot;
     /// What a `drawing::AlphaInverseEffectWith` holds.
-    type DrawingAlphaInverseEffect: ExtraSlot;
+    type DrawingAlphaInverseEffect: UserDataSlot;
     /// What a `drawing::AlphaModulateEffectWith` holds.
-    type DrawingAlphaModulateEffect: ExtraSlot;
+    type DrawingAlphaModulateEffect: UserDataSlot;
     /// What a `drawing::AlphaModulateFixedEffectWith` holds.
-    type DrawingAlphaModulateFixedEffect: ExtraSlot;
+    type DrawingAlphaModulateFixedEffect: UserDataSlot;
     /// What a `drawing::AlphaModulationWith` holds.
-    type DrawingAlphaModulation: ExtraSlot;
+    type DrawingAlphaModulation: UserDataSlot;
     /// What a `drawing::AlphaOffsetWith` holds.
-    type DrawingAlphaOffset: ExtraSlot;
+    type DrawingAlphaOffset: UserDataSlot;
     /// What a `drawing::AlphaReplaceEffectWith` holds.
-    type DrawingAlphaReplaceEffect: ExtraSlot;
+    type DrawingAlphaReplaceEffect: UserDataSlot;
     /// What a `drawing::AnchorPointWith` holds.
-    type DrawingAnchorPoint: ExtraSlot;
+    type DrawingAnchorPoint: UserDataSlot;
     /// What a `drawing::Apply3DShapePropertiesWith` holds.
-    type DrawingApply3DShapeProperties: ExtraSlot;
+    type DrawingApply3DShapeProperties: UserDataSlot;
     /// What a `drawing::AudioEndTimeWith` holds.
-    type DrawingAudioEndTime: ExtraSlot;
+    type DrawingAudioEndTime: UserDataSlot;
     /// What a `drawing::AudioFromCDWith` holds.
-    type DrawingAudioFromCD: ExtraSlot;
+    type DrawingAudioFromCD: UserDataSlot;
     /// What a `drawing::AudioFromFileWith` holds.
-    type DrawingAudioFromFile: ExtraSlot;
+    type DrawingAudioFromFile: UserDataSlot;
     /// What a `drawing::AudioFromWAVFileWith` holds.
-    type DrawingAudioFromWAVFile: ExtraSlot;
+    type DrawingAudioFromWAVFile: UserDataSlot;
     /// What a `drawing::AudioStartTimeWith` holds.
-    type DrawingAudioStartTime: ExtraSlot;
+    type DrawingAudioStartTime: UserDataSlot;
     /// What a `drawing::AutoNumberedBulletWith` holds.
-    type DrawingAutoNumberedBullet: ExtraSlot;
+    type DrawingAutoNumberedBullet: UserDataSlot;
     /// What a `drawing::BackdropPlaneWith` holds.
-    type DrawingBackdropPlane: ExtraSlot;
+    type DrawingBackdropPlane: UserDataSlot;
     /// What a `drawing::BackgroundColorWith` holds.
-    type DrawingBackgroundColor: ExtraSlot;
+    type DrawingBackgroundColor: UserDataSlot;
     /// What a `drawing::BackgroundFillStyleListWith` holds.
-    type DrawingBackgroundFillStyleList: ExtraSlot;
+    type DrawingBackgroundFillStyleList: UserDataSlot;
     /// What a `drawing::Band1HorizontalWith` holds.
-    type DrawingBand1Horizontal: ExtraSlot;
+    type DrawingBand1Horizontal: UserDataSlot;
     /// What a `drawing::Band1VerticalWith` holds.
-    type DrawingBand1Vertical: ExtraSlot;
+    type DrawingBand1Vertical: UserDataSlot;
     /// What a `drawing::Band2HorizontalWith` holds.
-    type DrawingBand2Horizontal: ExtraSlot;
+    type DrawingBand2Horizontal: UserDataSlot;
     /// What a `drawing::Band2VerticalWith` holds.
-    type DrawingBand2Vertical: ExtraSlot;
+    type DrawingBand2Vertical: UserDataSlot;
     /// What a `drawing::BevelWith` holds.
-    type DrawingBevel: ExtraSlot;
+    type DrawingBevel: UserDataSlot;
     /// What a `drawing::BiLevelWith` holds.
-    type DrawingBiLevel: ExtraSlot;
+    type DrawingBiLevel: UserDataSlot;
     /// What a `drawing::BlendEffectWith` holds.
-    type DrawingBlendEffect: ExtraSlot;
+    type DrawingBlendEffect: UserDataSlot;
     /// What a `drawing::BlipWith` holds.
-    type DrawingBlip: ExtraSlot;
+    type DrawingBlip: UserDataSlot;
     /// What a `drawing::BlueWith` holds.
-    type DrawingBlue: ExtraSlot;
+    type DrawingBlue: UserDataSlot;
     /// What a `drawing::BlueModulationWith` holds.
-    type DrawingBlueModulation: ExtraSlot;
+    type DrawingBlueModulation: UserDataSlot;
     /// What a `drawing::BlueOffsetWith` holds.
-    type DrawingBlueOffset: ExtraSlot;
+    type DrawingBlueOffset: UserDataSlot;
     /// What a `drawing::BlurEffectWith` holds.
-    type DrawingBlurEffect: ExtraSlot;
+    type DrawingBlurEffect: UserDataSlot;
     /// What a `drawing::BodyPropertiesWith` holds.
-    type DrawingBodyProperties: ExtraSlot;
+    type DrawingBodyProperties: UserDataSlot;
     /// What a `drawing::BottomBevelWith` holds.
-    type DrawingBottomBevel: ExtraSlot;
+    type DrawingBottomBevel: UserDataSlot;
     /// What a `drawing::BottomBorderWith` holds.
-    type DrawingBottomBorder: ExtraSlot;
+    type DrawingBottomBorder: UserDataSlot;
     /// What a `drawing::BottomBorderLinePropertiesWith` holds.
-    type DrawingBottomBorderLineProperties: ExtraSlot;
+    type DrawingBottomBorderLineProperties: UserDataSlot;
     /// What a `drawing::BottomLeftToTopRightBorderLinePropertiesWith` holds.
-    type DrawingBottomLeftToTopRightBorderLineProperties: ExtraSlot;
+    type DrawingBottomLeftToTopRightBorderLineProperties: UserDataSlot;
     /// What a `drawing::BuildChartWith` holds.
-    type DrawingBuildChart: ExtraSlot;
+    type DrawingBuildChart: UserDataSlot;
     /// What a `drawing::BuildDiagramWith` holds.
-    type DrawingBuildDiagram: ExtraSlot;
+    type DrawingBuildDiagram: UserDataSlot;
     /// What a `drawing::BulletSizeFollowsTextWith` holds.
-    type DrawingBulletSizeFollowsText: ExtraSlot;
+    type DrawingBulletSizeFollowsText: UserDataSlot;
     /// What a `drawing::BulletSizePercentageWith` holds.
-    type DrawingBulletSizePercentage: ExtraSlot;
+    type DrawingBulletSizePercentage: UserDataSlot;
     /// What a `drawing::BulletSizePointsWith` holds.
-    type DrawingBulletSizePoints: ExtraSlot;
+    type DrawingBulletSizePoints: UserDataSlot;
     /// What a `drawing::CameraWith` holds.
-    type DrawingCamera: ExtraSlot;
+    type DrawingCamera: UserDataSlot;
     /// What a `drawing::Cell3DWith` holds.
-    type DrawingCell3D: ExtraSlot;
+    type DrawingCell3D: UserDataSlot;
     /// What a `drawing::ChangeColorFromWith` holds.
-    type DrawingChangeColorFrom: ExtraSlot;
+    type DrawingChangeColorFrom: UserDataSlot;
     /// What a `drawing::ChangeColorToWith` holds.
-    type DrawingChangeColorTo: ExtraSlot;
+    type DrawingChangeColorTo: UserDataSlot;
     /// What a `drawing::CharacterBulletWith` holds.
-    type DrawingCharacterBullet: ExtraSlot;
+    type DrawingCharacterBullet: UserDataSlot;
     /// What a `drawing::ChartToAnimateWith` holds.
-    type DrawingChartToAnimate: ExtraSlot;
+    type DrawingChartToAnimate: UserDataSlot;
     /// What a `drawing::ChildExtentsWith` holds.
-    type DrawingChildExtents: ExtraSlot;
+    type DrawingChildExtents: UserDataSlot;
     /// What a `drawing::ChildOffsetWith` holds.
-    type DrawingChildOffset: ExtraSlot;
+    type DrawingChildOffset: UserDataSlot;
     /// What a `drawing::ClickHyperlinkWith` holds.
-    type DrawingClickHyperlink: ExtraSlot;
+    type DrawingClickHyperlink: UserDataSlot;
     /// What a `drawing::CloseShapePathWith` holds.
-    type DrawingCloseShapePath: ExtraSlot;
+    type DrawingCloseShapePath: UserDataSlot;
     /// What a `drawing::ColorChangeEffectWith` holds.
-    type DrawingColorChangeEffect: ExtraSlot;
+    type DrawingColorChangeEffect: UserDataSlot;
     /// What a `drawing::ColorMapWith` holds.
-    type DrawingColorMap: ExtraSlot;
+    type DrawingColorMap: UserDataSlot;
     /// What a `drawing::ColorSchemeWith` holds.
-    type DrawingColorScheme: ExtraSlot;
+    type DrawingColorScheme: UserDataSlot;
     /// What a `drawing::ColorSpecifiedWith` holds.
-    type DrawingColorSpecified: ExtraSlot;
+    type DrawingColorSpecified: UserDataSlot;
     /// What a `drawing::ComplementWith` holds.
-    type DrawingComplement: ExtraSlot;
+    type DrawingComplement: UserDataSlot;
     /// What a `drawing::ComplexScriptFontWith` holds.
-    type DrawingComplexScriptFont: ExtraSlot;
+    type DrawingComplexScriptFont: UserDataSlot;
     /// What a `drawing::ConnectionEndWith` holds.
-    type DrawingConnectionEnd: ExtraSlot;
+    type DrawingConnectionEnd: UserDataSlot;
     /// What a `drawing::ConnectionShapeWith` holds.
-    type DrawingConnectionShape: ExtraSlot;
+    type DrawingConnectionShape: UserDataSlot;
     /// What a `drawing::ConnectionShapeLocksWith` holds.
-    type DrawingConnectionShapeLocks: ExtraSlot;
+    type DrawingConnectionShapeLocks: UserDataSlot;
     /// What a `drawing::ConnectionStartWith` holds.
-    type DrawingConnectionStart: ExtraSlot;
+    type DrawingConnectionStart: UserDataSlot;
     /// What a `drawing::ContentPartLocksWith` holds.
-    type DrawingContentPartLocks: ExtraSlot;
+    type DrawingContentPartLocks: UserDataSlot;
     /// What a `drawing::ContourColorWith` holds.
-    type DrawingContourColor: ExtraSlot;
+    type DrawingContourColor: UserDataSlot;
     /// What a `drawing::CustomColorWith` holds.
-    type DrawingCustomColor: ExtraSlot;
+    type DrawingCustomColor: UserDataSlot;
     /// What a `drawing::CustomColorListWith` holds.
-    type DrawingCustomColorList: ExtraSlot;
+    type DrawingCustomColorList: UserDataSlot;
     /// What a `drawing::CustomDashWith` holds.
-    type DrawingCustomDash: ExtraSlot;
+    type DrawingCustomDash: UserDataSlot;
     /// What a `drawing::CustomGeometryWith` holds.
-    type DrawingCustomGeometry: ExtraSlot;
+    type DrawingCustomGeometry: UserDataSlot;
     /// What a `drawing::Dark1With` holds.
-    type DrawingDark1: ExtraSlot;
+    type DrawingDark1: UserDataSlot;
     /// What a `drawing::Dark2With` holds.
-    type DrawingDark2: ExtraSlot;
+    type DrawingDark2: UserDataSlot;
     /// What a `drawing::DashStopWith` holds.
-    type DrawingDashStop: ExtraSlot;
+    type DrawingDashStop: UserDataSlot;
     /// What a `drawing::DefaultParagraphStyleWith` holds.
-    type DrawingDefaultParagraphStyle: ExtraSlot;
+    type DrawingDefaultParagraphStyle: UserDataSlot;
     /// What a `drawing::DefaultTextRunPropertiesWith` holds.
-    type DrawingDefaultTextRunProperties: ExtraSlot;
+    type DrawingDefaultTextRunProperties: UserDataSlot;
     /// What a `drawing::DiagramToAnimateWith` holds.
-    type DrawingDiagramToAnimate: ExtraSlot;
+    type DrawingDiagramToAnimate: UserDataSlot;
     /// What a `drawing::DrawArcToWith` holds.
-    type DrawingDrawArcTo: ExtraSlot;
+    type DrawingDrawArcTo: UserDataSlot;
     /// What a `drawing::DrawCubicBezierCurveToWith` holds.
-    type DrawingDrawCubicBezierCurveTo: ExtraSlot;
+    type DrawingDrawCubicBezierCurveTo: UserDataSlot;
     /// What a `drawing::DrawLineToWith` holds.
-    type DrawingDrawLineTo: ExtraSlot;
+    type DrawingDrawLineTo: UserDataSlot;
     /// What a `drawing::DrawQuadraticBezierCurveToWith` holds.
-    type DrawingDrawQuadraticBezierCurveTo: ExtraSlot;
+    type DrawingDrawQuadraticBezierCurveTo: UserDataSlot;
     /// What a `drawing::DuotoneEffectWith` holds.
-    type DrawingDuotoneEffect: ExtraSlot;
+    type DrawingDuotoneEffect: UserDataSlot;
     /// What a `drawing::EastAsianFontWith` holds.
-    type DrawingEastAsianFont: ExtraSlot;
+    type DrawingEastAsianFont: UserDataSlot;
     /// What a `drawing::EffectWith` holds.
-    type DrawingEffect: ExtraSlot;
+    type DrawingEffect: UserDataSlot;
     /// What a `drawing::EffectContainerContWith` holds.
-    type DrawingEffectContainerCont: ExtraSlot;
+    type DrawingEffectContainerCont: UserDataSlot;
     /// What a `drawing::EffectContainerEffectDagWith` holds.
-    type DrawingEffectContainerEffectDag: ExtraSlot;
+    type DrawingEffectContainerEffectDag: UserDataSlot;
     /// What a `drawing::EffectContainerEffectLstWith` holds.
-    type DrawingEffectContainerEffectLst: ExtraSlot;
+    type DrawingEffectContainerEffectLst: UserDataSlot;
     /// What a `drawing::EffectEffectReferenceWith` holds.
-    type DrawingEffectEffectReference: ExtraSlot;
+    type DrawingEffectEffectReference: UserDataSlot;
     /// What a `drawing::EffectReferenceWith` holds.
-    type DrawingEffectReference: ExtraSlot;
+    type DrawingEffectReference: UserDataSlot;
     /// What a `drawing::EffectStyleWith` holds.
-    type DrawingEffectStyle: ExtraSlot;
+    type DrawingEffectStyle: UserDataSlot;
     /// What a `drawing::EffectStyleListWith` holds.
-    type DrawingEffectStyleList: ExtraSlot;
+    type DrawingEffectStyleList: UserDataSlot;
     /// What a `drawing::EndParagraphRunPropertiesWith` holds.
-    type DrawingEndParagraphRunProperties: ExtraSlot;
+    type DrawingEndParagraphRunProperties: UserDataSlot;
     /// What a `drawing::ExtensionWith` holds.
-    type DrawingExtension: ExtraSlot;
+    type DrawingExtension: UserDataSlot;
     /// What a `drawing::ExtensionListWith` holds.
-    type DrawingExtensionList: ExtraSlot;
+    type DrawingExtensionList: UserDataSlot;
     /// What a `drawing::ExtentsWith` holds.
-    type DrawingExtents: ExtraSlot;
+    type DrawingExtents: UserDataSlot;
     /// What a `drawing::ExtraColorSchemeWith` holds.
-    type DrawingExtraColorScheme: ExtraSlot;
+    type DrawingExtraColorScheme: UserDataSlot;
     /// What a `drawing::ExtraColorSchemeListWith` holds.
-    type DrawingExtraColorSchemeList: ExtraSlot;
+    type DrawingExtraColorSchemeList: UserDataSlot;
     /// What a `drawing::ExtrusionColorWith` holds.
-    type DrawingExtrusionColor: ExtraSlot;
+    type DrawingExtrusionColor: UserDataSlot;
     /// What a `drawing::FillWith` holds.
-    type DrawingFill: ExtraSlot;
+    type DrawingFill: UserDataSlot;
     /// What a `drawing::FillFillEffectWith` holds.
-    type DrawingFillFillEffect: ExtraSlot;
+    type DrawingFillFillEffect: UserDataSlot;
     /// What a `drawing::FillOverlayEffectWith` holds.
-    type DrawingFillOverlayEffect: ExtraSlot;
+    type DrawingFillOverlayEffect: UserDataSlot;
     /// What a `drawing::FillRectangleWith` holds.
-    type DrawingFillRectangle: ExtraSlot;
+    type DrawingFillRectangle: UserDataSlot;
     /// What a `drawing::FillReferenceWith` holds.
-    type DrawingFillReference: ExtraSlot;
+    type DrawingFillReference: UserDataSlot;
     /// What a `drawing::FillStyleListWith` holds.
-    type DrawingFillStyleList: ExtraSlot;
+    type DrawingFillStyleList: UserDataSlot;
     /// What a `drawing::FillToRectangleWith` holds.
-    type DrawingFillToRectangle: ExtraSlot;
+    type DrawingFillToRectangle: UserDataSlot;
     /// What a `drawing::FirstColumnWith` holds.
-    type DrawingFirstColumn: ExtraSlot;
+    type DrawingFirstColumn: UserDataSlot;
     /// What a `drawing::FirstRowWith` holds.
-    type DrawingFirstRow: ExtraSlot;
+    type DrawingFirstRow: UserDataSlot;
     /// What a `drawing::FollowTextBuClrTxWith` holds.
-    type DrawingFollowTextBuClrTx: ExtraSlot;
+    type DrawingFollowTextBuClrTx: UserDataSlot;
     /// What a `drawing::FollowTextBuFontTxWith` holds.
-    type DrawingFollowTextBuFontTx: ExtraSlot;
+    type DrawingFollowTextBuFontTx: UserDataSlot;
     /// What a `drawing::FollowedHyperlinkWith` holds.
-    type DrawingFollowedHyperlink: ExtraSlot;
+    type DrawingFollowedHyperlink: UserDataSlot;
     /// What a `drawing::FontWith` holds.
-    type DrawingFont: ExtraSlot;
+    type DrawingFont: UserDataSlot;
     /// What a `drawing::FontFontCollectionWith` holds.
-    type DrawingFontFontCollection: ExtraSlot;
+    type DrawingFontFontCollection: UserDataSlot;
     /// What a `drawing::FontReferenceWith` holds.
-    type DrawingFontReference: ExtraSlot;
+    type DrawingFontReference: UserDataSlot;
     /// What a `drawing::FontSchemeWith` holds.
-    type DrawingFontScheme: ExtraSlot;
+    type DrawingFontScheme: UserDataSlot;
     /// What a `drawing::ForegroundColorWith` holds.
-    type DrawingForegroundColor: ExtraSlot;
+    type DrawingForegroundColor: UserDataSlot;
     /// What a `drawing::FormatSchemeWith` holds.
-    type DrawingFormatScheme: ExtraSlot;
+    type DrawingFormatScheme: UserDataSlot;
     /// What a `drawing::GammaWith` holds.
-    type DrawingGamma: ExtraSlot;
+    type DrawingGamma: UserDataSlot;
     /// What a `drawing::GlowEffectWith` holds.
-    type DrawingGlowEffect: ExtraSlot;
+    type DrawingGlowEffect: UserDataSlot;
     /// What a `drawing::GradientFillWith` holds.
-    type DrawingGradientFill: ExtraSlot;
+    type DrawingGradientFill: UserDataSlot;
     /// What a `drawing::GradientStopListWith` holds.
-    type DrawingGradientStopList: ExtraSlot;
+    type DrawingGradientStopList: UserDataSlot;
     /// What a `drawing::GradientStopsWith` holds.
-    type DrawingGradientStops: ExtraSlot;
+    type DrawingGradientStops: UserDataSlot;
     /// What a `drawing::GraphicFrameWith` holds.
-    type DrawingGraphicFrame: ExtraSlot;
+    type DrawingGraphicFrame: UserDataSlot;
     /// What a `drawing::GraphicFrameLocksWith` holds.
-    type DrawingGraphicFrameLocks: ExtraSlot;
+    type DrawingGraphicFrameLocks: UserDataSlot;
     /// What a `drawing::GraphicObjectWith` holds.
-    type DrawingGraphicObject: ExtraSlot;
+    type DrawingGraphicObject: UserDataSlot;
     /// What a `drawing::GraphicObjectDataWith` holds.
-    type DrawingGraphicObjectData: ExtraSlot;
+    type DrawingGraphicObjectData: UserDataSlot;
     /// What a `drawing::GrayWith` holds.
-    type DrawingGray: ExtraSlot;
+    type DrawingGray: UserDataSlot;
     /// What a `drawing::GrayScaleEffectWith` holds.
-    type DrawingGrayScaleEffect: ExtraSlot;
+    type DrawingGrayScaleEffect: UserDataSlot;
     /// What a `drawing::GreenWith` holds.
-    type DrawingGreen: ExtraSlot;
+    type DrawingGreen: UserDataSlot;
     /// What a `drawing::GreenModulationWith` holds.
-    type DrawingGreenModulation: ExtraSlot;
+    type DrawingGreenModulation: UserDataSlot;
     /// What a `drawing::GreenOffsetWith` holds.
-    type DrawingGreenOffset: ExtraSlot;
+    type DrawingGreenOffset: UserDataSlot;
     /// What a `drawing::GroupFillWith` holds.
-    type DrawingGroupFill: ExtraSlot;
+    type DrawingGroupFill: UserDataSlot;
     /// What a `drawing::GroupShapeWith` holds.
-    type DrawingGroupShape: ExtraSlot;
+    type DrawingGroupShape: UserDataSlot;
     /// What a `drawing::GroupShapeLocksWith` holds.
-    type DrawingGroupShapeLocks: ExtraSlot;
+    type DrawingGroupShapeLocks: UserDataSlot;
     /// What a `drawing::HeaderCellReferenceWith` holds.
-    type DrawingHeaderCellReference: ExtraSlot;
+    type DrawingHeaderCellReference: UserDataSlot;
     /// What a `drawing::HeaderCellsAssociatedWithTableCellWith` holds.
-    type DrawingHeaderCellsAssociatedWithTableCell: ExtraSlot;
+    type DrawingHeaderCellsAssociatedWithTableCell: UserDataSlot;
     /// What a `drawing::HighlightColorWith` holds.
-    type DrawingHighlightColor: ExtraSlot;
+    type DrawingHighlightColor: UserDataSlot;
     /// What a `drawing::HorizontalRatioWith` holds.
-    type DrawingHorizontalRatio: ExtraSlot;
+    type DrawingHorizontalRatio: UserDataSlot;
     /// What a `drawing::HueWith` holds.
-    type DrawingHue: ExtraSlot;
+    type DrawingHue: UserDataSlot;
     /// What a `drawing::HueModulateWith` holds.
-    type DrawingHueModulate: ExtraSlot;
+    type DrawingHueModulate: UserDataSlot;
     /// What a `drawing::HueOffsetWith` holds.
-    type DrawingHueOffset: ExtraSlot;
+    type DrawingHueOffset: UserDataSlot;
     /// What a `drawing::HueSaturationLuminanceColorModelWith` holds.
-    type DrawingHueSaturationLuminanceColorModel: ExtraSlot;
+    type DrawingHueSaturationLuminanceColorModel: UserDataSlot;
     /// What a `drawing::HueSaturationLuminanceEffectWith` holds.
-    type DrawingHueSaturationLuminanceEffect: ExtraSlot;
+    type DrawingHueSaturationLuminanceEffect: UserDataSlot;
     /// What a `drawing::HyperlinkWith` holds.
-    type DrawingHyperlink: ExtraSlot;
+    type DrawingHyperlink: UserDataSlot;
     /// What a `drawing::HyperlinkForHoverWith` holds.
-    type DrawingHyperlinkForHover: ExtraSlot;
+    type DrawingHyperlinkForHover: UserDataSlot;
     /// What a `drawing::HyperlinkSoundWith` holds.
-    type DrawingHyperlinkSound: ExtraSlot;
+    type DrawingHyperlinkSound: UserDataSlot;
     /// What a `drawing::InnerShadowEffectWith` holds.
-    type DrawingInnerShadowEffect: ExtraSlot;
+    type DrawingInnerShadowEffect: UserDataSlot;
     /// What a `drawing::InsideHorizontalBorderWith` holds.
-    type DrawingInsideHorizontalBorder: ExtraSlot;
+    type DrawingInsideHorizontalBorder: UserDataSlot;
     /// What a `drawing::InsideVerticalBorderWith` holds.
-    type DrawingInsideVerticalBorder: ExtraSlot;
+    type DrawingInsideVerticalBorder: UserDataSlot;
     /// What a `drawing::InverseWith` holds.
-    type DrawingInverse: ExtraSlot;
+    type DrawingInverse: UserDataSlot;
     /// What a `drawing::InverseGammaWith` holds.
-    type DrawingInverseGamma: ExtraSlot;
+    type DrawingInverseGamma: UserDataSlot;
     /// What a `drawing::LastColumnWith` holds.
-    type DrawingLastColumn: ExtraSlot;
+    type DrawingLastColumn: UserDataSlot;
     /// What a `drawing::LastRowWith` holds.
-    type DrawingLastRow: ExtraSlot;
+    type DrawingLastRow: UserDataSlot;
     /// What a `drawing::LatinFontWith` holds.
-    type DrawingLatinFont: ExtraSlot;
+    type DrawingLatinFont: UserDataSlot;
     /// What a `drawing::LeftBorderWith` holds.
-    type DrawingLeftBorder: ExtraSlot;
+    type DrawingLeftBorder: UserDataSlot;
     /// What a `drawing::LeftBorderLinePropertiesWith` holds.
-    type DrawingLeftBorderLineProperties: ExtraSlot;
+    type DrawingLeftBorderLineProperties: UserDataSlot;
     /// What a `drawing::Light1With` holds.
-    type DrawingLight1: ExtraSlot;
+    type DrawingLight1: UserDataSlot;
     /// What a `drawing::Light2With` holds.
-    type DrawingLight2: ExtraSlot;
+    type DrawingLight2: UserDataSlot;
     /// What a `drawing::LightRigWith` holds.
-    type DrawingLightRig: ExtraSlot;
+    type DrawingLightRig: UserDataSlot;
     /// What a `drawing::LineDefaultWith` holds.
-    type DrawingLineDefault: ExtraSlot;
+    type DrawingLineDefault: UserDataSlot;
     /// What a `drawing::LineHeadEndStyleWith` holds.
-    type DrawingLineHeadEndStyle: ExtraSlot;
+    type DrawingLineHeadEndStyle: UserDataSlot;
     /// What a `drawing::LineJoinBevelWith` holds.
-    type DrawingLineJoinBevel: ExtraSlot;
+    type DrawingLineJoinBevel: UserDataSlot;
     /// What a `drawing::LineReferenceWith` holds.
-    type DrawingLineReference: ExtraSlot;
+    type DrawingLineReference: UserDataSlot;
     /// What a `drawing::LineSpacingWith` holds.
-    type DrawingLineSpacing: ExtraSlot;
+    type DrawingLineSpacing: UserDataSlot;
     /// What a `drawing::LineStyleListWith` holds.
-    type DrawingLineStyleList: ExtraSlot;
+    type DrawingLineStyleList: UserDataSlot;
     /// What a `drawing::LinearGradientFillWith` holds.
-    type DrawingLinearGradientFill: ExtraSlot;
+    type DrawingLinearGradientFill: UserDataSlot;
     /// What a `drawing::ListLevel1TextStyleWith` holds.
-    type DrawingListLevel1TextStyle: ExtraSlot;
+    type DrawingListLevel1TextStyle: UserDataSlot;
     /// What a `drawing::ListLevel2TextStyleWith` holds.
-    type DrawingListLevel2TextStyle: ExtraSlot;
+    type DrawingListLevel2TextStyle: UserDataSlot;
     /// What a `drawing::ListLevel3TextStyleWith` holds.
-    type DrawingListLevel3TextStyle: ExtraSlot;
+    type DrawingListLevel3TextStyle: UserDataSlot;
     /// What a `drawing::ListLevel4TextStyleWith` holds.
-    type DrawingListLevel4TextStyle: ExtraSlot;
+    type DrawingListLevel4TextStyle: UserDataSlot;
     /// What a `drawing::ListLevel5TextStyleWith` holds.
-    type DrawingListLevel5TextStyle: ExtraSlot;
+    type DrawingListLevel5TextStyle: UserDataSlot;
     /// What a `drawing::ListLevel6TextStyleWith` holds.
-    type DrawingListLevel6TextStyle: ExtraSlot;
+    type DrawingListLevel6TextStyle: UserDataSlot;
     /// What a `drawing::ListLevel7TextStyleWith` holds.
-    type DrawingListLevel7TextStyle: ExtraSlot;
+    type DrawingListLevel7TextStyle: UserDataSlot;
     /// What a `drawing::ListLevel8TextStyleWith` holds.
-    type DrawingListLevel8TextStyle: ExtraSlot;
+    type DrawingListLevel8TextStyle: UserDataSlot;
     /// What a `drawing::ListLevel9TextStyleWith` holds.
-    type DrawingListLevel9TextStyle: ExtraSlot;
+    type DrawingListLevel9TextStyle: UserDataSlot;
     /// What a `drawing::ListOfShapeAdjustHandlesWith` holds.
-    type DrawingListOfShapeAdjustHandles: ExtraSlot;
+    type DrawingListOfShapeAdjustHandles: UserDataSlot;
     /// What a `drawing::ListOfShapeAdjustValuesWith` holds.
-    type DrawingListOfShapeAdjustValues: ExtraSlot;
+    type DrawingListOfShapeAdjustValues: UserDataSlot;
     /// What a `drawing::ListOfShapeConnectionSitesWith` holds.
-    type DrawingListOfShapeConnectionSites: ExtraSlot;
+    type DrawingListOfShapeConnectionSites: UserDataSlot;
     /// What a `drawing::ListOfShapeGuidesWith` holds.
-    type DrawingListOfShapeGuides: ExtraSlot;
+    type DrawingListOfShapeGuides: UserDataSlot;
     /// What a `drawing::ListOfShapePathsWith` holds.
-    type DrawingListOfShapePaths: ExtraSlot;
+    type DrawingListOfShapePaths: UserDataSlot;
     /// What a `drawing::LuminanceWith` holds.
-    type DrawingLuminance: ExtraSlot;
+    type DrawingLuminance: UserDataSlot;
     /// What a `drawing::LuminanceEffectWith` holds.
-    type DrawingLuminanceEffect: ExtraSlot;
+    type DrawingLuminanceEffect: UserDataSlot;
     /// What a `drawing::LuminanceModulationWith` holds.
-    type DrawingLuminanceModulation: ExtraSlot;
+    type DrawingLuminanceModulation: UserDataSlot;
     /// What a `drawing::LuminanceOffsetWith` holds.
-    type DrawingLuminanceOffset: ExtraSlot;
+    type DrawingLuminanceOffset: UserDataSlot;
     /// What a `drawing::MajorFontWith` holds.
-    type DrawingMajorFont: ExtraSlot;
+    type DrawingMajorFont: UserDataSlot;
     /// What a `drawing::MasterColorMappingWith` holds.
-    type DrawingMasterColorMapping: ExtraSlot;
+    type DrawingMasterColorMapping: UserDataSlot;
     /// What a `drawing::MinorFontsWith` holds.
-    type DrawingMinorFonts: ExtraSlot;
+    type DrawingMinorFonts: UserDataSlot;
     /// What a `drawing::MiterLineJoinWith` holds.
-    type DrawingMiterLineJoin: ExtraSlot;
+    type DrawingMiterLineJoin: UserDataSlot;
     /// What a `drawing::MouseOverHyperlinkWith` holds.
-    type DrawingMouseOverHyperlink: ExtraSlot;
+    type DrawingMouseOverHyperlink: UserDataSlot;
     /// What a `drawing::MovePathToWith` holds.
-    type DrawingMovePathTo: ExtraSlot;
+    type DrawingMovePathTo: UserDataSlot;
     /// What a `drawing::NoAutoFitWith` holds.
-    type DrawingNoAutoFit: ExtraSlot;
+    type DrawingNoAutoFit: UserDataSlot;
     /// What a `drawing::NoBulletWith` holds.
-    type DrawingNoBullet: ExtraSlot;
+    type DrawingNoBullet: UserDataSlot;
     /// What a `drawing::NoFillWith` holds.
-    type DrawingNoFill: ExtraSlot;
+    type DrawingNoFill: UserDataSlot;
     /// What a `drawing::NoTextIn3DSceneWith` holds.
-    type DrawingNoTextIn3DScene: ExtraSlot;
+    type DrawingNoTextIn3DScene: UserDataSlot;
     /// What a `drawing::NonVisualConnectorShapeDrawingPropertiesWith` holds.
-    type DrawingNonVisualConnectorShapeDrawingProperties: ExtraSlot;
+    type DrawingNonVisualConnectorShapeDrawingProperties: UserDataSlot;
     /// What a `drawing::NonVisualDrawingPropertiesWith` holds.
-    type DrawingNonVisualDrawingProperties: ExtraSlot;
+    type DrawingNonVisualDrawingProperties: UserDataSlot;
     /// What a `drawing::NonVisualGraphicFrameDrawingPropertiesWith` holds.
-    type DrawingNonVisualGraphicFrameDrawingProperties: ExtraSlot;
+    type DrawingNonVisualGraphicFrameDrawingProperties: UserDataSlot;
     /// What a `drawing::NonVisualGroupShapeDrawingPropertiesWith` holds.
-    type DrawingNonVisualGroupShapeDrawingProperties: ExtraSlot;
+    type DrawingNonVisualGroupShapeDrawingProperties: UserDataSlot;
     /// What a `drawing::NonVisualPictureDrawingPropertiesWith` holds.
-    type DrawingNonVisualPictureDrawingProperties: ExtraSlot;
+    type DrawingNonVisualPictureDrawingProperties: UserDataSlot;
     /// What a `drawing::NonVisualPropertiesForAConnectionShapeWith` holds.
-    type DrawingNonVisualPropertiesForAConnectionShape: ExtraSlot;
+    type DrawingNonVisualPropertiesForAConnectionShape: UserDataSlot;
     /// What a `drawing::NonVisualPropertiesForAGraphicFrameWith` holds.
-    type DrawingNonVisualPropertiesForAGraphicFrame: ExtraSlot;
+    type DrawingNonVisualPropertiesForAGraphicFrame: UserDataSlot;
     /// What a `drawing::NonVisualPropertiesForAGroupShapeWith` holds.
-    type DrawingNonVisualPropertiesForAGroupShape: ExtraSlot;
+    type DrawingNonVisualPropertiesForAGroupShape: UserDataSlot;
     /// What a `drawing::NonVisualPropertiesForAPictureWith` holds.
-    type DrawingNonVisualPropertiesForAPicture: ExtraSlot;
+    type DrawingNonVisualPropertiesForAPicture: UserDataSlot;
     /// What a `drawing::NonVisualPropertiesForAShapeWith` holds.
-    type DrawingNonVisualPropertiesForAShape: ExtraSlot;
+    type DrawingNonVisualPropertiesForAShape: UserDataSlot;
     /// What a `drawing::NonVisualShapeDrawingPropertiesWith` holds.
-    type DrawingNonVisualShapeDrawingProperties: ExtraSlot;
+    type DrawingNonVisualShapeDrawingProperties: UserDataSlot;
     /// What a `drawing::NormalWith` holds.
-    type DrawingNormal: ExtraSlot;
+    type DrawingNormal: UserDataSlot;
     /// What a `drawing::NormalAutoFitWith` holds.
-    type DrawingNormalAutoFit: ExtraSlot;
+    type DrawingNormalAutoFit: UserDataSlot;
     /// What a `drawing::NortheastCellWith` holds.
-    type DrawingNortheastCell: ExtraSlot;
+    type DrawingNortheastCell: UserDataSlot;
     /// What a `drawing::NorthwestCellWith` holds.
-    type DrawingNorthwestCell: ExtraSlot;
+    type DrawingNorthwestCell: UserDataSlot;
     /// What a `drawing::ObjectDefaultsWith` holds.
-    type DrawingObjectDefaults: ExtraSlot;
+    type DrawingObjectDefaults: UserDataSlot;
     /// What a `drawing::OffsetWith` holds.
-    type DrawingOffset: ExtraSlot;
+    type DrawingOffset: UserDataSlot;
     /// What a `drawing::OuterShadowEffectWith` holds.
-    type DrawingOuterShadowEffect: ExtraSlot;
+    type DrawingOuterShadowEffect: UserDataSlot;
     /// What a `drawing::OutlineWith` holds.
-    type DrawingOutline: ExtraSlot;
+    type DrawingOutline: UserDataSlot;
     /// What a `drawing::OverrideColorMappingWith` holds.
-    type DrawingOverrideColorMapping: ExtraSlot;
+    type DrawingOverrideColorMapping: UserDataSlot;
     /// What a `drawing::PathGradientWith` holds.
-    type DrawingPathGradient: ExtraSlot;
+    type DrawingPathGradient: UserDataSlot;
     /// What a `drawing::PatternFillWith` holds.
-    type DrawingPatternFill: ExtraSlot;
+    type DrawingPatternFill: UserDataSlot;
     /// What a `drawing::PictureWith` holds.
-    type DrawingPicture: ExtraSlot;
+    type DrawingPicture: UserDataSlot;
     /// What a `drawing::PictureBulletWith` holds.
-    type DrawingPictureBullet: ExtraSlot;
+    type DrawingPictureBullet: UserDataSlot;
     /// What a `drawing::PictureFillWith` holds.
-    type DrawingPictureFill: ExtraSlot;
+    type DrawingPictureFill: UserDataSlot;
     /// What a `drawing::PictureLocksWith` holds.
-    type DrawingPictureLocks: ExtraSlot;
+    type DrawingPictureLocks: UserDataSlot;
     /// What a `drawing::PolarAdjustHandleWith` holds.
-    type DrawingPolarAdjustHandle: ExtraSlot;
+    type DrawingPolarAdjustHandle: UserDataSlot;
     /// What a `drawing::PresetColorWith` holds.
-    type DrawingPresetColor: ExtraSlot;
+    type DrawingPresetColor: UserDataSlot;
     /// What a `drawing::PresetDashWith` holds.
-    type DrawingPresetDash: ExtraSlot;
+    type DrawingPresetDash: UserDataSlot;
     /// What a `drawing::PresetGeometryWith` holds.
-    type DrawingPresetGeometry: ExtraSlot;
+    type DrawingPresetGeometry: UserDataSlot;
     /// What a `drawing::PresetShadowWith` holds.
-    type DrawingPresetShadow: ExtraSlot;
+    type DrawingPresetShadow: UserDataSlot;
     /// What a `drawing::PresetTextWarpWith` holds.
-    type DrawingPresetTextWarp: ExtraSlot;
+    type DrawingPresetTextWarp: UserDataSlot;
     /// What a `drawing::QuickTimeFromFileWith` holds.
-    type DrawingQuickTimeFromFile: ExtraSlot;
+    type DrawingQuickTimeFromFile: UserDataSlot;
     /// What a `drawing::RGBColorModelHexVariantWith` holds.
-    type DrawingRGBColorModelHexVariant: ExtraSlot;
+    type DrawingRGBColorModelHexVariant: UserDataSlot;
     /// What a `drawing::RGBColorModelPercentageVariantWith` holds.
-    type DrawingRGBColorModelPercentageVariant: ExtraSlot;
+    type DrawingRGBColorModelPercentageVariant: UserDataSlot;
     /// What a `drawing::RedWith` holds.
-    type DrawingRed: ExtraSlot;
+    type DrawingRed: UserDataSlot;
     /// What a `drawing::RedModulationWith` holds.
-    type DrawingRedModulation: ExtraSlot;
+    type DrawingRedModulation: UserDataSlot;
     /// What a `drawing::RedOffsetWith` holds.
-    type DrawingRedOffset: ExtraSlot;
+    type DrawingRedOffset: UserDataSlot;
     /// What a `drawing::ReflectionEffectWith` holds.
-    type DrawingReflectionEffect: ExtraSlot;
+    type DrawingReflectionEffect: UserDataSlot;
     /// What a `drawing::RelativeOffsetEffectWith` holds.
-    type DrawingRelativeOffsetEffect: ExtraSlot;
+    type DrawingRelativeOffsetEffect: UserDataSlot;
     /// What a `drawing::RightBorderWith` holds.
-    type DrawingRightBorder: ExtraSlot;
+    type DrawingRightBorder: UserDataSlot;
     /// What a `drawing::RightBorderLinePropertiesWith` holds.
-    type DrawingRightBorderLineProperties: ExtraSlot;
+    type DrawingRightBorderLineProperties: UserDataSlot;
     /// What a `drawing::RightToLeftRunWith` holds.
-    type DrawingRightToLeftRun: ExtraSlot;
+    type DrawingRightToLeftRun: UserDataSlot;
     /// What a `drawing::RotationWith` holds.
-    type DrawingRotation: ExtraSlot;
+    type DrawingRotation: UserDataSlot;
     /// What a `drawing::RoundLineJoinWith` holds.
-    type DrawingRoundLineJoin: ExtraSlot;
+    type DrawingRoundLineJoin: UserDataSlot;
     /// What a `drawing::SaturationWith` holds.
-    type DrawingSaturation: ExtraSlot;
+    type DrawingSaturation: UserDataSlot;
     /// What a `drawing::SaturationModulationWith` holds.
-    type DrawingSaturationModulation: ExtraSlot;
+    type DrawingSaturationModulation: UserDataSlot;
     /// What a `drawing::SaturationOffsetWith` holds.
-    type DrawingSaturationOffset: ExtraSlot;
+    type DrawingSaturationOffset: UserDataSlot;
     /// What a `drawing::Scene3dWith` holds.
-    type DrawingScene3d: ExtraSlot;
+    type DrawingScene3d: UserDataSlot;
     /// What a `drawing::SchemeColorWith` holds.
-    type DrawingSchemeColor: ExtraSlot;
+    type DrawingSchemeColor: UserDataSlot;
     /// What a `drawing::ShadeWith` holds.
-    type DrawingShade: ExtraSlot;
+    type DrawingShade: UserDataSlot;
     /// What a `drawing::ShapeWith` holds.
-    type DrawingShape: ExtraSlot;
+    type DrawingShape: UserDataSlot;
     /// What a `drawing::ShapeAutoFitWith` holds.
-    type DrawingShapeAutoFit: ExtraSlot;
+    type DrawingShapeAutoFit: UserDataSlot;
     /// What a `drawing::ShapeConnectionSiteWith` holds.
-    type DrawingShapeConnectionSite: ExtraSlot;
+    type DrawingShapeConnectionSite: UserDataSlot;
     /// What a `drawing::ShapeDefaultWith` holds.
-    type DrawingShapeDefault: ExtraSlot;
+    type DrawingShapeDefault: UserDataSlot;
     /// What a `drawing::ShapeGuideWith` holds.
-    type DrawingShapeGuide: ExtraSlot;
+    type DrawingShapeGuide: UserDataSlot;
     /// What a `drawing::ShapeLocksWith` holds.
-    type DrawingShapeLocks: ExtraSlot;
+    type DrawingShapeLocks: UserDataSlot;
     /// What a `drawing::ShapePathWith` holds.
-    type DrawingShapePath: ExtraSlot;
+    type DrawingShapePath: UserDataSlot;
     /// What a `drawing::ShapePathPointWith` holds.
-    type DrawingShapePathPoint: ExtraSlot;
+    type DrawingShapePathPoint: UserDataSlot;
     /// What a `drawing::ShapePositionCoordinateWith` holds.
-    type DrawingShapePositionCoordinate: ExtraSlot;
+    type DrawingShapePositionCoordinate: UserDataSlot;
     /// What a `drawing::ShapePropertiesWith` holds.
-    type DrawingShapeProperties: ExtraSlot;
+    type DrawingShapeProperties: UserDataSlot;
     /// What a `drawing::ShapeStyleWith` holds.
-    type DrawingShapeStyle: ExtraSlot;
+    type DrawingShapeStyle: UserDataSlot;
     /// What a `drawing::ShapeTextBodyWith` holds.
-    type DrawingShapeTextBody: ExtraSlot;
+    type DrawingShapeTextBody: UserDataSlot;
     /// What a `drawing::ShapeTextRectangleWith` holds.
-    type DrawingShapeTextRectangle: ExtraSlot;
+    type DrawingShapeTextRectangle: UserDataSlot;
     /// What a `drawing::SoftEdgeEffectWith` holds.
-    type DrawingSoftEdgeEffect: ExtraSlot;
+    type DrawingSoftEdgeEffect: UserDataSlot;
     /// What a `drawing::SolidColorReplacementWith` holds.
-    type DrawingSolidColorReplacement: ExtraSlot;
+    type DrawingSolidColorReplacement: UserDataSlot;
     /// What a `drawing::SolidFillWith` holds.
-    type DrawingSolidFill: ExtraSlot;
+    type DrawingSolidFill: UserDataSlot;
     /// What a `drawing::SourceRectangleWith` holds.
-    type DrawingSourceRectangle: ExtraSlot;
+    type DrawingSourceRectangle: UserDataSlot;
     /// What a `drawing::SoutheastCellWith` holds.
-    type DrawingSoutheastCell: ExtraSlot;
+    type DrawingSoutheastCell: UserDataSlot;
     /// What a `drawing::SouthwestCellWith` holds.
-    type DrawingSouthwestCell: ExtraSlot;
+    type DrawingSouthwestCell: UserDataSlot;
     /// What a `drawing::SpaceAfterWith` holds.
-    type DrawingSpaceAfter: ExtraSlot;
+    type DrawingSpaceAfter: UserDataSlot;
     /// What a `drawing::SpaceBeforeWith` holds.
-    type DrawingSpaceBefore: ExtraSlot;
+    type DrawingSpaceBefore: UserDataSlot;
     /// What a `drawing::SpacingPercentWith` holds.
-    type DrawingSpacingPercent: ExtraSlot;
+    type DrawingSpacingPercent: UserDataSlot;
     /// What a `drawing::SpacingPointsWith` holds.
-    type DrawingSpacingPoints: ExtraSlot;
+    type DrawingSpacingPoints: UserDataSlot;
     /// What a `drawing::SpecifiedWith` holds.
-    type DrawingSpecified: ExtraSlot;
+    type DrawingSpecified: UserDataSlot;
     /// What a `drawing::StretchWith` holds.
-    type DrawingStretch: ExtraSlot;
+    type DrawingStretch: UserDataSlot;
     /// What a `drawing::SymbolFontWith` holds.
-    type DrawingSymbolFont: ExtraSlot;
+    type DrawingSymbolFont: UserDataSlot;
     /// What a `drawing::SystemColorWith` holds.
-    type DrawingSystemColor: ExtraSlot;
+    type DrawingSystemColor: UserDataSlot;
     /// What a `drawing::TabListWith` holds.
-    type DrawingTabList: ExtraSlot;
+    type DrawingTabList: UserDataSlot;
     /// What a `drawing::TabStopWith` holds.
-    type DrawingTabStop: ExtraSlot;
+    type DrawingTabStop: UserDataSlot;
     /// What a `drawing::TableWith` holds.
-    type DrawingTable: ExtraSlot;
+    type DrawingTable: UserDataSlot;
     /// What a `drawing::TableBackgroundWith` holds.
-    type DrawingTableBackground: ExtraSlot;
+    type DrawingTableBackground: UserDataSlot;
     /// What a `drawing::TableCellWith` holds.
-    type DrawingTableCell: ExtraSlot;
+    type DrawingTableCell: UserDataSlot;
     /// What a `drawing::TableCellBordersWith` holds.
-    type DrawingTableCellBorders: ExtraSlot;
+    type DrawingTableCellBorders: UserDataSlot;
     /// What a `drawing::TableCellPropertiesWith` holds.
-    type DrawingTableCellProperties: ExtraSlot;
+    type DrawingTableCellProperties: UserDataSlot;
     /// What a `drawing::TableCellStyleWith` holds.
-    type DrawingTableCellStyle: ExtraSlot;
+    type DrawingTableCellStyle: UserDataSlot;
     /// What a `drawing::TableCellTextStyleWith` holds.
-    type DrawingTableCellTextStyle: ExtraSlot;
+    type DrawingTableCellTextStyle: UserDataSlot;
     /// What a `drawing::TableGridWith` holds.
-    type DrawingTableGrid: ExtraSlot;
+    type DrawingTableGrid: UserDataSlot;
     /// What a `drawing::TableGridColumnWith` holds.
-    type DrawingTableGridColumn: ExtraSlot;
+    type DrawingTableGridColumn: UserDataSlot;
     /// What a `drawing::TablePropertiesWith` holds.
-    type DrawingTableProperties: ExtraSlot;
+    type DrawingTableProperties: UserDataSlot;
     /// What a `drawing::TableRowWith` holds.
-    type DrawingTableRow: ExtraSlot;
+    type DrawingTableRow: UserDataSlot;
     /// What a `drawing::TableStyleWith` holds.
-    type DrawingTableStyle: ExtraSlot;
+    type DrawingTableStyle: UserDataSlot;
     /// What a `drawing::TableStyleIDWith` holds.
-    type DrawingTableStyleID: ExtraSlot;
+    type DrawingTableStyleID: UserDataSlot;
     /// What a `drawing::TableStyleListWith` holds.
-    type DrawingTableStyleList: ExtraSlot;
+    type DrawingTableStyleList: UserDataSlot;
     /// What a `drawing::TableStyleTblStyleWith` holds.
-    type DrawingTableStyleTblStyle: ExtraSlot;
+    type DrawingTableStyleTblStyle: UserDataSlot;
     /// What a `drawing::TailLineEndStyleWith` holds.
-    type DrawingTailLineEndStyle: ExtraSlot;
+    type DrawingTailLineEndStyle: UserDataSlot;
     /// What a `drawing::TextDefaultWith` holds.
-    type DrawingTextDefault: ExtraSlot;
+    type DrawingTextDefault: UserDataSlot;
     /// What a `drawing::TextFieldWith` holds.
-    type DrawingTextField: ExtraSlot;
+    type DrawingTextField: UserDataSlot;
     /// What a `drawing::TextLineBreakWith` holds.
-    type DrawingTextLineBreak: ExtraSlot;
+    type DrawingTextLineBreak: UserDataSlot;
     /// What a `drawing::TextListStylesWith` holds.
-    type DrawingTextListStyles: ExtraSlot;
+    type DrawingTextListStyles: UserDataSlot;
     /// What a `drawing::TextParagraphPropertiesWith` holds.
-    type DrawingTextParagraphProperties: ExtraSlot;
+    type DrawingTextParagraphProperties: UserDataSlot;
     /// What a `drawing::TextParagraphsWith` holds.
-    type DrawingTextParagraphs: ExtraSlot;
+    type DrawingTextParagraphs: UserDataSlot;
     /// What a `drawing::TextRunWith` holds.
-    type DrawingTextRun: ExtraSlot;
+    type DrawingTextRun: UserDataSlot;
     /// What a `drawing::TextRunPropertiesWith` holds.
-    type DrawingTextRunProperties: ExtraSlot;
+    type DrawingTextRunProperties: UserDataSlot;
     /// What a `drawing::TextShapeWith` holds.
-    type DrawingTextShape: ExtraSlot;
+    type DrawingTextShape: UserDataSlot;
     /// What a `drawing::TextStringWith` holds.
-    type DrawingTextString: ExtraSlot;
+    type DrawingTextString: UserDataSlot;
     /// What a `drawing::ThemeWith` holds.
-    type DrawingTheme: ExtraSlot;
+    type DrawingTheme: UserDataSlot;
     /// What a `drawing::ThemeElementsWith` holds.
-    type DrawingThemeElements: ExtraSlot;
+    type DrawingThemeElements: UserDataSlot;
     /// What a `drawing::ThemeManagerWith` holds.
-    type DrawingThemeManager: ExtraSlot;
+    type DrawingThemeManager: UserDataSlot;
     /// What a `drawing::ThemeOverrideWith` holds.
-    type DrawingThemeOverride: ExtraSlot;
+    type DrawingThemeOverride: UserDataSlot;
     /// What a `drawing::TileWith` holds.
-    type DrawingTile: ExtraSlot;
+    type DrawingTile: UserDataSlot;
     /// What a `drawing::TileRectangleWith` holds.
-    type DrawingTileRectangle: ExtraSlot;
+    type DrawingTileRectangle: UserDataSlot;
     /// What a `drawing::TintWith` holds.
-    type DrawingTint: ExtraSlot;
+    type DrawingTint: UserDataSlot;
     /// What a `drawing::TintEffectWith` holds.
-    type DrawingTintEffect: ExtraSlot;
+    type DrawingTintEffect: UserDataSlot;
     /// What a `drawing::TopBevelWith` holds.
-    type DrawingTopBevel: ExtraSlot;
+    type DrawingTopBevel: UserDataSlot;
     /// What a `drawing::TopBorderWith` holds.
-    type DrawingTopBorder: ExtraSlot;
+    type DrawingTopBorder: UserDataSlot;
     /// What a `drawing::TopBorderLinePropertiesWith` holds.
-    type DrawingTopBorderLineProperties: ExtraSlot;
+    type DrawingTopBorderLineProperties: UserDataSlot;
     /// What a `drawing::TopLeftToBottomRightBorderWith` holds.
-    type DrawingTopLeftToBottomRightBorder: ExtraSlot;
+    type DrawingTopLeftToBottomRightBorder: UserDataSlot;
     /// What a `drawing::TopLeftToBottomRightBorderLinePropertiesWith` holds.
-    type DrawingTopLeftToBottomRightBorderLineProperties: ExtraSlot;
+    type DrawingTopLeftToBottomRightBorderLineProperties: UserDataSlot;
     /// What a `drawing::TopRightToBottomLeftBorderWith` holds.
-    type DrawingTopRightToBottomLeftBorder: ExtraSlot;
+    type DrawingTopRightToBottomLeftBorder: UserDataSlot;
     /// What a `drawing::TransformEffectWith` holds.
-    type DrawingTransformEffect: ExtraSlot;
+    type DrawingTransformEffect: UserDataSlot;
     /// What a `drawing::UnderlineFillWith` holds.
-    type DrawingUnderlineFill: ExtraSlot;
+    type DrawingUnderlineFill: UserDataSlot;
     /// What a `drawing::UnderlineFillPropertiesFollowTextWith` holds.
-    type DrawingUnderlineFillPropertiesFollowText: ExtraSlot;
+    type DrawingUnderlineFillPropertiesFollowText: UserDataSlot;
     /// What a `drawing::UnderlineFollowsTextWith` holds.
-    type DrawingUnderlineFollowsText: ExtraSlot;
+    type DrawingUnderlineFollowsText: UserDataSlot;
     /// What a `drawing::UnderlineStrokeWith` holds.
-    type DrawingUnderlineStroke: ExtraSlot;
+    type DrawingUnderlineStroke: UserDataSlot;
     /// What a `drawing::UpVectorWith` holds.
-    type DrawingUpVector: ExtraSlot;
+    type DrawingUpVector: UserDataSlot;
     /// What a `drawing::UseShapeTextRectangleWith` holds.
-    type DrawingUseShapeTextRectangle: ExtraSlot;
+    type DrawingUseShapeTextRectangle: UserDataSlot;
     /// What a `drawing::VerticalRatioWith` holds.
-    type DrawingVerticalRatio: ExtraSlot;
+    type DrawingVerticalRatio: UserDataSlot;
     /// What a `drawing::VideoFromFileWith` holds.
-    type DrawingVideoFromFile: ExtraSlot;
+    type DrawingVideoFromFile: UserDataSlot;
     /// What a `drawing::VisualGroupShapePropertiesWith` holds.
-    type DrawingVisualGroupShapeProperties: ExtraSlot;
+    type DrawingVisualGroupShapeProperties: UserDataSlot;
     /// What a `drawing::WholeTableWith` holds.
-    type DrawingWholeTable: ExtraSlot;
+    type DrawingWholeTable: UserDataSlot;
     /// What a `drawing::XYAdjustHandleWith` holds.
-    type DrawingXYAdjustHandle: ExtraSlot;
+    type DrawingXYAdjustHandle: UserDataSlot;
     /// What a `drawing::XfrmGroupTransform2DWith` holds.
-    type DrawingXfrmGroupTransform2D: ExtraSlot;
+    type DrawingXfrmGroupTransform2D: UserDataSlot;
     /// What a `drawing::XfrmTransform2DWith` holds.
-    type DrawingXfrmTransform2D: ExtraSlot;
+    type DrawingXfrmTransform2D: UserDataSlot;
     /// What a `locked_canvas::LockedCanvasContainerWith` holds.
-    type LockedCanvasLockedCanvasContainer: ExtraSlot;
+    type LockedCanvasLockedCanvasContainer: UserDataSlot;
     /// What a `math::AccentWith` holds.
-    type MathAccent: ExtraSlot;
+    type MathAccent: UserDataSlot;
     /// What a `math::AccentPropertiesWith` holds.
-    type MathAccentProperties: ExtraSlot;
+    type MathAccentProperties: UserDataSlot;
     /// What a `math::AlignScriptsWith` holds.
-    type MathAlignScripts: ExtraSlot;
+    type MathAlignScripts: UserDataSlot;
     /// What a `math::AlignmentWith` holds.
-    type MathAlignment: ExtraSlot;
+    type MathAlignment: UserDataSlot;
     /// What a `math::ArgumentPropertiesWith` holds.
-    type MathArgumentProperties: ExtraSlot;
+    type MathArgumentProperties: UserDataSlot;
     /// What a `math::ArgumentSizeWith` holds.
-    type MathArgumentSize: ExtraSlot;
+    type MathArgumentSize: UserDataSlot;
     /// What a `math::ArrayObjectWith` holds.
-    type MathArrayObject: ExtraSlot;
+    type MathArrayObject: UserDataSlot;
     /// What a `math::ArrayPropertiesWith` holds.
-    type MathArrayProperties: ExtraSlot;
+    type MathArrayProperties: UserDataSlot;
     /// What a `math::BarWith` holds.
-    type MathBar: ExtraSlot;
+    type MathBar: UserDataSlot;
     /// What a `math::BarPropertiesWith` holds.
-    type MathBarProperties: ExtraSlot;
+    type MathBarProperties: UserDataSlot;
     /// What a `math::BorderBoxObjectWith` holds.
-    type MathBorderBoxObject: ExtraSlot;
+    type MathBorderBoxObject: UserDataSlot;
     /// What a `math::BorderBoxPropertiesWith` holds.
-    type MathBorderBoxProperties: ExtraSlot;
+    type MathBorderBoxProperties: UserDataSlot;
     /// What a `math::BorderBoxStrikethroughBottomLeftToTopRightWith` holds.
-    type MathBorderBoxStrikethroughBottomLeftToTopRight: ExtraSlot;
+    type MathBorderBoxStrikethroughBottomLeftToTopRight: UserDataSlot;
     /// What a `math::BorderBoxStrikethroughHorizontalWith` holds.
-    type MathBorderBoxStrikethroughHorizontal: ExtraSlot;
+    type MathBorderBoxStrikethroughHorizontal: UserDataSlot;
     /// What a `math::BorderBoxStrikethroughTopLeftToBottomRightWith` holds.
-    type MathBorderBoxStrikethroughTopLeftToBottomRight: ExtraSlot;
+    type MathBorderBoxStrikethroughTopLeftToBottomRight: UserDataSlot;
     /// What a `math::BorderBoxStrikethroughVerticalWith` holds.
-    type MathBorderBoxStrikethroughVertical: ExtraSlot;
+    type MathBorderBoxStrikethroughVertical: UserDataSlot;
     /// What a `math::BoxObjectWith` holds.
-    type MathBoxObject: ExtraSlot;
+    type MathBoxObject: UserDataSlot;
     /// What a `math::BoxPropertiesWith` holds.
-    type MathBoxProperties: ExtraSlot;
+    type MathBoxProperties: UserDataSlot;
     /// What a `math::BreakWith` holds.
-    type MathBreak: ExtraSlot;
+    type MathBreak: UserDataSlot;
     /// What a `math::BreakOnBinaryOperatorsWith` holds.
-    type MathBreakOnBinaryOperators: ExtraSlot;
+    type MathBreakOnBinaryOperators: UserDataSlot;
     /// What a `math::BreakOnBinarySubtractionWith` holds.
-    type MathBreakOnBinarySubtraction: ExtraSlot;
+    type MathBreakOnBinarySubtraction: UserDataSlot;
     /// What a `math::CharacterWith` holds.
-    type MathCharacter: ExtraSlot;
+    type MathCharacter: UserDataSlot;
     /// What a `math::ControlPropertiesWith` holds.
-    type MathControlProperties: ExtraSlot;
+    type MathControlProperties: UserDataSlot;
     /// What a `math::DefaultJustificationWith` holds.
-    type MathDefaultJustification: ExtraSlot;
+    type MathDefaultJustification: UserDataSlot;
     /// What a `math::DegreeWith` holds.
-    type MathDegree: ExtraSlot;
+    type MathDegree: UserDataSlot;
     /// What a `math::DelimiterBeginningCharacterWith` holds.
-    type MathDelimiterBeginningCharacter: ExtraSlot;
+    type MathDelimiterBeginningCharacter: UserDataSlot;
     /// What a `math::DelimiterEndingCharacterWith` holds.
-    type MathDelimiterEndingCharacter: ExtraSlot;
+    type MathDelimiterEndingCharacter: UserDataSlot;
     /// What a `math::DelimiterObjectWith` holds.
-    type MathDelimiterObject: ExtraSlot;
+    type MathDelimiterObject: UserDataSlot;
     /// What a `math::DelimiterPropertiesWith` holds.
-    type MathDelimiterProperties: ExtraSlot;
+    type MathDelimiterProperties: UserDataSlot;
     /// What a `math::DelimiterSeparatorCharacterWith` holds.
-    type MathDelimiterSeparatorCharacter: ExtraSlot;
+    type MathDelimiterSeparatorCharacter: UserDataSlot;
     /// What a `math::DenominatorWith` holds.
-    type MathDenominator: ExtraSlot;
+    type MathDenominator: UserDataSlot;
     /// What a `math::DifferentialWith` holds.
-    type MathDifferential: ExtraSlot;
+    type MathDifferential: UserDataSlot;
     /// What a `math::EWith` holds.
-    type MathE: ExtraSlot;
+    type MathE: UserDataSlot;
     /// What a `math::FractionObjectWith` holds.
-    type MathFractionObject: ExtraSlot;
+    type MathFractionObject: UserDataSlot;
     /// What a `math::FractionPropertiesWith` holds.
-    type MathFractionProperties: ExtraSlot;
+    type MathFractionProperties: UserDataSlot;
     /// What a `math::FractionTypeWith` holds.
-    type MathFractionType: ExtraSlot;
+    type MathFractionType: UserDataSlot;
     /// What a `math::FunctionApplyObjectWith` holds.
-    type MathFunctionApplyObject: ExtraSlot;
+    type MathFunctionApplyObject: UserDataSlot;
     /// What a `math::FunctionNameWith` holds.
-    type MathFunctionName: ExtraSlot;
+    type MathFunctionName: UserDataSlot;
     /// What a `math::FunctionPropertiesWith` holds.
-    type MathFunctionProperties: ExtraSlot;
+    type MathFunctionProperties: UserDataSlot;
     /// What a `math::GroupCharacterObjectWith` holds.
-    type MathGroupCharacterObject: ExtraSlot;
+    type MathGroupCharacterObject: UserDataSlot;
     /// What a `math::GroupCharacterPropertiesWith` holds.
-    type MathGroupCharacterProperties: ExtraSlot;
+    type MathGroupCharacterProperties: UserDataSlot;
     /// What a `math::GrowWith` holds.
-    type MathGrow: ExtraSlot;
+    type MathGrow: UserDataSlot;
     /// What a `math::HideBottomEdgeWith` holds.
-    type MathHideBottomEdge: ExtraSlot;
+    type MathHideBottomEdge: UserDataSlot;
     /// What a `math::HideDegreeWith` holds.
-    type MathHideDegree: ExtraSlot;
+    type MathHideDegree: UserDataSlot;
     /// What a `math::HideLeftEdgeWith` holds.
-    type MathHideLeftEdge: ExtraSlot;
+    type MathHideLeftEdge: UserDataSlot;
     /// What a `math::HideRightEdgeWith` holds.
-    type MathHideRightEdge: ExtraSlot;
+    type MathHideRightEdge: UserDataSlot;
     /// What a `math::HideTopEdgeWith` holds.
-    type MathHideTopEdge: ExtraSlot;
+    type MathHideTopEdge: UserDataSlot;
     /// What a `math::IntegralLimitLocationsWith` holds.
-    type MathIntegralLimitLocations: ExtraSlot;
+    type MathIntegralLimitLocations: UserDataSlot;
     /// What a `math::InterEquationSpacingWith` holds.
-    type MathInterEquationSpacing: ExtraSlot;
+    type MathInterEquationSpacing: UserDataSlot;
     /// What a `math::IntraEquationSpacingWith` holds.
-    type MathIntraEquationSpacing: ExtraSlot;
+    type MathIntraEquationSpacing: UserDataSlot;
     /// What a `math::JustificationWith` holds.
-    type MathJustification: ExtraSlot;
+    type MathJustification: UserDataSlot;
     /// What a `math::LeftMarginWith` holds.
-    type MathLeftMargin: ExtraSlot;
+    type MathLeftMargin: UserDataSlot;
     /// What a `math::LimLocWith` holds.
-    type MathLimLoc: ExtraSlot;
+    type MathLimLoc: UserDataSlot;
     /// What a `math::LimitWith` holds.
-    type MathLimit: ExtraSlot;
+    type MathLimit: UserDataSlot;
     /// What a `math::LiteralWith` holds.
-    type MathLiteral: ExtraSlot;
+    type MathLiteral: UserDataSlot;
     /// What a `math::LowerLimitObjectWith` holds.
-    type MathLowerLimitObject: ExtraSlot;
+    type MathLowerLimitObject: UserDataSlot;
     /// What a `math::LowerLimitPropertiesWith` holds.
-    type MathLowerLimitProperties: ExtraSlot;
+    type MathLowerLimitProperties: UserDataSlot;
     /// What a `math::MathFontWith` holds.
-    type MathMathFont: ExtraSlot;
+    type MathMathFont: UserDataSlot;
     /// What a `math::MathPropertiesWith` holds.
-    type MathMathProperties: ExtraSlot;
+    type MathMathProperties: UserDataSlot;
     /// What a `math::MatrixBaseJustificationWith` holds.
-    type MathMatrixBaseJustification: ExtraSlot;
+    type MathMatrixBaseJustification: UserDataSlot;
     /// What a `math::MatrixColumnWith` holds.
-    type MathMatrixColumn: ExtraSlot;
+    type MathMatrixColumn: UserDataSlot;
     /// What a `math::MatrixColumnCountWith` holds.
-    type MathMatrixColumnCount: ExtraSlot;
+    type MathMatrixColumnCount: UserDataSlot;
     /// What a `math::MatrixColumnGapWith` holds.
-    type MathMatrixColumnGap: ExtraSlot;
+    type MathMatrixColumnGap: UserDataSlot;
     /// What a `math::MatrixColumnGapRuleWith` holds.
-    type MathMatrixColumnGapRule: ExtraSlot;
+    type MathMatrixColumnGapRule: UserDataSlot;
     /// What a `math::MatrixColumnJustificationWith` holds.
-    type MathMatrixColumnJustification: ExtraSlot;
+    type MathMatrixColumnJustification: UserDataSlot;
     /// What a `math::MatrixColumnPropertiesWith` holds.
-    type MathMatrixColumnProperties: ExtraSlot;
+    type MathMatrixColumnProperties: UserDataSlot;
     /// What a `math::MatrixColumnsWith` holds.
-    type MathMatrixColumns: ExtraSlot;
+    type MathMatrixColumns: UserDataSlot;
     /// What a `math::MatrixObjectWith` holds.
-    type MathMatrixObject: ExtraSlot;
+    type MathMatrixObject: UserDataSlot;
     /// What a `math::MatrixPropertiesWith` holds.
-    type MathMatrixProperties: ExtraSlot;
+    type MathMatrixProperties: UserDataSlot;
     /// What a `math::MatrixRowWith` holds.
-    type MathMatrixRow: ExtraSlot;
+    type MathMatrixRow: UserDataSlot;
     /// What a `math::MaximumDistributionWith` holds.
-    type MathMaximumDistribution: ExtraSlot;
+    type MathMaximumDistribution: UserDataSlot;
     /// What a `math::MinimumMatrixColumnWidthWith` holds.
-    type MathMinimumMatrixColumnWidth: ExtraSlot;
+    type MathMinimumMatrixColumnWidth: UserDataSlot;
     /// What a `math::NaryWith` holds.
-    type MathNary: ExtraSlot;
+    type MathNary: UserDataSlot;
     /// What a `math::NaryLimWith` holds.
-    type MathNaryLim: ExtraSlot;
+    type MathNaryLim: UserDataSlot;
     /// What a `math::NaryPrWith` holds.
-    type MathNaryPr: ExtraSlot;
+    type MathNaryPr: UserDataSlot;
     /// What a `math::NoBreakWith` holds.
-    type MathNoBreak: ExtraSlot;
+    type MathNoBreak: UserDataSlot;
     /// What a `math::NormalTextWith` holds.
-    type MathNormalText: ExtraSlot;
+    type MathNormalText: UserDataSlot;
     /// What a `math::NumeratorWith` holds.
-    type MathNumerator: ExtraSlot;
+    type MathNumerator: UserDataSlot;
     /// What a `math::ObjectDistributionWith` holds.
-    type MathObjectDistribution: ExtraSlot;
+    type MathObjectDistribution: UserDataSlot;
     /// What a `math::OfficeMathWith` holds.
-    type MathOfficeMath: ExtraSlot;
+    type MathOfficeMath: UserDataSlot;
     /// What a `math::OfficeMathParagraphWith` holds.
-    type MathOfficeMathParagraph: ExtraSlot;
+    type MathOfficeMathParagraph: UserDataSlot;
     /// What a `math::OfficeMathParagraphPropertiesWith` holds.
-    type MathOfficeMathParagraphProperties: ExtraSlot;
+    type MathOfficeMathParagraphProperties: UserDataSlot;
     /// What a `math::OperatorEmulatorWith` holds.
-    type MathOperatorEmulator: ExtraSlot;
+    type MathOperatorEmulator: UserDataSlot;
     /// What a `math::PhantomObjectWith` holds.
-    type MathPhantomObject: ExtraSlot;
+    type MathPhantomObject: UserDataSlot;
     /// What a `math::PhantomPropertiesWith` holds.
-    type MathPhantomProperties: ExtraSlot;
+    type MathPhantomProperties: UserDataSlot;
     /// What a `math::PhantomShowWith` holds.
-    type MathPhantomShow: ExtraSlot;
+    type MathPhantomShow: UserDataSlot;
     /// What a `math::PhantomZeroAscentWith` holds.
-    type MathPhantomZeroAscent: ExtraSlot;
+    type MathPhantomZeroAscent: UserDataSlot;
     /// What a `math::PhantomZeroDescentWith` holds.
-    type MathPhantomZeroDescent: ExtraSlot;
+    type MathPhantomZeroDescent: UserDataSlot;
     /// What a `math::PhantomZeroWidthWith` holds.
-    type MathPhantomZeroWidth: ExtraSlot;
+    type MathPhantomZeroWidth: UserDataSlot;
     /// What a `math::PlcHideWith` holds.
-    type MathPlcHide: ExtraSlot;
+    type MathPlcHide: UserDataSlot;
     /// What a `math::PositionWith` holds.
-    type MathPosition: ExtraSlot;
+    type MathPosition: UserDataSlot;
     /// What a `math::PostParagraphSpacingWith` holds.
-    type MathPostParagraphSpacing: ExtraSlot;
+    type MathPostParagraphSpacing: UserDataSlot;
     /// What a `math::PreParagraphSpacingWith` holds.
-    type MathPreParagraphSpacing: ExtraSlot;
+    type MathPreParagraphSpacing: UserDataSlot;
     /// What a `math::PreSubSuperscriptObjectWith` holds.
-    type MathPreSubSuperscriptObject: ExtraSlot;
+    type MathPreSubSuperscriptObject: UserDataSlot;
     /// What a `math::PreSubSuperscriptPropertiesWith` holds.
-    type MathPreSubSuperscriptProperties: ExtraSlot;
+    type MathPreSubSuperscriptProperties: UserDataSlot;
     /// What a `math::RSpWith` holds.
-    type MathRSp: ExtraSlot;
+    type MathRSp: UserDataSlot;
     /// What a `math::RadicalObjectWith` holds.
-    type MathRadicalObject: ExtraSlot;
+    type MathRadicalObject: UserDataSlot;
     /// What a `math::RadicalPropertiesWith` holds.
-    type MathRadicalProperties: ExtraSlot;
+    type MathRadicalProperties: UserDataSlot;
     /// What a `math::RightMarginWith` holds.
-    type MathRightMargin: ExtraSlot;
+    type MathRightMargin: UserDataSlot;
     /// What a `math::RowSpacingRuleWith` holds.
-    type MathRowSpacingRule: ExtraSlot;
+    type MathRowSpacingRule: UserDataSlot;
     /// What a `math::RunWith` holds.
-    type MathRun: ExtraSlot;
+    type MathRun: UserDataSlot;
     /// What a `math::RunPropertiesWith` holds.
-    type MathRunProperties: ExtraSlot;
+    type MathRunProperties: UserDataSlot;
     /// What a `math::ScriptWith` holds.
-    type MathScript: ExtraSlot;
+    type MathScript: UserDataSlot;
     /// What a `math::ShpWith` holds.
-    type MathShp: ExtraSlot;
+    type MathShp: UserDataSlot;
     /// What a `math::SmallFractionWith` holds.
-    type MathSmallFraction: ExtraSlot;
+    type MathSmallFraction: UserDataSlot;
     /// What a `math::StyWith` holds.
-    type MathSty: ExtraSlot;
+    type MathSty: UserDataSlot;
     /// What a `math::SubWith` holds.
-    type MathSub: ExtraSlot;
+    type MathSub: UserDataSlot;
     /// What a `math::SubHideWith` holds.
-    type MathSubHide: ExtraSlot;
+    type MathSubHide: UserDataSlot;
     /// What a `math::SubSuperscriptObjectWith` holds.
-    type MathSubSuperscriptObject: ExtraSlot;
+    type MathSubSuperscriptObject: UserDataSlot;
     /// What a `math::SubSuperscriptPropertiesWith` holds.
-    type MathSubSuperscriptProperties: ExtraSlot;
+    type MathSubSuperscriptProperties: UserDataSlot;
     /// What a `math::SubscriptObjectWith` holds.
-    type MathSubscriptObject: ExtraSlot;
+    type MathSubscriptObject: UserDataSlot;
     /// What a `math::SubscriptPropertiesWith` holds.
-    type MathSubscriptProperties: ExtraSlot;
+    type MathSubscriptProperties: UserDataSlot;
     /// What a `math::SupWith` holds.
-    type MathSup: ExtraSlot;
+    type MathSup: UserDataSlot;
     /// What a `math::SupHideWith` holds.
-    type MathSupHide: ExtraSlot;
+    type MathSupHide: UserDataSlot;
     /// What a `math::SuperscriptObjectWith` holds.
-    type MathSuperscriptObject: ExtraSlot;
+    type MathSuperscriptObject: UserDataSlot;
     /// What a `math::SuperscriptPropertiesWith` holds.
-    type MathSuperscriptProperties: ExtraSlot;
+    type MathSuperscriptProperties: UserDataSlot;
     /// What a `math::TextWith` holds.
-    type MathText: ExtraSlot;
+    type MathText: UserDataSlot;
     /// What a `math::TranspWith` holds.
-    type MathTransp: ExtraSlot;
+    type MathTransp: UserDataSlot;
     /// What a `math::UpperLimitObjectWith` holds.
-    type MathUpperLimitObject: ExtraSlot;
+    type MathUpperLimitObject: UserDataSlot;
     /// What a `math::UpperLimitPropertiesWith` holds.
-    type MathUpperLimitProperties: ExtraSlot;
+    type MathUpperLimitProperties: UserDataSlot;
     /// What a `math::UseDisplayMathDefaultsWith` holds.
-    type MathUseDisplayMathDefaults: ExtraSlot;
+    type MathUseDisplayMathDefaults: UserDataSlot;
     /// What a `math::VerticalJustificationWith` holds.
-    type MathVerticalJustification: ExtraSlot;
+    type MathVerticalJustification: UserDataSlot;
     /// What a `math::WrapIndentWith` holds.
-    type MathWrapIndent: ExtraSlot;
+    type MathWrapIndent: UserDataSlot;
     /// What a `math::WrapRightWith` holds.
-    type MathWrapRight: ExtraSlot;
+    type MathWrapRight: UserDataSlot;
     /// What a `office_2009_07_customui::BackstageWith` holds.
-    type Office200907CustomuiBackstage: ExtraSlot;
+    type Office200907CustomuiBackstage: UserDataSlot;
     /// What a `office_2009_07_customui::BottomItemsWith` holds.
-    type Office200907CustomuiBottomItems: ExtraSlot;
+    type Office200907CustomuiBottomItems: UserDataSlot;
     /// What a `office_2009_07_customui::BoxBoxWith` holds.
-    type Office200907CustomuiBoxBox: ExtraSlot;
+    type Office200907CustomuiBoxBox: UserDataSlot;
     /// What a `office_2009_07_customui::ButtonBackstageFastCommandButtonWith` holds.
-    type Office200907CustomuiButtonBackstageFastCommandButton: ExtraSlot;
+    type Office200907CustomuiButtonBackstageFastCommandButton: UserDataSlot;
     /// What a `office_2009_07_customui::ButtonBackstageGroupButtonWith` holds.
-    type Office200907CustomuiButtonBackstageGroupButton: ExtraSlot;
+    type Office200907CustomuiButtonBackstageGroupButton: UserDataSlot;
     /// What a `office_2009_07_customui::ButtonBackstageMenuButtonWith` holds.
-    type Office200907CustomuiButtonBackstageMenuButton: ExtraSlot;
+    type Office200907CustomuiButtonBackstageMenuButton: UserDataSlot;
     /// What a `office_2009_07_customui::ButtonBackstageRegularButtonWith` holds.
-    type Office200907CustomuiButtonBackstageRegularButton: ExtraSlot;
+    type Office200907CustomuiButtonBackstageRegularButton: UserDataSlot;
     /// What a `office_2009_07_customui::ButtonButtonWith` holds.
-    type Office200907CustomuiButtonButton: ExtraSlot;
+    type Office200907CustomuiButtonButton: UserDataSlot;
     /// What a `office_2009_07_customui::ButtonButtonRegularWith` holds.
-    type Office200907CustomuiButtonButtonRegular: ExtraSlot;
+    type Office200907CustomuiButtonButtonRegular: UserDataSlot;
     /// What a `office_2009_07_customui::ButtonGroupWith` holds.
-    type Office200907CustomuiButtonGroup: ExtraSlot;
+    type Office200907CustomuiButtonGroup: UserDataSlot;
     /// What a `office_2009_07_customui::ButtonVisibleButtonWith` holds.
-    type Office200907CustomuiButtonVisibleButton: ExtraSlot;
+    type Office200907CustomuiButtonVisibleButton: UserDataSlot;
     /// What a `office_2009_07_customui::CategoryTaskFormGroupCategoryWith` holds.
-    type Office200907CustomuiCategoryTaskFormGroupCategory: ExtraSlot;
+    type Office200907CustomuiCategoryTaskFormGroupCategory: UserDataSlot;
     /// What a `office_2009_07_customui::CategoryTaskGroupCategoryWith` holds.
-    type Office200907CustomuiCategoryTaskGroupCategory: ExtraSlot;
+    type Office200907CustomuiCategoryTaskGroupCategory: UserDataSlot;
     /// What a `office_2009_07_customui::CheckBoxBackstageCheckBoxWith` holds.
-    type Office200907CustomuiCheckBoxBackstageCheckBox: ExtraSlot;
+    type Office200907CustomuiCheckBoxBackstageCheckBox: UserDataSlot;
     /// What a `office_2009_07_customui::CheckBoxBackstageMenuCheckBoxWith` holds.
-    type Office200907CustomuiCheckBoxBackstageMenuCheckBox: ExtraSlot;
+    type Office200907CustomuiCheckBoxBackstageMenuCheckBox: UserDataSlot;
     /// What a `office_2009_07_customui::CheckBoxCheckBoxWith` holds.
-    type Office200907CustomuiCheckBoxCheckBox: ExtraSlot;
+    type Office200907CustomuiCheckBoxCheckBox: UserDataSlot;
     /// What a `office_2009_07_customui::ComboBoxBackstageComboBoxWith` holds.
-    type Office200907CustomuiComboBoxBackstageComboBox: ExtraSlot;
+    type Office200907CustomuiComboBoxBackstageComboBox: UserDataSlot;
     /// What a `office_2009_07_customui::ComboBoxComboBoxWith` holds.
-    type Office200907CustomuiComboBoxComboBox: ExtraSlot;
+    type Office200907CustomuiComboBoxComboBox: UserDataSlot;
     /// What a `office_2009_07_customui::CommandWith` holds.
-    type Office200907CustomuiCommand: ExtraSlot;
+    type Office200907CustomuiCommand: UserDataSlot;
     /// What a `office_2009_07_customui::CommandsWith` holds.
-    type Office200907CustomuiCommands: ExtraSlot;
+    type Office200907CustomuiCommands: UserDataSlot;
     /// What a `office_2009_07_customui::ContextMenuWith` holds.
-    type Office200907CustomuiContextMenu: ExtraSlot;
+    type Office200907CustomuiContextMenu: UserDataSlot;
     /// What a `office_2009_07_customui::ContextMenusWith` holds.
-    type Office200907CustomuiContextMenus: ExtraSlot;
+    type Office200907CustomuiContextMenus: UserDataSlot;
     /// What a `office_2009_07_customui::ContextualTabsWith` holds.
-    type Office200907CustomuiContextualTabs: ExtraSlot;
+    type Office200907CustomuiContextualTabs: UserDataSlot;
     /// What a `office_2009_07_customui::ControlControlCloneWith` holds.
-    type Office200907CustomuiControlControlClone: ExtraSlot;
+    type Office200907CustomuiControlControlClone: UserDataSlot;
     /// What a `office_2009_07_customui::ControlControlCloneQatWith` holds.
-    type Office200907CustomuiControlControlCloneQat: ExtraSlot;
+    type Office200907CustomuiControlControlCloneQat: UserDataSlot;
     /// What a `office_2009_07_customui::ControlControlCloneRegularWith` holds.
-    type Office200907CustomuiControlControlCloneRegular: ExtraSlot;
+    type Office200907CustomuiControlControlCloneRegular: UserDataSlot;
     /// What a `office_2009_07_customui::CustomUIWith` holds.
-    type Office200907CustomuiCustomUI: ExtraSlot;
+    type Office200907CustomuiCustomUI: UserDataSlot;
     /// What a `office_2009_07_customui::DialogBoxLauncherWith` holds.
-    type Office200907CustomuiDialogBoxLauncher: ExtraSlot;
+    type Office200907CustomuiDialogBoxLauncher: UserDataSlot;
     /// What a `office_2009_07_customui::DocumentControlsWith` holds.
-    type Office200907CustomuiDocumentControls: ExtraSlot;
+    type Office200907CustomuiDocumentControls: UserDataSlot;
     /// What a `office_2009_07_customui::DropDownBackstageDropDownWith` holds.
-    type Office200907CustomuiDropDownBackstageDropDown: ExtraSlot;
+    type Office200907CustomuiDropDownBackstageDropDown: UserDataSlot;
     /// What a `office_2009_07_customui::DropDownDropDownRegularWith` holds.
-    type Office200907CustomuiDropDownDropDownRegular: ExtraSlot;
+    type Office200907CustomuiDropDownDropDownRegular: UserDataSlot;
     /// What a `office_2009_07_customui::DynamicMenuDynamicMenuWith` holds.
-    type Office200907CustomuiDynamicMenuDynamicMenu: ExtraSlot;
+    type Office200907CustomuiDynamicMenuDynamicMenu: UserDataSlot;
     /// What a `office_2009_07_customui::DynamicMenuDynamicMenuRegularWith` holds.
-    type Office200907CustomuiDynamicMenuDynamicMenuRegular: ExtraSlot;
+    type Office200907CustomuiDynamicMenuDynamicMenuRegular: UserDataSlot;
     /// What a `office_2009_07_customui::EditBoxBackstageEditBoxWith` holds.
-    type Office200907CustomuiEditBoxBackstageEditBox: ExtraSlot;
+    type Office200907CustomuiEditBoxBackstageEditBox: UserDataSlot;
     /// What a `office_2009_07_customui::EditBoxEditBoxWith` holds.
-    type Office200907CustomuiEditBoxEditBox: ExtraSlot;
+    type Office200907CustomuiEditBoxEditBox: UserDataSlot;
     /// What a `office_2009_07_customui::FirstColumnWith` holds.
-    type Office200907CustomuiFirstColumn: ExtraSlot;
+    type Office200907CustomuiFirstColumn: UserDataSlot;
     /// What a `office_2009_07_customui::GalleryGalleryWith` holds.
-    type Office200907CustomuiGalleryGallery: ExtraSlot;
+    type Office200907CustomuiGalleryGallery: UserDataSlot;
     /// What a `office_2009_07_customui::GalleryGalleryRegularWith` holds.
-    type Office200907CustomuiGalleryGalleryRegular: ExtraSlot;
+    type Office200907CustomuiGalleryGalleryRegular: UserDataSlot;
     /// What a `office_2009_07_customui::GroupBackstageGroupWith` holds.
-    type Office200907CustomuiGroupBackstageGroup: ExtraSlot;
+    type Office200907CustomuiGroupBackstageGroup: UserDataSlot;
     /// What a `office_2009_07_customui::GroupBoxWith` holds.
-    type Office200907CustomuiGroupBox: ExtraSlot;
+    type Office200907CustomuiGroupBox: UserDataSlot;
     /// What a `office_2009_07_customui::GroupGroupWith` holds.
-    type Office200907CustomuiGroupGroup: ExtraSlot;
+    type Office200907CustomuiGroupGroup: UserDataSlot;
     /// What a `office_2009_07_customui::HyperlinkWith` holds.
-    type Office200907CustomuiHyperlink: ExtraSlot;
+    type Office200907CustomuiHyperlink: UserDataSlot;
     /// What a `office_2009_07_customui::ImageControlWith` holds.
-    type Office200907CustomuiImageControl: ExtraSlot;
+    type Office200907CustomuiImageControl: UserDataSlot;
     /// What a `office_2009_07_customui::ItemBackstageItemWith` holds.
-    type Office200907CustomuiItemBackstageItem: ExtraSlot;
+    type Office200907CustomuiItemBackstageItem: UserDataSlot;
     /// What a `office_2009_07_customui::ItemItemWith` holds.
-    type Office200907CustomuiItemItem: ExtraSlot;
+    type Office200907CustomuiItemItem: UserDataSlot;
     /// What a `office_2009_07_customui::LabelControlBackstageLabelControlWith` holds.
-    type Office200907CustomuiLabelControlBackstageLabelControl: ExtraSlot;
+    type Office200907CustomuiLabelControlBackstageLabelControl: UserDataSlot;
     /// What a `office_2009_07_customui::LabelControlLabelControlWith` holds.
-    type Office200907CustomuiLabelControlLabelControl: ExtraSlot;
+    type Office200907CustomuiLabelControlLabelControl: UserDataSlot;
     /// What a `office_2009_07_customui::LayoutContainerWith` holds.
-    type Office200907CustomuiLayoutContainer: ExtraSlot;
+    type Office200907CustomuiLayoutContainer: UserDataSlot;
     /// What a `office_2009_07_customui::MenuBackstagePrimaryMenuWith` holds.
-    type Office200907CustomuiMenuBackstagePrimaryMenu: ExtraSlot;
+    type Office200907CustomuiMenuBackstagePrimaryMenu: UserDataSlot;
     /// What a `office_2009_07_customui::MenuBackstageSubMenuWith` holds.
-    type Office200907CustomuiMenuBackstageSubMenu: ExtraSlot;
+    type Office200907CustomuiMenuBackstageSubMenu: UserDataSlot;
     /// What a `office_2009_07_customui::MenuGroupWith` holds.
-    type Office200907CustomuiMenuGroup: ExtraSlot;
+    type Office200907CustomuiMenuGroup: UserDataSlot;
     /// What a `office_2009_07_customui::MenuMenuWith` holds.
-    type Office200907CustomuiMenuMenu: ExtraSlot;
+    type Office200907CustomuiMenuMenu: UserDataSlot;
     /// What a `office_2009_07_customui::MenuMenuRegularWith` holds.
-    type Office200907CustomuiMenuMenuRegular: ExtraSlot;
+    type Office200907CustomuiMenuMenuRegular: UserDataSlot;
     /// What a `office_2009_07_customui::MenuMenuRootWith` holds.
-    type Office200907CustomuiMenuMenuRoot: ExtraSlot;
+    type Office200907CustomuiMenuMenuRoot: UserDataSlot;
     /// What a `office_2009_07_customui::MenuMenuWithTitleWith` holds.
-    type Office200907CustomuiMenuMenuWithTitle: ExtraSlot;
+    type Office200907CustomuiMenuMenuWithTitle: UserDataSlot;
     /// What a `office_2009_07_customui::MenuSeparatorMenuSeparatorWith` holds.
-    type Office200907CustomuiMenuSeparatorMenuSeparator: ExtraSlot;
+    type Office200907CustomuiMenuSeparatorMenuSeparator: UserDataSlot;
     /// What a `office_2009_07_customui::MenuSeparatorMenuSeparatorNoTitleWith` holds.
-    type Office200907CustomuiMenuSeparatorMenuSeparatorNoTitle: ExtraSlot;
+    type Office200907CustomuiMenuSeparatorMenuSeparatorNoTitle: UserDataSlot;
     /// What a `office_2009_07_customui::PrimaryItemWith` holds.
-    type Office200907CustomuiPrimaryItem: ExtraSlot;
+    type Office200907CustomuiPrimaryItem: UserDataSlot;
     /// What a `office_2009_07_customui::QatWith` holds.
-    type Office200907CustomuiQat: ExtraSlot;
+    type Office200907CustomuiQat: UserDataSlot;
     /// What a `office_2009_07_customui::RadioButtonWith` holds.
-    type Office200907CustomuiRadioButton: ExtraSlot;
+    type Office200907CustomuiRadioButton: UserDataSlot;
     /// What a `office_2009_07_customui::RadioGroupWith` holds.
-    type Office200907CustomuiRadioGroup: ExtraSlot;
+    type Office200907CustomuiRadioGroup: UserDataSlot;
     /// What a `office_2009_07_customui::RibbonWith` holds.
-    type Office200907CustomuiRibbon: ExtraSlot;
+    type Office200907CustomuiRibbon: UserDataSlot;
     /// What a `office_2009_07_customui::SecondColumnWith` holds.
-    type Office200907CustomuiSecondColumn: ExtraSlot;
+    type Office200907CustomuiSecondColumn: UserDataSlot;
     /// What a `office_2009_07_customui::SeparatorWith` holds.
-    type Office200907CustomuiSeparator: ExtraSlot;
+    type Office200907CustomuiSeparator: UserDataSlot;
     /// What a `office_2009_07_customui::SharedControlsWith` holds.
-    type Office200907CustomuiSharedControls: ExtraSlot;
+    type Office200907CustomuiSharedControls: UserDataSlot;
     /// What a `office_2009_07_customui::SplitButtonSplitButtonWith` holds.
-    type Office200907CustomuiSplitButtonSplitButton: ExtraSlot;
+    type Office200907CustomuiSplitButtonSplitButton: UserDataSlot;
     /// What a `office_2009_07_customui::SplitButtonSplitButtonRegularWith` holds.
-    type Office200907CustomuiSplitButtonSplitButtonRegular: ExtraSlot;
+    type Office200907CustomuiSplitButtonSplitButtonRegular: UserDataSlot;
     /// What a `office_2009_07_customui::SplitButtonSplitButtonWithTitleWith` holds.
-    type Office200907CustomuiSplitButtonSplitButtonWithTitle: ExtraSlot;
+    type Office200907CustomuiSplitButtonSplitButtonWithTitle: UserDataSlot;
     /// What a `office_2009_07_customui::TabBackstageTabWith` holds.
-    type Office200907CustomuiTabBackstageTab: ExtraSlot;
+    type Office200907CustomuiTabBackstageTab: UserDataSlot;
     /// What a `office_2009_07_customui::TabSetWith` holds.
-    type Office200907CustomuiTabSet: ExtraSlot;
+    type Office200907CustomuiTabSet: UserDataSlot;
     /// What a `office_2009_07_customui::TabTabWith` holds.
-    type Office200907CustomuiTabTab: ExtraSlot;
+    type Office200907CustomuiTabTab: UserDataSlot;
     /// What a `office_2009_07_customui::TabsWith` holds.
-    type Office200907CustomuiTabs: ExtraSlot;
+    type Office200907CustomuiTabs: UserDataSlot;
     /// What a `office_2009_07_customui::TaskFormGroupWith` holds.
-    type Office200907CustomuiTaskFormGroup: ExtraSlot;
+    type Office200907CustomuiTaskFormGroup: UserDataSlot;
     /// What a `office_2009_07_customui::TaskGroupWith` holds.
-    type Office200907CustomuiTaskGroup: ExtraSlot;
+    type Office200907CustomuiTaskGroup: UserDataSlot;
     /// What a `office_2009_07_customui::TaskTaskFormGroupTaskWith` holds.
-    type Office200907CustomuiTaskTaskFormGroupTask: ExtraSlot;
+    type Office200907CustomuiTaskTaskFormGroupTask: UserDataSlot;
     /// What a `office_2009_07_customui::TaskTaskGroupTaskWith` holds.
-    type Office200907CustomuiTaskTaskGroupTask: ExtraSlot;
+    type Office200907CustomuiTaskTaskGroupTask: UserDataSlot;
     /// What a `office_2009_07_customui::ToggleButtonBackstageMenuToggleButtonWith` holds.
-    type Office200907CustomuiToggleButtonBackstageMenuToggleButton: ExtraSlot;
+    type Office200907CustomuiToggleButtonBackstageMenuToggleButton: UserDataSlot;
     /// What a `office_2009_07_customui::ToggleButtonToggleButtonWith` holds.
-    type Office200907CustomuiToggleButtonToggleButton: ExtraSlot;
+    type Office200907CustomuiToggleButtonToggleButton: UserDataSlot;
     /// What a `office_2009_07_customui::ToggleButtonToggleButtonRegularWith` holds.
-    type Office200907CustomuiToggleButtonToggleButtonRegular: ExtraSlot;
+    type Office200907CustomuiToggleButtonToggleButtonRegular: UserDataSlot;
     /// What a `office_2009_07_customui::ToggleButtonVisibleToggleButtonWith` holds.
-    type Office200907CustomuiToggleButtonVisibleToggleButton: ExtraSlot;
+    type Office200907CustomuiToggleButtonVisibleToggleButton: UserDataSlot;
     /// What a `office_2009_07_customui::TopItemsWith` holds.
-    type Office200907CustomuiTopItems: ExtraSlot;
+    type Office200907CustomuiTopItems: UserDataSlot;
     /// What a `office_2019_extlst::ExtWith` holds.
-    type Office2019ExtlstExt: ExtraSlot;
+    type Office2019ExtlstExt: UserDataSlot;
     /// What a `office_2020_mip_label_metadata::ExtWith` holds.
-    type Office2020MipLabelMetadataExt: ExtraSlot;
+    type Office2020MipLabelMetadataExt: UserDataSlot;
     /// What a `office_2020_mip_label_metadata::ExtLstWith` holds.
-    type Office2020MipLabelMetadataExtLst: ExtraSlot;
+    type Office2020MipLabelMetadataExtLst: UserDataSlot;
     /// What a `office_2020_mip_label_metadata::LabelWith` holds.
-    type Office2020MipLabelMetadataLabel: ExtraSlot;
+    type Office2020MipLabelMetadataLabel: UserDataSlot;
     /// What a `office_2020_mip_label_metadata::LabelListWith` holds.
-    type Office2020MipLabelMetadataLabelList: ExtraSlot;
+    type Office2020MipLabelMetadataLabelList: UserDataSlot;
     /// What a `office_drawing_2007_8_2_chart::DropZoneCategoriesWith` holds.
-    type OfficeDrawing200782ChartDropZoneCategories: ExtraSlot;
+    type OfficeDrawing200782ChartDropZoneCategories: UserDataSlot;
     /// What a `office_drawing_2007_8_2_chart::DropZoneDataWith` holds.
-    type OfficeDrawing200782ChartDropZoneData: ExtraSlot;
+    type OfficeDrawing200782ChartDropZoneData: UserDataSlot;
     /// What a `office_drawing_2007_8_2_chart::DropZoneFilterWith` holds.
-    type OfficeDrawing200782ChartDropZoneFilter: ExtraSlot;
+    type OfficeDrawing200782ChartDropZoneFilter: UserDataSlot;
     /// What a `office_drawing_2007_8_2_chart::DropZoneSeriesWith` holds.
-    type OfficeDrawing200782ChartDropZoneSeries: ExtraSlot;
+    type OfficeDrawing200782ChartDropZoneSeries: UserDataSlot;
     /// What a `office_drawing_2007_8_2_chart::DropZonesVisibleWith` holds.
-    type OfficeDrawing200782ChartDropZonesVisible: ExtraSlot;
+    type OfficeDrawing200782ChartDropZonesVisible: UserDataSlot;
     /// What a `office_drawing_2007_8_2_chart::InSketchModeWith` holds.
-    type OfficeDrawing200782ChartInSketchMode: ExtraSlot;
+    type OfficeDrawing200782ChartInSketchMode: UserDataSlot;
     /// What a `office_drawing_2007_8_2_chart::InvertSolidFillFmtWith` holds.
-    type OfficeDrawing200782ChartInvertSolidFillFmt: ExtraSlot;
+    type OfficeDrawing200782ChartInvertSolidFillFmt: UserDataSlot;
     /// What a `office_drawing_2007_8_2_chart::PivotOptionsWith` holds.
-    type OfficeDrawing200782ChartPivotOptions: ExtraSlot;
+    type OfficeDrawing200782ChartPivotOptions: UserDataSlot;
     /// What a `office_drawing_2007_8_2_chart::ShowSketchBtnWith` holds.
-    type OfficeDrawing200782ChartShowSketchBtn: ExtraSlot;
+    type OfficeDrawing200782ChartShowSketchBtn: UserDataSlot;
     /// What a `office_drawing_2007_8_2_chart::SketchOptionsWith` holds.
-    type OfficeDrawing200782ChartSketchOptions: ExtraSlot;
+    type OfficeDrawing200782ChartSketchOptions: UserDataSlot;
     /// What a `office_drawing_2007_8_2_chart::SpPrWith` holds.
-    type OfficeDrawing200782ChartSpPr: ExtraSlot;
+    type OfficeDrawing200782ChartSpPr: UserDataSlot;
     /// What a `office_drawing_2007_8_2_chart::StyleWith` holds.
-    type OfficeDrawing200782ChartStyle: ExtraSlot;
+    type OfficeDrawing200782ChartStyle: UserDataSlot;
     /// What a `office_drawing_2008_diagram::CNvGrpSpPrWith` holds.
-    type OfficeDrawing2008DiagramCNvGrpSpPr: ExtraSlot;
+    type OfficeDrawing2008DiagramCNvGrpSpPr: UserDataSlot;
     /// What a `office_drawing_2008_diagram::CNvPrWith` holds.
-    type OfficeDrawing2008DiagramCNvPr: ExtraSlot;
+    type OfficeDrawing2008DiagramCNvPr: UserDataSlot;
     /// What a `office_drawing_2008_diagram::CNvSpPrWith` holds.
-    type OfficeDrawing2008DiagramCNvSpPr: ExtraSlot;
+    type OfficeDrawing2008DiagramCNvSpPr: UserDataSlot;
     /// What a `office_drawing_2008_diagram::DataModelExtWith` holds.
-    type OfficeDrawing2008DiagramDataModelExt: ExtraSlot;
+    type OfficeDrawing2008DiagramDataModelExt: UserDataSlot;
     /// What a `office_drawing_2008_diagram::DrawingWith` holds.
-    type OfficeDrawing2008DiagramDrawing: ExtraSlot;
+    type OfficeDrawing2008DiagramDrawing: UserDataSlot;
     /// What a `office_drawing_2008_diagram::ExtLstWith` holds.
-    type OfficeDrawing2008DiagramExtLst: ExtraSlot;
+    type OfficeDrawing2008DiagramExtLst: UserDataSlot;
     /// What a `office_drawing_2008_diagram::GrpSpWith` holds.
-    type OfficeDrawing2008DiagramGrpSp: ExtraSlot;
+    type OfficeDrawing2008DiagramGrpSp: UserDataSlot;
     /// What a `office_drawing_2008_diagram::GrpSpPrWith` holds.
-    type OfficeDrawing2008DiagramGrpSpPr: ExtraSlot;
+    type OfficeDrawing2008DiagramGrpSpPr: UserDataSlot;
     /// What a `office_drawing_2008_diagram::NvGrpSpPrWith` holds.
-    type OfficeDrawing2008DiagramNvGrpSpPr: ExtraSlot;
+    type OfficeDrawing2008DiagramNvGrpSpPr: UserDataSlot;
     /// What a `office_drawing_2008_diagram::NvSpPrWith` holds.
-    type OfficeDrawing2008DiagramNvSpPr: ExtraSlot;
+    type OfficeDrawing2008DiagramNvSpPr: UserDataSlot;
     /// What a `office_drawing_2008_diagram::SpWith` holds.
-    type OfficeDrawing2008DiagramSp: ExtraSlot;
+    type OfficeDrawing2008DiagramSp: UserDataSlot;
     /// What a `office_drawing_2008_diagram::SpPrWith` holds.
-    type OfficeDrawing2008DiagramSpPr: ExtraSlot;
+    type OfficeDrawing2008DiagramSpPr: UserDataSlot;
     /// What a `office_drawing_2008_diagram::SpTreeWith` holds.
-    type OfficeDrawing2008DiagramSpTree: ExtraSlot;
+    type OfficeDrawing2008DiagramSpTree: UserDataSlot;
     /// What a `office_drawing_2008_diagram::StyleWith` holds.
-    type OfficeDrawing2008DiagramStyle: ExtraSlot;
+    type OfficeDrawing2008DiagramStyle: UserDataSlot;
     /// What a `office_drawing_2008_diagram::TxBodyWith` holds.
-    type OfficeDrawing2008DiagramTxBody: ExtraSlot;
+    type OfficeDrawing2008DiagramTxBody: UserDataSlot;
     /// What a `office_drawing_2008_diagram::TxXfrmWith` holds.
-    type OfficeDrawing2008DiagramTxXfrm: ExtraSlot;
+    type OfficeDrawing2008DiagramTxXfrm: UserDataSlot;
     /// What a `office_drawing_2010_chart_drawing::CNvContentPartPrWith` holds.
-    type OfficeDrawing2010ChartDrawingCNvContentPartPr: ExtraSlot;
+    type OfficeDrawing2010ChartDrawingCNvContentPartPr: UserDataSlot;
     /// What a `office_drawing_2010_chart_drawing::CNvPrWith` holds.
-    type OfficeDrawing2010ChartDrawingCNvPr: ExtraSlot;
+    type OfficeDrawing2010ChartDrawingCNvPr: UserDataSlot;
     /// What a `office_drawing_2010_chart_drawing::ContentPartWith` holds.
-    type OfficeDrawing2010ChartDrawingContentPart: ExtraSlot;
+    type OfficeDrawing2010ChartDrawingContentPart: UserDataSlot;
     /// What a `office_drawing_2010_chart_drawing::ExtLstWith` holds.
-    type OfficeDrawing2010ChartDrawingExtLst: ExtraSlot;
+    type OfficeDrawing2010ChartDrawingExtLst: UserDataSlot;
     /// What a `office_drawing_2010_chart_drawing::NvContentPartPrWith` holds.
-    type OfficeDrawing2010ChartDrawingNvContentPartPr: ExtraSlot;
+    type OfficeDrawing2010ChartDrawingNvContentPartPr: UserDataSlot;
     /// What a `office_drawing_2010_chart_drawing::NvPrWith` holds.
-    type OfficeDrawing2010ChartDrawingNvPr: ExtraSlot;
+    type OfficeDrawing2010ChartDrawingNvPr: UserDataSlot;
     /// What a `office_drawing_2010_chart_drawing::XfrmWith` holds.
-    type OfficeDrawing2010ChartDrawingXfrm: ExtraSlot;
+    type OfficeDrawing2010ChartDrawingXfrm: UserDataSlot;
     /// What a `office_drawing_2010_compatibility::CompatSpWith` holds.
-    type OfficeDrawing2010CompatibilityCompatSp: ExtraSlot;
+    type OfficeDrawing2010CompatibilityCompatSp: UserDataSlot;
     /// What a `office_drawing_2010_diagram::CNvPrWith` holds.
-    type OfficeDrawing2010DiagramCNvPr: ExtraSlot;
+    type OfficeDrawing2010DiagramCNvPr: UserDataSlot;
     /// What a `office_drawing_2010_diagram::RecolorImgWith` holds.
-    type OfficeDrawing2010DiagramRecolorImg: ExtraSlot;
+    type OfficeDrawing2010DiagramRecolorImg: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticBlurWith` holds.
-    type OfficeDrawing2010MainArtisticBlur: ExtraSlot;
+    type OfficeDrawing2010MainArtisticBlur: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticCementWith` holds.
-    type OfficeDrawing2010MainArtisticCement: ExtraSlot;
+    type OfficeDrawing2010MainArtisticCement: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticChalkSketchWith` holds.
-    type OfficeDrawing2010MainArtisticChalkSketch: ExtraSlot;
+    type OfficeDrawing2010MainArtisticChalkSketch: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticCrisscrossEtchingWith` holds.
-    type OfficeDrawing2010MainArtisticCrisscrossEtching: ExtraSlot;
+    type OfficeDrawing2010MainArtisticCrisscrossEtching: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticCutoutWith` holds.
-    type OfficeDrawing2010MainArtisticCutout: ExtraSlot;
+    type OfficeDrawing2010MainArtisticCutout: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticFilmGrainWith` holds.
-    type OfficeDrawing2010MainArtisticFilmGrain: ExtraSlot;
+    type OfficeDrawing2010MainArtisticFilmGrain: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticGlassWith` holds.
-    type OfficeDrawing2010MainArtisticGlass: ExtraSlot;
+    type OfficeDrawing2010MainArtisticGlass: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticGlowDiffusedWith` holds.
-    type OfficeDrawing2010MainArtisticGlowDiffused: ExtraSlot;
+    type OfficeDrawing2010MainArtisticGlowDiffused: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticGlowEdgesWith` holds.
-    type OfficeDrawing2010MainArtisticGlowEdges: ExtraSlot;
+    type OfficeDrawing2010MainArtisticGlowEdges: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticLightScreenWith` holds.
-    type OfficeDrawing2010MainArtisticLightScreen: ExtraSlot;
+    type OfficeDrawing2010MainArtisticLightScreen: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticLineDrawingWith` holds.
-    type OfficeDrawing2010MainArtisticLineDrawing: ExtraSlot;
+    type OfficeDrawing2010MainArtisticLineDrawing: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticMarkerWith` holds.
-    type OfficeDrawing2010MainArtisticMarker: ExtraSlot;
+    type OfficeDrawing2010MainArtisticMarker: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticMosiaicBubblesWith` holds.
-    type OfficeDrawing2010MainArtisticMosiaicBubbles: ExtraSlot;
+    type OfficeDrawing2010MainArtisticMosiaicBubbles: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticPaintBrushWith` holds.
-    type OfficeDrawing2010MainArtisticPaintBrush: ExtraSlot;
+    type OfficeDrawing2010MainArtisticPaintBrush: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticPaintStrokesWith` holds.
-    type OfficeDrawing2010MainArtisticPaintStrokes: ExtraSlot;
+    type OfficeDrawing2010MainArtisticPaintStrokes: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticPastelsSmoothWith` holds.
-    type OfficeDrawing2010MainArtisticPastelsSmooth: ExtraSlot;
+    type OfficeDrawing2010MainArtisticPastelsSmooth: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticPencilGrayscaleWith` holds.
-    type OfficeDrawing2010MainArtisticPencilGrayscale: ExtraSlot;
+    type OfficeDrawing2010MainArtisticPencilGrayscale: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticPencilSketchWith` holds.
-    type OfficeDrawing2010MainArtisticPencilSketch: ExtraSlot;
+    type OfficeDrawing2010MainArtisticPencilSketch: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticPhotocopyWith` holds.
-    type OfficeDrawing2010MainArtisticPhotocopy: ExtraSlot;
+    type OfficeDrawing2010MainArtisticPhotocopy: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticPlasticWrapWith` holds.
-    type OfficeDrawing2010MainArtisticPlasticWrap: ExtraSlot;
+    type OfficeDrawing2010MainArtisticPlasticWrap: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticTexturizerWith` holds.
-    type OfficeDrawing2010MainArtisticTexturizer: ExtraSlot;
+    type OfficeDrawing2010MainArtisticTexturizer: UserDataSlot;
     /// What a `office_drawing_2010_main::ArtisticWatercolorSpongeWith` holds.
-    type OfficeDrawing2010MainArtisticWatercolorSponge: ExtraSlot;
+    type OfficeDrawing2010MainArtisticWatercolorSponge: UserDataSlot;
     /// What a `office_drawing_2010_main::BackgroundMarkWith` holds.
-    type OfficeDrawing2010MainBackgroundMark: ExtraSlot;
+    type OfficeDrawing2010MainBackgroundMark: UserDataSlot;
     /// What a `office_drawing_2010_main::BackgroundRemovalWith` holds.
-    type OfficeDrawing2010MainBackgroundRemoval: ExtraSlot;
+    type OfficeDrawing2010MainBackgroundRemoval: UserDataSlot;
     /// What a `office_drawing_2010_main::BrightnessContrastWith` holds.
-    type OfficeDrawing2010MainBrightnessContrast: ExtraSlot;
+    type OfficeDrawing2010MainBrightnessContrast: UserDataSlot;
     /// What a `office_drawing_2010_main::CNvContentPartPrWith` holds.
-    type OfficeDrawing2010MainCNvContentPartPr: ExtraSlot;
+    type OfficeDrawing2010MainCNvContentPartPr: UserDataSlot;
     /// What a `office_drawing_2010_main::CNvPrWith` holds.
-    type OfficeDrawing2010MainCNvPr: ExtraSlot;
+    type OfficeDrawing2010MainCNvPr: UserDataSlot;
     /// What a `office_drawing_2010_main::CameraToolWith` holds.
-    type OfficeDrawing2010MainCameraTool: ExtraSlot;
+    type OfficeDrawing2010MainCameraTool: UserDataSlot;
     /// What a `office_drawing_2010_main::ColorTemperatureWith` holds.
-    type OfficeDrawing2010MainColorTemperature: ExtraSlot;
+    type OfficeDrawing2010MainColorTemperature: UserDataSlot;
     /// What a `office_drawing_2010_main::CompatExtWith` holds.
-    type OfficeDrawing2010MainCompatExt: ExtraSlot;
+    type OfficeDrawing2010MainCompatExt: UserDataSlot;
     /// What a `office_drawing_2010_main::ContentPartWith` holds.
-    type OfficeDrawing2010MainContentPart: ExtraSlot;
+    type OfficeDrawing2010MainContentPart: UserDataSlot;
     /// What a `office_drawing_2010_main::CpLocksWith` holds.
-    type OfficeDrawing2010MainCpLocks: ExtraSlot;
+    type OfficeDrawing2010MainCpLocks: UserDataSlot;
     /// What a `office_drawing_2010_main::ExtLstWith` holds.
-    type OfficeDrawing2010MainExtLst: ExtraSlot;
+    type OfficeDrawing2010MainExtLst: UserDataSlot;
     /// What a `office_drawing_2010_main::ForegroundMarkWith` holds.
-    type OfficeDrawing2010MainForegroundMark: ExtraSlot;
+    type OfficeDrawing2010MainForegroundMark: UserDataSlot;
     /// What a `office_drawing_2010_main::HiddenEffectsWith` holds.
-    type OfficeDrawing2010MainHiddenEffects: ExtraSlot;
+    type OfficeDrawing2010MainHiddenEffects: UserDataSlot;
     /// What a `office_drawing_2010_main::HiddenFillWith` holds.
-    type OfficeDrawing2010MainHiddenFill: ExtraSlot;
+    type OfficeDrawing2010MainHiddenFill: UserDataSlot;
     /// What a `office_drawing_2010_main::HiddenLineWith` holds.
-    type OfficeDrawing2010MainHiddenLine: ExtraSlot;
+    type OfficeDrawing2010MainHiddenLine: UserDataSlot;
     /// What a `office_drawing_2010_main::HiddenScene3dWith` holds.
-    type OfficeDrawing2010MainHiddenScene3d: ExtraSlot;
+    type OfficeDrawing2010MainHiddenScene3d: UserDataSlot;
     /// What a `office_drawing_2010_main::HiddenSp3dWith` holds.
-    type OfficeDrawing2010MainHiddenSp3d: ExtraSlot;
+    type OfficeDrawing2010MainHiddenSp3d: UserDataSlot;
     /// What a `office_drawing_2010_main::ImgEffectWith` holds.
-    type OfficeDrawing2010MainImgEffect: ExtraSlot;
+    type OfficeDrawing2010MainImgEffect: UserDataSlot;
     /// What a `office_drawing_2010_main::ImgLayerWith` holds.
-    type OfficeDrawing2010MainImgLayer: ExtraSlot;
+    type OfficeDrawing2010MainImgLayer: UserDataSlot;
     /// What a `office_drawing_2010_main::ImgPropsWith` holds.
-    type OfficeDrawing2010MainImgProps: ExtraSlot;
+    type OfficeDrawing2010MainImgProps: UserDataSlot;
     /// What a `office_drawing_2010_main::IsCanvasWith` holds.
-    type OfficeDrawing2010MainIsCanvas: ExtraSlot;
+    type OfficeDrawing2010MainIsCanvas: UserDataSlot;
     /// What a `office_drawing_2010_main::MWith` holds.
-    type OfficeDrawing2010MainM: ExtraSlot;
+    type OfficeDrawing2010MainM: UserDataSlot;
     /// What a `office_drawing_2010_main::NvContentPartPrWith` holds.
-    type OfficeDrawing2010MainNvContentPartPr: ExtraSlot;
+    type OfficeDrawing2010MainNvContentPartPr: UserDataSlot;
     /// What a `office_drawing_2010_main::SaturationWith` holds.
-    type OfficeDrawing2010MainSaturation: ExtraSlot;
+    type OfficeDrawing2010MainSaturation: UserDataSlot;
     /// What a `office_drawing_2010_main::ShadowObscuredWith` holds.
-    type OfficeDrawing2010MainShadowObscured: ExtraSlot;
+    type OfficeDrawing2010MainShadowObscured: UserDataSlot;
     /// What a `office_drawing_2010_main::SharpenSoftenWith` holds.
-    type OfficeDrawing2010MainSharpenSoften: ExtraSlot;
+    type OfficeDrawing2010MainSharpenSoften: UserDataSlot;
     /// What a `office_drawing_2010_main::UseLocalDpiWith` holds.
-    type OfficeDrawing2010MainUseLocalDpi: ExtraSlot;
+    type OfficeDrawing2010MainUseLocalDpi: UserDataSlot;
     /// What a `office_drawing_2010_main::XfrmWith` holds.
-    type OfficeDrawing2010MainXfrm: ExtraSlot;
+    type OfficeDrawing2010MainXfrm: UserDataSlot;
     /// What a `office_drawing_2010_picture::ExtLstWith` holds.
-    type OfficeDrawing2010PictureExtLst: ExtraSlot;
+    type OfficeDrawing2010PictureExtLst: UserDataSlot;
     /// What a `office_drawing_2010_picture::StyleWith` holds.
-    type OfficeDrawing2010PictureStyle: ExtraSlot;
+    type OfficeDrawing2010PictureStyle: UserDataSlot;
     /// What a `office_drawing_2010_slicer::ExtLstWith` holds.
-    type OfficeDrawing2010SlicerExtLst: ExtraSlot;
+    type OfficeDrawing2010SlicerExtLst: UserDataSlot;
     /// What a `office_drawing_2010_slicer::SlicerWith` holds.
-    type OfficeDrawing2010SlicerSlicer: ExtraSlot;
+    type OfficeDrawing2010SlicerSlicer: UserDataSlot;
     /// What a `office_drawing_2012_chart::AutoCatWith` holds.
-    type OfficeDrawing2012ChartAutoCat: ExtraSlot;
+    type OfficeDrawing2012ChartAutoCat: UserDataSlot;
     /// What a `office_drawing_2012_chart::Bubble3DWith` holds.
-    type OfficeDrawing2012ChartBubble3D: ExtraSlot;
+    type OfficeDrawing2012ChartBubble3D: UserDataSlot;
     /// What a `office_drawing_2012_chart::CatWith` holds.
-    type OfficeDrawing2012ChartCat: ExtraSlot;
+    type OfficeDrawing2012ChartCat: UserDataSlot;
     /// What a `office_drawing_2012_chart::CategoryFilterExceptionWith` holds.
-    type OfficeDrawing2012ChartCategoryFilterException: ExtraSlot;
+    type OfficeDrawing2012ChartCategoryFilterException: UserDataSlot;
     /// What a `office_drawing_2012_chart::CategoryFilterExceptionsWith` holds.
-    type OfficeDrawing2012ChartCategoryFilterExceptions: ExtraSlot;
+    type OfficeDrawing2012ChartCategoryFilterExceptions: UserDataSlot;
     /// What a `office_drawing_2012_chart::DLblWith` holds.
-    type OfficeDrawing2012ChartDLbl: ExtraSlot;
+    type OfficeDrawing2012ChartDLbl: UserDataSlot;
     /// What a `office_drawing_2012_chart::DatalabelsRangeWith` holds.
-    type OfficeDrawing2012ChartDatalabelsRange: ExtraSlot;
+    type OfficeDrawing2012ChartDatalabelsRange: UserDataSlot;
     /// What a `office_drawing_2012_chart::DlblFTEntryWith` holds.
-    type OfficeDrawing2012ChartDlblFTEntry: ExtraSlot;
+    type OfficeDrawing2012ChartDlblFTEntry: UserDataSlot;
     /// What a `office_drawing_2012_chart::DlblFieldTableWith` holds.
-    type OfficeDrawing2012ChartDlblFieldTable: ExtraSlot;
+    type OfficeDrawing2012ChartDlblFieldTable: UserDataSlot;
     /// What a `office_drawing_2012_chart::DlblFieldTableCacheWith` holds.
-    type OfficeDrawing2012ChartDlblFieldTableCache: ExtraSlot;
+    type OfficeDrawing2012ChartDlblFieldTableCache: UserDataSlot;
     /// What a `office_drawing_2012_chart::DlblRangeCacheWith` holds.
-    type OfficeDrawing2012ChartDlblRangeCache: ExtraSlot;
+    type OfficeDrawing2012ChartDlblRangeCache: UserDataSlot;
     /// What a `office_drawing_2012_chart::ExplosionWith` holds.
-    type OfficeDrawing2012ChartExplosion: ExtraSlot;
+    type OfficeDrawing2012ChartExplosion: UserDataSlot;
     /// What a `office_drawing_2012_chart::FWith` holds.
-    type OfficeDrawing2012ChartF: ExtraSlot;
+    type OfficeDrawing2012ChartF: UserDataSlot;
     /// What a `office_drawing_2012_chart::FilteredAreaSeriesWith` holds.
-    type OfficeDrawing2012ChartFilteredAreaSeries: ExtraSlot;
+    type OfficeDrawing2012ChartFilteredAreaSeries: UserDataSlot;
     /// What a `office_drawing_2012_chart::FilteredBarSeriesWith` holds.
-    type OfficeDrawing2012ChartFilteredBarSeries: ExtraSlot;
+    type OfficeDrawing2012ChartFilteredBarSeries: UserDataSlot;
     /// What a `office_drawing_2012_chart::FilteredBubbleSeriesWith` holds.
-    type OfficeDrawing2012ChartFilteredBubbleSeries: ExtraSlot;
+    type OfficeDrawing2012ChartFilteredBubbleSeries: UserDataSlot;
     /// What a `office_drawing_2012_chart::FilteredCategoryTitleWith` holds.
-    type OfficeDrawing2012ChartFilteredCategoryTitle: ExtraSlot;
+    type OfficeDrawing2012ChartFilteredCategoryTitle: UserDataSlot;
     /// What a `office_drawing_2012_chart::FilteredLineSeriesWith` holds.
-    type OfficeDrawing2012ChartFilteredLineSeries: ExtraSlot;
+    type OfficeDrawing2012ChartFilteredLineSeries: UserDataSlot;
     /// What a `office_drawing_2012_chart::FilteredPieSeriesWith` holds.
-    type OfficeDrawing2012ChartFilteredPieSeries: ExtraSlot;
+    type OfficeDrawing2012ChartFilteredPieSeries: UserDataSlot;
     /// What a `office_drawing_2012_chart::FilteredRadarSeriesWith` holds.
-    type OfficeDrawing2012ChartFilteredRadarSeries: ExtraSlot;
+    type OfficeDrawing2012ChartFilteredRadarSeries: UserDataSlot;
     /// What a `office_drawing_2012_chart::FilteredScatterSeriesWith` holds.
-    type OfficeDrawing2012ChartFilteredScatterSeries: ExtraSlot;
+    type OfficeDrawing2012ChartFilteredScatterSeries: UserDataSlot;
     /// What a `office_drawing_2012_chart::FilteredSeriesTitleWith` holds.
-    type OfficeDrawing2012ChartFilteredSeriesTitle: ExtraSlot;
+    type OfficeDrawing2012ChartFilteredSeriesTitle: UserDataSlot;
     /// What a `office_drawing_2012_chart::FilteredSurfaceSeriesWith` holds.
-    type OfficeDrawing2012ChartFilteredSurfaceSeries: ExtraSlot;
+    type OfficeDrawing2012ChartFilteredSurfaceSeries: UserDataSlot;
     /// What a `office_drawing_2012_chart::FormulaRefWith` holds.
-    type OfficeDrawing2012ChartFormulaRef: ExtraSlot;
+    type OfficeDrawing2012ChartFormulaRef: UserDataSlot;
     /// What a `office_drawing_2012_chart::FullRefWith` holds.
-    type OfficeDrawing2012ChartFullRef: ExtraSlot;
+    type OfficeDrawing2012ChartFullRef: UserDataSlot;
     /// What a `office_drawing_2012_chart::InvertIfNegativeWith` holds.
-    type OfficeDrawing2012ChartInvertIfNegative: ExtraSlot;
+    type OfficeDrawing2012ChartInvertIfNegative: UserDataSlot;
     /// What a `office_drawing_2012_chart::LayoutWith` holds.
-    type OfficeDrawing2012ChartLayout: ExtraSlot;
+    type OfficeDrawing2012ChartLayout: UserDataSlot;
     /// What a `office_drawing_2012_chart::LeaderLinesWith` holds.
-    type OfficeDrawing2012ChartLeaderLines: ExtraSlot;
+    type OfficeDrawing2012ChartLeaderLines: UserDataSlot;
     /// What a `office_drawing_2012_chart::LevelRefWith` holds.
-    type OfficeDrawing2012ChartLevelRef: ExtraSlot;
+    type OfficeDrawing2012ChartLevelRef: UserDataSlot;
     /// What a `office_drawing_2012_chart::MarkerWith` holds.
-    type OfficeDrawing2012ChartMarker: ExtraSlot;
+    type OfficeDrawing2012ChartMarker: UserDataSlot;
     /// What a `office_drawing_2012_chart::NumFmtWith` holds.
-    type OfficeDrawing2012ChartNumFmt: ExtraSlot;
+    type OfficeDrawing2012ChartNumFmt: UserDataSlot;
     /// What a `office_drawing_2012_chart::PivotSourceWith` holds.
-    type OfficeDrawing2012ChartPivotSource: ExtraSlot;
+    type OfficeDrawing2012ChartPivotSource: UserDataSlot;
     /// What a `office_drawing_2012_chart::SerAreaSerWith` holds.
-    type OfficeDrawing2012ChartSerAreaSer: ExtraSlot;
+    type OfficeDrawing2012ChartSerAreaSer: UserDataSlot;
     /// What a `office_drawing_2012_chart::SerBarSerWith` holds.
-    type OfficeDrawing2012ChartSerBarSer: ExtraSlot;
+    type OfficeDrawing2012ChartSerBarSer: UserDataSlot;
     /// What a `office_drawing_2012_chart::SerBubbleSerWith` holds.
-    type OfficeDrawing2012ChartSerBubbleSer: ExtraSlot;
+    type OfficeDrawing2012ChartSerBubbleSer: UserDataSlot;
     /// What a `office_drawing_2012_chart::SerLineSerWith` holds.
-    type OfficeDrawing2012ChartSerLineSer: ExtraSlot;
+    type OfficeDrawing2012ChartSerLineSer: UserDataSlot;
     /// What a `office_drawing_2012_chart::SerPieSerWith` holds.
-    type OfficeDrawing2012ChartSerPieSer: ExtraSlot;
+    type OfficeDrawing2012ChartSerPieSer: UserDataSlot;
     /// What a `office_drawing_2012_chart::SerRadarSerWith` holds.
-    type OfficeDrawing2012ChartSerRadarSer: ExtraSlot;
+    type OfficeDrawing2012ChartSerRadarSer: UserDataSlot;
     /// What a `office_drawing_2012_chart::SerScatterSerWith` holds.
-    type OfficeDrawing2012ChartSerScatterSer: ExtraSlot;
+    type OfficeDrawing2012ChartSerScatterSer: UserDataSlot;
     /// What a `office_drawing_2012_chart::SerSurfaceSerWith` holds.
-    type OfficeDrawing2012ChartSerSurfaceSer: ExtraSlot;
+    type OfficeDrawing2012ChartSerSurfaceSer: UserDataSlot;
     /// What a `office_drawing_2012_chart::ShowDataLabelsRangeWith` holds.
-    type OfficeDrawing2012ChartShowDataLabelsRange: ExtraSlot;
+    type OfficeDrawing2012ChartShowDataLabelsRange: UserDataSlot;
     /// What a `office_drawing_2012_chart::ShowLeaderLinesWith` holds.
-    type OfficeDrawing2012ChartShowLeaderLines: ExtraSlot;
+    type OfficeDrawing2012ChartShowLeaderLines: UserDataSlot;
     /// What a `office_drawing_2012_chart::SpPrWith` holds.
-    type OfficeDrawing2012ChartSpPr: ExtraSlot;
+    type OfficeDrawing2012ChartSpPr: UserDataSlot;
     /// What a `office_drawing_2012_chart::SqrefWith` holds.
-    type OfficeDrawing2012ChartSqref: ExtraSlot;
+    type OfficeDrawing2012ChartSqref: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::AxisTitleWith` holds.
-    type OfficeDrawing2012ChartStyleAxisTitle: ExtraSlot;
+    type OfficeDrawing2012ChartStyleAxisTitle: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::BodyPrWith` holds.
-    type OfficeDrawing2012ChartStyleBodyPr: ExtraSlot;
+    type OfficeDrawing2012ChartStyleBodyPr: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::CategoryAxisAxisPropsWith` holds.
-    type OfficeDrawing2012ChartStyleCategoryAxisAxisProps: ExtraSlot;
+    type OfficeDrawing2012ChartStyleCategoryAxisAxisProps: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::CategoryAxisStyleEntryWith` holds.
-    type OfficeDrawing2012ChartStyleCategoryAxisStyleEntry: ExtraSlot;
+    type OfficeDrawing2012ChartStyleCategoryAxisStyleEntry: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::ChartAreaWith` holds.
-    type OfficeDrawing2012ChartStyleChartArea: ExtraSlot;
+    type OfficeDrawing2012ChartStyleChartArea: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::ChartStyleWith` holds.
-    type OfficeDrawing2012ChartStyleChartStyle: ExtraSlot;
+    type OfficeDrawing2012ChartStyleChartStyle: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::ColorStyleWith` holds.
-    type OfficeDrawing2012ChartStyleColorStyle: ExtraSlot;
+    type OfficeDrawing2012ChartStyleColorStyle: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::DataLabelWith` holds.
-    type OfficeDrawing2012ChartStyleDataLabel: ExtraSlot;
+    type OfficeDrawing2012ChartStyleDataLabel: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::DataLabelCalloutWith` holds.
-    type OfficeDrawing2012ChartStyleDataLabelCallout: ExtraSlot;
+    type OfficeDrawing2012ChartStyleDataLabelCallout: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::DataLabelsWith` holds.
-    type OfficeDrawing2012ChartStyleDataLabels: ExtraSlot;
+    type OfficeDrawing2012ChartStyleDataLabels: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::DataPointWith` holds.
-    type OfficeDrawing2012ChartStyleDataPoint: ExtraSlot;
+    type OfficeDrawing2012ChartStyleDataPoint: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::DataPoint3DWith` holds.
-    type OfficeDrawing2012ChartStyleDataPoint3D: ExtraSlot;
+    type OfficeDrawing2012ChartStyleDataPoint3D: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::DataPointLineWith` holds.
-    type OfficeDrawing2012ChartStyleDataPointLine: ExtraSlot;
+    type OfficeDrawing2012ChartStyleDataPointLine: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::DataPointMarkerWith` holds.
-    type OfficeDrawing2012ChartStyleDataPointMarker: ExtraSlot;
+    type OfficeDrawing2012ChartStyleDataPointMarker: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::DataPointMarkerLayoutWith` holds.
-    type OfficeDrawing2012ChartStyleDataPointMarkerLayout: ExtraSlot;
+    type OfficeDrawing2012ChartStyleDataPointMarkerLayout: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::DataPointWireframeWith` holds.
-    type OfficeDrawing2012ChartStyleDataPointWireframe: ExtraSlot;
+    type OfficeDrawing2012ChartStyleDataPointWireframe: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::DataSeriesWith` holds.
-    type OfficeDrawing2012ChartStyleDataSeries: ExtraSlot;
+    type OfficeDrawing2012ChartStyleDataSeries: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::DataTableDataTablePropsWith` holds.
-    type OfficeDrawing2012ChartStyleDataTableDataTableProps: ExtraSlot;
+    type OfficeDrawing2012ChartStyleDataTableDataTableProps: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::DataTableStyleEntryWith` holds.
-    type OfficeDrawing2012ChartStyleDataTableStyleEntry: ExtraSlot;
+    type OfficeDrawing2012ChartStyleDataTableStyleEntry: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::DefRPrWith` holds.
-    type OfficeDrawing2012ChartStyleDefRPr: ExtraSlot;
+    type OfficeDrawing2012ChartStyleDefRPr: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::DownBarWith` holds.
-    type OfficeDrawing2012ChartStyleDownBar: ExtraSlot;
+    type OfficeDrawing2012ChartStyleDownBar: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::DropLineWith` holds.
-    type OfficeDrawing2012ChartStyleDropLine: ExtraSlot;
+    type OfficeDrawing2012ChartStyleDropLine: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::EffectRefWith` holds.
-    type OfficeDrawing2012ChartStyleEffectRef: ExtraSlot;
+    type OfficeDrawing2012ChartStyleEffectRef: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::ErrorBarWith` holds.
-    type OfficeDrawing2012ChartStyleErrorBar: ExtraSlot;
+    type OfficeDrawing2012ChartStyleErrorBar: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::ExtLstWith` holds.
-    type OfficeDrawing2012ChartStyleExtLst: ExtraSlot;
+    type OfficeDrawing2012ChartStyleExtLst: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::FillRefWith` holds.
-    type OfficeDrawing2012ChartStyleFillRef: ExtraSlot;
+    type OfficeDrawing2012ChartStyleFillRef: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::FloorWith` holds.
-    type OfficeDrawing2012ChartStyleFloor: ExtraSlot;
+    type OfficeDrawing2012ChartStyleFloor: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::FontRefWith` holds.
-    type OfficeDrawing2012ChartStyleFontRef: ExtraSlot;
+    type OfficeDrawing2012ChartStyleFontRef: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::GridlineMajorWith` holds.
-    type OfficeDrawing2012ChartStyleGridlineMajor: ExtraSlot;
+    type OfficeDrawing2012ChartStyleGridlineMajor: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::GridlineMinorWith` holds.
-    type OfficeDrawing2012ChartStyleGridlineMinor: ExtraSlot;
+    type OfficeDrawing2012ChartStyleGridlineMinor: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::HiLoLineWith` holds.
-    type OfficeDrawing2012ChartStyleHiLoLine: ExtraSlot;
+    type OfficeDrawing2012ChartStyleHiLoLine: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::LeaderLineWith` holds.
-    type OfficeDrawing2012ChartStyleLeaderLine: ExtraSlot;
+    type OfficeDrawing2012ChartStyleLeaderLine: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::LegendLegendPropsWith` holds.
-    type OfficeDrawing2012ChartStyleLegendLegendProps: ExtraSlot;
+    type OfficeDrawing2012ChartStyleLegendLegendProps: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::LegendStyleEntryWith` holds.
-    type OfficeDrawing2012ChartStyleLegendStyleEntry: ExtraSlot;
+    type OfficeDrawing2012ChartStyleLegendStyleEntry: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::LineWidthScaleWith` holds.
-    type OfficeDrawing2012ChartStyleLineWidthScale: ExtraSlot;
+    type OfficeDrawing2012ChartStyleLineWidthScale: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::LnRefWith` holds.
-    type OfficeDrawing2012ChartStyleLnRef: ExtraSlot;
+    type OfficeDrawing2012ChartStyleLnRef: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::PlotAreaWith` holds.
-    type OfficeDrawing2012ChartStylePlotArea: ExtraSlot;
+    type OfficeDrawing2012ChartStylePlotArea: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::PlotArea3DWith` holds.
-    type OfficeDrawing2012ChartStylePlotArea3D: ExtraSlot;
+    type OfficeDrawing2012ChartStylePlotArea3D: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::SeriesAxisAxisPropsWith` holds.
-    type OfficeDrawing2012ChartStyleSeriesAxisAxisProps: ExtraSlot;
+    type OfficeDrawing2012ChartStyleSeriesAxisAxisProps: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::SeriesAxisStyleEntryWith` holds.
-    type OfficeDrawing2012ChartStyleSeriesAxisStyleEntry: ExtraSlot;
+    type OfficeDrawing2012ChartStyleSeriesAxisStyleEntry: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::SeriesLineWith` holds.
-    type OfficeDrawing2012ChartStyleSeriesLine: ExtraSlot;
+    type OfficeDrawing2012ChartStyleSeriesLine: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::SpPrWith` holds.
-    type OfficeDrawing2012ChartStyleSpPr: ExtraSlot;
+    type OfficeDrawing2012ChartStyleSpPr: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::StyleClrWith` holds.
-    type OfficeDrawing2012ChartStyleStyleClr: ExtraSlot;
+    type OfficeDrawing2012ChartStyleStyleClr: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::TitleStyleEntryWith` holds.
-    type OfficeDrawing2012ChartStyleTitleStyleEntry: ExtraSlot;
+    type OfficeDrawing2012ChartStyleTitleStyleEntry: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::TitleTitlePropsWith` holds.
-    type OfficeDrawing2012ChartStyleTitleTitleProps: ExtraSlot;
+    type OfficeDrawing2012ChartStyleTitleTitleProps: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::TrendlineLabelWith` holds.
-    type OfficeDrawing2012ChartStyleTrendlineLabel: ExtraSlot;
+    type OfficeDrawing2012ChartStyleTrendlineLabel: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::TrendlineStyleEntryWith` holds.
-    type OfficeDrawing2012ChartStyleTrendlineStyleEntry: ExtraSlot;
+    type OfficeDrawing2012ChartStyleTrendlineStyleEntry: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::TrendlineTrendlinePropsWith` holds.
-    type OfficeDrawing2012ChartStyleTrendlineTrendlineProps: ExtraSlot;
+    type OfficeDrawing2012ChartStyleTrendlineTrendlineProps: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::UpBarWith` holds.
-    type OfficeDrawing2012ChartStyleUpBar: ExtraSlot;
+    type OfficeDrawing2012ChartStyleUpBar: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::ValueAxisAxisPropsWith` holds.
-    type OfficeDrawing2012ChartStyleValueAxisAxisProps: ExtraSlot;
+    type OfficeDrawing2012ChartStyleValueAxisAxisProps: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::ValueAxisStyleEntryWith` holds.
-    type OfficeDrawing2012ChartStyleValueAxisStyleEntry: ExtraSlot;
+    type OfficeDrawing2012ChartStyleValueAxisStyleEntry: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::VariationWith` holds.
-    type OfficeDrawing2012ChartStyleVariation: ExtraSlot;
+    type OfficeDrawing2012ChartStyleVariation: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::View3DWith` holds.
-    type OfficeDrawing2012ChartStyleView3D: ExtraSlot;
+    type OfficeDrawing2012ChartStyleView3D: UserDataSlot;
     /// What a `office_drawing_2012_chart_style::WallWith` holds.
-    type OfficeDrawing2012ChartStyleWall: ExtraSlot;
+    type OfficeDrawing2012ChartStyleWall: UserDataSlot;
     /// What a `office_drawing_2012_chart::TxWith` holds.
-    type OfficeDrawing2012ChartTx: ExtraSlot;
+    type OfficeDrawing2012ChartTx: UserDataSlot;
     /// What a `office_drawing_2012_chart::TxfldGUIDWith` holds.
-    type OfficeDrawing2012ChartTxfldGUID: ExtraSlot;
+    type OfficeDrawing2012ChartTxfldGUID: UserDataSlot;
     /// What a `office_drawing_2012_chart::XForSaveWith` holds.
-    type OfficeDrawing2012ChartXForSave: ExtraSlot;
+    type OfficeDrawing2012ChartXForSave: UserDataSlot;
     /// What a `office_drawing_2012_main::BackgroundPrWith` holds.
-    type OfficeDrawing2012MainBackgroundPr: ExtraSlot;
+    type OfficeDrawing2012MainBackgroundPr: UserDataSlot;
     /// What a `office_drawing_2012_main::NonVisualGroupPropsWith` holds.
-    type OfficeDrawing2012MainNonVisualGroupProps: ExtraSlot;
+    type OfficeDrawing2012MainNonVisualGroupProps: UserDataSlot;
     /// What a `office_drawing_2012_main::ObjectPrWith` holds.
-    type OfficeDrawing2012MainObjectPr: ExtraSlot;
+    type OfficeDrawing2012MainObjectPr: UserDataSlot;
     /// What a `office_drawing_2012_main::SignatureLineWith` holds.
-    type OfficeDrawing2012MainSignatureLine: ExtraSlot;
+    type OfficeDrawing2012MainSignatureLine: UserDataSlot;
     /// What a `office_drawing_2012_timeslicer::ExtLstWith` holds.
-    type OfficeDrawing2012TimeslicerExtLst: ExtraSlot;
+    type OfficeDrawing2012TimeslicerExtLst: UserDataSlot;
     /// What a `office_drawing_2012_timeslicer::TimeslicerWith` holds.
-    type OfficeDrawing2012TimeslicerTimeslicer: ExtraSlot;
+    type OfficeDrawing2012TimeslicerTimeslicer: UserDataSlot;
     /// What a `office_drawing_2013_main_command::BlipFillBlipFillPropertiesWith` holds.
-    type OfficeDrawing2013MainCommandBlipFillBlipFillProperties: ExtraSlot;
+    type OfficeDrawing2013MainCommandBlipFillBlipFillProperties: UserDataSlot;
     /// What a `office_drawing_2013_main_command::BlipFillResetBlipFillPropertiesWith` holds.
-    type OfficeDrawing2013MainCommandBlipFillResetBlipFillProperties: ExtraSlot;
+    type OfficeDrawing2013MainCommandBlipFillResetBlipFillProperties: UserDataSlot;
     /// What a `office_drawing_2013_main_command::BodyPrWith` holds.
-    type OfficeDrawing2013MainCommandBodyPr: ExtraSlot;
+    type OfficeDrawing2013MainCommandBodyPr: UserDataSlot;
     /// What a `office_drawing_2013_main_command::BoundsWith` holds.
-    type OfficeDrawing2013MainCommandBounds: ExtraSlot;
+    type OfficeDrawing2013MainCommandBounds: UserDataSlot;
     /// What a `office_drawing_2013_main_command::BwModeWith` holds.
-    type OfficeDrawing2013MainCommandBwMode: ExtraSlot;
+    type OfficeDrawing2013MainCommandBwMode: UserDataSlot;
     /// What a `office_drawing_2013_main_command::CNvCxnSpPrModifyNonVisualConnectorPropsWith` holds.
-    type OfficeDrawing2013MainCommandCNvCxnSpPrModifyNonVisualConnectorProps: ExtraSlot;
+    type OfficeDrawing2013MainCommandCNvCxnSpPrModifyNonVisualConnectorProps: UserDataSlot;
     /// What a `office_drawing_2013_main_command::CNvCxnSpPrResetNonVisualConnectorPropsWith` holds.
-    type OfficeDrawing2013MainCommandCNvCxnSpPrResetNonVisualConnectorProps: ExtraSlot;
+    type OfficeDrawing2013MainCommandCNvCxnSpPrResetNonVisualConnectorProps: UserDataSlot;
     /// What a `office_drawing_2013_main_command::CNvGraphicFramePrWith` holds.
-    type OfficeDrawing2013MainCommandCNvGraphicFramePr: ExtraSlot;
+    type OfficeDrawing2013MainCommandCNvGraphicFramePr: UserDataSlot;
     /// What a `office_drawing_2013_main_command::CNvGrpSpPrModifyNonVisualGroupDrawingShapePropsWith` holds.
-    type OfficeDrawing2013MainCommandCNvGrpSpPrModifyNonVisualGroupDrawingShapeProps: ExtraSlot;
+    type OfficeDrawing2013MainCommandCNvGrpSpPrModifyNonVisualGroupDrawingShapeProps: UserDataSlot;
     /// What a `office_drawing_2013_main_command::CNvGrpSpPrNonVisualGroupDrawingShapePropsWith` holds.
-    type OfficeDrawing2013MainCommandCNvGrpSpPrNonVisualGroupDrawingShapeProps: ExtraSlot;
+    type OfficeDrawing2013MainCommandCNvGrpSpPrNonVisualGroupDrawingShapeProps: UserDataSlot;
     /// What a `office_drawing_2013_main_command::CNvInkPrWith` holds.
-    type OfficeDrawing2013MainCommandCNvInkPr: ExtraSlot;
+    type OfficeDrawing2013MainCommandCNvInkPr: UserDataSlot;
     /// What a `office_drawing_2013_main_command::CNvPicPrModifyNonVisualPicturePropsWith` holds.
-    type OfficeDrawing2013MainCommandCNvPicPrModifyNonVisualPictureProps: ExtraSlot;
+    type OfficeDrawing2013MainCommandCNvPicPrModifyNonVisualPictureProps: UserDataSlot;
     /// What a `office_drawing_2013_main_command::CNvPicPrResetNonVisualPicturePropsWith` holds.
-    type OfficeDrawing2013MainCommandCNvPicPrResetNonVisualPictureProps: ExtraSlot;
+    type OfficeDrawing2013MainCommandCNvPicPrResetNonVisualPictureProps: UserDataSlot;
     /// What a `office_drawing_2013_main_command::CNvPrModifyNonVisualDrawingPropsWith` holds.
-    type OfficeDrawing2013MainCommandCNvPrModifyNonVisualDrawingProps: ExtraSlot;
+    type OfficeDrawing2013MainCommandCNvPrModifyNonVisualDrawingProps: UserDataSlot;
     /// What a `office_drawing_2013_main_command::CNvPrNonVisualDrawingPropsWith` holds.
-    type OfficeDrawing2013MainCommandCNvPrNonVisualDrawingProps: ExtraSlot;
+    type OfficeDrawing2013MainCommandCNvPrNonVisualDrawingProps: UserDataSlot;
     /// What a `office_drawing_2013_main_command::CNvSpPrWith` holds.
-    type OfficeDrawing2013MainCommandCNvSpPr: ExtraSlot;
+    type OfficeDrawing2013MainCommandCNvSpPr: UserDataSlot;
     /// What a `office_drawing_2013_main_command::CompressPicPrWith` holds.
-    type OfficeDrawing2013MainCommandCompressPicPr: ExtraSlot;
+    type OfficeDrawing2013MainCommandCompressPicPr: UserDataSlot;
     /// What a `office_drawing_2013_main_command::ContextTextCharRangeContextWith` holds.
-    type OfficeDrawing2013MainCommandContextTextCharRangeContext: ExtraSlot;
+    type OfficeDrawing2013MainCommandContextTextCharRangeContext: UserDataSlot;
     /// What a `office_drawing_2013_main_command::CxnSpMkWith` holds.
-    type OfficeDrawing2013MainCommandCxnSpMk: ExtraSlot;
+    type OfficeDrawing2013MainCommandCxnSpMk: UserDataSlot;
     /// What a `office_drawing_2013_main_command::CxnSpMkLstWith` holds.
-    type OfficeDrawing2013MainCommandCxnSpMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandCxnSpMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::DcMkLstWith` holds.
-    type OfficeDrawing2013MainCommandDcMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandDcMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::DeMasterMkLstWith` holds.
-    type OfficeDrawing2013MainCommandDeMasterMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandDeMasterMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::DeMkLstWith` holds.
-    type OfficeDrawing2013MainCommandDeMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandDeMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::DePkgWith` holds.
-    type OfficeDrawing2013MainCommandDePkg: ExtraSlot;
+    type OfficeDrawing2013MainCommandDePkg: UserDataSlot;
     /// What a `office_drawing_2013_main_command::DeSrcMkLstWith` holds.
-    type OfficeDrawing2013MainCommandDeSrcMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandDeSrcMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::DeTgtMkLstWith` holds.
-    type OfficeDrawing2013MainCommandDeTgtMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandDeTgtMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::DgMkLstWith` holds.
-    type OfficeDrawing2013MainCommandDgMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandDgMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::DpiWith` holds.
-    type OfficeDrawing2013MainCommandDpi: ExtraSlot;
+    type OfficeDrawing2013MainCommandDpi: UserDataSlot;
     /// What a `office_drawing_2013_main_command::DrSelLstWith` holds.
-    type OfficeDrawing2013MainCommandDrSelLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandDrSelLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::EditorSelLstWith` holds.
-    type OfficeDrawing2013MainCommandEditorSelLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandEditorSelLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::EffectWith` holds.
-    type OfficeDrawing2013MainCommandEffect: ExtraSlot;
+    type OfficeDrawing2013MainCommandEffect: UserDataSlot;
     /// What a `office_drawing_2013_main_command::EffectRefWith` holds.
-    type OfficeDrawing2013MainCommandEffectRef: ExtraSlot;
+    type OfficeDrawing2013MainCommandEffectRef: UserDataSlot;
     /// What a `office_drawing_2013_main_command::EndCxnConnectionWith` holds.
-    type OfficeDrawing2013MainCommandEndCxnConnection: ExtraSlot;
+    type OfficeDrawing2013MainCommandEndCxnConnection: UserDataSlot;
     /// What a `office_drawing_2013_main_command::EndCxnEmptyWith` holds.
-    type OfficeDrawing2013MainCommandEndCxnEmpty: ExtraSlot;
+    type OfficeDrawing2013MainCommandEndCxnEmpty: UserDataSlot;
     /// What a `office_drawing_2013_main_command::ExtLstWith` holds.
-    type OfficeDrawing2013MainCommandExtLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandExtLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::FillWith` holds.
-    type OfficeDrawing2013MainCommandFill: ExtraSlot;
+    type OfficeDrawing2013MainCommandFill: UserDataSlot;
     /// What a `office_drawing_2013_main_command::FillModeWith` holds.
-    type OfficeDrawing2013MainCommandFillMode: ExtraSlot;
+    type OfficeDrawing2013MainCommandFillMode: UserDataSlot;
     /// What a `office_drawing_2013_main_command::FillRectWith` holds.
-    type OfficeDrawing2013MainCommandFillRect: ExtraSlot;
+    type OfficeDrawing2013MainCommandFillRect: UserDataSlot;
     /// What a `office_drawing_2013_main_command::FillRefWith` holds.
-    type OfficeDrawing2013MainCommandFillRef: ExtraSlot;
+    type OfficeDrawing2013MainCommandFillRef: UserDataSlot;
     /// What a `office_drawing_2013_main_command::FontRefWith` holds.
-    type OfficeDrawing2013MainCommandFontRef: ExtraSlot;
+    type OfficeDrawing2013MainCommandFontRef: UserDataSlot;
     /// What a `office_drawing_2013_main_command::GeomWith` holds.
-    type OfficeDrawing2013MainCommandGeom: ExtraSlot;
+    type OfficeDrawing2013MainCommandGeom: UserDataSlot;
     /// What a `office_drawing_2013_main_command::GraphicFrameMkWith` holds.
-    type OfficeDrawing2013MainCommandGraphicFrameMk: ExtraSlot;
+    type OfficeDrawing2013MainCommandGraphicFrameMk: UserDataSlot;
     /// What a `office_drawing_2013_main_command::GraphicFrameMkLstWith` holds.
-    type OfficeDrawing2013MainCommandGraphicFrameMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandGraphicFrameMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::GraphicParentMkLstWith` holds.
-    type OfficeDrawing2013MainCommandGraphicParentMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandGraphicParentMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::GridColMkLstWith` holds.
-    type OfficeDrawing2013MainCommandGridColMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandGridColMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::GrpCmdWith` holds.
-    type OfficeDrawing2013MainCommandGrpCmd: ExtraSlot;
+    type OfficeDrawing2013MainCommandGrpCmd: UserDataSlot;
     /// What a `office_drawing_2013_main_command::GrpSpMkWith` holds.
-    type OfficeDrawing2013MainCommandGrpSpMk: ExtraSlot;
+    type OfficeDrawing2013MainCommandGrpSpMk: UserDataSlot;
     /// What a `office_drawing_2013_main_command::GrpSpMkLstWith` holds.
-    type OfficeDrawing2013MainCommandGrpSpMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandGrpSpMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::GrpSpPrGroupShapePropertiesWith` holds.
-    type OfficeDrawing2013MainCommandGrpSpPrGroupShapeProperties: ExtraSlot;
+    type OfficeDrawing2013MainCommandGrpSpPrGroupShapeProperties: UserDataSlot;
     /// What a `office_drawing_2013_main_command::GrpSpPrResetGroupShapePropertiesWith` holds.
-    type OfficeDrawing2013MainCommandGrpSpPrResetGroupShapeProperties: ExtraSlot;
+    type OfficeDrawing2013MainCommandGrpSpPrResetGroupShapeProperties: UserDataSlot;
     /// What a `office_drawing_2013_main_command::HlinkClickEmptyWith` holds.
-    type OfficeDrawing2013MainCommandHlinkClickEmpty: ExtraSlot;
+    type OfficeDrawing2013MainCommandHlinkClickEmpty: UserDataSlot;
     /// What a `office_drawing_2013_main_command::HlinkClickHyperlinkPropsWith` holds.
-    type OfficeDrawing2013MainCommandHlinkClickHyperlinkProps: ExtraSlot;
+    type OfficeDrawing2013MainCommandHlinkClickHyperlinkProps: UserDataSlot;
     /// What a `office_drawing_2013_main_command::HlinkHoverEmptyWith` holds.
-    type OfficeDrawing2013MainCommandHlinkHoverEmpty: ExtraSlot;
+    type OfficeDrawing2013MainCommandHlinkHoverEmpty: UserDataSlot;
     /// What a `office_drawing_2013_main_command::HlinkHoverHyperlinkPropsWith` holds.
-    type OfficeDrawing2013MainCommandHlinkHoverHyperlinkProps: ExtraSlot;
+    type OfficeDrawing2013MainCommandHlinkHoverHyperlinkProps: UserDataSlot;
     /// What a `office_drawing_2013_main_command::HlinkMkLstWith` holds.
-    type OfficeDrawing2013MainCommandHlinkMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandHlinkMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::HlinkModifyHyperlinkPropsWith` holds.
-    type OfficeDrawing2013MainCommandHlinkModifyHyperlinkProps: ExtraSlot;
+    type OfficeDrawing2013MainCommandHlinkModifyHyperlinkProps: UserDataSlot;
     /// What a `office_drawing_2013_main_command::HlinkResetHyperlinkPropsWith` holds.
-    type OfficeDrawing2013MainCommandHlinkResetHyperlinkProps: ExtraSlot;
+    type OfficeDrawing2013MainCommandHlinkResetHyperlinkProps: UserDataSlot;
     /// What a `office_drawing_2013_main_command::ImgDataWith` holds.
-    type OfficeDrawing2013MainCommandImgData: ExtraSlot;
+    type OfficeDrawing2013MainCommandImgData: UserDataSlot;
     /// What a `office_drawing_2013_main_command::ImgLinkWith` holds.
-    type OfficeDrawing2013MainCommandImgLink: ExtraSlot;
+    type OfficeDrawing2013MainCommandImgLink: UserDataSlot;
     /// What a `office_drawing_2013_main_command::ImgUrlWith` holds.
-    type OfficeDrawing2013MainCommandImgUrl: ExtraSlot;
+    type OfficeDrawing2013MainCommandImgUrl: UserDataSlot;
     /// What a `office_drawing_2013_main_command::InkMkWith` holds.
-    type OfficeDrawing2013MainCommandInkMk: ExtraSlot;
+    type OfficeDrawing2013MainCommandInkMk: UserDataSlot;
     /// What a `office_drawing_2013_main_command::InkMkLstWith` holds.
-    type OfficeDrawing2013MainCommandInkMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandInkMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::LfPrWith` holds.
-    type OfficeDrawing2013MainCommandLfPr: ExtraSlot;
+    type OfficeDrawing2013MainCommandLfPr: UserDataSlot;
     /// What a `office_drawing_2013_main_command::LinePropsWith` holds.
-    type OfficeDrawing2013MainCommandLineProps: ExtraSlot;
+    type OfficeDrawing2013MainCommandLineProps: UserDataSlot;
     /// What a `office_drawing_2013_main_command::LnWith` holds.
-    type OfficeDrawing2013MainCommandLn: ExtraSlot;
+    type OfficeDrawing2013MainCommandLn: UserDataSlot;
     /// What a `office_drawing_2013_main_command::LnRefWith` holds.
-    type OfficeDrawing2013MainCommandLnRef: ExtraSlot;
+    type OfficeDrawing2013MainCommandLnRef: UserDataSlot;
     /// What a `office_drawing_2013_main_command::Model3DMkLstWith` holds.
-    type OfficeDrawing2013MainCommandModel3DMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandModel3DMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::NoAdjustHandlesWith` holds.
-    type OfficeDrawing2013MainCommandNoAdjustHandles: ExtraSlot;
+    type OfficeDrawing2013MainCommandNoAdjustHandles: UserDataSlot;
     /// What a `office_drawing_2013_main_command::NoChangeArrowheadsWith` holds.
-    type OfficeDrawing2013MainCommandNoChangeArrowheads: ExtraSlot;
+    type OfficeDrawing2013MainCommandNoChangeArrowheads: UserDataSlot;
     /// What a `office_drawing_2013_main_command::NoChangeAspectWith` holds.
-    type OfficeDrawing2013MainCommandNoChangeAspect: ExtraSlot;
+    type OfficeDrawing2013MainCommandNoChangeAspect: UserDataSlot;
     /// What a `office_drawing_2013_main_command::NoChangeShapeTypeWith` holds.
-    type OfficeDrawing2013MainCommandNoChangeShapeType: ExtraSlot;
+    type OfficeDrawing2013MainCommandNoChangeShapeType: UserDataSlot;
     /// What a `office_drawing_2013_main_command::NoEditPointsWith` holds.
-    type OfficeDrawing2013MainCommandNoEditPoints: ExtraSlot;
+    type OfficeDrawing2013MainCommandNoEditPoints: UserDataSlot;
     /// What a `office_drawing_2013_main_command::NoGrpWith` holds.
-    type OfficeDrawing2013MainCommandNoGrp: ExtraSlot;
+    type OfficeDrawing2013MainCommandNoGrp: UserDataSlot;
     /// What a `office_drawing_2013_main_command::NoMoveWith` holds.
-    type OfficeDrawing2013MainCommandNoMove: ExtraSlot;
+    type OfficeDrawing2013MainCommandNoMove: UserDataSlot;
     /// What a `office_drawing_2013_main_command::NoResizeWith` holds.
-    type OfficeDrawing2013MainCommandNoResize: ExtraSlot;
+    type OfficeDrawing2013MainCommandNoResize: UserDataSlot;
     /// What a `office_drawing_2013_main_command::NoRotWith` holds.
-    type OfficeDrawing2013MainCommandNoRot: ExtraSlot;
+    type OfficeDrawing2013MainCommandNoRot: UserDataSlot;
     /// What a `office_drawing_2013_main_command::NoSelectWith` holds.
-    type OfficeDrawing2013MainCommandNoSelect: ExtraSlot;
+    type OfficeDrawing2013MainCommandNoSelect: UserDataSlot;
     /// What a `office_drawing_2013_main_command::OffWith` holds.
-    type OfficeDrawing2013MainCommandOff: ExtraSlot;
+    type OfficeDrawing2013MainCommandOff: UserDataSlot;
     /// What a `office_drawing_2013_main_command::OrigImgDataWith` holds.
-    type OfficeDrawing2013MainCommandOrigImgData: ExtraSlot;
+    type OfficeDrawing2013MainCommandOrigImgData: UserDataSlot;
     /// What a `office_drawing_2013_main_command::PPrWith` holds.
-    type OfficeDrawing2013MainCommandPPr: ExtraSlot;
+    type OfficeDrawing2013MainCommandPPr: UserDataSlot;
     /// What a `office_drawing_2013_main_command::PicMkWith` holds.
-    type OfficeDrawing2013MainCommandPicMk: ExtraSlot;
+    type OfficeDrawing2013MainCommandPicMk: UserDataSlot;
     /// What a `office_drawing_2013_main_command::PicMkLstWith` holds.
-    type OfficeDrawing2013MainCommandPicMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandPicMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::ResetWith` holds.
-    type OfficeDrawing2013MainCommandReset: ExtraSlot;
+    type OfficeDrawing2013MainCommandReset: UserDataSlot;
     /// What a `office_drawing_2013_main_command::RotWithShapeWith` holds.
-    type OfficeDrawing2013MainCommandRotWithShape: ExtraSlot;
+    type OfficeDrawing2013MainCommandRotWithShape: UserDataSlot;
     /// What a `office_drawing_2013_main_command::Scene3dWith` holds.
-    type OfficeDrawing2013MainCommandScene3d: ExtraSlot;
+    type OfficeDrawing2013MainCommandScene3d: UserDataSlot;
     /// What a `office_drawing_2013_main_command::SndDataWith` holds.
-    type OfficeDrawing2013MainCommandSndData: ExtraSlot;
+    type OfficeDrawing2013MainCommandSndData: UserDataSlot;
     /// What a `office_drawing_2013_main_command::Sp3dWith` holds.
-    type OfficeDrawing2013MainCommandSp3d: ExtraSlot;
+    type OfficeDrawing2013MainCommandSp3d: UserDataSlot;
     /// What a `office_drawing_2013_main_command::SpMkWith` holds.
-    type OfficeDrawing2013MainCommandSpMk: ExtraSlot;
+    type OfficeDrawing2013MainCommandSpMk: UserDataSlot;
     /// What a `office_drawing_2013_main_command::SpMkLstShapeMonikerListWith` holds.
-    type OfficeDrawing2013MainCommandSpMkLstShapeMonikerList: ExtraSlot;
+    type OfficeDrawing2013MainCommandSpMkLstShapeMonikerList: UserDataSlot;
     /// What a `office_drawing_2013_main_command::SpMkLstShapePropsMonikerListWith` holds.
-    type OfficeDrawing2013MainCommandSpMkLstShapePropsMonikerList: ExtraSlot;
+    type OfficeDrawing2013MainCommandSpMkLstShapePropsMonikerList: UserDataSlot;
     /// What a `office_drawing_2013_main_command::SpPrResetShapePropertiesWith` holds.
-    type OfficeDrawing2013MainCommandSpPrResetShapeProperties: ExtraSlot;
+    type OfficeDrawing2013MainCommandSpPrResetShapeProperties: UserDataSlot;
     /// What a `office_drawing_2013_main_command::SpPrShapePropertiesWith` holds.
-    type OfficeDrawing2013MainCommandSpPrShapeProperties: ExtraSlot;
+    type OfficeDrawing2013MainCommandSpPrShapeProperties: UserDataSlot;
     /// What a `office_drawing_2013_main_command::SrcRectEmptyWith` holds.
-    type OfficeDrawing2013MainCommandSrcRectEmpty: ExtraSlot;
+    type OfficeDrawing2013MainCommandSrcRectEmpty: UserDataSlot;
     /// What a `office_drawing_2013_main_command::SrcRectRelativeRectPropsWith` holds.
-    type OfficeDrawing2013MainCommandSrcRectRelativeRectProps: ExtraSlot;
+    type OfficeDrawing2013MainCommandSrcRectRelativeRectProps: UserDataSlot;
     /// What a `office_drawing_2013_main_command::StCxnConnectionWith` holds.
-    type OfficeDrawing2013MainCommandStCxnConnection: ExtraSlot;
+    type OfficeDrawing2013MainCommandStCxnConnection: UserDataSlot;
     /// What a `office_drawing_2013_main_command::StCxnEmptyWith` holds.
-    type OfficeDrawing2013MainCommandStCxnEmpty: ExtraSlot;
+    type OfficeDrawing2013MainCommandStCxnEmpty: UserDataSlot;
     /// What a `office_drawing_2013_main_command::StyleWith` holds.
-    type OfficeDrawing2013MainCommandStyle: ExtraSlot;
+    type OfficeDrawing2013MainCommandStyle: UserDataSlot;
     /// What a `office_drawing_2013_main_command::SvgBlipMkLstWith` holds.
-    type OfficeDrawing2013MainCommandSvgBlipMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandSvgBlipMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::TblMkLstWith` holds.
-    type OfficeDrawing2013MainCommandTblMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandTblMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::TcMkLstWith` holds.
-    type OfficeDrawing2013MainCommandTcMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandTcMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::TrMkLstWith` holds.
-    type OfficeDrawing2013MainCommandTrMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandTrMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::TxBodyMkLstWith` holds.
-    type OfficeDrawing2013MainCommandTxBodyMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandTxBodyMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::TxBodyPkgWith` holds.
-    type OfficeDrawing2013MainCommandTxBodyPkg: ExtraSlot;
+    type OfficeDrawing2013MainCommandTxBodyPkg: UserDataSlot;
     /// What a `office_drawing_2013_main_command::TxMkLstWith` holds.
-    type OfficeDrawing2013MainCommandTxMkLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandTxMkLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::UseBoundsWith` holds.
-    type OfficeDrawing2013MainCommandUseBounds: ExtraSlot;
+    type OfficeDrawing2013MainCommandUseBounds: UserDataSlot;
     /// What a `office_drawing_2013_main_command::ViewSelLstWith` holds.
-    type OfficeDrawing2013MainCommandViewSelLst: ExtraSlot;
+    type OfficeDrawing2013MainCommandViewSelLst: UserDataSlot;
     /// What a `office_drawing_2013_main_command::XfrmEmptyWith` holds.
-    type OfficeDrawing2013MainCommandXfrmEmpty: ExtraSlot;
+    type OfficeDrawing2013MainCommandXfrmEmpty: UserDataSlot;
     /// What a `office_drawing_2013_main_command::XfrmModifyTransformPropsWith` holds.
-    type OfficeDrawing2013MainCommandXfrmModifyTransformProps: ExtraSlot;
+    type OfficeDrawing2013MainCommandXfrmModifyTransformProps: UserDataSlot;
     /// What a `office_drawing_2013_main_command::XfrmTransform2DWith` holds.
-    type OfficeDrawing2013MainCommandXfrmTransform2D: ExtraSlot;
+    type OfficeDrawing2013MainCommandXfrmTransform2D: UserDataSlot;
     /// What a `office_drawing_2014_chart_ac::MultiLvlStrLitWith` holds.
-    type OfficeDrawing2014ChartAcMultiLvlStrLit: ExtraSlot;
+    type OfficeDrawing2014ChartAcMultiLvlStrLit: UserDataSlot;
     /// What a `office_drawing_2014_chart::Bubble3DWith` holds.
-    type OfficeDrawing2014ChartBubble3D: ExtraSlot;
+    type OfficeDrawing2014ChartBubble3D: UserDataSlot;
     /// What a `office_drawing_2014_chart::CategoryFilterExceptionWith` holds.
-    type OfficeDrawing2014ChartCategoryFilterException: ExtraSlot;
+    type OfficeDrawing2014ChartCategoryFilterException: UserDataSlot;
     /// What a `office_drawing_2014_chart::CategoryFilterExceptionsWith` holds.
-    type OfficeDrawing2014ChartCategoryFilterExceptions: ExtraSlot;
+    type OfficeDrawing2014ChartCategoryFilterExceptions: UserDataSlot;
     /// What a `office_drawing_2014_chart::DLblWith` holds.
-    type OfficeDrawing2014ChartDLbl: ExtraSlot;
+    type OfficeDrawing2014ChartDLbl: UserDataSlot;
     /// What a `office_drawing_2014_chart::DatapointuniqueidmapWith` holds.
-    type OfficeDrawing2014ChartDatapointuniqueidmap: ExtraSlot;
+    type OfficeDrawing2014ChartDatapointuniqueidmap: UserDataSlot;
     /// What a `office_drawing_2014_chart::ExplosionWith` holds.
-    type OfficeDrawing2014ChartExplosion: ExtraSlot;
+    type OfficeDrawing2014ChartExplosion: UserDataSlot;
     /// What a `office_drawing_2014_chart::FilteredLitCacheMultiLvlStrFilteredLiteralCacheWith` holds.
-    type OfficeDrawing2014ChartFilteredLitCacheMultiLvlStrFilteredLiteralCache: ExtraSlot;
+    type OfficeDrawing2014ChartFilteredLitCacheMultiLvlStrFilteredLiteralCache: UserDataSlot;
     /// What a `office_drawing_2014_chart::FilteredLitCacheNumFilteredLiteralCacheWith` holds.
-    type OfficeDrawing2014ChartFilteredLitCacheNumFilteredLiteralCache: ExtraSlot;
+    type OfficeDrawing2014ChartFilteredLitCacheNumFilteredLiteralCache: UserDataSlot;
     /// What a `office_drawing_2014_chart::FilteredLitCacheStrFilteredLiteralCacheWith` holds.
-    type OfficeDrawing2014ChartFilteredLitCacheStrFilteredLiteralCache: ExtraSlot;
+    type OfficeDrawing2014ChartFilteredLitCacheStrFilteredLiteralCache: UserDataSlot;
     /// What a `office_drawing_2014_chart::InvertIfNegativeWith` holds.
-    type OfficeDrawing2014ChartInvertIfNegative: ExtraSlot;
+    type OfficeDrawing2014ChartInvertIfNegative: UserDataSlot;
     /// What a `office_drawing_2014_chart::LiteralDataChartWith` holds.
-    type OfficeDrawing2014ChartLiteralDataChart: ExtraSlot;
+    type OfficeDrawing2014ChartLiteralDataChart: UserDataSlot;
     /// What a `office_drawing_2014_chart::MarkerWith` holds.
-    type OfficeDrawing2014ChartMarker: ExtraSlot;
+    type OfficeDrawing2014ChartMarker: UserDataSlot;
     /// What a `office_drawing_2014_chart::MultiLvlStrCacheWith` holds.
-    type OfficeDrawing2014ChartMultiLvlStrCache: ExtraSlot;
+    type OfficeDrawing2014ChartMultiLvlStrCache: UserDataSlot;
     /// What a `office_drawing_2014_chart::NumCacheWith` holds.
-    type OfficeDrawing2014ChartNumCache: ExtraSlot;
+    type OfficeDrawing2014ChartNumCache: UserDataSlot;
     /// What a `office_drawing_2014_chart::PivotOptions16With` holds.
-    type OfficeDrawing2014ChartPivotOptions16: ExtraSlot;
+    type OfficeDrawing2014ChartPivotOptions16: UserDataSlot;
     /// What a `office_drawing_2014_chart::PtentryWith` holds.
-    type OfficeDrawing2014ChartPtentry: ExtraSlot;
+    type OfficeDrawing2014ChartPtentry: UserDataSlot;
     /// What a `office_drawing_2014_chart::PtidxWith` holds.
-    type OfficeDrawing2014ChartPtidx: ExtraSlot;
+    type OfficeDrawing2014ChartPtidx: UserDataSlot;
     /// What a `office_drawing_2014_chart::ShowExpandCollapseFieldButtonsWith` holds.
-    type OfficeDrawing2014ChartShowExpandCollapseFieldButtons: ExtraSlot;
+    type OfficeDrawing2014ChartShowExpandCollapseFieldButtons: UserDataSlot;
     /// What a `office_drawing_2014_chart::SpPrWith` holds.
-    type OfficeDrawing2014ChartSpPr: ExtraSlot;
+    type OfficeDrawing2014ChartSpPr: UserDataSlot;
     /// What a `office_drawing_2014_chart::StrCacheWith` holds.
-    type OfficeDrawing2014ChartStrCache: ExtraSlot;
+    type OfficeDrawing2014ChartStrCache: UserDataSlot;
     /// What a `office_drawing_2014_chart::UniqueIDWith` holds.
-    type OfficeDrawing2014ChartUniqueID: ExtraSlot;
+    type OfficeDrawing2014ChartUniqueID: UserDataSlot;
     /// What a `office_drawing_2014_chart::UniqueIdWith` holds.
-    type OfficeDrawing2014ChartUniqueId: ExtraSlot;
+    type OfficeDrawing2014ChartUniqueId: UserDataSlot;
     /// What a `office_drawing_2014_chartex::AddressWith` holds.
-    type OfficeDrawing2014ChartexAddress: ExtraSlot;
+    type OfficeDrawing2014ChartexAddress: UserDataSlot;
     /// What a `office_drawing_2014_chartex::AggregationWith` holds.
-    type OfficeDrawing2014ChartexAggregation: ExtraSlot;
+    type OfficeDrawing2014ChartexAggregation: UserDataSlot;
     /// What a `office_drawing_2014_chartex::AxisWith` holds.
-    type OfficeDrawing2014ChartexAxis: ExtraSlot;
+    type OfficeDrawing2014ChartexAxis: UserDataSlot;
     /// What a `office_drawing_2014_chartex::AxisIdWith` holds.
-    type OfficeDrawing2014ChartexAxisId: ExtraSlot;
+    type OfficeDrawing2014ChartexAxisId: UserDataSlot;
     /// What a `office_drawing_2014_chartex::BinCountWith` holds.
-    type OfficeDrawing2014ChartexBinCount: ExtraSlot;
+    type OfficeDrawing2014ChartexBinCount: UserDataSlot;
     /// What a `office_drawing_2014_chartex::BinSizeWith` holds.
-    type OfficeDrawing2014ChartexBinSize: ExtraSlot;
+    type OfficeDrawing2014ChartexBinSize: UserDataSlot;
     /// What a `office_drawing_2014_chartex::BinaryWith` holds.
-    type OfficeDrawing2014ChartexBinary: ExtraSlot;
+    type OfficeDrawing2014ChartexBinary: UserDataSlot;
     /// What a `office_drawing_2014_chartex::BinningWith` holds.
-    type OfficeDrawing2014ChartexBinning: ExtraSlot;
+    type OfficeDrawing2014ChartexBinning: UserDataSlot;
     /// What a `office_drawing_2014_chartex::CatScalingWith` holds.
-    type OfficeDrawing2014ChartexCatScaling: ExtraSlot;
+    type OfficeDrawing2014ChartexCatScaling: UserDataSlot;
     /// What a `office_drawing_2014_chartex::ChartChartWith` holds.
-    type OfficeDrawing2014ChartexChartChart: ExtraSlot;
+    type OfficeDrawing2014ChartexChartChart: UserDataSlot;
     /// What a `office_drawing_2014_chartex::ChartDataWith` holds.
-    type OfficeDrawing2014ChartexChartData: ExtraSlot;
+    type OfficeDrawing2014ChartexChartData: UserDataSlot;
     /// What a `office_drawing_2014_chartex::ChartRelIdWith` holds.
-    type OfficeDrawing2014ChartexChartRelId: ExtraSlot;
+    type OfficeDrawing2014ChartexChartRelId: UserDataSlot;
     /// What a `office_drawing_2014_chartex::ChartSpaceWith` holds.
-    type OfficeDrawing2014ChartexChartSpace: ExtraSlot;
+    type OfficeDrawing2014ChartexChartSpace: UserDataSlot;
     /// What a `office_drawing_2014_chartex::ClearWith` holds.
-    type OfficeDrawing2014ChartexClear: ExtraSlot;
+    type OfficeDrawing2014ChartexClear: UserDataSlot;
     /// What a `office_drawing_2014_chartex::ClrMapOvrWith` holds.
-    type OfficeDrawing2014ChartexClrMapOvr: ExtraSlot;
+    type OfficeDrawing2014ChartexClrMapOvr: UserDataSlot;
     /// What a `office_drawing_2014_chartex::CopyrightWith` holds.
-    type OfficeDrawing2014ChartexCopyright: ExtraSlot;
+    type OfficeDrawing2014ChartexCopyright: UserDataSlot;
     /// What a `office_drawing_2014_chartex::CopyrightsWith` holds.
-    type OfficeDrawing2014ChartexCopyrights: ExtraSlot;
+    type OfficeDrawing2014ChartexCopyrights: UserDataSlot;
     /// What a `office_drawing_2014_chartex::DataWith` holds.
-    type OfficeDrawing2014ChartexData: ExtraSlot;
+    type OfficeDrawing2014ChartexData: UserDataSlot;
     /// What a `office_drawing_2014_chartex::DataIdWith` holds.
-    type OfficeDrawing2014ChartexDataId: ExtraSlot;
+    type OfficeDrawing2014ChartexDataId: UserDataSlot;
     /// What a `office_drawing_2014_chartex::DataLabelWith` holds.
-    type OfficeDrawing2014ChartexDataLabel: ExtraSlot;
+    type OfficeDrawing2014ChartexDataLabel: UserDataSlot;
     /// What a `office_drawing_2014_chartex::DataLabelHiddenWith` holds.
-    type OfficeDrawing2014ChartexDataLabelHidden: ExtraSlot;
+    type OfficeDrawing2014ChartexDataLabelHidden: UserDataSlot;
     /// What a `office_drawing_2014_chartex::DataLabelsWith` holds.
-    type OfficeDrawing2014ChartexDataLabels: ExtraSlot;
+    type OfficeDrawing2014ChartexDataLabels: UserDataSlot;
     /// What a `office_drawing_2014_chartex::DataPtWith` holds.
-    type OfficeDrawing2014ChartexDataPt: ExtraSlot;
+    type OfficeDrawing2014ChartexDataPt: UserDataSlot;
     /// What a `office_drawing_2014_chartex::EntityTypeWith` holds.
-    type OfficeDrawing2014ChartexEntityType: ExtraSlot;
+    type OfficeDrawing2014ChartexEntityType: UserDataSlot;
     /// What a `office_drawing_2014_chartex::EvenFooterWith` holds.
-    type OfficeDrawing2014ChartexEvenFooter: ExtraSlot;
+    type OfficeDrawing2014ChartexEvenFooter: UserDataSlot;
     /// What a `office_drawing_2014_chartex::EvenHeaderWith` holds.
-    type OfficeDrawing2014ChartexEvenHeader: ExtraSlot;
+    type OfficeDrawing2014ChartexEvenHeader: UserDataSlot;
     /// What a `office_drawing_2014_chartex::ExtWith` holds.
-    type OfficeDrawing2014ChartexExt: ExtraSlot;
+    type OfficeDrawing2014ChartexExt: UserDataSlot;
     /// What a `office_drawing_2014_chartex::ExtLstWith` holds.
-    type OfficeDrawing2014ChartexExtLst: ExtraSlot;
+    type OfficeDrawing2014ChartexExtLst: UserDataSlot;
     /// What a `office_drawing_2014_chartex::ExternalDataWith` holds.
-    type OfficeDrawing2014ChartexExternalData: ExtraSlot;
+    type OfficeDrawing2014ChartexExternalData: UserDataSlot;
     /// What a `office_drawing_2014_chartex::ExtremeValueWith` holds.
-    type OfficeDrawing2014ChartexExtremeValue: ExtraSlot;
+    type OfficeDrawing2014ChartexExtremeValue: UserDataSlot;
     /// What a `office_drawing_2014_chartex::FWith` holds.
-    type OfficeDrawing2014ChartexF: ExtraSlot;
+    type OfficeDrawing2014ChartexF: UserDataSlot;
     /// What a `office_drawing_2014_chartex::FirstFooterWith` holds.
-    type OfficeDrawing2014ChartexFirstFooter: ExtraSlot;
+    type OfficeDrawing2014ChartexFirstFooter: UserDataSlot;
     /// What a `office_drawing_2014_chartex::FirstHeaderWith` holds.
-    type OfficeDrawing2014ChartexFirstHeader: ExtraSlot;
+    type OfficeDrawing2014ChartexFirstHeader: UserDataSlot;
     /// What a `office_drawing_2014_chartex::FmtOvrWith` holds.
-    type OfficeDrawing2014ChartexFmtOvr: ExtraSlot;
+    type OfficeDrawing2014ChartexFmtOvr: UserDataSlot;
     /// What a `office_drawing_2014_chartex::FmtOvrsWith` holds.
-    type OfficeDrawing2014ChartexFmtOvrs: ExtraSlot;
+    type OfficeDrawing2014ChartexFmtOvrs: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoCacheWith` holds.
-    type OfficeDrawing2014ChartexGeoCache: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoCache: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoChildEntitiesWith` holds.
-    type OfficeDrawing2014ChartexGeoChildEntities: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoChildEntities: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoChildEntitiesQueryWith` holds.
-    type OfficeDrawing2014ChartexGeoChildEntitiesQuery: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoChildEntitiesQuery: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoChildEntitiesQueryResultWith` holds.
-    type OfficeDrawing2014ChartexGeoChildEntitiesQueryResult: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoChildEntitiesQueryResult: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoChildEntitiesQueryResultsWith` holds.
-    type OfficeDrawing2014ChartexGeoChildEntitiesQueryResults: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoChildEntitiesQueryResults: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoChildTypesWith` holds.
-    type OfficeDrawing2014ChartexGeoChildTypes: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoChildTypes: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoDataWith` holds.
-    type OfficeDrawing2014ChartexGeoData: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoData: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoDataEntityQueryWith` holds.
-    type OfficeDrawing2014ChartexGeoDataEntityQuery: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoDataEntityQuery: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoDataEntityQueryResultWith` holds.
-    type OfficeDrawing2014ChartexGeoDataEntityQueryResult: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoDataEntityQueryResult: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoDataEntityQueryResultsWith` holds.
-    type OfficeDrawing2014ChartexGeoDataEntityQueryResults: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoDataEntityQueryResults: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoDataPointQueryWith` holds.
-    type OfficeDrawing2014ChartexGeoDataPointQuery: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoDataPointQuery: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoDataPointToEntityQueryWith` holds.
-    type OfficeDrawing2014ChartexGeoDataPointToEntityQuery: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoDataPointToEntityQuery: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoDataPointToEntityQueryResultWith` holds.
-    type OfficeDrawing2014ChartexGeoDataPointToEntityQueryResult: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoDataPointToEntityQueryResult: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoDataPointToEntityQueryResultsWith` holds.
-    type OfficeDrawing2014ChartexGeoDataPointToEntityQueryResults: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoDataPointToEntityQueryResults: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoEntityWith` holds.
-    type OfficeDrawing2014ChartexGeoEntity: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoEntity: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoHierarchyEntityWith` holds.
-    type OfficeDrawing2014ChartexGeoHierarchyEntity: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoHierarchyEntity: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoLocationWith` holds.
-    type OfficeDrawing2014ChartexGeoLocation: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoLocation: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoLocationQueryWith` holds.
-    type OfficeDrawing2014ChartexGeoLocationQuery: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoLocationQuery: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoLocationQueryResultWith` holds.
-    type OfficeDrawing2014ChartexGeoLocationQueryResult: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoLocationQueryResult: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoLocationQueryResultsWith` holds.
-    type OfficeDrawing2014ChartexGeoLocationQueryResults: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoLocationQueryResults: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoLocationsWith` holds.
-    type OfficeDrawing2014ChartexGeoLocations: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoLocations: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoParentEntitiesQueryWith` holds.
-    type OfficeDrawing2014ChartexGeoParentEntitiesQuery: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoParentEntitiesQuery: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoParentEntitiesQueryResultWith` holds.
-    type OfficeDrawing2014ChartexGeoParentEntitiesQueryResult: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoParentEntitiesQueryResult: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoParentEntitiesQueryResultsWith` holds.
-    type OfficeDrawing2014ChartexGeoParentEntitiesQueryResults: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoParentEntitiesQueryResults: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoParentEntityWith` holds.
-    type OfficeDrawing2014ChartexGeoParentEntity: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoParentEntity: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoPolygonWith` holds.
-    type OfficeDrawing2014ChartexGeoPolygon: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoPolygon: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeoPolygonsWith` holds.
-    type OfficeDrawing2014ChartexGeoPolygons: ExtraSlot;
+    type OfficeDrawing2014ChartexGeoPolygons: UserDataSlot;
     /// What a `office_drawing_2014_chartex::GeographyWith` holds.
-    type OfficeDrawing2014ChartexGeography: ExtraSlot;
+    type OfficeDrawing2014ChartexGeography: UserDataSlot;
     /// What a `office_drawing_2014_chartex::HeaderFooterWith` holds.
-    type OfficeDrawing2014ChartexHeaderFooter: ExtraSlot;
+    type OfficeDrawing2014ChartexHeaderFooter: UserDataSlot;
     /// What a `office_drawing_2014_chartex::IdxWith` holds.
-    type OfficeDrawing2014ChartexIdx: ExtraSlot;
+    type OfficeDrawing2014ChartexIdx: UserDataSlot;
     /// What a `office_drawing_2014_chartex::LayoutPrWith` holds.
-    type OfficeDrawing2014ChartexLayoutPr: ExtraSlot;
+    type OfficeDrawing2014ChartexLayoutPr: UserDataSlot;
     /// What a `office_drawing_2014_chartex::LegendWith` holds.
-    type OfficeDrawing2014ChartexLegend: ExtraSlot;
+    type OfficeDrawing2014ChartexLegend: UserDataSlot;
     /// What a `office_drawing_2014_chartex::LvlNumericLevelWith` holds.
-    type OfficeDrawing2014ChartexLvlNumericLevel: ExtraSlot;
+    type OfficeDrawing2014ChartexLvlNumericLevel: UserDataSlot;
     /// What a `office_drawing_2014_chartex::LvlStringLevelWith` holds.
-    type OfficeDrawing2014ChartexLvlStringLevel: ExtraSlot;
+    type OfficeDrawing2014ChartexLvlStringLevel: UserDataSlot;
     /// What a `office_drawing_2014_chartex::MajorGridlinesWith` holds.
-    type OfficeDrawing2014ChartexMajorGridlines: ExtraSlot;
+    type OfficeDrawing2014ChartexMajorGridlines: UserDataSlot;
     /// What a `office_drawing_2014_chartex::MajorTickMarksWith` holds.
-    type OfficeDrawing2014ChartexMajorTickMarks: ExtraSlot;
+    type OfficeDrawing2014ChartexMajorTickMarks: UserDataSlot;
     /// What a `office_drawing_2014_chartex::MaxWith` holds.
-    type OfficeDrawing2014ChartexMax: ExtraSlot;
+    type OfficeDrawing2014ChartexMax: UserDataSlot;
     /// What a `office_drawing_2014_chartex::MaxColorWith` holds.
-    type OfficeDrawing2014ChartexMaxColor: ExtraSlot;
+    type OfficeDrawing2014ChartexMaxColor: UserDataSlot;
     /// What a `office_drawing_2014_chartex::MidWith` holds.
-    type OfficeDrawing2014ChartexMid: ExtraSlot;
+    type OfficeDrawing2014ChartexMid: UserDataSlot;
     /// What a `office_drawing_2014_chartex::MidColorWith` holds.
-    type OfficeDrawing2014ChartexMidColor: ExtraSlot;
+    type OfficeDrawing2014ChartexMidColor: UserDataSlot;
     /// What a `office_drawing_2014_chartex::MinWith` holds.
-    type OfficeDrawing2014ChartexMin: ExtraSlot;
+    type OfficeDrawing2014ChartexMin: UserDataSlot;
     /// What a `office_drawing_2014_chartex::MinColorWith` holds.
-    type OfficeDrawing2014ChartexMinColor: ExtraSlot;
+    type OfficeDrawing2014ChartexMinColor: UserDataSlot;
     /// What a `office_drawing_2014_chartex::MinorGridlinesWith` holds.
-    type OfficeDrawing2014ChartexMinorGridlines: ExtraSlot;
+    type OfficeDrawing2014ChartexMinorGridlines: UserDataSlot;
     /// What a `office_drawing_2014_chartex::MinorTickMarksWith` holds.
-    type OfficeDrawing2014ChartexMinorTickMarks: ExtraSlot;
+    type OfficeDrawing2014ChartexMinorTickMarks: UserDataSlot;
     /// What a `office_drawing_2014_chartex::NfWith` holds.
-    type OfficeDrawing2014ChartexNf: ExtraSlot;
+    type OfficeDrawing2014ChartexNf: UserDataSlot;
     /// What a `office_drawing_2014_chartex::NumDimWith` holds.
-    type OfficeDrawing2014ChartexNumDim: ExtraSlot;
+    type OfficeDrawing2014ChartexNumDim: UserDataSlot;
     /// What a `office_drawing_2014_chartex::NumFmtWith` holds.
-    type OfficeDrawing2014ChartexNumFmt: ExtraSlot;
+    type OfficeDrawing2014ChartexNumFmt: UserDataSlot;
     /// What a `office_drawing_2014_chartex::NumberWith` holds.
-    type OfficeDrawing2014ChartexNumber: ExtraSlot;
+    type OfficeDrawing2014ChartexNumber: UserDataSlot;
     /// What a `office_drawing_2014_chartex::OddFooterWith` holds.
-    type OfficeDrawing2014ChartexOddFooter: ExtraSlot;
+    type OfficeDrawing2014ChartexOddFooter: UserDataSlot;
     /// What a `office_drawing_2014_chartex::OddHeaderWith` holds.
-    type OfficeDrawing2014ChartexOddHeader: ExtraSlot;
+    type OfficeDrawing2014ChartexOddHeader: UserDataSlot;
     /// What a `office_drawing_2014_chartex::OffsetWith` holds.
-    type OfficeDrawing2014ChartexOffset: ExtraSlot;
+    type OfficeDrawing2014ChartexOffset: UserDataSlot;
     /// What a `office_drawing_2014_chartex::Openxmlsdk49BECFFA3B034D138272D6CCB22579E3With` holds.
-    type OfficeDrawing2014ChartexOpenxmlsdk49BECFFA3B034D138272D6CCB22579E3: ExtraSlot;
+    type OfficeDrawing2014ChartexOpenxmlsdk49BECFFA3B034D138272D6CCB22579E3: UserDataSlot;
     /// What a `office_drawing_2014_chartex::PageMarginsWith` holds.
-    type OfficeDrawing2014ChartexPageMargins: ExtraSlot;
+    type OfficeDrawing2014ChartexPageMargins: UserDataSlot;
     /// What a `office_drawing_2014_chartex::PageSetupWith` holds.
-    type OfficeDrawing2014ChartexPageSetup: ExtraSlot;
+    type OfficeDrawing2014ChartexPageSetup: UserDataSlot;
     /// What a `office_drawing_2014_chartex::ParentLabelLayoutWith` holds.
-    type OfficeDrawing2014ChartexParentLabelLayout: ExtraSlot;
+    type OfficeDrawing2014ChartexParentLabelLayout: UserDataSlot;
     /// What a `office_drawing_2014_chartex::PercentWith` holds.
-    type OfficeDrawing2014ChartexPercent: ExtraSlot;
+    type OfficeDrawing2014ChartexPercent: UserDataSlot;
     /// What a `office_drawing_2014_chartex::PlotAreaWith` holds.
-    type OfficeDrawing2014ChartexPlotArea: ExtraSlot;
+    type OfficeDrawing2014ChartexPlotArea: UserDataSlot;
     /// What a `office_drawing_2014_chartex::PlotAreaRegionWith` holds.
-    type OfficeDrawing2014ChartexPlotAreaRegion: ExtraSlot;
+    type OfficeDrawing2014ChartexPlotAreaRegion: UserDataSlot;
     /// What a `office_drawing_2014_chartex::PlotSurfaceWith` holds.
-    type OfficeDrawing2014ChartexPlotSurface: ExtraSlot;
+    type OfficeDrawing2014ChartexPlotSurface: UserDataSlot;
     /// What a `office_drawing_2014_chartex::PrintSettingsWith` holds.
-    type OfficeDrawing2014ChartexPrintSettings: ExtraSlot;
+    type OfficeDrawing2014ChartexPrintSettings: UserDataSlot;
     /// What a `office_drawing_2014_chartex::PtNumericValueWith` holds.
-    type OfficeDrawing2014ChartexPtNumericValue: ExtraSlot;
+    type OfficeDrawing2014ChartexPtNumericValue: UserDataSlot;
     /// What a `office_drawing_2014_chartex::PtStringValueWith` holds.
-    type OfficeDrawing2014ChartexPtStringValue: ExtraSlot;
+    type OfficeDrawing2014ChartexPtStringValue: UserDataSlot;
     /// What a `office_drawing_2014_chartex::RegionLabelLayoutWith` holds.
-    type OfficeDrawing2014ChartexRegionLabelLayout: ExtraSlot;
+    type OfficeDrawing2014ChartexRegionLabelLayout: UserDataSlot;
     /// What a `office_drawing_2014_chartex::RichWith` holds.
-    type OfficeDrawing2014ChartexRich: ExtraSlot;
+    type OfficeDrawing2014ChartexRich: UserDataSlot;
     /// What a `office_drawing_2014_chartex::SeparatorWith` holds.
-    type OfficeDrawing2014ChartexSeparator: ExtraSlot;
+    type OfficeDrawing2014ChartexSeparator: UserDataSlot;
     /// What a `office_drawing_2014_chartex::SeriesWith` holds.
-    type OfficeDrawing2014ChartexSeries: ExtraSlot;
+    type OfficeDrawing2014ChartexSeries: UserDataSlot;
     /// What a `office_drawing_2014_chartex::SpPrWith` holds.
-    type OfficeDrawing2014ChartexSpPr: ExtraSlot;
+    type OfficeDrawing2014ChartexSpPr: UserDataSlot;
     /// What a `office_drawing_2014_chartex::StatisticsWith` holds.
-    type OfficeDrawing2014ChartexStatistics: ExtraSlot;
+    type OfficeDrawing2014ChartexStatistics: UserDataSlot;
     /// What a `office_drawing_2014_chartex::StrDimWith` holds.
-    type OfficeDrawing2014ChartexStrDim: ExtraSlot;
+    type OfficeDrawing2014ChartexStrDim: UserDataSlot;
     /// What a `office_drawing_2014_chartex::SubtotalsWith` holds.
-    type OfficeDrawing2014ChartexSubtotals: ExtraSlot;
+    type OfficeDrawing2014ChartexSubtotals: UserDataSlot;
     /// What a `office_drawing_2014_chartex::TickLabelsWith` holds.
-    type OfficeDrawing2014ChartexTickLabels: ExtraSlot;
+    type OfficeDrawing2014ChartexTickLabels: UserDataSlot;
     /// What a `office_drawing_2014_chartex::TitleAxisTitleWith` holds.
-    type OfficeDrawing2014ChartexTitleAxisTitle: ExtraSlot;
+    type OfficeDrawing2014ChartexTitleAxisTitle: UserDataSlot;
     /// What a `office_drawing_2014_chartex::TitleChartTitleWith` holds.
-    type OfficeDrawing2014ChartexTitleChartTitle: ExtraSlot;
+    type OfficeDrawing2014ChartexTitleChartTitle: UserDataSlot;
     /// What a `office_drawing_2014_chartex::TxWith` holds.
-    type OfficeDrawing2014ChartexTx: ExtraSlot;
+    type OfficeDrawing2014ChartexTx: UserDataSlot;
     /// What a `office_drawing_2014_chartex::TxDataWith` holds.
-    type OfficeDrawing2014ChartexTxData: ExtraSlot;
+    type OfficeDrawing2014ChartexTxData: UserDataSlot;
     /// What a `office_drawing_2014_chartex::TxPrWith` holds.
-    type OfficeDrawing2014ChartexTxPr: ExtraSlot;
+    type OfficeDrawing2014ChartexTxPr: UserDataSlot;
     /// What a `office_drawing_2014_chartex::UnitsWith` holds.
-    type OfficeDrawing2014ChartexUnits: ExtraSlot;
+    type OfficeDrawing2014ChartexUnits: UserDataSlot;
     /// What a `office_drawing_2014_chartex::UnitsLabelWith` holds.
-    type OfficeDrawing2014ChartexUnitsLabel: ExtraSlot;
+    type OfficeDrawing2014ChartexUnitsLabel: UserDataSlot;
     /// What a `office_drawing_2014_chartex::VWith` holds.
-    type OfficeDrawing2014ChartexV: ExtraSlot;
+    type OfficeDrawing2014ChartexV: UserDataSlot;
     /// What a `office_drawing_2014_chartex::ValScalingWith` holds.
-    type OfficeDrawing2014ChartexValScaling: ExtraSlot;
+    type OfficeDrawing2014ChartexValScaling: UserDataSlot;
     /// What a `office_drawing_2014_chartex::ValueColorPositionsWith` holds.
-    type OfficeDrawing2014ChartexValueColorPositions: ExtraSlot;
+    type OfficeDrawing2014ChartexValueColorPositions: UserDataSlot;
     /// What a `office_drawing_2014_chartex::ValueColorsWith` holds.
-    type OfficeDrawing2014ChartexValueColors: ExtraSlot;
+    type OfficeDrawing2014ChartexValueColors: UserDataSlot;
     /// What a `office_drawing_2014_chartex::VisibilityDataLabelVisibilitiesWith` holds.
-    type OfficeDrawing2014ChartexVisibilityDataLabelVisibilities: ExtraSlot;
+    type OfficeDrawing2014ChartexVisibilityDataLabelVisibilities: UserDataSlot;
     /// What a `office_drawing_2014_chartex::VisibilitySeriesElementVisibilitiesWith` holds.
-    type OfficeDrawing2014ChartexVisibilitySeriesElementVisibilities: ExtraSlot;
+    type OfficeDrawing2014ChartexVisibilitySeriesElementVisibilities: UserDataSlot;
     /// What a `office_drawing_2014_main::ColIdWith` holds.
-    type OfficeDrawing2014MainColId: ExtraSlot;
+    type OfficeDrawing2014MainColId: UserDataSlot;
     /// What a `office_drawing_2014_main::CreationIdWith` holds.
-    type OfficeDrawing2014MainCreationId: ExtraSlot;
+    type OfficeDrawing2014MainCreationId: UserDataSlot;
     /// What a `office_drawing_2014_main::CxnDERefsWith` holds.
-    type OfficeDrawing2014MainCxnDERefs: ExtraSlot;
+    type OfficeDrawing2014MainCxnDERefs: UserDataSlot;
     /// What a `office_drawing_2014_main::PredDERefWith` holds.
-    type OfficeDrawing2014MainPredDERef: ExtraSlot;
+    type OfficeDrawing2014MainPredDERef: UserDataSlot;
     /// What a `office_drawing_2014_main::RowIdWith` holds.
-    type OfficeDrawing2014MainRowId: ExtraSlot;
+    type OfficeDrawing2014MainRowId: UserDataSlot;
     /// What a `office_drawing_2016_11_diagram::AutoBuNodeInfoWith` holds.
-    type OfficeDrawing201611DiagramAutoBuNodeInfo: ExtraSlot;
+    type OfficeDrawing201611DiagramAutoBuNodeInfo: UserDataSlot;
     /// What a `office_drawing_2016_11_diagram::AutoBuNodeInfoLstWith` holds.
-    type OfficeDrawing201611DiagramAutoBuNodeInfoLst: ExtraSlot;
+    type OfficeDrawing201611DiagramAutoBuNodeInfoLst: UserDataSlot;
     /// What a `office_drawing_2016_11_diagram::BuPrWith` holds.
-    type OfficeDrawing201611DiagramBuPr: ExtraSlot;
+    type OfficeDrawing201611DiagramBuPr: UserDataSlot;
     /// What a `office_drawing_2016_11_main::PicAttrSrcUrlWith` holds.
-    type OfficeDrawing201611MainPicAttrSrcUrl: ExtraSlot;
+    type OfficeDrawing201611MainPicAttrSrcUrl: UserDataSlot;
     /// What a `office_drawing_2016_12_diagram::LstStyleWith` holds.
-    type OfficeDrawing201612DiagramLstStyle: ExtraSlot;
+    type OfficeDrawing201612DiagramLstStyle: UserDataSlot;
     /// What a `office_drawing_2016_12_diagram::SpPrWith` holds.
-    type OfficeDrawing201612DiagramSpPr: ExtraSlot;
+    type OfficeDrawing201612DiagramSpPr: UserDataSlot;
     /// What a `office_drawing_2016_svg_main::SvgBlipWith` holds.
-    type OfficeDrawing2016SvgMainSvgBlip: ExtraSlot;
+    type OfficeDrawing2016SvgMainSvgBlip: UserDataSlot;
     /// What a `office_drawing_2017_03_chart::DataDisplayOptions16With` holds.
-    type OfficeDrawing201703ChartDataDisplayOptions16: ExtraSlot;
+    type OfficeDrawing201703ChartDataDisplayOptions16: UserDataSlot;
     /// What a `office_drawing_2017_03_chart::DispNaAsBlankWith` holds.
-    type OfficeDrawing201703ChartDispNaAsBlank: ExtraSlot;
+    type OfficeDrawing201703ChartDispNaAsBlank: UserDataSlot;
     /// What a `office_drawing_2017_decorative::DecorativeWith` holds.
-    type OfficeDrawing2017DecorativeDecorative: ExtraSlot;
+    type OfficeDrawing2017DecorativeDecorative: UserDataSlot;
     /// What a `office_drawing_2017_model3d::AmbientLightWith` holds.
-    type OfficeDrawing2017Model3dAmbientLight: ExtraSlot;
+    type OfficeDrawing2017Model3dAmbientLight: UserDataSlot;
     /// What a `office_drawing_2017_model3d::AttrSrcUrlWith` holds.
-    type OfficeDrawing2017Model3dAttrSrcUrl: ExtraSlot;
+    type OfficeDrawing2017Model3dAttrSrcUrl: UserDataSlot;
     /// What a `office_drawing_2017_model3d::BlipWith` holds.
-    type OfficeDrawing2017Model3dBlip: ExtraSlot;
+    type OfficeDrawing2017Model3dBlip: UserDataSlot;
     /// What a `office_drawing_2017_model3d::CameraWith` holds.
-    type OfficeDrawing2017Model3dCamera: ExtraSlot;
+    type OfficeDrawing2017Model3dCamera: UserDataSlot;
     /// What a `office_drawing_2017_model3d::ClrWith` holds.
-    type OfficeDrawing2017Model3dClr: ExtraSlot;
+    type OfficeDrawing2017Model3dClr: UserDataSlot;
     /// What a `office_drawing_2017_model3d::DirLightWith` holds.
-    type OfficeDrawing2017Model3dDirLight: ExtraSlot;
+    type OfficeDrawing2017Model3dDirLight: UserDataSlot;
     /// What a `office_drawing_2017_model3d::ExtWith` holds.
-    type OfficeDrawing2017Model3dExt: ExtraSlot;
+    type OfficeDrawing2017Model3dExt: UserDataSlot;
     /// What a `office_drawing_2017_model3d::ExtLstModel3DExtensionListWith` holds.
-    type OfficeDrawing2017Model3dExtLstModel3DExtensionList: ExtraSlot;
+    type OfficeDrawing2017Model3dExtLstModel3DExtensionList: UserDataSlot;
     /// What a `office_drawing_2017_model3d::ExtLstOfficeArtExtensionListWith` holds.
-    type OfficeDrawing2017Model3dExtLstOfficeArtExtensionList: ExtraSlot;
+    type OfficeDrawing2017Model3dExtLstOfficeArtExtensionList: UserDataSlot;
     /// What a `office_drawing_2017_model3d::IlluminanceWith` holds.
-    type OfficeDrawing2017Model3dIlluminance: ExtraSlot;
+    type OfficeDrawing2017Model3dIlluminance: UserDataSlot;
     /// What a `office_drawing_2017_model3d::IntensityWith` holds.
-    type OfficeDrawing2017Model3dIntensity: ExtraSlot;
+    type OfficeDrawing2017Model3dIntensity: UserDataSlot;
     /// What a `office_drawing_2017_model3d::LookAtWith` holds.
-    type OfficeDrawing2017Model3dLookAt: ExtraSlot;
+    type OfficeDrawing2017Model3dLookAt: UserDataSlot;
     /// What a `office_drawing_2017_model3d::MeterPerModelUnitWith` holds.
-    type OfficeDrawing2017Model3dMeterPerModelUnit: ExtraSlot;
+    type OfficeDrawing2017Model3dMeterPerModelUnit: UserDataSlot;
     /// What a `office_drawing_2017_model3d::Model3dWith` holds.
-    type OfficeDrawing2017Model3dModel3d: ExtraSlot;
+    type OfficeDrawing2017Model3dModel3d: UserDataSlot;
     /// What a `office_drawing_2017_model3d::ObjViewportWith` holds.
-    type OfficeDrawing2017Model3dObjViewport: ExtraSlot;
+    type OfficeDrawing2017Model3dObjViewport: UserDataSlot;
     /// What a `office_drawing_2017_model3d::OrthographicWith` holds.
-    type OfficeDrawing2017Model3dOrthographic: ExtraSlot;
+    type OfficeDrawing2017Model3dOrthographic: UserDataSlot;
     /// What a `office_drawing_2017_model3d::PerspectiveWith` holds.
-    type OfficeDrawing2017Model3dPerspective: ExtraSlot;
+    type OfficeDrawing2017Model3dPerspective: UserDataSlot;
     /// What a `office_drawing_2017_model3d::PosWith` holds.
-    type OfficeDrawing2017Model3dPos: ExtraSlot;
+    type OfficeDrawing2017Model3dPos: UserDataSlot;
     /// What a `office_drawing_2017_model3d::PostTransWith` holds.
-    type OfficeDrawing2017Model3dPostTrans: ExtraSlot;
+    type OfficeDrawing2017Model3dPostTrans: UserDataSlot;
     /// What a `office_drawing_2017_model3d::PreTransWith` holds.
-    type OfficeDrawing2017Model3dPreTrans: ExtraSlot;
+    type OfficeDrawing2017Model3dPreTrans: UserDataSlot;
     /// What a `office_drawing_2017_model3d::PtLightWith` holds.
-    type OfficeDrawing2017Model3dPtLight: ExtraSlot;
+    type OfficeDrawing2017Model3dPtLight: UserDataSlot;
     /// What a `office_drawing_2017_model3d::RasterWith` holds.
-    type OfficeDrawing2017Model3dRaster: ExtraSlot;
+    type OfficeDrawing2017Model3dRaster: UserDataSlot;
     /// What a `office_drawing_2017_model3d::RotWith` holds.
-    type OfficeDrawing2017Model3dRot: ExtraSlot;
+    type OfficeDrawing2017Model3dRot: UserDataSlot;
     /// What a `office_drawing_2017_model3d::ScaleWith` holds.
-    type OfficeDrawing2017Model3dScale: ExtraSlot;
+    type OfficeDrawing2017Model3dScale: UserDataSlot;
     /// What a `office_drawing_2017_model3d::SpPrWith` holds.
-    type OfficeDrawing2017Model3dSpPr: ExtraSlot;
+    type OfficeDrawing2017Model3dSpPr: UserDataSlot;
     /// What a `office_drawing_2017_model3d::SpotLightWith` holds.
-    type OfficeDrawing2017Model3dSpotLight: ExtraSlot;
+    type OfficeDrawing2017Model3dSpotLight: UserDataSlot;
     /// What a `office_drawing_2017_model3d::SxWith` holds.
-    type OfficeDrawing2017Model3dSx: ExtraSlot;
+    type OfficeDrawing2017Model3dSx: UserDataSlot;
     /// What a `office_drawing_2017_model3d::SyWith` holds.
-    type OfficeDrawing2017Model3dSy: ExtraSlot;
+    type OfficeDrawing2017Model3dSy: UserDataSlot;
     /// What a `office_drawing_2017_model3d::SzPositiveRatioWith` holds.
-    type OfficeDrawing2017Model3dSzPositiveRatio: ExtraSlot;
+    type OfficeDrawing2017Model3dSzPositiveRatio: UserDataSlot;
     /// What a `office_drawing_2017_model3d::SzRatioWith` holds.
-    type OfficeDrawing2017Model3dSzRatio: ExtraSlot;
+    type OfficeDrawing2017Model3dSzRatio: UserDataSlot;
     /// What a `office_drawing_2017_model3d::TransWith` holds.
-    type OfficeDrawing2017Model3dTrans: ExtraSlot;
+    type OfficeDrawing2017Model3dTrans: UserDataSlot;
     /// What a `office_drawing_2017_model3d::UnkLightWith` holds.
-    type OfficeDrawing2017Model3dUnkLight: ExtraSlot;
+    type OfficeDrawing2017Model3dUnkLight: UserDataSlot;
     /// What a `office_drawing_2017_model3d::UpWith` holds.
-    type OfficeDrawing2017Model3dUp: ExtraSlot;
+    type OfficeDrawing2017Model3dUp: UserDataSlot;
     /// What a `office_drawing_2017_model3d::WinViewportWith` holds.
-    type OfficeDrawing2017Model3dWinViewport: ExtraSlot;
+    type OfficeDrawing2017Model3dWinViewport: UserDataSlot;
     /// What a `office_drawing_2018_animation::AnimPrWith` holds.
-    type OfficeDrawing2018AnimationAnimPr: ExtraSlot;
+    type OfficeDrawing2018AnimationAnimPr: UserDataSlot;
     /// What a `office_drawing_2018_animation::ExtLstWith` holds.
-    type OfficeDrawing2018AnimationExtLst: ExtraSlot;
+    type OfficeDrawing2018AnimationExtLst: UserDataSlot;
     /// What a `office_drawing_2018_animation_model3d::AnimPrWith` holds.
-    type OfficeDrawing2018AnimationModel3dAnimPr: ExtraSlot;
+    type OfficeDrawing2018AnimationModel3dAnimPr: UserDataSlot;
     /// What a `office_drawing_2018_animation_model3d::EmbedAnimWith` holds.
-    type OfficeDrawing2018AnimationModel3dEmbedAnim: ExtraSlot;
+    type OfficeDrawing2018AnimationModel3dEmbedAnim: UserDataSlot;
     /// What a `office_drawing_2018_animation_model3d::ExtLstWith` holds.
-    type OfficeDrawing2018AnimationModel3dExtLst: ExtraSlot;
+    type OfficeDrawing2018AnimationModel3dExtLst: UserDataSlot;
     /// What a `office_drawing_2018_animation_model3d::PosterFrameWith` holds.
-    type OfficeDrawing2018AnimationModel3dPosterFrame: ExtraSlot;
+    type OfficeDrawing2018AnimationModel3dPosterFrame: UserDataSlot;
     /// What a `office_drawing_2018_hyperlinkcolor::HlinkClrWith` holds.
-    type OfficeDrawing2018HyperlinkcolorHlinkClr: ExtraSlot;
+    type OfficeDrawing2018HyperlinkcolorHlinkClr: UserDataSlot;
     /// What a `office_drawing_2018_sketchyshapes::ExtLstWith` holds.
-    type OfficeDrawing2018SketchyshapesExtLst: ExtraSlot;
+    type OfficeDrawing2018SketchyshapesExtLst: UserDataSlot;
     /// What a `office_drawing_2018_sketchyshapes::LineSketchCurvedWith` holds.
-    type OfficeDrawing2018SketchyshapesLineSketchCurved: ExtraSlot;
+    type OfficeDrawing2018SketchyshapesLineSketchCurved: UserDataSlot;
     /// What a `office_drawing_2018_sketchyshapes::LineSketchFreehandWith` holds.
-    type OfficeDrawing2018SketchyshapesLineSketchFreehand: ExtraSlot;
+    type OfficeDrawing2018SketchyshapesLineSketchFreehand: UserDataSlot;
     /// What a `office_drawing_2018_sketchyshapes::LineSketchNoneWith` holds.
-    type OfficeDrawing2018SketchyshapesLineSketchNone: ExtraSlot;
+    type OfficeDrawing2018SketchyshapesLineSketchNone: UserDataSlot;
     /// What a `office_drawing_2018_sketchyshapes::LineSketchScribbleWith` holds.
-    type OfficeDrawing2018SketchyshapesLineSketchScribble: ExtraSlot;
+    type OfficeDrawing2018SketchyshapesLineSketchScribble: UserDataSlot;
     /// What a `office_drawing_2018_sketchyshapes::LineSketchStylePropsWith` holds.
-    type OfficeDrawing2018SketchyshapesLineSketchStyleProps: ExtraSlot;
+    type OfficeDrawing2018SketchyshapesLineSketchStyleProps: UserDataSlot;
     /// What a `office_drawing_2018_sketchyshapes::SeedWith` holds.
-    type OfficeDrawing2018SketchyshapesSeed: ExtraSlot;
+    type OfficeDrawing2018SketchyshapesSeed: UserDataSlot;
     /// What a `office_drawing_2018_sketchyshapes::TypeWith` holds.
-    type OfficeDrawing2018SketchyshapesType: ExtraSlot;
+    type OfficeDrawing2018SketchyshapesType: UserDataSlot;
     /// What a `office_drawing_2020_classification_shape::ClassificationWith` holds.
-    type OfficeDrawing2020ClassificationShapeClassification: ExtraSlot;
+    type OfficeDrawing2020ClassificationShapeClassification: UserDataSlot;
     /// What a `office_drawing_2021_livefeed::BackgroundPropsWith` holds.
-    type OfficeDrawing2021LivefeedBackgroundProps: ExtraSlot;
+    type OfficeDrawing2021LivefeedBackgroundProps: UserDataSlot;
     /// What a `office_drawing_2021_livefeed::BlurWith` holds.
-    type OfficeDrawing2021LivefeedBlur: ExtraSlot;
+    type OfficeDrawing2021LivefeedBlur: UserDataSlot;
     /// What a `office_drawing_2021_livefeed::CustomWith` holds.
-    type OfficeDrawing2021LivefeedCustom: ExtraSlot;
+    type OfficeDrawing2021LivefeedCustom: UserDataSlot;
     /// What a `office_drawing_2021_livefeed::ExtLstWith` holds.
-    type OfficeDrawing2021LivefeedExtLst: ExtraSlot;
+    type OfficeDrawing2021LivefeedExtLst: UserDataSlot;
     /// What a `office_drawing_2021_livefeed::LiveFeedPropsWith` holds.
-    type OfficeDrawing2021LivefeedLiveFeedProps: ExtraSlot;
+    type OfficeDrawing2021LivefeedLiveFeedProps: UserDataSlot;
     /// What a `office_drawing_2021_livefeed::NormalWith` holds.
-    type OfficeDrawing2021LivefeedNormal: ExtraSlot;
+    type OfficeDrawing2021LivefeedNormal: UserDataSlot;
     /// What a `office_drawing_2021_livefeed::RemovedWith` holds.
-    type OfficeDrawing2021LivefeedRemoved: ExtraSlot;
+    type OfficeDrawing2021LivefeedRemoved: UserDataSlot;
     /// What a `office_drawing_2021_oembed::ExtLstWith` holds.
-    type OfficeDrawing2021OembedExtLst: ExtraSlot;
+    type OfficeDrawing2021OembedExtLst: UserDataSlot;
     /// What a `office_drawing_2021_oembed::OembedSharedWith` holds.
-    type OfficeDrawing2021OembedOembedShared: ExtraSlot;
+    type OfficeDrawing2021OembedOembedShared: UserDataSlot;
     /// What a `office_drawing_2021_scriptlink::ExtLstWith` holds.
-    type OfficeDrawing2021ScriptlinkExtLst: ExtraSlot;
+    type OfficeDrawing2021ScriptlinkExtLst: UserDataSlot;
     /// What a `office_drawing_2021_scriptlink::ScriptLinkWith` holds.
-    type OfficeDrawing2021ScriptlinkScriptLink: ExtraSlot;
+    type OfficeDrawing2021ScriptlinkScriptLink: UserDataSlot;
     /// What a `office_drawing_2022_imageformula::ImageFormulaWith` holds.
-    type OfficeDrawing2022ImageformulaImageFormula: ExtraSlot;
+    type OfficeDrawing2022ImageformulaImageFormula: UserDataSlot;
     /// What a `office_excel_2006_main::FWith` holds.
-    type OfficeExcel2006MainF: ExtraSlot;
+    type OfficeExcel2006MainF: UserDataSlot;
     /// What a `office_excel_2006_main::SqrefWith` holds.
-    type OfficeExcel2006MainSqref: ExtraSlot;
+    type OfficeExcel2006MainSqref: UserDataSlot;
     /// What a `office_excel_2010_spreadsheet_drawing::CNvContentPartPrWith` holds.
-    type OfficeExcel2010SpreadsheetDrawingCNvContentPartPr: ExtraSlot;
+    type OfficeExcel2010SpreadsheetDrawingCNvContentPartPr: UserDataSlot;
     /// What a `office_excel_2010_spreadsheet_drawing::CNvPrWith` holds.
-    type OfficeExcel2010SpreadsheetDrawingCNvPr: ExtraSlot;
+    type OfficeExcel2010SpreadsheetDrawingCNvPr: UserDataSlot;
     /// What a `office_excel_2010_spreadsheet_drawing::ContentPartWith` holds.
-    type OfficeExcel2010SpreadsheetDrawingContentPart: ExtraSlot;
+    type OfficeExcel2010SpreadsheetDrawingContentPart: UserDataSlot;
     /// What a `office_excel_2010_spreadsheet_drawing::ExtLstWith` holds.
-    type OfficeExcel2010SpreadsheetDrawingExtLst: ExtraSlot;
+    type OfficeExcel2010SpreadsheetDrawingExtLst: UserDataSlot;
     /// What a `office_excel_2010_spreadsheet_drawing::NvContentPartPrWith` holds.
-    type OfficeExcel2010SpreadsheetDrawingNvContentPartPr: ExtraSlot;
+    type OfficeExcel2010SpreadsheetDrawingNvContentPartPr: UserDataSlot;
     /// What a `office_excel_2010_spreadsheet_drawing::NvPrWith` holds.
-    type OfficeExcel2010SpreadsheetDrawingNvPr: ExtraSlot;
+    type OfficeExcel2010SpreadsheetDrawingNvPr: UserDataSlot;
     /// What a `office_excel_2010_spreadsheet_drawing::XfrmWith` holds.
-    type OfficeExcel2010SpreadsheetDrawingXfrm: ExtraSlot;
+    type OfficeExcel2010SpreadsheetDrawingXfrm: UserDataSlot;
     /// What a `office_powerpoint_2010_main::BmkWith` holds.
-    type OfficePowerpoint2010MainBmk: ExtraSlot;
+    type OfficePowerpoint2010MainBmk: UserDataSlot;
     /// What a `office_powerpoint_2010_main::BmkLstWith` holds.
-    type OfficePowerpoint2010MainBmkLst: ExtraSlot;
+    type OfficePowerpoint2010MainBmkLst: UserDataSlot;
     /// What a `office_powerpoint_2010_main::BmkTgtWith` holds.
-    type OfficePowerpoint2010MainBmkTgt: ExtraSlot;
+    type OfficePowerpoint2010MainBmkTgt: UserDataSlot;
     /// What a `office_powerpoint_2010_main::BrowseModeWith` holds.
-    type OfficePowerpoint2010MainBrowseMode: ExtraSlot;
+    type OfficePowerpoint2010MainBrowseMode: UserDataSlot;
     /// What a `office_powerpoint_2010_main::CNvContentPartPrWith` holds.
-    type OfficePowerpoint2010MainCNvContentPartPr: ExtraSlot;
+    type OfficePowerpoint2010MainCNvContentPartPr: UserDataSlot;
     /// What a `office_powerpoint_2010_main::CNvPrWith` holds.
-    type OfficePowerpoint2010MainCNvPr: ExtraSlot;
+    type OfficePowerpoint2010MainCNvPr: UserDataSlot;
     /// What a `office_powerpoint_2010_main::ConveyorWith` holds.
-    type OfficePowerpoint2010MainConveyor: ExtraSlot;
+    type OfficePowerpoint2010MainConveyor: UserDataSlot;
     /// What a `office_powerpoint_2010_main::CreationIdWith` holds.
-    type OfficePowerpoint2010MainCreationId: ExtraSlot;
+    type OfficePowerpoint2010MainCreationId: UserDataSlot;
     /// What a `office_powerpoint_2010_main::DefaultImageDpiWith` holds.
-    type OfficePowerpoint2010MainDefaultImageDpi: ExtraSlot;
+    type OfficePowerpoint2010MainDefaultImageDpi: UserDataSlot;
     /// What a `office_powerpoint_2010_main::DiscardImageEditDataWith` holds.
-    type OfficePowerpoint2010MainDiscardImageEditData: ExtraSlot;
+    type OfficePowerpoint2010MainDiscardImageEditData: UserDataSlot;
     /// What a `office_powerpoint_2010_main::DoorsWith` holds.
-    type OfficePowerpoint2010MainDoors: ExtraSlot;
+    type OfficePowerpoint2010MainDoors: UserDataSlot;
     /// What a `office_powerpoint_2010_main::ExtLstExtensionListWith` holds.
-    type OfficePowerpoint2010MainExtLstExtensionList: ExtraSlot;
+    type OfficePowerpoint2010MainExtLstExtensionList: UserDataSlot;
     /// What a `office_powerpoint_2010_main::ExtLstExtensionListModifyWith` holds.
-    type OfficePowerpoint2010MainExtLstExtensionListModify: ExtraSlot;
+    type OfficePowerpoint2010MainExtLstExtensionListModify: UserDataSlot;
     /// What a `office_powerpoint_2010_main::FadeWith` holds.
-    type OfficePowerpoint2010MainFade: ExtraSlot;
+    type OfficePowerpoint2010MainFade: UserDataSlot;
     /// What a `office_powerpoint_2010_main::FerrisWith` holds.
-    type OfficePowerpoint2010MainFerris: ExtraSlot;
+    type OfficePowerpoint2010MainFerris: UserDataSlot;
     /// What a `office_powerpoint_2010_main::FlashWith` holds.
-    type OfficePowerpoint2010MainFlash: ExtraSlot;
+    type OfficePowerpoint2010MainFlash: UserDataSlot;
     /// What a `office_powerpoint_2010_main::FlipWith` holds.
-    type OfficePowerpoint2010MainFlip: ExtraSlot;
+    type OfficePowerpoint2010MainFlip: UserDataSlot;
     /// What a `office_powerpoint_2010_main::FlythroughWith` holds.
-    type OfficePowerpoint2010MainFlythrough: ExtraSlot;
+    type OfficePowerpoint2010MainFlythrough: UserDataSlot;
     /// What a `office_powerpoint_2010_main::GalleryWith` holds.
-    type OfficePowerpoint2010MainGallery: ExtraSlot;
+    type OfficePowerpoint2010MainGallery: UserDataSlot;
     /// What a `office_powerpoint_2010_main::GlitterWith` holds.
-    type OfficePowerpoint2010MainGlitter: ExtraSlot;
+    type OfficePowerpoint2010MainGlitter: UserDataSlot;
     /// What a `office_powerpoint_2010_main::HoneycombWith` holds.
-    type OfficePowerpoint2010MainHoneycomb: ExtraSlot;
+    type OfficePowerpoint2010MainHoneycomb: UserDataSlot;
     /// What a `office_powerpoint_2010_main::LaserClrWith` holds.
-    type OfficePowerpoint2010MainLaserClr: ExtraSlot;
+    type OfficePowerpoint2010MainLaserClr: UserDataSlot;
     /// What a `office_powerpoint_2010_main::LaserTraceLstWith` holds.
-    type OfficePowerpoint2010MainLaserTraceLst: ExtraSlot;
+    type OfficePowerpoint2010MainLaserTraceLst: UserDataSlot;
     /// What a `office_powerpoint_2010_main::MediaWith` holds.
-    type OfficePowerpoint2010MainMedia: ExtraSlot;
+    type OfficePowerpoint2010MainMedia: UserDataSlot;
     /// What a `office_powerpoint_2010_main::ModIdWith` holds.
-    type OfficePowerpoint2010MainModId: ExtraSlot;
+    type OfficePowerpoint2010MainModId: UserDataSlot;
     /// What a `office_powerpoint_2010_main::NullEvtWith` holds.
-    type OfficePowerpoint2010MainNullEvt: ExtraSlot;
+    type OfficePowerpoint2010MainNullEvt: UserDataSlot;
     /// What a `office_powerpoint_2010_main::NvContentPartPrWith` holds.
-    type OfficePowerpoint2010MainNvContentPartPr: ExtraSlot;
+    type OfficePowerpoint2010MainNvContentPartPr: UserDataSlot;
     /// What a `office_powerpoint_2010_main::NvPrWith` holds.
-    type OfficePowerpoint2010MainNvPr: ExtraSlot;
+    type OfficePowerpoint2010MainNvPr: UserDataSlot;
     /// What a `office_powerpoint_2010_main::PanWith` holds.
-    type OfficePowerpoint2010MainPan: ExtraSlot;
+    type OfficePowerpoint2010MainPan: UserDataSlot;
     /// What a `office_powerpoint_2010_main::PauseEvtWith` holds.
-    type OfficePowerpoint2010MainPauseEvt: ExtraSlot;
+    type OfficePowerpoint2010MainPauseEvt: UserDataSlot;
     /// What a `office_powerpoint_2010_main::PlayEvtWith` holds.
-    type OfficePowerpoint2010MainPlayEvt: ExtraSlot;
+    type OfficePowerpoint2010MainPlayEvt: UserDataSlot;
     /// What a `office_powerpoint_2010_main::PrismWith` holds.
-    type OfficePowerpoint2010MainPrism: ExtraSlot;
+    type OfficePowerpoint2010MainPrism: UserDataSlot;
     /// What a `office_powerpoint_2010_main::ResumeEvtWith` holds.
-    type OfficePowerpoint2010MainResumeEvt: ExtraSlot;
+    type OfficePowerpoint2010MainResumeEvt: UserDataSlot;
     /// What a `office_powerpoint_2010_main::RevealWith` holds.
-    type OfficePowerpoint2010MainReveal: ExtraSlot;
+    type OfficePowerpoint2010MainReveal: UserDataSlot;
     /// What a `office_powerpoint_2010_main::RippleWith` holds.
-    type OfficePowerpoint2010MainRipple: ExtraSlot;
+    type OfficePowerpoint2010MainRipple: UserDataSlot;
     /// What a `office_powerpoint_2010_main::SectionLstWith` holds.
-    type OfficePowerpoint2010MainSectionLst: ExtraSlot;
+    type OfficePowerpoint2010MainSectionLst: UserDataSlot;
     /// What a `office_powerpoint_2010_main::SectionPrWith` holds.
-    type OfficePowerpoint2010MainSectionPr: ExtraSlot;
+    type OfficePowerpoint2010MainSectionPr: UserDataSlot;
     /// What a `office_powerpoint_2010_main::SectionSectionWith` holds.
-    type OfficePowerpoint2010MainSectionSection: ExtraSlot;
+    type OfficePowerpoint2010MainSectionSection: UserDataSlot;
     /// What a `office_powerpoint_2010_main::SectionSectionOldWith` holds.
-    type OfficePowerpoint2010MainSectionSectionOld: ExtraSlot;
+    type OfficePowerpoint2010MainSectionSectionOld: UserDataSlot;
     /// What a `office_powerpoint_2010_main::SeekEvtWith` holds.
-    type OfficePowerpoint2010MainSeekEvt: ExtraSlot;
+    type OfficePowerpoint2010MainSeekEvt: UserDataSlot;
     /// What a `office_powerpoint_2010_main::ShowEvtLstWith` holds.
-    type OfficePowerpoint2010MainShowEvtLst: ExtraSlot;
+    type OfficePowerpoint2010MainShowEvtLst: UserDataSlot;
     /// What a `office_powerpoint_2010_main::ShowMediaCtrlsWith` holds.
-    type OfficePowerpoint2010MainShowMediaCtrls: ExtraSlot;
+    type OfficePowerpoint2010MainShowMediaCtrls: UserDataSlot;
     /// What a `office_powerpoint_2010_main::ShredWith` holds.
-    type OfficePowerpoint2010MainShred: ExtraSlot;
+    type OfficePowerpoint2010MainShred: UserDataSlot;
     /// What a `office_powerpoint_2010_main::SldIdWith` holds.
-    type OfficePowerpoint2010MainSldId: ExtraSlot;
+    type OfficePowerpoint2010MainSldId: UserDataSlot;
     /// What a `office_powerpoint_2010_main::SldIdLstWith` holds.
-    type OfficePowerpoint2010MainSldIdLst: ExtraSlot;
+    type OfficePowerpoint2010MainSldIdLst: UserDataSlot;
     /// What a `office_powerpoint_2010_main::StopEvtWith` holds.
-    type OfficePowerpoint2010MainStopEvt: ExtraSlot;
+    type OfficePowerpoint2010MainStopEvt: UserDataSlot;
     /// What a `office_powerpoint_2010_main::SwitchWith` holds.
-    type OfficePowerpoint2010MainSwitch: ExtraSlot;
+    type OfficePowerpoint2010MainSwitch: UserDataSlot;
     /// What a `office_powerpoint_2010_main::TracePtWith` holds.
-    type OfficePowerpoint2010MainTracePt: ExtraSlot;
+    type OfficePowerpoint2010MainTracePt: UserDataSlot;
     /// What a `office_powerpoint_2010_main::TracePtLstWith` holds.
-    type OfficePowerpoint2010MainTracePtLst: ExtraSlot;
+    type OfficePowerpoint2010MainTracePtLst: UserDataSlot;
     /// What a `office_powerpoint_2010_main::TriggerEvtWith` holds.
-    type OfficePowerpoint2010MainTriggerEvt: ExtraSlot;
+    type OfficePowerpoint2010MainTriggerEvt: UserDataSlot;
     /// What a `office_powerpoint_2010_main::TrimWith` holds.
-    type OfficePowerpoint2010MainTrim: ExtraSlot;
+    type OfficePowerpoint2010MainTrim: UserDataSlot;
     /// What a `office_powerpoint_2010_main::VortexWith` holds.
-    type OfficePowerpoint2010MainVortex: ExtraSlot;
+    type OfficePowerpoint2010MainVortex: UserDataSlot;
     /// What a `office_powerpoint_2010_main::WarpWith` holds.
-    type OfficePowerpoint2010MainWarp: ExtraSlot;
+    type OfficePowerpoint2010MainWarp: UserDataSlot;
     /// What a `office_powerpoint_2010_main::WheelReverseWith` holds.
-    type OfficePowerpoint2010MainWheelReverse: ExtraSlot;
+    type OfficePowerpoint2010MainWheelReverse: UserDataSlot;
     /// What a `office_powerpoint_2010_main::WindowWith` holds.
-    type OfficePowerpoint2010MainWindow: ExtraSlot;
+    type OfficePowerpoint2010MainWindow: UserDataSlot;
     /// What a `office_powerpoint_2010_main::XfrmWith` holds.
-    type OfficePowerpoint2010MainXfrm: ExtraSlot;
+    type OfficePowerpoint2010MainXfrm: UserDataSlot;
     /// What a `office_powerpoint_2012_main::ChartTrackingRefBasedWith` holds.
-    type OfficePowerpoint2012MainChartTrackingRefBased: ExtraSlot;
+    type OfficePowerpoint2012MainChartTrackingRefBased: UserDataSlot;
     /// What a `office_powerpoint_2012_main::ClrWith` holds.
-    type OfficePowerpoint2012MainClr: ExtraSlot;
+    type OfficePowerpoint2012MainClr: UserDataSlot;
     /// What a `office_powerpoint_2012_main::ExtLstWith` holds.
-    type OfficePowerpoint2012MainExtLst: ExtraSlot;
+    type OfficePowerpoint2012MainExtLst: UserDataSlot;
     /// What a `office_powerpoint_2012_main::GuideWith` holds.
-    type OfficePowerpoint2012MainGuide: ExtraSlot;
+    type OfficePowerpoint2012MainGuide: UserDataSlot;
     /// What a `office_powerpoint_2012_main::NotesGuideLstWith` holds.
-    type OfficePowerpoint2012MainNotesGuideLst: ExtraSlot;
+    type OfficePowerpoint2012MainNotesGuideLst: UserDataSlot;
     /// What a `office_powerpoint_2012_main::ParentCmWith` holds.
-    type OfficePowerpoint2012MainParentCm: ExtraSlot;
+    type OfficePowerpoint2012MainParentCm: UserDataSlot;
     /// What a `office_powerpoint_2012_main::PresenceInfoWith` holds.
-    type OfficePowerpoint2012MainPresenceInfo: ExtraSlot;
+    type OfficePowerpoint2012MainPresenceInfo: UserDataSlot;
     /// What a `office_powerpoint_2012_main::PrstTransWith` holds.
-    type OfficePowerpoint2012MainPrstTrans: ExtraSlot;
+    type OfficePowerpoint2012MainPrstTrans: UserDataSlot;
     /// What a `office_powerpoint_2012_main::SldGuideLstWith` holds.
-    type OfficePowerpoint2012MainSldGuideLst: ExtraSlot;
+    type OfficePowerpoint2012MainSldGuideLst: UserDataSlot;
     /// What a `office_powerpoint_2012_main::ThreadingInfoWith` holds.
-    type OfficePowerpoint2012MainThreadingInfo: ExtraSlot;
+    type OfficePowerpoint2012MainThreadingInfo: UserDataSlot;
     /// What a `office_powerpoint_2012_roaming_settings::KeyWith` holds.
-    type OfficePowerpoint2012RoamingSettingsKey: ExtraSlot;
+    type OfficePowerpoint2012RoamingSettingsKey: UserDataSlot;
     /// What a `office_powerpoint_2012_roaming_settings::PropsWith` holds.
-    type OfficePowerpoint2012RoamingSettingsProps: ExtraSlot;
+    type OfficePowerpoint2012RoamingSettingsProps: UserDataSlot;
     /// What a `office_powerpoint_2012_roaming_settings::ValueWith` holds.
-    type OfficePowerpoint2012RoamingSettingsValue: ExtraSlot;
+    type OfficePowerpoint2012RoamingSettingsValue: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::AnimEffectMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandAnimEffectMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandAnimEffectMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::AnimEffectParentMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandAnimEffectParentMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandAnimEffectParentMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::CXmlMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandCXmlMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandCXmlMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::CmAuthorMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandCmAuthorMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandCmAuthorMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::CmMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandCmMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandCmMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::CustShowMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandCustShowMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandCustShowMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::DesignTagMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandDesignTagMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandDesignTagMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::DocMkWith` holds.
-    type OfficePowerpoint2013MainCommandDocMk: ExtraSlot;
+    type OfficePowerpoint2013MainCommandDocMk: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::DocMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandDocMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandDocMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::HandoutMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandHandoutMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandHandoutMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::NotesMasterMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandNotesMasterMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandNotesMasterMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::NotesMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandNotesMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandNotesMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::NotesTxtMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandNotesTxtMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandNotesTxtMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::SectionLnkObjMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandSectionLnkObjMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandSectionLnkObjMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::SectionMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandSectionMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandSectionMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::SldBaseMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandSldBaseMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandSldBaseMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::SldLayoutMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandSldLayoutMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandSldLayoutMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::SldMasterMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandSldMasterMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandSldMasterMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::SldMkWith` holds.
-    type OfficePowerpoint2013MainCommandSldMk: ExtraSlot;
+    type OfficePowerpoint2013MainCommandSldMk: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::SldMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandSldMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandSldMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::SldPosMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandSldPosMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandSldPosMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::TagMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandTagMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandTagMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::TkAppMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandTkAppMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandTkAppMkLst: UserDataSlot;
     /// What a `office_powerpoint_2013_main_command::TocMkLstWith` holds.
-    type OfficePowerpoint2013MainCommandTocMkLst: ExtraSlot;
+    type OfficePowerpoint2013MainCommandTocMkLst: UserDataSlot;
     /// What a `office_powerpoint_2015_main::DesignElemWith` holds.
-    type OfficePowerpoint2015MainDesignElem: ExtraSlot;
+    type OfficePowerpoint2015MainDesignElem: UserDataSlot;
     /// What a `office_powerpoint_2017_10_main::ReadonlyRecommendedWith` holds.
-    type OfficePowerpoint201710MainReadonlyRecommended: ExtraSlot;
+    type OfficePowerpoint201710MainReadonlyRecommended: UserDataSlot;
     /// What a `office_powerpoint_2017_3_main::TrackWith` holds.
-    type OfficePowerpoint20173MainTrack: ExtraSlot;
+    type OfficePowerpoint20173MainTrack: UserDataSlot;
     /// What a `office_powerpoint_2017_3_main::TrackLstWith` holds.
-    type OfficePowerpoint20173MainTrackLst: ExtraSlot;
+    type OfficePowerpoint20173MainTrackLst: UserDataSlot;
     /// What a `office_powerpoint_2017_3_main::TracksInfoWith` holds.
-    type OfficePowerpoint20173MainTracksInfo: ExtraSlot;
+    type OfficePowerpoint20173MainTracksInfo: UserDataSlot;
     /// What a `office_powerpoint_2018_4_main::ClassificationWith` holds.
-    type OfficePowerpoint20184MainClassification: ExtraSlot;
+    type OfficePowerpoint20184MainClassification: UserDataSlot;
     /// What a `office_powerpoint_2018_8_main::AuthorWith` holds.
-    type OfficePowerpoint20188MainAuthor: ExtraSlot;
+    type OfficePowerpoint20188MainAuthor: UserDataSlot;
     /// What a `office_powerpoint_2018_8_main::AuthorLstWith` holds.
-    type OfficePowerpoint20188MainAuthorLst: ExtraSlot;
+    type OfficePowerpoint20188MainAuthorLst: UserDataSlot;
     /// What a `office_powerpoint_2018_8_main::CmWith` holds.
-    type OfficePowerpoint20188MainCm: ExtraSlot;
+    type OfficePowerpoint20188MainCm: UserDataSlot;
     /// What a `office_powerpoint_2018_8_main::CmLstWith` holds.
-    type OfficePowerpoint20188MainCmLst: ExtraSlot;
+    type OfficePowerpoint20188MainCmLst: UserDataSlot;
     /// What a `office_powerpoint_2018_8_main::CommentRelWith` holds.
-    type OfficePowerpoint20188MainCommentRel: ExtraSlot;
+    type OfficePowerpoint20188MainCommentRel: UserDataSlot;
     /// What a `office_powerpoint_2018_8_main::ExtLstCommentPropertiesExtensionListWith` holds.
-    type OfficePowerpoint20188MainExtLstCommentPropertiesExtensionList: ExtraSlot;
+    type OfficePowerpoint20188MainExtLstCommentPropertiesExtensionList: UserDataSlot;
     /// What a `office_powerpoint_2018_8_main::ExtLstExtensionListWith` holds.
-    type OfficePowerpoint20188MainExtLstExtensionList: ExtraSlot;
+    type OfficePowerpoint20188MainExtLstExtensionList: UserDataSlot;
     /// What a `office_powerpoint_2018_8_main::PosWith` holds.
-    type OfficePowerpoint20188MainPos: ExtraSlot;
+    type OfficePowerpoint20188MainPos: UserDataSlot;
     /// What a `office_powerpoint_2018_8_main::ReplyWith` holds.
-    type OfficePowerpoint20188MainReply: ExtraSlot;
+    type OfficePowerpoint20188MainReply: UserDataSlot;
     /// What a `office_powerpoint_2018_8_main::ReplyLstWith` holds.
-    type OfficePowerpoint20188MainReplyLst: ExtraSlot;
+    type OfficePowerpoint20188MainReplyLst: UserDataSlot;
     /// What a `office_powerpoint_2018_8_main::TxBodyWith` holds.
-    type OfficePowerpoint20188MainTxBody: ExtraSlot;
+    type OfficePowerpoint20188MainTxBody: UserDataSlot;
     /// What a `office_powerpoint_2018_8_main::UnknownAnchorWith` holds.
-    type OfficePowerpoint20188MainUnknownAnchor: ExtraSlot;
+    type OfficePowerpoint20188MainUnknownAnchor: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::AddWith` holds.
-    type OfficePowerpoint201912MainAdd: ExtraSlot;
+    type OfficePowerpoint201912MainAdd: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::AnchrWith` holds.
-    type OfficePowerpoint201912MainAnchr: ExtraSlot;
+    type OfficePowerpoint201912MainAnchr: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::AsgnWith` holds.
-    type OfficePowerpoint201912MainAsgn: ExtraSlot;
+    type OfficePowerpoint201912MainAsgn: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::AtrbtnWith` holds.
-    type OfficePowerpoint201912MainAtrbtn: ExtraSlot;
+    type OfficePowerpoint201912MainAtrbtn: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::CommentWith` holds.
-    type OfficePowerpoint201912MainComment: ExtraSlot;
+    type OfficePowerpoint201912MainComment: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::DateWith` holds.
-    type OfficePowerpoint201912MainDate: ExtraSlot;
+    type OfficePowerpoint201912MainDate: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::EventWith` holds.
-    type OfficePowerpoint201912MainEvent: ExtraSlot;
+    type OfficePowerpoint201912MainEvent: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::ExtLstWith` holds.
-    type OfficePowerpoint201912MainExtLst: ExtraSlot;
+    type OfficePowerpoint201912MainExtLst: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::HistoryWith` holds.
-    type OfficePowerpoint201912MainHistory: ExtraSlot;
+    type OfficePowerpoint201912MainHistory: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::PcntCmpltWith` holds.
-    type OfficePowerpoint201912MainPcntCmplt: ExtraSlot;
+    type OfficePowerpoint201912MainPcntCmplt: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::PriWith` holds.
-    type OfficePowerpoint201912MainPri: ExtraSlot;
+    type OfficePowerpoint201912MainPri: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::TaskHistoryDetailsWith` holds.
-    type OfficePowerpoint201912MainTaskHistoryDetails: ExtraSlot;
+    type OfficePowerpoint201912MainTaskHistoryDetails: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::TitleWith` holds.
-    type OfficePowerpoint201912MainTitle: ExtraSlot;
+    type OfficePowerpoint201912MainTitle: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::UnAsgnWith` holds.
-    type OfficePowerpoint201912MainUnAsgn: ExtraSlot;
+    type OfficePowerpoint201912MainUnAsgn: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::UnasgnAllWith` holds.
-    type OfficePowerpoint201912MainUnasgnAll: ExtraSlot;
+    type OfficePowerpoint201912MainUnasgnAll: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::UndoWith` holds.
-    type OfficePowerpoint201912MainUndo: ExtraSlot;
+    type OfficePowerpoint201912MainUndo: UserDataSlot;
     /// What a `office_powerpoint_2019_12_main::UnknownWith` holds.
-    type OfficePowerpoint201912MainUnknown: ExtraSlot;
+    type OfficePowerpoint201912MainUnknown: UserDataSlot;
     /// What a `office_powerpoint_2019_9_main_command::CmMKWith` holds.
-    type OfficePowerpoint20199MainCommandCmMK: ExtraSlot;
+    type OfficePowerpoint20199MainCommandCmMK: UserDataSlot;
     /// What a `office_powerpoint_2019_9_main_command::CmMkLstWith` holds.
-    type OfficePowerpoint20199MainCommandCmMkLst: ExtraSlot;
+    type OfficePowerpoint20199MainCommandCmMkLst: UserDataSlot;
     /// What a `office_powerpoint_2019_9_main_command::CmRplyMkWith` holds.
-    type OfficePowerpoint20199MainCommandCmRplyMk: ExtraSlot;
+    type OfficePowerpoint20199MainCommandCmRplyMk: UserDataSlot;
     /// What a `office_powerpoint_2019_9_main_command::CmRplyMkLstWith` holds.
-    type OfficePowerpoint20199MainCommandCmRplyMkLst: ExtraSlot;
+    type OfficePowerpoint20199MainCommandCmRplyMkLst: UserDataSlot;
     /// What a `office_powerpoint_2020_02_main::DesignPrWith` holds.
-    type OfficePowerpoint202002MainDesignPr: ExtraSlot;
+    type OfficePowerpoint202002MainDesignPr: UserDataSlot;
     /// What a `office_powerpoint_2020_02_main::DesignTagWith` holds.
-    type OfficePowerpoint202002MainDesignTag: ExtraSlot;
+    type OfficePowerpoint202002MainDesignTag: UserDataSlot;
     /// What a `office_powerpoint_2020_02_main::DesignTagLstWith` holds.
-    type OfficePowerpoint202002MainDesignTagLst: ExtraSlot;
+    type OfficePowerpoint202002MainDesignTagLst: UserDataSlot;
     /// What a `office_powerpoint_2020_02_main::ExtLstWith` holds.
-    type OfficePowerpoint202002MainExtLst: ExtraSlot;
+    type OfficePowerpoint202002MainExtLst: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::AddWith` holds.
-    type OfficePowerpoint202106MainAdd: ExtraSlot;
+    type OfficePowerpoint202106MainAdd: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::AnchrWith` holds.
-    type OfficePowerpoint202106MainAnchr: ExtraSlot;
+    type OfficePowerpoint202106MainAnchr: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::AsgnWith` holds.
-    type OfficePowerpoint202106MainAsgn: ExtraSlot;
+    type OfficePowerpoint202106MainAsgn: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::AtrbtnWith` holds.
-    type OfficePowerpoint202106MainAtrbtn: ExtraSlot;
+    type OfficePowerpoint202106MainAtrbtn: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::CommentWith` holds.
-    type OfficePowerpoint202106MainComment: ExtraSlot;
+    type OfficePowerpoint202106MainComment: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::DateWith` holds.
-    type OfficePowerpoint202106MainDate: ExtraSlot;
+    type OfficePowerpoint202106MainDate: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::EventWith` holds.
-    type OfficePowerpoint202106MainEvent: ExtraSlot;
+    type OfficePowerpoint202106MainEvent: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::ExtLstWith` holds.
-    type OfficePowerpoint202106MainExtLst: ExtraSlot;
+    type OfficePowerpoint202106MainExtLst: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::HistoryWith` holds.
-    type OfficePowerpoint202106MainHistory: ExtraSlot;
+    type OfficePowerpoint202106MainHistory: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::PcntCmpltWith` holds.
-    type OfficePowerpoint202106MainPcntCmplt: ExtraSlot;
+    type OfficePowerpoint202106MainPcntCmplt: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::PriWith` holds.
-    type OfficePowerpoint202106MainPri: ExtraSlot;
+    type OfficePowerpoint202106MainPri: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::TaskHistoryDetailsWith` holds.
-    type OfficePowerpoint202106MainTaskHistoryDetails: ExtraSlot;
+    type OfficePowerpoint202106MainTaskHistoryDetails: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::TitleWith` holds.
-    type OfficePowerpoint202106MainTitle: ExtraSlot;
+    type OfficePowerpoint202106MainTitle: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::UnAsgnWith` holds.
-    type OfficePowerpoint202106MainUnAsgn: ExtraSlot;
+    type OfficePowerpoint202106MainUnAsgn: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::UnasgnAllWith` holds.
-    type OfficePowerpoint202106MainUnasgnAll: ExtraSlot;
+    type OfficePowerpoint202106MainUnasgnAll: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::UndoWith` holds.
-    type OfficePowerpoint202106MainUndo: ExtraSlot;
+    type OfficePowerpoint202106MainUndo: UserDataSlot;
     /// What a `office_powerpoint_2021_06_main::UnknownWith` holds.
-    type OfficePowerpoint202106MainUnknown: ExtraSlot;
+    type OfficePowerpoint202106MainUnknown: UserDataSlot;
     /// What a `office_powerpoint_2022_03_main::ExtLstWith` holds.
-    type OfficePowerpoint202203MainExtLst: ExtraSlot;
+    type OfficePowerpoint202203MainExtLst: UserDataSlot;
     /// What a `office_powerpoint_2022_03_main::InstanceWith` holds.
-    type OfficePowerpoint202203MainInstance: ExtraSlot;
+    type OfficePowerpoint202203MainInstance: UserDataSlot;
     /// What a `office_powerpoint_2022_03_main::ReactionsWith` holds.
-    type OfficePowerpoint202203MainReactions: ExtraSlot;
+    type OfficePowerpoint202203MainReactions: UserDataSlot;
     /// What a `office_powerpoint_2022_03_main::RxnWith` holds.
-    type OfficePowerpoint202203MainRxn: ExtraSlot;
+    type OfficePowerpoint202203MainRxn: UserDataSlot;
     /// What a `office_powerpoint_2022_08_main::AddWith` holds.
-    type OfficePowerpoint202208MainAdd: ExtraSlot;
+    type OfficePowerpoint202208MainAdd: UserDataSlot;
     /// What a `office_powerpoint_2022_08_main::AnchrWith` holds.
-    type OfficePowerpoint202208MainAnchr: ExtraSlot;
+    type OfficePowerpoint202208MainAnchr: UserDataSlot;
     /// What a `office_powerpoint_2022_08_main::AsgnWith` holds.
-    type OfficePowerpoint202208MainAsgn: ExtraSlot;
+    type OfficePowerpoint202208MainAsgn: UserDataSlot;
     /// What a `office_powerpoint_2022_08_main::AtrbtnWith` holds.
-    type OfficePowerpoint202208MainAtrbtn: ExtraSlot;
+    type OfficePowerpoint202208MainAtrbtn: UserDataSlot;
     /// What a `office_powerpoint_2022_08_main::CommentWith` holds.
-    type OfficePowerpoint202208MainComment: ExtraSlot;
+    type OfficePowerpoint202208MainComment: UserDataSlot;
     /// What a `office_powerpoint_2022_08_main::DateWith` holds.
-    type OfficePowerpoint202208MainDate: ExtraSlot;
+    type OfficePowerpoint202208MainDate: UserDataSlot;
     /// What a `office_powerpoint_2022_08_main::EventWith` holds.
-    type OfficePowerpoint202208MainEvent: ExtraSlot;
+    type OfficePowerpoint202208MainEvent: UserDataSlot;
     /// What a `office_powerpoint_2022_08_main::ExtLstWith` holds.
-    type OfficePowerpoint202208MainExtLst: ExtraSlot;
+    type OfficePowerpoint202208MainExtLst: UserDataSlot;
     /// What a `office_powerpoint_2022_08_main::HistoryWith` holds.
-    type OfficePowerpoint202208MainHistory: ExtraSlot;
+    type OfficePowerpoint202208MainHistory: UserDataSlot;
     /// What a `office_powerpoint_2022_08_main::PcntCmpltWith` holds.
-    type OfficePowerpoint202208MainPcntCmplt: ExtraSlot;
+    type OfficePowerpoint202208MainPcntCmplt: UserDataSlot;
     /// What a `office_powerpoint_2022_08_main::TaskDetailsWith` holds.
-    type OfficePowerpoint202208MainTaskDetails: ExtraSlot;
+    type OfficePowerpoint202208MainTaskDetails: UserDataSlot;
     /// What a `office_powerpoint_2022_08_main::TitleWith` holds.
-    type OfficePowerpoint202208MainTitle: ExtraSlot;
+    type OfficePowerpoint202208MainTitle: UserDataSlot;
     /// What a `office_powerpoint_2022_08_main::UnasgnAllWith` holds.
-    type OfficePowerpoint202208MainUnasgnAll: ExtraSlot;
+    type OfficePowerpoint202208MainUnasgnAll: UserDataSlot;
     /// What a `office_powerpoint_2022_08_main::UndoWith` holds.
-    type OfficePowerpoint202208MainUndo: ExtraSlot;
+    type OfficePowerpoint202208MainUndo: UserDataSlot;
     /// What a `office_powerpoint_2022_08_main::UnknownWith` holds.
-    type OfficePowerpoint202208MainUnknown: ExtraSlot;
+    type OfficePowerpoint202208MainUnknown: UserDataSlot;
     /// What a `office_powerpoint_2023_02_main::CameoWith` holds.
-    type OfficePowerpoint202302MainCameo: ExtraSlot;
+    type OfficePowerpoint202302MainCameo: UserDataSlot;
     /// What a `office_powerpoint_2023_02_main::PhTypeExtWith` holds.
-    type OfficePowerpoint202302MainPhTypeExt: ExtraSlot;
+    type OfficePowerpoint202302MainPhTypeExt: UserDataSlot;
     /// What a `office_powerpoint_2023_02_main::TypeWith` holds.
-    type OfficePowerpoint202302MainType: ExtraSlot;
+    type OfficePowerpoint202302MainType: UserDataSlot;
     /// What a `office_powerpoint_2023_02_main::UnknownWith` holds.
-    type OfficePowerpoint202302MainUnknown: ExtraSlot;
+    type OfficePowerpoint202302MainUnknown: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ArgumentDescriptionWith` holds.
-    type OfficeSpreadsheetml20099MainArgumentDescription: ExtraSlot;
+    type OfficeSpreadsheetml20099MainArgumentDescription: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ArgumentDescriptionsWith` holds.
-    type OfficeSpreadsheetml20099MainArgumentDescriptions: ExtraSlot;
+    type OfficeSpreadsheetml20099MainArgumentDescriptions: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::AxisColorWith` holds.
-    type OfficeSpreadsheetml20099MainAxisColor: ExtraSlot;
+    type OfficeSpreadsheetml20099MainAxisColor: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::BorderColorWith` holds.
-    type OfficeSpreadsheetml20099MainBorderColor: ExtraSlot;
+    type OfficeSpreadsheetml20099MainBorderColor: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::CacheFieldWith` holds.
-    type OfficeSpreadsheetml20099MainCacheField: ExtraSlot;
+    type OfficeSpreadsheetml20099MainCacheField: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::CacheHierarchyWith` holds.
-    type OfficeSpreadsheetml20099MainCacheHierarchy: ExtraSlot;
+    type OfficeSpreadsheetml20099MainCacheHierarchy: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::CalculatedMemberWith` holds.
-    type OfficeSpreadsheetml20099MainCalculatedMember: ExtraSlot;
+    type OfficeSpreadsheetml20099MainCalculatedMember: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::CalculatedMembersWith` holds.
-    type OfficeSpreadsheetml20099MainCalculatedMembers: ExtraSlot;
+    type OfficeSpreadsheetml20099MainCalculatedMembers: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::CfIconWith` holds.
-    type OfficeSpreadsheetml20099MainCfIcon: ExtraSlot;
+    type OfficeSpreadsheetml20099MainCfIcon: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::CfRuleWith` holds.
-    type OfficeSpreadsheetml20099MainCfRule: ExtraSlot;
+    type OfficeSpreadsheetml20099MainCfRule: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::CfvoWith` holds.
-    type OfficeSpreadsheetml20099MainCfvo: ExtraSlot;
+    type OfficeSpreadsheetml20099MainCfvo: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ColorWith` holds.
-    type OfficeSpreadsheetml20099MainColor: ExtraSlot;
+    type OfficeSpreadsheetml20099MainColor: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ColorAxisWith` holds.
-    type OfficeSpreadsheetml20099MainColorAxis: ExtraSlot;
+    type OfficeSpreadsheetml20099MainColorAxis: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ColorFirstWith` holds.
-    type OfficeSpreadsheetml20099MainColorFirst: ExtraSlot;
+    type OfficeSpreadsheetml20099MainColorFirst: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ColorHighWith` holds.
-    type OfficeSpreadsheetml20099MainColorHigh: ExtraSlot;
+    type OfficeSpreadsheetml20099MainColorHigh: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ColorLastWith` holds.
-    type OfficeSpreadsheetml20099MainColorLast: ExtraSlot;
+    type OfficeSpreadsheetml20099MainColorLast: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ColorLowWith` holds.
-    type OfficeSpreadsheetml20099MainColorLow: ExtraSlot;
+    type OfficeSpreadsheetml20099MainColorLow: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ColorMarkersWith` holds.
-    type OfficeSpreadsheetml20099MainColorMarkers: ExtraSlot;
+    type OfficeSpreadsheetml20099MainColorMarkers: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ColorNegativeWith` holds.
-    type OfficeSpreadsheetml20099MainColorNegative: ExtraSlot;
+    type OfficeSpreadsheetml20099MainColorNegative: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ColorScaleWith` holds.
-    type OfficeSpreadsheetml20099MainColorScale: ExtraSlot;
+    type OfficeSpreadsheetml20099MainColorScale: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ColorSeriesWith` holds.
-    type OfficeSpreadsheetml20099MainColorSeries: ExtraSlot;
+    type OfficeSpreadsheetml20099MainColorSeries: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ConditionalFormatWith` holds.
-    type OfficeSpreadsheetml20099MainConditionalFormat: ExtraSlot;
+    type OfficeSpreadsheetml20099MainConditionalFormat: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ConditionalFormatsWith` holds.
-    type OfficeSpreadsheetml20099MainConditionalFormats: ExtraSlot;
+    type OfficeSpreadsheetml20099MainConditionalFormats: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ConditionalFormattingWith` holds.
-    type OfficeSpreadsheetml20099MainConditionalFormatting: ExtraSlot;
+    type OfficeSpreadsheetml20099MainConditionalFormatting: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ConditionalFormattingsWith` holds.
-    type OfficeSpreadsheetml20099MainConditionalFormattings: ExtraSlot;
+    type OfficeSpreadsheetml20099MainConditionalFormattings: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ConnectionWith` holds.
-    type OfficeSpreadsheetml20099MainConnection: ExtraSlot;
+    type OfficeSpreadsheetml20099MainConnection: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::CustomFilterWith` holds.
-    type OfficeSpreadsheetml20099MainCustomFilter: ExtraSlot;
+    type OfficeSpreadsheetml20099MainCustomFilter: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::CustomFiltersWith` holds.
-    type OfficeSpreadsheetml20099MainCustomFilters: ExtraSlot;
+    type OfficeSpreadsheetml20099MainCustomFilters: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::DataWith` holds.
-    type OfficeSpreadsheetml20099MainData: ExtraSlot;
+    type OfficeSpreadsheetml20099MainData: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::DataBarWith` holds.
-    type OfficeSpreadsheetml20099MainDataBar: ExtraSlot;
+    type OfficeSpreadsheetml20099MainDataBar: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::DataFieldWith` holds.
-    type OfficeSpreadsheetml20099MainDataField: ExtraSlot;
+    type OfficeSpreadsheetml20099MainDataField: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::DataValidationWith` holds.
-    type OfficeSpreadsheetml20099MainDataValidation: ExtraSlot;
+    type OfficeSpreadsheetml20099MainDataValidation: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::DataValidationsWith` holds.
-    type OfficeSpreadsheetml20099MainDataValidations: ExtraSlot;
+    type OfficeSpreadsheetml20099MainDataValidations: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::DatastoreItemWith` holds.
-    type OfficeSpreadsheetml20099MainDatastoreItem: ExtraSlot;
+    type OfficeSpreadsheetml20099MainDatastoreItem: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::DefinedNameWith` holds.
-    type OfficeSpreadsheetml20099MainDefinedName: ExtraSlot;
+    type OfficeSpreadsheetml20099MainDefinedName: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::DefinedNamesWith` holds.
-    type OfficeSpreadsheetml20099MainDefinedNames: ExtraSlot;
+    type OfficeSpreadsheetml20099MainDefinedNames: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::DxfWith` holds.
-    type OfficeSpreadsheetml20099MainDxf: ExtraSlot;
+    type OfficeSpreadsheetml20099MainDxf: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::DxfsWith` holds.
-    type OfficeSpreadsheetml20099MainDxfs: ExtraSlot;
+    type OfficeSpreadsheetml20099MainDxfs: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::EditValueWith` holds.
-    type OfficeSpreadsheetml20099MainEditValue: ExtraSlot;
+    type OfficeSpreadsheetml20099MainEditValue: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ExtLstExtensionListWith` holds.
-    type OfficeSpreadsheetml20099MainExtLstExtensionList: ExtraSlot;
+    type OfficeSpreadsheetml20099MainExtLstExtensionList: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ExtLstSlicerCacheDefinitionExtensionListWith` holds.
-    type OfficeSpreadsheetml20099MainExtLstSlicerCacheDefinitionExtensionList: ExtraSlot;
+    type OfficeSpreadsheetml20099MainExtLstSlicerCacheDefinitionExtensionList: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::FillColorWith` holds.
-    type OfficeSpreadsheetml20099MainFillColor: ExtraSlot;
+    type OfficeSpreadsheetml20099MainFillColor: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::FilterWith` holds.
-    type OfficeSpreadsheetml20099MainFilter: ExtraSlot;
+    type OfficeSpreadsheetml20099MainFilter: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::FormControlPrWith` holds.
-    type OfficeSpreadsheetml20099MainFormControlPr: ExtraSlot;
+    type OfficeSpreadsheetml20099MainFormControlPr: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::Formula1With` holds.
-    type OfficeSpreadsheetml20099MainFormula1: ExtraSlot;
+    type OfficeSpreadsheetml20099MainFormula1: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::Formula2With` holds.
-    type OfficeSpreadsheetml20099MainFormula2: ExtraSlot;
+    type OfficeSpreadsheetml20099MainFormula2: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::HeaderWith` holds.
-    type OfficeSpreadsheetml20099MainHeader: ExtraSlot;
+    type OfficeSpreadsheetml20099MainHeader: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::HeadersWith` holds.
-    type OfficeSpreadsheetml20099MainHeaders: ExtraSlot;
+    type OfficeSpreadsheetml20099MainHeaders: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::IOlapSlicerCacheItemWith` holds.
-    type OfficeSpreadsheetml20099MainIOlapSlicerCacheItem: ExtraSlot;
+    type OfficeSpreadsheetml20099MainIOlapSlicerCacheItem: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ITabularSlicerCacheItemWith` holds.
-    type OfficeSpreadsheetml20099MainITabularSlicerCacheItem: ExtraSlot;
+    type OfficeSpreadsheetml20099MainITabularSlicerCacheItem: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::IconFilterWith` holds.
-    type OfficeSpreadsheetml20099MainIconFilter: ExtraSlot;
+    type OfficeSpreadsheetml20099MainIconFilter: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::IconSetWith` holds.
-    type OfficeSpreadsheetml20099MainIconSet: ExtraSlot;
+    type OfficeSpreadsheetml20099MainIconSet: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::IdWith` holds.
-    type OfficeSpreadsheetml20099MainId: ExtraSlot;
+    type OfficeSpreadsheetml20099MainId: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::IgnoredErrorWith` holds.
-    type OfficeSpreadsheetml20099MainIgnoredError: ExtraSlot;
+    type OfficeSpreadsheetml20099MainIgnoredError: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::IgnoredErrorsWith` holds.
-    type OfficeSpreadsheetml20099MainIgnoredErrors: ExtraSlot;
+    type OfficeSpreadsheetml20099MainIgnoredErrors: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ItemWith` holds.
-    type OfficeSpreadsheetml20099MainItem: ExtraSlot;
+    type OfficeSpreadsheetml20099MainItem: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ItemLstWith` holds.
-    type OfficeSpreadsheetml20099MainItemLst: ExtraSlot;
+    type OfficeSpreadsheetml20099MainItemLst: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ItemsWith` holds.
-    type OfficeSpreadsheetml20099MainItems: ExtraSlot;
+    type OfficeSpreadsheetml20099MainItems: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::LevelWith` holds.
-    type OfficeSpreadsheetml20099MainLevel: ExtraSlot;
+    type OfficeSpreadsheetml20099MainLevel: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::LevelsWith` holds.
-    type OfficeSpreadsheetml20099MainLevels: ExtraSlot;
+    type OfficeSpreadsheetml20099MainLevels: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::NegativeBorderColorWith` holds.
-    type OfficeSpreadsheetml20099MainNegativeBorderColor: ExtraSlot;
+    type OfficeSpreadsheetml20099MainNegativeBorderColor: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::NegativeFillColorWith` holds.
-    type OfficeSpreadsheetml20099MainNegativeFillColor: ExtraSlot;
+    type OfficeSpreadsheetml20099MainNegativeFillColor: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::OlapWith` holds.
-    type OfficeSpreadsheetml20099MainOlap: ExtraSlot;
+    type OfficeSpreadsheetml20099MainOlap: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::OleItemWith` holds.
-    type OfficeSpreadsheetml20099MainOleItem: ExtraSlot;
+    type OfficeSpreadsheetml20099MainOleItem: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::PWith` holds.
-    type OfficeSpreadsheetml20099MainP: ExtraSlot;
+    type OfficeSpreadsheetml20099MainP: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::PivotAreaWith` holds.
-    type OfficeSpreadsheetml20099MainPivotArea: ExtraSlot;
+    type OfficeSpreadsheetml20099MainPivotArea: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::PivotAreasWith` holds.
-    type OfficeSpreadsheetml20099MainPivotAreas: ExtraSlot;
+    type OfficeSpreadsheetml20099MainPivotAreas: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::PivotCacheDefinitionWith` holds.
-    type OfficeSpreadsheetml20099MainPivotCacheDefinition: ExtraSlot;
+    type OfficeSpreadsheetml20099MainPivotCacheDefinition: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::PivotCachesWith` holds.
-    type OfficeSpreadsheetml20099MainPivotCaches: ExtraSlot;
+    type OfficeSpreadsheetml20099MainPivotCaches: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::PivotChangeWith` holds.
-    type OfficeSpreadsheetml20099MainPivotChange: ExtraSlot;
+    type OfficeSpreadsheetml20099MainPivotChange: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::PivotChangesWith` holds.
-    type OfficeSpreadsheetml20099MainPivotChanges: ExtraSlot;
+    type OfficeSpreadsheetml20099MainPivotChanges: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::PivotEditWith` holds.
-    type OfficeSpreadsheetml20099MainPivotEdit: ExtraSlot;
+    type OfficeSpreadsheetml20099MainPivotEdit: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::PivotEditsWith` holds.
-    type OfficeSpreadsheetml20099MainPivotEdits: ExtraSlot;
+    type OfficeSpreadsheetml20099MainPivotEdits: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::PivotFieldWith` holds.
-    type OfficeSpreadsheetml20099MainPivotField: ExtraSlot;
+    type OfficeSpreadsheetml20099MainPivotField: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::PivotHierarchyWith` holds.
-    type OfficeSpreadsheetml20099MainPivotHierarchy: ExtraSlot;
+    type OfficeSpreadsheetml20099MainPivotHierarchy: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::PivotTableWith` holds.
-    type OfficeSpreadsheetml20099MainPivotTable: ExtraSlot;
+    type OfficeSpreadsheetml20099MainPivotTable: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::PivotTableDefinitionWith` holds.
-    type OfficeSpreadsheetml20099MainPivotTableDefinition: ExtraSlot;
+    type OfficeSpreadsheetml20099MainPivotTableDefinition: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::PivotTablesWith` holds.
-    type OfficeSpreadsheetml20099MainPivotTables: ExtraSlot;
+    type OfficeSpreadsheetml20099MainPivotTables: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ProtectedRangeWith` holds.
-    type OfficeSpreadsheetml20099MainProtectedRange: ExtraSlot;
+    type OfficeSpreadsheetml20099MainProtectedRange: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ProtectedRangesWith` holds.
-    type OfficeSpreadsheetml20099MainProtectedRanges: ExtraSlot;
+    type OfficeSpreadsheetml20099MainProtectedRanges: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::RangeWith` holds.
-    type OfficeSpreadsheetml20099MainRange: ExtraSlot;
+    type OfficeSpreadsheetml20099MainRange: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::RangesWith` holds.
-    type OfficeSpreadsheetml20099MainRanges: ExtraSlot;
+    type OfficeSpreadsheetml20099MainRanges: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::RowWith` holds.
-    type OfficeSpreadsheetml20099MainRow: ExtraSlot;
+    type OfficeSpreadsheetml20099MainRow: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::RowItemWith` holds.
-    type OfficeSpreadsheetml20099MainRowItem: ExtraSlot;
+    type OfficeSpreadsheetml20099MainRowItem: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::RowsWith` holds.
-    type OfficeSpreadsheetml20099MainRows: ExtraSlot;
+    type OfficeSpreadsheetml20099MainRows: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SelectionWith` holds.
-    type OfficeSpreadsheetml20099MainSelection: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSelection: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SelectionsWith` holds.
-    type OfficeSpreadsheetml20099MainSelections: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSelections: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SetLevelWith` holds.
-    type OfficeSpreadsheetml20099MainSetLevel: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSetLevel: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SetLevelsWith` holds.
-    type OfficeSpreadsheetml20099MainSetLevels: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSetLevels: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SlicerCacheWith` holds.
-    type OfficeSpreadsheetml20099MainSlicerCache: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSlicerCache: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SlicerCacheDefinitionWith` holds.
-    type OfficeSpreadsheetml20099MainSlicerCacheDefinition: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSlicerCacheDefinition: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SlicerCachesWith` holds.
-    type OfficeSpreadsheetml20099MainSlicerCaches: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSlicerCaches: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SlicerListWith` holds.
-    type OfficeSpreadsheetml20099MainSlicerList: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSlicerList: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SlicerSlicerWith` holds.
-    type OfficeSpreadsheetml20099MainSlicerSlicer: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSlicerSlicer: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SlicerSlicerRefWith` holds.
-    type OfficeSpreadsheetml20099MainSlicerSlicerRef: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSlicerSlicerRef: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SlicerStyleWith` holds.
-    type OfficeSpreadsheetml20099MainSlicerStyle: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSlicerStyle: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SlicerStyleElementWith` holds.
-    type OfficeSpreadsheetml20099MainSlicerStyleElement: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSlicerStyleElement: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SlicerStyleElementsWith` holds.
-    type OfficeSpreadsheetml20099MainSlicerStyleElements: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSlicerStyleElements: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SlicerStylesWith` holds.
-    type OfficeSpreadsheetml20099MainSlicerStyles: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSlicerStyles: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SlicersWith` holds.
-    type OfficeSpreadsheetml20099MainSlicers: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSlicers: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SortConditionWith` holds.
-    type OfficeSpreadsheetml20099MainSortCondition: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSortCondition: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SourceConnectionWith` holds.
-    type OfficeSpreadsheetml20099MainSourceConnection: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSourceConnection: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SparklineWith` holds.
-    type OfficeSpreadsheetml20099MainSparkline: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSparkline: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SparklineGroupWith` holds.
-    type OfficeSpreadsheetml20099MainSparklineGroup: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSparklineGroup: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SparklineGroupsWith` holds.
-    type OfficeSpreadsheetml20099MainSparklineGroups: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSparklineGroups: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::SparklinesWith` holds.
-    type OfficeSpreadsheetml20099MainSparklines: ExtraSlot;
+    type OfficeSpreadsheetml20099MainSparklines: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::TableWith` holds.
-    type OfficeSpreadsheetml20099MainTable: ExtraSlot;
+    type OfficeSpreadsheetml20099MainTable: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::TabularWith` holds.
-    type OfficeSpreadsheetml20099MainTabular: ExtraSlot;
+    type OfficeSpreadsheetml20099MainTabular: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::TupleItemWith` holds.
-    type OfficeSpreadsheetml20099MainTupleItem: ExtraSlot;
+    type OfficeSpreadsheetml20099MainTupleItem: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::TupleItemsWith` holds.
-    type OfficeSpreadsheetml20099MainTupleItems: ExtraSlot;
+    type OfficeSpreadsheetml20099MainTupleItems: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::TupleSetWith` holds.
-    type OfficeSpreadsheetml20099MainTupleSet: ExtraSlot;
+    type OfficeSpreadsheetml20099MainTupleSet: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::UserEditWith` holds.
-    type OfficeSpreadsheetml20099MainUserEdit: ExtraSlot;
+    type OfficeSpreadsheetml20099MainUserEdit: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::ValuesWith` holds.
-    type OfficeSpreadsheetml20099MainValues: ExtraSlot;
+    type OfficeSpreadsheetml20099MainValues: UserDataSlot;
     /// What a `office_spreadsheetml_2009_9_main::WorkbookPrWith` holds.
-    type OfficeSpreadsheetml20099MainWorkbookPr: ExtraSlot;
+    type OfficeSpreadsheetml20099MainWorkbookPr: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_ac::AbsPathWith` holds.
-    type OfficeSpreadsheetml201011AcAbsPath: ExtraSlot;
+    type OfficeSpreadsheetml201011AcAbsPath: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::ActiveTabTopLevelEntityWith` holds.
-    type OfficeSpreadsheetml201011MainActiveTabTopLevelEntity: ExtraSlot;
+    type OfficeSpreadsheetml201011MainActiveTabTopLevelEntity: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::AutoFilterWith` holds.
-    type OfficeSpreadsheetml201011MainAutoFilter: ExtraSlot;
+    type OfficeSpreadsheetml201011MainAutoFilter: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::BoundsWith` holds.
-    type OfficeSpreadsheetml201011MainBounds: ExtraSlot;
+    type OfficeSpreadsheetml201011MainBounds: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::CWith` holds.
-    type OfficeSpreadsheetml201011MainC: ExtraSlot;
+    type OfficeSpreadsheetml201011MainC: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::CacheHierarchyWith` holds.
-    type OfficeSpreadsheetml201011MainCacheHierarchy: ExtraSlot;
+    type OfficeSpreadsheetml201011MainCacheHierarchy: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::CachedUniqueNameWith` holds.
-    type OfficeSpreadsheetml201011MainCachedUniqueName: ExtraSlot;
+    type OfficeSpreadsheetml201011MainCachedUniqueName: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::CachedUniqueNamesWith` holds.
-    type OfficeSpreadsheetml201011MainCachedUniqueNames: ExtraSlot;
+    type OfficeSpreadsheetml201011MainCachedUniqueNames: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::CalculatedMemberWith` holds.
-    type OfficeSpreadsheetml201011MainCalculatedMember: ExtraSlot;
+    type OfficeSpreadsheetml201011MainCalculatedMember: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::ConnectionWith` holds.
-    type OfficeSpreadsheetml201011MainConnection: ExtraSlot;
+    type OfficeSpreadsheetml201011MainConnection: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::DataFeedPrWith` holds.
-    type OfficeSpreadsheetml201011MainDataFeedPr: ExtraSlot;
+    type OfficeSpreadsheetml201011MainDataFeedPr: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::DataFieldWith` holds.
-    type OfficeSpreadsheetml201011MainDataField: ExtraSlot;
+    type OfficeSpreadsheetml201011MainDataField: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::DataModelWith` holds.
-    type OfficeSpreadsheetml201011MainDataModel: ExtraSlot;
+    type OfficeSpreadsheetml201011MainDataModel: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::DbCommandWith` holds.
-    type OfficeSpreadsheetml201011MainDbCommand: ExtraSlot;
+    type OfficeSpreadsheetml201011MainDbCommand: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::DbTableWith` holds.
-    type OfficeSpreadsheetml201011MainDbTable: ExtraSlot;
+    type OfficeSpreadsheetml201011MainDbTable: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::DbTablesWith` holds.
-    type OfficeSpreadsheetml201011MainDbTables: ExtraSlot;
+    type OfficeSpreadsheetml201011MainDbTables: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::DescriptionPrWith` holds.
-    type OfficeSpreadsheetml201011MainDescriptionPr: ExtraSlot;
+    type OfficeSpreadsheetml201011MainDescriptionPr: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::DxfsWith` holds.
-    type OfficeSpreadsheetml201011MainDxfs: ExtraSlot;
+    type OfficeSpreadsheetml201011MainDxfs: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::ExtLstWith` holds.
-    type OfficeSpreadsheetml201011MainExtLst: ExtraSlot;
+    type OfficeSpreadsheetml201011MainExtLst: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::ModelRelationshipWith` holds.
-    type OfficeSpreadsheetml201011MainModelRelationship: ExtraSlot;
+    type OfficeSpreadsheetml201011MainModelRelationship: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::ModelRelationshipsWith` holds.
-    type OfficeSpreadsheetml201011MainModelRelationships: ExtraSlot;
+    type OfficeSpreadsheetml201011MainModelRelationships: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::ModelTableWith` holds.
-    type OfficeSpreadsheetml201011MainModelTable: ExtraSlot;
+    type OfficeSpreadsheetml201011MainModelTable: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::ModelTablesWith` holds.
-    type OfficeSpreadsheetml201011MainModelTables: ExtraSlot;
+    type OfficeSpreadsheetml201011MainModelTables: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::ModelTextPrWith` holds.
-    type OfficeSpreadsheetml201011MainModelTextPr: ExtraSlot;
+    type OfficeSpreadsheetml201011MainModelTextPr: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::MovingPeriodStateWith` holds.
-    type OfficeSpreadsheetml201011MainMovingPeriodState: ExtraSlot;
+    type OfficeSpreadsheetml201011MainMovingPeriodState: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::OledbPrWith` holds.
-    type OfficeSpreadsheetml201011MainOledbPr: ExtraSlot;
+    type OfficeSpreadsheetml201011MainOledbPr: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::PivotCacheDecoupledWith` holds.
-    type OfficeSpreadsheetml201011MainPivotCacheDecoupled: ExtraSlot;
+    type OfficeSpreadsheetml201011MainPivotCacheDecoupled: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::PivotCacheIdVersionWith` holds.
-    type OfficeSpreadsheetml201011MainPivotCacheIdVersion: ExtraSlot;
+    type OfficeSpreadsheetml201011MainPivotCacheIdVersion: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::PivotCachesWith` holds.
-    type OfficeSpreadsheetml201011MainPivotCaches: ExtraSlot;
+    type OfficeSpreadsheetml201011MainPivotCaches: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::PivotFilterWith` holds.
-    type OfficeSpreadsheetml201011MainPivotFilter: ExtraSlot;
+    type OfficeSpreadsheetml201011MainPivotFilter: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::PivotRowWith` holds.
-    type OfficeSpreadsheetml201011MainPivotRow: ExtraSlot;
+    type OfficeSpreadsheetml201011MainPivotRow: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::PivotTableWith` holds.
-    type OfficeSpreadsheetml201011MainPivotTable: ExtraSlot;
+    type OfficeSpreadsheetml201011MainPivotTable: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::PivotTableDataWith` holds.
-    type OfficeSpreadsheetml201011MainPivotTableData: ExtraSlot;
+    type OfficeSpreadsheetml201011MainPivotTableData: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::PivotTableReferenceWith` holds.
-    type OfficeSpreadsheetml201011MainPivotTableReference: ExtraSlot;
+    type OfficeSpreadsheetml201011MainPivotTableReference: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::PivotTableReferencesWith` holds.
-    type OfficeSpreadsheetml201011MainPivotTableReferences: ExtraSlot;
+    type OfficeSpreadsheetml201011MainPivotTableReferences: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::PivotTableServerFormatsWith` holds.
-    type OfficeSpreadsheetml201011MainPivotTableServerFormats: ExtraSlot;
+    type OfficeSpreadsheetml201011MainPivotTableServerFormats: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::PivotTableUISettingsWith` holds.
-    type OfficeSpreadsheetml201011MainPivotTableUISettings: ExtraSlot;
+    type OfficeSpreadsheetml201011MainPivotTableUISettings: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::PivotTablesWith` holds.
-    type OfficeSpreadsheetml201011MainPivotTables: ExtraSlot;
+    type OfficeSpreadsheetml201011MainPivotTables: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::QueryTableWith` holds.
-    type OfficeSpreadsheetml201011MainQueryTable: ExtraSlot;
+    type OfficeSpreadsheetml201011MainQueryTable: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::QuestionWith` holds.
-    type OfficeSpreadsheetml201011MainQuestion: ExtraSlot;
+    type OfficeSpreadsheetml201011MainQuestion: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::QuestionPrWith` holds.
-    type OfficeSpreadsheetml201011MainQuestionPr: ExtraSlot;
+    type OfficeSpreadsheetml201011MainQuestionPr: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::QuestionsWith` holds.
-    type OfficeSpreadsheetml201011MainQuestions: ExtraSlot;
+    type OfficeSpreadsheetml201011MainQuestions: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::QuestionsPrWith` holds.
-    type OfficeSpreadsheetml201011MainQuestionsPr: ExtraSlot;
+    type OfficeSpreadsheetml201011MainQuestionsPr: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::RangePrWith` holds.
-    type OfficeSpreadsheetml201011MainRangePr: ExtraSlot;
+    type OfficeSpreadsheetml201011MainRangePr: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::SelectionWith` holds.
-    type OfficeSpreadsheetml201011MainSelection: ExtraSlot;
+    type OfficeSpreadsheetml201011MainSelection: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::ServerFormatWith` holds.
-    type OfficeSpreadsheetml201011MainServerFormat: ExtraSlot;
+    type OfficeSpreadsheetml201011MainServerFormat: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::SlicerCacheHideItemsWithNoDataWith` holds.
-    type OfficeSpreadsheetml201011MainSlicerCacheHideItemsWithNoData: ExtraSlot;
+    type OfficeSpreadsheetml201011MainSlicerCacheHideItemsWithNoData: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::SlicerCacheOlapLevelNameWith` holds.
-    type OfficeSpreadsheetml201011MainSlicerCacheOlapLevelName: ExtraSlot;
+    type OfficeSpreadsheetml201011MainSlicerCacheOlapLevelName: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::SlicerCachePivotTablesWith` holds.
-    type OfficeSpreadsheetml201011MainSlicerCachePivotTables: ExtraSlot;
+    type OfficeSpreadsheetml201011MainSlicerCachePivotTables: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::SlicerCachesWith` holds.
-    type OfficeSpreadsheetml201011MainSlicerCaches: ExtraSlot;
+    type OfficeSpreadsheetml201011MainSlicerCaches: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::StateWith` holds.
-    type OfficeSpreadsheetml201011MainState: ExtraSlot;
+    type OfficeSpreadsheetml201011MainState: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::SurveyWith` holds.
-    type OfficeSpreadsheetml201011MainSurvey: ExtraSlot;
+    type OfficeSpreadsheetml201011MainSurvey: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::SurveyPrWith` holds.
-    type OfficeSpreadsheetml201011MainSurveyPr: ExtraSlot;
+    type OfficeSpreadsheetml201011MainSurveyPr: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::TableSlicerCacheWith` holds.
-    type OfficeSpreadsheetml201011MainTableSlicerCache: ExtraSlot;
+    type OfficeSpreadsheetml201011MainTableSlicerCache: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::TextPrWith` holds.
-    type OfficeSpreadsheetml201011MainTextPr: ExtraSlot;
+    type OfficeSpreadsheetml201011MainTextPr: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::TimelineWith` holds.
-    type OfficeSpreadsheetml201011MainTimeline: ExtraSlot;
+    type OfficeSpreadsheetml201011MainTimeline: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::TimelineCacheDefinitionWith` holds.
-    type OfficeSpreadsheetml201011MainTimelineCacheDefinition: ExtraSlot;
+    type OfficeSpreadsheetml201011MainTimelineCacheDefinition: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::TimelineCachePivotCachesWith` holds.
-    type OfficeSpreadsheetml201011MainTimelineCachePivotCaches: ExtraSlot;
+    type OfficeSpreadsheetml201011MainTimelineCachePivotCaches: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::TimelineCacheRefWith` holds.
-    type OfficeSpreadsheetml201011MainTimelineCacheRef: ExtraSlot;
+    type OfficeSpreadsheetml201011MainTimelineCacheRef: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::TimelineCacheRefsWith` holds.
-    type OfficeSpreadsheetml201011MainTimelineCacheRefs: ExtraSlot;
+    type OfficeSpreadsheetml201011MainTimelineCacheRefs: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::TimelinePivotCacheDefinitionWith` holds.
-    type OfficeSpreadsheetml201011MainTimelinePivotCacheDefinition: ExtraSlot;
+    type OfficeSpreadsheetml201011MainTimelinePivotCacheDefinition: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::TimelineRefWith` holds.
-    type OfficeSpreadsheetml201011MainTimelineRef: ExtraSlot;
+    type OfficeSpreadsheetml201011MainTimelineRef: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::TimelineRefsWith` holds.
-    type OfficeSpreadsheetml201011MainTimelineRefs: ExtraSlot;
+    type OfficeSpreadsheetml201011MainTimelineRefs: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::TimelineStyleWith` holds.
-    type OfficeSpreadsheetml201011MainTimelineStyle: ExtraSlot;
+    type OfficeSpreadsheetml201011MainTimelineStyle: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::TimelineStyleElementWith` holds.
-    type OfficeSpreadsheetml201011MainTimelineStyleElement: ExtraSlot;
+    type OfficeSpreadsheetml201011MainTimelineStyleElement: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::TimelineStyleElementsWith` holds.
-    type OfficeSpreadsheetml201011MainTimelineStyleElements: ExtraSlot;
+    type OfficeSpreadsheetml201011MainTimelineStyleElements: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::TimelineStylesWith` holds.
-    type OfficeSpreadsheetml201011MainTimelineStyles: ExtraSlot;
+    type OfficeSpreadsheetml201011MainTimelineStyles: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::TimelinesWith` holds.
-    type OfficeSpreadsheetml201011MainTimelines: ExtraSlot;
+    type OfficeSpreadsheetml201011MainTimelines: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::TitlePrWith` holds.
-    type OfficeSpreadsheetml201011MainTitlePr: ExtraSlot;
+    type OfficeSpreadsheetml201011MainTitlePr: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::VWith` holds.
-    type OfficeSpreadsheetml201011MainV: ExtraSlot;
+    type OfficeSpreadsheetml201011MainV: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::WebExtensionWith` holds.
-    type OfficeSpreadsheetml201011MainWebExtension: ExtraSlot;
+    type OfficeSpreadsheetml201011MainWebExtension: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::WebExtensionsWith` holds.
-    type OfficeSpreadsheetml201011MainWebExtensions: ExtraSlot;
+    type OfficeSpreadsheetml201011MainWebExtensions: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::WorkbookPrWith` holds.
-    type OfficeSpreadsheetml201011MainWorkbookPr: ExtraSlot;
+    type OfficeSpreadsheetml201011MainWorkbookPr: UserDataSlot;
     /// What a `office_spreadsheetml_2010_11_main::XWith` holds.
-    type OfficeSpreadsheetml201011MainX: ExtraSlot;
+    type OfficeSpreadsheetml201011MainX: UserDataSlot;
     /// What a `office_spreadsheetml_2011_1_ac::ListWith` holds.
-    type OfficeSpreadsheetml20111AcList: ExtraSlot;
+    type OfficeSpreadsheetml20111AcList: UserDataSlot;
     /// What a `office_spreadsheetml_2014_11_main::CalculatedTimeColumnWith` holds.
-    type OfficeSpreadsheetml201411MainCalculatedTimeColumn: ExtraSlot;
+    type OfficeSpreadsheetml201411MainCalculatedTimeColumn: UserDataSlot;
     /// What a `office_spreadsheetml_2014_11_main::ModelTimeGroupingWith` holds.
-    type OfficeSpreadsheetml201411MainModelTimeGrouping: ExtraSlot;
+    type OfficeSpreadsheetml201411MainModelTimeGrouping: UserDataSlot;
     /// What a `office_spreadsheetml_2014_11_main::ModelTimeGroupingsWith` holds.
-    type OfficeSpreadsheetml201411MainModelTimeGroupings: ExtraSlot;
+    type OfficeSpreadsheetml201411MainModelTimeGroupings: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::AutoFilterWith` holds.
-    type OfficeSpreadsheetml2014RevisionAutoFilter: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionAutoFilter: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::BodyWith` holds.
-    type OfficeSpreadsheetml2014RevisionBody: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionBody: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::CWith` holds.
-    type OfficeSpreadsheetml2014RevisionC: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionC: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::CcseWith` holds.
-    type OfficeSpreadsheetml2014RevisionCcse: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionCcse: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::CommentsWith` holds.
-    type OfficeSpreadsheetml2014RevisionComments: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionComments: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::DataValidationWith` holds.
-    type OfficeSpreadsheetml2014RevisionDataValidation: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionDataValidation: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::DxfWith` holds.
-    type OfficeSpreadsheetml2014RevisionDxf: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionDxf: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::ExtLstWith` holds.
-    type OfficeSpreadsheetml2014RevisionExtLst: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionExtLst: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::FWith` holds.
-    type OfficeSpreadsheetml2014RevisionF: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionF: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::FormulaWith` holds.
-    type OfficeSpreadsheetml2014RevisionFormula: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionFormula: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::FreezePanesWith` holds.
-    type OfficeSpreadsheetml2014RevisionFreezePanes: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionFreezePanes: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::FutureWith` holds.
-    type OfficeSpreadsheetml2014RevisionFuture: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionFuture: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::HdrRevExHeaderWith` holds.
-    type OfficeSpreadsheetml2014RevisionHdrRevExHeader: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionHdrRevExHeader: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::HdrStateBasedHeaderWith` holds.
-    type OfficeSpreadsheetml2014RevisionHdrStateBasedHeader: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionHdrStateBasedHeader: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::HideUnhideSheetWith` holds.
-    type OfficeSpreadsheetml2014RevisionHideUnhideSheet: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionHideUnhideSheet: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::HyperlinkWith` holds.
-    type OfficeSpreadsheetml2014RevisionHyperlink: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionHyperlink: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::IsWith` holds.
-    type OfficeSpreadsheetml2014RevisionIs: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionIs: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::LinkWith` holds.
-    type OfficeSpreadsheetml2014RevisionLink: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionLink: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::OartAnchorWith` holds.
-    type OfficeSpreadsheetml2014RevisionOartAnchor: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionOartAnchor: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::ObjectStateWith` holds.
-    type OfficeSpreadsheetml2014RevisionObjectState: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionObjectState: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::OutlineWith` holds.
-    type OfficeSpreadsheetml2014RevisionOutline: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionOutline: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::OutlinesWith` holds.
-    type OfficeSpreadsheetml2014RevisionOutlines: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionOutlines: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::PivotTableDefinitionWith` holds.
-    type OfficeSpreadsheetml2014RevisionPivotTableDefinition: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionPivotTableDefinition: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::RefWith` holds.
-    type OfficeSpreadsheetml2014RevisionRef: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionRef: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::RefmapWith` holds.
-    type OfficeSpreadsheetml2014RevisionRefmap: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionRefmap: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::RevHdrsWith` holds.
-    type OfficeSpreadsheetml2014RevisionRevHdrs: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionRevHdrs: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::RevStreamWith` holds.
-    type OfficeSpreadsheetml2014RevisionRevStream: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionRevStream: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::RevisionPtrWith` holds.
-    type OfficeSpreadsheetml2014RevisionRevisionPtr: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionRevisionPtr: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::RowColVisualOpsWith` holds.
-    type OfficeSpreadsheetml2014RevisionRowColVisualOps: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionRowColVisualOps: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::SheetUidWith` holds.
-    type OfficeSpreadsheetml2014RevisionSheetUid: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionSheetUid: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::ShowGridlinesHeadingsWith` holds.
-    type OfficeSpreadsheetml2014RevisionShowGridlinesHeadings: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionShowGridlinesHeadings: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::SparklineGroupWith` holds.
-    type OfficeSpreadsheetml2014RevisionSparklineGroup: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionSparklineGroup: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::TestWith` holds.
-    type OfficeSpreadsheetml2014RevisionTest: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionTest: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::VWith` holds.
-    type OfficeSpreadsheetml2014RevisionV: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionV: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::XrrDefNameWith` holds.
-    type OfficeSpreadsheetml2014RevisionXrrDefName: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionXrrDefName: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::XrrListWith` holds.
-    type OfficeSpreadsheetml2014RevisionXrrList: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionXrrList: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::XrrListExpRWith` holds.
-    type OfficeSpreadsheetml2014RevisionXrrListExpR: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionXrrListExpR: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::XrrSheetWith` holds.
-    type OfficeSpreadsheetml2014RevisionXrrSheet: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionXrrSheet: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::XrrTrimWith` holds.
-    type OfficeSpreadsheetml2014RevisionXrrTrim: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionXrrTrim: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::XrrUsptWith` holds.
-    type OfficeSpreadsheetml2014RevisionXrrUspt: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionXrrUspt: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::XrrcWith` holds.
-    type OfficeSpreadsheetml2014RevisionXrrc: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionXrrc: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::XrrcoWith` holds.
-    type OfficeSpreadsheetml2014RevisionXrrco: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionXrrco: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::XrrdoWith` holds.
-    type OfficeSpreadsheetml2014RevisionXrrdo: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionXrrdo: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::XrrfWith` holds.
-    type OfficeSpreadsheetml2014RevisionXrrf: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionXrrf: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::XrrftrWith` holds.
-    type OfficeSpreadsheetml2014RevisionXrrftr: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionXrrftr: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::XrrgWith` holds.
-    type OfficeSpreadsheetml2014RevisionXrrg: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionXrrg: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::XrrmWith` holds.
-    type OfficeSpreadsheetml2014RevisionXrrm: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionXrrm: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::XrrrcWith` holds.
-    type OfficeSpreadsheetml2014RevisionXrrrc: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionXrrrc: UserDataSlot;
     /// What a `office_spreadsheetml_2014_revision::XrrtestWith` holds.
-    type OfficeSpreadsheetml2014RevisionXrrtest: ExtraSlot;
+    type OfficeSpreadsheetml2014RevisionXrrtest: UserDataSlot;
     /// What a `office_spreadsheetml_2016_pivotdefaultlayout::PivotTableDefinition16With` holds.
-    type OfficeSpreadsheetml2016PivotdefaultlayoutPivotTableDefinition16: ExtraSlot;
+    type OfficeSpreadsheetml2016PivotdefaultlayoutPivotTableDefinition16: UserDataSlot;
     /// What a `office_spreadsheetml_2017_dynamicarray::DynamicArrayPropertiesWith` holds.
-    type OfficeSpreadsheetml2017DynamicarrayDynamicArrayProperties: ExtraSlot;
+    type OfficeSpreadsheetml2017DynamicarrayDynamicArrayProperties: UserDataSlot;
     /// What a `office_spreadsheetml_2017_dynamicarray::ExtLstWith` holds.
-    type OfficeSpreadsheetml2017DynamicarrayExtLst: ExtraSlot;
+    type OfficeSpreadsheetml2017DynamicarrayExtLst: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::AArrayWith` holds.
-    type OfficeSpreadsheetml2017Richdata2AArray: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2AArray: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::ASupportingPropertyBagArrayWith` holds.
-    type OfficeSpreadsheetml2017Richdata2ASupportingPropertyBagArray: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2ASupportingPropertyBagArray: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::ArrayDataWith` holds.
-    type OfficeSpreadsheetml2017Richdata2ArrayData: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2ArrayData: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::CustomFilterWith` holds.
-    type OfficeSpreadsheetml2017Richdata2CustomFilter: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2CustomFilter: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::CustomFiltersWith` holds.
-    type OfficeSpreadsheetml2017Richdata2CustomFilters: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2CustomFilters: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::DateGroupItemWith` holds.
-    type OfficeSpreadsheetml2017Richdata2DateGroupItem: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2DateGroupItem: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::DxfsWith` holds.
-    type OfficeSpreadsheetml2017Richdata2Dxfs: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2Dxfs: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::DynamicFilterWith` holds.
-    type OfficeSpreadsheetml2017Richdata2DynamicFilter: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2DynamicFilter: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::ExtLstWith` holds.
-    type OfficeSpreadsheetml2017Richdata2ExtLst: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2ExtLst: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::FilterWith` holds.
-    type OfficeSpreadsheetml2017Richdata2Filter: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2Filter: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::FilterColumnWith` holds.
-    type OfficeSpreadsheetml2017Richdata2FilterColumn: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2FilterColumn: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::FiltersWith` holds.
-    type OfficeSpreadsheetml2017Richdata2Filters: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2Filters: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::FlagWith` holds.
-    type OfficeSpreadsheetml2017Richdata2Flag: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2Flag: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::GlobalWith` holds.
-    type OfficeSpreadsheetml2017Richdata2Global: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2Global: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::KWith` holds.
-    type OfficeSpreadsheetml2017Richdata2K: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2K: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::KeyWith` holds.
-    type OfficeSpreadsheetml2017Richdata2Key: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2Key: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::KeyFlagsWith` holds.
-    type OfficeSpreadsheetml2017Richdata2KeyFlags: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2KeyFlags: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::RPrWith` holds.
-    type OfficeSpreadsheetml2017Richdata2RPr: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2RPr: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::RStyWith` holds.
-    type OfficeSpreadsheetml2017Richdata2RSty: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2RSty: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::RichPropertiesWith` holds.
-    type OfficeSpreadsheetml2017Richdata2RichProperties: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2RichProperties: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::RichSortConditionWith` holds.
-    type OfficeSpreadsheetml2017Richdata2RichSortCondition: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2RichSortCondition: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::RichStyleSheetWith` holds.
-    type OfficeSpreadsheetml2017Richdata2RichStyleSheet: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2RichStyleSheet: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::RichStylesWith` holds.
-    type OfficeSpreadsheetml2017Richdata2RichStyles: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2RichStyles: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::RpvWith` holds.
-    type OfficeSpreadsheetml2017Richdata2Rpv: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2Rpv: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::RvTypesInfoWith` holds.
-    type OfficeSpreadsheetml2017Richdata2RvTypesInfo: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2RvTypesInfo: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::SWith` holds.
-    type OfficeSpreadsheetml2017Richdata2S: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2S: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::SpbWith` holds.
-    type OfficeSpreadsheetml2017Richdata2Spb: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2Spb: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::SpbArraysWith` holds.
-    type OfficeSpreadsheetml2017Richdata2SpbArrays: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2SpbArrays: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::SpbDataWith` holds.
-    type OfficeSpreadsheetml2017Richdata2SpbData: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2SpbData: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::SpbStructuresWith` holds.
-    type OfficeSpreadsheetml2017Richdata2SpbStructures: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2SpbStructures: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::SupportingPropertyBagsWith` holds.
-    type OfficeSpreadsheetml2017Richdata2SupportingPropertyBags: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2SupportingPropertyBags: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::Top10With` holds.
-    type OfficeSpreadsheetml2017Richdata2Top10: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2Top10: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::TypeWith` holds.
-    type OfficeSpreadsheetml2017Richdata2Type: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2Type: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::TypesWith` holds.
-    type OfficeSpreadsheetml2017Richdata2Types: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2Types: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::VArrayValueWith` holds.
-    type OfficeSpreadsheetml2017Richdata2VArrayValue: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2VArrayValue: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::VSupportingPropertyBagArrayValueWith` holds.
-    type OfficeSpreadsheetml2017Richdata2VSupportingPropertyBagArrayValue: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2VSupportingPropertyBagArrayValue: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata2::VSupportingPropertyBagValueWith` holds.
-    type OfficeSpreadsheetml2017Richdata2VSupportingPropertyBagValue: ExtraSlot;
+    type OfficeSpreadsheetml2017Richdata2VSupportingPropertyBagValue: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata::ExtLstWith` holds.
-    type OfficeSpreadsheetml2017RichdataExtLst: ExtraSlot;
+    type OfficeSpreadsheetml2017RichdataExtLst: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata::FbWith` holds.
-    type OfficeSpreadsheetml2017RichdataFb: ExtraSlot;
+    type OfficeSpreadsheetml2017RichdataFb: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata::KWith` holds.
-    type OfficeSpreadsheetml2017RichdataK: ExtraSlot;
+    type OfficeSpreadsheetml2017RichdataK: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata::RvWith` holds.
-    type OfficeSpreadsheetml2017RichdataRv: ExtraSlot;
+    type OfficeSpreadsheetml2017RichdataRv: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata::RvDataWith` holds.
-    type OfficeSpreadsheetml2017RichdataRvData: ExtraSlot;
+    type OfficeSpreadsheetml2017RichdataRvData: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata::RvStructuresWith` holds.
-    type OfficeSpreadsheetml2017RichdataRvStructures: ExtraSlot;
+    type OfficeSpreadsheetml2017RichdataRvStructures: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata::RvbWith` holds.
-    type OfficeSpreadsheetml2017RichdataRvb: ExtraSlot;
+    type OfficeSpreadsheetml2017RichdataRvb: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata::SWith` holds.
-    type OfficeSpreadsheetml2017RichdataS: ExtraSlot;
+    type OfficeSpreadsheetml2017RichdataS: UserDataSlot;
     /// What a `office_spreadsheetml_2017_richdata::VWith` holds.
-    type OfficeSpreadsheetml2017RichdataV: ExtraSlot;
+    type OfficeSpreadsheetml2017RichdataV: UserDataSlot;
     /// What a `office_spreadsheetml_2018_calcfeatures::CalcFeaturesWith` holds.
-    type OfficeSpreadsheetml2018CalcfeaturesCalcFeatures: ExtraSlot;
+    type OfficeSpreadsheetml2018CalcfeaturesCalcFeatures: UserDataSlot;
     /// What a `office_spreadsheetml_2018_calcfeatures::FeatureWith` holds.
-    type OfficeSpreadsheetml2018CalcfeaturesFeature: ExtraSlot;
+    type OfficeSpreadsheetml2018CalcfeaturesFeature: UserDataSlot;
     /// What a `office_spreadsheetml_2018_threadedcomments::ExtLstWith` holds.
-    type OfficeSpreadsheetml2018ThreadedcommentsExtLst: ExtraSlot;
+    type OfficeSpreadsheetml2018ThreadedcommentsExtLst: UserDataSlot;
     /// What a `office_spreadsheetml_2018_threadedcomments::MentionWith` holds.
-    type OfficeSpreadsheetml2018ThreadedcommentsMention: ExtraSlot;
+    type OfficeSpreadsheetml2018ThreadedcommentsMention: UserDataSlot;
     /// What a `office_spreadsheetml_2018_threadedcomments::MentionsWith` holds.
-    type OfficeSpreadsheetml2018ThreadedcommentsMentions: ExtraSlot;
+    type OfficeSpreadsheetml2018ThreadedcommentsMentions: UserDataSlot;
     /// What a `office_spreadsheetml_2018_threadedcomments::PersonWith` holds.
-    type OfficeSpreadsheetml2018ThreadedcommentsPerson: ExtraSlot;
+    type OfficeSpreadsheetml2018ThreadedcommentsPerson: UserDataSlot;
     /// What a `office_spreadsheetml_2018_threadedcomments::PersonListWith` holds.
-    type OfficeSpreadsheetml2018ThreadedcommentsPersonList: ExtraSlot;
+    type OfficeSpreadsheetml2018ThreadedcommentsPersonList: UserDataSlot;
     /// What a `office_spreadsheetml_2018_threadedcomments::TextWith` holds.
-    type OfficeSpreadsheetml2018ThreadedcommentsText: ExtraSlot;
+    type OfficeSpreadsheetml2018ThreadedcommentsText: UserDataSlot;
     /// What a `office_spreadsheetml_2018_threadedcomments::ThreadedCommentWith` holds.
-    type OfficeSpreadsheetml2018ThreadedcommentsThreadedComment: ExtraSlot;
+    type OfficeSpreadsheetml2018ThreadedcommentsThreadedComment: UserDataSlot;
     /// What a `office_spreadsheetml_2018_threadedcomments::ThreadedCommentsWith` holds.
-    type OfficeSpreadsheetml2018ThreadedcommentsThreadedComments: ExtraSlot;
+    type OfficeSpreadsheetml2018ThreadedcommentsThreadedComments: UserDataSlot;
     /// What a `office_spreadsheetml_2019_extlinksprops::ExternalLinksPrWith` holds.
-    type OfficeSpreadsheetml2019ExtlinkspropsExternalLinksPr: ExtraSlot;
+    type OfficeSpreadsheetml2019ExtlinkspropsExternalLinksPr: UserDataSlot;
     /// What a `office_spreadsheetml_2019_namedsheetviews::ColumnFilterWith` holds.
-    type OfficeSpreadsheetml2019NamedsheetviewsColumnFilter: ExtraSlot;
+    type OfficeSpreadsheetml2019NamedsheetviewsColumnFilter: UserDataSlot;
     /// What a `office_spreadsheetml_2019_namedsheetviews::DxfWith` holds.
-    type OfficeSpreadsheetml2019NamedsheetviewsDxf: ExtraSlot;
+    type OfficeSpreadsheetml2019NamedsheetviewsDxf: UserDataSlot;
     /// What a `office_spreadsheetml_2019_namedsheetviews::ExtLstWith` holds.
-    type OfficeSpreadsheetml2019NamedsheetviewsExtLst: ExtraSlot;
+    type OfficeSpreadsheetml2019NamedsheetviewsExtLst: UserDataSlot;
     /// What a `office_spreadsheetml_2019_namedsheetviews::FilterWith` holds.
-    type OfficeSpreadsheetml2019NamedsheetviewsFilter: ExtraSlot;
+    type OfficeSpreadsheetml2019NamedsheetviewsFilter: UserDataSlot;
     /// What a `office_spreadsheetml_2019_namedsheetviews::NamedSheetViewWith` holds.
-    type OfficeSpreadsheetml2019NamedsheetviewsNamedSheetView: ExtraSlot;
+    type OfficeSpreadsheetml2019NamedsheetviewsNamedSheetView: UserDataSlot;
     /// What a `office_spreadsheetml_2019_namedsheetviews::NamedSheetViewsWith` holds.
-    type OfficeSpreadsheetml2019NamedsheetviewsNamedSheetViews: ExtraSlot;
+    type OfficeSpreadsheetml2019NamedsheetviewsNamedSheetViews: UserDataSlot;
     /// What a `office_spreadsheetml_2019_namedsheetviews::NsvFilterWith` holds.
-    type OfficeSpreadsheetml2019NamedsheetviewsNsvFilter: ExtraSlot;
+    type OfficeSpreadsheetml2019NamedsheetviewsNsvFilter: UserDataSlot;
     /// What a `office_spreadsheetml_2019_namedsheetviews::RichSortConditionWith` holds.
-    type OfficeSpreadsheetml2019NamedsheetviewsRichSortCondition: ExtraSlot;
+    type OfficeSpreadsheetml2019NamedsheetviewsRichSortCondition: UserDataSlot;
     /// What a `office_spreadsheetml_2019_namedsheetviews::SortConditionWith` holds.
-    type OfficeSpreadsheetml2019NamedsheetviewsSortCondition: ExtraSlot;
+    type OfficeSpreadsheetml2019NamedsheetviewsSortCondition: UserDataSlot;
     /// What a `office_spreadsheetml_2019_namedsheetviews::SortRuleWith` holds.
-    type OfficeSpreadsheetml2019NamedsheetviewsSortRule: ExtraSlot;
+    type OfficeSpreadsheetml2019NamedsheetviewsSortRule: UserDataSlot;
     /// What a `office_spreadsheetml_2019_namedsheetviews::SortRulesWith` holds.
-    type OfficeSpreadsheetml2019NamedsheetviewsSortRules: ExtraSlot;
+    type OfficeSpreadsheetml2019NamedsheetviewsSortRules: UserDataSlot;
     /// What a `office_spreadsheetml_2020_pivot_nov2020::DataFieldFutureDataWith` holds.
-    type OfficeSpreadsheetml2020PivotNov2020DataFieldFutureData: ExtraSlot;
+    type OfficeSpreadsheetml2020PivotNov2020DataFieldFutureData: UserDataSlot;
     /// What a `office_spreadsheetml_2020_pivot_nov2020::IgnorableAfterVersionWith` holds.
-    type OfficeSpreadsheetml2020PivotNov2020IgnorableAfterVersion: ExtraSlot;
+    type OfficeSpreadsheetml2020PivotNov2020IgnorableAfterVersion: UserDataSlot;
     /// What a `office_spreadsheetml_2020_pivot_nov2020::ImplicitMeasureSupportWith` holds.
-    type OfficeSpreadsheetml2020PivotNov2020ImplicitMeasureSupport: ExtraSlot;
+    type OfficeSpreadsheetml2020PivotNov2020ImplicitMeasureSupport: UserDataSlot;
     /// What a `office_spreadsheetml_2020_richdatawebimage::AddressWith` holds.
-    type OfficeSpreadsheetml2020RichdatawebimageAddress: ExtraSlot;
+    type OfficeSpreadsheetml2020RichdatawebimageAddress: UserDataSlot;
     /// What a `office_spreadsheetml_2020_richdatawebimage::BlipWith` holds.
-    type OfficeSpreadsheetml2020RichdatawebimageBlip: ExtraSlot;
+    type OfficeSpreadsheetml2020RichdatawebimageBlip: UserDataSlot;
     /// What a `office_spreadsheetml_2020_richdatawebimage::ExtLstWith` holds.
-    type OfficeSpreadsheetml2020RichdatawebimageExtLst: ExtraSlot;
+    type OfficeSpreadsheetml2020RichdatawebimageExtLst: UserDataSlot;
     /// What a `office_spreadsheetml_2020_richdatawebimage::MoreImagesAddressWith` holds.
-    type OfficeSpreadsheetml2020RichdatawebimageMoreImagesAddress: ExtraSlot;
+    type OfficeSpreadsheetml2020RichdatawebimageMoreImagesAddress: UserDataSlot;
     /// What a `office_spreadsheetml_2020_richdatawebimage::WebImageSrdWith` holds.
-    type OfficeSpreadsheetml2020RichdatawebimageWebImageSrd: ExtraSlot;
+    type OfficeSpreadsheetml2020RichdatawebimageWebImageSrd: UserDataSlot;
     /// What a `office_spreadsheetml_2020_richdatawebimage::WebImagesSrdWith` holds.
-    type OfficeSpreadsheetml2020RichdatawebimageWebImagesSrd: ExtraSlot;
+    type OfficeSpreadsheetml2020RichdatawebimageWebImagesSrd: UserDataSlot;
     /// What a `office_spreadsheetml_2020_richvaluerefresh::RefreshIntervalWith` holds.
-    type OfficeSpreadsheetml2020RichvaluerefreshRefreshInterval: ExtraSlot;
+    type OfficeSpreadsheetml2020RichvaluerefreshRefreshInterval: UserDataSlot;
     /// What a `office_spreadsheetml_2020_richvaluerefresh::RefreshIntervalsWith` holds.
-    type OfficeSpreadsheetml2020RichvaluerefreshRefreshIntervals: ExtraSlot;
+    type OfficeSpreadsheetml2020RichvaluerefreshRefreshIntervals: UserDataSlot;
     /// What a `office_spreadsheetml_2020_threadedcomments2::ChecksumWith` holds.
-    type OfficeSpreadsheetml2020Threadedcomments2Checksum: ExtraSlot;
+    type OfficeSpreadsheetml2020Threadedcomments2Checksum: UserDataSlot;
     /// What a `office_spreadsheetml_2020_threadedcomments2::ExtLstWith` holds.
-    type OfficeSpreadsheetml2020Threadedcomments2ExtLst: ExtraSlot;
+    type OfficeSpreadsheetml2020Threadedcomments2ExtLst: UserDataSlot;
     /// What a `office_spreadsheetml_2020_threadedcomments2::HyperlinkWith` holds.
-    type OfficeSpreadsheetml2020Threadedcomments2Hyperlink: ExtraSlot;
+    type OfficeSpreadsheetml2020Threadedcomments2Hyperlink: UserDataSlot;
     /// What a `office_spreadsheetml_2021_extlinks2021::AbsoluteUrlWith` holds.
-    type OfficeSpreadsheetml2021Extlinks2021AbsoluteUrl: ExtraSlot;
+    type OfficeSpreadsheetml2021Extlinks2021AbsoluteUrl: UserDataSlot;
     /// What a `office_spreadsheetml_2021_extlinks2021::AlternateUrlsWith` holds.
-    type OfficeSpreadsheetml2021Extlinks2021AlternateUrls: ExtraSlot;
+    type OfficeSpreadsheetml2021Extlinks2021AlternateUrls: UserDataSlot;
     /// What a `office_spreadsheetml_2021_extlinks2021::RelativeUrlWith` holds.
-    type OfficeSpreadsheetml2021Extlinks2021RelativeUrl: ExtraSlot;
+    type OfficeSpreadsheetml2021Extlinks2021RelativeUrl: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::AWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagA: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagA: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::BBoolFeaturePropertyWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagBBoolFeatureProperty: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagBBoolFeatureProperty: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::BBooleanWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagBBoolean: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagBBoolean: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::BagWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagBag: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagBag: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::BagExtWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagBagExt: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagBagExt: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::BagIdBagFeaturePropertyWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagBagIdBagFeatureProperty: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagBagIdBagFeatureProperty: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::BagIdUnsignedIntWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagBagIdUnsignedInt: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagBagIdUnsignedInt: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::ColumnBodyRevDxfWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagColumnBodyRevDxf: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagColumnBodyRevDxf: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::ColumnHeaderRevDxfWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagColumnHeaderRevDxf: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagColumnHeaderRevDxf: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::ColumnTotalsRevDxfWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagColumnTotalsRevDxf: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagColumnTotalsRevDxf: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::DDecimalFeaturePropertyWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagDDecimalFeatureProperty: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagDDecimalFeatureProperty: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::DDoubleWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagDDouble: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagDDouble: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::DXFComplementWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagDXFComplement: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagDXFComplement: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::DataRevDxfWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagDataRevDxf: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagDataRevDxf: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::DxfWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagDxf: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagDxf: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::ExtLstWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagExtLst: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagExtLst: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::FeaturePropertyBagsWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagFeaturePropertyBags: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagFeaturePropertyBags: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::FpbsWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagFpbs: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagFpbs: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::HeaderRowBorderRevDxfWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagHeaderRowBorderRevDxf: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagHeaderRowBorderRevDxf: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::HeaderRowRevDxfWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagHeaderRowRevDxf: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagHeaderRowRevDxf: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::IIntFeaturePropertyWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagIIntFeatureProperty: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagIIntFeatureProperty: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::IIntegerWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagIInteger: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagIInteger: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::RelRelFeaturePropertyWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagRelRelFeatureProperty: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagRelRelFeatureProperty: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::RelStringWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagRelString: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagRelString: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::RevdxfWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagRevdxf: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagRevdxf: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::SStringWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagSString: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagSString: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::SStringFeaturePropertyWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagSStringFeatureProperty: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagSStringFeatureProperty: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::TableBorderRevDxfWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagTableBorderRevDxf: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagTableBorderRevDxf: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::TotalsRowBorderRevDxfWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagTotalsRowBorderRevDxf: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagTotalsRowBorderRevDxf: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::TotalsRowRevDxfWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagTotalsRowRevDxf: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagTotalsRowRevDxf: UserDataSlot;
     /// What a `office_spreadsheetml_2022_featurepropertybag::XfComplementWith` holds.
-    type OfficeSpreadsheetml2022FeaturepropertybagXfComplement: ExtraSlot;
+    type OfficeSpreadsheetml2022FeaturepropertybagXfComplement: UserDataSlot;
     /// What a `office_spreadsheetml_2022_pivot_rich_data::RichInfoWith` holds.
-    type OfficeSpreadsheetml2022PivotRichDataRichInfo: ExtraSlot;
+    type OfficeSpreadsheetml2022PivotRichDataRichInfo: UserDataSlot;
     /// What a `office_spreadsheetml_2022_pivot_version_info::CacheVersionInfoWith` holds.
-    type OfficeSpreadsheetml2022PivotVersionInfoCacheVersionInfo: ExtraSlot;
+    type OfficeSpreadsheetml2022PivotVersionInfoCacheVersionInfo: UserDataSlot;
     /// What a `office_spreadsheetml_2022_pivot_version_info::LastRefreshFeatureWith` holds.
-    type OfficeSpreadsheetml2022PivotVersionInfoLastRefreshFeature: ExtraSlot;
+    type OfficeSpreadsheetml2022PivotVersionInfoLastRefreshFeature: UserDataSlot;
     /// What a `office_spreadsheetml_2022_pivot_version_info::LastUpdateFeatureWith` holds.
-    type OfficeSpreadsheetml2022PivotVersionInfoLastUpdateFeature: ExtraSlot;
+    type OfficeSpreadsheetml2022PivotVersionInfoLastUpdateFeature: UserDataSlot;
     /// What a `office_spreadsheetml_2022_pivot_version_info::PivotVersionInfoWith` holds.
-    type OfficeSpreadsheetml2022PivotVersionInfoPivotVersionInfo: ExtraSlot;
+    type OfficeSpreadsheetml2022PivotVersionInfoPivotVersionInfo: UserDataSlot;
     /// What a `office_spreadsheetml_2022_pivot_version_info::RequiredFeatureWith` holds.
-    type OfficeSpreadsheetml2022PivotVersionInfoRequiredFeature: ExtraSlot;
+    type OfficeSpreadsheetml2022PivotVersionInfoRequiredFeature: UserDataSlot;
     /// What a `office_spreadsheetml_2022_richvaluerel::ExtLstWith` holds.
-    type OfficeSpreadsheetml2022RichvaluerelExtLst: ExtraSlot;
+    type OfficeSpreadsheetml2022RichvaluerelExtLst: UserDataSlot;
     /// What a `office_spreadsheetml_2022_richvaluerel::RelWith` holds.
-    type OfficeSpreadsheetml2022RichvaluerelRel: ExtraSlot;
+    type OfficeSpreadsheetml2022RichvaluerelRel: UserDataSlot;
     /// What a `office_spreadsheetml_2022_richvaluerel::RichValueRelsWith` holds.
-    type OfficeSpreadsheetml2022RichvaluerelRichValueRels: ExtraSlot;
+    type OfficeSpreadsheetml2022RichvaluerelRichValueRels: UserDataSlot;
     /// What a `office_spreadsheetml_2023_data_source_versioning::LastEditFeatureWith` holds.
-    type OfficeSpreadsheetml2023DataSourceVersioningLastEditFeature: ExtraSlot;
+    type OfficeSpreadsheetml2023DataSourceVersioningLastEditFeature: UserDataSlot;
     /// What a `office_spreadsheetml_2023_data_source_versioning::LastRefreshFeatureWith` holds.
-    type OfficeSpreadsheetml2023DataSourceVersioningLastRefreshFeature: ExtraSlot;
+    type OfficeSpreadsheetml2023DataSourceVersioningLastRefreshFeature: UserDataSlot;
     /// What a `office_spreadsheetml_2023_data_source_versioning::RequiredFeatureWith` holds.
-    type OfficeSpreadsheetml2023DataSourceVersioningRequiredFeature: ExtraSlot;
+    type OfficeSpreadsheetml2023DataSourceVersioningRequiredFeature: UserDataSlot;
     /// What a `office_spreadsheetml_2023_data_source_versioning::VersionInfoWith` holds.
-    type OfficeSpreadsheetml2023DataSourceVersioningVersionInfo: ExtraSlot;
+    type OfficeSpreadsheetml2023DataSourceVersioningVersionInfo: UserDataSlot;
     /// What a `office_spreadsheetml_2023_external_code_service::ExternalCodeServiceWith` holds.
-    type OfficeSpreadsheetml2023ExternalCodeServiceExternalCodeService: ExtraSlot;
+    type OfficeSpreadsheetml2023ExternalCodeServiceExternalCodeService: UserDataSlot;
     /// What a `office_spreadsheetml_2023_ms_forms::ExtLstWith` holds.
-    type OfficeSpreadsheetml2023MsFormsExtLst: ExtraSlot;
+    type OfficeSpreadsheetml2023MsFormsExtLst: UserDataSlot;
     /// What a `office_spreadsheetml_2023_ms_forms::MsFormWith` holds.
-    type OfficeSpreadsheetml2023MsFormsMsForm: ExtraSlot;
+    type OfficeSpreadsheetml2023MsFormsMsForm: UserDataSlot;
     /// What a `office_spreadsheetml_2023_ms_forms::QuestionWith` holds.
-    type OfficeSpreadsheetml2023MsFormsQuestion: ExtraSlot;
+    type OfficeSpreadsheetml2023MsFormsQuestion: UserDataSlot;
     /// What a `office_spreadsheetml_2023_ms_forms::SyncedQuestionIdWith` holds.
-    type OfficeSpreadsheetml2023MsFormsSyncedQuestionId: ExtraSlot;
+    type OfficeSpreadsheetml2023MsFormsSyncedQuestionId: UserDataSlot;
     /// What a `office_spreadsheetml_2023_pivot2023_calculation::AggregationInfoWith` holds.
-    type OfficeSpreadsheetml2023Pivot2023CalculationAggregationInfo: ExtraSlot;
+    type OfficeSpreadsheetml2023Pivot2023CalculationAggregationInfo: UserDataSlot;
     /// What a `office_spreadsheetml_2023_pivot2023_calculation::FeatureSupportInfoWith` holds.
-    type OfficeSpreadsheetml2023Pivot2023CalculationFeatureSupportInfo: ExtraSlot;
+    type OfficeSpreadsheetml2023Pivot2023CalculationFeatureSupportInfo: UserDataSlot;
     /// What a `office_spreadsheetml_2023_pivot2023_calculation::PivotAreaReferenceSubtotalsWith` holds.
-    type OfficeSpreadsheetml2023Pivot2023CalculationPivotAreaReferenceSubtotals: ExtraSlot;
+    type OfficeSpreadsheetml2023Pivot2023CalculationPivotAreaReferenceSubtotals: UserDataSlot;
     /// What a `office_spreadsheetml_2023_pivot2023_calculation::PivotFieldSubtotalLineItemsWith` holds.
-    type OfficeSpreadsheetml2023Pivot2023CalculationPivotFieldSubtotalLineItems: ExtraSlot;
+    type OfficeSpreadsheetml2023Pivot2023CalculationPivotFieldSubtotalLineItems: UserDataSlot;
     /// What a `office_spreadsheetml_2023_pivot2023_calculation::PivotFieldSubtotalsWith` holds.
-    type OfficeSpreadsheetml2023Pivot2023CalculationPivotFieldSubtotals: ExtraSlot;
+    type OfficeSpreadsheetml2023Pivot2023CalculationPivotFieldSubtotals: UserDataSlot;
     /// What a `office_spreadsheetml_2023_pivot2023_calculation::SubtotalLineItemWith` holds.
-    type OfficeSpreadsheetml2023Pivot2023CalculationSubtotalLineItem: ExtraSlot;
+    type OfficeSpreadsheetml2023Pivot2023CalculationSubtotalLineItem: UserDataSlot;
     /// What a `office_spreadsheetml_2023_pivot2023_calculation::SubtotalPivotItemSubtotalWith` holds.
-    type OfficeSpreadsheetml2023Pivot2023CalculationSubtotalPivotItemSubtotal: ExtraSlot;
+    type OfficeSpreadsheetml2023Pivot2023CalculationSubtotalPivotItemSubtotal: UserDataSlot;
     /// What a `office_spreadsheetml_2023_pivot2023_calculation::SubtotalPivotSubtotalTypeWith` holds.
-    type OfficeSpreadsheetml2023Pivot2023CalculationSubtotalPivotSubtotalType: ExtraSlot;
+    type OfficeSpreadsheetml2023Pivot2023CalculationSubtotalPivotSubtotalType: UserDataSlot;
     /// What a `office_spreadsheetml_2024_pivot_auto_refresh::AutoRefreshWith` holds.
-    type OfficeSpreadsheetml2024PivotAutoRefreshAutoRefresh: ExtraSlot;
+    type OfficeSpreadsheetml2024PivotAutoRefreshAutoRefresh: UserDataSlot;
     /// What a `office_spreadsheetml_2024_pivot_dynamic_arrays::PivotCacheDynamicArrayWith` holds.
-    type OfficeSpreadsheetml2024PivotDynamicArraysPivotCacheDynamicArray: ExtraSlot;
+    type OfficeSpreadsheetml2024PivotDynamicArraysPivotCacheDynamicArray: UserDataSlot;
     /// What a `office_spreadsheetml_2024_workbook_compatibility_version::VersionWith` holds.
-    type OfficeSpreadsheetml2024WorkbookCompatibilityVersionVersion: ExtraSlot;
+    type OfficeSpreadsheetml2024WorkbookCompatibilityVersionVersion: UserDataSlot;
     /// What a `office_spreadsheetml_2025_external_code_service2::ExternalCodeServiceImageAsInputWith` holds.
-    type OfficeSpreadsheetml2025ExternalCodeService2ExternalCodeServiceImageAsInput: ExtraSlot;
+    type OfficeSpreadsheetml2025ExternalCodeService2ExternalCodeServiceImageAsInput: UserDataSlot;
     /// What a `office_spreadsheetml_2025_pivot_data_source::PivotCacheDataSourceWith` holds.
-    type OfficeSpreadsheetml2025PivotDataSourcePivotCacheDataSource: ExtraSlot;
+    type OfficeSpreadsheetml2025PivotDataSourcePivotCacheDataSource: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::AnchorWith` holds.
-    type OfficeTasks2019DocumenttasksAnchor: ExtraSlot;
+    type OfficeTasks2019DocumenttasksAnchor: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::AssignWith` holds.
-    type OfficeTasks2019DocumenttasksAssign: ExtraSlot;
+    type OfficeTasks2019DocumenttasksAssign: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::AttributionWith` holds.
-    type OfficeTasks2019DocumenttasksAttribution: ExtraSlot;
+    type OfficeTasks2019DocumenttasksAttribution: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::CommentWith` holds.
-    type OfficeTasks2019DocumenttasksComment: ExtraSlot;
+    type OfficeTasks2019DocumenttasksComment: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::CreateWith` holds.
-    type OfficeTasks2019DocumenttasksCreate: ExtraSlot;
+    type OfficeTasks2019DocumenttasksCreate: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::DeleteWith` holds.
-    type OfficeTasks2019DocumenttasksDelete: ExtraSlot;
+    type OfficeTasks2019DocumenttasksDelete: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::EventWith` holds.
-    type OfficeTasks2019DocumenttasksEvent: ExtraSlot;
+    type OfficeTasks2019DocumenttasksEvent: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::ExtLstWith` holds.
-    type OfficeTasks2019DocumenttasksExtLst: ExtraSlot;
+    type OfficeTasks2019DocumenttasksExtLst: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::HistoryWith` holds.
-    type OfficeTasks2019DocumenttasksHistory: ExtraSlot;
+    type OfficeTasks2019DocumenttasksHistory: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::PriorityWith` holds.
-    type OfficeTasks2019DocumenttasksPriority: ExtraSlot;
+    type OfficeTasks2019DocumenttasksPriority: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::ProgressWith` holds.
-    type OfficeTasks2019DocumenttasksProgress: ExtraSlot;
+    type OfficeTasks2019DocumenttasksProgress: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::ScheduleWith` holds.
-    type OfficeTasks2019DocumenttasksSchedule: ExtraSlot;
+    type OfficeTasks2019DocumenttasksSchedule: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::SetTitleWith` holds.
-    type OfficeTasks2019DocumenttasksSetTitle: ExtraSlot;
+    type OfficeTasks2019DocumenttasksSetTitle: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::TaskWith` holds.
-    type OfficeTasks2019DocumenttasksTask: ExtraSlot;
+    type OfficeTasks2019DocumenttasksTask: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::TasksWith` holds.
-    type OfficeTasks2019DocumenttasksTasks: ExtraSlot;
+    type OfficeTasks2019DocumenttasksTasks: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::UnassignWith` holds.
-    type OfficeTasks2019DocumenttasksUnassign: ExtraSlot;
+    type OfficeTasks2019DocumenttasksUnassign: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::UnassignAllWith` holds.
-    type OfficeTasks2019DocumenttasksUnassignAll: ExtraSlot;
+    type OfficeTasks2019DocumenttasksUnassignAll: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::UndeleteWith` holds.
-    type OfficeTasks2019DocumenttasksUndelete: ExtraSlot;
+    type OfficeTasks2019DocumenttasksUndelete: UserDataSlot;
     /// What a `office_tasks_2019_documenttasks::UndoWith` holds.
-    type OfficeTasks2019DocumenttasksUndo: ExtraSlot;
+    type OfficeTasks2019DocumenttasksUndo: UserDataSlot;
     /// What a `office_thememl_2012_main::ExtLstWith` holds.
-    type OfficeThememl2012MainExtLst: ExtraSlot;
+    type OfficeThememl2012MainExtLst: UserDataSlot;
     /// What a `office_thememl_2012_main::ThemeFamilyWith` holds.
-    type OfficeThememl2012MainThemeFamily: ExtraSlot;
+    type OfficeThememl2012MainThemeFamily: UserDataSlot;
     /// What a `office_thememl_2012_main::ThemeVariantWith` holds.
-    type OfficeThememl2012MainThemeVariant: ExtraSlot;
+    type OfficeThememl2012MainThemeVariant: UserDataSlot;
     /// What a `office_thememl_2012_main::ThemeVariantLstWith` holds.
-    type OfficeThememl2012MainThemeVariantLst: ExtraSlot;
+    type OfficeThememl2012MainThemeVariantLst: UserDataSlot;
     /// What a `office_webextensions_taskpanes_2010_11::ExtLstWith` holds.
-    type OfficeWebextensionsTaskpanes201011ExtLst: ExtraSlot;
+    type OfficeWebextensionsTaskpanes201011ExtLst: UserDataSlot;
     /// What a `office_webextensions_taskpanes_2010_11::TaskpaneWith` holds.
-    type OfficeWebextensionsTaskpanes201011Taskpane: ExtraSlot;
+    type OfficeWebextensionsTaskpanes201011Taskpane: UserDataSlot;
     /// What a `office_webextensions_taskpanes_2010_11::TaskpanesWith` holds.
-    type OfficeWebextensionsTaskpanes201011Taskpanes: ExtraSlot;
+    type OfficeWebextensionsTaskpanes201011Taskpanes: UserDataSlot;
     /// What a `office_webextensions_taskpanes_2010_11::WebextensionrefWith` holds.
-    type OfficeWebextensionsTaskpanes201011Webextensionref: ExtraSlot;
+    type OfficeWebextensionsTaskpanes201011Webextensionref: UserDataSlot;
     /// What a `office_webextensions_webextension_2010_11::AlternateReferencesWith` holds.
-    type OfficeWebextensionsWebextension201011AlternateReferences: ExtraSlot;
+    type OfficeWebextensionsWebextension201011AlternateReferences: UserDataSlot;
     /// What a `office_webextensions_webextension_2010_11::BindingWith` holds.
-    type OfficeWebextensionsWebextension201011Binding: ExtraSlot;
+    type OfficeWebextensionsWebextension201011Binding: UserDataSlot;
     /// What a `office_webextensions_webextension_2010_11::BindingsWith` holds.
-    type OfficeWebextensionsWebextension201011Bindings: ExtraSlot;
+    type OfficeWebextensionsWebextension201011Bindings: UserDataSlot;
     /// What a `office_webextensions_webextension_2010_11::ExtLstWith` holds.
-    type OfficeWebextensionsWebextension201011ExtLst: ExtraSlot;
+    type OfficeWebextensionsWebextension201011ExtLst: UserDataSlot;
     /// What a `office_webextensions_webextension_2010_11::PropertiesWith` holds.
-    type OfficeWebextensionsWebextension201011Properties: ExtraSlot;
+    type OfficeWebextensionsWebextension201011Properties: UserDataSlot;
     /// What a `office_webextensions_webextension_2010_11::PropertyWith` holds.
-    type OfficeWebextensionsWebextension201011Property: ExtraSlot;
+    type OfficeWebextensionsWebextension201011Property: UserDataSlot;
     /// What a `office_webextensions_webextension_2010_11::ReferenceWith` holds.
-    type OfficeWebextensionsWebextension201011Reference: ExtraSlot;
+    type OfficeWebextensionsWebextension201011Reference: UserDataSlot;
     /// What a `office_webextensions_webextension_2010_11::SnapshotWith` holds.
-    type OfficeWebextensionsWebextension201011Snapshot: ExtraSlot;
+    type OfficeWebextensionsWebextension201011Snapshot: UserDataSlot;
     /// What a `office_webextensions_webextension_2010_11::WebextensionWith` holds.
-    type OfficeWebextensionsWebextension201011Webextension: ExtraSlot;
+    type OfficeWebextensionsWebextension201011Webextension: UserDataSlot;
     /// What a `office_webextensions_webextension_2010_11::WebextensionrefWith` holds.
-    type OfficeWebextensionsWebextension201011Webextensionref: ExtraSlot;
+    type OfficeWebextensionsWebextension201011Webextensionref: UserDataSlot;
     /// What a `office_word_2010_wordml::AlphaWith` holds.
-    type OfficeWord2010WordmlAlpha: ExtraSlot;
+    type OfficeWord2010WordmlAlpha: UserDataSlot;
     /// What a `office_word_2010_wordml::BevelWith` holds.
-    type OfficeWord2010WordmlBevel: ExtraSlot;
+    type OfficeWord2010WordmlBevel: UserDataSlot;
     /// What a `office_word_2010_wordml::BevelBWith` holds.
-    type OfficeWord2010WordmlBevelB: ExtraSlot;
+    type OfficeWord2010WordmlBevelB: UserDataSlot;
     /// What a `office_word_2010_wordml::BevelTWith` holds.
-    type OfficeWord2010WordmlBevelT: ExtraSlot;
+    type OfficeWord2010WordmlBevelT: UserDataSlot;
     /// What a `office_word_2010_wordml::CNvContentPartPrWith` holds.
-    type OfficeWord2010WordmlCNvContentPartPr: ExtraSlot;
+    type OfficeWord2010WordmlCNvContentPartPr: UserDataSlot;
     /// What a `office_word_2010_wordml::CNvPrWith` holds.
-    type OfficeWord2010WordmlCNvPr: ExtraSlot;
+    type OfficeWord2010WordmlCNvPr: UserDataSlot;
     /// What a `office_word_2010_wordml::CameraWith` holds.
-    type OfficeWord2010WordmlCamera: ExtraSlot;
+    type OfficeWord2010WordmlCamera: UserDataSlot;
     /// What a `office_word_2010_wordml::CheckboxWith` holds.
-    type OfficeWord2010WordmlCheckbox: ExtraSlot;
+    type OfficeWord2010WordmlCheckbox: UserDataSlot;
     /// What a `office_word_2010_wordml::CheckedWith` holds.
-    type OfficeWord2010WordmlChecked: ExtraSlot;
+    type OfficeWord2010WordmlChecked: UserDataSlot;
     /// What a `office_word_2010_wordml::CheckedStateWith` holds.
-    type OfficeWord2010WordmlCheckedState: ExtraSlot;
+    type OfficeWord2010WordmlCheckedState: UserDataSlot;
     /// What a `office_word_2010_wordml::CntxtAltsWith` holds.
-    type OfficeWord2010WordmlCntxtAlts: ExtraSlot;
+    type OfficeWord2010WordmlCntxtAlts: UserDataSlot;
     /// What a `office_word_2010_wordml::ConflictDelRunTrackChangeWith` holds.
-    type OfficeWord2010WordmlConflictDelRunTrackChange: ExtraSlot;
+    type OfficeWord2010WordmlConflictDelRunTrackChange: UserDataSlot;
     /// What a `office_word_2010_wordml::ConflictDelTrackChangeWith` holds.
-    type OfficeWord2010WordmlConflictDelTrackChange: ExtraSlot;
+    type OfficeWord2010WordmlConflictDelTrackChange: UserDataSlot;
     /// What a `office_word_2010_wordml::ConflictInsRunTrackChangeWith` holds.
-    type OfficeWord2010WordmlConflictInsRunTrackChange: ExtraSlot;
+    type OfficeWord2010WordmlConflictInsRunTrackChange: UserDataSlot;
     /// What a `office_word_2010_wordml::ConflictInsTrackChangeWith` holds.
-    type OfficeWord2010WordmlConflictInsTrackChange: ExtraSlot;
+    type OfficeWord2010WordmlConflictInsTrackChange: UserDataSlot;
     /// What a `office_word_2010_wordml::ConflictModeWith` holds.
-    type OfficeWord2010WordmlConflictMode: ExtraSlot;
+    type OfficeWord2010WordmlConflictMode: UserDataSlot;
     /// What a `office_word_2010_wordml::ContentPartWith` holds.
-    type OfficeWord2010WordmlContentPart: ExtraSlot;
+    type OfficeWord2010WordmlContentPart: UserDataSlot;
     /// What a `office_word_2010_wordml::ContourClrWith` holds.
-    type OfficeWord2010WordmlContourClr: ExtraSlot;
+    type OfficeWord2010WordmlContourClr: UserDataSlot;
     /// What a `office_word_2010_wordml::CustomXmlConflictDelRangeEndWith` holds.
-    type OfficeWord2010WordmlCustomXmlConflictDelRangeEnd: ExtraSlot;
+    type OfficeWord2010WordmlCustomXmlConflictDelRangeEnd: UserDataSlot;
     /// What a `office_word_2010_wordml::CustomXmlConflictDelRangeStartWith` holds.
-    type OfficeWord2010WordmlCustomXmlConflictDelRangeStart: ExtraSlot;
+    type OfficeWord2010WordmlCustomXmlConflictDelRangeStart: UserDataSlot;
     /// What a `office_word_2010_wordml::CustomXmlConflictInsRangeEndWith` holds.
-    type OfficeWord2010WordmlCustomXmlConflictInsRangeEnd: ExtraSlot;
+    type OfficeWord2010WordmlCustomXmlConflictInsRangeEnd: UserDataSlot;
     /// What a `office_word_2010_wordml::CustomXmlConflictInsRangeStartWith` holds.
-    type OfficeWord2010WordmlCustomXmlConflictInsRangeStart: ExtraSlot;
+    type OfficeWord2010WordmlCustomXmlConflictInsRangeStart: UserDataSlot;
     /// What a `office_word_2010_wordml::DefaultImageDpiWith` holds.
-    type OfficeWord2010WordmlDefaultImageDpi: ExtraSlot;
+    type OfficeWord2010WordmlDefaultImageDpi: UserDataSlot;
     /// What a `office_word_2010_wordml::DiscardImageEditingDataWith` holds.
-    type OfficeWord2010WordmlDiscardImageEditingData: ExtraSlot;
+    type OfficeWord2010WordmlDiscardImageEditingData: UserDataSlot;
     /// What a `office_word_2010_wordml::DocIdWith` holds.
-    type OfficeWord2010WordmlDocId: ExtraSlot;
+    type OfficeWord2010WordmlDocId: UserDataSlot;
     /// What a `office_word_2010_wordml::EntityPickerWith` holds.
-    type OfficeWord2010WordmlEntityPicker: ExtraSlot;
+    type OfficeWord2010WordmlEntityPicker: UserDataSlot;
     /// What a `office_word_2010_wordml::ExtLstWith` holds.
-    type OfficeWord2010WordmlExtLst: ExtraSlot;
+    type OfficeWord2010WordmlExtLst: UserDataSlot;
     /// What a `office_word_2010_wordml::ExtrusionClrWith` holds.
-    type OfficeWord2010WordmlExtrusionClr: ExtraSlot;
+    type OfficeWord2010WordmlExtrusionClr: UserDataSlot;
     /// What a `office_word_2010_wordml::FillToRectWith` holds.
-    type OfficeWord2010WordmlFillToRect: ExtraSlot;
+    type OfficeWord2010WordmlFillToRect: UserDataSlot;
     /// What a `office_word_2010_wordml::GlowWith` holds.
-    type OfficeWord2010WordmlGlow: ExtraSlot;
+    type OfficeWord2010WordmlGlow: UserDataSlot;
     /// What a `office_word_2010_wordml::GradFillWith` holds.
-    type OfficeWord2010WordmlGradFill: ExtraSlot;
+    type OfficeWord2010WordmlGradFill: UserDataSlot;
     /// What a `office_word_2010_wordml::GsWith` holds.
-    type OfficeWord2010WordmlGs: ExtraSlot;
+    type OfficeWord2010WordmlGs: UserDataSlot;
     /// What a `office_word_2010_wordml::GsLstWith` holds.
-    type OfficeWord2010WordmlGsLst: ExtraSlot;
+    type OfficeWord2010WordmlGsLst: UserDataSlot;
     /// What a `office_word_2010_wordml::HueModWith` holds.
-    type OfficeWord2010WordmlHueMod: ExtraSlot;
+    type OfficeWord2010WordmlHueMod: UserDataSlot;
     /// What a `office_word_2010_wordml::LigaturesWith` holds.
-    type OfficeWord2010WordmlLigatures: ExtraSlot;
+    type OfficeWord2010WordmlLigatures: UserDataSlot;
     /// What a `office_word_2010_wordml::LightRigWith` holds.
-    type OfficeWord2010WordmlLightRig: ExtraSlot;
+    type OfficeWord2010WordmlLightRig: UserDataSlot;
     /// What a `office_word_2010_wordml::LinWith` holds.
-    type OfficeWord2010WordmlLin: ExtraSlot;
+    type OfficeWord2010WordmlLin: UserDataSlot;
     /// What a `office_word_2010_wordml::LumWith` holds.
-    type OfficeWord2010WordmlLum: ExtraSlot;
+    type OfficeWord2010WordmlLum: UserDataSlot;
     /// What a `office_word_2010_wordml::LumModWith` holds.
-    type OfficeWord2010WordmlLumMod: ExtraSlot;
+    type OfficeWord2010WordmlLumMod: UserDataSlot;
     /// What a `office_word_2010_wordml::LumOffWith` holds.
-    type OfficeWord2010WordmlLumOff: ExtraSlot;
+    type OfficeWord2010WordmlLumOff: UserDataSlot;
     /// What a `office_word_2010_wordml::MiterWith` holds.
-    type OfficeWord2010WordmlMiter: ExtraSlot;
+    type OfficeWord2010WordmlMiter: UserDataSlot;
     /// What a `office_word_2010_wordml::NoFillWith` holds.
-    type OfficeWord2010WordmlNoFill: ExtraSlot;
+    type OfficeWord2010WordmlNoFill: UserDataSlot;
     /// What a `office_word_2010_wordml::NumFormWith` holds.
-    type OfficeWord2010WordmlNumForm: ExtraSlot;
+    type OfficeWord2010WordmlNumForm: UserDataSlot;
     /// What a `office_word_2010_wordml::NumSpacingWith` holds.
-    type OfficeWord2010WordmlNumSpacing: ExtraSlot;
+    type OfficeWord2010WordmlNumSpacing: UserDataSlot;
     /// What a `office_word_2010_wordml::NvContentPartPrWith` holds.
-    type OfficeWord2010WordmlNvContentPartPr: ExtraSlot;
+    type OfficeWord2010WordmlNvContentPartPr: UserDataSlot;
     /// What a `office_word_2010_wordml::PathWith` holds.
-    type OfficeWord2010WordmlPath: ExtraSlot;
+    type OfficeWord2010WordmlPath: UserDataSlot;
     /// What a `office_word_2010_wordml::Props3dWith` holds.
-    type OfficeWord2010WordmlProps3d: ExtraSlot;
+    type OfficeWord2010WordmlProps3d: UserDataSlot;
     /// What a `office_word_2010_wordml::PrstDashWith` holds.
-    type OfficeWord2010WordmlPrstDash: ExtraSlot;
+    type OfficeWord2010WordmlPrstDash: UserDataSlot;
     /// What a `office_word_2010_wordml::ReflectionWith` holds.
-    type OfficeWord2010WordmlReflection: ExtraSlot;
+    type OfficeWord2010WordmlReflection: UserDataSlot;
     /// What a `office_word_2010_wordml::RotWith` holds.
-    type OfficeWord2010WordmlRot: ExtraSlot;
+    type OfficeWord2010WordmlRot: UserDataSlot;
     /// What a `office_word_2010_wordml::RoundWith` holds.
-    type OfficeWord2010WordmlRound: ExtraSlot;
+    type OfficeWord2010WordmlRound: UserDataSlot;
     /// What a `office_word_2010_wordml::SatWith` holds.
-    type OfficeWord2010WordmlSat: ExtraSlot;
+    type OfficeWord2010WordmlSat: UserDataSlot;
     /// What a `office_word_2010_wordml::SatModWith` holds.
-    type OfficeWord2010WordmlSatMod: ExtraSlot;
+    type OfficeWord2010WordmlSatMod: UserDataSlot;
     /// What a `office_word_2010_wordml::SatOffWith` holds.
-    type OfficeWord2010WordmlSatOff: ExtraSlot;
+    type OfficeWord2010WordmlSatOff: UserDataSlot;
     /// What a `office_word_2010_wordml::Scene3dWith` holds.
-    type OfficeWord2010WordmlScene3d: ExtraSlot;
+    type OfficeWord2010WordmlScene3d: UserDataSlot;
     /// What a `office_word_2010_wordml::SchemeClrWith` holds.
-    type OfficeWord2010WordmlSchemeClr: ExtraSlot;
+    type OfficeWord2010WordmlSchemeClr: UserDataSlot;
     /// What a `office_word_2010_wordml::ShadeWith` holds.
-    type OfficeWord2010WordmlShade: ExtraSlot;
+    type OfficeWord2010WordmlShade: UserDataSlot;
     /// What a `office_word_2010_wordml::ShadowWith` holds.
-    type OfficeWord2010WordmlShadow: ExtraSlot;
+    type OfficeWord2010WordmlShadow: UserDataSlot;
     /// What a `office_word_2010_wordml::SolidFillWith` holds.
-    type OfficeWord2010WordmlSolidFill: ExtraSlot;
+    type OfficeWord2010WordmlSolidFill: UserDataSlot;
     /// What a `office_word_2010_wordml::SrgbClrWith` holds.
-    type OfficeWord2010WordmlSrgbClr: ExtraSlot;
+    type OfficeWord2010WordmlSrgbClr: UserDataSlot;
     /// What a `office_word_2010_wordml::StyleSetWith` holds.
-    type OfficeWord2010WordmlStyleSet: ExtraSlot;
+    type OfficeWord2010WordmlStyleSet: UserDataSlot;
     /// What a `office_word_2010_wordml::StylisticSetsWith` holds.
-    type OfficeWord2010WordmlStylisticSets: ExtraSlot;
+    type OfficeWord2010WordmlStylisticSets: UserDataSlot;
     /// What a `office_word_2010_wordml::TextFillWith` holds.
-    type OfficeWord2010WordmlTextFill: ExtraSlot;
+    type OfficeWord2010WordmlTextFill: UserDataSlot;
     /// What a `office_word_2010_wordml::TextOutlineWith` holds.
-    type OfficeWord2010WordmlTextOutline: ExtraSlot;
+    type OfficeWord2010WordmlTextOutline: UserDataSlot;
     /// What a `office_word_2010_wordml::TintWith` holds.
-    type OfficeWord2010WordmlTint: ExtraSlot;
+    type OfficeWord2010WordmlTint: UserDataSlot;
     /// What a `office_word_2010_wordml::UncheckedStateWith` holds.
-    type OfficeWord2010WordmlUncheckedState: ExtraSlot;
+    type OfficeWord2010WordmlUncheckedState: UserDataSlot;
     /// What a `office_word_2010_wordml::XfrmWith` holds.
-    type OfficeWord2010WordmlXfrm: ExtraSlot;
+    type OfficeWord2010WordmlXfrm: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_canvas::BgWith` holds.
-    type OfficeWord2010WordprocessingCanvasBg: ExtraSlot;
+    type OfficeWord2010WordprocessingCanvasBg: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_canvas::ExtLstWith` holds.
-    type OfficeWord2010WordprocessingCanvasExtLst: ExtraSlot;
+    type OfficeWord2010WordprocessingCanvasExtLst: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_canvas::GraphicFrameWith` holds.
-    type OfficeWord2010WordprocessingCanvasGraphicFrame: ExtraSlot;
+    type OfficeWord2010WordprocessingCanvasGraphicFrame: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_canvas::WholeWith` holds.
-    type OfficeWord2010WordprocessingCanvasWhole: ExtraSlot;
+    type OfficeWord2010WordprocessingCanvasWhole: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_canvas::WpcWith` holds.
-    type OfficeWord2010WordprocessingCanvasWpc: ExtraSlot;
+    type OfficeWord2010WordprocessingCanvasWpc: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_drawing::PctHeightWith` holds.
-    type OfficeWord2010WordprocessingDrawingPctHeight: ExtraSlot;
+    type OfficeWord2010WordprocessingDrawingPctHeight: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_drawing::PctPosHOffsetWith` holds.
-    type OfficeWord2010WordprocessingDrawingPctPosHOffset: ExtraSlot;
+    type OfficeWord2010WordprocessingDrawingPctPosHOffset: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_drawing::PctPosVOffsetWith` holds.
-    type OfficeWord2010WordprocessingDrawingPctPosVOffset: ExtraSlot;
+    type OfficeWord2010WordprocessingDrawingPctPosVOffset: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_drawing::PctWidthWith` holds.
-    type OfficeWord2010WordprocessingDrawingPctWidth: ExtraSlot;
+    type OfficeWord2010WordprocessingDrawingPctWidth: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_drawing::SizeRelHWith` holds.
-    type OfficeWord2010WordprocessingDrawingSizeRelH: ExtraSlot;
+    type OfficeWord2010WordprocessingDrawingSizeRelH: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_drawing::SizeRelVWith` holds.
-    type OfficeWord2010WordprocessingDrawingSizeRelV: ExtraSlot;
+    type OfficeWord2010WordprocessingDrawingSizeRelV: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_group::CNvFrPrWith` holds.
-    type OfficeWord2010WordprocessingGroupCNvFrPr: ExtraSlot;
+    type OfficeWord2010WordprocessingGroupCNvFrPr: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_group::CNvGrpSpPrWith` holds.
-    type OfficeWord2010WordprocessingGroupCNvGrpSpPr: ExtraSlot;
+    type OfficeWord2010WordprocessingGroupCNvGrpSpPr: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_group::CNvPrWith` holds.
-    type OfficeWord2010WordprocessingGroupCNvPr: ExtraSlot;
+    type OfficeWord2010WordprocessingGroupCNvPr: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_group::ExtLstWith` holds.
-    type OfficeWord2010WordprocessingGroupExtLst: ExtraSlot;
+    type OfficeWord2010WordprocessingGroupExtLst: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_group::GraphicFrameWith` holds.
-    type OfficeWord2010WordprocessingGroupGraphicFrame: ExtraSlot;
+    type OfficeWord2010WordprocessingGroupGraphicFrame: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_group::GrpSpWith` holds.
-    type OfficeWord2010WordprocessingGroupGrpSp: ExtraSlot;
+    type OfficeWord2010WordprocessingGroupGrpSp: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_group::GrpSpPrWith` holds.
-    type OfficeWord2010WordprocessingGroupGrpSpPr: ExtraSlot;
+    type OfficeWord2010WordprocessingGroupGrpSpPr: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_group::WgpWith` holds.
-    type OfficeWord2010WordprocessingGroupWgp: ExtraSlot;
+    type OfficeWord2010WordprocessingGroupWgp: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_group::XfrmWith` holds.
-    type OfficeWord2010WordprocessingGroupXfrm: ExtraSlot;
+    type OfficeWord2010WordprocessingGroupXfrm: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_shape::BodyPrWith` holds.
-    type OfficeWord2010WordprocessingShapeBodyPr: ExtraSlot;
+    type OfficeWord2010WordprocessingShapeBodyPr: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_shape::CNvCnPrWith` holds.
-    type OfficeWord2010WordprocessingShapeCNvCnPr: ExtraSlot;
+    type OfficeWord2010WordprocessingShapeCNvCnPr: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_shape::CNvPrWith` holds.
-    type OfficeWord2010WordprocessingShapeCNvPr: ExtraSlot;
+    type OfficeWord2010WordprocessingShapeCNvPr: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_shape::CNvSpPrWith` holds.
-    type OfficeWord2010WordprocessingShapeCNvSpPr: ExtraSlot;
+    type OfficeWord2010WordprocessingShapeCNvSpPr: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_shape::ExtLstWith` holds.
-    type OfficeWord2010WordprocessingShapeExtLst: ExtraSlot;
+    type OfficeWord2010WordprocessingShapeExtLst: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_shape::LinkedTxbxWith` holds.
-    type OfficeWord2010WordprocessingShapeLinkedTxbx: ExtraSlot;
+    type OfficeWord2010WordprocessingShapeLinkedTxbx: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_shape::SpPrWith` holds.
-    type OfficeWord2010WordprocessingShapeSpPr: ExtraSlot;
+    type OfficeWord2010WordprocessingShapeSpPr: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_shape::StyleWith` holds.
-    type OfficeWord2010WordprocessingShapeStyle: ExtraSlot;
+    type OfficeWord2010WordprocessingShapeStyle: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_shape::TxbxWith` holds.
-    type OfficeWord2010WordprocessingShapeTxbx: ExtraSlot;
+    type OfficeWord2010WordprocessingShapeTxbx: UserDataSlot;
     /// What a `office_word_2010_wordprocessing_shape::WspWith` holds.
-    type OfficeWord2010WordprocessingShapeWsp: ExtraSlot;
+    type OfficeWord2010WordprocessingShapeWsp: UserDataSlot;
     /// What a `office_word_2012_wordml::AppearanceWith` holds.
-    type OfficeWord2012WordmlAppearance: ExtraSlot;
+    type OfficeWord2012WordmlAppearance: UserDataSlot;
     /// What a `office_word_2012_wordml::ChartTrackingRefBasedWith` holds.
-    type OfficeWord2012WordmlChartTrackingRefBased: ExtraSlot;
+    type OfficeWord2012WordmlChartTrackingRefBased: UserDataSlot;
     /// What a `office_word_2012_wordml::CollapsedWith` holds.
-    type OfficeWord2012WordmlCollapsed: ExtraSlot;
+    type OfficeWord2012WordmlCollapsed: UserDataSlot;
     /// What a `office_word_2012_wordml::ColorWith` holds.
-    type OfficeWord2012WordmlColor: ExtraSlot;
+    type OfficeWord2012WordmlColor: UserDataSlot;
     /// What a `office_word_2012_wordml::CommentExWith` holds.
-    type OfficeWord2012WordmlCommentEx: ExtraSlot;
+    type OfficeWord2012WordmlCommentEx: UserDataSlot;
     /// What a `office_word_2012_wordml::CommentsExWith` holds.
-    type OfficeWord2012WordmlCommentsEx: ExtraSlot;
+    type OfficeWord2012WordmlCommentsEx: UserDataSlot;
     /// What a `office_word_2012_wordml::DataBindingWith` holds.
-    type OfficeWord2012WordmlDataBinding: ExtraSlot;
+    type OfficeWord2012WordmlDataBinding: UserDataSlot;
     /// What a `office_word_2012_wordml::DoNotAllowInsertDeleteSectionWith` holds.
-    type OfficeWord2012WordmlDoNotAllowInsertDeleteSection: ExtraSlot;
+    type OfficeWord2012WordmlDoNotAllowInsertDeleteSection: UserDataSlot;
     /// What a `office_word_2012_wordml::DocIdWith` holds.
-    type OfficeWord2012WordmlDocId: ExtraSlot;
+    type OfficeWord2012WordmlDocId: UserDataSlot;
     /// What a `office_word_2012_wordml::FootnoteColumnsWith` holds.
-    type OfficeWord2012WordmlFootnoteColumns: ExtraSlot;
+    type OfficeWord2012WordmlFootnoteColumns: UserDataSlot;
     /// What a `office_word_2012_wordml::PeopleWith` holds.
-    type OfficeWord2012WordmlPeople: ExtraSlot;
+    type OfficeWord2012WordmlPeople: UserDataSlot;
     /// What a `office_word_2012_wordml::PersonWith` holds.
-    type OfficeWord2012WordmlPerson: ExtraSlot;
+    type OfficeWord2012WordmlPerson: UserDataSlot;
     /// What a `office_word_2012_wordml::PresenceInfoWith` holds.
-    type OfficeWord2012WordmlPresenceInfo: ExtraSlot;
+    type OfficeWord2012WordmlPresenceInfo: UserDataSlot;
     /// What a `office_word_2012_wordml::RepeatingSectionWith` holds.
-    type OfficeWord2012WordmlRepeatingSection: ExtraSlot;
+    type OfficeWord2012WordmlRepeatingSection: UserDataSlot;
     /// What a `office_word_2012_wordml::RepeatingSectionItemWith` holds.
-    type OfficeWord2012WordmlRepeatingSectionItem: ExtraSlot;
+    type OfficeWord2012WordmlRepeatingSectionItem: UserDataSlot;
     /// What a `office_word_2012_wordml::SectionTitleWith` holds.
-    type OfficeWord2012WordmlSectionTitle: ExtraSlot;
+    type OfficeWord2012WordmlSectionTitle: UserDataSlot;
     /// What a `office_word_2012_wordml::WebExtensionCreatedWith` holds.
-    type OfficeWord2012WordmlWebExtensionCreated: ExtraSlot;
+    type OfficeWord2012WordmlWebExtensionCreated: UserDataSlot;
     /// What a `office_word_2012_wordml::WebExtensionLinkedWith` holds.
-    type OfficeWord2012WordmlWebExtensionLinked: ExtraSlot;
+    type OfficeWord2012WordmlWebExtensionLinked: UserDataSlot;
     /// What a `office_word_2012_wordprocessing_drawing::WebVideoPrWith` holds.
-    type OfficeWord2012WordprocessingDrawingWebVideoPr: ExtraSlot;
+    type OfficeWord2012WordprocessingDrawingWebVideoPr: UserDataSlot;
     /// What a `office_word_2015_wordml_symex::SymExWith` holds.
-    type OfficeWord2015WordmlSymexSymEx: ExtraSlot;
+    type OfficeWord2015WordmlSymexSymEx: UserDataSlot;
     /// What a `office_word_2016_wordml_cid::CommentIdWith` holds.
-    type OfficeWord2016WordmlCidCommentId: ExtraSlot;
+    type OfficeWord2016WordmlCidCommentId: UserDataSlot;
     /// What a `office_word_2016_wordml_cid::CommentsIdsWith` holds.
-    type OfficeWord2016WordmlCidCommentsIds: ExtraSlot;
+    type OfficeWord2016WordmlCidCommentsIds: UserDataSlot;
     /// What a `office_word_2018_wordml_cex::CommentExtensibleWith` holds.
-    type OfficeWord2018WordmlCexCommentExtensible: ExtraSlot;
+    type OfficeWord2018WordmlCexCommentExtensible: UserDataSlot;
     /// What a `office_word_2018_wordml_cex::CommentsExtensibleWith` holds.
-    type OfficeWord2018WordmlCexCommentsExtensible: ExtraSlot;
+    type OfficeWord2018WordmlCexCommentsExtensible: UserDataSlot;
     /// What a `office_word_2018_wordml_cex::ExtLstWith` holds.
-    type OfficeWord2018WordmlCexExtLst: ExtraSlot;
+    type OfficeWord2018WordmlCexExtLst: UserDataSlot;
     /// What a `office_word_2018_wordml::ExtWith` holds.
-    type OfficeWord2018WordmlExt: ExtraSlot;
+    type OfficeWord2018WordmlExt: UserDataSlot;
     /// What a `office_word_2020_oembed::OembedWith` holds.
-    type OfficeWord2020OembedOembed: ExtraSlot;
+    type OfficeWord2020OembedOembed: UserDataSlot;
     /// What a `picture::NonVisualDrawingPropertiesWith` holds.
-    type PictureNonVisualDrawingProperties: ExtraSlot;
+    type PictureNonVisualDrawingProperties: UserDataSlot;
     /// What a `picture::NonVisualPictureDrawingPropertiesWith` holds.
-    type PictureNonVisualPictureDrawingProperties: ExtraSlot;
+    type PictureNonVisualPictureDrawingProperties: UserDataSlot;
     /// What a `picture::NonVisualPicturePropertiesWith` holds.
-    type PictureNonVisualPictureProperties: ExtraSlot;
+    type PictureNonVisualPictureProperties: UserDataSlot;
     /// What a `picture::PictureWith` holds.
-    type PicturePicture: ExtraSlot;
+    type PicturePicture: UserDataSlot;
     /// What a `picture::PictureFillWith` holds.
-    type PicturePictureFill: ExtraSlot;
+    type PicturePictureFill: UserDataSlot;
     /// What a `picture::ShapePropertiesWith` holds.
-    type PictureShapeProperties: ExtraSlot;
+    type PictureShapeProperties: UserDataSlot;
     /// What a `presentation::AGuideWith` holds.
-    type PresentationAGuide: ExtraSlot;
+    type PresentationAGuide: UserDataSlot;
     /// What a `presentation::AllSlidesWith` holds.
-    type PresentationAllSlides: ExtraSlot;
+    type PresentationAllSlides: UserDataSlot;
     /// What a `presentation::AnimateWith` holds.
-    type PresentationAnimate: ExtraSlot;
+    type PresentationAnimate: UserDataSlot;
     /// What a `presentation::AnimateColorBehaviorWith` holds.
-    type PresentationAnimateColorBehavior: ExtraSlot;
+    type PresentationAnimateColorBehavior: UserDataSlot;
     /// What a `presentation::AnimateEffectWith` holds.
-    type PresentationAnimateEffect: ExtraSlot;
+    type PresentationAnimateEffect: UserDataSlot;
     /// What a `presentation::AnimateMotionWith` holds.
-    type PresentationAnimateMotion: ExtraSlot;
+    type PresentationAnimateMotion: UserDataSlot;
     /// What a `presentation::AnimateRotationWith` holds.
-    type PresentationAnimateRotation: ExtraSlot;
+    type PresentationAnimateRotation: UserDataSlot;
     /// What a `presentation::AnimateScaleWith` holds.
-    type PresentationAnimateScale: ExtraSlot;
+    type PresentationAnimateScale: UserDataSlot;
     /// What a `presentation::AttributeNameWith` holds.
-    type PresentationAttributeName: ExtraSlot;
+    type PresentationAttributeName: UserDataSlot;
     /// What a `presentation::AttributeNameListWith` holds.
-    type PresentationAttributeNameList: ExtraSlot;
+    type PresentationAttributeNameList: UserDataSlot;
     /// What a `presentation::AudioWith` holds.
-    type PresentationAudio: ExtraSlot;
+    type PresentationAudio: UserDataSlot;
     /// What a `presentation::BackgroundWith` holds.
-    type PresentationBackground: ExtraSlot;
+    type PresentationBackground: UserDataSlot;
     /// What a `presentation::BackgroundPropertiesWith` holds.
-    type PresentationBackgroundProperties: ExtraSlot;
+    type PresentationBackgroundProperties: UserDataSlot;
     /// What a `presentation::BackgroundStyleReferenceWith` holds.
-    type PresentationBackgroundStyleReference: ExtraSlot;
+    type PresentationBackgroundStyleReference: UserDataSlot;
     /// What a `presentation::BlindsSlideTransitionWith` holds.
-    type PresentationBlindsSlideTransition: ExtraSlot;
+    type PresentationBlindsSlideTransition: UserDataSlot;
     /// What a `presentation::BoldEmbeddedFontWith` holds.
-    type PresentationBoldEmbeddedFont: ExtraSlot;
+    type PresentationBoldEmbeddedFont: UserDataSlot;
     /// What a `presentation::BoldItalicEmbeddedFontWith` holds.
-    type PresentationBoldItalicEmbeddedFont: ExtraSlot;
+    type PresentationBoldItalicEmbeddedFont: UserDataSlot;
     /// What a `presentation::BooleanVariantWith` holds.
-    type PresentationBooleanVariant: ExtraSlot;
+    type PresentationBooleanVariant: UserDataSlot;
     /// What a `presentation::BrowseSlideShowModeWith` holds.
-    type PresentationBrowseSlideShowMode: ExtraSlot;
+    type PresentationBrowseSlideShowMode: UserDataSlot;
     /// What a `presentation::BuildAsOneWith` holds.
-    type PresentationBuildAsOne: ExtraSlot;
+    type PresentationBuildAsOne: UserDataSlot;
     /// What a `presentation::BuildDiagramWith` holds.
-    type PresentationBuildDiagram: ExtraSlot;
+    type PresentationBuildDiagram: UserDataSlot;
     /// What a `presentation::BuildEmbeddedChartWith` holds.
-    type PresentationBuildEmbeddedChart: ExtraSlot;
+    type PresentationBuildEmbeddedChart: UserDataSlot;
     /// What a `presentation::BuildGraphicsWith` holds.
-    type PresentationBuildGraphics: ExtraSlot;
+    type PresentationBuildGraphics: UserDataSlot;
     /// What a `presentation::BuildListWith` holds.
-    type PresentationBuildList: ExtraSlot;
+    type PresentationBuildList: UserDataSlot;
     /// What a `presentation::BuildParagraphWith` holds.
-    type PresentationBuildParagraph: ExtraSlot;
+    type PresentationBuildParagraph: UserDataSlot;
     /// What a `presentation::BuildSubElementsWith` holds.
-    type PresentationBuildSubElements: ExtraSlot;
+    type PresentationBuildSubElements: UserDataSlot;
     /// What a `presentation::ByWith` holds.
-    type PresentationBy: ExtraSlot;
+    type PresentationBy: UserDataSlot;
     /// What a `presentation::ByTLPointWith` holds.
-    type PresentationByTLPoint: ExtraSlot;
+    type PresentationByTLPoint: UserDataSlot;
     /// What a `presentation::CharacterRangeWith` holds.
-    type PresentationCharacterRange: ExtraSlot;
+    type PresentationCharacterRange: UserDataSlot;
     /// What a `presentation::CheckerSlideTransitionWith` holds.
-    type PresentationCheckerSlideTransition: ExtraSlot;
+    type PresentationCheckerSlideTransition: UserDataSlot;
     /// What a `presentation::ChildrenTimeNodeListWith` holds.
-    type PresentationChildrenTimeNodeList: ExtraSlot;
+    type PresentationChildrenTimeNodeList: UserDataSlot;
     /// What a `presentation::CircleSlideTransitionWith` holds.
-    type PresentationCircleSlideTransition: ExtraSlot;
+    type PresentationCircleSlideTransition: UserDataSlot;
     /// What a `presentation::ColorMRUWith` holds.
-    type PresentationColorMRU: ExtraSlot;
+    type PresentationColorMRU: UserDataSlot;
     /// What a `presentation::ColorSchemeMapWith` holds.
-    type PresentationColorSchemeMap: ExtraSlot;
+    type PresentationColorSchemeMap: UserDataSlot;
     /// What a `presentation::ColorSchemeMapOverrideWith` holds.
-    type PresentationColorSchemeMapOverride: ExtraSlot;
+    type PresentationColorSchemeMapOverride: UserDataSlot;
     /// What a `presentation::ColorValueWith` holds.
-    type PresentationColorValue: ExtraSlot;
+    type PresentationColorValue: UserDataSlot;
     /// What a `presentation::CombSlideTransitionWith` holds.
-    type PresentationCombSlideTransition: ExtraSlot;
+    type PresentationCombSlideTransition: UserDataSlot;
     /// What a `presentation::CommandWith` holds.
-    type PresentationCommand: ExtraSlot;
+    type PresentationCommand: UserDataSlot;
     /// What a `presentation::CommentWith` holds.
-    type PresentationComment: ExtraSlot;
+    type PresentationComment: UserDataSlot;
     /// What a `presentation::CommentAuthorWith` holds.
-    type PresentationCommentAuthor: ExtraSlot;
+    type PresentationCommentAuthor: UserDataSlot;
     /// What a `presentation::CommentListWith` holds.
-    type PresentationCommentList: ExtraSlot;
+    type PresentationCommentList: UserDataSlot;
     /// What a `presentation::CommentPositionWith` holds.
-    type PresentationCommentPosition: ExtraSlot;
+    type PresentationCommentPosition: UserDataSlot;
     /// What a `presentation::CommentsTextContentWith` holds.
-    type PresentationCommentsTextContent: ExtraSlot;
+    type PresentationCommentsTextContent: UserDataSlot;
     /// What a `presentation::CommonBehaviorWith` holds.
-    type PresentationCommonBehavior: ExtraSlot;
+    type PresentationCommonBehavior: UserDataSlot;
     /// What a `presentation::CommonMediaNodePropertiesWith` holds.
-    type PresentationCommonMediaNodeProperties: ExtraSlot;
+    type PresentationCommonMediaNodeProperties: UserDataSlot;
     /// What a `presentation::CommonSlideDataWith` holds.
-    type PresentationCommonSlideData: ExtraSlot;
+    type PresentationCommonSlideData: UserDataSlot;
     /// What a `presentation::CommonSlideViewPropertiesWith` holds.
-    type PresentationCommonSlideViewProperties: ExtraSlot;
+    type PresentationCommonSlideViewProperties: UserDataSlot;
     /// What a `presentation::CommonTimeNodePropertiesWith` holds.
-    type PresentationCommonTimeNodeProperties: ExtraSlot;
+    type PresentationCommonTimeNodeProperties: UserDataSlot;
     /// What a `presentation::CommonViewPropertiesWith` holds.
-    type PresentationCommonViewProperties: ExtraSlot;
+    type PresentationCommonViewProperties: UserDataSlot;
     /// What a `presentation::ConditionWith` holds.
-    type PresentationCondition: ExtraSlot;
+    type PresentationCondition: UserDataSlot;
     /// What a `presentation::ConnectionShapeWith` holds.
-    type PresentationConnectionShape: ExtraSlot;
+    type PresentationConnectionShape: UserDataSlot;
     /// What a `presentation::ContentPartWith` holds.
-    type PresentationContentPart: ExtraSlot;
+    type PresentationContentPart: UserDataSlot;
     /// What a `presentation::CoverSlideTransitionWith` holds.
-    type PresentationCoverSlideTransition: ExtraSlot;
+    type PresentationCoverSlideTransition: UserDataSlot;
     /// What a `presentation::CustomShowWith` holds.
-    type PresentationCustomShow: ExtraSlot;
+    type PresentationCustomShow: UserDataSlot;
     /// What a `presentation::CustomShowCustomShowWith` holds.
-    type PresentationCustomShowCustomShow: ExtraSlot;
+    type PresentationCustomShowCustomShow: UserDataSlot;
     /// What a `presentation::CustomerDataWith` holds.
-    type PresentationCustomerData: ExtraSlot;
+    type PresentationCustomerData: UserDataSlot;
     /// What a `presentation::CustomerDataListWith` holds.
-    type PresentationCustomerDataList: ExtraSlot;
+    type PresentationCustomerDataList: UserDataSlot;
     /// What a `presentation::CustomerDataTagsWith` holds.
-    type PresentationCustomerDataTags: ExtraSlot;
+    type PresentationCustomerDataTags: UserDataSlot;
     /// What a `presentation::CutSlideTransitionWith` holds.
-    type PresentationCutSlideTransition: ExtraSlot;
+    type PresentationCutSlideTransition: UserDataSlot;
     /// What a `presentation::DiamondSlideTransitionWith` holds.
-    type PresentationDiamondSlideTransition: ExtraSlot;
+    type PresentationDiamondSlideTransition: UserDataSlot;
     /// What a `presentation::DissolveSlideTransitionWith` holds.
-    type PresentationDissolveSlideTransition: ExtraSlot;
+    type PresentationDissolveSlideTransition: UserDataSlot;
     /// What a `presentation::EmbeddedChartElementWith` holds.
-    type PresentationEmbeddedChartElement: ExtraSlot;
+    type PresentationEmbeddedChartElement: UserDataSlot;
     /// What a `presentation::EmbeddedControlWith` holds.
-    type PresentationEmbeddedControl: ExtraSlot;
+    type PresentationEmbeddedControl: UserDataSlot;
     /// What a `presentation::EmbeddedFontWith` holds.
-    type PresentationEmbeddedFont: ExtraSlot;
+    type PresentationEmbeddedFont: UserDataSlot;
     /// What a `presentation::EmbeddedFontListWith` holds.
-    type PresentationEmbeddedFontList: ExtraSlot;
+    type PresentationEmbeddedFontList: UserDataSlot;
     /// What a `presentation::EmbeddedFontNameWith` holds.
-    type PresentationEmbeddedFontName: ExtraSlot;
+    type PresentationEmbeddedFontName: UserDataSlot;
     /// What a `presentation::EmbeddedObjectOrControlWith` holds.
-    type PresentationEmbeddedObjectOrControl: ExtraSlot;
+    type PresentationEmbeddedObjectOrControl: UserDataSlot;
     /// What a `presentation::EmbeddedObjectsAndControlsWith` holds.
-    type PresentationEmbeddedObjectsAndControls: ExtraSlot;
+    type PresentationEmbeddedObjectsAndControls: UserDataSlot;
     /// What a `presentation::EndConditionsListWith` holds.
-    type PresentationEndConditionsList: ExtraSlot;
+    type PresentationEndConditionsList: UserDataSlot;
     /// What a `presentation::EndSyncWith` holds.
-    type PresentationEndSync: ExtraSlot;
+    type PresentationEndSync: UserDataSlot;
     /// What a `presentation::ExclusiveWith` holds.
-    type PresentationExclusive: ExtraSlot;
+    type PresentationExclusive: UserDataSlot;
     /// What a `presentation::ExtensionWith` holds.
-    type PresentationExtension: ExtraSlot;
+    type PresentationExtension: UserDataSlot;
     /// What a `presentation::ExtensionListWith` holds.
-    type PresentationExtensionList: ExtraSlot;
+    type PresentationExtensionList: UserDataSlot;
     /// What a `presentation::ExtensionListWithModificationFlagWith` holds.
-    type PresentationExtensionListWithModificationFlag: ExtraSlot;
+    type PresentationExtensionListWithModificationFlag: UserDataSlot;
     /// What a `presentation::FadeSlideTransitionWith` holds.
-    type PresentationFadeSlideTransition: ExtraSlot;
+    type PresentationFadeSlideTransition: UserDataSlot;
     /// What a `presentation::FloatValueWith` holds.
-    type PresentationFloatValue: ExtraSlot;
+    type PresentationFloatValue: UserDataSlot;
     /// What a `presentation::FromColorWith` holds.
-    type PresentationFromColor: ExtraSlot;
+    type PresentationFromColor: UserDataSlot;
     /// What a `presentation::FromTLPointWith` holds.
-    type PresentationFromTLPoint: ExtraSlot;
+    type PresentationFromTLPoint: UserDataSlot;
     /// What a `presentation::GraphicElementWith` holds.
-    type PresentationGraphicElement: ExtraSlot;
+    type PresentationGraphicElement: UserDataSlot;
     /// What a `presentation::GraphicFrameWith` holds.
-    type PresentationGraphicFrame: ExtraSlot;
+    type PresentationGraphicFrame: UserDataSlot;
     /// What a `presentation::GridSpacingWith` holds.
-    type PresentationGridSpacing: ExtraSlot;
+    type PresentationGridSpacing: UserDataSlot;
     /// What a `presentation::GroupShapeWith` holds.
-    type PresentationGroupShape: ExtraSlot;
+    type PresentationGroupShape: UserDataSlot;
     /// What a `presentation::GroupShapePropertiesWith` holds.
-    type PresentationGroupShapeProperties: ExtraSlot;
+    type PresentationGroupShapeProperties: UserDataSlot;
     /// What a `presentation::HTMLPublishingPropertiesWith` holds.
-    type PresentationHTMLPublishingProperties: ExtraSlot;
+    type PresentationHTMLPublishingProperties: UserDataSlot;
     /// What a `presentation::HandoutMasterWith` holds.
-    type PresentationHandoutMaster: ExtraSlot;
+    type PresentationHandoutMaster: UserDataSlot;
     /// What a `presentation::HandoutMasterIDWith` holds.
-    type PresentationHandoutMasterID: ExtraSlot;
+    type PresentationHandoutMasterID: UserDataSlot;
     /// What a `presentation::HeaderFooterInformationForASlideMasterWith` holds.
-    type PresentationHeaderFooterInformationForASlideMaster: ExtraSlot;
+    type PresentationHeaderFooterInformationForASlideMaster: UserDataSlot;
     /// What a `presentation::HslWith` holds.
-    type PresentationHsl: ExtraSlot;
+    type PresentationHsl: UserDataSlot;
     /// What a `presentation::InkTargetWith` holds.
-    type PresentationInkTarget: ExtraSlot;
+    type PresentationInkTarget: UserDataSlot;
     /// What a `presentation::IntegerWith` holds.
-    type PresentationInteger: ExtraSlot;
+    type PresentationInteger: UserDataSlot;
     /// What a `presentation::ItalicEmbeddedFontWith` holds.
-    type PresentationItalicEmbeddedFont: ExtraSlot;
+    type PresentationItalicEmbeddedFont: UserDataSlot;
     /// What a `presentation::IterateWith` holds.
-    type PresentationIterate: ExtraSlot;
+    type PresentationIterate: UserDataSlot;
     /// What a `presentation::KinsokuSettingsWith` holds.
-    type PresentationKinsokuSettings: ExtraSlot;
+    type PresentationKinsokuSettings: UserDataSlot;
     /// What a `presentation::KioskSlideShowModeWith` holds.
-    type PresentationKioskSlideShowMode: ExtraSlot;
+    type PresentationKioskSlideShowMode: UserDataSlot;
     /// What a `presentation::LinkedObjectOrControlWith` holds.
-    type PresentationLinkedObjectOrControl: ExtraSlot;
+    type PresentationLinkedObjectOrControl: UserDataSlot;
     /// What a `presentation::ListOfCommentAuthorsWith` holds.
-    type PresentationListOfCommentAuthors: ExtraSlot;
+    type PresentationListOfCommentAuthors: UserDataSlot;
     /// What a `presentation::ListOfControlsWith` holds.
-    type PresentationListOfControls: ExtraSlot;
+    type PresentationListOfControls: UserDataSlot;
     /// What a `presentation::ListOfCustomShowsWith` holds.
-    type PresentationListOfCustomShows: ExtraSlot;
+    type PresentationListOfCustomShows: UserDataSlot;
     /// What a `presentation::ListOfGuidesWith` holds.
-    type PresentationListOfGuides: ExtraSlot;
+    type PresentationListOfGuides: UserDataSlot;
     /// What a `presentation::ListOfHandoutMasterIDsWith` holds.
-    type PresentationListOfHandoutMasterIDs: ExtraSlot;
+    type PresentationListOfHandoutMasterIDs: UserDataSlot;
     /// What a `presentation::ListOfNotesMasterIDsWith` holds.
-    type PresentationListOfNotesMasterIDs: ExtraSlot;
+    type PresentationListOfNotesMasterIDs: UserDataSlot;
     /// What a `presentation::ListOfPresentationSlidesWith` holds.
-    type PresentationListOfPresentationSlides: ExtraSlot;
+    type PresentationListOfPresentationSlides: UserDataSlot;
     /// What a `presentation::ListOfPresentationSlidesOutlineViewSlideListWith` holds.
-    type PresentationListOfPresentationSlidesOutlineViewSlideList: ExtraSlot;
+    type PresentationListOfPresentationSlidesOutlineViewSlideList: UserDataSlot;
     /// What a `presentation::ListOfSlideIDsWith` holds.
-    type PresentationListOfSlideIDs: ExtraSlot;
+    type PresentationListOfSlideIDs: UserDataSlot;
     /// What a `presentation::ListOfSlideLayoutsWith` holds.
-    type PresentationListOfSlideLayouts: ExtraSlot;
+    type PresentationListOfSlideLayouts: UserDataSlot;
     /// What a `presentation::ListOfSlideMasterIDsWith` holds.
-    type PresentationListOfSlideMasterIDs: ExtraSlot;
+    type PresentationListOfSlideMasterIDs: UserDataSlot;
     /// What a `presentation::ModificationVerifierWith` holds.
-    type PresentationModificationVerifier: ExtraSlot;
+    type PresentationModificationVerifier: UserDataSlot;
     /// What a `presentation::NewsflashSlideTransitionWith` holds.
-    type PresentationNewsflashSlideTransition: ExtraSlot;
+    type PresentationNewsflashSlideTransition: UserDataSlot;
     /// What a `presentation::NextConditionsListWith` holds.
-    type PresentationNextConditionsList: ExtraSlot;
+    type PresentationNextConditionsList: UserDataSlot;
     /// What a `presentation::NonVisualConnectorShapeDrawingPropertiesWith` holds.
-    type PresentationNonVisualConnectorShapeDrawingProperties: ExtraSlot;
+    type PresentationNonVisualConnectorShapeDrawingProperties: UserDataSlot;
     /// What a `presentation::NonVisualDrawingPropertiesWith` holds.
-    type PresentationNonVisualDrawingProperties: ExtraSlot;
+    type PresentationNonVisualDrawingProperties: UserDataSlot;
     /// What a `presentation::NonVisualDrawingPropertiesForAShapeWith` holds.
-    type PresentationNonVisualDrawingPropertiesForAShape: ExtraSlot;
+    type PresentationNonVisualDrawingPropertiesForAShape: UserDataSlot;
     /// What a `presentation::NonVisualGraphicFrameDrawingPropertiesWith` holds.
-    type PresentationNonVisualGraphicFrameDrawingProperties: ExtraSlot;
+    type PresentationNonVisualGraphicFrameDrawingProperties: UserDataSlot;
     /// What a `presentation::NonVisualGroupShapeDrawingPropertiesWith` holds.
-    type PresentationNonVisualGroupShapeDrawingProperties: ExtraSlot;
+    type PresentationNonVisualGroupShapeDrawingProperties: UserDataSlot;
     /// What a `presentation::NonVisualPictureDrawingPropertiesWith` holds.
-    type PresentationNonVisualPictureDrawingProperties: ExtraSlot;
+    type PresentationNonVisualPictureDrawingProperties: UserDataSlot;
     /// What a `presentation::NonVisualPropertiesWith` holds.
-    type PresentationNonVisualProperties: ExtraSlot;
+    type PresentationNonVisualProperties: UserDataSlot;
     /// What a `presentation::NonVisualPropertiesForAConnectionShapeWith` holds.
-    type PresentationNonVisualPropertiesForAConnectionShape: ExtraSlot;
+    type PresentationNonVisualPropertiesForAConnectionShape: UserDataSlot;
     /// What a `presentation::NonVisualPropertiesForAGraphicFrameWith` holds.
-    type PresentationNonVisualPropertiesForAGraphicFrame: ExtraSlot;
+    type PresentationNonVisualPropertiesForAGraphicFrame: UserDataSlot;
     /// What a `presentation::NonVisualPropertiesForAGroupShapeWith` holds.
-    type PresentationNonVisualPropertiesForAGroupShape: ExtraSlot;
+    type PresentationNonVisualPropertiesForAGroupShape: UserDataSlot;
     /// What a `presentation::NonVisualPropertiesForAPictureWith` holds.
-    type PresentationNonVisualPropertiesForAPicture: ExtraSlot;
+    type PresentationNonVisualPropertiesForAPicture: UserDataSlot;
     /// What a `presentation::NonVisualPropertiesForAShapeWith` holds.
-    type PresentationNonVisualPropertiesForAShape: ExtraSlot;
+    type PresentationNonVisualPropertiesForAShape: UserDataSlot;
     /// What a `presentation::NormalViewPropertiesWith` holds.
-    type PresentationNormalViewProperties: ExtraSlot;
+    type PresentationNormalViewProperties: UserDataSlot;
     /// What a `presentation::NormalViewRestoredLeftPropertiesWith` holds.
-    type PresentationNormalViewRestoredLeftProperties: ExtraSlot;
+    type PresentationNormalViewRestoredLeftProperties: UserDataSlot;
     /// What a `presentation::NormalViewRestoredTopPropertiesWith` holds.
-    type PresentationNormalViewRestoredTopProperties: ExtraSlot;
+    type PresentationNormalViewRestoredTopProperties: UserDataSlot;
     /// What a `presentation::NotesMasterWith` holds.
-    type PresentationNotesMaster: ExtraSlot;
+    type PresentationNotesMaster: UserDataSlot;
     /// What a `presentation::NotesMasterIDWith` holds.
-    type PresentationNotesMasterID: ExtraSlot;
+    type PresentationNotesMasterID: UserDataSlot;
     /// What a `presentation::NotesSlideWith` holds.
-    type PresentationNotesSlide: ExtraSlot;
+    type PresentationNotesSlide: UserDataSlot;
     /// What a `presentation::NotesSlideSizeWith` holds.
-    type PresentationNotesSlideSize: ExtraSlot;
+    type PresentationNotesSlideSize: UserDataSlot;
     /// What a `presentation::NotesTextStyleWith` holds.
-    type PresentationNotesTextStyle: ExtraSlot;
+    type PresentationNotesTextStyle: UserDataSlot;
     /// What a `presentation::NotesTextViewPropertiesWith` holds.
-    type PresentationNotesTextViewProperties: ExtraSlot;
+    type PresentationNotesTextViewProperties: UserDataSlot;
     /// What a `presentation::NotesViewPropertiesWith` holds.
-    type PresentationNotesViewProperties: ExtraSlot;
+    type PresentationNotesViewProperties: UserDataSlot;
     /// What a `presentation::OutlineViewPropertiesWith` holds.
-    type PresentationOutlineViewProperties: ExtraSlot;
+    type PresentationOutlineViewProperties: UserDataSlot;
     /// What a `presentation::ParagraphTextRangeWith` holds.
-    type PresentationParagraphTextRange: ExtraSlot;
+    type PresentationParagraphTextRange: UserDataSlot;
     /// What a `presentation::ParallelTimeNodeWith` holds.
-    type PresentationParallelTimeNode: ExtraSlot;
+    type PresentationParallelTimeNode: UserDataSlot;
     /// What a `presentation::PenColorForSlideShowWith` holds.
-    type PresentationPenColorForSlideShow: ExtraSlot;
+    type PresentationPenColorForSlideShow: UserDataSlot;
     /// What a `presentation::PhotoAlbumInformationWith` holds.
-    type PresentationPhotoAlbumInformation: ExtraSlot;
+    type PresentationPhotoAlbumInformation: UserDataSlot;
     /// What a `presentation::PictureWith` holds.
-    type PresentationPicture: ExtraSlot;
+    type PresentationPicture: UserDataSlot;
     /// What a `presentation::PictureFillWith` holds.
-    type PresentationPictureFill: ExtraSlot;
+    type PresentationPictureFill: UserDataSlot;
     /// What a `presentation::PlaceholderShapeWith` holds.
-    type PresentationPlaceholderShape: ExtraSlot;
+    type PresentationPlaceholderShape: UserDataSlot;
     /// What a `presentation::PlusSlideTransitionWith` holds.
-    type PresentationPlusSlideTransition: ExtraSlot;
+    type PresentationPlusSlideTransition: UserDataSlot;
     /// What a `presentation::PresentationWith` holds.
-    type PresentationPresentation: ExtraSlot;
+    type PresentationPresentation: UserDataSlot;
     /// What a `presentation::PresentationDefaultTextStyleWith` holds.
-    type PresentationPresentationDefaultTextStyle: ExtraSlot;
+    type PresentationPresentationDefaultTextStyle: UserDataSlot;
     /// What a `presentation::PresentationSlideWith` holds.
-    type PresentationPresentationSlide: ExtraSlot;
+    type PresentationPresentationSlide: UserDataSlot;
     /// What a `presentation::PresentationSlideOutlineViewSlideEntryWith` holds.
-    type PresentationPresentationSlideOutlineViewSlideEntry: ExtraSlot;
+    type PresentationPresentationSlideOutlineViewSlideEntry: UserDataSlot;
     /// What a `presentation::PresentationSlideSizeWith` holds.
-    type PresentationPresentationSlideSize: ExtraSlot;
+    type PresentationPresentationSlideSize: UserDataSlot;
     /// What a `presentation::PresentationSlideSlideWith` holds.
-    type PresentationPresentationSlideSlide: ExtraSlot;
+    type PresentationPresentationSlideSlide: UserDataSlot;
     /// What a `presentation::PresentationWidePropertiesWith` holds.
-    type PresentationPresentationWideProperties: ExtraSlot;
+    type PresentationPresentationWideProperties: UserDataSlot;
     /// What a `presentation::PresentationWideShowPropertiesWith` holds.
-    type PresentationPresentationWideShowProperties: ExtraSlot;
+    type PresentationPresentationWideShowProperties: UserDataSlot;
     /// What a `presentation::PresentationWideViewPropertiesWith` holds.
-    type PresentationPresentationWideViewProperties: ExtraSlot;
+    type PresentationPresentationWideViewProperties: UserDataSlot;
     /// What a `presentation::PresenterSlideShowModeWith` holds.
-    type PresentationPresenterSlideShowMode: ExtraSlot;
+    type PresentationPresenterSlideShowMode: UserDataSlot;
     /// What a `presentation::PreviousConditionsListWith` holds.
-    type PresentationPreviousConditionsList: ExtraSlot;
+    type PresentationPreviousConditionsList: UserDataSlot;
     /// What a `presentation::PrintingPropertiesWith` holds.
-    type PresentationPrintingProperties: ExtraSlot;
+    type PresentationPrintingProperties: UserDataSlot;
     /// What a `presentation::ProgrammableExtensibilityTagWith` holds.
-    type PresentationProgrammableExtensibilityTag: ExtraSlot;
+    type PresentationProgrammableExtensibilityTag: UserDataSlot;
     /// What a `presentation::ProgrammableTabListWith` holds.
-    type PresentationProgrammableTabList: ExtraSlot;
+    type PresentationProgrammableTabList: UserDataSlot;
     /// What a `presentation::ProgressWith` holds.
-    type PresentationProgress: ExtraSlot;
+    type PresentationProgress: UserDataSlot;
     /// What a `presentation::PullSlideTransitionWith` holds.
-    type PresentationPullSlideTransition: ExtraSlot;
+    type PresentationPullSlideTransition: UserDataSlot;
     /// What a `presentation::PushSlideTransitionWith` holds.
-    type PresentationPushSlideTransition: ExtraSlot;
+    type PresentationPushSlideTransition: UserDataSlot;
     /// What a `presentation::RandomBarSlideTransitionWith` holds.
-    type PresentationRandomBarSlideTransition: ExtraSlot;
+    type PresentationRandomBarSlideTransition: UserDataSlot;
     /// What a `presentation::RandomSlideTransitionWith` holds.
-    type PresentationRandomSlideTransition: ExtraSlot;
+    type PresentationRandomSlideTransition: UserDataSlot;
     /// What a `presentation::RegularEmbeddedFontWith` holds.
-    type PresentationRegularEmbeddedFont: ExtraSlot;
+    type PresentationRegularEmbeddedFont: UserDataSlot;
     /// What a `presentation::RgbWith` holds.
-    type PresentationRgb: ExtraSlot;
+    type PresentationRgb: UserDataSlot;
     /// What a `presentation::RotationCenterWith` holds.
-    type PresentationRotationCenter: ExtraSlot;
+    type PresentationRotationCenter: UserDataSlot;
     /// What a `presentation::RuntimeNodeTriggerChoiceWith` holds.
-    type PresentationRuntimeNodeTriggerChoice: ExtraSlot;
+    type PresentationRuntimeNodeTriggerChoice: UserDataSlot;
     /// What a `presentation::SequenceTimeNodeWith` holds.
-    type PresentationSequenceTimeNode: ExtraSlot;
+    type PresentationSequenceTimeNode: UserDataSlot;
     /// What a `presentation::SetTimeNodeBehaviorWith` holds.
-    type PresentationSetTimeNodeBehavior: ExtraSlot;
+    type PresentationSetTimeNodeBehavior: UserDataSlot;
     /// What a `presentation::ShapeWith` holds.
-    type PresentationShape: ExtraSlot;
+    type PresentationShape: UserDataSlot;
     /// What a `presentation::ShapePropertiesWith` holds.
-    type PresentationShapeProperties: ExtraSlot;
+    type PresentationShapeProperties: UserDataSlot;
     /// What a `presentation::ShapeStyleWith` holds.
-    type PresentationShapeStyle: ExtraSlot;
+    type PresentationShapeStyle: UserDataSlot;
     /// What a `presentation::ShapeTargetWith` holds.
-    type PresentationShapeTarget: ExtraSlot;
+    type PresentationShapeTarget: UserDataSlot;
     /// What a `presentation::ShapeTextBodyWith` holds.
-    type PresentationShapeTextBody: ExtraSlot;
+    type PresentationShapeTextBody: UserDataSlot;
     /// What a `presentation::ShapeTreeWith` holds.
-    type PresentationShapeTree: ExtraSlot;
+    type PresentationShapeTree: UserDataSlot;
     /// What a `presentation::SlideBackgroundWith` holds.
-    type PresentationSlideBackground: ExtraSlot;
+    type PresentationSlideBackground: UserDataSlot;
     /// What a `presentation::SlideIDWith` holds.
-    type PresentationSlideID: ExtraSlot;
+    type PresentationSlideID: UserDataSlot;
     /// What a `presentation::SlideLayoutWith` holds.
-    type PresentationSlideLayout: ExtraSlot;
+    type PresentationSlideLayout: UserDataSlot;
     /// What a `presentation::SlideLayoutIdWith` holds.
-    type PresentationSlideLayoutId: ExtraSlot;
+    type PresentationSlideLayoutId: UserDataSlot;
     /// What a `presentation::SlideMasterWith` holds.
-    type PresentationSlideMaster: ExtraSlot;
+    type PresentationSlideMaster: UserDataSlot;
     /// What a `presentation::SlideMasterBodyTextStyleWith` holds.
-    type PresentationSlideMasterBodyTextStyle: ExtraSlot;
+    type PresentationSlideMasterBodyTextStyle: UserDataSlot;
     /// What a `presentation::SlideMasterIDWith` holds.
-    type PresentationSlideMasterID: ExtraSlot;
+    type PresentationSlideMasterID: UserDataSlot;
     /// What a `presentation::SlideMasterOtherTextStyleWith` holds.
-    type PresentationSlideMasterOtherTextStyle: ExtraSlot;
+    type PresentationSlideMasterOtherTextStyle: UserDataSlot;
     /// What a `presentation::SlideMasterTextStylesWith` holds.
-    type PresentationSlideMasterTextStyles: ExtraSlot;
+    type PresentationSlideMasterTextStyles: UserDataSlot;
     /// What a `presentation::SlideMasterTitleTextStyleWith` holds.
-    type PresentationSlideMasterTitleTextStyle: ExtraSlot;
+    type PresentationSlideMasterTitleTextStyle: UserDataSlot;
     /// What a `presentation::SlideRangeWith` holds.
-    type PresentationSlideRange: ExtraSlot;
+    type PresentationSlideRange: UserDataSlot;
     /// What a `presentation::SlideSorterViewPropertiesWith` holds.
-    type PresentationSlideSorterViewProperties: ExtraSlot;
+    type PresentationSlideSorterViewProperties: UserDataSlot;
     /// What a `presentation::SlideSynchronizationPropertiesWith` holds.
-    type PresentationSlideSynchronizationProperties: ExtraSlot;
+    type PresentationSlideSynchronizationProperties: UserDataSlot;
     /// What a `presentation::SlideTargetWith` holds.
-    type PresentationSlideTarget: ExtraSlot;
+    type PresentationSlideTarget: UserDataSlot;
     /// What a `presentation::SlideTimingInformationWith` holds.
-    type PresentationSlideTimingInformation: ExtraSlot;
+    type PresentationSlideTimingInformation: UserDataSlot;
     /// What a `presentation::SlideTransitionForASlideLayoutWith` holds.
-    type PresentationSlideTransitionForASlideLayout: ExtraSlot;
+    type PresentationSlideTransitionForASlideLayout: UserDataSlot;
     /// What a `presentation::SlideViewPropertiesWith` holds.
-    type PresentationSlideViewProperties: ExtraSlot;
+    type PresentationSlideViewProperties: UserDataSlot;
     /// What a `presentation::SmartTagsWith` holds.
-    type PresentationSmartTags: ExtraSlot;
+    type PresentationSmartTags: UserDataSlot;
     /// What a `presentation::SoundWith` holds.
-    type PresentationSound: ExtraSlot;
+    type PresentationSound: UserDataSlot;
     /// What a `presentation::SoundActionWith` holds.
-    type PresentationSoundAction: ExtraSlot;
+    type PresentationSoundAction: UserDataSlot;
     /// What a `presentation::SoundTargetWith` holds.
-    type PresentationSoundTarget: ExtraSlot;
+    type PresentationSoundTarget: UserDataSlot;
     /// What a `presentation::SplitSlideTransitionWith` holds.
-    type PresentationSplitSlideTransition: ExtraSlot;
+    type PresentationSplitSlideTransition: UserDataSlot;
     /// What a `presentation::StartConditionsListWith` holds.
-    type PresentationStartConditionsList: ExtraSlot;
+    type PresentationStartConditionsList: UserDataSlot;
     /// What a `presentation::StartSoundActionWith` holds.
-    type PresentationStartSoundAction: ExtraSlot;
+    type PresentationStartSoundAction: UserDataSlot;
     /// What a `presentation::StopSoundActionWith` holds.
-    type PresentationStopSoundAction: ExtraSlot;
+    type PresentationStopSoundAction: UserDataSlot;
     /// What a `presentation::StringValueWith` holds.
-    type PresentationStringValue: ExtraSlot;
+    type PresentationStringValue: UserDataSlot;
     /// What a `presentation::StripsSlideTransitionWith` holds.
-    type PresentationStripsSlideTransition: ExtraSlot;
+    type PresentationStripsSlideTransition: UserDataSlot;
     /// What a `presentation::SubTimeNodesListWith` holds.
-    type PresentationSubTimeNodesList: ExtraSlot;
+    type PresentationSubTimeNodesList: UserDataSlot;
     /// What a `presentation::SubshapeWith` holds.
-    type PresentationSubshape: ExtraSlot;
+    type PresentationSubshape: UserDataSlot;
     /// What a `presentation::TargetElementWith` holds.
-    type PresentationTargetElement: ExtraSlot;
+    type PresentationTargetElement: UserDataSlot;
     /// What a `presentation::TemplateEffectsTmplWith` holds.
-    type PresentationTemplateEffectsTmpl: ExtraSlot;
+    type PresentationTemplateEffectsTmpl: UserDataSlot;
     /// What a `presentation::TemplateEffectsTmplLstWith` holds.
-    type PresentationTemplateEffectsTmplLst: ExtraSlot;
+    type PresentationTemplateEffectsTmplLst: UserDataSlot;
     /// What a `presentation::TextElementWith` holds.
-    type PresentationTextElement: ExtraSlot;
+    type PresentationTextElement: UserDataSlot;
     /// What a `presentation::TimeAbsoluteWith` holds.
-    type PresentationTimeAbsolute: ExtraSlot;
+    type PresentationTimeAbsolute: UserDataSlot;
     /// What a `presentation::TimeAnimateValueWith` holds.
-    type PresentationTimeAnimateValue: ExtraSlot;
+    type PresentationTimeAnimateValue: UserDataSlot;
     /// What a `presentation::TimeAnimatedValueListWith` holds.
-    type PresentationTimeAnimatedValueList: ExtraSlot;
+    type PresentationTimeAnimatedValueList: UserDataSlot;
     /// What a `presentation::TimeNodeWith` holds.
-    type PresentationTimeNode: ExtraSlot;
+    type PresentationTimeNode: UserDataSlot;
     /// What a `presentation::TimeNodeListWith` holds.
-    type PresentationTimeNodeList: ExtraSlot;
+    type PresentationTimeNodeList: UserDataSlot;
     /// What a `presentation::TimePercentageWith` holds.
-    type PresentationTimePercentage: ExtraSlot;
+    type PresentationTimePercentage: UserDataSlot;
     /// What a `presentation::ToWith` holds.
-    type PresentationTo: ExtraSlot;
+    type PresentationTo: UserDataSlot;
     /// What a `presentation::ToColorWith` holds.
-    type PresentationToColor: ExtraSlot;
+    type PresentationToColor: UserDataSlot;
     /// What a `presentation::ToTLAnimVariantWith` holds.
-    type PresentationToTLAnimVariant: ExtraSlot;
+    type PresentationToTLAnimVariant: UserDataSlot;
     /// What a `presentation::ValueWith` holds.
-    type PresentationValue: ExtraSlot;
+    type PresentationValue: UserDataSlot;
     /// What a `presentation::VideoWith` holds.
-    type PresentationVideo: ExtraSlot;
+    type PresentationVideo: UserDataSlot;
     /// What a `presentation::ViewOriginWith` holds.
-    type PresentationViewOrigin: ExtraSlot;
+    type PresentationViewOrigin: UserDataSlot;
     /// What a `presentation::ViewScaleWith` holds.
-    type PresentationViewScale: ExtraSlot;
+    type PresentationViewScale: UserDataSlot;
     /// What a `presentation::WebPropertiesWith` holds.
-    type PresentationWebProperties: ExtraSlot;
+    type PresentationWebProperties: UserDataSlot;
     /// What a `presentation::WedgeSlideTransitionWith` holds.
-    type PresentationWedgeSlideTransition: ExtraSlot;
+    type PresentationWedgeSlideTransition: UserDataSlot;
     /// What a `presentation::WheelSlideTransitionWith` holds.
-    type PresentationWheelSlideTransition: ExtraSlot;
+    type PresentationWheelSlideTransition: UserDataSlot;
     /// What a `presentation::WipeSlideTransitionWith` holds.
-    type PresentationWipeSlideTransition: ExtraSlot;
+    type PresentationWipeSlideTransition: UserDataSlot;
     /// What a `presentation::XfrmWith` holds.
-    type PresentationXfrm: ExtraSlot;
+    type PresentationXfrm: UserDataSlot;
     /// What a `presentation::ZoomSlideTransitionWith` holds.
-    type PresentationZoomSlideTransition: ExtraSlot;
+    type PresentationZoomSlideTransition: UserDataSlot;
     /// What a `spreadsheet::AlignmentWith` holds.
-    type SpreadsheetAlignment: ExtraSlot;
+    type SpreadsheetAlignment: UserDataSlot;
     /// What a `spreadsheet::AuthorWith` holds.
-    type SpreadsheetAuthor: ExtraSlot;
+    type SpreadsheetAuthor: UserDataSlot;
     /// What a `spreadsheet::AuthorsWith` holds.
-    type SpreadsheetAuthors: ExtraSlot;
+    type SpreadsheetAuthors: UserDataSlot;
     /// What a `spreadsheet::AutoFilterColumnWith` holds.
-    type SpreadsheetAutoFilterColumn: ExtraSlot;
+    type SpreadsheetAutoFilterColumn: UserDataSlot;
     /// What a `spreadsheet::AutoFilterSettingsWith` holds.
-    type SpreadsheetAutoFilterSettings: ExtraSlot;
+    type SpreadsheetAutoFilterSettings: UserDataSlot;
     /// What a `spreadsheet::AutoSortScopeWith` holds.
-    type SpreadsheetAutoSortScope: ExtraSlot;
+    type SpreadsheetAutoSortScope: UserDataSlot;
     /// What a `spreadsheet::BackgroundColorWith` holds.
-    type SpreadsheetBackgroundColor: ExtraSlot;
+    type SpreadsheetBackgroundColor: UserDataSlot;
     /// What a `spreadsheet::BackgroundImageWith` holds.
-    type SpreadsheetBackgroundImage: ExtraSlot;
+    type SpreadsheetBackgroundImage: UserDataSlot;
     /// What a `spreadsheet::BoldWith` holds.
-    type SpreadsheetBold: ExtraSlot;
+    type SpreadsheetBold: UserDataSlot;
     /// What a `spreadsheet::BooleanWith` holds.
-    type SpreadsheetBoolean: ExtraSlot;
+    type SpreadsheetBoolean: UserDataSlot;
     /// What a `spreadsheet::BorderWith` holds.
-    type SpreadsheetBorder: ExtraSlot;
+    type SpreadsheetBorder: UserDataSlot;
     /// What a `spreadsheet::BordersWith` holds.
-    type SpreadsheetBorders: ExtraSlot;
+    type SpreadsheetBorders: UserDataSlot;
     /// What a `spreadsheet::BottomBorderWith` holds.
-    type SpreadsheetBottomBorder: ExtraSlot;
+    type SpreadsheetBottomBorder: UserDataSlot;
     /// What a `spreadsheet::BreakWith` holds.
-    type SpreadsheetBreak: ExtraSlot;
+    type SpreadsheetBreak: UserDataSlot;
     /// What a `spreadsheet::CachedWorksheetDataWith` holds.
-    type SpreadsheetCachedWorksheetData: ExtraSlot;
+    type SpreadsheetCachedWorksheetData: UserDataSlot;
     /// What a `spreadsheet::CalculatedColumnFormulaWith` holds.
-    type SpreadsheetCalculatedColumnFormula: ExtraSlot;
+    type SpreadsheetCalculatedColumnFormula: UserDataSlot;
     /// What a `spreadsheet::CalculatedItemWith` holds.
-    type SpreadsheetCalculatedItem: ExtraSlot;
+    type SpreadsheetCalculatedItem: UserDataSlot;
     /// What a `spreadsheet::CalculatedItemsWith` holds.
-    type SpreadsheetCalculatedItems: ExtraSlot;
+    type SpreadsheetCalculatedItems: UserDataSlot;
     /// What a `spreadsheet::CalculatedMemberWith` holds.
-    type SpreadsheetCalculatedMember: ExtraSlot;
+    type SpreadsheetCalculatedMember: UserDataSlot;
     /// What a `spreadsheet::CalculatedMembersWith` holds.
-    type SpreadsheetCalculatedMembers: ExtraSlot;
+    type SpreadsheetCalculatedMembers: UserDataSlot;
     /// What a `spreadsheet::CalculationChainInfoWith` holds.
-    type SpreadsheetCalculationChainInfo: ExtraSlot;
+    type SpreadsheetCalculationChainInfo: UserDataSlot;
     /// What a `spreadsheet::CalculationPropertiesWith` holds.
-    type SpreadsheetCalculationProperties: ExtraSlot;
+    type SpreadsheetCalculationProperties: UserDataSlot;
     /// What a `spreadsheet::CellWith` holds.
-    type SpreadsheetCell: ExtraSlot;
+    type SpreadsheetCell: UserDataSlot;
     /// What a `spreadsheet::CellCalcCellWith` holds.
-    type SpreadsheetCellCalcCell: ExtraSlot;
+    type SpreadsheetCellCalcCell: UserDataSlot;
     /// What a `spreadsheet::CellFormatsWith` holds.
-    type SpreadsheetCellFormats: ExtraSlot;
+    type SpreadsheetCellFormats: UserDataSlot;
     /// What a `spreadsheet::CellMetadataWith` holds.
-    type SpreadsheetCellMetadata: ExtraSlot;
+    type SpreadsheetCellMetadata: UserDataSlot;
     /// What a `spreadsheet::CellPropertiesWith` holds.
-    type SpreadsheetCellProperties: ExtraSlot;
+    type SpreadsheetCellProperties: UserDataSlot;
     /// What a `spreadsheet::CellSmartTagWith` holds.
-    type SpreadsheetCellSmartTag: ExtraSlot;
+    type SpreadsheetCellSmartTag: UserDataSlot;
     /// What a `spreadsheet::CellSmartTagsWith` holds.
-    type SpreadsheetCellSmartTags: ExtraSlot;
+    type SpreadsheetCellSmartTags: UserDataSlot;
     /// What a `spreadsheet::CellStyleWith` holds.
-    type SpreadsheetCellStyle: ExtraSlot;
+    type SpreadsheetCellStyle: UserDataSlot;
     /// What a `spreadsheet::CellStylesWith` holds.
-    type SpreadsheetCellStyles: ExtraSlot;
+    type SpreadsheetCellStyles: UserDataSlot;
     /// What a `spreadsheet::CellValueWith` holds.
-    type SpreadsheetCellValue: ExtraSlot;
+    type SpreadsheetCellValue: UserDataSlot;
     /// What a `spreadsheet::CellWatchItemWith` holds.
-    type SpreadsheetCellWatchItem: ExtraSlot;
+    type SpreadsheetCellWatchItem: UserDataSlot;
     /// What a `spreadsheet::CellWatchItemsWith` holds.
-    type SpreadsheetCellWatchItems: ExtraSlot;
+    type SpreadsheetCellWatchItems: UserDataSlot;
     /// What a `spreadsheet::CharacterSetWith` holds.
-    type SpreadsheetCharacterSet: ExtraSlot;
+    type SpreadsheetCharacterSet: UserDataSlot;
     /// What a `spreadsheet::CharacterValueWith` holds.
-    type SpreadsheetCharacterValue: ExtraSlot;
+    type SpreadsheetCharacterValue: UserDataSlot;
     /// What a `spreadsheet::CharacterValueXStringElementWith` holds.
-    type SpreadsheetCharacterValueXStringElement: ExtraSlot;
+    type SpreadsheetCharacterValueXStringElement: UserDataSlot;
     /// What a `spreadsheet::ChartSheetWith` holds.
-    type SpreadsheetChartSheet: ExtraSlot;
+    type SpreadsheetChartSheet: UserDataSlot;
     /// What a `spreadsheet::ChartSheetPageSetupWith` holds.
-    type SpreadsheetChartSheetPageSetup: ExtraSlot;
+    type SpreadsheetChartSheetPageSetup: UserDataSlot;
     /// What a `spreadsheet::ChartSheetPropertiesWith` holds.
-    type SpreadsheetChartSheetProperties: ExtraSlot;
+    type SpreadsheetChartSheetProperties: UserDataSlot;
     /// What a `spreadsheet::ChartSheetProtectionWith` holds.
-    type SpreadsheetChartSheetProtection: ExtraSlot;
+    type SpreadsheetChartSheetProtection: UserDataSlot;
     /// What a `spreadsheet::ChartSheetViewWith` holds.
-    type SpreadsheetChartSheetView: ExtraSlot;
+    type SpreadsheetChartSheetView: UserDataSlot;
     /// What a `spreadsheet::ChartSheetViewsWith` holds.
-    type SpreadsheetChartSheetViews: ExtraSlot;
+    type SpreadsheetChartSheetViews: UserDataSlot;
     /// What a `spreadsheet::ColorFilterCriteriaWith` holds.
-    type SpreadsheetColorFilterCriteria: ExtraSlot;
+    type SpreadsheetColorFilterCriteria: UserDataSlot;
     /// What a `spreadsheet::ColorIndexesWith` holds.
-    type SpreadsheetColorIndexes: ExtraSlot;
+    type SpreadsheetColorIndexes: UserDataSlot;
     /// What a `spreadsheet::ColorScaleWith` holds.
-    type SpreadsheetColorScale: ExtraSlot;
+    type SpreadsheetColorScale: UserDataSlot;
     /// What a `spreadsheet::ColorsWith` holds.
-    type SpreadsheetColors: ExtraSlot;
+    type SpreadsheetColors: UserDataSlot;
     /// What a `spreadsheet::ColumnFieldsWith` holds.
-    type SpreadsheetColumnFields: ExtraSlot;
+    type SpreadsheetColumnFields: UserDataSlot;
     /// What a `spreadsheet::ColumnInformationWith` holds.
-    type SpreadsheetColumnInformation: ExtraSlot;
+    type SpreadsheetColumnInformation: UserDataSlot;
     /// What a `spreadsheet::ColumnItemsWith` holds.
-    type SpreadsheetColumnItems: ExtraSlot;
+    type SpreadsheetColumnItems: UserDataSlot;
     /// What a `spreadsheet::ColumnOLAPHierarchiesWith` holds.
-    type SpreadsheetColumnOLAPHierarchies: ExtraSlot;
+    type SpreadsheetColumnOLAPHierarchies: UserDataSlot;
     /// What a `spreadsheet::ColumnOLAPHierarchyReferencesWith` holds.
-    type SpreadsheetColumnOLAPHierarchyReferences: ExtraSlot;
+    type SpreadsheetColumnOLAPHierarchyReferences: UserDataSlot;
     /// What a `spreadsheet::ColumnWidthFormattingWith` holds.
-    type SpreadsheetColumnWidthFormatting: ExtraSlot;
+    type SpreadsheetColumnWidthFormatting: UserDataSlot;
     /// What a `spreadsheet::ColumnXMLPropertiesWith` holds.
-    type SpreadsheetColumnXMLProperties: ExtraSlot;
+    type SpreadsheetColumnXMLProperties: UserDataSlot;
     /// What a `spreadsheet::CommentWith` holds.
-    type SpreadsheetComment: ExtraSlot;
+    type SpreadsheetComment: UserDataSlot;
     /// What a `spreadsheet::CommentPropertiesWith` holds.
-    type SpreadsheetCommentProperties: ExtraSlot;
+    type SpreadsheetCommentProperties: UserDataSlot;
     /// What a `spreadsheet::CommentTextWith` holds.
-    type SpreadsheetCommentText: ExtraSlot;
+    type SpreadsheetCommentText: UserDataSlot;
     /// What a `spreadsheet::CommentsWith` holds.
-    type SpreadsheetComments: ExtraSlot;
+    type SpreadsheetComments: UserDataSlot;
     /// What a `spreadsheet::CondenseWith` holds.
-    type SpreadsheetCondense: ExtraSlot;
+    type SpreadsheetCondense: UserDataSlot;
     /// What a `spreadsheet::ConditionalFormatValueObjectWith` holds.
-    type SpreadsheetConditionalFormatValueObject: ExtraSlot;
+    type SpreadsheetConditionalFormatValueObject: UserDataSlot;
     /// What a `spreadsheet::ConditionalFormatsWith` holds.
-    type SpreadsheetConditionalFormats: ExtraSlot;
+    type SpreadsheetConditionalFormats: UserDataSlot;
     /// What a `spreadsheet::ConditionalFormattingWith` holds.
-    type SpreadsheetConditionalFormatting: ExtraSlot;
+    type SpreadsheetConditionalFormatting: UserDataSlot;
     /// What a `spreadsheet::ConditionalFormattingConditionalFormatWith` holds.
-    type SpreadsheetConditionalFormattingConditionalFormat: ExtraSlot;
+    type SpreadsheetConditionalFormattingConditionalFormat: UserDataSlot;
     /// What a `spreadsheet::ConditionalFormattingRuleWith` holds.
-    type SpreadsheetConditionalFormattingRule: ExtraSlot;
+    type SpreadsheetConditionalFormattingRule: UserDataSlot;
     /// What a `spreadsheet::ConnectionWith` holds.
-    type SpreadsheetConnection: ExtraSlot;
+    type SpreadsheetConnection: UserDataSlot;
     /// What a `spreadsheet::ConnectionsWith` holds.
-    type SpreadsheetConnections: ExtraSlot;
+    type SpreadsheetConnections: UserDataSlot;
     /// What a `spreadsheet::ConsolidationSourceWith` holds.
-    type SpreadsheetConsolidationSource: ExtraSlot;
+    type SpreadsheetConsolidationSource: UserDataSlot;
     /// What a `spreadsheet::CustomChartSheetViewWith` holds.
-    type SpreadsheetCustomChartSheetView: ExtraSlot;
+    type SpreadsheetCustomChartSheetView: UserDataSlot;
     /// What a `spreadsheet::CustomChartSheetViewsWith` holds.
-    type SpreadsheetCustomChartSheetViews: ExtraSlot;
+    type SpreadsheetCustomChartSheetViews: UserDataSlot;
     /// What a `spreadsheet::CustomFilterCriteriaWith` holds.
-    type SpreadsheetCustomFilterCriteria: ExtraSlot;
+    type SpreadsheetCustomFilterCriteria: UserDataSlot;
     /// What a `spreadsheet::CustomFiltersWith` holds.
-    type SpreadsheetCustomFilters: ExtraSlot;
+    type SpreadsheetCustomFilters: UserDataSlot;
     /// What a `spreadsheet::CustomPropertiesWith` holds.
-    type SpreadsheetCustomProperties: ExtraSlot;
+    type SpreadsheetCustomProperties: UserDataSlot;
     /// What a `spreadsheet::CustomPropertyWith` holds.
-    type SpreadsheetCustomProperty: ExtraSlot;
+    type SpreadsheetCustomProperty: UserDataSlot;
     /// What a `spreadsheet::CustomSheetViewWith` holds.
-    type SpreadsheetCustomSheetView: ExtraSlot;
+    type SpreadsheetCustomSheetView: UserDataSlot;
     /// What a `spreadsheet::CustomSheetViewsWith` holds.
-    type SpreadsheetCustomSheetViews: ExtraSlot;
+    type SpreadsheetCustomSheetViews: UserDataSlot;
     /// What a `spreadsheet::CustomWorkbookViewWith` holds.
-    type SpreadsheetCustomWorkbookView: ExtraSlot;
+    type SpreadsheetCustomWorkbookView: UserDataSlot;
     /// What a `spreadsheet::CustomWorkbookViewsWith` holds.
-    type SpreadsheetCustomWorkbookViews: ExtraSlot;
+    type SpreadsheetCustomWorkbookViews: UserDataSlot;
     /// What a `spreadsheet::DDEConnectionWith` holds.
-    type SpreadsheetDDEConnection: ExtraSlot;
+    type SpreadsheetDDEConnection: UserDataSlot;
     /// What a `spreadsheet::DDEItemDefinitionWith` holds.
-    type SpreadsheetDDEItemDefinition: ExtraSlot;
+    type SpreadsheetDDEItemDefinition: UserDataSlot;
     /// What a `spreadsheet::DDEItemsCollectionWith` holds.
-    type SpreadsheetDDEItemsCollection: ExtraSlot;
+    type SpreadsheetDDEItemsCollection: UserDataSlot;
     /// What a `spreadsheet::DDELinkValueWith` holds.
-    type SpreadsheetDDELinkValue: ExtraSlot;
+    type SpreadsheetDDELinkValue: UserDataSlot;
     /// What a `spreadsheet::DDENameValuesWith` holds.
-    type SpreadsheetDDENameValues: ExtraSlot;
+    type SpreadsheetDDENameValues: UserDataSlot;
     /// What a `spreadsheet::DataBarWith` holds.
-    type SpreadsheetDataBar: ExtraSlot;
+    type SpreadsheetDataBar: UserDataSlot;
     /// What a `spreadsheet::DataBarColorWith` holds.
-    type SpreadsheetDataBarColor: ExtraSlot;
+    type SpreadsheetDataBarColor: UserDataSlot;
     /// What a `spreadsheet::DataConsolidateWith` holds.
-    type SpreadsheetDataConsolidate: ExtraSlot;
+    type SpreadsheetDataConsolidate: UserDataSlot;
     /// What a `spreadsheet::DataConsolidationReferenceWith` holds.
-    type SpreadsheetDataConsolidationReference: ExtraSlot;
+    type SpreadsheetDataConsolidationReference: UserDataSlot;
     /// What a `spreadsheet::DataConsolidationReferencesWith` holds.
-    type SpreadsheetDataConsolidationReferences: ExtraSlot;
+    type SpreadsheetDataConsolidationReferences: UserDataSlot;
     /// What a `spreadsheet::DataFieldItemWith` holds.
-    type SpreadsheetDataFieldItem: ExtraSlot;
+    type SpreadsheetDataFieldItem: UserDataSlot;
     /// What a `spreadsheet::DataFieldsWith` holds.
-    type SpreadsheetDataFields: ExtraSlot;
+    type SpreadsheetDataFields: UserDataSlot;
     /// What a `spreadsheet::DataValidationWith` holds.
-    type SpreadsheetDataValidation: ExtraSlot;
+    type SpreadsheetDataValidation: UserDataSlot;
     /// What a `spreadsheet::DataValidationsWith` holds.
-    type SpreadsheetDataValidations: ExtraSlot;
+    type SpreadsheetDataValidations: UserDataSlot;
     /// What a `spreadsheet::DatabasePropertiesWith` holds.
-    type SpreadsheetDatabaseProperties: ExtraSlot;
+    type SpreadsheetDatabaseProperties: UserDataSlot;
     /// What a `spreadsheet::DateGroupingWith` holds.
-    type SpreadsheetDateGrouping: ExtraSlot;
+    type SpreadsheetDateGrouping: UserDataSlot;
     /// What a `spreadsheet::DateTimeWith` holds.
-    type SpreadsheetDateTime: ExtraSlot;
+    type SpreadsheetDateTime: UserDataSlot;
     /// What a `spreadsheet::DefinedNameWith` holds.
-    type SpreadsheetDefinedName: ExtraSlot;
+    type SpreadsheetDefinedName: UserDataSlot;
     /// What a `spreadsheet::DefinedNameExternalDefinedNameWith` holds.
-    type SpreadsheetDefinedNameExternalDefinedName: ExtraSlot;
+    type SpreadsheetDefinedNameExternalDefinedName: UserDataSlot;
     /// What a `spreadsheet::DefinedNamesWith` holds.
-    type SpreadsheetDefinedNames: ExtraSlot;
+    type SpreadsheetDefinedNames: UserDataSlot;
     /// What a `spreadsheet::DeletedFieldWith` holds.
-    type SpreadsheetDeletedField: ExtraSlot;
+    type SpreadsheetDeletedField: UserDataSlot;
     /// What a `spreadsheet::DeletedFieldsWith` holds.
-    type SpreadsheetDeletedFields: ExtraSlot;
+    type SpreadsheetDeletedFields: UserDataSlot;
     /// What a `spreadsheet::DiagonalWith` holds.
-    type SpreadsheetDiagonal: ExtraSlot;
+    type SpreadsheetDiagonal: UserDataSlot;
     /// What a `spreadsheet::DialogSheetWith` holds.
-    type SpreadsheetDialogSheet: ExtraSlot;
+    type SpreadsheetDialogSheet: UserDataSlot;
     /// What a `spreadsheet::DiscreteGroupingPropertiesWith` holds.
-    type SpreadsheetDiscreteGroupingProperties: ExtraSlot;
+    type SpreadsheetDiscreteGroupingProperties: UserDataSlot;
     /// What a `spreadsheet::DrawingWith` holds.
-    type SpreadsheetDrawing: ExtraSlot;
+    type SpreadsheetDrawing: UserDataSlot;
     /// What a `spreadsheet_drawing::AbsoluteAnchorShapeSizeWith` holds.
-    type SpreadsheetDrawingAbsoluteAnchorShapeSize: ExtraSlot;
+    type SpreadsheetDrawingAbsoluteAnchorShapeSize: UserDataSlot;
     /// What a `spreadsheet_drawing::ClientDataWith` holds.
-    type SpreadsheetDrawingClientData: ExtraSlot;
+    type SpreadsheetDrawingClientData: UserDataSlot;
     /// What a `spreadsheet_drawing::ColWith` holds.
-    type SpreadsheetDrawingCol: ExtraSlot;
+    type SpreadsheetDrawingCol: UserDataSlot;
     /// What a `spreadsheet_drawing::ColumnOffsetWith` holds.
-    type SpreadsheetDrawingColumnOffset: ExtraSlot;
+    type SpreadsheetDrawingColumnOffset: UserDataSlot;
     /// What a `spreadsheet_drawing::ConnectionNonVisualShapePropertiesWith` holds.
-    type SpreadsheetDrawingConnectionNonVisualShapeProperties: ExtraSlot;
+    type SpreadsheetDrawingConnectionNonVisualShapeProperties: UserDataSlot;
     /// What a `spreadsheet_drawing::ConnectionShapeWith` holds.
-    type SpreadsheetDrawingConnectionShape: ExtraSlot;
+    type SpreadsheetDrawingConnectionShape: UserDataSlot;
     /// What a `spreadsheet_drawing::ContentPartWith` holds.
-    type SpreadsheetDrawingContentPart: ExtraSlot;
+    type SpreadsheetDrawingContentPart: UserDataSlot;
     /// What a `spreadsheet_drawing::EndingAnchorPointWith` holds.
-    type SpreadsheetDrawingEndingAnchorPoint: ExtraSlot;
+    type SpreadsheetDrawingEndingAnchorPoint: UserDataSlot;
     /// What a `spreadsheet_drawing::GraphicFrameWith` holds.
-    type SpreadsheetDrawingGraphicFrame: ExtraSlot;
+    type SpreadsheetDrawingGraphicFrame: UserDataSlot;
     /// What a `spreadsheet_drawing::GroupShapeWith` holds.
-    type SpreadsheetDrawingGroupShape: ExtraSlot;
+    type SpreadsheetDrawingGroupShape: UserDataSlot;
     /// What a `spreadsheet_drawing::GroupShapePropertiesWith` holds.
-    type SpreadsheetDrawingGroupShapeProperties: ExtraSlot;
+    type SpreadsheetDrawingGroupShapeProperties: UserDataSlot;
     /// What a `spreadsheet_drawing::NonVisualConnectorShapeDrawingPropertiesWith` holds.
-    type SpreadsheetDrawingNonVisualConnectorShapeDrawingProperties: ExtraSlot;
+    type SpreadsheetDrawingNonVisualConnectorShapeDrawingProperties: UserDataSlot;
     /// What a `spreadsheet_drawing::NonVisualDrawingPropertiesWith` holds.
-    type SpreadsheetDrawingNonVisualDrawingProperties: ExtraSlot;
+    type SpreadsheetDrawingNonVisualDrawingProperties: UserDataSlot;
     /// What a `spreadsheet_drawing::NonVisualGraphicFrameDrawingPropertiesWith` holds.
-    type SpreadsheetDrawingNonVisualGraphicFrameDrawingProperties: ExtraSlot;
+    type SpreadsheetDrawingNonVisualGraphicFrameDrawingProperties: UserDataSlot;
     /// What a `spreadsheet_drawing::NonVisualGroupShapeDrawingPropertiesWith` holds.
-    type SpreadsheetDrawingNonVisualGroupShapeDrawingProperties: ExtraSlot;
+    type SpreadsheetDrawingNonVisualGroupShapeDrawingProperties: UserDataSlot;
     /// What a `spreadsheet_drawing::NonVisualPictureDrawingPropertiesWith` holds.
-    type SpreadsheetDrawingNonVisualPictureDrawingProperties: ExtraSlot;
+    type SpreadsheetDrawingNonVisualPictureDrawingProperties: UserDataSlot;
     /// What a `spreadsheet_drawing::NonVisualPropertiesForAConnectionShapeWith` holds.
-    type SpreadsheetDrawingNonVisualPropertiesForAConnectionShape: ExtraSlot;
+    type SpreadsheetDrawingNonVisualPropertiesForAConnectionShape: UserDataSlot;
     /// What a `spreadsheet_drawing::NonVisualPropertiesForAGraphicFrameWith` holds.
-    type SpreadsheetDrawingNonVisualPropertiesForAGraphicFrame: ExtraSlot;
+    type SpreadsheetDrawingNonVisualPropertiesForAGraphicFrame: UserDataSlot;
     /// What a `spreadsheet_drawing::NonVisualPropertiesForAGroupShapeWith` holds.
-    type SpreadsheetDrawingNonVisualPropertiesForAGroupShape: ExtraSlot;
+    type SpreadsheetDrawingNonVisualPropertiesForAGroupShape: UserDataSlot;
     /// What a `spreadsheet_drawing::NonVisualPropertiesForAPictureWith` holds.
-    type SpreadsheetDrawingNonVisualPropertiesForAPicture: ExtraSlot;
+    type SpreadsheetDrawingNonVisualPropertiesForAPicture: UserDataSlot;
     /// What a `spreadsheet_drawing::NonVisualPropertiesForAShapeWith` holds.
-    type SpreadsheetDrawingNonVisualPropertiesForAShape: ExtraSlot;
+    type SpreadsheetDrawingNonVisualPropertiesForAShape: UserDataSlot;
     /// What a `spreadsheet_drawing::OneCellAnchorShapeSizeWith` holds.
-    type SpreadsheetDrawingOneCellAnchorShapeSize: ExtraSlot;
+    type SpreadsheetDrawingOneCellAnchorShapeSize: UserDataSlot;
     /// What a `spreadsheet_drawing::PictureWith` holds.
-    type SpreadsheetDrawingPicture: ExtraSlot;
+    type SpreadsheetDrawingPicture: UserDataSlot;
     /// What a `spreadsheet_drawing::PictureFillWith` holds.
-    type SpreadsheetDrawingPictureFill: ExtraSlot;
+    type SpreadsheetDrawingPictureFill: UserDataSlot;
     /// What a `spreadsheet_drawing::PositionWith` holds.
-    type SpreadsheetDrawingPosition: ExtraSlot;
+    type SpreadsheetDrawingPosition: UserDataSlot;
     /// What a `spreadsheet::DrawingReferenceInHeaderFooterWith` holds.
-    type SpreadsheetDrawingReferenceInHeaderFooter: ExtraSlot;
+    type SpreadsheetDrawingReferenceInHeaderFooter: UserDataSlot;
     /// What a `spreadsheet_drawing::RowWith` holds.
-    type SpreadsheetDrawingRow: ExtraSlot;
+    type SpreadsheetDrawingRow: UserDataSlot;
     /// What a `spreadsheet_drawing::RowOffsetWith` holds.
-    type SpreadsheetDrawingRowOffset: ExtraSlot;
+    type SpreadsheetDrawingRowOffset: UserDataSlot;
     /// What a `spreadsheet_drawing::ShapeWith` holds.
-    type SpreadsheetDrawingShape: ExtraSlot;
+    type SpreadsheetDrawingShape: UserDataSlot;
     /// What a `spreadsheet_drawing::ShapeExtentWith` holds.
-    type SpreadsheetDrawingShapeExtent: ExtraSlot;
+    type SpreadsheetDrawingShapeExtent: UserDataSlot;
     /// What a `spreadsheet_drawing::ShapePropertiesWith` holds.
-    type SpreadsheetDrawingShapeProperties: ExtraSlot;
+    type SpreadsheetDrawingShapeProperties: UserDataSlot;
     /// What a `spreadsheet_drawing::ShapeStyleWith` holds.
-    type SpreadsheetDrawingShapeStyle: ExtraSlot;
+    type SpreadsheetDrawingShapeStyle: UserDataSlot;
     /// What a `spreadsheet_drawing::ShapeTextBodyWith` holds.
-    type SpreadsheetDrawingShapeTextBody: ExtraSlot;
+    type SpreadsheetDrawingShapeTextBody: UserDataSlot;
     /// What a `spreadsheet_drawing::StartingAnchorPointWith` holds.
-    type SpreadsheetDrawingStartingAnchorPoint: ExtraSlot;
+    type SpreadsheetDrawingStartingAnchorPoint: UserDataSlot;
     /// What a `spreadsheet_drawing::TwoCellAnchorShapeSizeWith` holds.
-    type SpreadsheetDrawingTwoCellAnchorShapeSize: ExtraSlot;
+    type SpreadsheetDrawingTwoCellAnchorShapeSize: UserDataSlot;
     /// What a `spreadsheet_drawing::WorksheetDrawingWith` holds.
-    type SpreadsheetDrawingWorksheetDrawing: ExtraSlot;
+    type SpreadsheetDrawingWorksheetDrawing: UserDataSlot;
     /// What a `spreadsheet_drawing::XfrmWith` holds.
-    type SpreadsheetDrawingXfrm: ExtraSlot;
+    type SpreadsheetDrawingXfrm: UserDataSlot;
     /// What a `spreadsheet::DynamicFilterWith` holds.
-    type SpreadsheetDynamicFilter: ExtraSlot;
+    type SpreadsheetDynamicFilter: UserDataSlot;
     /// What a `spreadsheet::EmbeddedControlWith` holds.
-    type SpreadsheetEmbeddedControl: ExtraSlot;
+    type SpreadsheetEmbeddedControl: UserDataSlot;
     /// What a `spreadsheet::EmbeddedControlPropertiesWith` holds.
-    type SpreadsheetEmbeddedControlProperties: ExtraSlot;
+    type SpreadsheetEmbeddedControlProperties: UserDataSlot;
     /// What a `spreadsheet::EmbeddedControlsWith` holds.
-    type SpreadsheetEmbeddedControls: ExtraSlot;
+    type SpreadsheetEmbeddedControls: UserDataSlot;
     /// What a `spreadsheet::EmbeddedObjectWith` holds.
-    type SpreadsheetEmbeddedObject: ExtraSlot;
+    type SpreadsheetEmbeddedObject: UserDataSlot;
     /// What a `spreadsheet::EmbeddedObjectPropertiesWith` holds.
-    type SpreadsheetEmbeddedObjectProperties: ExtraSlot;
+    type SpreadsheetEmbeddedObjectProperties: UserDataSlot;
     /// What a `spreadsheet::EmbeddedObjectSizeWith` holds.
-    type SpreadsheetEmbeddedObjectSize: ExtraSlot;
+    type SpreadsheetEmbeddedObjectSize: UserDataSlot;
     /// What a `spreadsheet::EmbeddedObjectsWith` holds.
-    type SpreadsheetEmbeddedObjects: ExtraSlot;
+    type SpreadsheetEmbeddedObjects: UserDataSlot;
     /// What a `spreadsheet::EntriesWith` holds.
-    type SpreadsheetEntries: ExtraSlot;
+    type SpreadsheetEntries: UserDataSlot;
     /// What a `spreadsheet::ErrorValueWith` holds.
-    type SpreadsheetErrorValue: ExtraSlot;
+    type SpreadsheetErrorValue: UserDataSlot;
     /// What a `spreadsheet::EvenPageFooterWith` holds.
-    type SpreadsheetEvenPageFooter: ExtraSlot;
+    type SpreadsheetEvenPageFooter: UserDataSlot;
     /// What a `spreadsheet::EvenPageHeaderWith` holds.
-    type SpreadsheetEvenPageHeader: ExtraSlot;
+    type SpreadsheetEvenPageHeader: UserDataSlot;
     /// What a `spreadsheet::ExtendWith` holds.
-    type SpreadsheetExtend: ExtraSlot;
+    type SpreadsheetExtend: UserDataSlot;
     /// What a `spreadsheet::ExtensionWith` holds.
-    type SpreadsheetExtension: ExtraSlot;
+    type SpreadsheetExtension: UserDataSlot;
     /// What a `spreadsheet::ExternalCellDataWith` holds.
-    type SpreadsheetExternalCellData: ExtraSlot;
+    type SpreadsheetExternalCellData: UserDataSlot;
     /// What a `spreadsheet::ExternalReferenceWith` holds.
-    type SpreadsheetExternalReference: ExtraSlot;
+    type SpreadsheetExternalReference: UserDataSlot;
     /// What a `spreadsheet::ExternalReferenceExternalLinkWith` holds.
-    type SpreadsheetExternalReferenceExternalLink: ExtraSlot;
+    type SpreadsheetExternalReferenceExternalLink: UserDataSlot;
     /// What a `spreadsheet::ExternalReferencesWith` holds.
-    type SpreadsheetExternalReferences: ExtraSlot;
+    type SpreadsheetExternalReferences: UserDataSlot;
     /// What a `spreadsheet::ExternalSheetDataSetWith` holds.
-    type SpreadsheetExternalSheetDataSet: ExtraSlot;
+    type SpreadsheetExternalSheetDataSet: UserDataSlot;
     /// What a `spreadsheet::ExternalWorkbookWith` holds.
-    type SpreadsheetExternalWorkbook: ExtraSlot;
+    type SpreadsheetExternalWorkbook: UserDataSlot;
     /// What a `spreadsheet::FieldWith` holds.
-    type SpreadsheetField: ExtraSlot;
+    type SpreadsheetField: UserDataSlot;
     /// What a `spreadsheet::FieldGroupPropertiesWith` holds.
-    type SpreadsheetFieldGroupProperties: ExtraSlot;
+    type SpreadsheetFieldGroupProperties: UserDataSlot;
     /// What a `spreadsheet::FieldItemsWith` holds.
-    type SpreadsheetFieldItems: ExtraSlot;
+    type SpreadsheetFieldItems: UserDataSlot;
     /// What a `spreadsheet::FieldsWith` holds.
-    type SpreadsheetFields: ExtraSlot;
+    type SpreadsheetFields: UserDataSlot;
     /// What a `spreadsheet::FieldsUsageWith` holds.
-    type SpreadsheetFieldsUsage: ExtraSlot;
+    type SpreadsheetFieldsUsage: UserDataSlot;
     /// What a `spreadsheet::FileRecoveryPropertiesWith` holds.
-    type SpreadsheetFileRecoveryProperties: ExtraSlot;
+    type SpreadsheetFileRecoveryProperties: UserDataSlot;
     /// What a `spreadsheet::FileSharingWith` holds.
-    type SpreadsheetFileSharing: ExtraSlot;
+    type SpreadsheetFileSharing: UserDataSlot;
     /// What a `spreadsheet::FileVersionWith` holds.
-    type SpreadsheetFileVersion: ExtraSlot;
+    type SpreadsheetFileVersion: UserDataSlot;
     /// What a `spreadsheet::FillWith` holds.
-    type SpreadsheetFill: ExtraSlot;
+    type SpreadsheetFill: UserDataSlot;
     /// What a `spreadsheet::FillsWith` holds.
-    type SpreadsheetFills: ExtraSlot;
+    type SpreadsheetFills: UserDataSlot;
     /// What a `spreadsheet::FilterWith` holds.
-    type SpreadsheetFilter: ExtraSlot;
+    type SpreadsheetFilter: UserDataSlot;
     /// What a `spreadsheet::FilterCriteriaWith` holds.
-    type SpreadsheetFilterCriteria: ExtraSlot;
+    type SpreadsheetFilterCriteria: UserDataSlot;
     /// What a `spreadsheet::FiltersWith` holds.
-    type SpreadsheetFilters: ExtraSlot;
+    type SpreadsheetFilters: UserDataSlot;
     /// What a `spreadsheet::FirstPageFooterWith` holds.
-    type SpreadsheetFirstPageFooter: ExtraSlot;
+    type SpreadsheetFirstPageFooter: UserDataSlot;
     /// What a `spreadsheet::FirstPageHeaderWith` holds.
-    type SpreadsheetFirstPageHeader: ExtraSlot;
+    type SpreadsheetFirstPageHeader: UserDataSlot;
     /// What a `spreadsheet::FontWith` holds.
-    type SpreadsheetFont: ExtraSlot;
+    type SpreadsheetFont: UserDataSlot;
     /// What a `spreadsheet::FontFamilyWith` holds.
-    type SpreadsheetFontFamily: ExtraSlot;
+    type SpreadsheetFontFamily: UserDataSlot;
     /// What a `spreadsheet::FontFamilyIntPropertyWith` holds.
-    type SpreadsheetFontFamilyIntProperty: ExtraSlot;
+    type SpreadsheetFontFamilyIntProperty: UserDataSlot;
     /// What a `spreadsheet::FontNameWith` holds.
-    type SpreadsheetFontName: ExtraSlot;
+    type SpreadsheetFontName: UserDataSlot;
     /// What a `spreadsheet::FontRFontWith` holds.
-    type SpreadsheetFontRFont: ExtraSlot;
+    type SpreadsheetFontRFont: UserDataSlot;
     /// What a `spreadsheet::FontSizeWith` holds.
-    type SpreadsheetFontSize: ExtraSlot;
+    type SpreadsheetFontSize: UserDataSlot;
     /// What a `spreadsheet::FontsWith` holds.
-    type SpreadsheetFonts: ExtraSlot;
+    type SpreadsheetFonts: UserDataSlot;
     /// What a `spreadsheet::ForegroundColorWith` holds.
-    type SpreadsheetForegroundColor: ExtraSlot;
+    type SpreadsheetForegroundColor: UserDataSlot;
     /// What a `spreadsheet::FormatWith` holds.
-    type SpreadsheetFormat: ExtraSlot;
+    type SpreadsheetFormat: UserDataSlot;
     /// What a `spreadsheet::FormatsWith` holds.
-    type SpreadsheetFormats: ExtraSlot;
+    type SpreadsheetFormats: UserDataSlot;
     /// What a `spreadsheet::FormattingWith` holds.
-    type SpreadsheetFormatting: ExtraSlot;
+    type SpreadsheetFormatting: UserDataSlot;
     /// What a `spreadsheet::FormattingRecordsWith` holds.
-    type SpreadsheetFormattingRecords: ExtraSlot;
+    type SpreadsheetFormattingRecords: UserDataSlot;
     /// What a `spreadsheet::FormulaWith` holds.
-    type SpreadsheetFormula: ExtraSlot;
+    type SpreadsheetFormula: UserDataSlot;
     /// What a `spreadsheet::Formula1With` holds.
-    type SpreadsheetFormula1: ExtraSlot;
+    type SpreadsheetFormula1: UserDataSlot;
     /// What a `spreadsheet::Formula2With` holds.
-    type SpreadsheetFormula2: ExtraSlot;
+    type SpreadsheetFormula2: UserDataSlot;
     /// What a `spreadsheet::FormulaFWith` holds.
-    type SpreadsheetFormulaF: ExtraSlot;
+    type SpreadsheetFormulaF: UserDataSlot;
     /// What a `spreadsheet::FunctionGroupWith` holds.
-    type SpreadsheetFunctionGroup: ExtraSlot;
+    type SpreadsheetFunctionGroup: UserDataSlot;
     /// What a `spreadsheet::FunctionGroupsWith` holds.
-    type SpreadsheetFunctionGroups: ExtraSlot;
+    type SpreadsheetFunctionGroups: UserDataSlot;
     /// What a `spreadsheet::FutureFeatureDataStorageAreaWith` holds.
-    type SpreadsheetFutureFeatureDataStorageArea: ExtraSlot;
+    type SpreadsheetFutureFeatureDataStorageArea: UserDataSlot;
     /// What a `spreadsheet::FutureMetadataWith` holds.
-    type SpreadsheetFutureMetadata: ExtraSlot;
+    type SpreadsheetFutureMetadata: UserDataSlot;
     /// What a `spreadsheet::FutureMetadataBlockWith` holds.
-    type SpreadsheetFutureMetadataBlock: ExtraSlot;
+    type SpreadsheetFutureMetadataBlock: UserDataSlot;
     /// What a `spreadsheet::GenericObjectLinkConnectionWith` holds.
-    type SpreadsheetGenericObjectLinkConnection: ExtraSlot;
+    type SpreadsheetGenericObjectLinkConnection: UserDataSlot;
     /// What a `spreadsheet::GradientWith` holds.
-    type SpreadsheetGradient: ExtraSlot;
+    type SpreadsheetGradient: UserDataSlot;
     /// What a `spreadsheet::GradientStopWith` holds.
-    type SpreadsheetGradientStop: ExtraSlot;
+    type SpreadsheetGradientStop: UserDataSlot;
     /// What a `spreadsheet::HeaderWith` holds.
-    type SpreadsheetHeader: ExtraSlot;
+    type SpreadsheetHeader: UserDataSlot;
     /// What a `spreadsheet::HeaderFooterSettingsWith` holds.
-    type SpreadsheetHeaderFooterSettings: ExtraSlot;
+    type SpreadsheetHeaderFooterSettings: UserDataSlot;
     /// What a `spreadsheet::HorizontalInnerBordersWith` holds.
-    type SpreadsheetHorizontalInnerBorders: ExtraSlot;
+    type SpreadsheetHorizontalInnerBorders: UserDataSlot;
     /// What a `spreadsheet::HyperlinkWith` holds.
-    type SpreadsheetHyperlink: ExtraSlot;
+    type SpreadsheetHyperlink: UserDataSlot;
     /// What a `spreadsheet::HyperlinksWith` holds.
-    type SpreadsheetHyperlinks: ExtraSlot;
+    type SpreadsheetHyperlinks: UserDataSlot;
     /// What a `spreadsheet::IconFilterWith` holds.
-    type SpreadsheetIconFilter: ExtraSlot;
+    type SpreadsheetIconFilter: UserDataSlot;
     /// What a `spreadsheet::IconSetWith` holds.
-    type SpreadsheetIconSet: ExtraSlot;
+    type SpreadsheetIconSet: UserDataSlot;
     /// What a `spreadsheet::IgnoredErrorWith` holds.
-    type SpreadsheetIgnoredError: ExtraSlot;
+    type SpreadsheetIgnoredError: UserDataSlot;
     /// What a `spreadsheet::IgnoredErrorsWith` holds.
-    type SpreadsheetIgnoredErrors: ExtraSlot;
+    type SpreadsheetIgnoredErrors: UserDataSlot;
     /// What a `spreadsheet::InputCellsWith` holds.
-    type SpreadsheetInputCells: ExtraSlot;
+    type SpreadsheetInputCells: UserDataSlot;
     /// What a `spreadsheet::ItalicWith` holds.
-    type SpreadsheetItalic: ExtraSlot;
+    type SpreadsheetItalic: UserDataSlot;
     /// What a `spreadsheet::KPIMDXMetadataWith` holds.
-    type SpreadsheetKPIMDXMetadata: ExtraSlot;
+    type SpreadsheetKPIMDXMetadata: UserDataSlot;
     /// What a `spreadsheet::LeadingEdgeBorderLeftWith` holds.
-    type SpreadsheetLeadingEdgeBorderLeft: ExtraSlot;
+    type SpreadsheetLeadingEdgeBorderLeft: UserDataSlot;
     /// What a `spreadsheet::LeadingEdgeBorderStartWith` holds.
-    type SpreadsheetLeadingEdgeBorderStart: ExtraSlot;
+    type SpreadsheetLeadingEdgeBorderStart: UserDataSlot;
     /// What a `spreadsheet::LegacyDrawingReferenceWith` holds.
-    type SpreadsheetLegacyDrawingReference: ExtraSlot;
+    type SpreadsheetLegacyDrawingReference: UserDataSlot;
     /// What a `spreadsheet::LegacyDrawingReferenceInHeaderFooterWith` holds.
-    type SpreadsheetLegacyDrawingReferenceInHeaderFooter: ExtraSlot;
+    type SpreadsheetLegacyDrawingReferenceInHeaderFooter: UserDataSlot;
     /// What a `spreadsheet::ListOfCommentsWith` holds.
-    type SpreadsheetListOfComments: ExtraSlot;
+    type SpreadsheetListOfComments: UserDataSlot;
     /// What a `spreadsheet::MDXMetadataInformationWith` holds.
-    type SpreadsheetMDXMetadataInformation: ExtraSlot;
+    type SpreadsheetMDXMetadataInformation: UserDataSlot;
     /// What a `spreadsheet::MDXMetadataRecordWith` holds.
-    type SpreadsheetMDXMetadataRecord: ExtraSlot;
+    type SpreadsheetMDXMetadataRecord: UserDataSlot;
     /// What a `spreadsheet::MRUColorsWith` holds.
-    type SpreadsheetMRUColors: ExtraSlot;
+    type SpreadsheetMRUColors: UserDataSlot;
     /// What a `spreadsheet::MainWith` holds.
-    type SpreadsheetMain: ExtraSlot;
+    type SpreadsheetMain: UserDataSlot;
     /// What a `spreadsheet::MemberWith` holds.
-    type SpreadsheetMember: ExtraSlot;
+    type SpreadsheetMember: UserDataSlot;
     /// What a `spreadsheet::MemberPropertiesMapWith` holds.
-    type SpreadsheetMemberPropertiesMap: ExtraSlot;
+    type SpreadsheetMemberPropertiesMap: UserDataSlot;
     /// What a `spreadsheet::MemberPropertyIndexWith` holds.
-    type SpreadsheetMemberPropertyIndex: ExtraSlot;
+    type SpreadsheetMemberPropertyIndex: UserDataSlot;
     /// What a `spreadsheet::MemberPropertyMDXMetadataWith` holds.
-    type SpreadsheetMemberPropertyMDXMetadata: ExtraSlot;
+    type SpreadsheetMemberPropertyMDXMetadata: UserDataSlot;
     /// What a `spreadsheet::MemberUniqueNameIndexWith` holds.
-    type SpreadsheetMemberUniqueNameIndex: ExtraSlot;
+    type SpreadsheetMemberUniqueNameIndex: UserDataSlot;
     /// What a `spreadsheet::MembersWith` holds.
-    type SpreadsheetMembers: ExtraSlot;
+    type SpreadsheetMembers: UserDataSlot;
     /// What a `spreadsheet::MergeCellsWith` holds.
-    type SpreadsheetMergeCells: ExtraSlot;
+    type SpreadsheetMergeCells: UserDataSlot;
     /// What a `spreadsheet::MergedCellWith` holds.
-    type SpreadsheetMergedCell: ExtraSlot;
+    type SpreadsheetMergedCell: UserDataSlot;
     /// What a `spreadsheet::MetadataWith` holds.
-    type SpreadsheetMetadata: ExtraSlot;
+    type SpreadsheetMetadata: UserDataSlot;
     /// What a `spreadsheet::MetadataBlockWith` holds.
-    type SpreadsheetMetadataBlock: ExtraSlot;
+    type SpreadsheetMetadataBlock: UserDataSlot;
     /// What a `spreadsheet::MetadataRecordWith` holds.
-    type SpreadsheetMetadataRecord: ExtraSlot;
+    type SpreadsheetMetadataRecord: UserDataSlot;
     /// What a `spreadsheet::MetadataStringStoreWith` holds.
-    type SpreadsheetMetadataStringStore: ExtraSlot;
+    type SpreadsheetMetadataStringStore: UserDataSlot;
     /// What a `spreadsheet::MetadataTypeInformationWith` holds.
-    type SpreadsheetMetadataTypeInformation: ExtraSlot;
+    type SpreadsheetMetadataTypeInformation: UserDataSlot;
     /// What a `spreadsheet::MetadataTypesCollectionWith` holds.
-    type SpreadsheetMetadataTypesCollection: ExtraSlot;
+    type SpreadsheetMetadataTypesCollection: UserDataSlot;
     /// What a `spreadsheet::NamedLinksWith` holds.
-    type SpreadsheetNamedLinks: ExtraSlot;
+    type SpreadsheetNamedLinks: UserDataSlot;
     /// What a `spreadsheet::NewCellDataWith` holds.
-    type SpreadsheetNewCellData: ExtraSlot;
+    type SpreadsheetNewCellData: UserDataSlot;
     /// What a `spreadsheet::NewFormattingInformationWith` holds.
-    type SpreadsheetNewFormattingInformation: ExtraSlot;
+    type SpreadsheetNewFormattingInformation: UserDataSlot;
     /// What a `spreadsheet::NoValueWith` holds.
-    type SpreadsheetNoValue: ExtraSlot;
+    type SpreadsheetNoValue: UserDataSlot;
     /// What a `spreadsheet::NoValueTableMissingWith` holds.
-    type SpreadsheetNoValueTableMissing: ExtraSlot;
+    type SpreadsheetNoValueTableMissing: UserDataSlot;
     /// What a `spreadsheet::NumberFormatWith` holds.
-    type SpreadsheetNumberFormat: ExtraSlot;
+    type SpreadsheetNumberFormat: UserDataSlot;
     /// What a `spreadsheet::NumberFormatsWith` holds.
-    type SpreadsheetNumberFormats: ExtraSlot;
+    type SpreadsheetNumberFormats: UserDataSlot;
     /// What a `spreadsheet::NumericWith` holds.
-    type SpreadsheetNumeric: ExtraSlot;
+    type SpreadsheetNumeric: UserDataSlot;
     /// What a `spreadsheet::OLAPDimensionWith` holds.
-    type SpreadsheetOLAPDimension: ExtraSlot;
+    type SpreadsheetOLAPDimension: UserDataSlot;
     /// What a `spreadsheet::OLAPDimensionsWith` holds.
-    type SpreadsheetOLAPDimensions: ExtraSlot;
+    type SpreadsheetOLAPDimensions: UserDataSlot;
     /// What a `spreadsheet::OLAPGroupWith` holds.
-    type SpreadsheetOLAPGroup: ExtraSlot;
+    type SpreadsheetOLAPGroup: UserDataSlot;
     /// What a `spreadsheet::OLAPGroupItemsWith` holds.
-    type SpreadsheetOLAPGroupItems: ExtraSlot;
+    type SpreadsheetOLAPGroupItems: UserDataSlot;
     /// What a `spreadsheet::OLAPGroupMemberWith` holds.
-    type SpreadsheetOLAPGroupMember: ExtraSlot;
+    type SpreadsheetOLAPGroupMember: UserDataSlot;
     /// What a `spreadsheet::OLAPGroupMembersWith` holds.
-    type SpreadsheetOLAPGroupMembers: ExtraSlot;
+    type SpreadsheetOLAPGroupMembers: UserDataSlot;
     /// What a `spreadsheet::OLAPGroupingLevelsGroupLevelWith` holds.
-    type SpreadsheetOLAPGroupingLevelsGroupLevel: ExtraSlot;
+    type SpreadsheetOLAPGroupingLevelsGroupLevel: UserDataSlot;
     /// What a `spreadsheet::OLAPGroupingLevelsGroupLevelsWith` holds.
-    type SpreadsheetOLAPGroupingLevelsGroupLevels: ExtraSlot;
+    type SpreadsheetOLAPGroupingLevelsGroupLevels: UserDataSlot;
     /// What a `spreadsheet::OLAPHierarchyWith` holds.
-    type SpreadsheetOLAPHierarchy: ExtraSlot;
+    type SpreadsheetOLAPHierarchy: UserDataSlot;
     /// What a `spreadsheet::OLAPKPIWith` holds.
-    type SpreadsheetOLAPKPI: ExtraSlot;
+    type SpreadsheetOLAPKPI: UserDataSlot;
     /// What a `spreadsheet::OLAPKPIsWith` holds.
-    type SpreadsheetOLAPKPIs: ExtraSlot;
+    type SpreadsheetOLAPKPIs: UserDataSlot;
     /// What a `spreadsheet::OLAPLevelGroupsWith` holds.
-    type SpreadsheetOLAPLevelGroups: ExtraSlot;
+    type SpreadsheetOLAPLevelGroups: UserDataSlot;
     /// What a `spreadsheet::OLAPMeasureGroupMapWith` holds.
-    type SpreadsheetOLAPMeasureGroupMap: ExtraSlot;
+    type SpreadsheetOLAPMeasureGroupMap: UserDataSlot;
     /// What a `spreadsheet::OLAPMeasureGroupMapsWith` holds.
-    type SpreadsheetOLAPMeasureGroupMaps: ExtraSlot;
+    type SpreadsheetOLAPMeasureGroupMaps: UserDataSlot;
     /// What a `spreadsheet::OLAPMeasureGroupMeasureGroupWith` holds.
-    type SpreadsheetOLAPMeasureGroupMeasureGroup: ExtraSlot;
+    type SpreadsheetOLAPMeasureGroupMeasureGroup: UserDataSlot;
     /// What a `spreadsheet::OLAPMeasureGroupsWith` holds.
-    type SpreadsheetOLAPMeasureGroups: ExtraSlot;
+    type SpreadsheetOLAPMeasureGroups: UserDataSlot;
     /// What a `spreadsheet::OLAPMemberPropertiesWith` holds.
-    type SpreadsheetOLAPMemberProperties: ExtraSlot;
+    type SpreadsheetOLAPMemberProperties: UserDataSlot;
     /// What a `spreadsheet::OLAPMemberPropertyWith` holds.
-    type SpreadsheetOLAPMemberProperty: ExtraSlot;
+    type SpreadsheetOLAPMemberProperty: UserDataSlot;
     /// What a `spreadsheet::OLAPPropertiesWith` holds.
-    type SpreadsheetOLAPProperties: ExtraSlot;
+    type SpreadsheetOLAPProperties: UserDataSlot;
     /// What a `spreadsheet::OLAPQueryCacheWith` holds.
-    type SpreadsheetOLAPQueryCache: ExtraSlot;
+    type SpreadsheetOLAPQueryCache: UserDataSlot;
     /// What a `spreadsheet::OLAPSetWith` holds.
-    type SpreadsheetOLAPSet: ExtraSlot;
+    type SpreadsheetOLAPSet: UserDataSlot;
     /// What a `spreadsheet::ObjectCellAnchorWith` holds.
-    type SpreadsheetObjectCellAnchor: ExtraSlot;
+    type SpreadsheetObjectCellAnchor: UserDataSlot;
     /// What a `spreadsheet::ObjectLinkItemWith` holds.
-    type SpreadsheetObjectLinkItem: ExtraSlot;
+    type SpreadsheetObjectLinkItem: UserDataSlot;
     /// What a `spreadsheet::ObjectLinkItemsWith` holds.
-    type SpreadsheetObjectLinkItems: ExtraSlot;
+    type SpreadsheetObjectLinkItems: UserDataSlot;
     /// What a `spreadsheet::OddHeaderWith` holds.
-    type SpreadsheetOddHeader: ExtraSlot;
+    type SpreadsheetOddHeader: UserDataSlot;
     /// What a `spreadsheet::OddPageFooterWith` holds.
-    type SpreadsheetOddPageFooter: ExtraSlot;
+    type SpreadsheetOddPageFooter: UserDataSlot;
     /// What a `spreadsheet::OldCellDataWith` holds.
-    type SpreadsheetOldCellData: ExtraSlot;
+    type SpreadsheetOldCellData: UserDataSlot;
     /// What a `spreadsheet::OldFormattingInformationWith` holds.
-    type SpreadsheetOldFormattingInformation: ExtraSlot;
+    type SpreadsheetOldFormattingInformation: UserDataSlot;
     /// What a `spreadsheet::OldFormulaWith` holds.
-    type SpreadsheetOldFormula: ExtraSlot;
+    type SpreadsheetOldFormula: UserDataSlot;
     /// What a `spreadsheet::OutlineWith` holds.
-    type SpreadsheetOutline: ExtraSlot;
+    type SpreadsheetOutline: UserDataSlot;
     /// What a `spreadsheet::OutlinePropertiesWith` holds.
-    type SpreadsheetOutlineProperties: ExtraSlot;
+    type SpreadsheetOutlineProperties: UserDataSlot;
     /// What a `spreadsheet::PageFieldWith` holds.
-    type SpreadsheetPageField: ExtraSlot;
+    type SpreadsheetPageField: UserDataSlot;
     /// What a `spreadsheet::PageFieldItemsWith` holds.
-    type SpreadsheetPageFieldItems: ExtraSlot;
+    type SpreadsheetPageFieldItems: UserDataSlot;
     /// What a `spreadsheet::PageItemWith` holds.
-    type SpreadsheetPageItem: ExtraSlot;
+    type SpreadsheetPageItem: UserDataSlot;
     /// What a `spreadsheet::PageItemValuesWith` holds.
-    type SpreadsheetPageItemValues: ExtraSlot;
+    type SpreadsheetPageItemValues: UserDataSlot;
     /// What a `spreadsheet::PageItemsWith` holds.
-    type SpreadsheetPageItems: ExtraSlot;
+    type SpreadsheetPageItems: UserDataSlot;
     /// What a `spreadsheet::PageMarginsWith` holds.
-    type SpreadsheetPageMargins: ExtraSlot;
+    type SpreadsheetPageMargins: UserDataSlot;
     /// What a `spreadsheet::PageSetupPropertiesWith` holds.
-    type SpreadsheetPageSetupProperties: ExtraSlot;
+    type SpreadsheetPageSetupProperties: UserDataSlot;
     /// What a `spreadsheet::PageSetupSettingsWith` holds.
-    type SpreadsheetPageSetupSettings: ExtraSlot;
+    type SpreadsheetPageSetupSettings: UserDataSlot;
     /// What a `spreadsheet::ParameterPropertiesWith` holds.
-    type SpreadsheetParameterProperties: ExtraSlot;
+    type SpreadsheetParameterProperties: UserDataSlot;
     /// What a `spreadsheet::PatternWith` holds.
-    type SpreadsheetPattern: ExtraSlot;
+    type SpreadsheetPattern: UserDataSlot;
     /// What a `spreadsheet::PhoneticPropertiesWith` holds.
-    type SpreadsheetPhoneticProperties: ExtraSlot;
+    type SpreadsheetPhoneticProperties: UserDataSlot;
     /// What a `spreadsheet::PhoneticRunWith` holds.
-    type SpreadsheetPhoneticRun: ExtraSlot;
+    type SpreadsheetPhoneticRun: UserDataSlot;
     /// What a `spreadsheet::PivotAreaWith` holds.
-    type SpreadsheetPivotArea: ExtraSlot;
+    type SpreadsheetPivotArea: UserDataSlot;
     /// What a `spreadsheet::PivotAreasWith` holds.
-    type SpreadsheetPivotAreas: ExtraSlot;
+    type SpreadsheetPivotAreas: UserDataSlot;
     /// What a `spreadsheet::PivotCacheWith` holds.
-    type SpreadsheetPivotCache: ExtraSlot;
+    type SpreadsheetPivotCache: UserDataSlot;
     /// What a `spreadsheet::PivotCacheDefinitionWith` holds.
-    type SpreadsheetPivotCacheDefinition: ExtraSlot;
+    type SpreadsheetPivotCacheDefinition: UserDataSlot;
     /// What a `spreadsheet::PivotCacheFieldWith` holds.
-    type SpreadsheetPivotCacheField: ExtraSlot;
+    type SpreadsheetPivotCacheField: UserDataSlot;
     /// What a `spreadsheet::PivotCacheFieldIdWith` holds.
-    type SpreadsheetPivotCacheFieldId: ExtraSlot;
+    type SpreadsheetPivotCacheFieldId: UserDataSlot;
     /// What a `spreadsheet::PivotCacheFieldsWith` holds.
-    type SpreadsheetPivotCacheFields: ExtraSlot;
+    type SpreadsheetPivotCacheFields: UserDataSlot;
     /// What a `spreadsheet::PivotCacheHierarchiesWith` holds.
-    type SpreadsheetPivotCacheHierarchies: ExtraSlot;
+    type SpreadsheetPivotCacheHierarchies: UserDataSlot;
     /// What a `spreadsheet::PivotCacheHierarchyWith` holds.
-    type SpreadsheetPivotCacheHierarchy: ExtraSlot;
+    type SpreadsheetPivotCacheHierarchy: UserDataSlot;
     /// What a `spreadsheet::PivotCacheRecordWith` holds.
-    type SpreadsheetPivotCacheRecord: ExtraSlot;
+    type SpreadsheetPivotCacheRecord: UserDataSlot;
     /// What a `spreadsheet::PivotCacheRecordsWith` holds.
-    type SpreadsheetPivotCacheRecords: ExtraSlot;
+    type SpreadsheetPivotCacheRecords: UserDataSlot;
     /// What a `spreadsheet::PivotCacheSourceDescriptionWith` holds.
-    type SpreadsheetPivotCacheSourceDescription: ExtraSlot;
+    type SpreadsheetPivotCacheSourceDescription: UserDataSlot;
     /// What a `spreadsheet::PivotCachesWith` holds.
-    type SpreadsheetPivotCaches: ExtraSlot;
+    type SpreadsheetPivotCaches: UserDataSlot;
     /// What a `spreadsheet::PivotChartFormatWith` holds.
-    type SpreadsheetPivotChartFormat: ExtraSlot;
+    type SpreadsheetPivotChartFormat: UserDataSlot;
     /// What a `spreadsheet::PivotChartFormatsWith` holds.
-    type SpreadsheetPivotChartFormats: ExtraSlot;
+    type SpreadsheetPivotChartFormats: UserDataSlot;
     /// What a `spreadsheet::PivotTableAdvancedFilterWith` holds.
-    type SpreadsheetPivotTableAdvancedFilter: ExtraSlot;
+    type SpreadsheetPivotTableAdvancedFilter: UserDataSlot;
     /// What a `spreadsheet::PivotTableDefinitionWith` holds.
-    type SpreadsheetPivotTableDefinition: ExtraSlot;
+    type SpreadsheetPivotTableDefinition: UserDataSlot;
     /// What a `spreadsheet::PivotTableFieldWith` holds.
-    type SpreadsheetPivotTableField: ExtraSlot;
+    type SpreadsheetPivotTableField: UserDataSlot;
     /// What a `spreadsheet::PivotTableFieldItemWith` holds.
-    type SpreadsheetPivotTableFieldItem: ExtraSlot;
+    type SpreadsheetPivotTableFieldItem: UserDataSlot;
     /// What a `spreadsheet::PivotTableFieldsWith` holds.
-    type SpreadsheetPivotTableFields: ExtraSlot;
+    type SpreadsheetPivotTableFields: UserDataSlot;
     /// What a `spreadsheet::PivotTableFormatWith` holds.
-    type SpreadsheetPivotTableFormat: ExtraSlot;
+    type SpreadsheetPivotTableFormat: UserDataSlot;
     /// What a `spreadsheet::PivotTableFormatsWith` holds.
-    type SpreadsheetPivotTableFormats: ExtraSlot;
+    type SpreadsheetPivotTableFormats: UserDataSlot;
     /// What a `spreadsheet::PivotTableLocationWith` holds.
-    type SpreadsheetPivotTableLocation: ExtraSlot;
+    type SpreadsheetPivotTableLocation: UserDataSlot;
     /// What a `spreadsheet::PivotTableOLAPHierarchiesWith` holds.
-    type SpreadsheetPivotTableOLAPHierarchies: ExtraSlot;
+    type SpreadsheetPivotTableOLAPHierarchies: UserDataSlot;
     /// What a `spreadsheet::PivotTableSelectionWith` holds.
-    type SpreadsheetPivotTableSelection: ExtraSlot;
+    type SpreadsheetPivotTableSelection: UserDataSlot;
     /// What a `spreadsheet::PivotTableStyleWith` holds.
-    type SpreadsheetPivotTableStyle: ExtraSlot;
+    type SpreadsheetPivotTableStyle: UserDataSlot;
     /// What a `spreadsheet::PrintOptionsWith` holds.
-    type SpreadsheetPrintOptions: ExtraSlot;
+    type SpreadsheetPrintOptions: UserDataSlot;
     /// What a `spreadsheet::ProtectedRangeWith` holds.
-    type SpreadsheetProtectedRange: ExtraSlot;
+    type SpreadsheetProtectedRange: UserDataSlot;
     /// What a `spreadsheet::ProtectedRangesWith` holds.
-    type SpreadsheetProtectedRanges: ExtraSlot;
+    type SpreadsheetProtectedRanges: UserDataSlot;
     /// What a `spreadsheet::ProtectionPropertiesWith` holds.
-    type SpreadsheetProtectionProperties: ExtraSlot;
+    type SpreadsheetProtectionProperties: UserDataSlot;
     /// What a `spreadsheet::QueryWith` holds.
-    type SpreadsheetQuery: ExtraSlot;
+    type SpreadsheetQuery: UserDataSlot;
     /// What a `spreadsheet::QueryParametersWith` holds.
-    type SpreadsheetQueryParameters: ExtraSlot;
+    type SpreadsheetQueryParameters: UserDataSlot;
     /// What a `spreadsheet::QueryTableWith` holds.
-    type SpreadsheetQueryTable: ExtraSlot;
+    type SpreadsheetQueryTable: UserDataSlot;
     /// What a `spreadsheet::QueryTableFieldWith` holds.
-    type SpreadsheetQueryTableField: ExtraSlot;
+    type SpreadsheetQueryTableField: UserDataSlot;
     /// What a `spreadsheet::QueryTableFieldsWith` holds.
-    type SpreadsheetQueryTableFields: ExtraSlot;
+    type SpreadsheetQueryTableFields: UserDataSlot;
     /// What a `spreadsheet::QueryTableRefreshInformationWith` holds.
-    type SpreadsheetQueryTableRefreshInformation: ExtraSlot;
+    type SpreadsheetQueryTableRefreshInformation: UserDataSlot;
     /// What a `spreadsheet::RGBColorWith` holds.
-    type SpreadsheetRGBColor: ExtraSlot;
+    type SpreadsheetRGBColor: UserDataSlot;
     /// What a `spreadsheet::RangeGroupingPropertiesWith` holds.
-    type SpreadsheetRangeGroupingProperties: ExtraSlot;
+    type SpreadsheetRangeGroupingProperties: UserDataSlot;
     /// What a `spreadsheet::RangeSetWith` holds.
-    type SpreadsheetRangeSet: ExtraSlot;
+    type SpreadsheetRangeSet: UserDataSlot;
     /// What a `spreadsheet::RangeSetsWith` holds.
-    type SpreadsheetRangeSets: ExtraSlot;
+    type SpreadsheetRangeSets: UserDataSlot;
     /// What a `spreadsheet::ReferenceWith` holds.
-    type SpreadsheetReference: ExtraSlot;
+    type SpreadsheetReference: UserDataSlot;
     /// What a `spreadsheet::ReferencesWith` holds.
-    type SpreadsheetReferences: ExtraSlot;
+    type SpreadsheetReferences: UserDataSlot;
     /// What a `spreadsheet::ReferencesTrWith` holds.
-    type SpreadsheetReferencesTr: ExtraSlot;
+    type SpreadsheetReferencesTr: UserDataSlot;
     /// What a `spreadsheet::ReviewedWith` holds.
-    type SpreadsheetReviewed: ExtraSlot;
+    type SpreadsheetReviewed: UserDataSlot;
     /// What a `spreadsheet::ReviewedListWith` holds.
-    type SpreadsheetReviewedList: ExtraSlot;
+    type SpreadsheetReviewedList: UserDataSlot;
     /// What a `spreadsheet::RevisionAutoFormatWith` holds.
-    type SpreadsheetRevisionAutoFormat: ExtraSlot;
+    type SpreadsheetRevisionAutoFormat: UserDataSlot;
     /// What a `spreadsheet::RevisionCellChangeWith` holds.
-    type SpreadsheetRevisionCellChange: ExtraSlot;
+    type SpreadsheetRevisionCellChange: UserDataSlot;
     /// What a `spreadsheet::RevisionCellCommentWith` holds.
-    type SpreadsheetRevisionCellComment: ExtraSlot;
+    type SpreadsheetRevisionCellComment: UserDataSlot;
     /// What a `spreadsheet::RevisionCellMoveWith` holds.
-    type SpreadsheetRevisionCellMove: ExtraSlot;
+    type SpreadsheetRevisionCellMove: UserDataSlot;
     /// What a `spreadsheet::RevisionCustomViewWith` holds.
-    type SpreadsheetRevisionCustomView: ExtraSlot;
+    type SpreadsheetRevisionCustomView: UserDataSlot;
     /// What a `spreadsheet::RevisionDefinedNameWith` holds.
-    type SpreadsheetRevisionDefinedName: ExtraSlot;
+    type SpreadsheetRevisionDefinedName: UserDataSlot;
     /// What a `spreadsheet::RevisionFormatWith` holds.
-    type SpreadsheetRevisionFormat: ExtraSlot;
+    type SpreadsheetRevisionFormat: UserDataSlot;
     /// What a `spreadsheet::RevisionHeadersWith` holds.
-    type SpreadsheetRevisionHeaders: ExtraSlot;
+    type SpreadsheetRevisionHeaders: UserDataSlot;
     /// What a `spreadsheet::RevisionInsertSheetWith` holds.
-    type SpreadsheetRevisionInsertSheet: ExtraSlot;
+    type SpreadsheetRevisionInsertSheet: UserDataSlot;
     /// What a `spreadsheet::RevisionMergeConflictWith` holds.
-    type SpreadsheetRevisionMergeConflict: ExtraSlot;
+    type SpreadsheetRevisionMergeConflict: UserDataSlot;
     /// What a `spreadsheet::RevisionQueryTableWith` holds.
-    type SpreadsheetRevisionQueryTable: ExtraSlot;
+    type SpreadsheetRevisionQueryTable: UserDataSlot;
     /// What a `spreadsheet::RevisionRowColumnInsertDeleteWith` holds.
-    type SpreadsheetRevisionRowColumnInsertDelete: ExtraSlot;
+    type SpreadsheetRevisionRowColumnInsertDelete: UserDataSlot;
     /// What a `spreadsheet::RevisionSheetNameWith` holds.
-    type SpreadsheetRevisionSheetName: ExtraSlot;
+    type SpreadsheetRevisionSheetName: UserDataSlot;
     /// What a `spreadsheet::RevisionsWith` holds.
-    type SpreadsheetRevisions: ExtraSlot;
+    type SpreadsheetRevisions: UserDataSlot;
     /// What a `spreadsheet::RichTextInlineWith` holds.
-    type SpreadsheetRichTextInline: ExtraSlot;
+    type SpreadsheetRichTextInline: UserDataSlot;
     /// What a `spreadsheet::RichTextRunWith` holds.
-    type SpreadsheetRichTextRun: ExtraSlot;
+    type SpreadsheetRichTextRun: UserDataSlot;
     /// What a `spreadsheet::RowWith` holds.
-    type SpreadsheetRow: ExtraSlot;
+    type SpreadsheetRow: UserDataSlot;
     /// What a `spreadsheet::RowBreaksWith` holds.
-    type SpreadsheetRowBreaks: ExtraSlot;
+    type SpreadsheetRowBreaks: UserDataSlot;
     /// What a `spreadsheet::RowExternalRowWith` holds.
-    type SpreadsheetRowExternalRow: ExtraSlot;
+    type SpreadsheetRowExternalRow: UserDataSlot;
     /// What a `spreadsheet::RowFieldsWith` holds.
-    type SpreadsheetRowFields: ExtraSlot;
+    type SpreadsheetRowFields: UserDataSlot;
     /// What a `spreadsheet::RowItemsWith` holds.
-    type SpreadsheetRowItems: ExtraSlot;
+    type SpreadsheetRowItems: UserDataSlot;
     /// What a `spreadsheet::RowItemsIWith` holds.
-    type SpreadsheetRowItemsI: ExtraSlot;
+    type SpreadsheetRowItemsI: UserDataSlot;
     /// What a `spreadsheet::RowOLAPHierarchiesWith` holds.
-    type SpreadsheetRowOLAPHierarchies: ExtraSlot;
+    type SpreadsheetRowOLAPHierarchies: UserDataSlot;
     /// What a `spreadsheet::RowOLAPHierarchyReferencesWith` holds.
-    type SpreadsheetRowOLAPHierarchyReferences: ExtraSlot;
+    type SpreadsheetRowOLAPHierarchyReferences: UserDataSlot;
     /// What a `spreadsheet::RunPropertiesWith` holds.
-    type SpreadsheetRunProperties: ExtraSlot;
+    type SpreadsheetRunProperties: UserDataSlot;
     /// What a `spreadsheet::ScenarioWith` holds.
-    type SpreadsheetScenario: ExtraSlot;
+    type SpreadsheetScenario: UserDataSlot;
     /// What a `spreadsheet::ScenariosWith` holds.
-    type SpreadsheetScenarios: ExtraSlot;
+    type SpreadsheetScenarios: UserDataSlot;
     /// What a `spreadsheet::SchemeWith` holds.
-    type SpreadsheetScheme: ExtraSlot;
+    type SpreadsheetScheme: UserDataSlot;
     /// What a `spreadsheet::SecurityDescriptorWith` holds.
-    type SpreadsheetSecurityDescriptor: ExtraSlot;
+    type SpreadsheetSecurityDescriptor: UserDataSlot;
     /// What a `spreadsheet::SelectionWith` holds.
-    type SpreadsheetSelection: ExtraSlot;
+    type SpreadsheetSelection: UserDataSlot;
     /// What a `spreadsheet::ServerFormatWith` holds.
-    type SpreadsheetServerFormat: ExtraSlot;
+    type SpreadsheetServerFormat: UserDataSlot;
     /// What a `spreadsheet::ServerFormatsWith` holds.
-    type SpreadsheetServerFormats: ExtraSlot;
+    type SpreadsheetServerFormats: UserDataSlot;
     /// What a `spreadsheet::SetMDXMetadataWith` holds.
-    type SpreadsheetSetMDXMetadata: ExtraSlot;
+    type SpreadsheetSetMDXMetadata: UserDataSlot;
     /// What a `spreadsheet::SetsWith` holds.
-    type SpreadsheetSets: ExtraSlot;
+    type SpreadsheetSets: UserDataSlot;
     /// What a `spreadsheet::ShadowWith` holds.
-    type SpreadsheetShadow: ExtraSlot;
+    type SpreadsheetShadow: UserDataSlot;
     /// What a `spreadsheet::SharedItemsWith` holds.
-    type SpreadsheetSharedItems: ExtraSlot;
+    type SpreadsheetSharedItems: UserDataSlot;
     /// What a `spreadsheet::SharedItemsIndexWith` holds.
-    type SpreadsheetSharedItemsIndex: ExtraSlot;
+    type SpreadsheetSharedItemsIndex: UserDataSlot;
     /// What a `spreadsheet::SharedStringTableWith` holds.
-    type SpreadsheetSharedStringTable: ExtraSlot;
+    type SpreadsheetSharedStringTable: UserDataSlot;
     /// What a `spreadsheet::SheetCalculationPropertiesWith` holds.
-    type SpreadsheetSheetCalculationProperties: ExtraSlot;
+    type SpreadsheetSheetCalculationProperties: UserDataSlot;
     /// What a `spreadsheet::SheetDataWith` holds.
-    type SpreadsheetSheetData: ExtraSlot;
+    type SpreadsheetSheetData: UserDataSlot;
     /// What a `spreadsheet::SheetFormatPropertiesWith` holds.
-    type SpreadsheetSheetFormatProperties: ExtraSlot;
+    type SpreadsheetSheetFormatProperties: UserDataSlot;
     /// What a `spreadsheet::SheetIdWith` holds.
-    type SpreadsheetSheetId: ExtraSlot;
+    type SpreadsheetSheetId: UserDataSlot;
     /// What a `spreadsheet::SheetIdMapWith` holds.
-    type SpreadsheetSheetIdMap: ExtraSlot;
+    type SpreadsheetSheetIdMap: UserDataSlot;
     /// What a `spreadsheet::SheetInformationWith` holds.
-    type SpreadsheetSheetInformation: ExtraSlot;
+    type SpreadsheetSheetInformation: UserDataSlot;
     /// What a `spreadsheet::SheetNameWith` holds.
-    type SpreadsheetSheetName: ExtraSlot;
+    type SpreadsheetSheetName: UserDataSlot;
     /// What a `spreadsheet::SheetPropertiesWith` holds.
-    type SpreadsheetSheetProperties: ExtraSlot;
+    type SpreadsheetSheetProperties: UserDataSlot;
     /// What a `spreadsheet::SheetProtectionOptionsWith` holds.
-    type SpreadsheetSheetProtectionOptions: ExtraSlot;
+    type SpreadsheetSheetProtectionOptions: UserDataSlot;
     /// What a `spreadsheet::SheetTabColorWith` holds.
-    type SpreadsheetSheetTabColor: ExtraSlot;
+    type SpreadsheetSheetTabColor: UserDataSlot;
     /// What a `spreadsheet::SheetViewsWith` holds.
-    type SpreadsheetSheetViews: ExtraSlot;
+    type SpreadsheetSheetViews: UserDataSlot;
     /// What a `spreadsheet::SheetsWith` holds.
-    type SpreadsheetSheets: ExtraSlot;
+    type SpreadsheetSheets: UserDataSlot;
     /// What a `spreadsheet::SingleCellsWith` holds.
-    type SpreadsheetSingleCells: ExtraSlot;
+    type SpreadsheetSingleCells: UserDataSlot;
     /// What a `spreadsheet::SmartTagPropertiesCellSmartTagPrWith` holds.
-    type SpreadsheetSmartTagPropertiesCellSmartTagPr: ExtraSlot;
+    type SpreadsheetSmartTagPropertiesCellSmartTagPr: UserDataSlot;
     /// What a `spreadsheet::SmartTagPropertiesSmartTagPrWith` holds.
-    type SpreadsheetSmartTagPropertiesSmartTagPr: ExtraSlot;
+    type SpreadsheetSmartTagPropertiesSmartTagPr: UserDataSlot;
     /// What a `spreadsheet::SmartTagTypeWith` holds.
-    type SpreadsheetSmartTagType: ExtraSlot;
+    type SpreadsheetSmartTagType: UserDataSlot;
     /// What a `spreadsheet::SmartTagTypesWith` holds.
-    type SpreadsheetSmartTagTypes: ExtraSlot;
+    type SpreadsheetSmartTagTypes: UserDataSlot;
     /// What a `spreadsheet::SmartTagsWith` holds.
-    type SpreadsheetSmartTags: ExtraSlot;
+    type SpreadsheetSmartTags: UserDataSlot;
     /// What a `spreadsheet::SortByTupleWith` holds.
-    type SpreadsheetSortByTuple: ExtraSlot;
+    type SpreadsheetSortByTuple: UserDataSlot;
     /// What a `spreadsheet::SortConditionWith` holds.
-    type SpreadsheetSortCondition: ExtraSlot;
+    type SpreadsheetSortCondition: UserDataSlot;
     /// What a `spreadsheet::SortStateWith` holds.
-    type SpreadsheetSortState: ExtraSlot;
+    type SpreadsheetSortState: UserDataSlot;
     /// What a `spreadsheet::StrikeThroughWith` holds.
-    type SpreadsheetStrikeThrough: ExtraSlot;
+    type SpreadsheetStrikeThrough: UserDataSlot;
     /// What a `spreadsheet::StringItemWith` holds.
-    type SpreadsheetStringItem: ExtraSlot;
+    type SpreadsheetStringItem: UserDataSlot;
     /// What a `spreadsheet::StringsInSubtopicWith` holds.
-    type SpreadsheetStringsInSubtopic: ExtraSlot;
+    type SpreadsheetStringsInSubtopic: UserDataSlot;
     /// What a `spreadsheet::StyleSheetWith` holds.
-    type SpreadsheetStyleSheet: ExtraSlot;
+    type SpreadsheetStyleSheet: UserDataSlot;
     /// What a `spreadsheet::SupportingWorkbookSheetNamesWith` holds.
-    type SpreadsheetSupportingWorkbookSheetNames: ExtraSlot;
+    type SpreadsheetSupportingWorkbookSheetNames: UserDataSlot;
     /// What a `spreadsheet::TableWith` holds.
-    type SpreadsheetTable: ExtraSlot;
+    type SpreadsheetTable: UserDataSlot;
     /// What a `spreadsheet::TableColumnWith` holds.
-    type SpreadsheetTableColumn: ExtraSlot;
+    type SpreadsheetTableColumn: UserDataSlot;
     /// What a `spreadsheet::TableColumnsWith` holds.
-    type SpreadsheetTableColumns: ExtraSlot;
+    type SpreadsheetTableColumns: UserDataSlot;
     /// What a `spreadsheet::TablePartWith` holds.
-    type SpreadsheetTablePart: ExtraSlot;
+    type SpreadsheetTablePart: UserDataSlot;
     /// What a `spreadsheet::TablePartsWith` holds.
-    type SpreadsheetTableParts: ExtraSlot;
+    type SpreadsheetTableParts: UserDataSlot;
     /// What a `spreadsheet::TablePropertiesWith` holds.
-    type SpreadsheetTableProperties: ExtraSlot;
+    type SpreadsheetTableProperties: UserDataSlot;
     /// What a `spreadsheet::TableStyleWith` holds.
-    type SpreadsheetTableStyle: ExtraSlot;
+    type SpreadsheetTableStyle: UserDataSlot;
     /// What a `spreadsheet::TableStyleTableStyleElementWith` holds.
-    type SpreadsheetTableStyleTableStyleElement: ExtraSlot;
+    type SpreadsheetTableStyleTableStyleElement: UserDataSlot;
     /// What a `spreadsheet::TableStyleTableStyleInfoWith` holds.
-    type SpreadsheetTableStyleTableStyleInfo: ExtraSlot;
+    type SpreadsheetTableStyleTableStyleInfo: UserDataSlot;
     /// What a `spreadsheet::TableStylesWith` holds.
-    type SpreadsheetTableStyles: ExtraSlot;
+    type SpreadsheetTableStyles: UserDataSlot;
     /// What a `spreadsheet::TablesWith` holds.
-    type SpreadsheetTables: ExtraSlot;
+    type SpreadsheetTables: UserDataSlot;
     /// What a `spreadsheet::TextWith` holds.
-    type SpreadsheetText: ExtraSlot;
+    type SpreadsheetText: UserDataSlot;
     /// What a `spreadsheet::TextImportFieldSettingsWith` holds.
-    type SpreadsheetTextImportFieldSettings: ExtraSlot;
+    type SpreadsheetTextImportFieldSettings: UserDataSlot;
     /// What a `spreadsheet::TextImportSettingsWith` holds.
-    type SpreadsheetTextImportSettings: ExtraSlot;
+    type SpreadsheetTextImportSettings: UserDataSlot;
     /// What a `spreadsheet::Top10With` holds.
-    type SpreadsheetTop10: ExtraSlot;
+    type SpreadsheetTop10: UserDataSlot;
     /// What a `spreadsheet::TopBorderWith` holds.
-    type SpreadsheetTopBorder: ExtraSlot;
+    type SpreadsheetTopBorder: UserDataSlot;
     /// What a `spreadsheet::TopicWith` holds.
-    type SpreadsheetTopic: ExtraSlot;
+    type SpreadsheetTopic: UserDataSlot;
     /// What a `spreadsheet::TotalsRowFormulaWith` holds.
-    type SpreadsheetTotalsRowFormula: ExtraSlot;
+    type SpreadsheetTotalsRowFormula: UserDataSlot;
     /// What a `spreadsheet::TrailingEdgeBorderEndWith` holds.
-    type SpreadsheetTrailingEdgeBorderEnd: ExtraSlot;
+    type SpreadsheetTrailingEdgeBorderEnd: UserDataSlot;
     /// What a `spreadsheet::TrailingEdgeBorderRightWith` holds.
-    type SpreadsheetTrailingEdgeBorderRight: ExtraSlot;
+    type SpreadsheetTrailingEdgeBorderRight: UserDataSlot;
     /// What a `spreadsheet::TupleWith` holds.
-    type SpreadsheetTuple: ExtraSlot;
+    type SpreadsheetTuple: UserDataSlot;
     /// What a `spreadsheet::TupleCacheWith` holds.
-    type SpreadsheetTupleCache: ExtraSlot;
+    type SpreadsheetTupleCache: UserDataSlot;
     /// What a `spreadsheet::TupleMDXMetadataWith` holds.
-    type SpreadsheetTupleMDXMetadata: ExtraSlot;
+    type SpreadsheetTupleMDXMetadata: UserDataSlot;
     /// What a `spreadsheet::TuplesWith` holds.
-    type SpreadsheetTuples: ExtraSlot;
+    type SpreadsheetTuples: UserDataSlot;
     /// What a `spreadsheet::UnderlineWith` holds.
-    type SpreadsheetUnderline: ExtraSlot;
+    type SpreadsheetUnderline: UserDataSlot;
     /// What a `spreadsheet::UndoWith` holds.
-    type SpreadsheetUndo: ExtraSlot;
+    type SpreadsheetUndo: UserDataSlot;
     /// What a `spreadsheet::UserInformationWith` holds.
-    type SpreadsheetUserInformation: ExtraSlot;
+    type SpreadsheetUserInformation: UserDataSlot;
     /// What a `spreadsheet::UserListWith` holds.
-    type SpreadsheetUserList: ExtraSlot;
+    type SpreadsheetUserList: UserDataSlot;
     /// What a `spreadsheet::ValueWith` holds.
-    type SpreadsheetValue: ExtraSlot;
+    type SpreadsheetValue: UserDataSlot;
     /// What a `spreadsheet::ValueMetadataWith` holds.
-    type SpreadsheetValueMetadata: ExtraSlot;
+    type SpreadsheetValueMetadata: UserDataSlot;
     /// What a `spreadsheet::VerticalAlignmentWith` holds.
-    type SpreadsheetVerticalAlignment: ExtraSlot;
+    type SpreadsheetVerticalAlignment: UserDataSlot;
     /// What a `spreadsheet::VerticalInnerBorderWith` holds.
-    type SpreadsheetVerticalInnerBorder: ExtraSlot;
+    type SpreadsheetVerticalInnerBorder: UserDataSlot;
     /// What a `spreadsheet::VerticalPageBreaksWith` holds.
-    type SpreadsheetVerticalPageBreaks: ExtraSlot;
+    type SpreadsheetVerticalPageBreaks: UserDataSlot;
     /// What a `spreadsheet::ViewPaneWith` holds.
-    type SpreadsheetViewPane: ExtraSlot;
+    type SpreadsheetViewPane: UserDataSlot;
     /// What a `spreadsheet::VolatileDependencyTypeWith` holds.
-    type SpreadsheetVolatileDependencyType: ExtraSlot;
+    type SpreadsheetVolatileDependencyType: UserDataSlot;
     /// What a `spreadsheet::VolatileDependencyTypesWith` holds.
-    type SpreadsheetVolatileDependencyTypes: ExtraSlot;
+    type SpreadsheetVolatileDependencyTypes: UserDataSlot;
     /// What a `spreadsheet::WebPublishObjectsWith` holds.
-    type SpreadsheetWebPublishObjects: ExtraSlot;
+    type SpreadsheetWebPublishObjects: UserDataSlot;
     /// What a `spreadsheet::WebPublishingItemWith` holds.
-    type SpreadsheetWebPublishingItem: ExtraSlot;
+    type SpreadsheetWebPublishingItem: UserDataSlot;
     /// What a `spreadsheet::WebPublishingItemsWith` holds.
-    type SpreadsheetWebPublishingItems: ExtraSlot;
+    type SpreadsheetWebPublishingItems: UserDataSlot;
     /// What a `spreadsheet::WebPublishingObjectWith` holds.
-    type SpreadsheetWebPublishingObject: ExtraSlot;
+    type SpreadsheetWebPublishingObject: UserDataSlot;
     /// What a `spreadsheet::WebPublishingPropertiesWith` holds.
-    type SpreadsheetWebPublishingProperties: ExtraSlot;
+    type SpreadsheetWebPublishingProperties: UserDataSlot;
     /// What a `spreadsheet::WebQueryPropertiesWith` holds.
-    type SpreadsheetWebQueryProperties: ExtraSlot;
+    type SpreadsheetWebQueryProperties: UserDataSlot;
     /// What a `spreadsheet::WorkbookWith` holds.
-    type SpreadsheetWorkbook: ExtraSlot;
+    type SpreadsheetWorkbook: UserDataSlot;
     /// What a `spreadsheet::WorkbookPropertiesWith` holds.
-    type SpreadsheetWorkbookProperties: ExtraSlot;
+    type SpreadsheetWorkbookProperties: UserDataSlot;
     /// What a `spreadsheet::WorkbookProtectionWith` holds.
-    type SpreadsheetWorkbookProtection: ExtraSlot;
+    type SpreadsheetWorkbookProtection: UserDataSlot;
     /// What a `spreadsheet::WorkbookViewWith` holds.
-    type SpreadsheetWorkbookView: ExtraSlot;
+    type SpreadsheetWorkbookView: UserDataSlot;
     /// What a `spreadsheet::WorkbookViewsWith` holds.
-    type SpreadsheetWorkbookViews: ExtraSlot;
+    type SpreadsheetWorkbookViews: UserDataSlot;
     /// What a `spreadsheet::WorksheetWith` holds.
-    type SpreadsheetWorksheet: ExtraSlot;
+    type SpreadsheetWorksheet: UserDataSlot;
     /// What a `spreadsheet::WorksheetDimensionsWith` holds.
-    type SpreadsheetWorksheetDimensions: ExtraSlot;
+    type SpreadsheetWorksheetDimensions: UserDataSlot;
     /// What a `spreadsheet::WorksheetPivotCacheSourceWith` holds.
-    type SpreadsheetWorksheetPivotCacheSource: ExtraSlot;
+    type SpreadsheetWorksheetPivotCacheSource: UserDataSlot;
     /// What a `spreadsheet::WorksheetViewWith` holds.
-    type SpreadsheetWorksheetView: ExtraSlot;
+    type SpreadsheetWorksheetView: UserDataSlot;
     /// What a `spreadsheet::XMLColumnPropertiesWith` holds.
-    type SpreadsheetXMLColumnProperties: ExtraSlot;
+    type SpreadsheetXMLColumnProperties: UserDataSlot;
     /// What a `spreadsheet::XMLMappingDataBindingWith` holds.
-    type SpreadsheetXMLMappingDataBinding: ExtraSlot;
+    type SpreadsheetXMLMappingDataBinding: UserDataSlot;
     /// What a `spreadsheet::XMLMappingMapInfoWith` holds.
-    type SpreadsheetXMLMappingMapInfo: ExtraSlot;
+    type SpreadsheetXMLMappingMapInfo: UserDataSlot;
     /// What a `spreadsheet::XMLMappingPropertiesWith` holds.
-    type SpreadsheetXMLMappingProperties: ExtraSlot;
+    type SpreadsheetXMLMappingProperties: UserDataSlot;
     /// What a `spreadsheet::XMLSchemaWith` holds.
-    type SpreadsheetXMLSchema: ExtraSlot;
+    type SpreadsheetXMLSchema: UserDataSlot;
     /// What a `vml::ArcSegmentWith` holds.
-    type VmlArcSegment: ExtraSlot;
+    type VmlArcSegment: UserDataSlot;
     /// What a `vml::BezierCurveWith` holds.
-    type VmlBezierCurve: ExtraSlot;
+    type VmlBezierCurve: UserDataSlot;
     /// What a `vml::DocumentBackgroundWith` holds.
-    type VmlDocumentBackground: ExtraSlot;
+    type VmlDocumentBackground: UserDataSlot;
     /// What a `vml::ImageDataWith` holds.
-    type VmlImageData: ExtraSlot;
+    type VmlImageData: UserDataSlot;
     /// What a `vml::ImageFileWith` holds.
-    type VmlImageFile: ExtraSlot;
+    type VmlImageFile: UserDataSlot;
     /// What a `vml::LineWith` holds.
-    type VmlLine: ExtraSlot;
+    type VmlLine: UserDataSlot;
     /// What a `vml::LineStrokeSettingsWith` holds.
-    type VmlLineStrokeSettings: ExtraSlot;
+    type VmlLineStrokeSettings: UserDataSlot;
     /// What a `vml::MultiplePathLineWith` holds.
-    type VmlMultiplePathLine: ExtraSlot;
+    type VmlMultiplePathLine: UserDataSlot;
     /// What a `vml_office_drawing::CalloutWith` holds.
-    type VmlOfficeDrawingCallout: ExtraSlot;
+    type VmlOfficeDrawingCallout: UserDataSlot;
     /// What a `vml_office_drawing::ComplexWith` holds.
-    type VmlOfficeDrawingComplex: ExtraSlot;
+    type VmlOfficeDrawingComplex: UserDataSlot;
     /// What a `vml_office_drawing::DiagramRelationshipWith` holds.
-    type VmlOfficeDrawingDiagramRelationship: ExtraSlot;
+    type VmlOfficeDrawingDiagramRelationship: UserDataSlot;
     /// What a `vml_office_drawing::DiagramRelationshipTableWith` holds.
-    type VmlOfficeDrawingDiagramRelationshipTable: ExtraSlot;
+    type VmlOfficeDrawingDiagramRelationshipTable: UserDataSlot;
     /// What a `vml_office_drawing::DigitalSignatureLineWith` holds.
-    type VmlOfficeDrawingDigitalSignatureLine: ExtraSlot;
+    type VmlOfficeDrawingDigitalSignatureLine: UserDataSlot;
     /// What a `vml_office_drawing::EmbeddedOLEObjectWith` holds.
-    type VmlOfficeDrawingEmbeddedOLEObject: ExtraSlot;
+    type VmlOfficeDrawingEmbeddedOLEObject: UserDataSlot;
     /// What a `vml_office_drawing::EmbeddedObjectAlternateImageRequestWith` holds.
-    type VmlOfficeDrawingEmbeddedObjectAlternateImageRequest: ExtraSlot;
+    type VmlOfficeDrawingEmbeddedObjectAlternateImageRequest: UserDataSlot;
     /// What a `vml_office_drawing::EmbeddedObjectCannotBeRefreshedWith` holds.
-    type VmlOfficeDrawingEmbeddedObjectCannotBeRefreshed: ExtraSlot;
+    type VmlOfficeDrawingEmbeddedObjectCannotBeRefreshed: UserDataSlot;
     /// What a `vml_office_drawing::ExtrusionWith` holds.
-    type VmlOfficeDrawingExtrusion: ExtraSlot;
+    type VmlOfficeDrawingExtrusion: UserDataSlot;
     /// What a `vml_office_drawing::InkWith` holds.
-    type VmlOfficeDrawingInk: ExtraSlot;
+    type VmlOfficeDrawingInk: UserDataSlot;
     /// What a `vml_office_drawing::MostRecentlyUsedColorsWith` holds.
-    type VmlOfficeDrawingMostRecentlyUsedColors: ExtraSlot;
+    type VmlOfficeDrawingMostRecentlyUsedColors: UserDataSlot;
     /// What a `vml_office_drawing::NewShapeDefaultsWith` holds.
-    type VmlOfficeDrawingNewShapeDefaults: ExtraSlot;
+    type VmlOfficeDrawingNewShapeDefaults: UserDataSlot;
     /// What a `vml_office_drawing::RegroupEntryWith` holds.
-    type VmlOfficeDrawingRegroupEntry: ExtraSlot;
+    type VmlOfficeDrawingRegroupEntry: UserDataSlot;
     /// What a `vml_office_drawing::RuleWith` holds.
-    type VmlOfficeDrawingRule: ExtraSlot;
+    type VmlOfficeDrawingRule: UserDataSlot;
     /// What a `vml_office_drawing::RuleSetWith` holds.
-    type VmlOfficeDrawingRuleSet: ExtraSlot;
+    type VmlOfficeDrawingRuleSet: UserDataSlot;
     /// What a `vml_office_drawing::ShapeClippingPathWith` holds.
-    type VmlOfficeDrawingShapeClippingPath: ExtraSlot;
+    type VmlOfficeDrawingShapeClippingPath: UserDataSlot;
     /// What a `vml_office_drawing::ShapeFillExtendedPropertiesWith` holds.
-    type VmlOfficeDrawingShapeFillExtendedProperties: ExtraSlot;
+    type VmlOfficeDrawingShapeFillExtendedProperties: UserDataSlot;
     /// What a `vml_office_drawing::ShapeGroupingHistoryWith` holds.
-    type VmlOfficeDrawingShapeGroupingHistory: ExtraSlot;
+    type VmlOfficeDrawingShapeGroupingHistory: UserDataSlot;
     /// What a `vml_office_drawing::ShapeIDMapWith` holds.
-    type VmlOfficeDrawingShapeIDMap: ExtraSlot;
+    type VmlOfficeDrawingShapeIDMap: UserDataSlot;
     /// What a `vml_office_drawing::ShapeLayoutPropertiesWith` holds.
-    type VmlOfficeDrawingShapeLayoutProperties: ExtraSlot;
+    type VmlOfficeDrawingShapeLayoutProperties: UserDataSlot;
     /// What a `vml_office_drawing::ShapeProtectionsWith` holds.
-    type VmlOfficeDrawingShapeProtections: ExtraSlot;
+    type VmlOfficeDrawingShapeProtections: UserDataSlot;
     /// What a `vml_office_drawing::ShapeReferenceWith` holds.
-    type VmlOfficeDrawingShapeReference: ExtraSlot;
+    type VmlOfficeDrawingShapeReference: UserDataSlot;
     /// What a `vml_office_drawing::SkewTransformWith` holds.
-    type VmlOfficeDrawingSkewTransform: ExtraSlot;
+    type VmlOfficeDrawingSkewTransform: UserDataSlot;
     /// What a `vml_office_drawing::StorageForAlternateMathContentWith` holds.
-    type VmlOfficeDrawingStorageForAlternateMathContent: ExtraSlot;
+    type VmlOfficeDrawingStorageForAlternateMathContent: UserDataSlot;
     /// What a `vml_office_drawing::TextBoxBottomStrokeWith` holds.
-    type VmlOfficeDrawingTextBoxBottomStroke: ExtraSlot;
+    type VmlOfficeDrawingTextBoxBottomStroke: UserDataSlot;
     /// What a `vml_office_drawing::TextBoxInteriorStrokeWith` holds.
-    type VmlOfficeDrawingTextBoxInteriorStroke: ExtraSlot;
+    type VmlOfficeDrawingTextBoxInteriorStroke: UserDataSlot;
     /// What a `vml_office_drawing::TextBoxLeftStrokeWith` holds.
-    type VmlOfficeDrawingTextBoxLeftStroke: ExtraSlot;
+    type VmlOfficeDrawingTextBoxLeftStroke: UserDataSlot;
     /// What a `vml_office_drawing::TextBoxRightStrokeWith` holds.
-    type VmlOfficeDrawingTextBoxRightStroke: ExtraSlot;
+    type VmlOfficeDrawingTextBoxRightStroke: UserDataSlot;
     /// What a `vml_office_drawing::TextBoxTopStrokeWith` holds.
-    type VmlOfficeDrawingTextBoxTopStroke: ExtraSlot;
+    type VmlOfficeDrawingTextBoxTopStroke: UserDataSlot;
     /// What a `vml_office_drawing::UIDefaultColorsWith` holds.
-    type VmlOfficeDrawingUIDefaultColors: ExtraSlot;
+    type VmlOfficeDrawingUIDefaultColors: UserDataSlot;
     /// What a `vml_office_drawing::VMLDiagramWith` holds.
-    type VmlOfficeDrawingVMLDiagram: ExtraSlot;
+    type VmlOfficeDrawingVMLDiagram: UserDataSlot;
     /// What a `vml_office_drawing::WordprocessingMLFieldSwitchesWith` holds.
-    type VmlOfficeDrawingWordprocessingMLFieldSwitches: ExtraSlot;
+    type VmlOfficeDrawingWordprocessingMLFieldSwitches: UserDataSlot;
     /// What a `vml::OvalWith` holds.
-    type VmlOval: ExtraSlot;
+    type VmlOval: UserDataSlot;
     /// What a `vml_presentation_drawing::InkAnnotationFlagWith` holds.
-    type VmlPresentationDrawingInkAnnotationFlag: ExtraSlot;
+    type VmlPresentationDrawingInkAnnotationFlag: UserDataSlot;
     /// What a `vml_presentation_drawing::VMLDiagramTextWith` holds.
-    type VmlPresentationDrawingVMLDiagramText: ExtraSlot;
+    type VmlPresentationDrawingVMLDiagramText: UserDataSlot;
     /// What a `vml::RectangleWith` holds.
-    type VmlRectangle: ExtraSlot;
+    type VmlRectangle: UserDataSlot;
     /// What a `vml::RoundedRectangleWith` holds.
-    type VmlRoundedRectangle: ExtraSlot;
+    type VmlRoundedRectangle: UserDataSlot;
     /// What a `vml::SetOfFormulasWith` holds.
-    type VmlSetOfFormulas: ExtraSlot;
+    type VmlSetOfFormulas: UserDataSlot;
     /// What a `vml::SetOfHandlesWith` holds.
-    type VmlSetOfHandles: ExtraSlot;
+    type VmlSetOfHandles: UserDataSlot;
     /// What a `vml::ShadowEffectWith` holds.
-    type VmlShadowEffect: ExtraSlot;
+    type VmlShadowEffect: UserDataSlot;
     /// What a `vml::ShapeDefinitionWith` holds.
-    type VmlShapeDefinition: ExtraSlot;
+    type VmlShapeDefinition: UserDataSlot;
     /// What a `vml::ShapeFillPropertiesWith` holds.
-    type VmlShapeFillProperties: ExtraSlot;
+    type VmlShapeFillProperties: UserDataSlot;
     /// What a `vml::ShapeGroupWith` holds.
-    type VmlShapeGroup: ExtraSlot;
+    type VmlShapeGroup: UserDataSlot;
     /// What a `vml::ShapeHandleWith` holds.
-    type VmlShapeHandle: ExtraSlot;
+    type VmlShapeHandle: UserDataSlot;
     /// What a `vml::ShapePathWith` holds.
-    type VmlShapePath: ExtraSlot;
+    type VmlShapePath: UserDataSlot;
     /// What a `vml::ShapeTemplateWith` holds.
-    type VmlShapeTemplate: ExtraSlot;
+    type VmlShapeTemplate: UserDataSlot;
     /// What a `vml::SingleFormulaWith` holds.
-    type VmlSingleFormula: ExtraSlot;
+    type VmlSingleFormula: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::AnchorWith` holds.
-    type VmlSpreadsheetDrawingAnchor: ExtraSlot;
+    type VmlSpreadsheetDrawingAnchor: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::AttachedObjectDataWith` holds.
-    type VmlSpreadsheetDrawingAttachedObjectData: ExtraSlot;
+    type VmlSpreadsheetDrawingAttachedObjectData: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::AutoFillWith` holds.
-    type VmlSpreadsheetDrawingAutoFill: ExtraSlot;
+    type VmlSpreadsheetDrawingAutoFill: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::AutoLineWith` holds.
-    type VmlSpreadsheetDrawingAutoLine: ExtraSlot;
+    type VmlSpreadsheetDrawingAutoLine: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::AutomaticallySizeWith` holds.
-    type VmlSpreadsheetDrawingAutomaticallySize: ExtraSlot;
+    type VmlSpreadsheetDrawingAutomaticallySize: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::CallbackTypeWith` holds.
-    type VmlSpreadsheetDrawingCallbackType: ExtraSlot;
+    type VmlSpreadsheetDrawingCallbackType: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::CameraSourceRangeWith` holds.
-    type VmlSpreadsheetDrawingCameraSourceRange: ExtraSlot;
+    type VmlSpreadsheetDrawingCameraSourceRange: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::CameraToolWith` holds.
-    type VmlSpreadsheetDrawingCameraTool: ExtraSlot;
+    type VmlSpreadsheetDrawingCameraTool: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::CancelButtonWith` holds.
-    type VmlSpreadsheetDrawingCancelButton: ExtraSlot;
+    type VmlSpreadsheetDrawingCancelButton: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::CheckedWith` holds.
-    type VmlSpreadsheetDrawingChecked: ExtraSlot;
+    type VmlSpreadsheetDrawingChecked: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::ClipboardFormatWith` holds.
-    type VmlSpreadsheetDrawingClipboardFormat: ExtraSlot;
+    type VmlSpreadsheetDrawingClipboardFormat: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::CommentColumnTargetWith` holds.
-    type VmlSpreadsheetDrawingCommentColumnTarget: ExtraSlot;
+    type VmlSpreadsheetDrawingCommentColumnTarget: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::CommentRowTargetWith` holds.
-    type VmlSpreadsheetDrawingCommentRowTarget: ExtraSlot;
+    type VmlSpreadsheetDrawingCommentRowTarget: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::CommentVisibilityToggleWith` holds.
-    type VmlSpreadsheetDrawingCommentVisibilityToggle: ExtraSlot;
+    type VmlSpreadsheetDrawingCommentVisibilityToggle: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::CommentsColumnIsHiddenWith` holds.
-    type VmlSpreadsheetDrawingCommentsColumnIsHidden: ExtraSlot;
+    type VmlSpreadsheetDrawingCommentsColumnIsHidden: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::CommentsRowIsHiddenWith` holds.
-    type VmlSpreadsheetDrawingCommentsRowIsHidden: ExtraSlot;
+    type VmlSpreadsheetDrawingCommentsRowIsHidden: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::DefaultButtonWith` holds.
-    type VmlSpreadsheetDrawingDefaultButton: ExtraSlot;
+    type VmlSpreadsheetDrawingDefaultButton: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::DefaultSizeToggleWith` holds.
-    type VmlSpreadsheetDrawingDefaultSizeToggle: ExtraSlot;
+    type VmlSpreadsheetDrawingDefaultSizeToggle: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::Disable3DNoThreeDWith` holds.
-    type VmlSpreadsheetDrawingDisable3DNoThreeD: ExtraSlot;
+    type VmlSpreadsheetDrawingDisable3DNoThreeD: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::Disable3DNoThreeD2With` holds.
-    type VmlSpreadsheetDrawingDisable3DNoThreeD2: ExtraSlot;
+    type VmlSpreadsheetDrawingDisable3DNoThreeD2: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::DismissButtonWith` holds.
-    type VmlSpreadsheetDrawingDismissButton: ExtraSlot;
+    type VmlSpreadsheetDrawingDismissButton: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::DropdownColorToggleWith` holds.
-    type VmlSpreadsheetDrawingDropdownColorToggle: ExtraSlot;
+    type VmlSpreadsheetDrawingDropdownColorToggle: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::DropdownMaximumLinesWith` holds.
-    type VmlSpreadsheetDrawingDropdownMaximumLines: ExtraSlot;
+    type VmlSpreadsheetDrawingDropdownMaximumLines: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::DropdownStyleWith` holds.
-    type VmlSpreadsheetDrawingDropdownStyle: ExtraSlot;
+    type VmlSpreadsheetDrawingDropdownStyle: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::DynamicDataExchangeWith` holds.
-    type VmlSpreadsheetDrawingDynamicDataExchange: ExtraSlot;
+    type VmlSpreadsheetDrawingDynamicDataExchange: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::EmbeddedControlWith` holds.
-    type VmlSpreadsheetDrawingEmbeddedControl: ExtraSlot;
+    type VmlSpreadsheetDrawingEmbeddedControl: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::FarEastAlignmentToggleWith` holds.
-    type VmlSpreadsheetDrawingFarEastAlignmentToggle: ExtraSlot;
+    type VmlSpreadsheetDrawingFarEastAlignmentToggle: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::FirstRadioButtonWith` holds.
-    type VmlSpreadsheetDrawingFirstRadioButton: ExtraSlot;
+    type VmlSpreadsheetDrawingFirstRadioButton: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::FontAutoScaleWith` holds.
-    type VmlSpreadsheetDrawingFontAutoScale: ExtraSlot;
+    type VmlSpreadsheetDrawingFontAutoScale: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::HTMLScriptAttributesWith` holds.
-    type VmlSpreadsheetDrawingHTMLScriptAttributes: ExtraSlot;
+    type VmlSpreadsheetDrawingHTMLScriptAttributes: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::HTMLScriptLanguageWith` holds.
-    type VmlSpreadsheetDrawingHTMLScriptLanguage: ExtraSlot;
+    type VmlSpreadsheetDrawingHTMLScriptLanguage: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::HTMLScriptLocationWith` holds.
-    type VmlSpreadsheetDrawingHTMLScriptLocation: ExtraSlot;
+    type VmlSpreadsheetDrawingHTMLScriptLocation: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::HTMLScriptTextWith` holds.
-    type VmlSpreadsheetDrawingHTMLScriptText: ExtraSlot;
+    type VmlSpreadsheetDrawingHTMLScriptText: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::HelpButtonWith` holds.
-    type VmlSpreadsheetDrawingHelpButton: ExtraSlot;
+    type VmlSpreadsheetDrawingHelpButton: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::HorizontalTextAlignmentWith` holds.
-    type VmlSpreadsheetDrawingHorizontalTextAlignment: ExtraSlot;
+    type VmlSpreadsheetDrawingHorizontalTextAlignment: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::LinkedFormulaWith` holds.
-    type VmlSpreadsheetDrawingLinkedFormula: ExtraSlot;
+    type VmlSpreadsheetDrawingLinkedFormula: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::LinkedFormulaGroupBoxWith` holds.
-    type VmlSpreadsheetDrawingLinkedFormulaGroupBox: ExtraSlot;
+    type VmlSpreadsheetDrawingLinkedFormulaGroupBox: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::ListItemsSourceRangeWith` holds.
-    type VmlSpreadsheetDrawingListItemsSourceRange: ExtraSlot;
+    type VmlSpreadsheetDrawingListItemsSourceRange: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::LockToggleWith` holds.
-    type VmlSpreadsheetDrawingLockToggle: ExtraSlot;
+    type VmlSpreadsheetDrawingLockToggle: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::MacroDisableToggleWith` holds.
-    type VmlSpreadsheetDrawingMacroDisableToggle: ExtraSlot;
+    type VmlSpreadsheetDrawingMacroDisableToggle: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::MinimumWidthWith` holds.
-    type VmlSpreadsheetDrawingMinimumWidth: ExtraSlot;
+    type VmlSpreadsheetDrawingMinimumWidth: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::MoveWithCellsWith` holds.
-    type VmlSpreadsheetDrawingMoveWithCells: ExtraSlot;
+    type VmlSpreadsheetDrawingMoveWithCells: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::MultiLineWith` holds.
-    type VmlSpreadsheetDrawingMultiLine: ExtraSlot;
+    type VmlSpreadsheetDrawingMultiLine: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::MultipleSelectionsWith` holds.
-    type VmlSpreadsheetDrawingMultipleSelections: ExtraSlot;
+    type VmlSpreadsheetDrawingMultipleSelections: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::NonLinkedListItemWith` holds.
-    type VmlSpreadsheetDrawingNonLinkedListItem: ExtraSlot;
+    type VmlSpreadsheetDrawingNonLinkedListItem: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::PasswordEditWith` holds.
-    type VmlSpreadsheetDrawingPasswordEdit: ExtraSlot;
+    type VmlSpreadsheetDrawingPasswordEdit: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::PrimaryKeyboardAcceleratorWith` holds.
-    type VmlSpreadsheetDrawingPrimaryKeyboardAccelerator: ExtraSlot;
+    type VmlSpreadsheetDrawingPrimaryKeyboardAccelerator: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::PrintToggleWith` holds.
-    type VmlSpreadsheetDrawingPrintToggle: ExtraSlot;
+    type VmlSpreadsheetDrawingPrintToggle: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::RecalculationToggleWith` holds.
-    type VmlSpreadsheetDrawingRecalculationToggle: ExtraSlot;
+    type VmlSpreadsheetDrawingRecalculationToggle: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::ReferenceToCustomFunctionWith` holds.
-    type VmlSpreadsheetDrawingReferenceToCustomFunction: ExtraSlot;
+    type VmlSpreadsheetDrawingReferenceToCustomFunction: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::ResizeWithCellsWith` holds.
-    type VmlSpreadsheetDrawingResizeWithCells: ExtraSlot;
+    type VmlSpreadsheetDrawingResizeWithCells: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::ScrollBarIncrementWith` holds.
-    type VmlSpreadsheetDrawingScrollBarIncrement: ExtraSlot;
+    type VmlSpreadsheetDrawingScrollBarIncrement: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::ScrollBarMaximumWith` holds.
-    type VmlSpreadsheetDrawingScrollBarMaximum: ExtraSlot;
+    type VmlSpreadsheetDrawingScrollBarMaximum: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::ScrollBarMinimumWith` holds.
-    type VmlSpreadsheetDrawingScrollBarMinimum: ExtraSlot;
+    type VmlSpreadsheetDrawingScrollBarMinimum: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::ScrollBarOrientationWith` holds.
-    type VmlSpreadsheetDrawingScrollBarOrientation: ExtraSlot;
+    type VmlSpreadsheetDrawingScrollBarOrientation: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::ScrollBarPageIncrementWith` holds.
-    type VmlSpreadsheetDrawingScrollBarPageIncrement: ExtraSlot;
+    type VmlSpreadsheetDrawingScrollBarPageIncrement: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::ScrollBarPositionWith` holds.
-    type VmlSpreadsheetDrawingScrollBarPosition: ExtraSlot;
+    type VmlSpreadsheetDrawingScrollBarPosition: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::ScrollBarWidthWith` holds.
-    type VmlSpreadsheetDrawingScrollBarWidth: ExtraSlot;
+    type VmlSpreadsheetDrawingScrollBarWidth: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::SecondaryKeyboardAcceleratorWith` holds.
-    type VmlSpreadsheetDrawingSecondaryKeyboardAccelerator: ExtraSlot;
+    type VmlSpreadsheetDrawingSecondaryKeyboardAccelerator: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::SelectedEntryWith` holds.
-    type VmlSpreadsheetDrawingSelectedEntry: ExtraSlot;
+    type VmlSpreadsheetDrawingSelectedEntry: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::SelectionTypeWith` holds.
-    type VmlSpreadsheetDrawingSelectionType: ExtraSlot;
+    type VmlSpreadsheetDrawingSelectionType: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::TextFormulaWith` holds.
-    type VmlSpreadsheetDrawingTextFormula: ExtraSlot;
+    type VmlSpreadsheetDrawingTextFormula: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::TextLockWith` holds.
-    type VmlSpreadsheetDrawingTextLock: ExtraSlot;
+    type VmlSpreadsheetDrawingTextLock: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::UIObjectToggleWith` holds.
-    type VmlSpreadsheetDrawingUIObjectToggle: ExtraSlot;
+    type VmlSpreadsheetDrawingUIObjectToggle: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::ValidIDWith` holds.
-    type VmlSpreadsheetDrawingValidID: ExtraSlot;
+    type VmlSpreadsheetDrawingValidID: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::ValidationTypeWith` holds.
-    type VmlSpreadsheetDrawingValidationType: ExtraSlot;
+    type VmlSpreadsheetDrawingValidationType: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::VerticalScrollWith` holds.
-    type VmlSpreadsheetDrawingVerticalScroll: ExtraSlot;
+    type VmlSpreadsheetDrawingVerticalScroll: UserDataSlot;
     /// What a `vml_spreadsheet_drawing::VerticalTextAlignmentWith` holds.
-    type VmlSpreadsheetDrawingVerticalTextAlignment: ExtraSlot;
+    type VmlSpreadsheetDrawingVerticalTextAlignment: UserDataSlot;
     /// What a `vml::TextBoxWith` holds.
-    type VmlTextBox: ExtraSlot;
+    type VmlTextBox: UserDataSlot;
     /// What a `vml::TextLayoutPathWith` holds.
-    type VmlTextLayoutPath: ExtraSlot;
+    type VmlTextLayoutPath: UserDataSlot;
     /// What a `vml_wordprocessing_drawing::AnchorLocationIsLockedWith` holds.
-    type VmlWordprocessingDrawingAnchorLocationIsLocked: ExtraSlot;
+    type VmlWordprocessingDrawingAnchorLocationIsLocked: UserDataSlot;
     /// What a `vml_wordprocessing_drawing::BottomBorderWith` holds.
-    type VmlWordprocessingDrawingBottomBorder: ExtraSlot;
+    type VmlWordprocessingDrawingBottomBorder: UserDataSlot;
     /// What a `vml_wordprocessing_drawing::LeftBorderWith` holds.
-    type VmlWordprocessingDrawingLeftBorder: ExtraSlot;
+    type VmlWordprocessingDrawingLeftBorder: UserDataSlot;
     /// What a `vml_wordprocessing_drawing::RightBorderWith` holds.
-    type VmlWordprocessingDrawingRightBorder: ExtraSlot;
+    type VmlWordprocessingDrawingRightBorder: UserDataSlot;
     /// What a `vml_wordprocessing_drawing::TextWrappingWith` holds.
-    type VmlWordprocessingDrawingTextWrapping: ExtraSlot;
+    type VmlWordprocessingDrawingTextWrapping: UserDataSlot;
     /// What a `vml_wordprocessing_drawing::TopBorderWith` holds.
-    type VmlWordprocessingDrawingTopBorder: ExtraSlot;
+    type VmlWordprocessingDrawingTopBorder: UserDataSlot;
     /// What a `wordprocessing::AbsolutePositionTabCharacterWith` holds.
-    type WordprocessingAbsolutePositionTabCharacter: ExtraSlot;
+    type WordprocessingAbsolutePositionTabCharacter: UserDataSlot;
     /// What a `wordprocessing::AbstractNumberingDefinitionWith` holds.
-    type WordprocessingAbstractNumberingDefinition: ExtraSlot;
+    type WordprocessingAbstractNumberingDefinition: UserDataSlot;
     /// What a `wordprocessing::AbstractNumberingDefinitionIdentifierWith` holds.
-    type WordprocessingAbstractNumberingDefinitionIdentifier: ExtraSlot;
+    type WordprocessingAbstractNumberingDefinitionIdentifier: UserDataSlot;
     /// What a `wordprocessing::AbstractNumberingDefinitionReferenceWith` holds.
-    type WordprocessingAbstractNumberingDefinitionReference: ExtraSlot;
+    type WordprocessingAbstractNumberingDefinitionReference: UserDataSlot;
     /// What a `wordprocessing::AbstractNumberingDefinitionTypeWith` holds.
-    type WordprocessingAbstractNumberingDefinitionType: ExtraSlot;
+    type WordprocessingAbstractNumberingDefinitionType: UserDataSlot;
     /// What a `wordprocessing::AddDocumentGridLinePitchWith` holds.
-    type WordprocessingAddDocumentGridLinePitch: ExtraSlot;
+    type WordprocessingAddDocumentGridLinePitch: UserDataSlot;
     /// What a `wordprocessing::AddSpaceBelowUnderlinedTextWith` holds.
-    type WordprocessingAddSpaceBelowUnderlinedText: ExtraSlot;
+    type WordprocessingAddSpaceBelowUnderlinedText: UserDataSlot;
     /// What a `wordprocessing::AdjustSpacingEastAsianTextNumbersWith` holds.
-    type WordprocessingAdjustSpacingEastAsianTextNumbers: ExtraSlot;
+    type WordprocessingAdjustSpacingEastAsianTextNumbers: UserDataSlot;
     /// What a `wordprocessing::AdjustSpacingLatinEastAsianTextWith` holds.
-    type WordprocessingAdjustSpacingLatinEastAsianText: ExtraSlot;
+    type WordprocessingAdjustSpacingLatinEastAsianText: UserDataSlot;
     /// What a `wordprocessing::AlignParagraphAndTableBordersWith` holds.
-    type WordprocessingAlignParagraphAndTableBorders: ExtraSlot;
+    type WordprocessingAlignParagraphAndTableBorders: UserDataSlot;
     /// What a `wordprocessing::AlignTableRowsIndependentlyWith` holds.
-    type WordprocessingAlignTableRowsIndependently: ExtraSlot;
+    type WordprocessingAlignTableRowsIndependently: UserDataSlot;
     /// What a `wordprocessing::AllowAutomaticFormattingOverrideWith` holds.
-    type WordprocessingAllowAutomaticFormattingOverride: ExtraSlot;
+    type WordprocessingAllowAutomaticFormattingOverride: UserDataSlot;
     /// What a `wordprocessing::AllowContextualSpacingOfParagraphsInTablesWith` holds.
-    type WordprocessingAllowContextualSpacingOfParagraphsInTables: ExtraSlot;
+    type WordprocessingAllowContextualSpacingOfParagraphsInTables: UserDataSlot;
     /// What a `wordprocessing::AllowFirstLastLineDisplayWith` holds.
-    type WordprocessingAllowFirstLastLineDisplay: ExtraSlot;
+    type WordprocessingAllowFirstLastLineDisplay: UserDataSlot;
     /// What a `wordprocessing::AllowLineBreakingAtCharacterLevelWith` holds.
-    type WordprocessingAllowLineBreakingAtCharacterLevel: ExtraSlot;
+    type WordprocessingAllowLineBreakingAtCharacterLevel: UserDataSlot;
     /// What a `wordprocessing::AllowPNGAsGraphicFormatWith` holds.
-    type WordprocessingAllowPNGAsGraphicFormat: ExtraSlot;
+    type WordprocessingAllowPNGAsGraphicFormat: UserDataSlot;
     /// What a `wordprocessing::AllowPunctuationExtendPastTextExtentsWith` holds.
-    type WordprocessingAllowPunctuationExtendPastTextExtents: ExtraSlot;
+    type WordprocessingAllowPunctuationExtendPastTextExtents: UserDataSlot;
     /// What a `wordprocessing::AllowSavingDocumentAsXMLFileWith` holds.
-    type WordprocessingAllowSavingDocumentAsXMLFile: ExtraSlot;
+    type WordprocessingAllowSavingDocumentAsXMLFile: UserDataSlot;
     /// What a `wordprocessing::AllowTableRowsToWrapInlineObjectsIndependentlyWith` holds.
-    type WordprocessingAllowTableRowsToWrapInlineObjectsIndependently: ExtraSlot;
+    type WordprocessingAllowTableRowsToWrapInlineObjectsIndependently: UserDataSlot;
     /// What a `wordprocessing::AllowTablesToAutoFitIntoPageMarginsWith` holds.
-    type WordprocessingAllowTablesToAutoFitIntoPageMargins: ExtraSlot;
+    type WordprocessingAllowTablesToAutoFitIntoPageMargins: UserDataSlot;
     /// What a `wordprocessing::AlternateNamesForFontWith` holds.
-    type WordprocessingAlternateNamesForFont: ExtraSlot;
+    type WordprocessingAlternateNamesForFont: UserDataSlot;
     /// What a `wordprocessing::AlternateStyleNamesWith` holds.
-    type WordprocessingAlternateStyleNames: ExtraSlot;
+    type WordprocessingAlternateStyleNames: UserDataSlot;
     /// What a `wordprocessing::AlwaysMergeEmptyNamespaceWith` holds.
-    type WordprocessingAlwaysMergeEmptyNamespace: ExtraSlot;
+    type WordprocessingAlwaysMergeEmptyNamespace: UserDataSlot;
     /// What a `wordprocessing::AlwaysShowPlaceholderTextWith` holds.
-    type WordprocessingAlwaysShowPlaceholderText: ExtraSlot;
+    type WordprocessingAlwaysShowPlaceholderText: UserDataSlot;
     /// What a `wordprocessing::AlwaysUseFixedWidthForHangulCharactersWith` holds.
-    type WordprocessingAlwaysUseFixedWidthForHangulCharacters: ExtraSlot;
+    type WordprocessingAlwaysUseFixedWidthForHangulCharacters: UserDataSlot;
     /// What a `wordprocessing::AnchorForImportedExternalContentWith` holds.
-    type WordprocessingAnchorForImportedExternalContent: ExtraSlot;
+    type WordprocessingAnchorForImportedExternalContent: UserDataSlot;
     /// What a `wordprocessing::AnchorForSubdocumentLocationWith` holds.
-    type WordprocessingAnchorForSubdocumentLocation: ExtraSlot;
+    type WordprocessingAnchorForSubdocumentLocation: UserDataSlot;
     /// What a `wordprocessing::AnimatedTextEffectWith` holds.
-    type WordprocessingAnimatedTextEffect: ExtraSlot;
+    type WordprocessingAnimatedTextEffect: UserDataSlot;
     /// What a `wordprocessing::AssociatedHTMLDivIDWith` holds.
-    type WordprocessingAssociatedHTMLDivID: ExtraSlot;
+    type WordprocessingAssociatedHTMLDivID: UserDataSlot;
     /// What a `wordprocessing::AssociatedHelpTextWith` holds.
-    type WordprocessingAssociatedHelpText: ExtraSlot;
+    type WordprocessingAssociatedHelpText: UserDataSlot;
     /// What a `wordprocessing::AssociatedOutlineLevelWith` holds.
-    type WordprocessingAssociatedOutlineLevel: ExtraSlot;
+    type WordprocessingAssociatedOutlineLevel: UserDataSlot;
     /// What a `wordprocessing::AssociatedParagraphStyleNameWith` holds.
-    type WordprocessingAssociatedParagraphStyleName: ExtraSlot;
+    type WordprocessingAssociatedParagraphStyleName: UserDataSlot;
     /// What a `wordprocessing::AssociatedStatusTextWith` holds.
-    type WordprocessingAssociatedStatusText: ExtraSlot;
+    type WordprocessingAssociatedStatusText: UserDataSlot;
     /// What a `wordprocessing::AttachedCustomXMLSchemaWith` holds.
-    type WordprocessingAttachedCustomXMLSchema: ExtraSlot;
+    type WordprocessingAttachedCustomXMLSchema: UserDataSlot;
     /// What a `wordprocessing::AttachedDocumentTemplateWith` holds.
-    type WordprocessingAttachedDocumentTemplate: ExtraSlot;
+    type WordprocessingAttachedDocumentTemplate: UserDataSlot;
     /// What a `wordprocessing::AutoSpaceLikeWord95With` holds.
-    type WordprocessingAutoSpaceLikeWord95: ExtraSlot;
+    type WordprocessingAutoSpaceLikeWord95: UserDataSlot;
     /// What a `wordprocessing::AutofitToFirstFixedWidthCellWith` holds.
-    type WordprocessingAutofitToFirstFixedWidthCell: ExtraSlot;
+    type WordprocessingAutofitToFirstFixedWidthCell: UserDataSlot;
     /// What a `wordprocessing::AutomaticCaptioningSettingsWith` holds.
-    type WordprocessingAutomaticCaptioningSettings: ExtraSlot;
+    type WordprocessingAutomaticCaptioningSettings: UserDataSlot;
     /// What a `wordprocessing::AutomaticallyAdjustRightIndentWith` holds.
-    type WordprocessingAutomaticallyAdjustRightIndent: ExtraSlot;
+    type WordprocessingAutomaticallyAdjustRightIndent: UserDataSlot;
     /// What a `wordprocessing::AutomaticallyHyphenateDocumentContentsWhenDisplayedWith` holds.
-    type WordprocessingAutomaticallyHyphenateDocumentContentsWhenDisplayed: ExtraSlot;
+    type WordprocessingAutomaticallyHyphenateDocumentContentsWhenDisplayed: UserDataSlot;
     /// What a `wordprocessing::AutomaticallyMergeUserFormattingWith` holds.
-    type WordprocessingAutomaticallyMergeUserFormatting: ExtraSlot;
+    type WordprocessingAutomaticallyMergeUserFormatting: UserDataSlot;
     /// What a `wordprocessing::AutomaticallyRecalculateFieldsOnOpenWith` holds.
-    type WordprocessingAutomaticallyRecalculateFieldsOnOpen: ExtraSlot;
+    type WordprocessingAutomaticallyRecalculateFieldsOnOpen: UserDataSlot;
     /// What a `wordprocessing::AutomaticallySizeFormFieldWith` holds.
-    type WordprocessingAutomaticallySizeFormField: ExtraSlot;
+    type WordprocessingAutomaticallySizeFormField: UserDataSlot;
     /// What a `wordprocessing::AutomaticallyUpdateStylesFromDocumentTemplateWith` holds.
-    type WordprocessingAutomaticallyUpdateStylesFromDocumentTemplate: ExtraSlot;
+    type WordprocessingAutomaticallyUpdateStylesFromDocumentTemplate: UserDataSlot;
     /// What a `wordprocessing::BalanceSingleByteDoubleByteWidthWith` holds.
-    type WordprocessingBalanceSingleByteDoubleByteWidth: ExtraSlot;
+    type WordprocessingBalanceSingleByteDoubleByteWidth: UserDataSlot;
     /// What a `wordprocessing::BibliographyStructuredDocumentTagWith` holds.
-    type WordprocessingBibliographyStructuredDocumentTag: ExtraSlot;
+    type WordprocessingBibliographyStructuredDocumentTag: UserDataSlot;
     /// What a `wordprocessing::BidirectionalEmbeddingLevelWith` holds.
-    type WordprocessingBidirectionalEmbeddingLevel: ExtraSlot;
+    type WordprocessingBidirectionalEmbeddingLevel: UserDataSlot;
     /// What a `wordprocessing::BidirectionalOverrideWith` holds.
-    type WordprocessingBidirectionalOverride: ExtraSlot;
+    type WordprocessingBidirectionalOverride: UserDataSlot;
     /// What a `wordprocessing::BlockLevelCustomXMLElementWith` holds.
-    type WordprocessingBlockLevelCustomXMLElement: ExtraSlot;
+    type WordprocessingBlockLevelCustomXMLElement: UserDataSlot;
     /// What a `wordprocessing::BlockLevelStructuredDocumentTagWith` holds.
-    type WordprocessingBlockLevelStructuredDocumentTag: ExtraSlot;
+    type WordprocessingBlockLevelStructuredDocumentTag: UserDataSlot;
     /// What a `wordprocessing::BlockLevelStructuredDocumentTagContentWith` holds.
-    type WordprocessingBlockLevelStructuredDocumentTagContent: ExtraSlot;
+    type WordprocessingBlockLevelStructuredDocumentTagContent: UserDataSlot;
     /// What a `wordprocessing::BoldWith` holds.
-    type WordprocessingBold: ExtraSlot;
+    type WordprocessingBold: UserDataSlot;
     /// What a `wordprocessing::BoldItalicFontStyleEmbeddingWith` holds.
-    type WordprocessingBoldItalicFontStyleEmbedding: ExtraSlot;
+    type WordprocessingBoldItalicFontStyleEmbedding: UserDataSlot;
     /// What a `wordprocessing::BoldStyleFontStyleEmbeddingWith` holds.
-    type WordprocessingBoldStyleFontStyleEmbedding: ExtraSlot;
+    type WordprocessingBoldStyleFontStyleEmbedding: UserDataSlot;
     /// What a `wordprocessing::BookFoldPrintingWith` holds.
-    type WordprocessingBookFoldPrinting: ExtraSlot;
+    type WordprocessingBookFoldPrinting: UserDataSlot;
     /// What a `wordprocessing::BookmarkEndWith` holds.
-    type WordprocessingBookmarkEnd: ExtraSlot;
+    type WordprocessingBookmarkEnd: UserDataSlot;
     /// What a `wordprocessing::BookmarkStartWith` holds.
-    type WordprocessingBookmarkStart: ExtraSlot;
+    type WordprocessingBookmarkStart: UserDataSlot;
     /// What a `wordprocessing::BottomBorderWith` holds.
-    type WordprocessingBottomBorder: ExtraSlot;
+    type WordprocessingBottomBorder: UserDataSlot;
     /// What a `wordprocessing::BottomMarginForHTMLDivWith` holds.
-    type WordprocessingBottomMarginForHTMLDiv: ExtraSlot;
+    type WordprocessingBottomMarginForHTMLDiv: UserDataSlot;
     /// What a `wordprocessing::BreakWith` holds.
-    type WordprocessingBreak: ExtraSlot;
+    type WordprocessingBreak: UserDataSlot;
     /// What a `wordprocessing::BuiltInDocumentPartWith` holds.
-    type WordprocessingBuiltInDocumentPart: ExtraSlot;
+    type WordprocessingBuiltInDocumentPart: UserDataSlot;
     /// What a `wordprocessing::BuiltInDocumentPartStructuredDocumentTagWith` holds.
-    type WordprocessingBuiltInDocumentPartStructuredDocumentTag: ExtraSlot;
+    type WordprocessingBuiltInDocumentPartStructuredDocumentTag: UserDataSlot;
     /// What a `wordprocessing::CaptionSettingsWith` holds.
-    type WordprocessingCaptionSettings: ExtraSlot;
+    type WordprocessingCaptionSettings: UserDataSlot;
     /// What a `wordprocessing::CarriageReturnWith` holds.
-    type WordprocessingCarriageReturn: ExtraSlot;
+    type WordprocessingCarriageReturn: UserDataSlot;
     /// What a `wordprocessing::CellLevelCustomXMLElementWith` holds.
-    type WordprocessingCellLevelCustomXMLElement: ExtraSlot;
+    type WordprocessingCellLevelCustomXMLElement: UserDataSlot;
     /// What a `wordprocessing::CellLevelStructuredDocumentTagWith` holds.
-    type WordprocessingCellLevelStructuredDocumentTag: ExtraSlot;
+    type WordprocessingCellLevelStructuredDocumentTag: UserDataSlot;
     /// What a `wordprocessing::CellLevelStructuredDocumentTagContentWith` holds.
-    type WordprocessingCellLevelStructuredDocumentTagContent: ExtraSlot;
+    type WordprocessingCellLevelStructuredDocumentTagContent: UserDataSlot;
     /// What a `wordprocessing::CharacterLevelWhitespaceCompressionWith` holds.
-    type WordprocessingCharacterLevelWhitespaceCompression: ExtraSlot;
+    type WordprocessingCharacterLevelWhitespaceCompression: UserDataSlot;
     /// What a `wordprocessing::CharacterSetSupportedByFontWith` holds.
-    type WordprocessingCharacterSetSupportedByFont: ExtraSlot;
+    type WordprocessingCharacterSetSupportedByFont: UserDataSlot;
     /// What a `wordprocessing::CharacterSpacingAdjustmentWith` holds.
-    type WordprocessingCharacterSpacingAdjustment: ExtraSlot;
+    type WordprocessingCharacterSpacingAdjustment: UserDataSlot;
     /// What a `wordprocessing::CharactersWhichCannotBeginALineWith` holds.
-    type WordprocessingCharactersWhichCannotBeginALine: ExtraSlot;
+    type WordprocessingCharactersWhichCannotBeginALine: UserDataSlot;
     /// What a `wordprocessing::CharactersWhichCannotEndALineWith` holds.
-    type WordprocessingCharactersWhichCannotEndALine: ExtraSlot;
+    type WordprocessingCharactersWhichCannotEndALine: UserDataSlot;
     /// What a `wordprocessing::CheckboxFormFieldPropertiesWith` holds.
-    type WordprocessingCheckboxFormFieldProperties: ExtraSlot;
+    type WordprocessingCheckboxFormFieldProperties: UserDataSlot;
     /// What a `wordprocessing::CheckboxFormFieldSizeWith` holds.
-    type WordprocessingCheckboxFormFieldSize: ExtraSlot;
+    type WordprocessingCheckboxFormFieldSize: UserDataSlot;
     /// What a `wordprocessing::CheckboxFormFieldStateWith` holds.
-    type WordprocessingCheckboxFormFieldState: ExtraSlot;
+    type WordprocessingCheckboxFormFieldState: UserDataSlot;
     /// What a `wordprocessing::ChildDivElementsWith` holds.
-    type WordprocessingChildDivElements: ExtraSlot;
+    type WordprocessingChildDivElements: UserDataSlot;
     /// What a `wordprocessing::CitationStructuredDocumentTagWith` holds.
-    type WordprocessingCitationStructuredDocumentTag: ExtraSlot;
+    type WordprocessingCitationStructuredDocumentTag: UserDataSlot;
     /// What a `wordprocessing::ClickAndTypeStyleWith` holds.
-    type WordprocessingClickAndTypeStyle: ExtraSlot;
+    type WordprocessingClickAndTypeStyle: UserDataSlot;
     /// What a `wordprocessing::ColumnContainingEMailAddressWith` holds.
-    type WordprocessingColumnContainingEMailAddress: ExtraSlot;
+    type WordprocessingColumnContainingEMailAddress: UserDataSlot;
     /// What a `wordprocessing::ColumnDefinitionsWith` holds.
-    type WordprocessingColumnDefinitions: ExtraSlot;
+    type WordprocessingColumnDefinitions: UserDataSlot;
     /// What a `wordprocessing::ColumnDelimiterForDataSourceWith` holds.
-    type WordprocessingColumnDelimiterForDataSource: ExtraSlot;
+    type WordprocessingColumnDelimiterForDataSource: UserDataSlot;
     /// What a `wordprocessing::ComboBoxListItemWith` holds.
-    type WordprocessingComboBoxListItem: ExtraSlot;
+    type WordprocessingComboBoxListItem: UserDataSlot;
     /// What a `wordprocessing::ComboBoxStructuredDocumentTagWith` holds.
-    type WordprocessingComboBoxStructuredDocumentTag: ExtraSlot;
+    type WordprocessingComboBoxStructuredDocumentTag: UserDataSlot;
     /// What a `wordprocessing::CommentAnchorRangeEndWith` holds.
-    type WordprocessingCommentAnchorRangeEnd: ExtraSlot;
+    type WordprocessingCommentAnchorRangeEnd: UserDataSlot;
     /// What a `wordprocessing::CommentAnchorRangeStartWith` holds.
-    type WordprocessingCommentAnchorRangeStart: ExtraSlot;
+    type WordprocessingCommentAnchorRangeStart: UserDataSlot;
     /// What a `wordprocessing::CommentContentWith` holds.
-    type WordprocessingCommentContent: ExtraSlot;
+    type WordprocessingCommentContent: UserDataSlot;
     /// What a `wordprocessing::CommentContentReferenceMarkWith` holds.
-    type WordprocessingCommentContentReferenceMark: ExtraSlot;
+    type WordprocessingCommentContentReferenceMark: UserDataSlot;
     /// What a `wordprocessing::CommentInformationBlockWith` holds.
-    type WordprocessingCommentInformationBlock: ExtraSlot;
+    type WordprocessingCommentInformationBlock: UserDataSlot;
     /// What a `wordprocessing::CommentsCollectionWith` holds.
-    type WordprocessingCommentsCollection: ExtraSlot;
+    type WordprocessingCommentsCollection: UserDataSlot;
     /// What a `wordprocessing::CompatibilitySettingsWith` holds.
-    type WordprocessingCompatibilitySettings: ExtraSlot;
+    type WordprocessingCompatibilitySettings: UserDataSlot;
     /// What a `wordprocessing::ComplexFieldCharacterWith` holds.
-    type WordprocessingComplexFieldCharacter: ExtraSlot;
+    type WordprocessingComplexFieldCharacter: UserDataSlot;
     /// What a `wordprocessing::ComplexScriptBoldWith` holds.
-    type WordprocessingComplexScriptBold: ExtraSlot;
+    type WordprocessingComplexScriptBold: UserDataSlot;
     /// What a `wordprocessing::ComplexScriptFontSizeWith` holds.
-    type WordprocessingComplexScriptFontSize: ExtraSlot;
+    type WordprocessingComplexScriptFontSize: UserDataSlot;
     /// What a `wordprocessing::ComplexScriptItalicsWith` holds.
-    type WordprocessingComplexScriptItalics: ExtraSlot;
+    type WordprocessingComplexScriptItalics: UserDataSlot;
     /// What a `wordprocessing::CompressPunctuationAtStartOfLineWith` holds.
-    type WordprocessingCompressPunctuationAtStartOfLine: ExtraSlot;
+    type WordprocessingCompressPunctuationAtStartOfLine: UserDataSlot;
     /// What a `wordprocessing::ContentBetweenNumberingSymbolAndTextWith` holds.
-    type WordprocessingContentBetweenNumberingSymbolAndText: ExtraSlot;
+    type WordprocessingContentBetweenNumberingSymbolAndText: UserDataSlot;
     /// What a `wordprocessing::ContentPartWith` holds.
-    type WordprocessingContentPart: ExtraSlot;
+    type WordprocessingContentPart: UserDataSlot;
     /// What a `wordprocessing::ContentsOfGlossaryDocumentEntryWith` holds.
-    type WordprocessingContentsOfGlossaryDocumentEntry: ExtraSlot;
+    type WordprocessingContentsOfGlossaryDocumentEntry: UserDataSlot;
     /// What a `wordprocessing::ContinuationSeparatorMarkWith` holds.
-    type WordprocessingContinuationSeparatorMark: ExtraSlot;
+    type WordprocessingContinuationSeparatorMark: UserDataSlot;
     /// What a `wordprocessing::CurrentContentsArePlaceholderTextWith` holds.
-    type WordprocessingCurrentContentsArePlaceholderText: ExtraSlot;
+    type WordprocessingCurrentContentsArePlaceholderText: UserDataSlot;
     /// What a `wordprocessing::CustomCompatibilitySettingWith` holds.
-    type WordprocessingCustomCompatibilitySetting: ExtraSlot;
+    type WordprocessingCustomCompatibilitySetting: UserDataSlot;
     /// What a `wordprocessing::CustomFieldDataWith` holds.
-    type WordprocessingCustomFieldData: ExtraSlot;
+    type WordprocessingCustomFieldData: UserDataSlot;
     /// What a `wordprocessing::CustomTabStopWith` holds.
-    type WordprocessingCustomTabStop: ExtraSlot;
+    type WordprocessingCustomTabStop: UserDataSlot;
     /// What a `wordprocessing::CustomXMLAttributeWith` holds.
-    type WordprocessingCustomXMLAttribute: ExtraSlot;
+    type WordprocessingCustomXMLAttribute: UserDataSlot;
     /// What a `wordprocessing::CustomXMLDataDateStorageFormatWith` holds.
-    type WordprocessingCustomXMLDataDateStorageFormat: ExtraSlot;
+    type WordprocessingCustomXMLDataDateStorageFormat: UserDataSlot;
     /// What a `wordprocessing::CustomXMLElementPlaceholderTextWith` holds.
-    type WordprocessingCustomXMLElementPlaceholderText: ExtraSlot;
+    type WordprocessingCustomXMLElementPlaceholderText: UserDataSlot;
     /// What a `wordprocessing::CustomXMLElementPropertiesWith` holds.
-    type WordprocessingCustomXMLElementProperties: ExtraSlot;
+    type WordprocessingCustomXMLElementProperties: UserDataSlot;
     /// What a `wordprocessing::CustomXMLMarkupDeletionEndWith` holds.
-    type WordprocessingCustomXMLMarkupDeletionEnd: ExtraSlot;
+    type WordprocessingCustomXMLMarkupDeletionEnd: UserDataSlot;
     /// What a `wordprocessing::CustomXMLMarkupDeletionStartWith` holds.
-    type WordprocessingCustomXMLMarkupDeletionStart: ExtraSlot;
+    type WordprocessingCustomXMLMarkupDeletionStart: UserDataSlot;
     /// What a `wordprocessing::CustomXMLMarkupInsertionEndWith` holds.
-    type WordprocessingCustomXMLMarkupInsertionEnd: ExtraSlot;
+    type WordprocessingCustomXMLMarkupInsertionEnd: UserDataSlot;
     /// What a `wordprocessing::CustomXMLMarkupInsertionStartWith` holds.
-    type WordprocessingCustomXMLMarkupInsertionStart: ExtraSlot;
+    type WordprocessingCustomXMLMarkupInsertionStart: UserDataSlot;
     /// What a `wordprocessing::CustomXMLMarkupMoveSourceEndWith` holds.
-    type WordprocessingCustomXMLMarkupMoveSourceEnd: ExtraSlot;
+    type WordprocessingCustomXMLMarkupMoveSourceEnd: UserDataSlot;
     /// What a `wordprocessing::CustomXMLMarkupMoveSourceStartWith` holds.
-    type WordprocessingCustomXMLMarkupMoveSourceStart: ExtraSlot;
+    type WordprocessingCustomXMLMarkupMoveSourceStart: UserDataSlot;
     /// What a `wordprocessing::CustomXSLTransformWith` holds.
-    type WordprocessingCustomXSLTransform: ExtraSlot;
+    type WordprocessingCustomXSLTransform: UserDataSlot;
     /// What a `wordprocessing::CustomXmlMoveToRangeEndWith` holds.
-    type WordprocessingCustomXmlMoveToRangeEnd: ExtraSlot;
+    type WordprocessingCustomXmlMoveToRangeEnd: UserDataSlot;
     /// What a `wordprocessing::CustomXmlMoveToRangeStartWith` holds.
-    type WordprocessingCustomXmlMoveToRangeStart: ExtraSlot;
+    type WordprocessingCustomXmlMoveToRangeStart: UserDataSlot;
     /// What a `wordprocessing::DataAboutSingleDataSourceRecordWith` holds.
-    type WordprocessingDataAboutSingleDataSourceRecord: ExtraSlot;
+    type WordprocessingDataAboutSingleDataSourceRecord: UserDataSlot;
     /// What a `wordprocessing::DataForHTMLBlockquoteElementWith` holds.
-    type WordprocessingDataForHTMLBlockquoteElement: ExtraSlot;
+    type WordprocessingDataForHTMLBlockquoteElement: UserDataSlot;
     /// What a `wordprocessing::DataForHTMLBodyElementWith` holds.
-    type WordprocessingDataForHTMLBodyElement: ExtraSlot;
+    type WordprocessingDataForHTMLBodyElement: UserDataSlot;
     /// What a `wordprocessing::DataSourceConnectionStringWith` holds.
-    type WordprocessingDataSourceConnectionString: ExtraSlot;
+    type WordprocessingDataSourceConnectionString: UserDataSlot;
     /// What a `wordprocessing::DataSourceFilePathWith` holds.
-    type WordprocessingDataSourceFilePath: ExtraSlot;
+    type WordprocessingDataSourceFilePath: UserDataSlot;
     /// What a `wordprocessing::DataSourceTableNameWith` holds.
-    type WordprocessingDataSourceTableName: ExtraSlot;
+    type WordprocessingDataSourceTableName: UserDataSlot;
     /// What a `wordprocessing::DataSourceTypeWith` holds.
-    type WordprocessingDataSourceType: ExtraSlot;
+    type WordprocessingDataSourceType: UserDataSlot;
     /// What a `wordprocessing::DateBlockLongDayFormatWith` holds.
-    type WordprocessingDateBlockLongDayFormat: ExtraSlot;
+    type WordprocessingDateBlockLongDayFormat: UserDataSlot;
     /// What a `wordprocessing::DateBlockLongMonthFormatWith` holds.
-    type WordprocessingDateBlockLongMonthFormat: ExtraSlot;
+    type WordprocessingDateBlockLongMonthFormat: UserDataSlot;
     /// What a `wordprocessing::DateBlockLongYearFormatWith` holds.
-    type WordprocessingDateBlockLongYearFormat: ExtraSlot;
+    type WordprocessingDateBlockLongYearFormat: UserDataSlot;
     /// What a `wordprocessing::DateBlockShortDayFormatWith` holds.
-    type WordprocessingDateBlockShortDayFormat: ExtraSlot;
+    type WordprocessingDateBlockShortDayFormat: UserDataSlot;
     /// What a `wordprocessing::DateBlockShortMonthFormatWith` holds.
-    type WordprocessingDateBlockShortMonthFormat: ExtraSlot;
+    type WordprocessingDateBlockShortMonthFormat: UserDataSlot;
     /// What a `wordprocessing::DateBlockShortYearFormatWith` holds.
-    type WordprocessingDateBlockShortYearFormat: ExtraSlot;
+    type WordprocessingDateBlockShortYearFormat: UserDataSlot;
     /// What a `wordprocessing::DateDisplayMaskWith` holds.
-    type WordprocessingDateDisplayMask: ExtraSlot;
+    type WordprocessingDateDisplayMask: UserDataSlot;
     /// What a `wordprocessing::DatePickerCalendarTypeWith` holds.
-    type WordprocessingDatePickerCalendarType: ExtraSlot;
+    type WordprocessingDatePickerCalendarType: UserDataSlot;
     /// What a `wordprocessing::DateStructuredDocumentTagWith` holds.
-    type WordprocessingDateStructuredDocumentTag: ExtraSlot;
+    type WordprocessingDateStructuredDocumentTag: UserDataSlot;
     /// What a `wordprocessing::DefaultCheckboxFormFieldStateWith` holds.
-    type WordprocessingDefaultCheckboxFormFieldState: ExtraSlot;
+    type WordprocessingDefaultCheckboxFormFieldState: UserDataSlot;
     /// What a `wordprocessing::DefaultDropDownListItemIndexWith` holds.
-    type WordprocessingDefaultDropDownListItemIndex: ExtraSlot;
+    type WordprocessingDefaultDropDownListItemIndex: UserDataSlot;
     /// What a `wordprocessing::DefaultParagraphPropertiesWith` holds.
-    type WordprocessingDefaultParagraphProperties: ExtraSlot;
+    type WordprocessingDefaultParagraphProperties: UserDataSlot;
     /// What a `wordprocessing::DefaultPropertiesForVMLObjectsInHeaderAndFooterWith` holds.
-    type WordprocessingDefaultPropertiesForVMLObjectsInHeaderAndFooter: ExtraSlot;
+    type WordprocessingDefaultPropertiesForVMLObjectsInHeaderAndFooter: UserDataSlot;
     /// What a `wordprocessing::DefaultPropertiesForVMLObjectsInMainDocumentWith` holds.
-    type WordprocessingDefaultPropertiesForVMLObjectsInMainDocument: ExtraSlot;
+    type WordprocessingDefaultPropertiesForVMLObjectsInMainDocument: UserDataSlot;
     /// What a `wordprocessing::DefaultRunPropertiesWith` holds.
-    type WordprocessingDefaultRunProperties: ExtraSlot;
+    type WordprocessingDefaultRunProperties: UserDataSlot;
     /// What a `wordprocessing::DefaultTableStyleWith` holds.
-    type WordprocessingDefaultTableStyle: ExtraSlot;
+    type WordprocessingDefaultTableStyle: UserDataSlot;
     /// What a `wordprocessing::DefaultTextBoxFormFieldStringWith` holds.
-    type WordprocessingDefaultTextBoxFormFieldString: ExtraSlot;
+    type WordprocessingDefaultTextBoxFormFieldString: UserDataSlot;
     /// What a `wordprocessing::DelWith` holds.
-    type WordprocessingDel: ExtraSlot;
+    type WordprocessingDel: UserDataSlot;
     /// What a `wordprocessing::DeletedFieldCodeWith` holds.
-    type WordprocessingDeletedFieldCode: ExtraSlot;
+    type WordprocessingDeletedFieldCode: UserDataSlot;
     /// What a `wordprocessing::DeletedMathControlCharacterWith` holds.
-    type WordprocessingDeletedMathControlCharacter: ExtraSlot;
+    type WordprocessingDeletedMathControlCharacter: UserDataSlot;
     /// What a `wordprocessing::DeletedRunContentWith` holds.
-    type WordprocessingDeletedRunContent: ExtraSlot;
+    type WordprocessingDeletedRunContent: UserDataSlot;
     /// What a `wordprocessing::DeletedTableRowWith` holds.
-    type WordprocessingDeletedTableRow: ExtraSlot;
+    type WordprocessingDeletedTableRow: UserDataSlot;
     /// What a `wordprocessing::DeletedTextWith` holds.
-    type WordprocessingDeletedText: ExtraSlot;
+    type WordprocessingDeletedText: UserDataSlot;
     /// What a `wordprocessing::DescriptionForEntryWith` holds.
-    type WordprocessingDescriptionForEntry: ExtraSlot;
+    type WordprocessingDescriptionForEntry: UserDataSlot;
     /// What a `wordprocessing::DifferentEvenOddPageHeadersAndFootersWith` holds.
-    type WordprocessingDifferentEvenOddPageHeadersAndFooters: ExtraSlot;
+    type WordprocessingDifferentEvenOddPageHeadersAndFooters: UserDataSlot;
     /// What a `wordprocessing::DifferentFirstPageHeadersAndFootersWith` holds.
-    type WordprocessingDifferentFirstPageHeadersAndFooters: ExtraSlot;
+    type WordprocessingDifferentFirstPageHeadersAndFooters: UserDataSlot;
     /// What a `wordprocessing::DisableFeaturesNotSupportedWith` holds.
-    type WordprocessingDisableFeaturesNotSupported: ExtraSlot;
+    type WordprocessingDisableFeaturesNotSupported: UserDataSlot;
     /// What a `wordprocessing::DisplayAllCharactersAsCapitalLettersWith` holds.
-    type WordprocessingDisplayAllCharactersAsCapitalLetters: ExtraSlot;
+    type WordprocessingDisplayAllCharactersAsCapitalLetters: UserDataSlot;
     /// What a `wordprocessing::DisplayAllLevelsUsingArabicNumeralsWith` holds.
-    type WordprocessingDisplayAllLevelsUsingArabicNumerals: ExtraSlot;
+    type WordprocessingDisplayAllLevelsUsingArabicNumerals: UserDataSlot;
     /// What a `wordprocessing::DisplayBackgroundShapeWith` holds.
-    type WordprocessingDisplayBackgroundShape: ExtraSlot;
+    type WordprocessingDisplayBackgroundShape: UserDataSlot;
     /// What a `wordprocessing::DisplayBackslashAsYenSignWith` holds.
-    type WordprocessingDisplayBackslashAsYenSign: ExtraSlot;
+    type WordprocessingDisplayBackslashAsYenSign: UserDataSlot;
     /// What a `wordprocessing::DisplayCharacterOutlineWith` holds.
-    type WordprocessingDisplayCharacterOutline: ExtraSlot;
+    type WordprocessingDisplayCharacterOutline: UserDataSlot;
     /// What a `wordprocessing::DisplayPageColumnBreaksPresentInFramesWith` holds.
-    type WordprocessingDisplayPageColumnBreaksPresentInFrames: ExtraSlot;
+    type WordprocessingDisplayPageColumnBreaksPresentInFrames: UserDataSlot;
     /// What a `wordprocessing::DistanceBetweenAutomaticTabStopsWith` holds.
-    type WordprocessingDistanceBetweenAutomaticTabStops: ExtraSlot;
+    type WordprocessingDistanceBetweenAutomaticTabStops: UserDataSlot;
     /// What a `wordprocessing::DistanceBetweenHorizontalGridlinesWith` holds.
-    type WordprocessingDistanceBetweenHorizontalGridlines: ExtraSlot;
+    type WordprocessingDistanceBetweenHorizontalGridlines: UserDataSlot;
     /// What a `wordprocessing::DistanceBetweenPhoneticGuideTextWith` holds.
-    type WordprocessingDistanceBetweenPhoneticGuideText: ExtraSlot;
+    type WordprocessingDistanceBetweenPhoneticGuideText: UserDataSlot;
     /// What a `wordprocessing::DistanceBetweenVerticalGridlinesWith` holds.
-    type WordprocessingDistanceBetweenVerticalGridlines: ExtraSlot;
+    type WordprocessingDistanceBetweenVerticalGridlines: UserDataSlot;
     /// What a `wordprocessing::DoNotAddLeadingBetweenLinesOfTextWith` holds.
-    type WordprocessingDoNotAddLeadingBetweenLinesOfText: ExtraSlot;
+    type WordprocessingDoNotAddLeadingBetweenLinesOfText: UserDataSlot;
     /// What a `wordprocessing::DoNotAllowFloatingTablesToBreakAcrossPagesWith` holds.
-    type WordprocessingDoNotAllowFloatingTablesToBreakAcrossPages: ExtraSlot;
+    type WordprocessingDoNotAllowFloatingTablesToBreakAcrossPages: UserDataSlot;
     /// What a `wordprocessing::DoNotAutofitConstrainedTablesWith` holds.
-    type WordprocessingDoNotAutofitConstrainedTables: ExtraSlot;
+    type WordprocessingDoNotAutofitConstrainedTables: UserDataSlot;
     /// What a `wordprocessing::DoNotAutomaticallyCompressImagesWith` holds.
-    type WordprocessingDoNotAutomaticallyCompressImages: ExtraSlot;
+    type WordprocessingDoNotAutomaticallyCompressImages: UserDataSlot;
     /// What a `wordprocessing::DoNotBalanceTextColumnsWithinASectionWith` holds.
-    type WordprocessingDoNotBalanceTextColumnsWithinASection: ExtraSlot;
+    type WordprocessingDoNotBalanceTextColumnsWithinASection: UserDataSlot;
     /// What a `wordprocessing::DoNotBreakConstrainedForcedTableWith` holds.
-    type WordprocessingDoNotBreakConstrainedForcedTable: ExtraSlot;
+    type WordprocessingDoNotBreakConstrainedForcedTable: UserDataSlot;
     /// What a `wordprocessing::DoNotBypassEastAsianComplexScriptLayoutCodeWith` holds.
-    type WordprocessingDoNotBypassEastAsianComplexScriptLayoutCode: ExtraSlot;
+    type WordprocessingDoNotBypassEastAsianComplexScriptLayoutCode: UserDataSlot;
     /// What a `wordprocessing::DoNotCenterContentOnLinesWithExactLineHeightWith` holds.
-    type WordprocessingDoNotCenterContentOnLinesWithExactLineHeight: ExtraSlot;
+    type WordprocessingDoNotCenterContentOnLinesWithExactLineHeight: UserDataSlot;
     /// What a `wordprocessing::DoNotCheckSpellingOrGrammarWith` holds.
-    type WordprocessingDoNotCheckSpellingOrGrammar: ExtraSlot;
+    type WordprocessingDoNotCheckSpellingOrGrammar: UserDataSlot;
     /// What a `wordprocessing::DoNotCreateCustomTabStopForHangingIndentWith` holds.
-    type WordprocessingDoNotCreateCustomTabStopForHangingIndent: ExtraSlot;
+    type WordprocessingDoNotCreateCustomTabStopForHangingIndent: UserDataSlot;
     /// What a `wordprocessing::DoNotDisplayFramesetSplittersWith` holds.
-    type WordprocessingDoNotDisplayFramesetSplitters: ExtraSlot;
+    type WordprocessingDoNotDisplayFramesetSplitters: UserDataSlot;
     /// What a `wordprocessing::DoNotDisplayGrammaticalErrorsWith` holds.
-    type WordprocessingDoNotDisplayGrammaticalErrors: ExtraSlot;
+    type WordprocessingDoNotDisplayGrammaticalErrors: UserDataSlot;
     /// What a `wordprocessing::DoNotDisplayPageBoundariesWith` holds.
-    type WordprocessingDoNotDisplayPageBoundaries: ExtraSlot;
+    type WordprocessingDoNotDisplayPageBoundaries: UserDataSlot;
     /// What a `wordprocessing::DoNotDisplaySpellingErrorsWith` holds.
-    type WordprocessingDoNotDisplaySpellingErrors: ExtraSlot;
+    type WordprocessingDoNotDisplaySpellingErrors: UserDataSlot;
     /// What a `wordprocessing::DoNotHyphenateCapitalLettersWith` holds.
-    type WordprocessingDoNotHyphenateCapitalLetters: ExtraSlot;
+    type WordprocessingDoNotHyphenateCapitalLetters: UserDataSlot;
     /// What a `wordprocessing::DoNotIncludeSubdocsInStatsWith` holds.
-    type WordprocessingDoNotIncludeSubdocsInStats: ExtraSlot;
+    type WordprocessingDoNotIncludeSubdocsInStats: UserDataSlot;
     /// What a `wordprocessing::DoNotIncreaseLineHeightForRaisedLoweredTextWith` holds.
-    type WordprocessingDoNotIncreaseLineHeightForRaisedLoweredText: ExtraSlot;
+    type WordprocessingDoNotIncreaseLineHeightForRaisedLoweredText: UserDataSlot;
     /// What a `wordprocessing::DoNotPlaceSupportingFilesWith` holds.
-    type WordprocessingDoNotPlaceSupportingFiles: ExtraSlot;
+    type WordprocessingDoNotPlaceSupportingFiles: UserDataSlot;
     /// What a `wordprocessing::DoNotRelyOnCSSWith` holds.
-    type WordprocessingDoNotRelyOnCSS: ExtraSlot;
+    type WordprocessingDoNotRelyOnCSS: UserDataSlot;
     /// What a `wordprocessing::DoNotShowFormFieldIndicatorWith` holds.
-    type WordprocessingDoNotShowFormFieldIndicator: ExtraSlot;
+    type WordprocessingDoNotShowFormFieldIndicator: UserDataSlot;
     /// What a `wordprocessing::DoNotShowInvalidMarkupIndicatorWith` holds.
-    type WordprocessingDoNotShowInvalidMarkupIndicator: ExtraSlot;
+    type WordprocessingDoNotShowInvalidMarkupIndicator: UserDataSlot;
     /// What a `wordprocessing::DoNotSnapToDocumentGridInTableCellsWithObjectsWith` holds.
-    type WordprocessingDoNotSnapToDocumentGridInTableCellsWithObjects: ExtraSlot;
+    type WordprocessingDoNotSnapToDocumentGridInTableCellsWithObjects: UserDataSlot;
     /// What a `wordprocessing::DoNotSuppressBlankLinesWith` holds.
-    type WordprocessingDoNotSuppressBlankLines: ExtraSlot;
+    type WordprocessingDoNotSuppressBlankLines: UserDataSlot;
     /// What a `wordprocessing::DoNotSuppressIndentationWith` holds.
-    type WordprocessingDoNotSuppressIndentation: ExtraSlot;
+    type WordprocessingDoNotSuppressIndentation: UserDataSlot;
     /// What a `wordprocessing::DoNotSuppressParagraphBordersWith` holds.
-    type WordprocessingDoNotSuppressParagraphBorders: ExtraSlot;
+    type WordprocessingDoNotSuppressParagraphBorders: UserDataSlot;
     /// What a `wordprocessing::DoNotTrackFormattingWith` holds.
-    type WordprocessingDoNotTrackFormatting: ExtraSlot;
+    type WordprocessingDoNotTrackFormatting: UserDataSlot;
     /// What a `wordprocessing::DoNotUseEastAsianBreakRulesWith` holds.
-    type WordprocessingDoNotUseEastAsianBreakRules: ExtraSlot;
+    type WordprocessingDoNotUseEastAsianBreakRules: UserDataSlot;
     /// What a `wordprocessing::DoNotUseFileNamesWith` holds.
-    type WordprocessingDoNotUseFileNames: ExtraSlot;
+    type WordprocessingDoNotUseFileNames: UserDataSlot;
     /// What a `wordprocessing::DoNotUseHTMLParagraphAutoSpacingWith` holds.
-    type WordprocessingDoNotUseHTMLParagraphAutoSpacing: ExtraSlot;
+    type WordprocessingDoNotUseHTMLParagraphAutoSpacing: UserDataSlot;
     /// What a `wordprocessing::DoNotUseIndentAsNumberingTabStopWith` holds.
-    type WordprocessingDoNotUseIndentAsNumberingTabStop: ExtraSlot;
+    type WordprocessingDoNotUseIndentAsNumberingTabStop: UserDataSlot;
     /// What a `wordprocessing::DoNotUseMarginsForDrawingGridOriginWith` holds.
-    type WordprocessingDoNotUseMarginsForDrawingGridOrigin: ExtraSlot;
+    type WordprocessingDoNotUseMarginsForDrawingGridOrigin: UserDataSlot;
     /// What a `wordprocessing::DoNotUseMoveSyntaxWith` holds.
-    type WordprocessingDoNotUseMoveSyntax: ExtraSlot;
+    type WordprocessingDoNotUseMoveSyntax: UserDataSlot;
     /// What a `wordprocessing::DoNotValidateAgainstSchemaWith` holds.
-    type WordprocessingDoNotValidateAgainstSchema: ExtraSlot;
+    type WordprocessingDoNotValidateAgainstSchema: UserDataSlot;
     /// What a `wordprocessing::DoNotVertAlignCellWithSpWith` holds.
-    type WordprocessingDoNotVertAlignCellWithSp: ExtraSlot;
+    type WordprocessingDoNotVertAlignCellWithSp: UserDataSlot;
     /// What a `wordprocessing::DoNotWrapTextWithPunctWith` holds.
-    type WordprocessingDoNotWrapTextWithPunct: ExtraSlot;
+    type WordprocessingDoNotWrapTextWithPunct: UserDataSlot;
     /// What a `wordprocessing::DocumentWith` holds.
-    type WordprocessingDocument: ExtraSlot;
+    type WordprocessingDocument: UserDataSlot;
     /// What a `wordprocessing::DocumentBackgroundWith` holds.
-    type WordprocessingDocumentBackground: ExtraSlot;
+    type WordprocessingDocumentBackground: UserDataSlot;
     /// What a `wordprocessing::DocumentBodyWith` holds.
-    type WordprocessingDocumentBody: ExtraSlot;
+    type WordprocessingDocumentBody: UserDataSlot;
     /// What a `wordprocessing::DocumentClassificationWith` holds.
-    type WordprocessingDocumentClassification: ExtraSlot;
+    type WordprocessingDocumentClassification: UserDataSlot;
     /// What a `wordprocessing::DocumentDefaultParagraphAndRunPropertiesWith` holds.
-    type WordprocessingDocumentDefaultParagraphAndRunProperties: ExtraSlot;
+    type WordprocessingDocumentDefaultParagraphAndRunProperties: UserDataSlot;
     /// What a `wordprocessing::DocumentEditingRestrictionsWith` holds.
-    type WordprocessingDocumentEditingRestrictions: ExtraSlot;
+    type WordprocessingDocumentEditingRestrictions: UserDataSlot;
     /// What a `wordprocessing::DocumentEndnotesWith` holds.
-    type WordprocessingDocumentEndnotes: ExtraSlot;
+    type WordprocessingDocumentEndnotes: UserDataSlot;
     /// What a `wordprocessing::DocumentFinalSectionPropertiesWith` holds.
-    type WordprocessingDocumentFinalSectionProperties: ExtraSlot;
+    type WordprocessingDocumentFinalSectionProperties: UserDataSlot;
     /// What a `wordprocessing::DocumentFootnotesWith` holds.
-    type WordprocessingDocumentFootnotes: ExtraSlot;
+    type WordprocessingDocumentFootnotes: UserDataSlot;
     /// What a `wordprocessing::DocumentGridWith` holds.
-    type WordprocessingDocumentGrid: ExtraSlot;
+    type WordprocessingDocumentGrid: UserDataSlot;
     /// What a `wordprocessing::DocumentGridInterLineParagraphSpacingWith` holds.
-    type WordprocessingDocumentGridInterLineParagraphSpacing: ExtraSlot;
+    type WordprocessingDocumentGridInterLineParagraphSpacing: UserDataSlot;
     /// What a `wordprocessing::DocumentPartCategoryFilterWith` holds.
-    type WordprocessingDocumentPartCategoryFilter: ExtraSlot;
+    type WordprocessingDocumentPartCategoryFilter: UserDataSlot;
     /// What a `wordprocessing::DocumentPartGalleryFilterWith` holds.
-    type WordprocessingDocumentPartGalleryFilter: ExtraSlot;
+    type WordprocessingDocumentPartGalleryFilter: UserDataSlot;
     /// What a `wordprocessing::DocumentPartGalleryStructuredDocumentTagWith` holds.
-    type WordprocessingDocumentPartGalleryStructuredDocumentTag: ExtraSlot;
+    type WordprocessingDocumentPartGalleryStructuredDocumentTag: UserDataSlot;
     /// What a `wordprocessing::DocumentPartReferenceWith` holds.
-    type WordprocessingDocumentPartReference: ExtraSlot;
+    type WordprocessingDocumentPartReference: UserDataSlot;
     /// What a `wordprocessing::DocumentSettingsWith` holds.
-    type WordprocessingDocumentSettings: ExtraSlot;
+    type WordprocessingDocumentSettings: UserDataSlot;
     /// What a `wordprocessing::DocumentVariablesWith` holds.
-    type WordprocessingDocumentVariables: ExtraSlot;
+    type WordprocessingDocumentVariables: UserDataSlot;
     /// What a `wordprocessing::DocumentViewSettingWith` holds.
-    type WordprocessingDocumentViewSetting: ExtraSlot;
+    type WordprocessingDocumentViewSetting: UserDataSlot;
     /// What a `wordprocessing::DocumentWideEndnotePropertiesWith` holds.
-    type WordprocessingDocumentWideEndnoteProperties: ExtraSlot;
+    type WordprocessingDocumentWideEndnoteProperties: UserDataSlot;
     /// What a `wordprocessing::DocumentWideFootnotePropertiesWith` holds.
-    type WordprocessingDocumentWideFootnoteProperties: ExtraSlot;
+    type WordprocessingDocumentWideFootnoteProperties: UserDataSlot;
     /// What a `wordprocessing::DontJustifySoftLineBreakLinesWith` holds.
-    type WordprocessingDontJustifySoftLineBreakLines: ExtraSlot;
+    type WordprocessingDontJustifySoftLineBreakLines: UserDataSlot;
     /// What a `wordprocessing::DontWrapCellContentWith` holds.
-    type WordprocessingDontWrapCellContent: ExtraSlot;
+    type WordprocessingDontWrapCellContent: UserDataSlot;
     /// What a `wordprocessing::DoubleStrikethroughWith` holds.
-    type WordprocessingDoubleStrikethrough: ExtraSlot;
+    type WordprocessingDoubleStrikethrough: UserDataSlot;
     /// What a `wordprocessing_drawing::AbsolutePositionOffsetWith` holds.
-    type WordprocessingDrawingAbsolutePositionOffset: ExtraSlot;
+    type WordprocessingDrawingAbsolutePositionOffset: UserDataSlot;
     /// What a `wordprocessing_drawing::AnchorForFloatingDrawingMLObjectWith` holds.
-    type WordprocessingDrawingAnchorForFloatingDrawingMLObject: ExtraSlot;
+    type WordprocessingDrawingAnchorForFloatingDrawingMLObject: UserDataSlot;
     /// What a `wordprocessing_drawing::BackgroundFormattingWith` holds.
-    type WordprocessingDrawingBackgroundFormatting: ExtraSlot;
+    type WordprocessingDrawingBackgroundFormatting: UserDataSlot;
     /// What a `wordprocessing_drawing::BodyPropertiesWith` holds.
-    type WordprocessingDrawingBodyProperties: ExtraSlot;
+    type WordprocessingDrawingBodyProperties: UserDataSlot;
     /// What a `wordprocessing_drawing::CommonDrawingMLNonVisualPropertiesWith` holds.
-    type WordprocessingDrawingCommonDrawingMLNonVisualProperties: ExtraSlot;
+    type WordprocessingDrawingCommonDrawingMLNonVisualProperties: UserDataSlot;
     /// What a `wordprocessing_drawing::ContentPartWith` holds.
-    type WordprocessingDrawingContentPart: ExtraSlot;
+    type WordprocessingDrawingContentPart: UserDataSlot;
     /// What a `wordprocessing_drawing::DrawingObjectNonVisualPropertiesWith` holds.
-    type WordprocessingDrawingDrawingObjectNonVisualProperties: ExtraSlot;
+    type WordprocessingDrawingDrawingObjectNonVisualProperties: UserDataSlot;
     /// What a `wordprocessing_drawing::DrawingObjectSizeWith` holds.
-    type WordprocessingDrawingDrawingObjectSize: ExtraSlot;
+    type WordprocessingDrawingDrawingObjectSize: UserDataSlot;
     /// What a `wordprocessing_drawing::ExtensionListWith` holds.
-    type WordprocessingDrawingExtensionList: ExtraSlot;
+    type WordprocessingDrawingExtensionList: UserDataSlot;
     /// What a `wordprocessing_drawing::GraphicalObjectContainerWith` holds.
-    type WordprocessingDrawingGraphicalObjectContainer: ExtraSlot;
+    type WordprocessingDrawingGraphicalObjectContainer: UserDataSlot;
     /// What a `wordprocessing::DrawingGridHorizontalGridUnitSizeWith` holds.
-    type WordprocessingDrawingGridHorizontalGridUnitSize: ExtraSlot;
+    type WordprocessingDrawingGridHorizontalGridUnitSize: UserDataSlot;
     /// What a `wordprocessing::DrawingGridHorizontalOriginPointWith` holds.
-    type WordprocessingDrawingGridHorizontalOriginPoint: ExtraSlot;
+    type WordprocessingDrawingGridHorizontalOriginPoint: UserDataSlot;
     /// What a `wordprocessing::DrawingGridVerticalGridUnitSizeWith` holds.
-    type WordprocessingDrawingGridVerticalGridUnitSize: ExtraSlot;
+    type WordprocessingDrawingGridVerticalGridUnitSize: UserDataSlot;
     /// What a `wordprocessing::DrawingGridVerticalOriginPointWith` holds.
-    type WordprocessingDrawingGridVerticalOriginPoint: ExtraSlot;
+    type WordprocessingDrawingGridVerticalOriginPoint: UserDataSlot;
     /// What a `wordprocessing_drawing::GroupShapeWith` holds.
-    type WordprocessingDrawingGroupShape: ExtraSlot;
+    type WordprocessingDrawingGroupShape: UserDataSlot;
     /// What a `wordprocessing_drawing::GroupShapePropertiesWith` holds.
-    type WordprocessingDrawingGroupShapeProperties: ExtraSlot;
+    type WordprocessingDrawingGroupShapeProperties: UserDataSlot;
     /// What a `wordprocessing_drawing::HorizontalPositioningWith` holds.
-    type WordprocessingDrawingHorizontalPositioning: ExtraSlot;
+    type WordprocessingDrawingHorizontalPositioning: UserDataSlot;
     /// What a `wordprocessing_drawing::InlineDrawingMLObjectWith` holds.
-    type WordprocessingDrawingInlineDrawingMLObject: ExtraSlot;
+    type WordprocessingDrawingInlineDrawingMLObject: UserDataSlot;
     /// What a `wordprocessing::DrawingMLObjectWith` holds.
-    type WordprocessingDrawingMLObject: ExtraSlot;
+    type WordprocessingDrawingMLObject: UserDataSlot;
     /// What a `wordprocessing_drawing::NoTextWrappingWith` holds.
-    type WordprocessingDrawingNoTextWrapping: ExtraSlot;
+    type WordprocessingDrawingNoTextWrapping: UserDataSlot;
     /// What a `wordprocessing_drawing::NonVisualConnectorShapeDrawingPropertiesWith` holds.
-    type WordprocessingDrawingNonVisualConnectorShapeDrawingProperties: ExtraSlot;
+    type WordprocessingDrawingNonVisualConnectorShapeDrawingProperties: UserDataSlot;
     /// What a `wordprocessing_drawing::NonVisualContentPartDrawingPropertiesWith` holds.
-    type WordprocessingDrawingNonVisualContentPartDrawingProperties: ExtraSlot;
+    type WordprocessingDrawingNonVisualContentPartDrawingProperties: UserDataSlot;
     /// What a `wordprocessing_drawing::NonVisualDrawingPropertiesWith` holds.
-    type WordprocessingDrawingNonVisualDrawingProperties: ExtraSlot;
+    type WordprocessingDrawingNonVisualDrawingProperties: UserDataSlot;
     /// What a `wordprocessing_drawing::NonVisualDrawingPropertiesForAShapeWith` holds.
-    type WordprocessingDrawingNonVisualDrawingPropertiesForAShape: ExtraSlot;
+    type WordprocessingDrawingNonVisualDrawingPropertiesForAShape: UserDataSlot;
     /// What a `wordprocessing_drawing::NonVisualGraphicFrameDrawingPropertiesWith` holds.
-    type WordprocessingDrawingNonVisualGraphicFrameDrawingProperties: ExtraSlot;
+    type WordprocessingDrawingNonVisualGraphicFrameDrawingProperties: UserDataSlot;
     /// What a `wordprocessing_drawing::NonVisualGroupShapeDrawingPropertiesWith` holds.
-    type WordprocessingDrawingNonVisualGroupShapeDrawingProperties: ExtraSlot;
+    type WordprocessingDrawingNonVisualGroupShapeDrawingProperties: UserDataSlot;
     /// What a `wordprocessing_drawing::NvContentPartPrWith` holds.
-    type WordprocessingDrawingNvContentPartPr: ExtraSlot;
+    type WordprocessingDrawingNvContentPartPr: UserDataSlot;
     /// What a `wordprocessing_drawing::ObjectExtentsIncludingEffectsWith` holds.
-    type WordprocessingDrawingObjectExtentsIncludingEffects: ExtraSlot;
+    type WordprocessingDrawingObjectExtentsIncludingEffects: UserDataSlot;
     /// What a `wordprocessing_drawing::RelativeHorizontalAlignmentWith` holds.
-    type WordprocessingDrawingRelativeHorizontalAlignment: ExtraSlot;
+    type WordprocessingDrawingRelativeHorizontalAlignment: UserDataSlot;
     /// What a `wordprocessing_drawing::RelativeVerticalAlignmentWith` holds.
-    type WordprocessingDrawingRelativeVerticalAlignment: ExtraSlot;
+    type WordprocessingDrawingRelativeVerticalAlignment: UserDataSlot;
     /// What a `wordprocessing_drawing::RichTextBoxContentContainerWith` holds.
-    type WordprocessingDrawingRichTextBoxContentContainer: ExtraSlot;
+    type WordprocessingDrawingRichTextBoxContentContainer: UserDataSlot;
     /// What a `wordprocessing_drawing::ShapePropertiesWith` holds.
-    type WordprocessingDrawingShapeProperties: ExtraSlot;
+    type WordprocessingDrawingShapeProperties: UserDataSlot;
     /// What a `wordprocessing_drawing::ShapeStyleWith` holds.
-    type WordprocessingDrawingShapeStyle: ExtraSlot;
+    type WordprocessingDrawingShapeStyle: UserDataSlot;
     /// What a `wordprocessing_drawing::SimplePositioningCoordinatesWith` holds.
-    type WordprocessingDrawingSimplePositioningCoordinates: ExtraSlot;
+    type WordprocessingDrawingSimplePositioningCoordinates: UserDataSlot;
     /// What a `wordprocessing_drawing::SquareWrappingWith` holds.
-    type WordprocessingDrawingSquareWrapping: ExtraSlot;
+    type WordprocessingDrawingSquareWrapping: UserDataSlot;
     /// What a `wordprocessing_drawing::TextualContentsOfShapeLinkedTxbxWith` holds.
-    type WordprocessingDrawingTextualContentsOfShapeLinkedTxbx: ExtraSlot;
+    type WordprocessingDrawingTextualContentsOfShapeLinkedTxbx: UserDataSlot;
     /// What a `wordprocessing_drawing::TextualContentsOfShapeTxbxWith` holds.
-    type WordprocessingDrawingTextualContentsOfShapeTxbx: ExtraSlot;
+    type WordprocessingDrawingTextualContentsOfShapeTxbx: UserDataSlot;
     /// What a `wordprocessing_drawing::ThroughWrappingWith` holds.
-    type WordprocessingDrawingThroughWrapping: ExtraSlot;
+    type WordprocessingDrawingThroughWrapping: UserDataSlot;
     /// What a `wordprocessing_drawing::TightWrappingWith` holds.
-    type WordprocessingDrawingTightWrapping: ExtraSlot;
+    type WordprocessingDrawingTightWrapping: UserDataSlot;
     /// What a `wordprocessing_drawing::TopAndBottomWrappingWith` holds.
-    type WordprocessingDrawingTopAndBottomWrapping: ExtraSlot;
+    type WordprocessingDrawingTopAndBottomWrapping: UserDataSlot;
     /// What a `wordprocessing_drawing::VerticalPositioningWith` holds.
-    type WordprocessingDrawingVerticalPositioning: ExtraSlot;
+    type WordprocessingDrawingVerticalPositioning: UserDataSlot;
     /// What a `wordprocessing_drawing::WholeE2OFormattingWith` holds.
-    type WordprocessingDrawingWholeE2OFormatting: ExtraSlot;
+    type WordprocessingDrawingWholeE2OFormatting: UserDataSlot;
     /// What a `wordprocessing_drawing::WordprocessingMLDrawingCanvasWith` holds.
-    type WordprocessingDrawingWordprocessingMLDrawingCanvas: ExtraSlot;
+    type WordprocessingDrawingWordprocessingMLDrawingCanvas: UserDataSlot;
     /// What a `wordprocessing_drawing::WordprocessingMLShapeWith` holds.
-    type WordprocessingDrawingWordprocessingMLShape: ExtraSlot;
+    type WordprocessingDrawingWordprocessingMLShape: UserDataSlot;
     /// What a `wordprocessing_drawing::WordprocessingMLShapeGroupWith` holds.
-    type WordprocessingDrawingWordprocessingMLShapeGroup: ExtraSlot;
+    type WordprocessingDrawingWordprocessingMLShapeGroup: UserDataSlot;
     /// What a `wordprocessing_drawing::WrappingPolygonWith` holds.
-    type WordprocessingDrawingWrappingPolygon: ExtraSlot;
+    type WordprocessingDrawingWrappingPolygon: UserDataSlot;
     /// What a `wordprocessing_drawing::WrappingPolygonLineEndPositionWith` holds.
-    type WordprocessingDrawingWrappingPolygonLineEndPosition: ExtraSlot;
+    type WordprocessingDrawingWrappingPolygonLineEndPosition: UserDataSlot;
     /// What a `wordprocessing_drawing::WrappingPolygonStartWith` holds.
-    type WordprocessingDrawingWrappingPolygonStart: ExtraSlot;
+    type WordprocessingDrawingWrappingPolygonStart: UserDataSlot;
     /// What a `wordprocessing_drawing::XfrmWith` holds.
-    type WordprocessingDrawingXfrm: ExtraSlot;
+    type WordprocessingDrawingXfrm: UserDataSlot;
     /// What a `wordprocessing::DropDownListEntryWith` holds.
-    type WordprocessingDropDownListEntry: ExtraSlot;
+    type WordprocessingDropDownListEntry: UserDataSlot;
     /// What a `wordprocessing::DropDownListFormFieldPropertiesWith` holds.
-    type WordprocessingDropDownListFormFieldProperties: ExtraSlot;
+    type WordprocessingDropDownListFormFieldProperties: UserDataSlot;
     /// What a `wordprocessing::DropDownListSelectionWith` holds.
-    type WordprocessingDropDownListSelection: ExtraSlot;
+    type WordprocessingDropDownListSelection: UserDataSlot;
     /// What a `wordprocessing::DropDownListStructuredDocumentTagWith` holds.
-    type WordprocessingDropDownListStructuredDocumentTag: ExtraSlot;
+    type WordprocessingDropDownListStructuredDocumentTag: UserDataSlot;
     /// What a `wordprocessing::EMailMessageCompositionStyleWith` holds.
-    type WordprocessingEMailMessageCompositionStyle: ExtraSlot;
+    type WordprocessingEMailMessageCompositionStyle: UserDataSlot;
     /// What a `wordprocessing::EMailMessageReplyStyleWith` holds.
-    type WordprocessingEMailMessageReplyStyle: ExtraSlot;
+    type WordprocessingEMailMessageReplyStyle: UserDataSlot;
     /// What a `wordprocessing::EMailMessageTextStyleWith` holds.
-    type WordprocessingEMailMessageTextStyle: ExtraSlot;
+    type WordprocessingEMailMessageTextStyle: UserDataSlot;
     /// What a `wordprocessing::EastAsianTypographyRulesWith` holds.
-    type WordprocessingEastAsianTypographyRules: ExtraSlot;
+    type WordprocessingEastAsianTypographyRules: UserDataSlot;
     /// What a `wordprocessing::EastAsianTypographySettingsWith` holds.
-    type WordprocessingEastAsianTypographySettings: ExtraSlot;
+    type WordprocessingEastAsianTypographySettings: UserDataSlot;
     /// What a `wordprocessing::EmbedCommonSystemFontsWith` holds.
-    type WordprocessingEmbedCommonSystemFonts: ExtraSlot;
+    type WordprocessingEmbedCommonSystemFonts: UserDataSlot;
     /// What a `wordprocessing::EmbedTrueTypeFontsWith` holds.
-    type WordprocessingEmbedTrueTypeFonts: ExtraSlot;
+    type WordprocessingEmbedTrueTypeFonts: UserDataSlot;
     /// What a `wordprocessing::EmbeddedControlWith` holds.
-    type WordprocessingEmbeddedControl: ExtraSlot;
+    type WordprocessingEmbeddedControl: UserDataSlot;
     /// What a `wordprocessing::EmbeddedObjectWith` holds.
-    type WordprocessingEmbeddedObject: ExtraSlot;
+    type WordprocessingEmbeddedObject: UserDataSlot;
     /// What a `wordprocessing::EmbeddedObjectPropertiesWith` holds.
-    type WordprocessingEmbeddedObjectProperties: ExtraSlot;
+    type WordprocessingEmbeddedObjectProperties: UserDataSlot;
     /// What a `wordprocessing::EmbeddedVideoWith` holds.
-    type WordprocessingEmbeddedVideo: ExtraSlot;
+    type WordprocessingEmbeddedVideo: UserDataSlot;
     /// What a `wordprocessing::EmbossingWith` holds.
-    type WordprocessingEmbossing: ExtraSlot;
+    type WordprocessingEmbossing: UserDataSlot;
     /// What a `wordprocessing::EmphasisMarkWith` holds.
-    type WordprocessingEmphasisMark: ExtraSlot;
+    type WordprocessingEmphasisMark: UserDataSlot;
     /// What a `wordprocessing::EndnoteContentWith` holds.
-    type WordprocessingEndnoteContent: ExtraSlot;
+    type WordprocessingEndnoteContent: UserDataSlot;
     /// What a `wordprocessing::EndnotePlacementWith` holds.
-    type WordprocessingEndnotePlacement: ExtraSlot;
+    type WordprocessingEndnotePlacement: UserDataSlot;
     /// What a `wordprocessing::EndnoteReferenceWith` holds.
-    type WordprocessingEndnoteReference: ExtraSlot;
+    type WordprocessingEndnoteReference: UserDataSlot;
     /// What a `wordprocessing::EndnoteReferenceMarkWith` holds.
-    type WordprocessingEndnoteReferenceMark: ExtraSlot;
+    type WordprocessingEndnoteReferenceMark: UserDataSlot;
     /// What a `wordprocessing::EntryCategorizationWith` holds.
-    type WordprocessingEntryCategorization: ExtraSlot;
+    type WordprocessingEntryCategorization: UserDataSlot;
     /// What a `wordprocessing::EntryIDWith` holds.
-    type WordprocessingEntryID: ExtraSlot;
+    type WordprocessingEntryID: UserDataSlot;
     /// What a `wordprocessing::EntryInsertionBehaviorWith` holds.
-    type WordprocessingEntryInsertionBehavior: ExtraSlot;
+    type WordprocessingEntryInsertionBehavior: UserDataSlot;
     /// What a `wordprocessing::EntryInsertionBehaviorsWith` holds.
-    type WordprocessingEntryInsertionBehaviors: ExtraSlot;
+    type WordprocessingEntryInsertionBehaviors: UserDataSlot;
     /// What a `wordprocessing::EntryNameWith` holds.
-    type WordprocessingEntryName: ExtraSlot;
+    type WordprocessingEntryName: UserDataSlot;
     /// What a `wordprocessing::EntryTypeWith` holds.
-    type WordprocessingEntryType: ExtraSlot;
+    type WordprocessingEntryType: UserDataSlot;
     /// What a `wordprocessing::EntryTypesWith` holds.
-    type WordprocessingEntryTypes: ExtraSlot;
+    type WordprocessingEntryTypes: UserDataSlot;
     /// What a `wordprocessing::EquationStructuredDocumentTagWith` holds.
-    type WordprocessingEquationStructuredDocumentTag: ExtraSlot;
+    type WordprocessingEquationStructuredDocumentTag: UserDataSlot;
     /// What a `wordprocessing::ExecuteOnFormFieldEntryWith` holds.
-    type WordprocessingExecuteOnFormFieldEntry: ExtraSlot;
+    type WordprocessingExecuteOnFormFieldEntry: UserDataSlot;
     /// What a `wordprocessing::ExecuteOnFormFieldExitWith` holds.
-    type WordprocessingExecuteOnFormFieldExit: ExtraSlot;
+    type WordprocessingExecuteOnFormFieldExit: UserDataSlot;
     /// What a `wordprocessing::ExpandedCompressedTextWith` holds.
-    type WordprocessingExpandedCompressedText: ExtraSlot;
+    type WordprocessingExpandedCompressedText: UserDataSlot;
     /// What a `wordprocessing::ExternalContentImportPropertiesWith` holds.
-    type WordprocessingExternalContentImportProperties: ExtraSlot;
+    type WordprocessingExternalContentImportProperties: UserDataSlot;
     /// What a `wordprocessing::ExternalDataSourceMergeFieldMappingWith` holds.
-    type WordprocessingExternalDataSourceMergeFieldMapping: ExtraSlot;
+    type WordprocessingExternalDataSourceMergeFieldMapping: UserDataSlot;
     /// What a `wordprocessing::FieldCodeWith` holds.
-    type WordprocessingFieldCode: ExtraSlot;
+    type WordprocessingFieldCode: UserDataSlot;
     /// What a `wordprocessing::FirstRowContainsColumnNamesWith` holds.
-    type WordprocessingFirstRowContainsColumnNames: ExtraSlot;
+    type WordprocessingFirstRowContainsColumnNames: UserDataSlot;
     /// What a `wordprocessing::FitTextWithinCellWith` holds.
-    type WordprocessingFitTextWithinCell: ExtraSlot;
+    type WordprocessingFitTextWithinCell: UserDataSlot;
     /// What a `wordprocessing::FitToExpandedWidthWhenPerformingFullJustificationWith` holds.
-    type WordprocessingFitToExpandedWidthWhenPerformingFullJustification: ExtraSlot;
+    type WordprocessingFitToExpandedWidthWhenPerformingFullJustification: UserDataSlot;
     /// What a `wordprocessing::FloatingTableAllowsOverlapWith` holds.
-    type WordprocessingFloatingTableAllowsOverlap: ExtraSlot;
+    type WordprocessingFloatingTableAllowsOverlap: UserDataSlot;
     /// What a `wordprocessing::FloatingTablePositioningWith` holds.
-    type WordprocessingFloatingTablePositioning: ExtraSlot;
+    type WordprocessingFloatingTablePositioning: UserDataSlot;
     /// What a `wordprocessing::FontFamilyWith` holds.
-    type WordprocessingFontFamily: ExtraSlot;
+    type WordprocessingFontFamily: UserDataSlot;
     /// What a `wordprocessing::FontKerningWith` holds.
-    type WordprocessingFontKerning: ExtraSlot;
+    type WordprocessingFontKerning: UserDataSlot;
     /// What a `wordprocessing::FontPitchWith` holds.
-    type WordprocessingFontPitch: ExtraSlot;
+    type WordprocessingFontPitch: UserDataSlot;
     /// What a `wordprocessing::FontTableRootElementWith` holds.
-    type WordprocessingFontTableRootElement: ExtraSlot;
+    type WordprocessingFontTableRootElement: UserDataSlot;
     /// What a `wordprocessing::FooterWith` holds.
-    type WordprocessingFooter: ExtraSlot;
+    type WordprocessingFooter: UserDataSlot;
     /// What a `wordprocessing::FooterReferenceWith` holds.
-    type WordprocessingFooterReference: ExtraSlot;
+    type WordprocessingFooterReference: UserDataSlot;
     /// What a `wordprocessing::FootnoteAndEndnoteNumberingRestartLocationWith` holds.
-    type WordprocessingFootnoteAndEndnoteNumberingRestartLocation: ExtraSlot;
+    type WordprocessingFootnoteAndEndnoteNumberingRestartLocation: UserDataSlot;
     /// What a `wordprocessing::FootnoteAndEndnoteNumberingStartingValueWith` holds.
-    type WordprocessingFootnoteAndEndnoteNumberingStartingValue: ExtraSlot;
+    type WordprocessingFootnoteAndEndnoteNumberingStartingValue: UserDataSlot;
     /// What a `wordprocessing::FootnoteContentWith` holds.
-    type WordprocessingFootnoteContent: ExtraSlot;
+    type WordprocessingFootnoteContent: UserDataSlot;
     /// What a `wordprocessing::FootnoteEndnoteSeparatorMarkWith` holds.
-    type WordprocessingFootnoteEndnoteSeparatorMark: ExtraSlot;
+    type WordprocessingFootnoteEndnoteSeparatorMark: UserDataSlot;
     /// What a `wordprocessing::FootnotePlacementWith` holds.
-    type WordprocessingFootnotePlacement: ExtraSlot;
+    type WordprocessingFootnotePlacement: UserDataSlot;
     /// What a `wordprocessing::FootnoteReferenceWith` holds.
-    type WordprocessingFootnoteReference: ExtraSlot;
+    type WordprocessingFootnoteReference: UserDataSlot;
     /// What a `wordprocessing::FootnoteReferenceMarkWith` holds.
-    type WordprocessingFootnoteReferenceMark: ExtraSlot;
+    type WordprocessingFootnoteReferenceMark: UserDataSlot;
     /// What a `wordprocessing::ForgetLastTabAlignmentWith` holds.
-    type WordprocessingForgetLastTabAlignment: ExtraSlot;
+    type WordprocessingForgetLastTabAlignment: UserDataSlot;
     /// What a `wordprocessing::FormFieldEnabledWith` holds.
-    type WordprocessingFormFieldEnabled: ExtraSlot;
+    type WordprocessingFormFieldEnabled: UserDataSlot;
     /// What a `wordprocessing::FormFieldNameWith` holds.
-    type WordprocessingFormFieldName: ExtraSlot;
+    type WordprocessingFormFieldName: UserDataSlot;
     /// What a `wordprocessing::FormFieldPropertiesWith` holds.
-    type WordprocessingFormFieldProperties: ExtraSlot;
+    type WordprocessingFormFieldProperties: UserDataSlot;
     /// What a `wordprocessing::FrameCannotBeResizedWith` holds.
-    type WordprocessingFrameCannotBeResized: ExtraSlot;
+    type WordprocessingFrameCannotBeResized: UserDataSlot;
     /// What a `wordprocessing::FrameLongDescriptionWith` holds.
-    type WordprocessingFrameLongDescription: ExtraSlot;
+    type WordprocessingFrameLongDescription: UserDataSlot;
     /// What a `wordprocessing::FrameOrFramesetTitleWith` holds.
-    type WordprocessingFrameOrFramesetTitle: ExtraSlot;
+    type WordprocessingFrameOrFramesetTitle: UserDataSlot;
     /// What a `wordprocessing::FrameSizeWith` holds.
-    type WordprocessingFrameSize: ExtraSlot;
+    type WordprocessingFrameSize: UserDataSlot;
     /// What a `wordprocessing::FramesetLayoutWith` holds.
-    type WordprocessingFramesetLayout: ExtraSlot;
+    type WordprocessingFramesetLayout: UserDataSlot;
     /// What a `wordprocessing::FramesetSplitterBorderStyleWith` holds.
-    type WordprocessingFramesetSplitterBorderStyle: ExtraSlot;
+    type WordprocessingFramesetSplitterBorderStyle: UserDataSlot;
     /// What a `wordprocessing::FramesetSplitterPropertiesWith` holds.
-    type WordprocessingFramesetSplitterProperties: ExtraSlot;
+    type WordprocessingFramesetSplitterProperties: UserDataSlot;
     /// What a `wordprocessing::FramesetSplitterWidthWith` holds.
-    type WordprocessingFramesetSplitterWidth: ExtraSlot;
+    type WordprocessingFramesetSplitterWidth: UserDataSlot;
     /// What a `wordprocessing::FreezeDocumentLayoutWith` holds.
-    type WordprocessingFreezeDocumentLayout: ExtraSlot;
+    type WordprocessingFreezeDocumentLayout: UserDataSlot;
     /// What a `wordprocessing::FriendlyNameWith` holds.
-    type WordprocessingFriendlyName: ExtraSlot;
+    type WordprocessingFriendlyName: UserDataSlot;
     /// What a `wordprocessing::GalleryAssociatedWithEntryWith` holds.
-    type WordprocessingGalleryAssociatedWithEntry: ExtraSlot;
+    type WordprocessingGalleryAssociatedWithEntry: UserDataSlot;
     /// What a `wordprocessing::GenerateThumbnailForDocumentOnSaveWith` holds.
-    type WordprocessingGenerateThumbnailForDocumentOnSave: ExtraSlot;
+    type WordprocessingGenerateThumbnailForDocumentOnSave: UserDataSlot;
     /// What a `wordprocessing::GlossaryDocumentEntryWith` holds.
-    type WordprocessingGlossaryDocumentEntry: ExtraSlot;
+    type WordprocessingGlossaryDocumentEntry: UserDataSlot;
     /// What a `wordprocessing::GlossaryDocumentEntryPropertiesWith` holds.
-    type WordprocessingGlossaryDocumentEntryProperties: ExtraSlot;
+    type WordprocessingGlossaryDocumentEntryProperties: UserDataSlot;
     /// What a `wordprocessing::GlossaryDocumentRootElementWith` holds.
-    type WordprocessingGlossaryDocumentRootElement: ExtraSlot;
+    type WordprocessingGlossaryDocumentRootElement: UserDataSlot;
     /// What a `wordprocessing::GrammarCheckingSettingsWith` holds.
-    type WordprocessingGrammarCheckingSettings: ExtraSlot;
+    type WordprocessingGrammarCheckingSettings: UserDataSlot;
     /// What a `wordprocessing::GridColumnDefinitionWith` holds.
-    type WordprocessingGridColumnDefinition: ExtraSlot;
+    type WordprocessingGridColumnDefinition: UserDataSlot;
     /// What a `wordprocessing::GridColumnsAfterLastCellWith` holds.
-    type WordprocessingGridColumnsAfterLastCell: ExtraSlot;
+    type WordprocessingGridColumnsAfterLastCell: UserDataSlot;
     /// What a `wordprocessing::GridColumnsBeforeFirstCellWith` holds.
-    type WordprocessingGridColumnsBeforeFirstCell: ExtraSlot;
+    type WordprocessingGridColumnsBeforeFirstCell: UserDataSlot;
     /// What a `wordprocessing::GridColumnsSpannedWith` holds.
-    type WordprocessingGridColumnsSpanned: ExtraSlot;
+    type WordprocessingGridColumnsSpanned: UserDataSlot;
     /// What a `wordprocessing::GroupStructuredDocumentTagWith` holds.
-    type WordprocessingGroupStructuredDocumentTag: ExtraSlot;
+    type WordprocessingGroupStructuredDocumentTag: UserDataSlot;
     /// What a `wordprocessing::GutterOnRightSideOfPageWith` holds.
-    type WordprocessingGutterOnRightSideOfPage: ExtraSlot;
+    type WordprocessingGutterOnRightSideOfPage: UserDataSlot;
     /// What a `wordprocessing::HeaderWith` holds.
-    type WordprocessingHeader: ExtraSlot;
+    type WordprocessingHeader: UserDataSlot;
     /// What a `wordprocessing::HeaderCellReferenceWith` holds.
-    type WordprocessingHeaderCellReference: ExtraSlot;
+    type WordprocessingHeaderCellReference: UserDataSlot;
     /// What a `wordprocessing::HeaderCellsAssociatedWithTableCellWith` holds.
-    type WordprocessingHeaderCellsAssociatedWithTableCell: ExtraSlot;
+    type WordprocessingHeaderCellsAssociatedWithTableCell: UserDataSlot;
     /// What a `wordprocessing::HeaderDefinitionFilePathWith` holds.
-    type WordprocessingHeaderDefinitionFilePath: ExtraSlot;
+    type WordprocessingHeaderDefinitionFilePath: UserDataSlot;
     /// What a `wordprocessing::HeaderReferenceWith` holds.
-    type WordprocessingHeaderReference: ExtraSlot;
+    type WordprocessingHeaderReference: UserDataSlot;
     /// What a `wordprocessing::HiddenTableRowMarkerWith` holds.
-    type WordprocessingHiddenTableRowMarker: ExtraSlot;
+    type WordprocessingHiddenTableRowMarker: UserDataSlot;
     /// What a `wordprocessing::HiddenTextWith` holds.
-    type WordprocessingHiddenText: ExtraSlot;
+    type WordprocessingHiddenText: UserDataSlot;
     /// What a `wordprocessing::HideStyleFromMainUserInterfaceWith` holds.
-    type WordprocessingHideStyleFromMainUserInterface: ExtraSlot;
+    type WordprocessingHideStyleFromMainUserInterface: UserDataSlot;
     /// What a `wordprocessing::HorizontallyMergedCellWith` holds.
-    type WordprocessingHorizontallyMergedCell: ExtraSlot;
+    type WordprocessingHorizontallyMergedCell: UserDataSlot;
     /// What a `wordprocessing::HyperlinkWith` holds.
-    type WordprocessingHyperlink: ExtraSlot;
+    type WordprocessingHyperlink: UserDataSlot;
     /// What a `wordprocessing::HyphenationZoneWith` holds.
-    type WordprocessingHyphenationZone: ExtraSlot;
+    type WordprocessingHyphenationZone: UserDataSlot;
     /// What a `wordprocessing::IgnoreEndOfCellMarkerWith` holds.
-    type WordprocessingIgnoreEndOfCellMarker: ExtraSlot;
+    type WordprocessingIgnoreEndOfCellMarker: UserDataSlot;
     /// What a `wordprocessing::IgnoreExactLineHeightForLastLineOnPageWith` holds.
-    type WordprocessingIgnoreExactLineHeightForLastLineOnPage: ExtraSlot;
+    type WordprocessingIgnoreExactLineHeightForLastLineOnPage: UserDataSlot;
     /// What a `wordprocessing::IgnoreMinimumLineHeightForFirstLineOnPageWith` holds.
-    type WordprocessingIgnoreMinimumLineHeightForFirstLineOnPage: ExtraSlot;
+    type WordprocessingIgnoreMinimumLineHeightForFirstLineOnPage: UserDataSlot;
     /// What a `wordprocessing::IgnoreMixedContentWith` holds.
-    type WordprocessingIgnoreMixedContent: ExtraSlot;
+    type WordprocessingIgnoreMixedContent: UserDataSlot;
     /// What a `wordprocessing::IgnorePageBreakFromContinuousSectionBreakWith` holds.
-    type WordprocessingIgnorePageBreakFromContinuousSectionBreak: ExtraSlot;
+    type WordprocessingIgnorePageBreakFromContinuousSectionBreak: UserDataSlot;
     /// What a `wordprocessing::IgnoreSpacingAboveAndBelowWith` holds.
-    type WordprocessingIgnoreSpacingAboveAndBelow: ExtraSlot;
+    type WordprocessingIgnoreSpacingAboveAndBelow: UserDataSlot;
     /// What a `wordprocessing::IgnoreTextWrappingAroundObjectsAtBottomOfPageWith` holds.
-    type WordprocessingIgnoreTextWrappingAroundObjectsAtBottomOfPage: ExtraSlot;
+    type WordprocessingIgnoreTextWrappingAroundObjectsAtBottomOfPage: UserDataSlot;
     /// What a `wordprocessing::IgnoreVerticalAlignmentInTextboxesWith` holds.
-    type WordprocessingIgnoreVerticalAlignmentInTextboxes: ExtraSlot;
+    type WordprocessingIgnoreVerticalAlignmentInTextboxes: UserDataSlot;
     /// What a `wordprocessing::ImprintingWith` holds.
-    type WordprocessingImprinting: ExtraSlot;
+    type WordprocessingImprinting: UserDataSlot;
     /// What a `wordprocessing::InclusionExclusionDataForDataSourceWith` holds.
-    type WordprocessingInclusionExclusionDataForDataSource: ExtraSlot;
+    type WordprocessingInclusionExclusionDataForDataSource: UserDataSlot;
     /// What a `wordprocessing::IndexOfColumnBeingMappedWith` holds.
-    type WordprocessingIndexOfColumnBeingMapped: ExtraSlot;
+    type WordprocessingIndexOfColumnBeingMapped: UserDataSlot;
     /// What a `wordprocessing::InformationAboutHTMLDivElementsWith` holds.
-    type WordprocessingInformationAboutHTMLDivElements: ExtraSlot;
+    type WordprocessingInformationAboutHTMLDivElements: UserDataSlot;
     /// What a `wordprocessing::InformationAboutSingleHTMLDivElementWith` holds.
-    type WordprocessingInformationAboutSingleHTMLDivElement: ExtraSlot;
+    type WordprocessingInformationAboutSingleHTMLDivElement: UserDataSlot;
     /// What a `wordprocessing::InlineLevelCustomXMLElementWith` holds.
-    type WordprocessingInlineLevelCustomXMLElement: ExtraSlot;
+    type WordprocessingInlineLevelCustomXMLElement: UserDataSlot;
     /// What a `wordprocessing::InlineLevelSmartTagWith` holds.
-    type WordprocessingInlineLevelSmartTag: ExtraSlot;
+    type WordprocessingInlineLevelSmartTag: UserDataSlot;
     /// What a `wordprocessing::InlineLevelStructuredDocumentTagWith` holds.
-    type WordprocessingInlineLevelStructuredDocumentTag: ExtraSlot;
+    type WordprocessingInlineLevelStructuredDocumentTag: UserDataSlot;
     /// What a `wordprocessing::InlineLevelStructuredDocumentTagContentWith` holds.
-    type WordprocessingInlineLevelStructuredDocumentTagContent: ExtraSlot;
+    type WordprocessingInlineLevelStructuredDocumentTagContent: UserDataSlot;
     /// What a `wordprocessing::InsertedMathControlCharacterWith` holds.
-    type WordprocessingInsertedMathControlCharacter: ExtraSlot;
+    type WordprocessingInsertedMathControlCharacter: UserDataSlot;
     /// What a `wordprocessing::InsertedRunContentWith` holds.
-    type WordprocessingInsertedRunContent: ExtraSlot;
+    type WordprocessingInsertedRunContent: UserDataSlot;
     /// What a `wordprocessing::InsertedTableRowWith` holds.
-    type WordprocessingInsertedTableRow: ExtraSlot;
+    type WordprocessingInsertedTableRow: UserDataSlot;
     /// What a `wordprocessing::InvalidatedFieldCacheWith` holds.
-    type WordprocessingInvalidatedFieldCache: ExtraSlot;
+    type WordprocessingInvalidatedFieldCache: UserDataSlot;
     /// What a `wordprocessing::ItalicFontStyleEmbeddingWith` holds.
-    type WordprocessingItalicFontStyleEmbedding: ExtraSlot;
+    type WordprocessingItalicFontStyleEmbedding: UserDataSlot;
     /// What a `wordprocessing::ItalicsWith` holds.
-    type WordprocessingItalics: ExtraSlot;
+    type WordprocessingItalics: UserDataSlot;
     /// What a `wordprocessing::JustificationWith` holds.
-    type WordprocessingJustification: ExtraSlot;
+    type WordprocessingJustification: UserDataSlot;
     /// What a `wordprocessing::KeepAllLinesOnOnePageWith` holds.
-    type WordprocessingKeepAllLinesOnOnePage: ExtraSlot;
+    type WordprocessingKeepAllLinesOnOnePage: UserDataSlot;
     /// What a `wordprocessing::KeepParagraphWithNextParagraphWith` holds.
-    type WordprocessingKeepParagraphWithNextParagraph: ExtraSlot;
+    type WordprocessingKeepParagraphWithNextParagraph: UserDataSlot;
     /// What a `wordprocessing::KeepSourceFormattingOnImportWith` holds.
-    type WordprocessingKeepSourceFormattingOnImport: ExtraSlot;
+    type WordprocessingKeepSourceFormattingOnImport: UserDataSlot;
     /// What a `wordprocessing::LanguageIDForPhoneticGuideWith` holds.
-    type WordprocessingLanguageIDForPhoneticGuide: ExtraSlot;
+    type WordprocessingLanguageIDForPhoneticGuide: UserDataSlot;
     /// What a `wordprocessing::LanguagesForRunContentWith` holds.
-    type WordprocessingLanguagesForRunContent: ExtraSlot;
+    type WordprocessingLanguagesForRunContent: UserDataSlot;
     /// What a `wordprocessing::LastReviewedAbstractNumberingDefinitionWith` holds.
-    type WordprocessingLastReviewedAbstractNumberingDefinition: ExtraSlot;
+    type WordprocessingLastReviewedAbstractNumberingDefinition: UserDataSlot;
     /// What a `wordprocessing::LatentStyleExceptionWith` holds.
-    type WordprocessingLatentStyleException: ExtraSlot;
+    type WordprocessingLatentStyleException: UserDataSlot;
     /// What a `wordprocessing::LatentStyleInformationWith` holds.
-    type WordprocessingLatentStyleInformation: ExtraSlot;
+    type WordprocessingLatentStyleInformation: UserDataSlot;
     /// What a `wordprocessing::LayoutRawTableWidthWith` holds.
-    type WordprocessingLayoutRawTableWidth: ExtraSlot;
+    type WordprocessingLayoutRawTableWidth: UserDataSlot;
     /// What a `wordprocessing::LeftAndRightMarginForFrameWith` holds.
-    type WordprocessingLeftAndRightMarginForFrame: ExtraSlot;
+    type WordprocessingLeftAndRightMarginForFrame: UserDataSlot;
     /// What a `wordprocessing::LeftBorderWith` holds.
-    type WordprocessingLeftBorder: ExtraSlot;
+    type WordprocessingLeftBorder: UserDataSlot;
     /// What a `wordprocessing::LeftMarginForHTMLDivWith` holds.
-    type WordprocessingLeftMarginForHTMLDiv: ExtraSlot;
+    type WordprocessingLeftMarginForHTMLDiv: UserDataSlot;
     /// What a `wordprocessing::LeftParagraphBorderWith` holds.
-    type WordprocessingLeftParagraphBorder: ExtraSlot;
+    type WordprocessingLeftParagraphBorder: UserDataSlot;
     /// What a `wordprocessing::LeftParagraphBorderTblWidthWith` holds.
-    type WordprocessingLeftParagraphBorderTblWidth: ExtraSlot;
+    type WordprocessingLeftParagraphBorderTblWidth: UserDataSlot;
     /// What a `wordprocessing::LegacyEthiopicAmharicLineBreakingRulesWith` holds.
-    type WordprocessingLegacyEthiopicAmharicLineBreakingRules: ExtraSlot;
+    type WordprocessingLegacyEthiopicAmharicLineBreakingRules: UserDataSlot;
     /// What a `wordprocessing::LegacyNumberingLevelPropertiesWith` holds.
-    type WordprocessingLegacyNumberingLevelProperties: ExtraSlot;
+    type WordprocessingLegacyNumberingLevelProperties: UserDataSlot;
     /// What a `wordprocessing::LineNumberingSettingsWith` holds.
-    type WordprocessingLineNumberingSettings: ExtraSlot;
+    type WordprocessingLineNumberingSettings: UserDataSlot;
     /// What a `wordprocessing::LineWrapLikeWord6With` holds.
-    type WordprocessingLineWrapLikeWord6: ExtraSlot;
+    type WordprocessingLineWrapLikeWord6: UserDataSlot;
     /// What a `wordprocessing::LineWrapTrailingSpacesWith` holds.
-    type WordprocessingLineWrapTrailingSpaces: ExtraSlot;
+    type WordprocessingLineWrapTrailingSpaces: UserDataSlot;
     /// What a `wordprocessing::LinkToExternalQueryFileWith` holds.
-    type WordprocessingLinkToExternalQueryFile: ExtraSlot;
+    type WordprocessingLinkToExternalQueryFile: UserDataSlot;
     /// What a `wordprocessing::LinkedObjectPropertiesWith` holds.
-    type WordprocessingLinkedObjectProperties: ExtraSlot;
+    type WordprocessingLinkedObjectProperties: UserDataSlot;
     /// What a `wordprocessing::LinkedStyleReferenceWith` holds.
-    type WordprocessingLinkedStyleReference: ExtraSlot;
+    type WordprocessingLinkedStyleReference: UserDataSlot;
     /// What a `wordprocessing::ListOfGlossaryDocumentEntriesWith` holds.
-    type WordprocessingListOfGlossaryDocumentEntries: ExtraSlot;
+    type WordprocessingListOfGlossaryDocumentEntries: UserDataSlot;
     /// What a `wordprocessing::ListSeparatorForFieldCodeEvaluationWith` holds.
-    type WordprocessingListSeparatorForFieldCodeEvaluation: ExtraSlot;
+    type WordprocessingListSeparatorForFieldCodeEvaluation: UserDataSlot;
     /// What a `wordprocessing::LockingSettingWith` holds.
-    type WordprocessingLockingSetting: ExtraSlot;
+    type WordprocessingLockingSetting: UserDataSlot;
     /// What a `wordprocessing::MagnificationSettingWith` holds.
-    type WordprocessingMagnificationSetting: ExtraSlot;
+    type WordprocessingMagnificationSetting: UserDataSlot;
     /// What a `wordprocessing::MailMergeErrorReportingSettingWith` holds.
-    type WordprocessingMailMergeErrorReportingSetting: ExtraSlot;
+    type WordprocessingMailMergeErrorReportingSetting: UserDataSlot;
     /// What a `wordprocessing::MailMergeSettingsWith` holds.
-    type WordprocessingMailMergeSettings: ExtraSlot;
+    type WordprocessingMailMergeSettings: UserDataSlot;
     /// What a `wordprocessing::MaintainLinkToExistingFileWith` holds.
-    type WordprocessingMaintainLinkToExistingFile: ExtraSlot;
+    type WordprocessingMaintainLinkToExistingFile: UserDataSlot;
     /// What a `wordprocessing::ManualRunWidthWith` holds.
-    type WordprocessingManualRunWidth: ExtraSlot;
+    type WordprocessingManualRunWidth: UserDataSlot;
     /// What a `wordprocessing::MaximumNumberOfConsecutivelyHyphenatedLinesWith` holds.
-    type WordprocessingMaximumNumberOfConsecutivelyHyphenatedLines: ExtraSlot;
+    type WordprocessingMaximumNumberOfConsecutivelyHyphenatedLines: UserDataSlot;
     /// What a `wordprocessing::MergeFieldMappingWith` holds.
-    type WordprocessingMergeFieldMapping: ExtraSlot;
+    type WordprocessingMergeFieldMapping: UserDataSlot;
     /// What a `wordprocessing::MergedDocumentDestinationWith` holds.
-    type WordprocessingMergedDocumentDestination: ExtraSlot;
+    type WordprocessingMergedDocumentDestination: UserDataSlot;
     /// What a `wordprocessing::MergedDocumentToEMailAttachmentWith` holds.
-    type WordprocessingMergedDocumentToEMailAttachment: ExtraSlot;
+    type WordprocessingMergedDocumentToEMailAttachment: UserDataSlot;
     /// What a `wordprocessing::MergedEMailOrFaxSubjectLineWith` holds.
-    type WordprocessingMergedEMailOrFaxSubjectLine: ExtraSlot;
+    type WordprocessingMergedEMailOrFaxSubjectLine: UserDataSlot;
     /// What a `wordprocessing::MirrorPageMarginsWith` holds.
-    type WordprocessingMirrorPageMargins: ExtraSlot;
+    type WordprocessingMirrorPageMargins: UserDataSlot;
     /// What a `wordprocessing::MoveDestinationLocationContainerEndWith` holds.
-    type WordprocessingMoveDestinationLocationContainerEnd: ExtraSlot;
+    type WordprocessingMoveDestinationLocationContainerEnd: UserDataSlot;
     /// What a `wordprocessing::MoveDestinationLocationContainerStartWith` holds.
-    type WordprocessingMoveDestinationLocationContainerStart: ExtraSlot;
+    type WordprocessingMoveDestinationLocationContainerStart: UserDataSlot;
     /// What a `wordprocessing::MoveDestinationParagraphWith` holds.
-    type WordprocessingMoveDestinationParagraph: ExtraSlot;
+    type WordprocessingMoveDestinationParagraph: UserDataSlot;
     /// What a `wordprocessing::MoveDestinationRunContentWith` holds.
-    type WordprocessingMoveDestinationRunContent: ExtraSlot;
+    type WordprocessingMoveDestinationRunContent: UserDataSlot;
     /// What a `wordprocessing::MoveSourceLocationContainerEndWith` holds.
-    type WordprocessingMoveSourceLocationContainerEnd: ExtraSlot;
+    type WordprocessingMoveSourceLocationContainerEnd: UserDataSlot;
     /// What a `wordprocessing::MoveSourceLocationContainerStartWith` holds.
-    type WordprocessingMoveSourceLocationContainerStart: ExtraSlot;
+    type WordprocessingMoveSourceLocationContainerStart: UserDataSlot;
     /// What a `wordprocessing::MoveSourceParagraphWith` holds.
-    type WordprocessingMoveSourceParagraph: ExtraSlot;
+    type WordprocessingMoveSourceParagraph: UserDataSlot;
     /// What a `wordprocessing::MoveSourceRunContentWith` holds.
-    type WordprocessingMoveSourceRunContent: ExtraSlot;
+    type WordprocessingMoveSourceRunContent: UserDataSlot;
     /// What a `wordprocessing::NestedFramesetDefinitionWith` holds.
-    type WordprocessingNestedFramesetDefinition: ExtraSlot;
+    type WordprocessingNestedFramesetDefinition: UserDataSlot;
     /// What a `wordprocessing::NeverKernPunctuationCharactersWith` holds.
-    type WordprocessingNeverKernPunctuationCharacters: ExtraSlot;
+    type WordprocessingNeverKernPunctuationCharacters: UserDataSlot;
     /// What a `wordprocessing::NonBreakingHyphenCharacterWith` holds.
-    type WordprocessingNonBreakingHyphenCharacter: ExtraSlot;
+    type WordprocessingNonBreakingHyphenCharacter: UserDataSlot;
     /// What a `wordprocessing::NonComplexScriptFontSizeWith` holds.
-    type WordprocessingNonComplexScriptFontSize: ExtraSlot;
+    type WordprocessingNonComplexScriptFontSize: UserDataSlot;
     /// What a `wordprocessing::NotATrueTypeOutlineFontWith` holds.
-    type WordprocessingNotATrueTypeOutlineFont: ExtraSlot;
+    type WordprocessingNotATrueTypeOutlineFont: UserDataSlot;
     /// What a `wordprocessing::NumberOfColumnsInColumnBandWith` holds.
-    type WordprocessingNumberOfColumnsInColumnBand: ExtraSlot;
+    type WordprocessingNumberOfColumnsInColumnBand: UserDataSlot;
     /// What a `wordprocessing::NumberOfPagesPerBookletWith` holds.
-    type WordprocessingNumberOfPagesPerBooklet: ExtraSlot;
+    type WordprocessingNumberOfPagesPerBooklet: UserDataSlot;
     /// What a `wordprocessing::NumberOfRowsInRowBandWith` holds.
-    type WordprocessingNumberOfRowsInRowBand: ExtraSlot;
+    type WordprocessingNumberOfRowsInRowBand: UserDataSlot;
     /// What a `wordprocessing::NumberingDefinitionInstanceWith` holds.
-    type WordprocessingNumberingDefinitionInstance: ExtraSlot;
+    type WordprocessingNumberingDefinitionInstance: UserDataSlot;
     /// What a `wordprocessing::NumberingDefinitionInstanceReferenceNumIdWith` holds.
-    type WordprocessingNumberingDefinitionInstanceReferenceNumId: ExtraSlot;
+    type WordprocessingNumberingDefinitionInstanceReferenceNumId: UserDataSlot;
     /// What a `wordprocessing::NumberingDefinitionInstanceReferenceNumPrWith` holds.
-    type WordprocessingNumberingDefinitionInstanceReferenceNumPr: ExtraSlot;
+    type WordprocessingNumberingDefinitionInstanceReferenceNumPr: UserDataSlot;
     /// What a `wordprocessing::NumberingDefinitionsWith` holds.
-    type WordprocessingNumberingDefinitions: ExtraSlot;
+    type WordprocessingNumberingDefinitions: UserDataSlot;
     /// What a `wordprocessing::NumberingFormatWith` holds.
-    type WordprocessingNumberingFormat: ExtraSlot;
+    type WordprocessingNumberingFormat: UserDataSlot;
     /// What a `wordprocessing::NumberingLevelDefinitionOverrideWith` holds.
-    type WordprocessingNumberingLevelDefinitionOverride: ExtraSlot;
+    type WordprocessingNumberingLevelDefinitionOverride: UserDataSlot;
     /// What a `wordprocessing::NumberingLevelOverrideDefinitionWith` holds.
-    type WordprocessingNumberingLevelOverrideDefinition: ExtraSlot;
+    type WordprocessingNumberingLevelOverrideDefinition: UserDataSlot;
     /// What a `wordprocessing::NumberingLevelReferenceWith` holds.
-    type WordprocessingNumberingLevelReference: ExtraSlot;
+    type WordprocessingNumberingLevelReference: UserDataSlot;
     /// What a `wordprocessing::NumberingLevelStartingValueOverrideWith` holds.
-    type WordprocessingNumberingLevelStartingValueOverride: ExtraSlot;
+    type WordprocessingNumberingLevelStartingValueOverride: UserDataSlot;
     /// What a `wordprocessing::NumberingLevelTextWith` holds.
-    type WordprocessingNumberingLevelText: ExtraSlot;
+    type WordprocessingNumberingLevelText: UserDataSlot;
     /// What a `wordprocessing::NumberingStyleDefinitionWith` holds.
-    type WordprocessingNumberingStyleDefinition: ExtraSlot;
+    type WordprocessingNumberingStyleDefinition: UserDataSlot;
     /// What a `wordprocessing::NumberingStyleReferenceWith` holds.
-    type WordprocessingNumberingStyleReference: ExtraSlot;
+    type WordprocessingNumberingStyleReference: UserDataSlot;
     /// What a `wordprocessing::NumberingTemplateCodeWith` holds.
-    type WordprocessingNumberingTemplateCode: ExtraSlot;
+    type WordprocessingNumberingTemplateCode: UserDataSlot;
     /// What a `wordprocessing::ODSODataSourceFilePathWith` holds.
-    type WordprocessingODSODataSourceFilePath: ExtraSlot;
+    type WordprocessingODSODataSourceFilePath: UserDataSlot;
     /// What a `wordprocessing::ODSODataSourceTypeWith` holds.
-    type WordprocessingODSODataSourceType: ExtraSlot;
+    type WordprocessingODSODataSourceType: UserDataSlot;
     /// What a `wordprocessing::OfficeDataSourceObjectSettingsWith` holds.
-    type WordprocessingOfficeDataSourceObjectSettings: ExtraSlot;
+    type WordprocessingOfficeDataSourceObjectSettings: UserDataSlot;
     /// What a `wordprocessing::OfficeOpenXMLMathWith` holds.
-    type WordprocessingOfficeOpenXMLMath: ExtraSlot;
+    type WordprocessingOfficeOpenXMLMath: UserDataSlot;
     /// What a `wordprocessing::OnlyAllowEditingOfFormFieldsWith` holds.
-    type WordprocessingOnlyAllowEditingOfFormFields: ExtraSlot;
+    type WordprocessingOnlyAllowEditingOfFormFields: UserDataSlot;
     /// What a `wordprocessing::OnlyExpandCondenseTextByWholePointsWith` holds.
-    type WordprocessingOnlyExpandCondenseTextByWholePoints: ExtraSlot;
+    type WordprocessingOnlyExpandCondenseTextByWholePoints: UserDataSlot;
     /// What a `wordprocessing::OnlyPrintFormFieldContentWith` holds.
-    type WordprocessingOnlyPrintFormFieldContent: ExtraSlot;
+    type WordprocessingOnlyPrintFormFieldContent: UserDataSlot;
     /// What a `wordprocessing::OnlySaveCustomXMLMarkupWith` holds.
-    type WordprocessingOnlySaveCustomXMLMarkup: ExtraSlot;
+    type WordprocessingOnlySaveCustomXMLMarkup: UserDataSlot;
     /// What a `wordprocessing::OnlySaveFormFieldContentWith` holds.
-    type WordprocessingOnlySaveFormFieldContent: ExtraSlot;
+    type WordprocessingOnlySaveFormFieldContent: UserDataSlot;
     /// What a `wordprocessing::OptionalHyphenCharacterWith` holds.
-    type WordprocessingOptionalHyphenCharacter: ExtraSlot;
+    type WordprocessingOptionalHyphenCharacter: UserDataSlot;
     /// What a `wordprocessing::OptionalUserInterfaceSortingOrderWith` holds.
-    type WordprocessingOptionalUserInterfaceSortingOrder: ExtraSlot;
+    type WordprocessingOptionalUserInterfaceSortingOrder: UserDataSlot;
     /// What a `wordprocessing::OriginalDocumentRevisionSaveIDWith` holds.
-    type WordprocessingOriginalDocumentRevisionSaveID: ExtraSlot;
+    type WordprocessingOriginalDocumentRevisionSaveID: UserDataSlot;
     /// What a `wordprocessing::OutputEncodingWith` holds.
-    type WordprocessingOutputEncoding: ExtraSlot;
+    type WordprocessingOutputEncoding: UserDataSlot;
     /// What a `wordprocessing::PageBorderExcludesFooterWith` holds.
-    type WordprocessingPageBorderExcludesFooter: ExtraSlot;
+    type WordprocessingPageBorderExcludesFooter: UserDataSlot;
     /// What a `wordprocessing::PageBorderExcludesHeaderWith` holds.
-    type WordprocessingPageBorderExcludesHeader: ExtraSlot;
+    type WordprocessingPageBorderExcludesHeader: UserDataSlot;
     /// What a `wordprocessing::PageBordersWith` holds.
-    type WordprocessingPageBorders: ExtraSlot;
+    type WordprocessingPageBorders: UserDataSlot;
     /// What a `wordprocessing::PageMarginsWith` holds.
-    type WordprocessingPageMargins: ExtraSlot;
+    type WordprocessingPageMargins: UserDataSlot;
     /// What a `wordprocessing::PageNumberBlockWith` holds.
-    type WordprocessingPageNumberBlock: ExtraSlot;
+    type WordprocessingPageNumberBlock: UserDataSlot;
     /// What a `wordprocessing::PageNumberingSettingsWith` holds.
-    type WordprocessingPageNumberingSettings: ExtraSlot;
+    type WordprocessingPageNumberingSettings: UserDataSlot;
     /// What a `wordprocessing::PageSizeWith` holds.
-    type WordprocessingPageSize: ExtraSlot;
+    type WordprocessingPageSize: UserDataSlot;
     /// What a `wordprocessing::Panose1TypefaceClassificationNumberWith` holds.
-    type WordprocessingPanose1TypefaceClassificationNumber: ExtraSlot;
+    type WordprocessingPanose1TypefaceClassificationNumber: UserDataSlot;
     /// What a `wordprocessing::PaperSourceInformationWith` holds.
-    type WordprocessingPaperSourceInformation: ExtraSlot;
+    type WordprocessingPaperSourceInformation: UserDataSlot;
     /// What a `wordprocessing::ParagraphWith` holds.
-    type WordprocessingParagraph: ExtraSlot;
+    type WordprocessingParagraph: UserDataSlot;
     /// What a `wordprocessing::ParagraphAlignmentWith` holds.
-    type WordprocessingParagraphAlignment: ExtraSlot;
+    type WordprocessingParagraphAlignment: UserDataSlot;
     /// What a `wordprocessing::ParagraphBorderAboveIdenticalParagraphsWith` holds.
-    type WordprocessingParagraphBorderAboveIdenticalParagraphs: ExtraSlot;
+    type WordprocessingParagraphBorderAboveIdenticalParagraphs: UserDataSlot;
     /// What a `wordprocessing::ParagraphBorderAboveIdenticalParagraphsTblWidthWith` holds.
-    type WordprocessingParagraphBorderAboveIdenticalParagraphsTblWidth: ExtraSlot;
+    type WordprocessingParagraphBorderAboveIdenticalParagraphsTblWidth: UserDataSlot;
     /// What a `wordprocessing::ParagraphBorderBelowIdenticalParagraphsWith` holds.
-    type WordprocessingParagraphBorderBelowIdenticalParagraphs: ExtraSlot;
+    type WordprocessingParagraphBorderBelowIdenticalParagraphs: UserDataSlot;
     /// What a `wordprocessing::ParagraphBorderBelowIdenticalParagraphsTblWidthWith` holds.
-    type WordprocessingParagraphBorderBelowIdenticalParagraphsTblWidth: ExtraSlot;
+    type WordprocessingParagraphBorderBelowIdenticalParagraphsTblWidth: UserDataSlot;
     /// What a `wordprocessing::ParagraphBorderBetweenFacingPagesWith` holds.
-    type WordprocessingParagraphBorderBetweenFacingPages: ExtraSlot;
+    type WordprocessingParagraphBorderBetweenFacingPages: UserDataSlot;
     /// What a `wordprocessing::ParagraphBorderBetweenIdenticalParagraphsWith` holds.
-    type WordprocessingParagraphBorderBetweenIdenticalParagraphs: ExtraSlot;
+    type WordprocessingParagraphBorderBetweenIdenticalParagraphs: UserDataSlot;
     /// What a `wordprocessing::ParagraphBordersWith` holds.
-    type WordprocessingParagraphBorders: ExtraSlot;
+    type WordprocessingParagraphBorders: UserDataSlot;
     /// What a `wordprocessing::ParagraphConditionalFormattingWith` holds.
-    type WordprocessingParagraphConditionalFormatting: ExtraSlot;
+    type WordprocessingParagraphConditionalFormatting: UserDataSlot;
     /// What a `wordprocessing::ParagraphIndentationWith` holds.
-    type WordprocessingParagraphIndentation: ExtraSlot;
+    type WordprocessingParagraphIndentation: UserDataSlot;
     /// What a `wordprocessing::ParagraphMarkIsAlwaysHiddenWith` holds.
-    type WordprocessingParagraphMarkIsAlwaysHidden: ExtraSlot;
+    type WordprocessingParagraphMarkIsAlwaysHidden: UserDataSlot;
     /// What a `wordprocessing::ParagraphMarkRunPropertiesRevisionWith` holds.
-    type WordprocessingParagraphMarkRunPropertiesRevision: ExtraSlot;
+    type WordprocessingParagraphMarkRunPropertiesRevision: UserDataSlot;
     /// What a `wordprocessing::ParagraphPropertiesWith` holds.
-    type WordprocessingParagraphProperties: ExtraSlot;
+    type WordprocessingParagraphProperties: UserDataSlot;
     /// What a `wordprocessing::ParagraphPropertiesPPrGeneralWith` holds.
-    type WordprocessingParagraphPropertiesPPrGeneral: ExtraSlot;
+    type WordprocessingParagraphPropertiesPPrGeneral: UserDataSlot;
     /// What a `wordprocessing::ParagraphShadingWith` holds.
-    type WordprocessingParagraphShading: ExtraSlot;
+    type WordprocessingParagraphShading: UserDataSlot;
     /// What a `wordprocessing::ParagraphTextFlowDirectionWith` holds.
-    type WordprocessingParagraphTextFlowDirection: ExtraSlot;
+    type WordprocessingParagraphTextFlowDirection: UserDataSlot;
     /// What a `wordprocessing::ParentStyleIDWith` holds.
-    type WordprocessingParentStyleID: ExtraSlot;
+    type WordprocessingParentStyleID: UserDataSlot;
     /// What a `wordprocessing::PercentageOfDocumentToUseWith` holds.
-    type WordprocessingPercentageOfDocumentToUse: ExtraSlot;
+    type WordprocessingPercentageOfDocumentToUse: UserDataSlot;
     /// What a `wordprocessing::PhoneticGuideWith` holds.
-    type WordprocessingPhoneticGuide: ExtraSlot;
+    type WordprocessingPhoneticGuide: UserDataSlot;
     /// What a `wordprocessing::PhoneticGuideBaseTextWith` holds.
-    type WordprocessingPhoneticGuideBaseText: ExtraSlot;
+    type WordprocessingPhoneticGuideBaseText: UserDataSlot;
     /// What a `wordprocessing::PhoneticGuideBaseTextFontSizeWith` holds.
-    type WordprocessingPhoneticGuideBaseTextFontSize: ExtraSlot;
+    type WordprocessingPhoneticGuideBaseTextFontSize: UserDataSlot;
     /// What a `wordprocessing::PhoneticGuidePropertiesWith` holds.
-    type WordprocessingPhoneticGuideProperties: ExtraSlot;
+    type WordprocessingPhoneticGuideProperties: UserDataSlot;
     /// What a `wordprocessing::PhoneticGuideTextWith` holds.
-    type WordprocessingPhoneticGuideText: ExtraSlot;
+    type WordprocessingPhoneticGuideText: UserDataSlot;
     /// What a `wordprocessing::PhoneticGuideTextAlignmentWith` holds.
-    type WordprocessingPhoneticGuideTextAlignment: ExtraSlot;
+    type WordprocessingPhoneticGuideTextAlignment: UserDataSlot;
     /// What a `wordprocessing::PhoneticGuideTextFontSizeWith` holds.
-    type WordprocessingPhoneticGuideTextFontSize: ExtraSlot;
+    type WordprocessingPhoneticGuideTextFontSize: UserDataSlot;
     /// What a `wordprocessing::PictureNumberingSymbolDefinitionWith` holds.
-    type WordprocessingPictureNumberingSymbolDefinition: ExtraSlot;
+    type WordprocessingPictureNumberingSymbolDefinition: UserDataSlot;
     /// What a `wordprocessing::PictureNumberingSymbolDefinitionReferenceWith` holds.
-    type WordprocessingPictureNumberingSymbolDefinitionReference: ExtraSlot;
+    type WordprocessingPictureNumberingSymbolDefinitionReference: UserDataSlot;
     /// What a `wordprocessing::PictureStructuredDocumentTagWith` holds.
-    type WordprocessingPictureStructuredDocumentTag: ExtraSlot;
+    type WordprocessingPictureStructuredDocumentTag: UserDataSlot;
     /// What a `wordprocessing::PixelsPerInchForGraphicsImagesWith` holds.
-    type WordprocessingPixelsPerInchForGraphicsImages: ExtraSlot;
+    type WordprocessingPixelsPerInchForGraphicsImages: UserDataSlot;
     /// What a `wordprocessing::PlaceholderTextShouldBeResavedWith` holds.
-    type WordprocessingPlaceholderTextShouldBeResaved: ExtraSlot;
+    type WordprocessingPlaceholderTextShouldBeResaved: UserDataSlot;
     /// What a `wordprocessing::PlainTextStructuredDocumentTagWith` holds.
-    type WordprocessingPlainTextStructuredDocumentTag: ExtraSlot;
+    type WordprocessingPlainTextStructuredDocumentTag: UserDataSlot;
     /// What a `wordprocessing::PositionGutterAtTopOfPageWith` holds.
-    type WordprocessingPositionGutterAtTopOfPage: ExtraSlot;
+    type WordprocessingPositionGutterAtTopOfPage: UserDataSlot;
     /// What a `wordprocessing::PositionOfLastCalculatedPageBreakWith` holds.
-    type WordprocessingPositionOfLastCalculatedPageBreak: ExtraSlot;
+    type WordprocessingPositionOfLastCalculatedPageBreak: UserDataSlot;
     /// What a `wordprocessing::PredefinedMergeFieldNameWith` holds.
-    type WordprocessingPredefinedMergeFieldName: ExtraSlot;
+    type WordprocessingPredefinedMergeFieldName: UserDataSlot;
     /// What a `wordprocessing::PreferredTableCellWidthWith` holds.
-    type WordprocessingPreferredTableCellWidth: ExtraSlot;
+    type WordprocessingPreferredTableCellWidth: UserDataSlot;
     /// What a `wordprocessing::PreferredTableWidthWith` holds.
-    type WordprocessingPreferredTableWidth: ExtraSlot;
+    type WordprocessingPreferredTableWidth: UserDataSlot;
     /// What a `wordprocessing::PreferredWidthAfterTableRowWith` holds.
-    type WordprocessingPreferredWidthAfterTableRow: ExtraSlot;
+    type WordprocessingPreferredWidthAfterTableRow: UserDataSlot;
     /// What a `wordprocessing::PreferredWidthBeforeTableRowWith` holds.
-    type WordprocessingPreferredWidthBeforeTableRow: ExtraSlot;
+    type WordprocessingPreferredWidthBeforeTableRow: UserDataSlot;
     /// What a `wordprocessing::PreventModificationOfThemesPartWith` holds.
-    type WordprocessingPreventModificationOfThemesPart: ExtraSlot;
+    type WordprocessingPreventModificationOfThemesPart: UserDataSlot;
     /// What a `wordprocessing::PreventReplacementOfStylesPartWith` holds.
-    type WordprocessingPreventReplacementOfStylesPart: ExtraSlot;
+    type WordprocessingPreventReplacementOfStylesPart: UserDataSlot;
     /// What a `wordprocessing::PreventTextFramesFromOverlappingWith` holds.
-    type WordprocessingPreventTextFramesFromOverlapping: ExtraSlot;
+    type WordprocessingPreventTextFramesFromOverlapping: UserDataSlot;
     /// What a `wordprocessing::PreviousNumberingFieldPropertiesWith` holds.
-    type WordprocessingPreviousNumberingFieldProperties: ExtraSlot;
+    type WordprocessingPreviousNumberingFieldProperties: UserDataSlot;
     /// What a `wordprocessing::PreviousParagraphMarkRunPropertiesWith` holds.
-    type WordprocessingPreviousParagraphMarkRunProperties: ExtraSlot;
+    type WordprocessingPreviousParagraphMarkRunProperties: UserDataSlot;
     /// What a `wordprocessing::PreviousParagraphPropertiesWith` holds.
-    type WordprocessingPreviousParagraphProperties: ExtraSlot;
+    type WordprocessingPreviousParagraphProperties: UserDataSlot;
     /// What a `wordprocessing::PreviousRunPropertiesWith` holds.
-    type WordprocessingPreviousRunProperties: ExtraSlot;
+    type WordprocessingPreviousRunProperties: UserDataSlot;
     /// What a `wordprocessing::PreviousSectionPropertiesWith` holds.
-    type WordprocessingPreviousSectionProperties: ExtraSlot;
+    type WordprocessingPreviousSectionProperties: UserDataSlot;
     /// What a `wordprocessing::PreviousTableCellPropertiesWith` holds.
-    type WordprocessingPreviousTableCellProperties: ExtraSlot;
+    type WordprocessingPreviousTableCellProperties: UserDataSlot;
     /// What a `wordprocessing::PreviousTableGridWith` holds.
-    type WordprocessingPreviousTableGrid: ExtraSlot;
+    type WordprocessingPreviousTableGrid: UserDataSlot;
     /// What a `wordprocessing::PreviousTableLevelPropertyExceptionsWith` holds.
-    type WordprocessingPreviousTableLevelPropertyExceptions: ExtraSlot;
+    type WordprocessingPreviousTableLevelPropertyExceptions: UserDataSlot;
     /// What a `wordprocessing::PreviousTablePropertiesWith` holds.
-    type WordprocessingPreviousTableProperties: ExtraSlot;
+    type WordprocessingPreviousTableProperties: UserDataSlot;
     /// What a `wordprocessing::PreviousTableRowPropertiesWith` holds.
-    type WordprocessingPreviousTableRowProperties: ExtraSlot;
+    type WordprocessingPreviousTableRowProperties: UserDataSlot;
     /// What a `wordprocessing::PrimaryStyleWith` holds.
-    type WordprocessingPrimaryStyle: ExtraSlot;
+    type WordprocessingPrimaryStyle: UserDataSlot;
     /// What a `wordprocessing::PrimaryStyleNameWith` holds.
-    type WordprocessingPrimaryStyleName: ExtraSlot;
+    type WordprocessingPrimaryStyleName: UserDataSlot;
     /// What a `wordprocessing::PrintBodyTextBeforeHeaderFooterContentsWith` holds.
-    type WordprocessingPrintBodyTextBeforeHeaderFooterContents: ExtraSlot;
+    type WordprocessingPrintBodyTextBeforeHeaderFooterContents: UserDataSlot;
     /// What a `wordprocessing::PrintColorsAsBlackAndWhiteWithoutDitheringWith` holds.
-    type WordprocessingPrintColorsAsBlackAndWhiteWithoutDithering: ExtraSlot;
+    type WordprocessingPrintColorsAsBlackAndWhiteWithoutDithering: UserDataSlot;
     /// What a `wordprocessing::PrintFractionalCharacterWidthsWith` holds.
-    type WordprocessingPrintFractionalCharacterWidths: ExtraSlot;
+    type WordprocessingPrintFractionalCharacterWidths: UserDataSlot;
     /// What a `wordprocessing::PrintPostScriptCodesWithDocumentTextWith` holds.
-    type WordprocessingPrintPostScriptCodesWithDocumentText: ExtraSlot;
+    type WordprocessingPrintPostScriptCodesWithDocumentText: UserDataSlot;
     /// What a `wordprocessing::PrintTwoPagesPerSheetWith` holds.
-    type WordprocessingPrintTwoPagesPerSheet: ExtraSlot;
+    type WordprocessingPrintTwoPagesPerSheet: UserDataSlot;
     /// What a `wordprocessing::ProgrammaticTagWith` holds.
-    type WordprocessingProgrammaticTag: ExtraSlot;
+    type WordprocessingProgrammaticTag: UserDataSlot;
     /// What a `wordprocessing::ProofingErrorAnchorWith` holds.
-    type WordprocessingProofingErrorAnchor: ExtraSlot;
+    type WordprocessingProofingErrorAnchor: UserDataSlot;
     /// What a `wordprocessing::PropertiesForASingleFontWith` holds.
-    type WordprocessingPropertiesForASingleFont: ExtraSlot;
+    type WordprocessingPropertiesForASingleFont: UserDataSlot;
     /// What a `wordprocessing::QueryForDataSourceRecordsWith` holds.
-    type WordprocessingQueryForDataSourceRecords: ExtraSlot;
+    type WordprocessingQueryForDataSourceRecords: UserDataSlot;
     /// What a `wordprocessing::RadixPointForFieldCodeEvaluationWith` holds.
-    type WordprocessingRadixPointForFieldCodeEvaluation: ExtraSlot;
+    type WordprocessingRadixPointForFieldCodeEvaluation: UserDataSlot;
     /// What a `wordprocessing::RangePermissionEndWith` holds.
-    type WordprocessingRangePermissionEnd: ExtraSlot;
+    type WordprocessingRangePermissionEnd: UserDataSlot;
     /// What a `wordprocessing::RangePermissionStartWith` holds.
-    type WordprocessingRangePermissionStart: ExtraSlot;
+    type WordprocessingRangePermissionStart: UserDataSlot;
     /// What a `wordprocessing::RecalculateFieldsWhenModifiedWith` holds.
-    type WordprocessingRecalculateFieldsWhenModified: ExtraSlot;
+    type WordprocessingRecalculateFieldsWhenModified: UserDataSlot;
     /// What a `wordprocessing::RecommendWebPageFormatWith` holds.
-    type WordprocessingRecommendWebPageFormat: ExtraSlot;
+    type WordprocessingRecommendWebPageFormat: UserDataSlot;
     /// What a `wordprocessing::RecordCurrentlyDisplayedInMergedDocumentWith` holds.
-    type WordprocessingRecordCurrentlyDisplayedInMergedDocument: ExtraSlot;
+    type WordprocessingRecordCurrentlyDisplayedInMergedDocument: UserDataSlot;
     /// What a `wordprocessing::RecordIsIncludedInMailMergeWith` holds.
-    type WordprocessingRecordIsIncludedInMailMerge: ExtraSlot;
+    type WordprocessingRecordIsIncludedInMailMerge: UserDataSlot;
     /// What a `wordprocessing::ReferenceToInclusionExclusionDataWith` holds.
-    type WordprocessingReferenceToInclusionExclusionData: ExtraSlot;
+    type WordprocessingReferenceToInclusionExclusionData: UserDataSlot;
     /// What a `wordprocessing::ReferenceToPrinterSettingsDataWith` holds.
-    type WordprocessingReferenceToPrinterSettingsData: ExtraSlot;
+    type WordprocessingReferenceToPrinterSettingsData: UserDataSlot;
     /// What a `wordprocessing::ReferencedCharacterStyleWith` holds.
-    type WordprocessingReferencedCharacterStyle: ExtraSlot;
+    type WordprocessingReferencedCharacterStyle: UserDataSlot;
     /// What a `wordprocessing::ReferencedParagraphStyleWith` holds.
-    type WordprocessingReferencedParagraphStyle: ExtraSlot;
+    type WordprocessingReferencedParagraphStyle: UserDataSlot;
     /// What a `wordprocessing::ReferencedTableStyleWith` holds.
-    type WordprocessingReferencedTableStyle: ExtraSlot;
+    type WordprocessingReferencedTableStyle: UserDataSlot;
     /// What a `wordprocessing::RegularFontStyleEmbeddingWith` holds.
-    type WordprocessingRegularFontStyleEmbedding: ExtraSlot;
+    type WordprocessingRegularFontStyleEmbedding: UserDataSlot;
     /// What a `wordprocessing::RemoveDateAndTimeFromAnnotationsWith` holds.
-    type WordprocessingRemoveDateAndTimeFromAnnotations: ExtraSlot;
+    type WordprocessingRemoveDateAndTimeFromAnnotations: UserDataSlot;
     /// What a `wordprocessing::RemovePersonalInformationWith` holds.
-    type WordprocessingRemovePersonalInformation: ExtraSlot;
+    type WordprocessingRemovePersonalInformation: UserDataSlot;
     /// What a `wordprocessing::RemoveSemiHiddenPropertyWith` holds.
-    type WordprocessingRemoveSemiHiddenProperty: ExtraSlot;
+    type WordprocessingRemoveSemiHiddenProperty: UserDataSlot;
     /// What a `wordprocessing::RemoveSmartTagsWhenSavingWith` holds.
-    type WordprocessingRemoveSmartTagsWhenSaving: ExtraSlot;
+    type WordprocessingRemoveSmartTagsWhenSaving: UserDataSlot;
     /// What a `wordprocessing::RemoveStructuredDocumentTagWhenEditedWith` holds.
-    type WordprocessingRemoveStructuredDocumentTagWhenEdited: ExtraSlot;
+    type WordprocessingRemoveStructuredDocumentTagWhenEdited: UserDataSlot;
     /// What a `wordprocessing::RepeatTableRowWith` holds.
-    type WordprocessingRepeatTableRow: ExtraSlot;
+    type WordprocessingRepeatTableRow: UserDataSlot;
     /// What a `wordprocessing::RequireExactSizeDuringFontSubstitutionWith` holds.
-    type WordprocessingRequireExactSizeDuringFontSubstitution: ExtraSlot;
+    type WordprocessingRequireExactSizeDuringFontSubstitution: UserDataSlot;
     /// What a `wordprocessing::RestartNumberingLevelSymbolWith` holds.
-    type WordprocessingRestartNumberingLevelSymbol: ExtraSlot;
+    type WordprocessingRestartNumberingLevelSymbol: UserDataSlot;
     /// What a `wordprocessing::ReverseBookFoldPrintingWith` holds.
-    type WordprocessingReverseBookFoldPrinting: ExtraSlot;
+    type WordprocessingReverseBookFoldPrinting: UserDataSlot;
     /// What a `wordprocessing::RevisionIdentifierForStyleDefinitionWith` holds.
-    type WordprocessingRevisionIdentifierForStyleDefinition: ExtraSlot;
+    type WordprocessingRevisionIdentifierForStyleDefinition: UserDataSlot;
     /// What a `wordprocessing::RevisionInformationForParagraphPropertiesWith` holds.
-    type WordprocessingRevisionInformationForParagraphProperties: ExtraSlot;
+    type WordprocessingRevisionInformationForParagraphProperties: UserDataSlot;
     /// What a `wordprocessing::RevisionInformationForRunPropertiesWith` holds.
-    type WordprocessingRevisionInformationForRunProperties: ExtraSlot;
+    type WordprocessingRevisionInformationForRunProperties: UserDataSlot;
     /// What a `wordprocessing::RevisionInformationForSectionPropertiesWith` holds.
-    type WordprocessingRevisionInformationForSectionProperties: ExtraSlot;
+    type WordprocessingRevisionInformationForSectionProperties: UserDataSlot;
     /// What a `wordprocessing::RevisionInformationForTableCellPropertiesWith` holds.
-    type WordprocessingRevisionInformationForTableCellProperties: ExtraSlot;
+    type WordprocessingRevisionInformationForTableCellProperties: UserDataSlot;
     /// What a `wordprocessing::RevisionInformationForTableLevelPropertyExceptionsWith` holds.
-    type WordprocessingRevisionInformationForTableLevelPropertyExceptions: ExtraSlot;
+    type WordprocessingRevisionInformationForTableLevelPropertyExceptions: UserDataSlot;
     /// What a `wordprocessing::RevisionInformationForTablePropertiesWith` holds.
-    type WordprocessingRevisionInformationForTableProperties: ExtraSlot;
+    type WordprocessingRevisionInformationForTableProperties: UserDataSlot;
     /// What a `wordprocessing::RevisionInformationForTableRowPropertiesWith` holds.
-    type WordprocessingRevisionInformationForTableRowProperties: ExtraSlot;
+    type WordprocessingRevisionInformationForTableRowProperties: UserDataSlot;
     /// What a `wordprocessing::RevisionSaveIDValuesWith` holds.
-    type WordprocessingRevisionSaveIDValues: ExtraSlot;
+    type WordprocessingRevisionSaveIDValues: UserDataSlot;
     /// What a `wordprocessing::RichTextBoxContentContainerWith` holds.
-    type WordprocessingRichTextBoxContentContainer: ExtraSlot;
+    type WordprocessingRichTextBoxContentContainer: UserDataSlot;
     /// What a `wordprocessing::RichTextStructuredDocumentTagWith` holds.
-    type WordprocessingRichTextStructuredDocumentTag: ExtraSlot;
+    type WordprocessingRichTextStructuredDocumentTag: UserDataSlot;
     /// What a `wordprocessing::RightBorderWith` holds.
-    type WordprocessingRightBorder: ExtraSlot;
+    type WordprocessingRightBorder: UserDataSlot;
     /// What a `wordprocessing::RightMarginForHTMLDivWith` holds.
-    type WordprocessingRightMarginForHTMLDiv: ExtraSlot;
+    type WordprocessingRightMarginForHTMLDiv: UserDataSlot;
     /// What a `wordprocessing::RightParagraphBorderWith` holds.
-    type WordprocessingRightParagraphBorder: ExtraSlot;
+    type WordprocessingRightParagraphBorder: UserDataSlot;
     /// What a `wordprocessing::RightParagraphBorderTblWidthWith` holds.
-    type WordprocessingRightParagraphBorderTblWidth: ExtraSlot;
+    type WordprocessingRightParagraphBorderTblWidth: UserDataSlot;
     /// What a `wordprocessing::RightToLeftParagraphLayoutWith` holds.
-    type WordprocessingRightToLeftParagraphLayout: ExtraSlot;
+    type WordprocessingRightToLeftParagraphLayout: UserDataSlot;
     /// What a `wordprocessing::RightToLeftTextWith` holds.
-    type WordprocessingRightToLeftText: ExtraSlot;
+    type WordprocessingRightToLeftText: UserDataSlot;
     /// What a `wordprocessing::RowLevelCustomXMLElementWith` holds.
-    type WordprocessingRowLevelCustomXMLElement: ExtraSlot;
+    type WordprocessingRowLevelCustomXMLElement: UserDataSlot;
     /// What a `wordprocessing::RowLevelStructuredDocumentTagWith` holds.
-    type WordprocessingRowLevelStructuredDocumentTag: ExtraSlot;
+    type WordprocessingRowLevelStructuredDocumentTag: UserDataSlot;
     /// What a `wordprocessing::RowLevelStructuredDocumentTagContentWith` holds.
-    type WordprocessingRowLevelStructuredDocumentTagContent: ExtraSlot;
+    type WordprocessingRowLevelStructuredDocumentTagContent: UserDataSlot;
     /// What a `wordprocessing::RunContentColorWith` holds.
-    type WordprocessingRunContentColor: ExtraSlot;
+    type WordprocessingRunContentColor: UserDataSlot;
     /// What a `wordprocessing::RunFontsWith` holds.
-    type WordprocessingRunFonts: ExtraSlot;
+    type WordprocessingRunFonts: UserDataSlot;
     /// What a `wordprocessing::RunPropertiesWith` holds.
-    type WordprocessingRunProperties: ExtraSlot;
+    type WordprocessingRunProperties: UserDataSlot;
     /// What a `wordprocessing::RunPropertiesForTheParagraphMarkWith` holds.
-    type WordprocessingRunPropertiesForTheParagraphMark: ExtraSlot;
+    type WordprocessingRunPropertiesForTheParagraphMark: UserDataSlot;
     /// What a `wordprocessing::SaveSmartTagDataWith` holds.
-    type WordprocessingSaveSmartTagData: ExtraSlot;
+    type WordprocessingSaveSmartTagData: UserDataSlot;
     /// What a `wordprocessing::SaveThroughCustomXSLTransformWith` holds.
-    type WordprocessingSaveThroughCustomXSLTransform: ExtraSlot;
+    type WordprocessingSaveThroughCustomXSLTransform: UserDataSlot;
     /// What a `wordprocessing::ScrollbarDisplayOptionWith` holds.
-    type WordprocessingScrollbarDisplayOption: ExtraSlot;
+    type WordprocessingScrollbarDisplayOption: UserDataSlot;
     /// What a `wordprocessing::SectionTypeWith` holds.
-    type WordprocessingSectionType: ExtraSlot;
+    type WordprocessingSectionType: UserDataSlot;
     /// What a `wordprocessing::SectionWideEndnotePropertiesWith` holds.
-    type WordprocessingSectionWideEndnoteProperties: ExtraSlot;
+    type WordprocessingSectionWideEndnoteProperties: UserDataSlot;
     /// What a `wordprocessing::SectionWideFootnotePropertiesWith` holds.
-    type WordprocessingSectionWideFootnoteProperties: ExtraSlot;
+    type WordprocessingSectionWideFootnoteProperties: UserDataSlot;
     /// What a `wordprocessing::SelectFldWithFirstOrLastCharWith` holds.
-    type WordprocessingSelectFldWithFirstOrLastChar: ExtraSlot;
+    type WordprocessingSelectFldWithFirstOrLastChar: UserDataSlot;
     /// What a `wordprocessing::SetOfBordersForHTMLDivWith` holds.
-    type WordprocessingSetOfBordersForHTMLDiv: ExtraSlot;
+    type WordprocessingSetOfBordersForHTMLDiv: UserDataSlot;
     /// What a `wordprocessing::SetOfCustomTabStopsWith` holds.
-    type WordprocessingSetOfCustomTabStops: ExtraSlot;
+    type WordprocessingSetOfCustomTabStops: UserDataSlot;
     /// What a `wordprocessing::ShadowWith` holds.
-    type WordprocessingShadow: ExtraSlot;
+    type WordprocessingShadow: UserDataSlot;
     /// What a `wordprocessing::ShowEMailMessageHeaderWith` holds.
-    type WordprocessingShowEMailMessageHeader: ExtraSlot;
+    type WordprocessingShowEMailMessageHeader: UserDataSlot;
     /// What a `wordprocessing::ShowXMLTagsWith` holds.
-    type WordprocessingShowXMLTags: ExtraSlot;
+    type WordprocessingShowXMLTags: UserDataSlot;
     /// What a `wordprocessing::SimpleFieldWith` holds.
-    type WordprocessingSimpleField: ExtraSlot;
+    type WordprocessingSimpleField: UserDataSlot;
     /// What a `wordprocessing::SingleAutomaticCaptioningSettingWith` holds.
-    type WordprocessingSingleAutomaticCaptioningSetting: ExtraSlot;
+    type WordprocessingSingleAutomaticCaptioningSetting: UserDataSlot;
     /// What a `wordprocessing::SingleCaptionTypeDefinitionWith` holds.
-    type WordprocessingSingleCaptionTypeDefinition: ExtraSlot;
+    type WordprocessingSingleCaptionTypeDefinition: UserDataSlot;
     /// What a `wordprocessing::SingleColumnDefinitionWith` holds.
-    type WordprocessingSingleColumnDefinition: ExtraSlot;
+    type WordprocessingSingleColumnDefinition: UserDataSlot;
     /// What a `wordprocessing::SingleDocumentVariableWith` holds.
-    type WordprocessingSingleDocumentVariable: ExtraSlot;
+    type WordprocessingSingleDocumentVariable: UserDataSlot;
     /// What a `wordprocessing::SingleFramePropertiesWith` holds.
-    type WordprocessingSingleFrameProperties: ExtraSlot;
+    type WordprocessingSingleFrameProperties: UserDataSlot;
     /// What a `wordprocessing::SingleStrikethroughWith` holds.
-    type WordprocessingSingleStrikethrough: ExtraSlot;
+    type WordprocessingSingleStrikethrough: UserDataSlot;
     /// What a `wordprocessing::SingleTableCellMarginsWith` holds.
-    type WordprocessingSingleTableCellMargins: ExtraSlot;
+    type WordprocessingSingleTableCellMargins: UserDataSlot;
     /// What a `wordprocessing::SmallCapsWith` holds.
-    type WordprocessingSmallCaps: ExtraSlot;
+    type WordprocessingSmallCaps: UserDataSlot;
     /// What a `wordprocessing::SmartTagPropertiesWith` holds.
-    type WordprocessingSmartTagProperties: ExtraSlot;
+    type WordprocessingSmartTagProperties: UserDataSlot;
     /// What a `wordprocessing::SourceDocumentTypeWith` holds.
-    type WordprocessingSourceDocumentType: ExtraSlot;
+    type WordprocessingSourceDocumentType: UserDataSlot;
     /// What a `wordprocessing::SourceFileForFrameWith` holds.
-    type WordprocessingSourceFileForFrame: ExtraSlot;
+    type WordprocessingSourceFileForFrame: UserDataSlot;
     /// What a `wordprocessing::SpacingBetweenLinesAndAboveBelowParagraphWith` holds.
-    type WordprocessingSpacingBetweenLinesAndAboveBelowParagraph: ExtraSlot;
+    type WordprocessingSpacingBetweenLinesAndAboveBelowParagraph: UserDataSlot;
     /// What a `wordprocessing::SpecialEndnoteListWith` holds.
-    type WordprocessingSpecialEndnoteList: ExtraSlot;
+    type WordprocessingSpecialEndnoteList: UserDataSlot;
     /// What a `wordprocessing::SpecialFootnoteListWith` holds.
-    type WordprocessingSpecialFootnoteList: ExtraSlot;
+    type WordprocessingSpecialFootnoteList: UserDataSlot;
     /// What a `wordprocessing::SpellingAndGrammaticalCheckingStateWith` holds.
-    type WordprocessingSpellingAndGrammaticalCheckingState: ExtraSlot;
+    type WordprocessingSpellingAndGrammaticalCheckingState: UserDataSlot;
     /// What a `wordprocessing::SplitPgBreakAndParaMarkWith` holds.
-    type WordprocessingSplitPgBreakAndParaMark: ExtraSlot;
+    type WordprocessingSplitPgBreakAndParaMark: UserDataSlot;
     /// What a `wordprocessing::StartParagraphOnNextPageWith` holds.
-    type WordprocessingStartParagraphOnNextPage: ExtraSlot;
+    type WordprocessingStartParagraphOnNextPage: UserDataSlot;
     /// What a `wordprocessing::StartingValueWith` holds.
-    type WordprocessingStartingValue: ExtraSlot;
+    type WordprocessingStartingValue: UserDataSlot;
     /// What a `wordprocessing::StrictKinsokuRulesWith` holds.
-    type WordprocessingStrictKinsokuRules: ExtraSlot;
+    type WordprocessingStrictKinsokuRules: UserDataSlot;
     /// What a `wordprocessing::StructuredDocumentTagEndCharacterPropertiesWith` holds.
-    type WordprocessingStructuredDocumentTagEndCharacterProperties: ExtraSlot;
+    type WordprocessingStructuredDocumentTagEndCharacterProperties: UserDataSlot;
     /// What a `wordprocessing::StructuredDocumentTagLabelWith` holds.
-    type WordprocessingStructuredDocumentTagLabel: ExtraSlot;
+    type WordprocessingStructuredDocumentTagLabel: UserDataSlot;
     /// What a `wordprocessing::StructuredDocumentTagNavigationOrderIndexWith` holds.
-    type WordprocessingStructuredDocumentTagNavigationOrderIndex: ExtraSlot;
+    type WordprocessingStructuredDocumentTagNavigationOrderIndex: UserDataSlot;
     /// What a `wordprocessing::StructuredDocumentTagPlaceholderTextWith` holds.
-    type WordprocessingStructuredDocumentTagPlaceholderText: ExtraSlot;
+    type WordprocessingStructuredDocumentTagPlaceholderText: UserDataSlot;
     /// What a `wordprocessing::StructuredDocumentTagPropertiesWith` holds.
-    type WordprocessingStructuredDocumentTagProperties: ExtraSlot;
+    type WordprocessingStructuredDocumentTagProperties: UserDataSlot;
     /// What a `wordprocessing::StyleCannotBeAppliedWith` holds.
-    type WordprocessingStyleCannotBeApplied: ExtraSlot;
+    type WordprocessingStyleCannotBeApplied: UserDataSlot;
     /// What a `wordprocessing::StyleConditionalTableFormattingPropertiesWith` holds.
-    type WordprocessingStyleConditionalTableFormattingProperties: ExtraSlot;
+    type WordprocessingStyleConditionalTableFormattingProperties: UserDataSlot;
     /// What a `wordprocessing::StyleDefinitionWith` holds.
-    type WordprocessingStyleDefinition: ExtraSlot;
+    type WordprocessingStyleDefinition: UserDataSlot;
     /// What a `wordprocessing::StyleDefinitionsWith` holds.
-    type WordprocessingStyleDefinitions: ExtraSlot;
+    type WordprocessingStyleDefinitions: UserDataSlot;
     /// What a `wordprocessing::StyleForNextParagraphWith` holds.
-    type WordprocessingStyleForNextParagraph: ExtraSlot;
+    type WordprocessingStyleForNextParagraph: UserDataSlot;
     /// What a `wordprocessing::SubscriptSuperscriptTextWith` holds.
-    type WordprocessingSubscriptSuperscriptText: ExtraSlot;
+    type WordprocessingSubscriptSuperscriptText: UserDataSlot;
     /// What a `wordprocessing::SubsetFontsWhenEmbeddingWith` holds.
-    type WordprocessingSubsetFontsWhenEmbedding: ExtraSlot;
+    type WordprocessingSubsetFontsWhenEmbedding: UserDataSlot;
     /// What a `wordprocessing::SuggestedFilteringWith` holds.
-    type WordprocessingSuggestedFiltering: ExtraSlot;
+    type WordprocessingSuggestedFiltering: UserDataSlot;
     /// What a `wordprocessing::SuggestedSortingWith` holds.
-    type WordprocessingSuggestedSorting: ExtraSlot;
+    type WordprocessingSuggestedSorting: UserDataSlot;
     /// What a `wordprocessing::SupplementarySmartTagInformationWith` holds.
-    type WordprocessingSupplementarySmartTagInformation: ExtraSlot;
+    type WordprocessingSupplementarySmartTagInformation: UserDataSlot;
     /// What a `wordprocessing::SupportedUnicodeSubrangesAndCodePagesWith` holds.
-    type WordprocessingSupportedUnicodeSubrangesAndCodePages: ExtraSlot;
+    type WordprocessingSupportedUnicodeSubrangesAndCodePages: UserDataSlot;
     /// What a `wordprocessing::SuppressEndnotesInDocumentWith` holds.
-    type WordprocessingSuppressEndnotesInDocument: ExtraSlot;
+    type WordprocessingSuppressEndnotesInDocument: UserDataSlot;
     /// What a `wordprocessing::SuppressHyphenationForParagraphWith` holds.
-    type WordprocessingSuppressHyphenationForParagraph: ExtraSlot;
+    type WordprocessingSuppressHyphenationForParagraph: UserDataSlot;
     /// What a `wordprocessing::SuppressLineNumbersForParagraphWith` holds.
-    type WordprocessingSuppressLineNumbersForParagraph: ExtraSlot;
+    type WordprocessingSuppressLineNumbersForParagraph: UserDataSlot;
     /// What a `wordprocessing::SuppressSpBfAfterPgBrkWith` holds.
-    type WordprocessingSuppressSpBfAfterPgBrk: ExtraSlot;
+    type WordprocessingSuppressSpBfAfterPgBrk: UserDataSlot;
     /// What a `wordprocessing::SuppressTopSpacingWith` holds.
-    type WordprocessingSuppressTopSpacing: ExtraSlot;
+    type WordprocessingSuppressTopSpacing: UserDataSlot;
     /// What a `wordprocessing::SwapParagraphBordersOnOddNumberedPagesWith` holds.
-    type WordprocessingSwapParagraphBordersOnOddNumberedPages: ExtraSlot;
+    type WordprocessingSwapParagraphBordersOnOddNumberedPages: UserDataSlot;
     /// What a `wordprocessing::SymbolCharacterWith` holds.
-    type WordprocessingSymbolCharacter: ExtraSlot;
+    type WordprocessingSymbolCharacter: UserDataSlot;
     /// What a `wordprocessing::TabCharacterWith` holds.
-    type WordprocessingTabCharacter: ExtraSlot;
+    type WordprocessingTabCharacter: UserDataSlot;
     /// What a `wordprocessing::TableWith` holds.
-    type WordprocessingTable: ExtraSlot;
+    type WordprocessingTable: UserDataSlot;
     /// What a `wordprocessing::TableAlignmentExceptionWith` holds.
-    type WordprocessingTableAlignmentException: ExtraSlot;
+    type WordprocessingTableAlignmentException: UserDataSlot;
     /// What a `wordprocessing::TableBordersWith` holds.
-    type WordprocessingTableBorders: ExtraSlot;
+    type WordprocessingTableBorders: UserDataSlot;
     /// What a `wordprocessing::TableCaptionWith` holds.
-    type WordprocessingTableCaption: ExtraSlot;
+    type WordprocessingTableCaption: UserDataSlot;
     /// What a `wordprocessing::TableCellWith` holds.
-    type WordprocessingTableCell: ExtraSlot;
+    type WordprocessingTableCell: UserDataSlot;
     /// What a `wordprocessing::TableCellBordersWith` holds.
-    type WordprocessingTableCellBorders: ExtraSlot;
+    type WordprocessingTableCellBorders: UserDataSlot;
     /// What a `wordprocessing::TableCellDeletionWith` holds.
-    type WordprocessingTableCellDeletion: ExtraSlot;
+    type WordprocessingTableCellDeletion: UserDataSlot;
     /// What a `wordprocessing::TableCellInsertionWith` holds.
-    type WordprocessingTableCellInsertion: ExtraSlot;
+    type WordprocessingTableCellInsertion: UserDataSlot;
     /// What a `wordprocessing::TableCellLeadingEdgeBorderWith` holds.
-    type WordprocessingTableCellLeadingEdgeBorder: ExtraSlot;
+    type WordprocessingTableCellLeadingEdgeBorder: UserDataSlot;
     /// What a `wordprocessing::TableCellLeadingEdgeBorderTblWidthWith` holds.
-    type WordprocessingTableCellLeadingEdgeBorderTblWidth: ExtraSlot;
+    type WordprocessingTableCellLeadingEdgeBorderTblWidth: UserDataSlot;
     /// What a `wordprocessing::TableCellMarginExceptionsWith` holds.
-    type WordprocessingTableCellMarginExceptions: ExtraSlot;
+    type WordprocessingTableCellMarginExceptions: UserDataSlot;
     /// What a `wordprocessing::TableCellPropertiesWith` holds.
-    type WordprocessingTableCellProperties: ExtraSlot;
+    type WordprocessingTableCellProperties: UserDataSlot;
     /// What a `wordprocessing::TableCellTrailingMarginExceptionWith` holds.
-    type WordprocessingTableCellTrailingMarginException: ExtraSlot;
+    type WordprocessingTableCellTrailingMarginException: UserDataSlot;
     /// What a `wordprocessing::TableCellTrailingMarginExceptionTblWidthWith` holds.
-    type WordprocessingTableCellTrailingMarginExceptionTblWidth: ExtraSlot;
+    type WordprocessingTableCellTrailingMarginExceptionTblWidth: UserDataSlot;
     /// What a `wordprocessing::TableCellVerticalAlignmentWith` holds.
-    type WordprocessingTableCellVerticalAlignment: ExtraSlot;
+    type WordprocessingTableCellVerticalAlignment: UserDataSlot;
     /// What a `wordprocessing::TableDescriptionWith` holds.
-    type WordprocessingTableDescription: ExtraSlot;
+    type WordprocessingTableDescription: UserDataSlot;
     /// What a `wordprocessing::TableGridWith` holds.
-    type WordprocessingTableGrid: ExtraSlot;
+    type WordprocessingTableGrid: UserDataSlot;
     /// What a `wordprocessing::TableGridColumnRevisionInformationWith` holds.
-    type WordprocessingTableGridColumnRevisionInformation: ExtraSlot;
+    type WordprocessingTableGridColumnRevisionInformation: UserDataSlot;
     /// What a `wordprocessing::TableIndentFromLeadingMarginWith` holds.
-    type WordprocessingTableIndentFromLeadingMargin: ExtraSlot;
+    type WordprocessingTableIndentFromLeadingMargin: UserDataSlot;
     /// What a `wordprocessing::TableInsideHorizontalEdgesBorderWith` holds.
-    type WordprocessingTableInsideHorizontalEdgesBorder: ExtraSlot;
+    type WordprocessingTableInsideHorizontalEdgesBorder: UserDataSlot;
     /// What a `wordprocessing::TableInsideVerticalEdgesBorderWith` holds.
-    type WordprocessingTableInsideVerticalEdgesBorder: ExtraSlot;
+    type WordprocessingTableInsideVerticalEdgesBorder: UserDataSlot;
     /// What a `wordprocessing::TableLayoutWith` holds.
-    type WordprocessingTableLayout: ExtraSlot;
+    type WordprocessingTableLayout: UserDataSlot;
     /// What a `wordprocessing::TableLevelPropertyExceptionsWith` holds.
-    type WordprocessingTableLevelPropertyExceptions: ExtraSlot;
+    type WordprocessingTableLevelPropertyExceptions: UserDataSlot;
     /// What a `wordprocessing::TablePropertiesWith` holds.
-    type WordprocessingTableProperties: ExtraSlot;
+    type WordprocessingTableProperties: UserDataSlot;
     /// What a `wordprocessing::TableRowWith` holds.
-    type WordprocessingTableRow: ExtraSlot;
+    type WordprocessingTableRow: UserDataSlot;
     /// What a `wordprocessing::TableRowCannotBreakAcrossPagesWith` holds.
-    type WordprocessingTableRowCannotBreakAcrossPages: ExtraSlot;
+    type WordprocessingTableRowCannotBreakAcrossPages: UserDataSlot;
     /// What a `wordprocessing::TableRowCellSpacingWith` holds.
-    type WordprocessingTableRowCellSpacing: ExtraSlot;
+    type WordprocessingTableRowCellSpacing: UserDataSlot;
     /// What a `wordprocessing::TableRowHeightWith` holds.
-    type WordprocessingTableRowHeight: ExtraSlot;
+    type WordprocessingTableRowHeight: UserDataSlot;
     /// What a `wordprocessing::TableRowPropertiesWith` holds.
-    type WordprocessingTableRowProperties: ExtraSlot;
+    type WordprocessingTableRowProperties: UserDataSlot;
     /// What a `wordprocessing::TableStyleConditionalFormattingSettingsExceptionWith` holds.
-    type WordprocessingTableStyleConditionalFormattingSettingsException: ExtraSlot;
+    type WordprocessingTableStyleConditionalFormattingSettingsException: UserDataSlot;
     /// What a `wordprocessing::TargetScreenSizeForWebPageWith` holds.
-    type WordprocessingTargetScreenSizeForWebPage: ExtraSlot;
+    type WordprocessingTargetScreenSizeForWebPage: UserDataSlot;
     /// What a `wordprocessing::TextWith` holds.
-    type WordprocessingText: ExtraSlot;
+    type WordprocessingText: UserDataSlot;
     /// What a `wordprocessing::TextBorderWith` holds.
-    type WordprocessingTextBorder: ExtraSlot;
+    type WordprocessingTextBorder: UserDataSlot;
     /// What a `wordprocessing::TextBoxFormFieldFormattingWith` holds.
-    type WordprocessingTextBoxFormFieldFormatting: ExtraSlot;
+    type WordprocessingTextBoxFormFieldFormatting: UserDataSlot;
     /// What a `wordprocessing::TextBoxFormFieldMaximumLengthWith` holds.
-    type WordprocessingTextBoxFormFieldMaximumLength: ExtraSlot;
+    type WordprocessingTextBoxFormFieldMaximumLength: UserDataSlot;
     /// What a `wordprocessing::TextBoxFormFieldPropertiesWith` holds.
-    type WordprocessingTextBoxFormFieldProperties: ExtraSlot;
+    type WordprocessingTextBoxFormFieldProperties: UserDataSlot;
     /// What a `wordprocessing::TextBoxFormFieldTypeWith` holds.
-    type WordprocessingTextBoxFormFieldType: ExtraSlot;
+    type WordprocessingTextBoxFormFieldType: UserDataSlot;
     /// What a `wordprocessing::TextFramePropertiesWith` holds.
-    type WordprocessingTextFrameProperties: ExtraSlot;
+    type WordprocessingTextFrameProperties: UserDataSlot;
     /// What a `wordprocessing::TextHighlightingWith` holds.
-    type WordprocessingTextHighlighting: ExtraSlot;
+    type WordprocessingTextHighlighting: UserDataSlot;
     /// What a `wordprocessing::TextRunWith` holds.
-    type WordprocessingTextRun: ExtraSlot;
+    type WordprocessingTextRun: UserDataSlot;
     /// What a `wordprocessing::TextboxTightWrapWith` holds.
-    type WordprocessingTextboxTightWrap: ExtraSlot;
+    type WordprocessingTextboxTightWrap: UserDataSlot;
     /// What a `wordprocessing::ThemeColorMappingsWith` holds.
-    type WordprocessingThemeColorMappings: ExtraSlot;
+    type WordprocessingThemeColorMappings: UserDataSlot;
     /// What a `wordprocessing::ThemeFontLanguagesWith` holds.
-    type WordprocessingThemeFontLanguages: ExtraSlot;
+    type WordprocessingThemeFontLanguages: UserDataSlot;
     /// What a `wordprocessing::TopAndBottomMarginForFrameWith` holds.
-    type WordprocessingTopAndBottomMarginForFrame: ExtraSlot;
+    type WordprocessingTopAndBottomMarginForFrame: UserDataSlot;
     /// What a `wordprocessing::TopBorderWith` holds.
-    type WordprocessingTopBorder: ExtraSlot;
+    type WordprocessingTopBorder: UserDataSlot;
     /// What a `wordprocessing::TopLeftBottomRightDiagonalBorderWith` holds.
-    type WordprocessingTopLeftBottomRightDiagonalBorder: ExtraSlot;
+    type WordprocessingTopLeftBottomRightDiagonalBorder: UserDataSlot;
     /// What a `wordprocessing::TopMarginForHTMLDivWith` holds.
-    type WordprocessingTopMarginForHTMLDiv: ExtraSlot;
+    type WordprocessingTopMarginForHTMLDiv: UserDataSlot;
     /// What a `wordprocessing::TopRightBottomLeftDiagonalBorderWith` holds.
-    type WordprocessingTopRightBottomLeftDiagonalBorder: ExtraSlot;
+    type WordprocessingTopRightBottomLeftDiagonalBorder: UserDataSlot;
     /// What a `wordprocessing::TrackRevisionsToDocumentWith` holds.
-    type WordprocessingTrackRevisionsToDocument: ExtraSlot;
+    type WordprocessingTrackRevisionsToDocument: UserDataSlot;
     /// What a `wordprocessing::TreatBackslashQuotationDelimiterAsTwoQuotationMarksWith` holds.
-    type WordprocessingTreatBackslashQuotationDelimiterAsTwoQuotationMarks: ExtraSlot;
+    type WordprocessingTreatBackslashQuotationDelimiterAsTwoQuotationMarks: UserDataSlot;
     /// What a `wordprocessing::TruncateFontHeightsLikeWP6With` holds.
-    type WordprocessingTruncateFontHeightsLikeWP6: ExtraSlot;
+    type WordprocessingTruncateFontHeightsLikeWP6: UserDataSlot;
     /// What a `wordprocessing::UDLConnectionStringWith` holds.
-    type WordprocessingUDLConnectionString: ExtraSlot;
+    type WordprocessingUDLConnectionString: UserDataSlot;
     /// What a `wordprocessing::UnderlineWith` holds.
-    type WordprocessingUnderline: ExtraSlot;
+    type WordprocessingUnderline: UserDataSlot;
     /// What a `wordprocessing::UnderlineAllTrailingSpacesWith` holds.
-    type WordprocessingUnderlineAllTrailingSpaces: ExtraSlot;
+    type WordprocessingUnderlineAllTrailingSpaces: UserDataSlot;
     /// What a `wordprocessing::UnderlineFollowingCharacterFollowingNumberingWith` holds.
-    type WordprocessingUnderlineFollowingCharacterFollowingNumbering: ExtraSlot;
+    type WordprocessingUnderlineFollowingCharacterFollowingNumbering: UserDataSlot;
     /// What a `wordprocessing::UniqueIDWith` holds.
-    type WordprocessingUniqueID: ExtraSlot;
+    type WordprocessingUniqueID: UserDataSlot;
     /// What a `wordprocessing::UniqueValueForRecordWith` holds.
-    type WordprocessingUniqueValueForRecord: ExtraSlot;
+    type WordprocessingUniqueValueForRecord: UserDataSlot;
     /// What a `wordprocessing::UpgradeDocumentOnOpenWith` holds.
-    type WordprocessingUpgradeDocumentOnOpen: ExtraSlot;
+    type WordprocessingUpgradeDocumentOnOpen: UserDataSlot;
     /// What a `wordprocessing::UseANSIKerningPairsFromFontsWith` holds.
-    type WordprocessingUseANSIKerningPairsFromFonts: ExtraSlot;
+    type WordprocessingUseANSIKerningPairsFromFonts: UserDataSlot;
     /// What a `wordprocessing::UseAltKinsokuLineBreakRulesWith` holds.
-    type WordprocessingUseAltKinsokuLineBreakRules: ExtraSlot;
+    type WordprocessingUseAltKinsokuLineBreakRules: UserDataSlot;
     /// What a `wordprocessing::UseCachedParagraphInformationForColumnBalancingWith` holds.
-    type WordprocessingUseCachedParagraphInformationForColumnBalancing: ExtraSlot;
+    type WordprocessingUseCachedParagraphInformationForColumnBalancing: UserDataSlot;
     /// What a `wordprocessing::UseComplexScriptFormattingOnRunWith` holds.
-    type WordprocessingUseComplexScriptFormattingOnRun: ExtraSlot;
+    type WordprocessingUseComplexScriptFormattingOnRun: UserDataSlot;
     /// What a `wordprocessing::UseCountryBasedAddressFieldOrderingWith` holds.
-    type WordprocessingUseCountryBasedAddressFieldOrdering: ExtraSlot;
+    type WordprocessingUseCountryBasedAddressFieldOrdering: UserDataSlot;
     /// What a `wordprocessing::UseIncorrectInterCharacterSpacingRulesWith` holds.
-    type WordprocessingUseIncorrectInterCharacterSpacingRules: ExtraSlot;
+    type WordprocessingUseIncorrectInterCharacterSpacingRules: UserDataSlot;
     /// What a `wordprocessing::UseLeftRightIndentsAsInsideOutsideIndentsWith` holds.
-    type WordprocessingUseLeftRightIndentsAsInsideOutsideIndents: ExtraSlot;
+    type WordprocessingUseLeftRightIndentsAsInsideOutsideIndents: UserDataSlot;
     /// What a `wordprocessing::UseNormalStyleForListWith` holds.
-    type WordprocessingUseNormalStyleForList: ExtraSlot;
+    type WordprocessingUseNormalStyleForList: UserDataSlot;
     /// What a `wordprocessing::UsePrinterMetricsToDisplayDocumentsWith` holds.
-    type WordprocessingUsePrinterMetricsToDisplayDocuments: ExtraSlot;
+    type WordprocessingUsePrinterMetricsToDisplayDocuments: UserDataSlot;
     /// What a `wordprocessing::UseSingleBorderforContiguousCellsWith` holds.
-    type WordprocessingUseSingleBorderforContiguousCells: ExtraSlot;
+    type WordprocessingUseSingleBorderforContiguousCells: UserDataSlot;
     /// What a `wordprocessing::UseSpecificSmallCapsAlgorithmWith` holds.
-    type WordprocessingUseSpecificSmallCapsAlgorithm: ExtraSlot;
+    type WordprocessingUseSpecificSmallCapsAlgorithm: UserDataSlot;
     /// What a `wordprocessing::UseSpecificSpaceWidthWith` holds.
-    type WordprocessingUseSpecificSpaceWidth: ExtraSlot;
+    type WordprocessingUseSpecificSpaceWidth: UserDataSlot;
     /// What a `wordprocessing::UseStaticTextLeadingWith` holds.
-    type WordprocessingUseStaticTextLeading: ExtraSlot;
+    type WordprocessingUseStaticTextLeading: UserDataSlot;
     /// What a `wordprocessing::UseWord2002TableStyleRulesWith` holds.
-    type WordprocessingUseWord2002TableStyleRules: ExtraSlot;
+    type WordprocessingUseWord2002TableStyleRules: UserDataSlot;
     /// What a `wordprocessing::UtilizeVMLWhenSavingAsWebPageWith` holds.
-    type WordprocessingUtilizeVMLWhenSavingAsWebPage: ExtraSlot;
+    type WordprocessingUtilizeVMLWhenSavingAsWebPage: UserDataSlot;
     /// What a `wordprocessing::VMLObjectWith` holds.
-    type WordprocessingVMLObject: ExtraSlot;
+    type WordprocessingVMLObject: UserDataSlot;
     /// What a `wordprocessing::VerticalCharacterAlignmentOnLineWith` holds.
-    type WordprocessingVerticalCharacterAlignmentOnLine: ExtraSlot;
+    type WordprocessingVerticalCharacterAlignmentOnLine: UserDataSlot;
     /// What a `wordprocessing::VerticallyMergedCellWith` holds.
-    type WordprocessingVerticallyMergedCell: ExtraSlot;
+    type WordprocessingVerticallyMergedCell: UserDataSlot;
     /// What a `wordprocessing::VerticallyMergedSplitTableCellsWith` holds.
-    type WordprocessingVerticallyMergedSplitTableCells: ExtraSlot;
+    type WordprocessingVerticallyMergedSplitTableCells: UserDataSlot;
     /// What a `wordprocessing::VerticallyRaisedOrLoweredTextWith` holds.
-    type WordprocessingVerticallyRaisedOrLoweredText: ExtraSlot;
+    type WordprocessingVerticallyRaisedOrLoweredText: UserDataSlot;
     /// What a `wordprocessing::ViewMergedDataWithinDocumentWith` holds.
-    type WordprocessingViewMergedDataWithinDocument: ExtraSlot;
+    type WordprocessingViewMergedDataWithinDocument: UserDataSlot;
     /// What a `wordprocessing::VisibilityOfAnnotationTypesWith` holds.
-    type WordprocessingVisibilityOfAnnotationTypes: ExtraSlot;
+    type WordprocessingVisibilityOfAnnotationTypes: UserDataSlot;
     /// What a `wordprocessing::VisuallyRightToLeftTableWith` holds.
-    type WordprocessingVisuallyRightToLeftTable: ExtraSlot;
+    type WordprocessingVisuallyRightToLeftTable: UserDataSlot;
     /// What a `wordprocessing::WebHiddenTextWith` holds.
-    type WordprocessingWebHiddenText: ExtraSlot;
+    type WordprocessingWebHiddenText: UserDataSlot;
     /// What a `wordprocessing::WebPageSettingsWith` holds.
-    type WordprocessingWebPageSettings: ExtraSlot;
+    type WordprocessingWebPageSettings: UserDataSlot;
     /// What a `wordprocessing::WriteProtectionWith` holds.
-    type WordprocessingWriteProtection: ExtraSlot;
+    type WordprocessingWriteProtection: UserDataSlot;
     /// What a `wordprocessing::XMLMappingWith` holds.
-    type WordprocessingXMLMapping: ExtraSlot;
+    type WordprocessingXMLMapping: UserDataSlot;
 }
 
-impl NodeExtra for () {
+impl UserData for () {
     type AdditionalCharacteristicsSetOfAdditionalCharacteristics = ();
     type AdditionalCharacteristicsSingleCharacteristic = ();
     type BibliographyAbbreviatedCaseNumber = ();

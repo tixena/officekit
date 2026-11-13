@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -271,16 +271,16 @@ pub static CM_MK_LST_SHAPE: officekit_markup_base::Shape = officekit_markup_base
 /// schema type is `CT_CommentV2Moniker`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CmMKWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint20199MainCommandCmMK,
+pub struct CmMKWith<X: UserData> {
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint20199MainCommandCmMK,
 }
 
-/// The `pc2:cmMK` element of the tree a read gives: [`CmMKWith`] holding nothing in `extra`.
+/// The `pc2:cmMK` element of the tree a read gives: [`CmMKWith`] holding nothing in `user_data`.
 pub type CmMK = CmMKWith<()>;
 
 impl Eq for CmMKWith<()> {}
@@ -289,19 +289,20 @@ impl Eq for CmMKWith<()> {}
 /// schema type is `CT_CommentV2MonikerList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CmMkLstWith<X: NodeExtra> {
+pub struct CmMkLstWith<X: UserData> {
     /// The child that is `CmMK`, which the schema requires.
     pub cm_mk: Box<CmMKWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint20199MainCommandCmMkLst,
     /// The child that is `super::office_powerpoint_2013_main_command::SldMkLst`, which the schema
     /// requires.
     pub sld_mk_lst: Box<super::office_powerpoint_2013_main_command::SldMkLstWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint20199MainCommandCmMkLst,
 }
 
-/// The `pc2:cmMkLst` element of the tree a read gives: [`CmMkLstWith`] holding nothing in `extra`.
+/// The `pc2:cmMkLst` element of the tree a read gives: [`CmMkLstWith`] holding nothing in
+/// `user_data`.
 pub type CmMkLst = CmMkLstWith<()>;
 
 impl Eq for CmMkLstWith<()> {}
@@ -310,17 +311,17 @@ impl Eq for CmMkLstWith<()> {}
 /// schema type is `CT_CommentReplyV2Moniker`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CmRplyMkWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint20199MainCommandCmRplyMk,
+pub struct CmRplyMkWith<X: UserData> {
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint20199MainCommandCmRplyMk,
 }
 
 /// The `pc2:cmRplyMk` element of the tree a read gives: [`CmRplyMkWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CmRplyMk = CmRplyMkWith<()>;
 
 impl Eq for CmRplyMkWith<()> {}
@@ -329,19 +330,19 @@ impl Eq for CmRplyMkWith<()> {}
 /// Its schema type is `CT_CommentReplyV2MonikerList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CmRplyMkLstWith<X: NodeExtra> {
+pub struct CmRplyMkLstWith<X: UserData> {
     /// The child that is `CmMkLst`, which the schema requires.
     pub cm_mk_lst: Box<CmMkLstWith<X>>,
     /// The child that is `CmRplyMk`, which the schema requires.
     pub cm_rply_mk: Box<CmRplyMkWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint20199MainCommandCmRplyMkLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint20199MainCommandCmRplyMkLst,
 }
 
 /// The `pc2:cmRplyMkLst` element of the tree a read gives: [`CmRplyMkLstWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CmRplyMkLst = CmRplyMkLstWith<()>;
 
 impl Eq for CmRplyMkLstWith<()> {}
@@ -460,18 +461,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> CmMKWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CmMKWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CmMKWith<Y>
+    pub fn into_user_data<Y>(self) -> CmMKWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CmMKWith {
-            extra: Default::default(),
             id: self.id,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -498,22 +499,25 @@ impl officekit_markup_base::Write for CmMK {
     }
 }
 
-impl<X: NodeExtra> CmMkLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CmMkLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CmMkLstWith<Y>
+    pub fn into_user_data<Y>(self) -> CmMkLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CmMkLstWith {
-            cm_mk: officekit_markup_base::into_extra_required(*self.cm_mk, CmMKWith::into_extra),
-            extra: Default::default(),
-            sld_mk_lst: officekit_markup_base::into_extra_required(
+            cm_mk: officekit_markup_base::into_user_data_required(
+                *self.cm_mk,
+                CmMKWith::into_user_data,
+            ),
+            sld_mk_lst: officekit_markup_base::into_user_data_required(
                 *self.sld_mk_lst,
-                super::office_powerpoint_2013_main_command::SldMkLstWith::into_extra,
+                super::office_powerpoint_2013_main_command::SldMkLstWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -537,18 +541,18 @@ impl officekit_markup_base::Write for CmMkLst {
     }
 }
 
-impl<X: NodeExtra> CmRplyMkWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CmRplyMkWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CmRplyMkWith<Y>
+    pub fn into_user_data<Y>(self) -> CmRplyMkWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CmRplyMkWith {
-            extra: Default::default(),
             id: self.id,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -575,25 +579,25 @@ impl officekit_markup_base::Write for CmRplyMk {
     }
 }
 
-impl<X: NodeExtra> CmRplyMkLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CmRplyMkLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CmRplyMkLstWith<Y>
+    pub fn into_user_data<Y>(self) -> CmRplyMkLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CmRplyMkLstWith {
-            cm_mk_lst: officekit_markup_base::into_extra_required(
+            cm_mk_lst: officekit_markup_base::into_user_data_required(
                 *self.cm_mk_lst,
-                CmMkLstWith::into_extra,
+                CmMkLstWith::into_user_data,
             ),
-            cm_rply_mk: officekit_markup_base::into_extra_required(
+            cm_rply_mk: officekit_markup_base::into_user_data_required(
                 *self.cm_rply_mk,
-                CmRplyMkWith::into_extra,
+                CmRplyMkWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -285,23 +285,23 @@ pub static SIGNATURE_LINE_SHAPE: officekit_markup_base::Shape = officekit_markup
 /// Its schema type is `CT_BackgroundPr`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BackgroundPrWith<X: NodeExtra> {
+pub struct BackgroundPrWith<X: UserData> {
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
     /// The attribute `bwNormal`, when the element has it.
     pub bw_normal: Option<drawing::BlackAndWhiteMode>,
     /// The attribute `bwPure`, when the element has it.
     pub bw_pure: Option<drawing::BlackAndWhiteMode>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012MainBackgroundPr,
     /// The attribute `targetScreenSize`, when the element has it.
     pub target_screen_size: Option<TargetScreenSz>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012MainBackgroundPr,
 }
 
 /// The `a15:backgroundPr` element of the tree a read gives: [`BackgroundPrWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type BackgroundPr = BackgroundPrWith<()>;
 
 impl Eq for BackgroundPrWith<()> {}
@@ -403,17 +403,17 @@ pub trait Context: crate::Context {
 /// 3.5.1. Its schema type is `CT_NonVisualGroupProps`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonVisualGroupPropsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012MainNonVisualGroupProps,
+pub struct NonVisualGroupPropsWith<X: UserData> {
     /// The attribute `isLegacyGroup`, when the element has it.
     pub is_legacy_group: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012MainNonVisualGroupProps,
 }
 
 /// The `a15:nonVisualGroupProps` element of the tree a read gives: [`NonVisualGroupPropsWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type NonVisualGroupProps = NonVisualGroupPropsWith<()>;
 
 impl Eq for NonVisualGroupPropsWith<()> {}
@@ -422,9 +422,7 @@ impl Eq for NonVisualGroupPropsWith<()> {}
 /// schema type is `CT_ObjectPr`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ObjectPrWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012MainObjectPr,
+pub struct ObjectPrWith<X: UserData> {
     /// The attribute `isActiveX`, when the element has it.
     pub is_active_x: Option<String>,
     /// The attribute `linkType`, when the element has it.
@@ -433,10 +431,12 @@ pub struct ObjectPrWith<X: NodeExtra> {
     pub object_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012MainObjectPr,
 }
 
 /// The `a15:objectPr` element of the tree a read gives: [`ObjectPrWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ObjectPr = ObjectPrWith<()>;
 
 impl Eq for ObjectPrWith<()> {}
@@ -445,13 +445,11 @@ impl Eq for ObjectPrWith<()> {}
 /// Its schema type is `CT_SignatureLine`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SignatureLineWith<X: NodeExtra> {
+pub struct SignatureLineWith<X: UserData> {
     /// The attribute `addlXml`, when the element has it.
     pub addl_xml: Option<String>,
     /// The attribute `allowComments`, when the element has it.
     pub allow_comments: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012MainSignatureLine,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `isSignatureLine`, when the element has it.
@@ -474,10 +472,12 @@ pub struct SignatureLineWith<X: NodeExtra> {
     pub suggested_signer_email: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012MainSignatureLine,
 }
 
 /// The `a15:signatureLine` element of the tree a read gives: [`SignatureLineWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type SignatureLine = SignatureLineWith<()>;
 
 impl Eq for SignatureLineWith<()> {}
@@ -556,21 +556,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> BackgroundPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BackgroundPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BackgroundPrWith<Y>
+    pub fn into_user_data<Y>(self) -> BackgroundPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BackgroundPrWith {
             bw_mode: self.bw_mode,
             bw_normal: self.bw_normal,
             bw_pure: self.bw_pure,
-            extra: Default::default(),
             target_screen_size: self.target_screen_size,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -600,18 +600,18 @@ impl officekit_markup_base::Write for BackgroundPr {
     }
 }
 
-impl<X: NodeExtra> NonVisualGroupPropsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> NonVisualGroupPropsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> NonVisualGroupPropsWith<Y>
+    pub fn into_user_data<Y>(self) -> NonVisualGroupPropsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         NonVisualGroupPropsWith {
-            extra: Default::default(),
             is_legacy_group: self.is_legacy_group,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -638,20 +638,20 @@ impl officekit_markup_base::Write for NonVisualGroupProps {
     }
 }
 
-impl<X: NodeExtra> ObjectPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ObjectPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ObjectPrWith<Y>
+    pub fn into_user_data<Y>(self) -> ObjectPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ObjectPrWith {
-            extra: Default::default(),
             is_active_x: self.is_active_x,
             link_type: self.link_type,
             object_id: self.object_id,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -680,18 +680,17 @@ impl officekit_markup_base::Write for ObjectPr {
     }
 }
 
-impl<X: NodeExtra> SignatureLineWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SignatureLineWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SignatureLineWith<Y>
+    pub fn into_user_data<Y>(self) -> SignatureLineWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SignatureLineWith {
             addl_xml: self.addl_xml,
             allow_comments: self.allow_comments,
-            extra: Default::default(),
             id: self.id,
             is_signature_line: self.is_signature_line,
             prov_id: self.prov_id,
@@ -703,6 +702,7 @@ impl<X: NodeExtra> SignatureLineWith<X> {
             suggested_signer2: self.suggested_signer2,
             suggested_signer_email: self.suggested_signer_email,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

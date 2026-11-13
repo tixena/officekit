@@ -222,8 +222,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::LastEditFeature)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LastEditFeatureMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -231,8 +231,8 @@ pub struct LastEditFeatureMirror {
 #[rkyv(remote = super::LastRefreshFeature)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LastRefreshFeatureMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -240,8 +240,8 @@ pub struct LastRefreshFeatureMirror {
 #[rkyv(remote = super::RequiredFeature)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RequiredFeatureMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -249,18 +249,18 @@ pub struct RequiredFeatureMirror {
 #[rkyv(remote = super::VersionInfo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VersionInfoMirror {
-    pub extra: (),
     pub last_edit_feature: Vec<super::LastEditFeature>,
     pub last_refresh_feature: Vec<super::LastRefreshFeature>,
     pub required_feature: Vec<super::RequiredFeature>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<LastEditFeatureMirror> for super::LastEditFeature {
     fn from(item: LastEditFeatureMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -298,8 +298,8 @@ where
 impl From<LastRefreshFeatureMirror> for super::LastRefreshFeature {
     fn from(item: LastRefreshFeatureMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -337,8 +337,8 @@ where
 impl From<RequiredFeatureMirror> for super::RequiredFeature {
     fn from(item: RequiredFeatureMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -376,11 +376,11 @@ where
 impl From<VersionInfoMirror> for super::VersionInfo {
     fn from(item: VersionInfoMirror) -> Self {
         Self {
-            extra: item.extra,
             last_edit_feature: item.last_edit_feature,
             last_refresh_feature: item.last_refresh_feature,
             required_feature: item.required_feature,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

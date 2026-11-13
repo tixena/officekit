@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -265,21 +265,21 @@ pub static AUTO_BU_NODE_INFO_LST_SHAPE: officekit_markup_base::Shape =
 /// 3.5.1. Its schema type is `CT_NumberDiagramInfo`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AutoBuNodeInfoWith<X: NodeExtra> {
+pub struct AutoBuNodeInfoWith<X: UserData> {
     /// The child that is `BuPr`, which the schema requires.
     pub bu_pr: Box<BuPrWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing201611DiagramAutoBuNodeInfo,
     /// The attribute `lvl`, when the element has it.
     pub lvl: Option<String>,
     /// The attribute `ptType`, when the element has it.
     pub pt_type: Option<STorageType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing201611DiagramAutoBuNodeInfo,
 }
 
 /// The `dgm1611:autoBuNodeInfo` element of the tree a read gives: [`AutoBuNodeInfoWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type AutoBuNodeInfo = AutoBuNodeInfoWith<()>;
 
 impl Eq for AutoBuNodeInfoWith<()> {}
@@ -288,17 +288,17 @@ impl Eq for AutoBuNodeInfoWith<()> {}
 /// version 3.5.1. Its schema type is `CT_NumberDiagramInfoList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AutoBuNodeInfoLstWith<X: NodeExtra> {
+pub struct AutoBuNodeInfoLstWith<X: UserData> {
     /// The children that are `AutoBuNodeInfo`, in order.
     pub auto_bu_node_info: Vec<AutoBuNodeInfoWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing201611DiagramAutoBuNodeInfoLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing201611DiagramAutoBuNodeInfoLst,
 }
 
 /// The `dgm1611:autoBuNodeInfoLst` element of the tree a read gives: [`AutoBuNodeInfoLstWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type AutoBuNodeInfoLst = AutoBuNodeInfoLstWith<()>;
 
 impl Eq for AutoBuNodeInfoLstWith<()> {}
@@ -307,20 +307,21 @@ impl Eq for AutoBuNodeInfoLstWith<()> {}
 /// schema type is `CT_DiagramAutoBullet`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BuPrWith<X: NodeExtra> {
+pub struct BuPrWith<X: UserData> {
     /// The child that is an item of `drawing::TextBulletContent`, which the schema requires.
     pub content: Box<drawing::TextBulletContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing201611DiagramBuPr,
     /// The attribute `leadZeros`, when the element has it.
     pub lead_zeros: Option<String>,
     /// The attribute `prefix`, when the element has it.
     pub prefix: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing201611DiagramBuPr,
 }
 
-/// The `dgm1611:buPr` element of the tree a read gives: [`BuPrWith`] holding nothing in `extra`.
+/// The `dgm1611:buPr` element of the tree a read gives: [`BuPrWith`] holding nothing in
+/// `user_data`.
 pub type BuPr = BuPrWith<()>;
 
 impl Eq for BuPrWith<()> {}
@@ -441,20 +442,23 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> AutoBuNodeInfoWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AutoBuNodeInfoWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AutoBuNodeInfoWith<Y>
+    pub fn into_user_data<Y>(self) -> AutoBuNodeInfoWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AutoBuNodeInfoWith {
-            bu_pr: officekit_markup_base::into_extra_required(*self.bu_pr, BuPrWith::into_extra),
-            extra: Default::default(),
+            bu_pr: officekit_markup_base::into_user_data_required(
+                *self.bu_pr,
+                BuPrWith::into_user_data,
+            ),
             lvl: self.lvl,
             pt_type: self.pt_type,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -482,21 +486,21 @@ impl officekit_markup_base::Write for AutoBuNodeInfo {
     }
 }
 
-impl<X: NodeExtra> AutoBuNodeInfoLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AutoBuNodeInfoLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AutoBuNodeInfoLstWith<Y>
+    pub fn into_user_data<Y>(self) -> AutoBuNodeInfoLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AutoBuNodeInfoLstWith {
-            auto_bu_node_info: officekit_markup_base::into_extra_list(
+            auto_bu_node_info: officekit_markup_base::into_user_data_list(
                 self.auto_bu_node_info,
-                AutoBuNodeInfoWith::into_extra,
+                AutoBuNodeInfoWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -520,23 +524,23 @@ impl officekit_markup_base::Write for AutoBuNodeInfoLst {
     }
 }
 
-impl<X: NodeExtra> BuPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BuPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BuPrWith<Y>
+    pub fn into_user_data<Y>(self) -> BuPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BuPrWith {
-            content: officekit_markup_base::into_extra_required(
+            content: officekit_markup_base::into_user_data_required(
                 *self.content,
-                drawing::TextBulletContentWith::into_extra,
+                drawing::TextBulletContentWith::into_user_data,
             ),
-            extra: Default::default(),
             lead_zeros: self.lead_zeros,
             prefix: self.prefix,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

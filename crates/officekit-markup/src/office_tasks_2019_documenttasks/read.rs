@@ -239,7 +239,7 @@ pub fn anchor(element: &Element) -> super::Anchor {
 pub fn assign(element: &Element) -> super::Assign {
     let reader = officekit_markup_base::Reader::new(element, &super::ASSIGN_SHAPE);
     super::Assign {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -249,7 +249,7 @@ pub fn assign(element: &Element) -> super::Assign {
 pub fn attribution(element: &Element) -> super::Attribution {
     let reader = officekit_markup_base::Reader::new(element, &super::ATTRIBUTION_SHAPE);
     super::Attribution {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -273,7 +273,7 @@ pub fn comment(element: &Element) -> super::Comment {
 pub fn create(element: &Element) -> super::Create {
     let reader = officekit_markup_base::Reader::new(element, &super::CREATE_SHAPE);
     super::Create {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -283,7 +283,7 @@ pub fn create(element: &Element) -> super::Create {
 pub fn delete(element: &Element) -> super::Delete {
     let reader = officekit_markup_base::Reader::new(element, &super::DELETE_SHAPE);
     super::Delete {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -439,7 +439,7 @@ pub fn tasks(element: &Element) -> super::Tasks {
 pub fn unassign(element: &Element) -> super::Unassign {
     let reader = officekit_markup_base::Reader::new(element, &super::UNASSIGN_SHAPE);
     super::Unassign {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -449,7 +449,7 @@ pub fn unassign(element: &Element) -> super::Unassign {
 pub fn unassign_all(element: &Element) -> super::UnassignAll {
     let reader = officekit_markup_base::Reader::new(element, &super::UNASSIGN_ALL_SHAPE);
     super::UnassignAll {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -459,7 +459,7 @@ pub fn unassign_all(element: &Element) -> super::UnassignAll {
 pub fn undelete(element: &Element) -> super::Undelete {
     let reader = officekit_markup_base::Reader::new(element, &super::UNDELETE_SHAPE);
     super::Undelete {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }

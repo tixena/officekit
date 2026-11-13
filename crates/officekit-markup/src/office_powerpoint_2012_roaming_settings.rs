@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -318,16 +318,16 @@ pub trait Context: crate::Context {
 /// schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct KeyWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint2012RoamingSettingsKey,
+pub struct KeyWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint2012RoamingSettingsKey,
     /// The element's text.
     pub value: String,
 }
 
-/// The `pRoam:key` element of the tree a read gives: [`KeyWith`] holding nothing in `extra`.
+/// The `pRoam:key` element of the tree a read gives: [`KeyWith`] holding nothing in `user_data`.
 pub type Key = KeyWith<()>;
 
 impl Eq for KeyWith<()> {}
@@ -336,18 +336,19 @@ impl Eq for KeyWith<()> {}
 /// schema type is `CT_RoamingProperty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PropsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint2012RoamingSettingsProps,
+pub struct PropsWith<X: UserData> {
     /// The child that is `Key`, which the schema requires.
     pub key: Box<KeyWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint2012RoamingSettingsProps,
     /// The child that is `Value`, which the schema requires.
     pub value: Box<ValueWith<X>>,
 }
 
-/// The `pRoam:props` element of the tree a read gives: [`PropsWith`] holding nothing in `extra`.
+/// The `pRoam:props` element of the tree a read gives: [`PropsWith`] holding nothing in
+/// `user_data`.
 pub type Props = PropsWith<()>;
 
 impl Eq for PropsWith<()> {}
@@ -356,16 +357,17 @@ impl Eq for PropsWith<()> {}
 /// schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ValueWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint2012RoamingSettingsValue,
+pub struct ValueWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint2012RoamingSettingsValue,
     /// The element's text.
     pub value: String,
 }
 
-/// The `pRoam:value` element of the tree a read gives: [`ValueWith`] holding nothing in `extra`.
+/// The `pRoam:value` element of the tree a read gives: [`ValueWith`] holding nothing in
+/// `user_data`.
 pub type Value = ValueWith<()>;
 
 impl Eq for ValueWith<()> {}
@@ -392,17 +394,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> KeyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> KeyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> KeyWith<Y>
+    pub fn into_user_data<Y>(self) -> KeyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         KeyWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -430,19 +432,22 @@ impl officekit_markup_base::Write for Key {
     }
 }
 
-impl<X: NodeExtra> PropsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PropsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PropsWith<Y>
+    pub fn into_user_data<Y>(self) -> PropsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PropsWith {
-            extra: Default::default(),
-            key: officekit_markup_base::into_extra_required(*self.key, KeyWith::into_extra),
+            key: officekit_markup_base::into_user_data_required(*self.key, KeyWith::into_user_data),
             unknown: self.unknown,
-            value: officekit_markup_base::into_extra_required(*self.value, ValueWith::into_extra),
+            user_data: Default::default(),
+            value: officekit_markup_base::into_user_data_required(
+                *self.value,
+                ValueWith::into_user_data,
+            ),
         }
     }
 
@@ -466,17 +471,17 @@ impl officekit_markup_base::Write for Props {
     }
 }
 
-impl<X: NodeExtra> ValueWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ValueWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ValueWith<Y>
+    pub fn into_user_data<Y>(self) -> ValueWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ValueWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }

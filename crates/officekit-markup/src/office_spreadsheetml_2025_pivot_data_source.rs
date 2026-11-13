@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_base::office_excel_2006_main;
 use officekit_xml::element::Element;
@@ -280,19 +280,19 @@ pub trait Context: crate::Context {
 /// version 3.5.1. Its schema type is `CT_PivotCacheDataSource`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotCacheDataSourceWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2025PivotDataSourcePivotCacheDataSource,
+pub struct PivotCacheDataSourceWith<X: UserData> {
     /// The child that is `office_excel_2006_main::F`, when there is one.
     pub f: Option<Box<office_excel_2006_main::FWith<X>>>,
     /// The attribute `ref`, when the element has it.
     pub r#ref: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2025PivotDataSourcePivotCacheDataSource,
 }
 
 /// The `xlpds:pivotCacheDataSource` element of the tree a read gives: [`PivotCacheDataSourceWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type PivotCacheDataSource = PivotCacheDataSourceWith<()>;
 
 impl Eq for PivotCacheDataSourceWith<()> {}
@@ -313,22 +313,22 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> PivotCacheDataSourceWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotCacheDataSourceWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> PivotCacheDataSourceWith<Y>
+    pub fn into_user_data<Y>(mut self) -> PivotCacheDataSourceWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotCacheDataSourceWith {
-            extra: Default::default(),
-            f: officekit_markup_base::into_extra_optional(
+            f: officekit_markup_base::into_user_data_optional(
                 &mut self.f,
-                office_excel_2006_main::FWith::into_extra,
+                office_excel_2006_main::FWith::into_user_data,
             ),
             r#ref: self.r#ref,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

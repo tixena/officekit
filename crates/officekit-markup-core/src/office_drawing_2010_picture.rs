@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -251,16 +251,17 @@ pub static STYLE_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Sh
 /// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `super::drawing::Extension`, in order.
     pub extension: Vec<super::drawing::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010PictureExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010PictureExtLst,
 }
 
-/// The `pic14:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `pic14:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -269,11 +270,9 @@ impl Eq for ExtLstWith<()> {}
 /// schema type is `CT_ShapeStyle`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StyleWith<X: NodeExtra> {
+pub struct StyleWith<X: UserData> {
     /// The child that is `super::drawing::EffectReference`, which the schema requires.
     pub effect_reference: Box<super::drawing::EffectReferenceWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010PictureStyle,
     /// The child that is `super::drawing::FillReference`, which the schema requires.
     pub fill_reference: Box<super::drawing::FillReferenceWith<X>>,
     /// The child that is `super::drawing::FontReference`, which the schema requires.
@@ -282,28 +281,31 @@ pub struct StyleWith<X: NodeExtra> {
     pub line_reference: Box<super::drawing::LineReferenceWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010PictureStyle,
 }
 
-/// The `pic14:style` element of the tree a read gives: [`StyleWith`] holding nothing in `extra`.
+/// The `pic14:style` element of the tree a read gives: [`StyleWith`] holding nothing in
+/// `user_data`.
 pub type Style = StyleWith<()>;
 
 impl Eq for StyleWith<()> {}
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                super::drawing::ExtensionWith::into_extra,
+                super::drawing::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -327,33 +329,33 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> StyleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> StyleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> StyleWith<Y>
+    pub fn into_user_data<Y>(self) -> StyleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         StyleWith {
-            effect_reference: officekit_markup_base::into_extra_required(
+            effect_reference: officekit_markup_base::into_user_data_required(
                 *self.effect_reference,
-                super::drawing::EffectReferenceWith::into_extra,
+                super::drawing::EffectReferenceWith::into_user_data,
             ),
-            extra: Default::default(),
-            fill_reference: officekit_markup_base::into_extra_required(
+            fill_reference: officekit_markup_base::into_user_data_required(
                 *self.fill_reference,
-                super::drawing::FillReferenceWith::into_extra,
+                super::drawing::FillReferenceWith::into_user_data,
             ),
-            font_reference: officekit_markup_base::into_extra_required(
+            font_reference: officekit_markup_base::into_user_data_required(
                 *self.font_reference,
-                super::drawing::FontReferenceWith::into_extra,
+                super::drawing::FontReferenceWith::into_user_data,
             ),
-            line_reference: officekit_markup_base::into_extra_required(
+            line_reference: officekit_markup_base::into_user_data_required(
                 *self.line_reference,
-                super::drawing::LineReferenceWith::into_extra,
+                super::drawing::LineReferenceWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

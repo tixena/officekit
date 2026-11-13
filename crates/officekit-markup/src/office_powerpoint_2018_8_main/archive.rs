@@ -226,12 +226,12 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct AuthorMirror {
     pub ext_lst_extension_list: Option<Box<super::ExtLstExtensionList>>,
-    pub extra: (),
     pub id: Option<String>,
     pub initials: Option<String>,
     pub name: Option<String>,
     pub provider_id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub user_id: Option<String>,
 }
 
@@ -240,8 +240,8 @@ pub struct AuthorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AuthorLstMirror {
     pub author: Vec<super::Author>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -256,7 +256,6 @@ pub struct CmMirror {
     pub due_date: Option<String>,
     pub ext_lst_comment_properties_extension_list:
         Option<Box<super::ExtLstCommentPropertiesExtensionList>>,
-    pub extra: (),
     pub id: Option<String>,
     pub likes: Option<String>,
     pub pos: Option<Box<super::Pos>>,
@@ -268,6 +267,7 @@ pub struct CmMirror {
     pub title: Option<String>,
     pub tx_body: Option<Box<super::TxBody>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -275,17 +275,17 @@ pub struct CmMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CmLstMirror {
     pub cm: Vec<super::Cm>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CommentRel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentRelMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -293,8 +293,8 @@ pub struct CommentRelMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstCommentPropertiesExtensionListMirror {
     pub extension: Vec<presentation::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -302,16 +302,16 @@ pub struct ExtLstCommentPropertiesExtensionListMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstExtensionListMirror {
     pub extension: Vec<presentation::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Pos)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PosMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub x: Option<drawing::Coordinate>,
     pub y: Option<drawing::Coordinate>,
 }
@@ -324,41 +324,41 @@ pub struct ReplyMirror {
     pub created: Option<String>,
     pub ext_lst_comment_properties_extension_list:
         Option<Box<super::ExtLstCommentPropertiesExtensionList>>,
-    pub extra: (),
     pub id: Option<String>,
     pub likes: Option<String>,
     pub status: Option<super::CommentStatus>,
     pub tags: Option<String>,
     pub tx_body: Option<Box<super::TxBody>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ReplyLst)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReplyLstMirror {
-    pub extra: (),
     pub reply: Vec<super::Reply>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TxBody)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TxBodyMirror {
-    pub extra: (),
     pub properties: Box<drawing::BodyProperties>,
     pub text_list_styles: Option<Box<drawing::TextListStyles>>,
     pub text_paragraphs: Vec<drawing::TextParagraphs>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::UnknownAnchor)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnknownAnchorMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -382,12 +382,12 @@ impl From<AuthorMirror> for super::Author {
     fn from(item: AuthorMirror) -> Self {
         Self {
             ext_lst_extension_list: item.ext_lst_extension_list,
-            extra: item.extra,
             id: item.id,
             initials: item.initials,
             name: item.name,
             provider_id: item.provider_id,
             unknown: item.unknown,
+            user_data: item.user_data,
             user_id: item.user_id,
         }
     }
@@ -426,8 +426,8 @@ impl From<AuthorLstMirror> for super::AuthorLst {
     fn from(item: AuthorLstMirror) -> Self {
         Self {
             author: item.author,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -472,7 +472,6 @@ impl From<CmMirror> for super::Cm {
             due_date: item.due_date,
             ext_lst_comment_properties_extension_list: item
                 .ext_lst_comment_properties_extension_list,
-            extra: item.extra,
             id: item.id,
             likes: item.likes,
             pos: item.pos,
@@ -484,6 +483,7 @@ impl From<CmMirror> for super::Cm {
             title: item.title,
             tx_body: item.tx_body,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -521,8 +521,8 @@ impl From<CmLstMirror> for super::CmLst {
     fn from(item: CmLstMirror) -> Self {
         Self {
             cm: item.cm,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -559,9 +559,9 @@ where
 impl From<CommentRelMirror> for super::CommentRel {
     fn from(item: CommentRelMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -601,8 +601,8 @@ impl From<ExtLstCommentPropertiesExtensionListMirror>
     fn from(item: ExtLstCommentPropertiesExtensionListMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -644,8 +644,8 @@ impl From<ExtLstExtensionListMirror> for super::ExtLstExtensionList {
     fn from(item: ExtLstExtensionListMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -685,8 +685,8 @@ where
 impl From<PosMirror> for super::Pos {
     fn from(item: PosMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             x: item.x,
             y: item.y,
         }
@@ -729,13 +729,13 @@ impl From<ReplyMirror> for super::Reply {
             created: item.created,
             ext_lst_comment_properties_extension_list: item
                 .ext_lst_comment_properties_extension_list,
-            extra: item.extra,
             id: item.id,
             likes: item.likes,
             status: item.status,
             tags: item.tags,
             tx_body: item.tx_body,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -772,9 +772,9 @@ where
 impl From<ReplyLstMirror> for super::ReplyLst {
     fn from(item: ReplyLstMirror) -> Self {
         Self {
-            extra: item.extra,
             reply: item.reply,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -811,11 +811,11 @@ where
 impl From<TxBodyMirror> for super::TxBody {
     fn from(item: TxBodyMirror) -> Self {
         Self {
-            extra: item.extra,
             properties: item.properties,
             text_list_styles: item.text_list_styles,
             text_paragraphs: item.text_paragraphs,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -852,8 +852,8 @@ where
 impl From<UnknownAnchorMirror> for super::UnknownAnchor {
     fn from(item: UnknownAnchorMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

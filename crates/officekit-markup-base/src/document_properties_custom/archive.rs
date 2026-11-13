@@ -224,8 +224,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomFilePropertiesMirror {
     pub custom_file_property: Vec<super::CustomFileProperty>,
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -233,12 +233,12 @@ pub struct CustomFilePropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomFilePropertyMirror {
     pub content: Box<super::CustomFilePropertyContent>,
-    pub extra: (),
     pub fmtid: Option<super::super::common_simple_types::Guid>,
     pub link_target: Option<String>,
     pub name: Option<String>,
     pub pid: Option<String>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -285,8 +285,8 @@ impl From<CustomFilePropertiesMirror> for super::CustomFileProperties {
     fn from(item: CustomFilePropertiesMirror) -> Self {
         Self {
             custom_file_property: item.custom_file_property,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -327,12 +327,12 @@ impl From<CustomFilePropertyMirror> for super::CustomFileProperty {
     fn from(item: CustomFilePropertyMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             fmtid: item.fmtid,
             link_target: item.link_target,
             name: item.name,
             pid: item.pid,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

@@ -3,13 +3,13 @@ use core::mem::{size_of, size_of_val};
 use crate::wordprocessing::{
     self, Document, Paragraph, ParagraphContent, ParagraphWith, TextRun, TextWith,
 };
-use crate::{NodeExtra, node_extra};
+use crate::{UserData, user_data};
 
 #[derive(Clone, Debug, Default, PartialEq)]
 struct Marks;
 
-#[node_extra]
-impl NodeExtra for Marks {
+#[user_data]
+impl UserData for Marks {
     type WordprocessingParagraph = Vec<(u32, f32)>;
 }
 
@@ -20,9 +20,9 @@ where
 }
 
 #[test]
-fn a_node_defaults_with_nothing_naming_the_extra_type() {
+fn a_node_defaults_with_nothing_naming_the_user_data_type() {
     let paragraph = Paragraph::default();
-    assert_eq!(size_of_val(&paragraph.extra), 0);
+    assert_eq!(size_of_val(&paragraph.user_data), 0);
 }
 
 #[test]
@@ -53,11 +53,11 @@ fn the_slot_adds_nothing_to_the_size() {
 }
 
 #[test]
-fn node_extra_fills_the_named_kind_and_leaves_the_others_empty() {
+fn user_data_fills_the_named_kind_and_leaves_the_others_empty() {
     let mut paragraph = ParagraphWith::<Marks>::default();
-    paragraph.extra.push((2, 72.5));
+    paragraph.user_data.push((2, 72.5));
     assert_eq!(paragraph.clone(), paragraph);
     assert!(format!("{paragraph:?}").contains("72.5"));
     let text: TextWith<Marks> = TextWith::default();
-    assert_eq!(size_of_val(&text.extra), 0);
+    assert_eq!(size_of_val(&text.user_data), 0);
 }

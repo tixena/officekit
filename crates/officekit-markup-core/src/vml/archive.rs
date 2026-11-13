@@ -257,7 +257,6 @@ pub struct ArcSegmentMirror {
     pub dgmnodekind: Option<String>,
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     pub end_angle: Option<String>,
-    pub extra: (),
     pub fillcolor: Option<String>,
     pub filled: Option<common_simple_types::BooleanValue>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
@@ -287,6 +286,7 @@ pub struct ArcSegmentMirror {
     pub target: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
     pub wrapcoords: Option<String>,
@@ -326,7 +326,6 @@ pub struct BezierCurveMirror {
     pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
     pub dgmnodekind: Option<String>,
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
-    pub extra: (),
     pub fillcolor: Option<String>,
     pub filled: Option<common_simple_types::BooleanValue>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
@@ -357,6 +356,7 @@ pub struct BezierCurveMirror {
     pub title: Option<String>,
     pub to: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
     pub wrapcoords: Option<String>,
@@ -369,13 +369,13 @@ pub struct DocumentBackgroundMirror {
     pub bwmode: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
     pub bwnormal: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
     pub bwpure: Option<super::super::vml_office_drawing::BlackAndWhiteModes>,
-    pub extra: (),
     pub fillcolor: Option<String>,
     pub filled: Option<common_simple_types::BooleanValue>,
     pub id: Option<String>,
     pub shape_fill_properties: Option<Box<super::ShapeFillProperties>>,
     pub targetscreensize: Option<super::super::vml_office_drawing::ScreenSizesType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -392,7 +392,6 @@ pub struct ImageDataMirror {
     pub croptop: Option<String>,
     pub detectmouseclick: Option<common_simple_types::BooleanValue>,
     pub embosscolor: Option<String>,
-    pub extra: (),
     pub gain: Option<String>,
     pub gamma: Option<String>,
     pub grayscale: Option<common_simple_types::BooleanValue>,
@@ -408,6 +407,7 @@ pub struct ImageDataMirror {
     pub src: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -448,7 +448,6 @@ pub struct ImageFileMirror {
     pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
     pub dgmnodekind: Option<String>,
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
-    pub extra: (),
     pub fillcolor: Option<String>,
     pub filled: Option<common_simple_types::BooleanValue>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
@@ -481,6 +480,7 @@ pub struct ImageFileMirror {
     pub target: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
     pub wrapcoords: Option<String>,
@@ -518,7 +518,6 @@ pub struct LineMirror {
     pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
     pub dgmnodekind: Option<String>,
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
-    pub extra: (),
     pub fillcolor: Option<String>,
     pub filled: Option<common_simple_types::BooleanValue>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
@@ -549,6 +548,7 @@ pub struct LineMirror {
     pub title: Option<String>,
     pub to: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
     pub wrapcoords: Option<String>,
@@ -566,7 +566,6 @@ pub struct LineStrokeSettingsMirror {
     pub endarrowlength: Option<super::StrokeArrowheadLength>,
     pub endarrowwidth: Option<super::StrokeArrowheadWidth>,
     pub endcap: Option<super::StrokeEndCapType>,
-    pub extra: (),
     pub filltype: Option<super::ShapeFillType>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
     pub href: Option<String>,
@@ -594,6 +593,7 @@ pub struct LineStrokeSettingsMirror {
     pub text_box_top_stroke: Option<Box<super::super::vml_office_drawing::TextBoxTopStroke>>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub weight: Option<String>,
 }
 
@@ -629,7 +629,6 @@ pub struct MultiplePathLineMirror {
     pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
     pub dgmnodekind: Option<String>,
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
-    pub extra: (),
     pub fillcolor: Option<String>,
     pub filled: Option<common_simple_types::BooleanValue>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
@@ -659,6 +658,7 @@ pub struct MultiplePathLineMirror {
     pub target: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
     pub wrapcoords: Option<String>,
@@ -696,7 +696,6 @@ pub struct OvalMirror {
     pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
     pub dgmnodekind: Option<String>,
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
-    pub extra: (),
     pub fillcolor: Option<String>,
     pub filled: Option<common_simple_types::BooleanValue>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
@@ -725,6 +724,7 @@ pub struct OvalMirror {
     pub target: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
     pub wrapcoords: Option<String>,
@@ -762,7 +762,6 @@ pub struct RectangleMirror {
     pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
     pub dgmnodekind: Option<String>,
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
-    pub extra: (),
     pub fillcolor: Option<String>,
     pub filled: Option<common_simple_types::BooleanValue>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
@@ -791,6 +790,7 @@ pub struct RectangleMirror {
     pub target: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
     pub wrapcoords: Option<String>,
@@ -829,7 +829,6 @@ pub struct RoundedRectangleMirror {
     pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
     pub dgmnodekind: Option<String>,
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
-    pub extra: (),
     pub fillcolor: Option<String>,
     pub filled: Option<common_simple_types::BooleanValue>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
@@ -858,6 +857,7 @@ pub struct RoundedRectangleMirror {
     pub target: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
     pub wrapcoords: Option<String>,
@@ -867,18 +867,18 @@ pub struct RoundedRectangleMirror {
 #[rkyv(remote = super::SetOfFormulas)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SetOfFormulasMirror {
-    pub extra: (),
     pub single_formula: Vec<super::SingleFormula>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SetOfHandles)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SetOfHandlesMirror {
-    pub extra: (),
     pub shape_handle: Vec<super::ShapeHandle>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -887,7 +887,6 @@ pub struct SetOfHandlesMirror {
 pub struct ShadowEffectMirror {
     pub color: Option<String>,
     pub color2: Option<String>,
-    pub extra: (),
     pub id: Option<String>,
     pub matrix: Option<String>,
     pub obscured: Option<common_simple_types::BooleanValue>,
@@ -898,6 +897,7 @@ pub struct ShadowEffectMirror {
     pub origin: Option<String>,
     pub r#type: Option<super::ShadowType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -934,7 +934,6 @@ pub struct ShapeDefinitionMirror {
     pub dgmnodekind: Option<String>,
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     pub equationxml: Option<String>,
-    pub extra: (),
     pub fillcolor: Option<String>,
     pub filled: Option<common_simple_types::BooleanValue>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
@@ -966,6 +965,7 @@ pub struct ShapeDefinitionMirror {
     pub title: Option<String>,
     pub r#type: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
     pub wrapcoords: Option<String>,
@@ -983,7 +983,6 @@ pub struct ShapeFillPropertiesMirror {
     pub color2: Option<String>,
     pub colors: Option<String>,
     pub detectmouseclick: Option<common_simple_types::BooleanValue>,
-    pub extra: (),
     pub focus: Option<String>,
     pub focusposition: Option<String>,
     pub focussize: Option<String>,
@@ -1006,6 +1005,7 @@ pub struct ShapeFillPropertiesMirror {
     pub title: Option<String>,
     pub r#type: Option<super::ShapeFillType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1034,7 +1034,6 @@ pub struct ShapeGroupMirror {
     pub dgmnodekind: Option<String>,
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     pub editas: Option<super::ShapeGroupingTypes>,
-    pub extra: (),
     pub fillcolor: Option<String>,
     pub filled: Option<common_simple_types::BooleanValue>,
     pub hr: Option<common_simple_types::BooleanValue>,
@@ -1055,6 +1054,7 @@ pub struct ShapeGroupMirror {
     pub target: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
     pub wrapcoords: Option<String>,
@@ -1064,7 +1064,6 @@ pub struct ShapeGroupMirror {
 #[rkyv(remote = super::ShapeHandle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeHandleMirror {
-    pub extra: (),
     pub invx: Option<common_simple_types::BooleanValue>,
     pub invy: Option<common_simple_types::BooleanValue>,
     pub map: Option<String>,
@@ -1073,6 +1072,7 @@ pub struct ShapeHandleMirror {
     pub radiusrange: Option<String>,
     pub switch: Option<common_simple_types::BooleanValueWithBlankFalseState>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xrange: Option<String>,
     pub yrange: Option<String>,
 }
@@ -1085,7 +1085,6 @@ pub struct ShapePathMirror {
     pub connectangles: Option<String>,
     pub connectlocs: Option<String>,
     pub connecttype: Option<super::super::vml_office_drawing::ConnectionLocationsType>,
-    pub extra: (),
     pub extrusionok: Option<common_simple_types::BooleanValue>,
     pub fillok: Option<common_simple_types::BooleanValue>,
     pub gradientshapeok: Option<common_simple_types::BooleanValue>,
@@ -1097,6 +1096,7 @@ pub struct ShapePathMirror {
     pub textboxrect: Option<String>,
     pub textpathok: Option<common_simple_types::BooleanValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub v: Option<String>,
 }
 
@@ -1134,7 +1134,6 @@ pub struct ShapeTemplateMirror {
     pub dgmlayoutmru: Option<super::super::vml_office_drawing::DiagramLayoutType>,
     pub dgmnodekind: Option<String>,
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
-    pub extra: (),
     pub fillcolor: Option<String>,
     pub filled: Option<common_simple_types::BooleanValue>,
     pub forcedash: Option<common_simple_types::BooleanValue>,
@@ -1165,6 +1164,7 @@ pub struct ShapeTemplateMirror {
     pub target: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
     pub wrapcoords: Option<String>,
@@ -1175,8 +1175,8 @@ pub struct ShapeTemplateMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SingleFormulaMirror {
     pub eqn: Option<String>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1188,20 +1188,19 @@ pub struct SingleFormulaMirror {
 pub struct TextBoxMirror {
     #[rkyv(omit_bounds)]
     pub content: Option<Box<super::TextBoxContent>>,
-    pub extra: (),
     pub id: Option<String>,
     pub inset: Option<String>,
     pub insetmode: Option<super::super::vml_office_drawing::InsetMarginType>,
     pub singleclick: Option<common_simple_types::BooleanValue>,
     pub style: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextLayoutPath)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextLayoutPathMirror {
-    pub extra: (),
     pub fitpath: Option<common_simple_types::BooleanValue>,
     pub fitshape: Option<common_simple_types::BooleanValue>,
     pub id: Option<String>,
@@ -1210,6 +1209,7 @@ pub struct TextLayoutPathMirror {
     pub style: Option<String>,
     pub trim: Option<common_simple_types::BooleanValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xscale: Option<common_simple_types::BooleanValue>,
 }
 
@@ -1404,7 +1404,6 @@ impl From<ArcSegmentMirror> for super::ArcSegment {
             dgmnodekind: item.dgmnodekind,
             doubleclicknotify: item.doubleclicknotify,
             end_angle: item.end_angle,
-            extra: item.extra,
             fillcolor: item.fillcolor,
             filled: item.filled,
             forcedash: item.forcedash,
@@ -1434,6 +1433,7 @@ impl From<ArcSegmentMirror> for super::ArcSegment {
             target: item.target,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
             userdrawn: item.userdrawn,
             userhidden: item.userhidden,
             wrapcoords: item.wrapcoords,
@@ -1499,7 +1499,6 @@ impl From<BezierCurveMirror> for super::BezierCurve {
             dgmlayoutmru: item.dgmlayoutmru,
             dgmnodekind: item.dgmnodekind,
             doubleclicknotify: item.doubleclicknotify,
-            extra: item.extra,
             fillcolor: item.fillcolor,
             filled: item.filled,
             forcedash: item.forcedash,
@@ -1530,6 +1529,7 @@ impl From<BezierCurveMirror> for super::BezierCurve {
             title: item.title,
             to: item.to,
             unknown: item.unknown,
+            user_data: item.user_data,
             userdrawn: item.userdrawn,
             userhidden: item.userhidden,
             wrapcoords: item.wrapcoords,
@@ -1572,13 +1572,13 @@ impl From<DocumentBackgroundMirror> for super::DocumentBackground {
             bwmode: item.bwmode,
             bwnormal: item.bwnormal,
             bwpure: item.bwpure,
-            extra: item.extra,
             fillcolor: item.fillcolor,
             filled: item.filled,
             id: item.id,
             shape_fill_properties: item.shape_fill_properties,
             targetscreensize: item.targetscreensize,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1625,7 +1625,6 @@ impl From<ImageDataMirror> for super::ImageData {
             croptop: item.croptop,
             detectmouseclick: item.detectmouseclick,
             embosscolor: item.embosscolor,
-            extra: item.extra,
             gain: item.gain,
             gamma: item.gamma,
             grayscale: item.grayscale,
@@ -1641,6 +1640,7 @@ impl From<ImageDataMirror> for super::ImageData {
             src: item.src,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1707,7 +1707,6 @@ impl From<ImageFileMirror> for super::ImageFile {
             dgmlayoutmru: item.dgmlayoutmru,
             dgmnodekind: item.dgmnodekind,
             doubleclicknotify: item.doubleclicknotify,
-            extra: item.extra,
             fillcolor: item.fillcolor,
             filled: item.filled,
             forcedash: item.forcedash,
@@ -1740,6 +1739,7 @@ impl From<ImageFileMirror> for super::ImageFile {
             target: item.target,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
             userdrawn: item.userdrawn,
             userhidden: item.userhidden,
             wrapcoords: item.wrapcoords,
@@ -1803,7 +1803,6 @@ impl From<LineMirror> for super::Line {
             dgmlayoutmru: item.dgmlayoutmru,
             dgmnodekind: item.dgmnodekind,
             doubleclicknotify: item.doubleclicknotify,
-            extra: item.extra,
             fillcolor: item.fillcolor,
             filled: item.filled,
             forcedash: item.forcedash,
@@ -1834,6 +1833,7 @@ impl From<LineMirror> for super::Line {
             title: item.title,
             to: item.to,
             unknown: item.unknown,
+            user_data: item.user_data,
             userdrawn: item.userdrawn,
             userhidden: item.userhidden,
             wrapcoords: item.wrapcoords,
@@ -1881,7 +1881,6 @@ impl From<LineStrokeSettingsMirror> for super::LineStrokeSettings {
             endarrowlength: item.endarrowlength,
             endarrowwidth: item.endarrowwidth,
             endcap: item.endcap,
-            extra: item.extra,
             filltype: item.filltype,
             forcedash: item.forcedash,
             href: item.href,
@@ -1908,6 +1907,7 @@ impl From<LineStrokeSettingsMirror> for super::LineStrokeSettings {
             text_box_top_stroke: item.text_box_top_stroke,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
             weight: item.weight,
         }
     }
@@ -1969,7 +1969,6 @@ impl From<MultiplePathLineMirror> for super::MultiplePathLine {
             dgmlayoutmru: item.dgmlayoutmru,
             dgmnodekind: item.dgmnodekind,
             doubleclicknotify: item.doubleclicknotify,
-            extra: item.extra,
             fillcolor: item.fillcolor,
             filled: item.filled,
             forcedash: item.forcedash,
@@ -1999,6 +1998,7 @@ impl From<MultiplePathLineMirror> for super::MultiplePathLine {
             target: item.target,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
             userdrawn: item.userdrawn,
             userhidden: item.userhidden,
             wrapcoords: item.wrapcoords,
@@ -2062,7 +2062,6 @@ impl From<OvalMirror> for super::Oval {
             dgmlayoutmru: item.dgmlayoutmru,
             dgmnodekind: item.dgmnodekind,
             doubleclicknotify: item.doubleclicknotify,
-            extra: item.extra,
             fillcolor: item.fillcolor,
             filled: item.filled,
             forcedash: item.forcedash,
@@ -2091,6 +2090,7 @@ impl From<OvalMirror> for super::Oval {
             target: item.target,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
             userdrawn: item.userdrawn,
             userhidden: item.userhidden,
             wrapcoords: item.wrapcoords,
@@ -2154,7 +2154,6 @@ impl From<RectangleMirror> for super::Rectangle {
             dgmlayoutmru: item.dgmlayoutmru,
             dgmnodekind: item.dgmnodekind,
             doubleclicknotify: item.doubleclicknotify,
-            extra: item.extra,
             fillcolor: item.fillcolor,
             filled: item.filled,
             forcedash: item.forcedash,
@@ -2183,6 +2182,7 @@ impl From<RectangleMirror> for super::Rectangle {
             target: item.target,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
             userdrawn: item.userdrawn,
             userhidden: item.userhidden,
             wrapcoords: item.wrapcoords,
@@ -2247,7 +2247,6 @@ impl From<RoundedRectangleMirror> for super::RoundedRectangle {
             dgmlayoutmru: item.dgmlayoutmru,
             dgmnodekind: item.dgmnodekind,
             doubleclicknotify: item.doubleclicknotify,
-            extra: item.extra,
             fillcolor: item.fillcolor,
             filled: item.filled,
             forcedash: item.forcedash,
@@ -2276,6 +2275,7 @@ impl From<RoundedRectangleMirror> for super::RoundedRectangle {
             target: item.target,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
             userdrawn: item.userdrawn,
             userhidden: item.userhidden,
             wrapcoords: item.wrapcoords,
@@ -2315,9 +2315,9 @@ where
 impl From<SetOfFormulasMirror> for super::SetOfFormulas {
     fn from(item: SetOfFormulasMirror) -> Self {
         Self {
-            extra: item.extra,
             single_formula: item.single_formula,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2354,9 +2354,9 @@ where
 impl From<SetOfHandlesMirror> for super::SetOfHandles {
     fn from(item: SetOfHandlesMirror) -> Self {
         Self {
-            extra: item.extra,
             shape_handle: item.shape_handle,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2395,7 +2395,6 @@ impl From<ShadowEffectMirror> for super::ShadowEffect {
         Self {
             color: item.color,
             color2: item.color2,
-            extra: item.extra,
             id: item.id,
             matrix: item.matrix,
             obscured: item.obscured,
@@ -2406,6 +2405,7 @@ impl From<ShadowEffectMirror> for super::ShadowEffect {
             origin: item.origin,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2468,7 +2468,6 @@ impl From<ShapeDefinitionMirror> for super::ShapeDefinition {
             dgmnodekind: item.dgmnodekind,
             doubleclicknotify: item.doubleclicknotify,
             equationxml: item.equationxml,
-            extra: item.extra,
             fillcolor: item.fillcolor,
             filled: item.filled,
             forcedash: item.forcedash,
@@ -2500,6 +2499,7 @@ impl From<ShapeDefinitionMirror> for super::ShapeDefinition {
             title: item.title,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             userdrawn: item.userdrawn,
             userhidden: item.userhidden,
             wrapcoords: item.wrapcoords,
@@ -2547,7 +2547,6 @@ impl From<ShapeFillPropertiesMirror> for super::ShapeFillProperties {
             color2: item.color2,
             colors: item.colors,
             detectmouseclick: item.detectmouseclick,
-            extra: item.extra,
             focus: item.focus,
             focusposition: item.focusposition,
             focussize: item.focussize,
@@ -2569,6 +2568,7 @@ impl From<ShapeFillPropertiesMirror> for super::ShapeFillProperties {
             title: item.title,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2626,7 +2626,6 @@ impl From<ShapeGroupMirror> for super::ShapeGroup {
             dgmnodekind: item.dgmnodekind,
             doubleclicknotify: item.doubleclicknotify,
             editas: item.editas,
-            extra: item.extra,
             fillcolor: item.fillcolor,
             filled: item.filled,
             hr: item.hr,
@@ -2647,6 +2646,7 @@ impl From<ShapeGroupMirror> for super::ShapeGroup {
             target: item.target,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
             userdrawn: item.userdrawn,
             userhidden: item.userhidden,
             wrapcoords: item.wrapcoords,
@@ -2686,7 +2686,6 @@ where
 impl From<ShapeHandleMirror> for super::ShapeHandle {
     fn from(item: ShapeHandleMirror) -> Self {
         Self {
-            extra: item.extra,
             invx: item.invx,
             invy: item.invy,
             map: item.map,
@@ -2695,6 +2694,7 @@ impl From<ShapeHandleMirror> for super::ShapeHandle {
             radiusrange: item.radiusrange,
             switch: item.switch,
             unknown: item.unknown,
+            user_data: item.user_data,
             xrange: item.xrange,
             yrange: item.yrange,
         }
@@ -2737,7 +2737,6 @@ impl From<ShapePathMirror> for super::ShapePath {
             connectangles: item.connectangles,
             connectlocs: item.connectlocs,
             connecttype: item.connecttype,
-            extra: item.extra,
             extrusionok: item.extrusionok,
             fillok: item.fillok,
             gradientshapeok: item.gradientshapeok,
@@ -2749,6 +2748,7 @@ impl From<ShapePathMirror> for super::ShapePath {
             textboxrect: item.textboxrect,
             textpathok: item.textpathok,
             unknown: item.unknown,
+            user_data: item.user_data,
             v: item.v,
         }
     }
@@ -2812,7 +2812,6 @@ impl From<ShapeTemplateMirror> for super::ShapeTemplate {
             dgmlayoutmru: item.dgmlayoutmru,
             dgmnodekind: item.dgmnodekind,
             doubleclicknotify: item.doubleclicknotify,
-            extra: item.extra,
             fillcolor: item.fillcolor,
             filled: item.filled,
             forcedash: item.forcedash,
@@ -2843,6 +2842,7 @@ impl From<ShapeTemplateMirror> for super::ShapeTemplate {
             target: item.target,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
             userdrawn: item.userdrawn,
             userhidden: item.userhidden,
             wrapcoords: item.wrapcoords,
@@ -2883,8 +2883,8 @@ impl From<SingleFormulaMirror> for super::SingleFormula {
     fn from(item: SingleFormulaMirror) -> Self {
         Self {
             eqn: item.eqn,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2922,13 +2922,13 @@ impl From<TextBoxMirror> for super::TextBox {
     fn from(item: TextBoxMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             id: item.id,
             inset: item.inset,
             insetmode: item.insetmode,
             singleclick: item.singleclick,
             style: item.style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2965,7 +2965,6 @@ where
 impl From<TextLayoutPathMirror> for super::TextLayoutPath {
     fn from(item: TextLayoutPathMirror) -> Self {
         Self {
-            extra: item.extra,
             fitpath: item.fitpath,
             fitshape: item.fitshape,
             id: item.id,
@@ -2974,6 +2973,7 @@ impl From<TextLayoutPathMirror> for super::TextLayoutPath {
             style: item.style,
             trim: item.trim,
             unknown: item.unknown,
+            user_data: item.user_data,
             xscale: item.xscale,
         }
     }

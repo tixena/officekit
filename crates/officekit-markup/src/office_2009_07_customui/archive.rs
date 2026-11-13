@@ -225,10 +225,10 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct BackstageMirror {
     pub content: Vec<super::BackstageContent>,
-    pub extra: (),
     pub on_hide: Option<String>,
     pub on_show: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -236,8 +236,8 @@ pub struct BackstageMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BottomItemsMirror {
     pub content: Vec<super::GroupControlsContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -250,7 +250,6 @@ pub struct BoxBoxMirror {
     pub box_style: Option<super::BoxStyle>,
     #[rkyv(omit_bounds)]
     pub content: Vec<super::BoxContent>,
-    pub extra: (),
     pub get_visible: Option<String>,
     pub id: Option<String>,
     pub id_q: Option<String>,
@@ -260,6 +259,7 @@ pub struct BoxBoxMirror {
     pub insert_before_q: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -268,7 +268,6 @@ pub struct BoxBoxMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ButtonBackstageFastCommandButtonMirror {
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
     pub get_keytip: Option<String>,
@@ -289,6 +288,7 @@ pub struct ButtonBackstageFastCommandButtonMirror {
     pub on_action: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -298,7 +298,6 @@ pub struct ButtonBackstageFastCommandButtonMirror {
 pub struct ButtonBackstageGroupButtonMirror {
     pub enabled: Option<String>,
     pub expand: Option<super::Expand>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
     pub get_keytip: Option<String>,
@@ -319,6 +318,7 @@ pub struct ButtonBackstageGroupButtonMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -328,7 +328,6 @@ pub struct ButtonBackstageGroupButtonMirror {
 pub struct ButtonBackstageMenuButtonMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -345,6 +344,7 @@ pub struct ButtonBackstageMenuButtonMirror {
     pub on_action: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -353,7 +353,6 @@ pub struct ButtonBackstageMenuButtonMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ButtonBackstageRegularButtonMirror {
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
     pub get_keytip: Option<String>,
@@ -373,6 +372,7 @@ pub struct ButtonBackstageRegularButtonMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -382,7 +382,6 @@ pub struct ButtonBackstageRegularButtonMirror {
 pub struct ButtonButtonMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -413,6 +412,7 @@ pub struct ButtonButtonMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -422,7 +422,6 @@ pub struct ButtonButtonMirror {
 pub struct ButtonButtonRegularMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -451,6 +450,7 @@ pub struct ButtonButtonRegularMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -459,7 +459,6 @@ pub struct ButtonButtonRegularMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ButtonGroupMirror {
     pub content: Vec<super::ButtonGroupContent>,
-    pub extra: (),
     pub get_visible: Option<String>,
     pub id: Option<String>,
     pub id_q: Option<String>,
@@ -469,6 +468,7 @@ pub struct ButtonGroupMirror {
     pub insert_before_q: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -478,7 +478,6 @@ pub struct ButtonGroupMirror {
 pub struct ButtonVisibleButtonMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -506,13 +505,13 @@ pub struct ButtonVisibleButtonMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CategoryTaskFormGroupCategory)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CategoryTaskFormGroupCategoryMirror {
-    pub extra: (),
     pub get_label: Option<String>,
     pub get_visible: Option<String>,
     pub id: Option<String>,
@@ -526,6 +525,7 @@ pub struct CategoryTaskFormGroupCategoryMirror {
     pub tag: Option<String>,
     pub task_task_form_group_task: Vec<super::TaskTaskFormGroupTask>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -533,7 +533,6 @@ pub struct CategoryTaskFormGroupCategoryMirror {
 #[rkyv(remote = super::CategoryTaskGroupCategory)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CategoryTaskGroupCategoryMirror {
-    pub extra: (),
     pub get_label: Option<String>,
     pub get_visible: Option<String>,
     pub id: Option<String>,
@@ -547,6 +546,7 @@ pub struct CategoryTaskGroupCategoryMirror {
     pub tag: Option<String>,
     pub task_task_group_task: Vec<super::TaskTaskGroupTask>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -557,7 +557,6 @@ pub struct CheckBoxBackstageCheckBoxMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
     pub expand: Option<super::Expand>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_keytip: Option<String>,
@@ -575,6 +574,7 @@ pub struct CheckBoxBackstageCheckBoxMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -584,7 +584,6 @@ pub struct CheckBoxBackstageCheckBoxMirror {
 pub struct CheckBoxBackstageMenuCheckBoxMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_keytip: Option<String>,
@@ -598,6 +597,7 @@ pub struct CheckBoxBackstageMenuCheckBoxMirror {
     pub on_action: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -607,7 +607,6 @@ pub struct CheckBoxBackstageMenuCheckBoxMirror {
 pub struct CheckBoxCheckBoxMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_keytip: Option<String>,
@@ -630,6 +629,7 @@ pub struct CheckBoxCheckBoxMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -640,7 +640,6 @@ pub struct ComboBoxBackstageComboBoxMirror {
     pub align_label: Option<super::Expand>,
     pub enabled: Option<String>,
     pub expand: Option<super::Expand>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_item_count: Option<String>,
     pub get_item_id: Option<String>,
@@ -658,6 +657,7 @@ pub struct ComboBoxBackstageComboBoxMirror {
     pub size_string: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -666,7 +666,6 @@ pub struct ComboBoxBackstageComboBoxMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ComboBoxComboBoxMirror {
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
     pub get_item_count: Option<String>,
@@ -706,6 +705,7 @@ pub struct ComboBoxComboBoxMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -714,11 +714,11 @@ pub struct ComboBoxComboBoxMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CommandMirror {
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub id_mso: Option<String>,
     pub on_action: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -726,8 +726,8 @@ pub struct CommandMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CommandsMirror {
     pub command: Vec<super::Command>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -735,9 +735,9 @@ pub struct CommandsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ContextMenuMirror {
     pub content: Vec<super::ContextMenuContent>,
-    pub extra: (),
     pub id_mso: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -745,17 +745,17 @@ pub struct ContextMenuMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ContextMenusMirror {
     pub context_menu: Vec<super::ContextMenu>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ContextualTabs)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ContextualTabsMirror {
-    pub extra: (),
     pub tab_set: Vec<super::TabSet>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -764,7 +764,6 @@ pub struct ContextualTabsMirror {
 pub struct ControlControlCloneMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -793,6 +792,7 @@ pub struct ControlControlCloneMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -802,7 +802,6 @@ pub struct ControlControlCloneMirror {
 pub struct ControlControlCloneQatMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -831,6 +830,7 @@ pub struct ControlControlCloneQatMirror {
     pub size: Option<super::Size>,
     pub supertip: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -839,7 +839,6 @@ pub struct ControlControlCloneQatMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ControlControlCloneRegularMirror {
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
     pub get_keytip: Option<String>,
@@ -865,6 +864,7 @@ pub struct ControlControlCloneRegularMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -875,11 +875,11 @@ pub struct CustomUIMirror {
     pub backstage: Option<Box<super::Backstage>>,
     pub commands: Option<Box<super::Commands>>,
     pub context_menus: Option<Box<super::ContextMenus>>,
-    pub extra: (),
     pub load_image: Option<String>,
     pub on_load: Option<String>,
     pub ribbon: Option<Box<super::Ribbon>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -887,8 +887,8 @@ pub struct CustomUIMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DialogBoxLauncherMirror {
     pub button_button_regular: Box<super::ButtonButtonRegular>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -896,8 +896,8 @@ pub struct DialogBoxLauncherMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentControlsMirror {
     pub content: Vec<super::QuickAccessToolbarItemsContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -907,7 +907,6 @@ pub struct DropDownBackstageDropDownMirror {
     pub align_label: Option<super::Expand>,
     pub enabled: Option<String>,
     pub expand: Option<super::Expand>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_item_count: Option<String>,
     pub get_item_id: Option<String>,
@@ -929,6 +928,7 @@ pub struct DropDownBackstageDropDownMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -938,7 +938,6 @@ pub struct DropDownBackstageDropDownMirror {
 pub struct DropDownDropDownRegularMirror {
     pub button_button_regular: Vec<super::ButtonButtonRegular>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
     pub get_item_count: Option<String>,
@@ -978,6 +977,7 @@ pub struct DropDownDropDownRegularMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -987,7 +987,6 @@ pub struct DropDownDropDownRegularMirror {
 pub struct DynamicMenuDynamicMenuMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_content: Option<String>,
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
@@ -1019,6 +1018,7 @@ pub struct DynamicMenuDynamicMenuMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1028,7 +1028,6 @@ pub struct DynamicMenuDynamicMenuMirror {
 pub struct DynamicMenuDynamicMenuRegularMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_content: Option<String>,
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
@@ -1058,6 +1057,7 @@ pub struct DynamicMenuDynamicMenuRegularMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1068,7 +1068,6 @@ pub struct EditBoxBackstageEditBoxMirror {
     pub align_label: Option<super::Expand>,
     pub enabled: Option<String>,
     pub expand: Option<super::Expand>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_keytip: Option<String>,
     pub get_label: Option<String>,
@@ -1083,6 +1082,7 @@ pub struct EditBoxBackstageEditBoxMirror {
     pub size_string: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1091,7 +1091,6 @@ pub struct EditBoxBackstageEditBoxMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct EditBoxEditBoxMirror {
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
     pub get_keytip: Option<String>,
@@ -1122,6 +1121,7 @@ pub struct EditBoxEditBoxMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1130,8 +1130,8 @@ pub struct EditBoxEditBoxMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FirstColumnMirror {
     pub content: Vec<super::BackstageGroupsContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1142,7 +1142,6 @@ pub struct GalleryGalleryMirror {
     pub columns: Option<String>,
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -1192,6 +1191,7 @@ pub struct GalleryGalleryMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1203,7 +1203,6 @@ pub struct GalleryGalleryRegularMirror {
     pub columns: Option<String>,
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -1251,6 +1250,7 @@ pub struct GalleryGalleryRegularMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1259,7 +1259,6 @@ pub struct GalleryGalleryRegularMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct GroupBackstageGroupMirror {
     pub bottom_items: Option<Box<super::BottomItems>>,
-    pub extra: (),
     pub get_helper_text: Option<String>,
     pub get_label: Option<String>,
     pub get_show_label: Option<String>,
@@ -1280,6 +1279,7 @@ pub struct GroupBackstageGroupMirror {
     pub tag: Option<String>,
     pub top_items: Option<Box<super::TopItems>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1293,13 +1293,13 @@ pub struct GroupBoxMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::GroupControlsContent>,
     pub expand: Option<super::Expand>,
-    pub extra: (),
     pub get_label: Option<String>,
     pub id: Option<String>,
     pub id_q: Option<String>,
     pub label: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1310,7 +1310,6 @@ pub struct GroupGroupMirror {
     pub center_vertically: Option<String>,
     pub content: Vec<super::GroupContent>,
     pub dialog_box_launcher: Option<Box<super::DialogBoxLauncher>>,
-    pub extra: (),
     pub get_image: Option<String>,
     pub get_keytip: Option<String>,
     pub get_label: Option<String>,
@@ -1332,6 +1331,7 @@ pub struct GroupGroupMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1342,7 +1342,6 @@ pub struct HyperlinkMirror {
     pub align_label: Option<super::Expand>,
     pub enabled: Option<String>,
     pub expand: Option<super::Expand>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
     pub get_keytip: Option<String>,
@@ -1363,6 +1362,7 @@ pub struct HyperlinkMirror {
     pub tag: Option<String>,
     pub target: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1372,7 +1372,6 @@ pub struct HyperlinkMirror {
 pub struct ImageControlMirror {
     pub alt_text: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_alt_text: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -1383,6 +1382,7 @@ pub struct ImageControlMirror {
     pub image_mso: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1390,15 +1390,14 @@ pub struct ImageControlMirror {
 #[rkyv(remote = super::ItemBackstageItem)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ItemBackstageItemMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ItemItem)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ItemItemMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub image: Option<String>,
     pub image_mso: Option<String>,
@@ -1406,6 +1405,7 @@ pub struct ItemItemMirror {
     pub screentip: Option<String>,
     pub supertip: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1415,7 +1415,6 @@ pub struct LabelControlBackstageLabelControlMirror {
     pub align_label: Option<super::Expand>,
     pub enabled: Option<String>,
     pub expand: Option<super::Expand>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_label: Option<String>,
     pub get_visible: Option<String>,
@@ -1425,6 +1424,7 @@ pub struct LabelControlBackstageLabelControlMirror {
     pub no_wrap: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1433,7 +1433,6 @@ pub struct LabelControlBackstageLabelControlMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct LabelControlLabelControlMirror {
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_label: Option<String>,
     pub get_screentip: Option<String>,
@@ -1453,6 +1452,7 @@ pub struct LabelControlLabelControlMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1467,12 +1467,12 @@ pub struct LayoutContainerMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::GroupControlsContent>,
     pub expand: Option<super::Expand>,
-    pub extra: (),
     pub id: Option<String>,
     pub id_q: Option<String>,
     pub layout_children: Option<super::LayoutChildren>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1480,7 +1480,6 @@ pub struct LayoutContainerMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct MenuBackstagePrimaryMenuMirror {
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
     pub get_keytip: Option<String>,
@@ -1499,6 +1498,7 @@ pub struct MenuBackstagePrimaryMenuMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1511,7 +1511,6 @@ pub struct MenuBackstagePrimaryMenuMirror {
 pub struct MenuBackstageSubMenuMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -1528,6 +1527,7 @@ pub struct MenuBackstageSubMenuMirror {
     pub label: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1540,7 +1540,6 @@ pub struct MenuBackstageSubMenuMirror {
 pub struct MenuGroupMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::BackstageMenuGroupContent>,
-    pub extra: (),
     pub get_label: Option<String>,
     pub id: Option<String>,
     pub id_q: Option<String>,
@@ -1548,6 +1547,7 @@ pub struct MenuGroupMirror {
     pub label: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1557,7 +1557,6 @@ pub struct MenuMenuMirror {
     pub content: Vec<super::MenuContent>,
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -1588,6 +1587,7 @@ pub struct MenuMenuMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1602,7 +1602,6 @@ pub struct MenuMenuRegularMirror {
     pub content: Vec<super::MenuContent>,
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -1631,6 +1630,7 @@ pub struct MenuMenuRegularMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1639,11 +1639,11 @@ pub struct MenuMenuRegularMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct MenuMenuRootMirror {
     pub content: Vec<super::MenuContent>,
-    pub extra: (),
     pub get_title: Option<String>,
     pub item_size: Option<super::ItemSize>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1656,7 +1656,6 @@ pub struct MenuMenuWithTitleMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::MenuWithTitleContent>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
     pub get_keytip: Option<String>,
@@ -1686,6 +1685,7 @@ pub struct MenuMenuWithTitleMirror {
     pub tag: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1693,7 +1693,6 @@ pub struct MenuMenuWithTitleMirror {
 #[rkyv(remote = super::MenuSeparatorMenuSeparator)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MenuSeparatorMenuSeparatorMirror {
-    pub extra: (),
     pub get_title: Option<String>,
     pub id: Option<String>,
     pub id_q: Option<String>,
@@ -1704,13 +1703,13 @@ pub struct MenuSeparatorMenuSeparatorMirror {
     pub tag: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::MenuSeparatorMenuSeparatorNoTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MenuSeparatorMenuSeparatorNoTitleMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub id_q: Option<String>,
     pub insert_after_mso: Option<String>,
@@ -1719,6 +1718,7 @@ pub struct MenuSeparatorMenuSeparatorNoTitleMirror {
     pub insert_before_q: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1726,8 +1726,8 @@ pub struct MenuSeparatorMenuSeparatorNoTitleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PrimaryItemMirror {
     pub content: Box<super::PrimaryItemContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1735,17 +1735,17 @@ pub struct PrimaryItemMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct QatMirror {
     pub document_controls: Option<Box<super::DocumentControls>>,
-    pub extra: (),
     pub shared_controls: Option<Box<super::SharedControls>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RadioButton)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RadioButtonMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1755,7 +1755,6 @@ pub struct RadioGroupMirror {
     pub align_label: Option<super::Expand>,
     pub enabled: Option<String>,
     pub expand: Option<super::Expand>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_item_count: Option<String>,
     pub get_item_id: Option<String>,
@@ -1772,6 +1771,7 @@ pub struct RadioGroupMirror {
     pub radio_button: Vec<super::RadioButton>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1780,9 +1780,9 @@ pub struct RadioGroupMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RibbonMirror {
     pub content: Vec<super::RibbonContent>,
-    pub extra: (),
     pub start_from_scratch: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1790,15 +1790,14 @@ pub struct RibbonMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SecondColumnMirror {
     pub content: Vec<super::SimpleGroupsContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Separator)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SeparatorMirror {
-    pub extra: (),
     pub get_visible: Option<String>,
     pub id: Option<String>,
     pub id_q: Option<String>,
@@ -1808,6 +1807,7 @@ pub struct SeparatorMirror {
     pub insert_before_q: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1816,8 +1816,8 @@ pub struct SeparatorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SharedControlsMirror {
     pub content: Vec<super::QuickAccessToolbarItemsContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1826,7 +1826,6 @@ pub struct SharedControlsMirror {
 pub struct SplitButtonSplitButtonMirror {
     pub content: Option<Box<super::SplitButtonContent>>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_keytip: Option<String>,
     pub get_show_label: Option<String>,
@@ -1845,6 +1844,7 @@ pub struct SplitButtonSplitButtonMirror {
     pub size: Option<super::Size>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1857,7 +1857,6 @@ pub struct SplitButtonSplitButtonMirror {
 pub struct SplitButtonSplitButtonRegularMirror {
     pub content: Option<Box<super::SplitButtonContent>>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_keytip: Option<String>,
     pub get_show_label: Option<String>,
@@ -1875,6 +1874,7 @@ pub struct SplitButtonSplitButtonRegularMirror {
     pub show_label: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1887,7 +1887,6 @@ pub struct SplitButtonSplitButtonRegularMirror {
 pub struct SplitButtonSplitButtonWithTitleMirror {
     pub content: Option<Box<super::SplitButtonContent>>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_enabled: Option<String>,
     pub get_keytip: Option<String>,
     pub get_show_label: Option<String>,
@@ -1905,6 +1904,7 @@ pub struct SplitButtonSplitButtonWithTitleMirror {
     pub show_label: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1914,7 +1914,6 @@ pub struct SplitButtonSplitButtonWithTitleMirror {
 pub struct TabBackstageTabMirror {
     pub column_width_percent: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub first_column: Option<Box<super::FirstColumn>>,
     pub first_column_max_width: Option<String>,
     pub first_column_min_width: Option<String>,
@@ -1938,6 +1937,7 @@ pub struct TabBackstageTabMirror {
     pub tag: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1945,11 +1945,11 @@ pub struct TabBackstageTabMirror {
 #[rkyv(remote = super::TabSet)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TabSetMirror {
-    pub extra: (),
     pub get_visible: Option<String>,
     pub id_mso: Option<String>,
     pub tab_tab: Vec<super::TabTab>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1957,7 +1957,6 @@ pub struct TabSetMirror {
 #[rkyv(remote = super::TabTab)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TabTabMirror {
-    pub extra: (),
     pub get_keytip: Option<String>,
     pub get_label: Option<String>,
     pub get_visible: Option<String>,
@@ -1973,6 +1972,7 @@ pub struct TabTabMirror {
     pub label: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -1980,9 +1980,9 @@ pub struct TabTabMirror {
 #[rkyv(remote = super::Tabs)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TabsMirror {
-    pub extra: (),
     pub tab_tab: Vec<super::TabTab>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1991,7 +1991,6 @@ pub struct TabsMirror {
 pub struct TaskFormGroupMirror {
     pub allowed_task_sizes: Option<super::TaskSizes>,
     pub category_task_form_group_category: Vec<super::CategoryTaskFormGroupCategory>,
-    pub extra: (),
     pub get_helper_text: Option<String>,
     pub get_label: Option<String>,
     pub get_show_label: Option<String>,
@@ -2004,6 +2003,7 @@ pub struct TaskFormGroupMirror {
     pub show_label: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -2013,7 +2013,6 @@ pub struct TaskFormGroupMirror {
 pub struct TaskGroupMirror {
     pub allowed_task_sizes: Option<super::TaskSizes>,
     pub category_task_group_category: Vec<super::CategoryTaskGroupCategory>,
-    pub extra: (),
     pub get_helper_text: Option<String>,
     pub get_label: Option<String>,
     pub get_show_label: Option<String>,
@@ -2030,6 +2029,7 @@ pub struct TaskGroupMirror {
     pub show_label: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -2039,7 +2039,6 @@ pub struct TaskGroupMirror {
 pub struct TaskTaskFormGroupTaskMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -2060,6 +2059,7 @@ pub struct TaskTaskFormGroupTaskMirror {
     pub label: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -2069,7 +2069,6 @@ pub struct TaskTaskFormGroupTaskMirror {
 pub struct TaskTaskGroupTaskMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -2091,6 +2090,7 @@ pub struct TaskTaskGroupTaskMirror {
     pub on_action: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -2100,7 +2100,6 @@ pub struct TaskTaskGroupTaskMirror {
 pub struct ToggleButtonBackstageMenuToggleButtonMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -2117,6 +2116,7 @@ pub struct ToggleButtonBackstageMenuToggleButtonMirror {
     pub on_action: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -2126,7 +2126,6 @@ pub struct ToggleButtonBackstageMenuToggleButtonMirror {
 pub struct ToggleButtonToggleButtonMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -2158,6 +2157,7 @@ pub struct ToggleButtonToggleButtonMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -2167,7 +2167,6 @@ pub struct ToggleButtonToggleButtonMirror {
 pub struct ToggleButtonToggleButtonRegularMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -2197,6 +2196,7 @@ pub struct ToggleButtonToggleButtonRegularMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -2206,7 +2206,6 @@ pub struct ToggleButtonToggleButtonRegularMirror {
 pub struct ToggleButtonVisibleToggleButtonMirror {
     pub description: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub get_description: Option<String>,
     pub get_enabled: Option<String>,
     pub get_image: Option<String>,
@@ -2235,6 +2234,7 @@ pub struct ToggleButtonVisibleToggleButtonMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2242,8 +2242,8 @@ pub struct ToggleButtonVisibleToggleButtonMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TopItemsMirror {
     pub content: Vec<super::GroupControlsContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2466,10 +2466,10 @@ impl From<BackstageMirror> for super::Backstage {
     fn from(item: BackstageMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             on_hide: item.on_hide,
             on_show: item.on_show,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2507,8 +2507,8 @@ impl From<BottomItemsMirror> for super::BottomItems {
     fn from(item: BottomItemsMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2547,7 +2547,6 @@ impl From<BoxBoxMirror> for super::BoxBox {
         Self {
             box_style: item.box_style,
             content: item.content,
-            extra: item.extra,
             get_visible: item.get_visible,
             id: item.id,
             id_q: item.id_q,
@@ -2557,6 +2556,7 @@ impl From<BoxBoxMirror> for super::BoxBox {
             insert_before_q: item.insert_before_q,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -2595,7 +2595,6 @@ impl From<ButtonBackstageFastCommandButtonMirror> for super::ButtonBackstageFast
     fn from(item: ButtonBackstageFastCommandButtonMirror) -> Self {
         Self {
             enabled: item.enabled,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
             get_keytip: item.get_keytip,
@@ -2616,6 +2615,7 @@ impl From<ButtonBackstageFastCommandButtonMirror> for super::ButtonBackstageFast
             on_action: item.on_action,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -2659,7 +2659,6 @@ impl From<ButtonBackstageGroupButtonMirror> for super::ButtonBackstageGroupButto
         Self {
             enabled: item.enabled,
             expand: item.expand,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
             get_keytip: item.get_keytip,
@@ -2680,6 +2679,7 @@ impl From<ButtonBackstageGroupButtonMirror> for super::ButtonBackstageGroupButto
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -2723,7 +2723,6 @@ impl From<ButtonBackstageMenuButtonMirror> for super::ButtonBackstageMenuButton 
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -2740,6 +2739,7 @@ impl From<ButtonBackstageMenuButtonMirror> for super::ButtonBackstageMenuButton 
             on_action: item.on_action,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -2782,7 +2782,6 @@ impl From<ButtonBackstageRegularButtonMirror> for super::ButtonBackstageRegularB
     fn from(item: ButtonBackstageRegularButtonMirror) -> Self {
         Self {
             enabled: item.enabled,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
             get_keytip: item.get_keytip,
@@ -2802,6 +2801,7 @@ impl From<ButtonBackstageRegularButtonMirror> for super::ButtonBackstageRegularB
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -2845,7 +2845,6 @@ impl From<ButtonButtonMirror> for super::ButtonButton {
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -2876,6 +2875,7 @@ impl From<ButtonButtonMirror> for super::ButtonButton {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -2915,7 +2915,6 @@ impl From<ButtonButtonRegularMirror> for super::ButtonButtonRegular {
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -2944,6 +2943,7 @@ impl From<ButtonButtonRegularMirror> for super::ButtonButtonRegular {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -2985,7 +2985,6 @@ impl From<ButtonGroupMirror> for super::ButtonGroup {
     fn from(item: ButtonGroupMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             get_visible: item.get_visible,
             id: item.id,
             id_q: item.id_q,
@@ -2995,6 +2994,7 @@ impl From<ButtonGroupMirror> for super::ButtonGroup {
             insert_before_q: item.insert_before_q,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -3034,7 +3034,6 @@ impl From<ButtonVisibleButtonMirror> for super::ButtonVisibleButton {
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -3062,6 +3061,7 @@ impl From<ButtonVisibleButtonMirror> for super::ButtonVisibleButton {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3101,7 +3101,6 @@ where
 impl From<CategoryTaskFormGroupCategoryMirror> for super::CategoryTaskFormGroupCategory {
     fn from(item: CategoryTaskFormGroupCategoryMirror) -> Self {
         Self {
-            extra: item.extra,
             get_label: item.get_label,
             get_visible: item.get_visible,
             id: item.id,
@@ -3115,6 +3114,7 @@ impl From<CategoryTaskFormGroupCategoryMirror> for super::CategoryTaskFormGroupC
             tag: item.tag,
             task_task_form_group_task: item.task_task_form_group_task,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -3156,7 +3156,6 @@ where
 impl From<CategoryTaskGroupCategoryMirror> for super::CategoryTaskGroupCategory {
     fn from(item: CategoryTaskGroupCategoryMirror) -> Self {
         Self {
-            extra: item.extra,
             get_label: item.get_label,
             get_visible: item.get_visible,
             id: item.id,
@@ -3170,6 +3169,7 @@ impl From<CategoryTaskGroupCategoryMirror> for super::CategoryTaskGroupCategory 
             tag: item.tag,
             task_task_group_task: item.task_task_group_task,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -3214,7 +3214,6 @@ impl From<CheckBoxBackstageCheckBoxMirror> for super::CheckBoxBackstageCheckBox 
             description: item.description,
             enabled: item.enabled,
             expand: item.expand,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_keytip: item.get_keytip,
@@ -3232,6 +3231,7 @@ impl From<CheckBoxBackstageCheckBoxMirror> for super::CheckBoxBackstageCheckBox 
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -3275,7 +3275,6 @@ impl From<CheckBoxBackstageMenuCheckBoxMirror> for super::CheckBoxBackstageMenuC
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_keytip: item.get_keytip,
@@ -3289,6 +3288,7 @@ impl From<CheckBoxBackstageMenuCheckBoxMirror> for super::CheckBoxBackstageMenuC
             on_action: item.on_action,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -3332,7 +3332,6 @@ impl From<CheckBoxCheckBoxMirror> for super::CheckBoxCheckBox {
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_keytip: item.get_keytip,
@@ -3355,6 +3354,7 @@ impl From<CheckBoxCheckBoxMirror> for super::CheckBoxCheckBox {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -3395,7 +3395,6 @@ impl From<ComboBoxBackstageComboBoxMirror> for super::ComboBoxBackstageComboBox 
             align_label: item.align_label,
             enabled: item.enabled,
             expand: item.expand,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_item_count: item.get_item_count,
             get_item_id: item.get_item_id,
@@ -3413,6 +3412,7 @@ impl From<ComboBoxBackstageComboBoxMirror> for super::ComboBoxBackstageComboBox 
             size_string: item.size_string,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -3455,7 +3455,6 @@ impl From<ComboBoxComboBoxMirror> for super::ComboBoxComboBox {
     fn from(item: ComboBoxComboBoxMirror) -> Self {
         Self {
             enabled: item.enabled,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
             get_item_count: item.get_item_count,
@@ -3495,6 +3494,7 @@ impl From<ComboBoxComboBoxMirror> for super::ComboBoxComboBox {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -3533,11 +3533,11 @@ impl From<CommandMirror> for super::Command {
     fn from(item: CommandMirror) -> Self {
         Self {
             enabled: item.enabled,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             id_mso: item.id_mso,
             on_action: item.on_action,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3575,8 +3575,8 @@ impl From<CommandsMirror> for super::Commands {
     fn from(item: CommandsMirror) -> Self {
         Self {
             command: item.command,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3614,9 +3614,9 @@ impl From<ContextMenuMirror> for super::ContextMenu {
     fn from(item: ContextMenuMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             id_mso: item.id_mso,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3654,8 +3654,8 @@ impl From<ContextMenusMirror> for super::ContextMenus {
     fn from(item: ContextMenusMirror) -> Self {
         Self {
             context_menu: item.context_menu,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3692,9 +3692,9 @@ where
 impl From<ContextualTabsMirror> for super::ContextualTabs {
     fn from(item: ContextualTabsMirror) -> Self {
         Self {
-            extra: item.extra,
             tab_set: item.tab_set,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3733,7 +3733,6 @@ impl From<ControlControlCloneMirror> for super::ControlControlClone {
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -3762,6 +3761,7 @@ impl From<ControlControlCloneMirror> for super::ControlControlClone {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -3804,7 +3804,6 @@ impl From<ControlControlCloneQatMirror> for super::ControlControlCloneQat {
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -3833,6 +3832,7 @@ impl From<ControlControlCloneQatMirror> for super::ControlControlCloneQat {
             size: item.size,
             supertip: item.supertip,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -3875,7 +3875,6 @@ impl From<ControlControlCloneRegularMirror> for super::ControlControlCloneRegula
     fn from(item: ControlControlCloneRegularMirror) -> Self {
         Self {
             enabled: item.enabled,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
             get_keytip: item.get_keytip,
@@ -3901,6 +3900,7 @@ impl From<ControlControlCloneRegularMirror> for super::ControlControlCloneRegula
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -3945,11 +3945,11 @@ impl From<CustomUIMirror> for super::CustomUI {
             backstage: item.backstage,
             commands: item.commands,
             context_menus: item.context_menus,
-            extra: item.extra,
             load_image: item.load_image,
             on_load: item.on_load,
             ribbon: item.ribbon,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3987,8 +3987,8 @@ impl From<DialogBoxLauncherMirror> for super::DialogBoxLauncher {
     fn from(item: DialogBoxLauncherMirror) -> Self {
         Self {
             button_button_regular: item.button_button_regular,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -4026,8 +4026,8 @@ impl From<DocumentControlsMirror> for super::DocumentControls {
     fn from(item: DocumentControlsMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -4067,7 +4067,6 @@ impl From<DropDownBackstageDropDownMirror> for super::DropDownBackstageDropDown 
             align_label: item.align_label,
             enabled: item.enabled,
             expand: item.expand,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_item_count: item.get_item_count,
             get_item_id: item.get_item_id,
@@ -4089,6 +4088,7 @@ impl From<DropDownBackstageDropDownMirror> for super::DropDownBackstageDropDown 
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -4132,7 +4132,6 @@ impl From<DropDownDropDownRegularMirror> for super::DropDownDropDownRegular {
         Self {
             button_button_regular: item.button_button_regular,
             enabled: item.enabled,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
             get_item_count: item.get_item_count,
@@ -4172,6 +4171,7 @@ impl From<DropDownDropDownRegularMirror> for super::DropDownDropDownRegular {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -4215,7 +4215,6 @@ impl From<DynamicMenuDynamicMenuMirror> for super::DynamicMenuDynamicMenu {
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_content: item.get_content,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
@@ -4247,6 +4246,7 @@ impl From<DynamicMenuDynamicMenuMirror> for super::DynamicMenuDynamicMenu {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -4290,7 +4290,6 @@ impl From<DynamicMenuDynamicMenuRegularMirror> for super::DynamicMenuDynamicMenu
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_content: item.get_content,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
@@ -4320,6 +4319,7 @@ impl From<DynamicMenuDynamicMenuRegularMirror> for super::DynamicMenuDynamicMenu
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -4364,7 +4364,6 @@ impl From<EditBoxBackstageEditBoxMirror> for super::EditBoxBackstageEditBox {
             align_label: item.align_label,
             enabled: item.enabled,
             expand: item.expand,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_keytip: item.get_keytip,
             get_label: item.get_label,
@@ -4379,6 +4378,7 @@ impl From<EditBoxBackstageEditBoxMirror> for super::EditBoxBackstageEditBox {
             size_string: item.size_string,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -4421,7 +4421,6 @@ impl From<EditBoxEditBoxMirror> for super::EditBoxEditBox {
     fn from(item: EditBoxEditBoxMirror) -> Self {
         Self {
             enabled: item.enabled,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
             get_keytip: item.get_keytip,
@@ -4452,6 +4451,7 @@ impl From<EditBoxEditBoxMirror> for super::EditBoxEditBox {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -4490,8 +4490,8 @@ impl From<FirstColumnMirror> for super::FirstColumn {
     fn from(item: FirstColumnMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -4532,7 +4532,6 @@ impl From<GalleryGalleryMirror> for super::GalleryGallery {
             columns: item.columns,
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -4582,6 +4581,7 @@ impl From<GalleryGalleryMirror> for super::GalleryGallery {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -4623,7 +4623,6 @@ impl From<GalleryGalleryRegularMirror> for super::GalleryGalleryRegular {
             columns: item.columns,
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -4671,6 +4670,7 @@ impl From<GalleryGalleryRegularMirror> for super::GalleryGalleryRegular {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -4713,7 +4713,6 @@ impl From<GroupBackstageGroupMirror> for super::GroupBackstageGroup {
     fn from(item: GroupBackstageGroupMirror) -> Self {
         Self {
             bottom_items: item.bottom_items,
-            extra: item.extra,
             get_helper_text: item.get_helper_text,
             get_label: item.get_label,
             get_show_label: item.get_show_label,
@@ -4734,6 +4733,7 @@ impl From<GroupBackstageGroupMirror> for super::GroupBackstageGroup {
             tag: item.tag,
             top_items: item.top_items,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -4776,13 +4776,13 @@ impl From<GroupBoxMirror> for super::GroupBox {
         Self {
             content: item.content,
             expand: item.expand,
-            extra: item.extra,
             get_label: item.get_label,
             id: item.id,
             id_q: item.id_q,
             label: item.label,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -4823,7 +4823,6 @@ impl From<GroupGroupMirror> for super::GroupGroup {
             center_vertically: item.center_vertically,
             content: item.content,
             dialog_box_launcher: item.dialog_box_launcher,
-            extra: item.extra,
             get_image: item.get_image,
             get_keytip: item.get_keytip,
             get_label: item.get_label,
@@ -4845,6 +4844,7 @@ impl From<GroupGroupMirror> for super::GroupGroup {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -4885,7 +4885,6 @@ impl From<HyperlinkMirror> for super::Hyperlink {
             align_label: item.align_label,
             enabled: item.enabled,
             expand: item.expand,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
             get_keytip: item.get_keytip,
@@ -4906,6 +4905,7 @@ impl From<HyperlinkMirror> for super::Hyperlink {
             tag: item.tag,
             target: item.target,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -4945,7 +4945,6 @@ impl From<ImageControlMirror> for super::ImageControl {
         Self {
             alt_text: item.alt_text,
             enabled: item.enabled,
-            extra: item.extra,
             get_alt_text: item.get_alt_text,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -4956,6 +4955,7 @@ impl From<ImageControlMirror> for super::ImageControl {
             image_mso: item.image_mso,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -4993,8 +4993,8 @@ where
 impl From<ItemBackstageItemMirror> for super::ItemBackstageItem {
     fn from(item: ItemBackstageItemMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5031,7 +5031,6 @@ where
 impl From<ItemItemMirror> for super::ItemItem {
     fn from(item: ItemItemMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             image: item.image,
             image_mso: item.image_mso,
@@ -5039,6 +5038,7 @@ impl From<ItemItemMirror> for super::ItemItem {
             screentip: item.screentip,
             supertip: item.supertip,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5078,7 +5078,6 @@ impl From<LabelControlBackstageLabelControlMirror> for super::LabelControlBackst
             align_label: item.align_label,
             enabled: item.enabled,
             expand: item.expand,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_label: item.get_label,
             get_visible: item.get_visible,
@@ -5088,6 +5087,7 @@ impl From<LabelControlBackstageLabelControlMirror> for super::LabelControlBackst
             no_wrap: item.no_wrap,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -5130,7 +5130,6 @@ impl From<LabelControlLabelControlMirror> for super::LabelControlLabelControl {
     fn from(item: LabelControlLabelControlMirror) -> Self {
         Self {
             enabled: item.enabled,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_label: item.get_label,
             get_screentip: item.get_screentip,
@@ -5150,6 +5149,7 @@ impl From<LabelControlLabelControlMirror> for super::LabelControlLabelControl {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -5194,12 +5194,12 @@ impl From<LayoutContainerMirror> for super::LayoutContainer {
             align: item.align,
             content: item.content,
             expand: item.expand,
-            extra: item.extra,
             id: item.id,
             id_q: item.id_q,
             layout_children: item.layout_children,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5237,7 +5237,6 @@ impl From<MenuBackstagePrimaryMenuMirror> for super::MenuBackstagePrimaryMenu {
     fn from(item: MenuBackstagePrimaryMenuMirror) -> Self {
         Self {
             enabled: item.enabled,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
             get_keytip: item.get_keytip,
@@ -5256,6 +5255,7 @@ impl From<MenuBackstagePrimaryMenuMirror> for super::MenuBackstagePrimaryMenu {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -5299,7 +5299,6 @@ impl From<MenuBackstageSubMenuMirror> for super::MenuBackstageSubMenu {
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -5315,6 +5314,7 @@ impl From<MenuBackstageSubMenuMirror> for super::MenuBackstageSubMenu {
             label: item.label,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -5356,7 +5356,6 @@ impl From<MenuGroupMirror> for super::MenuGroup {
     fn from(item: MenuGroupMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             get_label: item.get_label,
             id: item.id,
             id_q: item.id_q,
@@ -5364,6 +5363,7 @@ impl From<MenuGroupMirror> for super::MenuGroup {
             label: item.label,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5403,7 +5403,6 @@ impl From<MenuMenuMirror> for super::MenuMenu {
             content: item.content,
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -5434,6 +5433,7 @@ impl From<MenuMenuMirror> for super::MenuMenu {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -5474,7 +5474,6 @@ impl From<MenuMenuRegularMirror> for super::MenuMenuRegular {
             content: item.content,
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -5503,6 +5502,7 @@ impl From<MenuMenuRegularMirror> for super::MenuMenuRegular {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -5541,11 +5541,11 @@ impl From<MenuMenuRootMirror> for super::MenuMenuRoot {
     fn from(item: MenuMenuRootMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             get_title: item.get_title,
             item_size: item.item_size,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5584,7 +5584,6 @@ impl From<MenuMenuWithTitleMirror> for super::MenuMenuWithTitle {
         Self {
             content: item.content,
             enabled: item.enabled,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
             get_keytip: item.get_keytip,
@@ -5614,6 +5613,7 @@ impl From<MenuMenuWithTitleMirror> for super::MenuMenuWithTitle {
             tag: item.tag,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -5651,7 +5651,6 @@ where
 impl From<MenuSeparatorMenuSeparatorMirror> for super::MenuSeparatorMenuSeparator {
     fn from(item: MenuSeparatorMenuSeparatorMirror) -> Self {
         Self {
-            extra: item.extra,
             get_title: item.get_title,
             id: item.id,
             id_q: item.id_q,
@@ -5662,6 +5661,7 @@ impl From<MenuSeparatorMenuSeparatorMirror> for super::MenuSeparatorMenuSeparato
             tag: item.tag,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5702,7 +5702,6 @@ where
 impl From<MenuSeparatorMenuSeparatorNoTitleMirror> for super::MenuSeparatorMenuSeparatorNoTitle {
     fn from(item: MenuSeparatorMenuSeparatorNoTitleMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             id_q: item.id_q,
             insert_after_mso: item.insert_after_mso,
@@ -5711,6 +5710,7 @@ impl From<MenuSeparatorMenuSeparatorNoTitleMirror> for super::MenuSeparatorMenuS
             insert_before_q: item.insert_before_q,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5752,8 +5752,8 @@ impl From<PrimaryItemMirror> for super::PrimaryItem {
     fn from(item: PrimaryItemMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5791,9 +5791,9 @@ impl From<QatMirror> for super::Qat {
     fn from(item: QatMirror) -> Self {
         Self {
             document_controls: item.document_controls,
-            extra: item.extra,
             shared_controls: item.shared_controls,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5830,8 +5830,8 @@ where
 impl From<RadioButtonMirror> for super::RadioButton {
     fn from(item: RadioButtonMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5871,7 +5871,6 @@ impl From<RadioGroupMirror> for super::RadioGroup {
             align_label: item.align_label,
             enabled: item.enabled,
             expand: item.expand,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_item_count: item.get_item_count,
             get_item_id: item.get_item_id,
@@ -5888,6 +5887,7 @@ impl From<RadioGroupMirror> for super::RadioGroup {
             radio_button: item.radio_button,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -5926,9 +5926,9 @@ impl From<RibbonMirror> for super::Ribbon {
     fn from(item: RibbonMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             start_from_scratch: item.start_from_scratch,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5966,8 +5966,8 @@ impl From<SecondColumnMirror> for super::SecondColumn {
     fn from(item: SecondColumnMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6004,7 +6004,6 @@ where
 impl From<SeparatorMirror> for super::Separator {
     fn from(item: SeparatorMirror) -> Self {
         Self {
-            extra: item.extra,
             get_visible: item.get_visible,
             id: item.id,
             id_q: item.id_q,
@@ -6014,6 +6013,7 @@ impl From<SeparatorMirror> for super::Separator {
             insert_before_q: item.insert_before_q,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -6052,8 +6052,8 @@ impl From<SharedControlsMirror> for super::SharedControls {
     fn from(item: SharedControlsMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6092,7 +6092,6 @@ impl From<SplitButtonSplitButtonMirror> for super::SplitButtonSplitButton {
         Self {
             content: item.content,
             enabled: item.enabled,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_keytip: item.get_keytip,
             get_show_label: item.get_show_label,
@@ -6111,6 +6110,7 @@ impl From<SplitButtonSplitButtonMirror> for super::SplitButtonSplitButton {
             size: item.size,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -6154,7 +6154,6 @@ impl From<SplitButtonSplitButtonRegularMirror> for super::SplitButtonSplitButton
         Self {
             content: item.content,
             enabled: item.enabled,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_keytip: item.get_keytip,
             get_show_label: item.get_show_label,
@@ -6171,6 +6170,7 @@ impl From<SplitButtonSplitButtonRegularMirror> for super::SplitButtonSplitButton
             show_label: item.show_label,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -6214,7 +6214,6 @@ impl From<SplitButtonSplitButtonWithTitleMirror> for super::SplitButtonSplitButt
         Self {
             content: item.content,
             enabled: item.enabled,
-            extra: item.extra,
             get_enabled: item.get_enabled,
             get_keytip: item.get_keytip,
             get_show_label: item.get_show_label,
@@ -6231,6 +6230,7 @@ impl From<SplitButtonSplitButtonWithTitleMirror> for super::SplitButtonSplitButt
             show_label: item.show_label,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -6274,7 +6274,6 @@ impl From<TabBackstageTabMirror> for super::TabBackstageTab {
         Self {
             column_width_percent: item.column_width_percent,
             enabled: item.enabled,
-            extra: item.extra,
             first_column: item.first_column,
             first_column_max_width: item.first_column_max_width,
             first_column_min_width: item.first_column_min_width,
@@ -6298,6 +6297,7 @@ impl From<TabBackstageTabMirror> for super::TabBackstageTab {
             tag: item.tag,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -6335,11 +6335,11 @@ where
 impl From<TabSetMirror> for super::TabSet {
     fn from(item: TabSetMirror) -> Self {
         Self {
-            extra: item.extra,
             get_visible: item.get_visible,
             id_mso: item.id_mso,
             tab_tab: item.tab_tab,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -6377,7 +6377,6 @@ where
 impl From<TabTabMirror> for super::TabTab {
     fn from(item: TabTabMirror) -> Self {
         Self {
-            extra: item.extra,
             get_keytip: item.get_keytip,
             get_label: item.get_label,
             get_visible: item.get_visible,
@@ -6393,6 +6392,7 @@ impl From<TabTabMirror> for super::TabTab {
             label: item.label,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -6430,9 +6430,9 @@ where
 impl From<TabsMirror> for super::Tabs {
     fn from(item: TabsMirror) -> Self {
         Self {
-            extra: item.extra,
             tab_tab: item.tab_tab,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6471,7 +6471,6 @@ impl From<TaskFormGroupMirror> for super::TaskFormGroup {
         Self {
             allowed_task_sizes: item.allowed_task_sizes,
             category_task_form_group_category: item.category_task_form_group_category,
-            extra: item.extra,
             get_helper_text: item.get_helper_text,
             get_label: item.get_label,
             get_show_label: item.get_show_label,
@@ -6484,6 +6483,7 @@ impl From<TaskFormGroupMirror> for super::TaskFormGroup {
             show_label: item.show_label,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -6523,7 +6523,6 @@ impl From<TaskGroupMirror> for super::TaskGroup {
         Self {
             allowed_task_sizes: item.allowed_task_sizes,
             category_task_group_category: item.category_task_group_category,
-            extra: item.extra,
             get_helper_text: item.get_helper_text,
             get_label: item.get_label,
             get_show_label: item.get_show_label,
@@ -6540,6 +6539,7 @@ impl From<TaskGroupMirror> for super::TaskGroup {
             show_label: item.show_label,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -6579,7 +6579,6 @@ impl From<TaskTaskFormGroupTaskMirror> for super::TaskTaskFormGroupTask {
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -6600,6 +6599,7 @@ impl From<TaskTaskFormGroupTaskMirror> for super::TaskTaskFormGroupTask {
             label: item.label,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -6643,7 +6643,6 @@ impl From<TaskTaskGroupTaskMirror> for super::TaskTaskGroupTask {
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -6665,6 +6664,7 @@ impl From<TaskTaskGroupTaskMirror> for super::TaskTaskGroupTask {
             on_action: item.on_action,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -6706,7 +6706,6 @@ impl From<ToggleButtonBackstageMenuToggleButtonMirror>
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -6723,6 +6722,7 @@ impl From<ToggleButtonBackstageMenuToggleButtonMirror>
             on_action: item.on_action,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -6766,7 +6766,6 @@ impl From<ToggleButtonToggleButtonMirror> for super::ToggleButtonToggleButton {
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -6798,6 +6797,7 @@ impl From<ToggleButtonToggleButtonMirror> for super::ToggleButtonToggleButton {
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -6841,7 +6841,6 @@ impl From<ToggleButtonToggleButtonRegularMirror> for super::ToggleButtonToggleBu
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -6871,6 +6870,7 @@ impl From<ToggleButtonToggleButtonRegularMirror> for super::ToggleButtonToggleBu
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -6914,7 +6914,6 @@ impl From<ToggleButtonVisibleToggleButtonMirror> for super::ToggleButtonVisibleT
         Self {
             description: item.description,
             enabled: item.enabled,
-            extra: item.extra,
             get_description: item.get_description,
             get_enabled: item.get_enabled,
             get_image: item.get_image,
@@ -6943,6 +6942,7 @@ impl From<ToggleButtonVisibleToggleButtonMirror> for super::ToggleButtonVisibleT
             supertip: item.supertip,
             tag: item.tag,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6984,8 +6984,8 @@ impl From<TopItemsMirror> for super::TopItems {
     fn from(item: TopItemsMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

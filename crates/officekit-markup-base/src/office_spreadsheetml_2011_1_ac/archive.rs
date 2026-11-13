@@ -222,16 +222,16 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::List)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ListMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
 impl From<ListMirror> for super::List {
     fn from(item: ListMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }

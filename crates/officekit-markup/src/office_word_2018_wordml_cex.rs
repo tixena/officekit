@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_base::common_simple_types;
 use officekit_xml::element::Element;
@@ -266,23 +266,23 @@ pub static EXT_LST_SHAPE: officekit_markup_base::Shape = officekit_markup_base::
 /// 3.5.1. Its schema type is `CT_CommentExtensible`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentExtensibleWith<X: NodeExtra> {
+pub struct CommentExtensibleWith<X: UserData> {
     /// The attribute `w16cex:dateUtc`, when the element has it.
     pub date_utc: Option<String>,
     /// The attribute `w16cex:durableId`, when the element has it.
     pub durable_id: Option<String>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2018WordmlCexCommentExtensible,
     /// The attribute `w16cex:intelligentPlaceholder`, when the element has it.
     pub intelligent_placeholder: Option<common_simple_types::OnOffValue>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2018WordmlCexCommentExtensible,
 }
 
 /// The `w16cex:commentExtensible` element of the tree a read gives: [`CommentExtensibleWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type CommentExtensible = CommentExtensibleWith<()>;
 
 impl Eq for CommentExtensibleWith<()> {}
@@ -291,19 +291,19 @@ impl Eq for CommentExtensibleWith<()> {}
 /// version 3.5.1. Its schema type is `CT_CommentsExtensible`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentsExtensibleWith<X: NodeExtra> {
+pub struct CommentsExtensibleWith<X: UserData> {
     /// The children that are `CommentExtensible`, in order.
     pub comment_extensible: Vec<CommentExtensibleWith<X>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2018WordmlCexCommentsExtensible,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2018WordmlCexCommentsExtensible,
 }
 
 /// The `w16cex:commentsExtensible` element of the tree a read gives: [`CommentsExtensibleWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type CommentsExtensible = CommentsExtensibleWith<()>;
 
 impl Eq for CommentsExtensibleWith<()> {}
@@ -378,16 +378,17 @@ pub trait Context: crate::Context {
 /// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `super::office_word_2018_wordml::Ext`, in order.
     pub ext: Vec<super::office_word_2018_wordml::ExtWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2018WordmlCexExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2018WordmlCexExtLst,
 }
 
-/// The `w16cex:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `w16cex:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -419,24 +420,24 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> CommentExtensibleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CommentExtensibleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> CommentExtensibleWith<Y>
+    pub fn into_user_data<Y>(mut self) -> CommentExtensibleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CommentExtensibleWith {
             date_utc: self.date_utc,
             durable_id: self.durable_id,
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             intelligent_placeholder: self.intelligent_placeholder,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -465,25 +466,25 @@ impl officekit_markup_base::Write for CommentExtensible {
     }
 }
 
-impl<X: NodeExtra> CommentsExtensibleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CommentsExtensibleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> CommentsExtensibleWith<Y>
+    pub fn into_user_data<Y>(mut self) -> CommentsExtensibleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CommentsExtensibleWith {
-            comment_extensible: officekit_markup_base::into_extra_list(
+            comment_extensible: officekit_markup_base::into_user_data_list(
                 self.comment_extensible,
-                CommentExtensibleWith::into_extra,
+                CommentExtensibleWith::into_user_data,
             ),
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -507,21 +508,21 @@ impl officekit_markup_base::Write for CommentsExtensible {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            ext: officekit_markup_base::into_extra_list(
+            ext: officekit_markup_base::into_user_data_list(
                 self.ext,
-                super::office_word_2018_wordml::ExtWith::into_extra,
+                super::office_word_2018_wordml::ExtWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

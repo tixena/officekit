@@ -223,17 +223,17 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Cameo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CameoMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PhTypeExt)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PhTypeExtMirror {
-    pub extra: (),
     pub r#type: Box<super::Type>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -241,16 +241,16 @@ pub struct PhTypeExtMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TypeMirror {
     pub content: Box<super::PlaceholderTypeContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Unknown)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnknownMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -265,8 +265,8 @@ pub enum PlaceholderTypeContent {
 impl From<CameoMirror> for super::Cameo {
     fn from(item: CameoMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -303,9 +303,9 @@ where
 impl From<PhTypeExtMirror> for super::PhTypeExt {
     fn from(item: PhTypeExtMirror) -> Self {
         Self {
-            extra: item.extra,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -343,8 +343,8 @@ impl From<TypeMirror> for super::Type {
     fn from(item: TypeMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -381,8 +381,8 @@ where
 impl From<UnknownMirror> for super::Unknown {
     fn from(item: UnknownMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

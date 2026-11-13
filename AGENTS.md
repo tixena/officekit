@@ -12,7 +12,7 @@ crates/officekit-markdown      library: a Word file from markdown and markdown f
 crates/officekit-markup        library: the typed tree, officekit_markup::<namespace>: the namespaces outside base and core, the root hook traits, every namespace's hook traits, and base's and core's namespaces re-exported
 crates/officekit-markup-base   library: the runtime and the namespaces the cycle depends on
 crates/officekit-markup-core   library: the namespaces that reference each other in a cycle
-crates/officekit-markup-macros proc-macro: the `#[node_extra]` attribute, re-exported as `officekit_markup::node_extra`
+crates/officekit-markup-macros proc-macro: the `#[user_data]` attribute, re-exported as `officekit_markup::user_data`
 crates/officekit-strict        library: the Strict class: read and write of every node (feature `strict` of officekit); the typed tree's transforms, visitors and write-through (`traversal`)
 crates/officekit-xml           library: element tree, names, values, part reader and writer; the package, part names, content types, relationships, images (`packaging`)
 crates/officekit-cli           CLI binary

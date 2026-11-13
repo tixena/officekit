@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use crate::NodeExtra;
+use crate::UserData;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 
@@ -292,17 +292,17 @@ pub static CUSTOM_FILE_PROPERTY_CONTENT_TAGS: crate::Accept = crate::Accept {
 /// schema type is `CT_Properties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CustomFilePropertiesWith<X: NodeExtra> {
+pub struct CustomFilePropertiesWith<X: UserData> {
     /// The children that are `CustomFileProperty`, in order.
     pub custom_file_property: Vec<CustomFilePropertyWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesCustomCustomFileProperties,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesCustomCustomFileProperties,
 }
 
 /// The `op:Properties` element of the tree a read gives: [`CustomFilePropertiesWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type CustomFileProperties = CustomFilePropertiesWith<()>;
 
 impl Eq for CustomFilePropertiesWith<()> {}
@@ -311,11 +311,9 @@ impl Eq for CustomFilePropertiesWith<()> {}
 /// type is `CT_Property`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CustomFilePropertyWith<X: NodeExtra> {
+pub struct CustomFilePropertyWith<X: UserData> {
     /// The child that is an item of `CustomFilePropertyContent`, which the schema requires.
     pub content: Box<CustomFilePropertyContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::DocumentPropertiesCustomCustomFileProperty,
     /// The attribute `fmtid`, when the element has it.
     pub fmtid: Option<super::common_simple_types::Guid>,
     /// The attribute `linkTarget`, when the element has it.
@@ -326,10 +324,12 @@ pub struct CustomFilePropertyWith<X: NodeExtra> {
     pub pid: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::DocumentPropertiesCustomCustomFileProperty,
 }
 
 /// The `op:property` element of the tree a read gives: [`CustomFilePropertyWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type CustomFileProperty = CustomFilePropertyWith<()>;
 
 impl Eq for CustomFilePropertyWith<()> {}
@@ -340,7 +340,7 @@ impl Eq for CustomFilePropertyWith<()> {}
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
-pub enum CustomFilePropertyContentWith<X: NodeExtra> {
+pub enum CustomFilePropertyContentWith<X: UserData> {
     /// The element `vt:array`, a `Array`.
     Array(super::document_properties_variant_types::ArrayWith<X>),
     /// The element `vt:bstr`, a `BasicString`.
@@ -412,26 +412,26 @@ pub enum CustomFilePropertyContentWith<X: NodeExtra> {
 }
 
 /// [`CustomFilePropertyContentWith`] of the tree a read gives, where no node holds anything in
-/// `extra`.
+/// `user_data`.
 pub type CustomFilePropertyContent = CustomFilePropertyContentWith<()>;
 
 impl Eq for CustomFilePropertyContentWith<()> {}
 
-impl<X: NodeExtra> CustomFilePropertiesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CustomFilePropertiesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CustomFilePropertiesWith<Y>
+    pub fn into_user_data<Y>(self) -> CustomFilePropertiesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CustomFilePropertiesWith {
-            custom_file_property: crate::into_extra_list(
+            custom_file_property: crate::into_user_data_list(
                 self.custom_file_property,
-                CustomFilePropertyWith::into_extra,
+                CustomFilePropertyWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -455,25 +455,25 @@ impl crate::Write for CustomFileProperties {
     }
 }
 
-impl<X: NodeExtra> CustomFilePropertyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CustomFilePropertyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CustomFilePropertyWith<Y>
+    pub fn into_user_data<Y>(self) -> CustomFilePropertyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CustomFilePropertyWith {
-            content: crate::into_extra_required(
+            content: crate::into_user_data_required(
                 *self.content,
-                CustomFilePropertyContentWith::into_extra,
+                CustomFilePropertyContentWith::into_user_data,
             ),
-            extra: Default::default(),
             fmtid: self.fmtid,
             link_target: self.link_target,
             name: self.name,
             pid: self.pid,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -503,73 +503,75 @@ impl crate::Write for CustomFileProperty {
     }
 }
 
-impl<X: NodeExtra> CustomFilePropertyContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> CustomFilePropertyContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CustomFilePropertyContentWith<Y>
+    pub fn into_user_data<Y>(self) -> CustomFilePropertyContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
-            Self::Array(node) => CustomFilePropertyContentWith::Array(node.into_extra()),
+            Self::Array(node) => CustomFilePropertyContentWith::Array(node.into_user_data()),
             Self::BasicString(node) => {
-                CustomFilePropertyContentWith::BasicString(node.into_extra())
+                CustomFilePropertyContentWith::BasicString(node.into_user_data())
             }
-            Self::BinaryBlob(node) => CustomFilePropertyContentWith::BinaryBlob(node.into_extra()),
+            Self::BinaryBlob(node) => {
+                CustomFilePropertyContentWith::BinaryBlob(node.into_user_data())
+            }
             Self::BinaryBlobObject(node) => {
-                CustomFilePropertyContentWith::BinaryBlobObject(node.into_extra())
+                CustomFilePropertyContentWith::BinaryBlobObject(node.into_user_data())
             }
             Self::BinaryStorage(node) => {
-                CustomFilePropertyContentWith::BinaryStorage(node.into_extra())
+                CustomFilePropertyContentWith::BinaryStorage(node.into_user_data())
             }
             Self::BinaryStorageObject(node) => {
-                CustomFilePropertyContentWith::BinaryStorageObject(node.into_extra())
+                CustomFilePropertyContentWith::BinaryStorageObject(node.into_user_data())
             }
             Self::BinaryStream(node) => {
-                CustomFilePropertyContentWith::BinaryStream(node.into_extra())
+                CustomFilePropertyContentWith::BinaryStream(node.into_user_data())
             }
             Self::BinaryStreamObject(node) => {
-                CustomFilePropertyContentWith::BinaryStreamObject(node.into_extra())
+                CustomFilePropertyContentWith::BinaryStreamObject(node.into_user_data())
             }
             Self::BinaryVersionedStream(node) => {
-                CustomFilePropertyContentWith::BinaryVersionedStream(node.into_extra())
+                CustomFilePropertyContentWith::BinaryVersionedStream(node.into_user_data())
             }
-            Self::Boolean(node) => CustomFilePropertyContentWith::Boolean(node.into_extra()),
-            Self::ClassID(node) => CustomFilePropertyContentWith::ClassID(node.into_extra()),
-            Self::Currency(node) => CustomFilePropertyContentWith::Currency(node.into_extra()),
+            Self::Boolean(node) => CustomFilePropertyContentWith::Boolean(node.into_user_data()),
+            Self::ClassID(node) => CustomFilePropertyContentWith::ClassID(node.into_user_data()),
+            Self::Currency(node) => CustomFilePropertyContentWith::Currency(node.into_user_data()),
             Self::DateAndTime(node) => {
-                CustomFilePropertyContentWith::DateAndTime(node.into_extra())
+                CustomFilePropertyContentWith::DateAndTime(node.into_user_data())
             }
-            Self::Decimal(node) => CustomFilePropertyContentWith::Decimal(node.into_extra()),
-            Self::Empty(node) => CustomFilePropertyContentWith::Empty(node.into_extra()),
+            Self::Decimal(node) => CustomFilePropertyContentWith::Decimal(node.into_user_data()),
+            Self::Empty(node) => CustomFilePropertyContentWith::Empty(node.into_user_data()),
             Self::ErrorStatusCode(node) => {
-                CustomFilePropertyContentWith::ErrorStatusCode(node.into_extra())
+                CustomFilePropertyContentWith::ErrorStatusCode(node.into_user_data())
             }
-            Self::FileTime(node) => CustomFilePropertyContentWith::FileTime(node.into_extra()),
-            Self::I1(node) => CustomFilePropertyContentWith::I1(node.into_extra()),
-            Self::I2(node) => CustomFilePropertyContentWith::I2(node.into_extra()),
-            Self::I4(node) => CustomFilePropertyContentWith::I4(node.into_extra()),
-            Self::I8(node) => CustomFilePropertyContentWith::I8(node.into_extra()),
-            Self::Integer(node) => CustomFilePropertyContentWith::Integer(node.into_extra()),
-            Self::Lpstr(node) => CustomFilePropertyContentWith::Lpstr(node.into_extra()),
-            Self::Lpwstr(node) => CustomFilePropertyContentWith::Lpwstr(node.into_extra()),
-            Self::Null(node) => CustomFilePropertyContentWith::Null(node.into_extra()),
+            Self::FileTime(node) => CustomFilePropertyContentWith::FileTime(node.into_user_data()),
+            Self::I1(node) => CustomFilePropertyContentWith::I1(node.into_user_data()),
+            Self::I2(node) => CustomFilePropertyContentWith::I2(node.into_user_data()),
+            Self::I4(node) => CustomFilePropertyContentWith::I4(node.into_user_data()),
+            Self::I8(node) => CustomFilePropertyContentWith::I8(node.into_user_data()),
+            Self::Integer(node) => CustomFilePropertyContentWith::Integer(node.into_user_data()),
+            Self::Lpstr(node) => CustomFilePropertyContentWith::Lpstr(node.into_user_data()),
+            Self::Lpwstr(node) => CustomFilePropertyContentWith::Lpwstr(node.into_user_data()),
+            Self::Null(node) => CustomFilePropertyContentWith::Null(node.into_user_data()),
             Self::Other(node) => CustomFilePropertyContentWith::Other(node),
-            Self::R4(node) => CustomFilePropertyContentWith::R4(node.into_extra()),
-            Self::R8(node) => CustomFilePropertyContentWith::R8(node.into_extra()),
-            Self::Ui1(node) => CustomFilePropertyContentWith::Ui1(node.into_extra()),
-            Self::Ui2(node) => CustomFilePropertyContentWith::Ui2(node.into_extra()),
-            Self::Ui4(node) => CustomFilePropertyContentWith::Ui4(node.into_extra()),
-            Self::Ui8(node) => CustomFilePropertyContentWith::Ui8(node.into_extra()),
+            Self::R4(node) => CustomFilePropertyContentWith::R4(node.into_user_data()),
+            Self::R8(node) => CustomFilePropertyContentWith::R8(node.into_user_data()),
+            Self::Ui1(node) => CustomFilePropertyContentWith::Ui1(node.into_user_data()),
+            Self::Ui2(node) => CustomFilePropertyContentWith::Ui2(node.into_user_data()),
+            Self::Ui4(node) => CustomFilePropertyContentWith::Ui4(node.into_user_data()),
+            Self::Ui8(node) => CustomFilePropertyContentWith::Ui8(node.into_user_data()),
             Self::UnsignedInteger(node) => {
-                CustomFilePropertyContentWith::UnsignedInteger(node.into_extra())
+                CustomFilePropertyContentWith::UnsignedInteger(node.into_user_data())
             }
-            Self::Vector(node) => CustomFilePropertyContentWith::Vector(node.into_extra()),
+            Self::Vector(node) => CustomFilePropertyContentWith::Vector(node.into_user_data()),
         }
     }
 }
 
-impl<X: NodeExtra> Default for CustomFilePropertyContentWith<X> {
+impl<X: UserData> Default for CustomFilePropertyContentWith<X> {
     fn default() -> Self {
         Self::Array(super::document_properties_variant_types::ArrayWith::default())
     }

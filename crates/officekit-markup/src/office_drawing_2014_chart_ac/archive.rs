@@ -224,20 +224,20 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct MultiLvlStrLitMirror {
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
-    pub extra: (),
     pub level: Vec<chart::Level>,
     pub point_count: Option<Box<chart::PointCount>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<MultiLvlStrLitMirror> for super::MultiLvlStrLit {
     fn from(item: MultiLvlStrLitMirror) -> Self {
         Self {
             chart_extensibility: item.chart_extensibility,
-            extra: item.extra,
             level: item.level,
             point_count: item.point_count,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

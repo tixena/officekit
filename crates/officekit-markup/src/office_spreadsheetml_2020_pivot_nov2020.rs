@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -339,19 +339,19 @@ pub trait Context: crate::Context {
 /// version 3.5.1. Its schema type is `CT_DataFieldFutureData`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataFieldFutureDataWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2020PivotNov2020DataFieldFutureData,
+pub struct DataFieldFutureDataWith<X: UserData> {
     /// The attribute `sourceField`, when the element has it.
     pub source_field: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2020PivotNov2020DataFieldFutureData,
     /// The attribute `version`, when the element has it.
     pub version: Option<String>,
 }
 
 /// The `xxpim:dataFieldFutureData` element of the tree a read gives: [`DataFieldFutureDataWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type DataFieldFutureData = DataFieldFutureDataWith<()>;
 
 impl Eq for DataFieldFutureDataWith<()> {}
@@ -360,17 +360,17 @@ impl Eq for DataFieldFutureDataWith<()> {}
 /// version 3.5.1. Its schema type is `CT_Ignorable`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IgnorableAfterVersionWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2020PivotNov2020IgnorableAfterVersion,
+pub struct IgnorableAfterVersionWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2020PivotNov2020IgnorableAfterVersion,
     /// The attribute `version`, when the element has it.
     pub version: Option<String>,
 }
 
 /// The `xxpim:ignorableAfterVersion` element of the tree a read gives:
-/// [`IgnorableAfterVersionWith`] holding nothing in `extra`.
+/// [`IgnorableAfterVersionWith`] holding nothing in `user_data`.
 pub type IgnorableAfterVersion = IgnorableAfterVersionWith<()>;
 
 impl Eq for IgnorableAfterVersionWith<()> {}
@@ -379,17 +379,17 @@ impl Eq for IgnorableAfterVersionWith<()> {}
 /// version 3.5.1. Its schema type is `boolean`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ImplicitMeasureSupportWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2020PivotNov2020ImplicitMeasureSupport,
+pub struct ImplicitMeasureSupportWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2020PivotNov2020ImplicitMeasureSupport,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xxpim:implicitMeasureSupport` element of the tree a read gives:
-/// [`ImplicitMeasureSupportWith`] holding nothing in `extra`.
+/// [`ImplicitMeasureSupportWith`] holding nothing in `user_data`.
 pub type ImplicitMeasureSupport = ImplicitMeasureSupportWith<()>;
 
 impl Eq for ImplicitMeasureSupportWith<()> {}
@@ -428,18 +428,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> DataFieldFutureDataWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DataFieldFutureDataWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DataFieldFutureDataWith<Y>
+    pub fn into_user_data<Y>(self) -> DataFieldFutureDataWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DataFieldFutureDataWith {
-            extra: Default::default(),
             source_field: self.source_field,
             unknown: self.unknown,
+            user_data: Default::default(),
             version: self.version,
         }
     }
@@ -468,17 +468,17 @@ impl officekit_markup_base::Write for DataFieldFutureData {
     }
 }
 
-impl<X: NodeExtra> IgnorableAfterVersionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> IgnorableAfterVersionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> IgnorableAfterVersionWith<Y>
+    pub fn into_user_data<Y>(self) -> IgnorableAfterVersionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         IgnorableAfterVersionWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             version: self.version,
         }
     }
@@ -506,17 +506,17 @@ impl officekit_markup_base::Write for IgnorableAfterVersion {
     }
 }
 
-impl<X: NodeExtra> ImplicitMeasureSupportWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ImplicitMeasureSupportWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ImplicitMeasureSupportWith<Y>
+    pub fn into_user_data<Y>(self) -> ImplicitMeasureSupportWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ImplicitMeasureSupportWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }

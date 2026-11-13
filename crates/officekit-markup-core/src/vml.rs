@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::common_simple_types;
 use officekit_markup_base::vml_presentation_drawing;
 use officekit_markup_base::vml_spreadsheet_drawing;
@@ -1327,7 +1327,7 @@ pub static TEXT_BOX_CONTENT_TAGS: officekit_markup_base::Accept = officekit_mark
 /// `CT_Arc`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArcSegmentWith<X: NodeExtra> {
+pub struct ArcSegmentWith<X: UserData> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -1378,8 +1378,6 @@ pub struct ArcSegmentWith<X: NodeExtra> {
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `endAngle`, when the element has it.
     pub end_angle: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlArcSegment,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -1438,6 +1436,8 @@ pub struct ArcSegmentWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlArcSegment,
     /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:userhidden`, when the element has it.
@@ -1446,7 +1446,7 @@ pub struct ArcSegmentWith<X: NodeExtra> {
     pub wrapcoords: Option<String>,
 }
 
-/// The `v:arc` element of the tree a read gives: [`ArcSegmentWith`] holding nothing in `extra`.
+/// The `v:arc` element of the tree a read gives: [`ArcSegmentWith`] holding nothing in `user_data`.
 pub type ArcSegment = ArcSegmentWith<()>;
 
 impl Eq for ArcSegmentWith<()> {}
@@ -1455,7 +1455,7 @@ impl Eq for ArcSegmentWith<()> {}
 /// `CT_Curve`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BezierCurveWith<X: NodeExtra> {
+pub struct BezierCurveWith<X: UserData> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -1508,8 +1508,6 @@ pub struct BezierCurveWith<X: NodeExtra> {
     pub dgmnodekind: Option<String>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlBezierCurve,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -1570,6 +1568,8 @@ pub struct BezierCurveWith<X: NodeExtra> {
     pub to: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlBezierCurve,
     /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:userhidden`, when the element has it.
@@ -1578,7 +1578,8 @@ pub struct BezierCurveWith<X: NodeExtra> {
     pub wrapcoords: Option<String>,
 }
 
-/// The `v:curve` element of the tree a read gives: [`BezierCurveWith`] holding nothing in `extra`.
+/// The `v:curve` element of the tree a read gives: [`BezierCurveWith`] holding nothing in
+/// `user_data`.
 pub type BezierCurve = BezierCurveWith<()>;
 
 impl Eq for BezierCurveWith<()> {}
@@ -1587,15 +1588,13 @@ impl Eq for BezierCurveWith<()> {}
 /// type is `CT_Background`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DocumentBackgroundWith<X: NodeExtra> {
+pub struct DocumentBackgroundWith<X: UserData> {
     /// The attribute `o:bwmode`, when the element has it.
     pub bwmode: Option<super::vml_office_drawing::BlackAndWhiteModes>,
     /// The attribute `o:bwnormal`, when the element has it.
     pub bwnormal: Option<super::vml_office_drawing::BlackAndWhiteModes>,
     /// The attribute `o:bwpure`, when the element has it.
     pub bwpure: Option<super::vml_office_drawing::BlackAndWhiteModes>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlDocumentBackground,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -1608,10 +1607,12 @@ pub struct DocumentBackgroundWith<X: NodeExtra> {
     pub targetscreensize: Option<super::vml_office_drawing::ScreenSizesType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlDocumentBackground,
 }
 
 /// The `v:background` element of the tree a read gives: [`DocumentBackgroundWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type DocumentBackground = DocumentBackgroundWith<()>;
 
 impl Eq for DocumentBackgroundWith<()> {}
@@ -1650,7 +1651,7 @@ pub enum GradientFillComputationTypeMember {
 /// `CT_ImageData`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ImageDataWith<X: NodeExtra> {
+pub struct ImageDataWith<X: UserData> {
     /// The attribute `o:althref`, when the element has it.
     pub althref: Option<String>,
     /// The attribute `bilevel`, when the element has it.
@@ -1671,8 +1672,6 @@ pub struct ImageDataWith<X: NodeExtra> {
     pub detectmouseclick: Option<common_simple_types::BooleanValue>,
     /// The attribute `embosscolor`, when the element has it.
     pub embosscolor: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlImageData,
     /// The attribute `gain`, when the element has it.
     pub gain: Option<String>,
     /// The attribute `gamma`, when the element has it.
@@ -1703,10 +1702,12 @@ pub struct ImageDataWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlImageData,
 }
 
 /// The `v:imagedata` element of the tree a read gives: [`ImageDataWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ImageData = ImageDataWith<()>;
 
 impl Eq for ImageDataWith<()> {}
@@ -1715,7 +1716,7 @@ impl Eq for ImageDataWith<()> {}
 /// `CT_Image`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ImageFileWith<X: NodeExtra> {
+pub struct ImageFileWith<X: UserData> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -1776,8 +1777,6 @@ pub struct ImageFileWith<X: NodeExtra> {
     pub dgmnodekind: Option<String>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlImageFile,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -1842,6 +1841,8 @@ pub struct ImageFileWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlImageFile,
     /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:userhidden`, when the element has it.
@@ -1850,7 +1851,8 @@ pub struct ImageFileWith<X: NodeExtra> {
     pub wrapcoords: Option<String>,
 }
 
-/// The `v:image` element of the tree a read gives: [`ImageFileWith`] holding nothing in `extra`.
+/// The `v:image` element of the tree a read gives: [`ImageFileWith`] holding nothing in
+/// `user_data`.
 pub type ImageFile = ImageFileWith<()>;
 
 impl Eq for ImageFileWith<()> {}
@@ -1884,7 +1886,7 @@ pub enum ImageScalingBehaviorMember {
 /// The `v:line` element, Line (ECMA-376 Part 4, section 19.1.2.12). Its schema type is `CT_Line`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LineWith<X: NodeExtra> {
+pub struct LineWith<X: UserData> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -1933,8 +1935,6 @@ pub struct LineWith<X: NodeExtra> {
     pub dgmnodekind: Option<String>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlLine,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -1995,6 +1995,8 @@ pub struct LineWith<X: NodeExtra> {
     pub to: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlLine,
     /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:userhidden`, when the element has it.
@@ -2003,7 +2005,7 @@ pub struct LineWith<X: NodeExtra> {
     pub wrapcoords: Option<String>,
 }
 
-/// The `v:line` element of the tree a read gives: [`LineWith`] holding nothing in `extra`.
+/// The `v:line` element of the tree a read gives: [`LineWith`] holding nothing in `user_data`.
 pub type Line = LineWith<()>;
 
 impl Eq for LineWith<()> {}
@@ -2038,7 +2040,7 @@ pub enum LineJoinTypeMember {
 /// type is `CT_Stroke`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LineStrokeSettingsWith<X: NodeExtra> {
+pub struct LineStrokeSettingsWith<X: UserData> {
     /// The attribute `o:althref`, when the element has it.
     pub althref: Option<String>,
     /// The attribute `color`, when the element has it.
@@ -2055,8 +2057,6 @@ pub struct LineStrokeSettingsWith<X: NodeExtra> {
     pub endarrowwidth: Option<StrokeArrowheadWidth>,
     /// The attribute `endcap`, when the element has it.
     pub endcap: Option<StrokeEndCapType>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlLineStrokeSettings,
     /// The attribute `filltype`, when the element has it.
     pub filltype: Option<ShapeFillType>,
     /// The attribute `o:forcedash`, when the element has it.
@@ -2110,12 +2110,14 @@ pub struct LineStrokeSettingsWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlLineStrokeSettings,
     /// The attribute `weight`, when the element has it.
     pub weight: Option<String>,
 }
 
 /// The `v:stroke` element of the tree a read gives: [`LineStrokeSettingsWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type LineStrokeSettings = LineStrokeSettingsWith<()>;
 
 impl Eq for LineStrokeSettingsWith<()> {}
@@ -2124,7 +2126,7 @@ impl Eq for LineStrokeSettingsWith<()> {}
 /// type is `CT_PolyLine`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MultiplePathLineWith<X: NodeExtra> {
+pub struct MultiplePathLineWith<X: UserData> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -2173,8 +2175,6 @@ pub struct MultiplePathLineWith<X: NodeExtra> {
     pub dgmnodekind: Option<String>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlMultiplePathLine,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -2233,6 +2233,8 @@ pub struct MultiplePathLineWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlMultiplePathLine,
     /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:userhidden`, when the element has it.
@@ -2242,7 +2244,7 @@ pub struct MultiplePathLineWith<X: NodeExtra> {
 }
 
 /// The `v:polyline` element of the tree a read gives: [`MultiplePathLineWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type MultiplePathLine = MultiplePathLineWith<()>;
 
 impl Eq for MultiplePathLineWith<()> {}
@@ -2253,7 +2255,7 @@ impl Eq for MultiplePathLineWith<()> {}
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
-pub enum MultiplePathLineContentWith<X: NodeExtra> {
+pub enum MultiplePathLineContentWith<X: UserData> {
     /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
     AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>),
     /// The element `xvml:ClientData`, a `AttachedObjectData`.
@@ -2307,7 +2309,7 @@ pub enum MultiplePathLineContentWith<X: NodeExtra> {
 }
 
 /// [`MultiplePathLineContentWith`] of the tree a read gives, where no node holds anything in
-/// `extra`.
+/// `user_data`.
 pub type MultiplePathLineContent = MultiplePathLineContentWith<()>;
 
 impl Eq for MultiplePathLineContentWith<()> {}
@@ -2315,7 +2317,7 @@ impl Eq for MultiplePathLineContentWith<()> {}
 /// The `v:oval` element, Oval (ECMA-376 Part 4, section 19.1.2.13). Its schema type is `CT_Oval`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct OvalWith<X: NodeExtra> {
+pub struct OvalWith<X: UserData> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -2364,8 +2366,6 @@ pub struct OvalWith<X: NodeExtra> {
     pub dgmnodekind: Option<String>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlOval,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -2422,6 +2422,8 @@ pub struct OvalWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlOval,
     /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:userhidden`, when the element has it.
@@ -2430,7 +2432,7 @@ pub struct OvalWith<X: NodeExtra> {
     pub wrapcoords: Option<String>,
 }
 
-/// The `v:oval` element of the tree a read gives: [`OvalWith`] holding nothing in `extra`.
+/// The `v:oval` element of the tree a read gives: [`OvalWith`] holding nothing in `user_data`.
 pub type Oval = OvalWith<()>;
 
 impl Eq for OvalWith<()> {}
@@ -2439,7 +2441,7 @@ impl Eq for OvalWith<()> {}
 /// `CT_Rect`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RectangleWith<X: NodeExtra> {
+pub struct RectangleWith<X: UserData> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -2488,8 +2490,6 @@ pub struct RectangleWith<X: NodeExtra> {
     pub dgmnodekind: Option<String>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlRectangle,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -2546,6 +2546,8 @@ pub struct RectangleWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlRectangle,
     /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:userhidden`, when the element has it.
@@ -2554,7 +2556,7 @@ pub struct RectangleWith<X: NodeExtra> {
     pub wrapcoords: Option<String>,
 }
 
-/// The `v:rect` element of the tree a read gives: [`RectangleWith`] holding nothing in `extra`.
+/// The `v:rect` element of the tree a read gives: [`RectangleWith`] holding nothing in `user_data`.
 pub type Rectangle = RectangleWith<()>;
 
 impl Eq for RectangleWith<()> {}
@@ -2563,7 +2565,7 @@ impl Eq for RectangleWith<()> {}
 /// type is `CT_RoundRect`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RoundedRectangleWith<X: NodeExtra> {
+pub struct RoundedRectangleWith<X: UserData> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -2614,8 +2616,6 @@ pub struct RoundedRectangleWith<X: NodeExtra> {
     pub dgmnodekind: Option<String>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlRoundedRectangle,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -2672,6 +2672,8 @@ pub struct RoundedRectangleWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlRoundedRectangle,
     /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:userhidden`, when the element has it.
@@ -2681,7 +2683,7 @@ pub struct RoundedRectangleWith<X: NodeExtra> {
 }
 
 /// The `v:roundrect` element of the tree a read gives: [`RoundedRectangleWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type RoundedRectangle = RoundedRectangleWith<()>;
 
 impl Eq for RoundedRectangleWith<()> {}
@@ -2690,17 +2692,17 @@ impl Eq for RoundedRectangleWith<()> {}
 /// is `CT_Formulas`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SetOfFormulasWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSetOfFormulas,
+pub struct SetOfFormulasWith<X: UserData> {
     /// The children that are `SingleFormula`, in order.
     pub single_formula: Vec<SingleFormulaWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSetOfFormulas,
 }
 
 /// The `v:formulas` element of the tree a read gives: [`SetOfFormulasWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SetOfFormulas = SetOfFormulasWith<()>;
 
 impl Eq for SetOfFormulasWith<()> {}
@@ -2709,17 +2711,17 @@ impl Eq for SetOfFormulasWith<()> {}
 /// `CT_Handles`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SetOfHandlesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSetOfHandles,
+pub struct SetOfHandlesWith<X: UserData> {
     /// The children that are `ShapeHandle`, in order.
     pub shape_handle: Vec<ShapeHandleWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSetOfHandles,
 }
 
 /// The `v:handles` element of the tree a read gives: [`SetOfHandlesWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SetOfHandles = SetOfHandlesWith<()>;
 
 impl Eq for SetOfHandlesWith<()> {}
@@ -2728,13 +2730,11 @@ impl Eq for SetOfHandlesWith<()> {}
 /// `CT_Shadow`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShadowEffectWith<X: NodeExtra> {
+pub struct ShadowEffectWith<X: UserData> {
     /// The attribute `color`, when the element has it.
     pub color: Option<String>,
     /// The attribute `color2`, when the element has it.
     pub color2: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlShadowEffect,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `matrix`, when the element has it.
@@ -2755,10 +2755,12 @@ pub struct ShadowEffectWith<X: NodeExtra> {
     pub r#type: Option<ShadowType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlShadowEffect,
 }
 
 /// The `v:shadow` element of the tree a read gives: [`ShadowEffectWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ShadowEffect = ShadowEffectWith<()>;
 
 impl Eq for ShadowEffectWith<()> {}
@@ -2795,7 +2797,7 @@ pub enum ShadowTypeMember {
 /// `CT_Shape`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeDefinitionWith<X: NodeExtra> {
+pub struct ShapeDefinitionWith<X: UserData> {
     /// The attribute `adj`, when the element has it.
     pub adj: Option<String>,
     /// The attribute `o:allowincell`, when the element has it.
@@ -2848,8 +2850,6 @@ pub struct ShapeDefinitionWith<X: NodeExtra> {
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `equationxml`, when the element has it.
     pub equationxml: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlShapeDefinition,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -2912,6 +2912,8 @@ pub struct ShapeDefinitionWith<X: NodeExtra> {
     pub r#type: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlShapeDefinition,
     /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:userhidden`, when the element has it.
@@ -2921,7 +2923,7 @@ pub struct ShapeDefinitionWith<X: NodeExtra> {
 }
 
 /// The `v:shape` element of the tree a read gives: [`ShapeDefinitionWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ShapeDefinition = ShapeDefinitionWith<()>;
 
 impl Eq for ShapeDefinitionWith<()> {}
@@ -2932,7 +2934,7 @@ impl Eq for ShapeDefinitionWith<()> {}
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
-pub enum ShapeDefinitionContentWith<X: NodeExtra> {
+pub enum ShapeDefinitionContentWith<X: UserData> {
     /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
     AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>),
     /// The element `xvml:ClientData`, a `AttachedObjectData`.
@@ -2992,7 +2994,7 @@ pub enum ShapeDefinitionContentWith<X: NodeExtra> {
 }
 
 /// [`ShapeDefinitionContentWith`] of the tree a read gives, where no node holds anything in
-/// `extra`.
+/// `user_data`.
 pub type ShapeDefinitionContent = ShapeDefinitionContentWith<()>;
 
 impl Eq for ShapeDefinitionContentWith<()> {}
@@ -3005,7 +3007,7 @@ impl Eq for ShapeDefinitionContentWith<()> {}
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
-pub enum ShapeElementContentWith<X: NodeExtra> {
+pub enum ShapeElementContentWith<X: UserData> {
     /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
     AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>),
     /// The element `xvml:ClientData`, a `AttachedObjectData`.
@@ -3056,7 +3058,8 @@ pub enum ShapeElementContentWith<X: NodeExtra> {
     VMLDiagramText(vml_presentation_drawing::VMLDiagramTextWith<X>),
 }
 
-/// [`ShapeElementContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`ShapeElementContentWith`] of the tree a read gives, where no node holds anything in
+/// `user_data`.
 pub type ShapeElementContent = ShapeElementContentWith<()>;
 
 impl Eq for ShapeElementContentWith<()> {}
@@ -3065,7 +3068,7 @@ impl Eq for ShapeElementContentWith<()> {}
 /// is `CT_Fill`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeFillPropertiesWith<X: NodeExtra> {
+pub struct ShapeFillPropertiesWith<X: UserData> {
     /// The attribute `alignshape`, when the element has it.
     pub alignshape: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:althref`, when the element has it.
@@ -3082,8 +3085,6 @@ pub struct ShapeFillPropertiesWith<X: NodeExtra> {
     pub colors: Option<String>,
     /// The attribute `o:detectmouseclick`, when the element has it.
     pub detectmouseclick: Option<common_simple_types::BooleanValue>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlShapeFillProperties,
     /// The attribute `focus`, when the element has it.
     pub focus: Option<String>,
     /// The attribute `focusposition`, when the element has it.
@@ -3128,10 +3129,12 @@ pub struct ShapeFillPropertiesWith<X: NodeExtra> {
     pub r#type: Option<ShapeFillType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlShapeFillProperties,
 }
 
 /// The `v:fill` element of the tree a read gives: [`ShapeFillPropertiesWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ShapeFillProperties = ShapeFillPropertiesWith<()>;
 
 impl Eq for ShapeFillPropertiesWith<()> {}
@@ -3172,7 +3175,7 @@ pub enum ShapeFillTypeMember {
 /// `CT_Group`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeGroupWith<X: NodeExtra> {
+pub struct ShapeGroupWith<X: UserData> {
     /// The attribute `o:allowincell`, when the element has it.
     pub allowincell: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:allowoverlap`, when the element has it.
@@ -3209,8 +3212,6 @@ pub struct ShapeGroupWith<X: NodeExtra> {
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
     /// The attribute `editas`, when the element has it.
     pub editas: Option<ShapeGroupingTypes>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlShapeGroup,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -3251,6 +3252,8 @@ pub struct ShapeGroupWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlShapeGroup,
     /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:userhidden`, when the element has it.
@@ -3259,7 +3262,8 @@ pub struct ShapeGroupWith<X: NodeExtra> {
     pub wrapcoords: Option<String>,
 }
 
-/// The `v:group` element of the tree a read gives: [`ShapeGroupWith`] holding nothing in `extra`.
+/// The `v:group` element of the tree a read gives: [`ShapeGroupWith`] holding nothing in
+/// `user_data`.
 pub type ShapeGroup = ShapeGroupWith<()>;
 
 impl Eq for ShapeGroupWith<()> {}
@@ -3270,7 +3274,7 @@ impl Eq for ShapeGroupWith<()> {}
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
-pub enum ShapeGroupContentWith<X: NodeExtra> {
+pub enum ShapeGroupContentWith<X: UserData> {
     /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
     AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>),
     /// The element `v:arc`, a `ArcSegment`.
@@ -3345,7 +3349,7 @@ pub enum ShapeGroupContentWith<X: NodeExtra> {
     VMLDiagramText(vml_presentation_drawing::VMLDiagramTextWith<X>),
 }
 
-/// [`ShapeGroupContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`ShapeGroupContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
 pub type ShapeGroupContent = ShapeGroupContentWith<()>;
 
 impl Eq for ShapeGroupContentWith<()> {}
@@ -3387,9 +3391,7 @@ pub enum ShapeGroupingTypesMember {
 /// The `v:h` element, Shape Handle (ECMA-376 Part 4, section 19.1.2.8). Its schema type is `CT_H`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeHandleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlShapeHandle,
+pub struct ShapeHandleWith<X: UserData> {
     /// The attribute `invx`, when the element has it.
     pub invx: Option<common_simple_types::BooleanValue>,
     /// The attribute `invy`, when the element has it.
@@ -3406,13 +3408,15 @@ pub struct ShapeHandleWith<X: NodeExtra> {
     pub switch: Option<common_simple_types::BooleanValueWithBlankFalseState>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlShapeHandle,
     /// The attribute `xrange`, when the element has it.
     pub xrange: Option<String>,
     /// The attribute `yrange`, when the element has it.
     pub yrange: Option<String>,
 }
 
-/// The `v:h` element of the tree a read gives: [`ShapeHandleWith`] holding nothing in `extra`.
+/// The `v:h` element of the tree a read gives: [`ShapeHandleWith`] holding nothing in `user_data`.
 pub type ShapeHandle = ShapeHandleWith<()>;
 
 impl Eq for ShapeHandleWith<()> {}
@@ -3421,7 +3425,7 @@ impl Eq for ShapeHandleWith<()> {}
 /// `CT_Path`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapePathWith<X: NodeExtra> {
+pub struct ShapePathWith<X: UserData> {
     /// The attribute `arrowok`, when the element has it.
     pub arrowok: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:connectangles`, when the element has it.
@@ -3430,8 +3434,6 @@ pub struct ShapePathWith<X: NodeExtra> {
     pub connectlocs: Option<String>,
     /// The attribute `o:connecttype`, when the element has it.
     pub connecttype: Option<super::vml_office_drawing::ConnectionLocationsType>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlShapePath,
     /// The attribute `o:extrusionok`, when the element has it.
     pub extrusionok: Option<common_simple_types::BooleanValue>,
     /// The attribute `fillok`, when the element has it.
@@ -3454,11 +3456,13 @@ pub struct ShapePathWith<X: NodeExtra> {
     pub textpathok: Option<common_simple_types::BooleanValue>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlShapePath,
     /// The attribute `v`, when the element has it.
     pub v: Option<String>,
 }
 
-/// The `v:path` element of the tree a read gives: [`ShapePathWith`] holding nothing in `extra`.
+/// The `v:path` element of the tree a read gives: [`ShapePathWith`] holding nothing in `user_data`.
 pub type ShapePath = ShapePathWith<()>;
 
 impl Eq for ShapePathWith<()> {}
@@ -3467,7 +3471,7 @@ impl Eq for ShapePathWith<()> {}
 /// is `CT_Shapetype`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShapeTemplateWith<X: NodeExtra> {
+pub struct ShapeTemplateWith<X: UserData> {
     /// The attribute `adj`, when the element has it.
     pub adj: Option<String>,
     /// The attribute `o:allowincell`, when the element has it.
@@ -3520,8 +3524,6 @@ pub struct ShapeTemplateWith<X: NodeExtra> {
     pub dgmnodekind: Option<String>,
     /// The attribute `o:doubleclicknotify`, when the element has it.
     pub doubleclicknotify: Option<common_simple_types::BooleanValue>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlShapeTemplate,
     /// The attribute `fillcolor`, when the element has it.
     pub fillcolor: Option<String>,
     /// The attribute `filled`, when the element has it.
@@ -3582,6 +3584,8 @@ pub struct ShapeTemplateWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlShapeTemplate,
     /// The attribute `o:userdrawn`, when the element has it.
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     /// The attribute `o:userhidden`, when the element has it.
@@ -3591,7 +3595,7 @@ pub struct ShapeTemplateWith<X: NodeExtra> {
 }
 
 /// The `v:shapetype` element of the tree a read gives: [`ShapeTemplateWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ShapeTemplate = ShapeTemplateWith<()>;
 
 impl Eq for ShapeTemplateWith<()> {}
@@ -3600,16 +3604,17 @@ impl Eq for ShapeTemplateWith<()> {}
 /// `CT_F`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SingleFormulaWith<X: NodeExtra> {
+pub struct SingleFormulaWith<X: UserData> {
     /// The attribute `eqn`, when the element has it.
     pub eqn: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSingleFormula,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSingleFormula,
 }
 
-/// The `v:f` element of the tree a read gives: [`SingleFormulaWith`] holding nothing in `extra`.
+/// The `v:f` element of the tree a read gives: [`SingleFormulaWith`] holding nothing in
+/// `user_data`.
 pub type SingleFormula = SingleFormulaWith<()>;
 
 impl Eq for SingleFormulaWith<()> {}
@@ -3758,11 +3763,9 @@ pub enum StrokeLineStyleMember {
 /// `CT_Textbox`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextBoxWith<X: NodeExtra> {
+pub struct TextBoxWith<X: UserData> {
     /// The child that is an item of `TextBoxContent`, when there is one.
     pub content: Option<Box<TextBoxContentWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlTextBox,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `inset`, when the element has it.
@@ -3775,9 +3778,12 @@ pub struct TextBoxWith<X: NodeExtra> {
     pub style: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlTextBox,
 }
 
-/// The `v:textbox` element of the tree a read gives: [`TextBoxWith`] holding nothing in `extra`.
+/// The `v:textbox` element of the tree a read gives: [`TextBoxWith`] holding nothing in
+/// `user_data`.
 pub type TextBox = TextBoxWith<()>;
 
 impl Eq for TextBoxWith<()> {}
@@ -3788,14 +3794,14 @@ impl Eq for TextBoxWith<()> {}
 ///
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
-pub enum TextBoxContentWith<X: NodeExtra> {
+pub enum TextBoxContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
     Other(Node),
     /// The element `w:txbxContent`, a `RichTextBoxContentContainer`.
     RichTextBoxContentContainer(super::wordprocessing::RichTextBoxContentContainerWith<X>),
 }
 
-/// [`TextBoxContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`TextBoxContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
 pub type TextBoxContent = TextBoxContentWith<()>;
 
 impl Eq for TextBoxContentWith<()> {}
@@ -3804,9 +3810,7 @@ impl Eq for TextBoxContentWith<()> {}
 /// is `CT_TextPath`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextLayoutPathWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlTextLayoutPath,
+pub struct TextLayoutPathWith<X: UserData> {
     /// The attribute `fitpath`, when the element has it.
     pub fitpath: Option<common_simple_types::BooleanValue>,
     /// The attribute `fitshape`, when the element has it.
@@ -3823,12 +3827,14 @@ pub struct TextLayoutPathWith<X: NodeExtra> {
     pub trim: Option<common_simple_types::BooleanValue>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlTextLayoutPath,
     /// The attribute `xscale`, when the element has it.
     pub xscale: Option<common_simple_types::BooleanValue>,
 }
 
 /// The `v:textpath` element of the tree a read gives: [`TextLayoutPathWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type TextLayoutPath = TextLayoutPathWith<()>;
 
 impl Eq for TextLayoutPathWith<()> {}
@@ -3859,13 +3865,13 @@ pub enum VMLExtensionHandlingBehaviorsMember {
     View,
 }
 
-impl<X: NodeExtra> ArcSegmentWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArcSegmentWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArcSegmentWith<Y>
+    pub fn into_user_data<Y>(self) -> ArcSegmentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArcSegmentWith {
             allowincell: self.allowincell,
@@ -3885,9 +3891,9 @@ impl<X: NodeExtra> ArcSegmentWith<X> {
             clip: self.clip,
             cliptowrap: self.cliptowrap,
             connectortype: self.connectortype,
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                ShapeElementContentWith::into_extra,
+                ShapeElementContentWith::into_user_data,
             ),
             coordorigin: self.coordorigin,
             coordsize: self.coordsize,
@@ -3896,7 +3902,6 @@ impl<X: NodeExtra> ArcSegmentWith<X> {
             dgmnodekind: self.dgmnodekind,
             doubleclicknotify: self.doubleclicknotify,
             end_angle: self.end_angle,
-            extra: Default::default(),
             fillcolor: self.fillcolor,
             filled: self.filled,
             forcedash: self.forcedash,
@@ -3926,6 +3931,7 @@ impl<X: NodeExtra> ArcSegmentWith<X> {
             target: self.target,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
             userdrawn: self.userdrawn,
             userhidden: self.userhidden,
             wrapcoords: self.wrapcoords,
@@ -4009,13 +4015,13 @@ impl officekit_markup_base::Write for ArcSegment {
     }
 }
 
-impl<X: NodeExtra> BezierCurveWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BezierCurveWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BezierCurveWith<Y>
+    pub fn into_user_data<Y>(self) -> BezierCurveWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BezierCurveWith {
             allowincell: self.allowincell,
@@ -4035,9 +4041,9 @@ impl<X: NodeExtra> BezierCurveWith<X> {
             clip: self.clip,
             cliptowrap: self.cliptowrap,
             connectortype: self.connectortype,
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                ShapeElementContentWith::into_extra,
+                ShapeElementContentWith::into_user_data,
             ),
             control1: self.control1,
             control2: self.control2,
@@ -4047,7 +4053,6 @@ impl<X: NodeExtra> BezierCurveWith<X> {
             dgmlayoutmru: self.dgmlayoutmru,
             dgmnodekind: self.dgmnodekind,
             doubleclicknotify: self.doubleclicknotify,
-            extra: Default::default(),
             fillcolor: self.fillcolor,
             filled: self.filled,
             forcedash: self.forcedash,
@@ -4078,6 +4083,7 @@ impl<X: NodeExtra> BezierCurveWith<X> {
             title: self.title,
             to: self.to,
             unknown: self.unknown,
+            user_data: Default::default(),
             userdrawn: self.userdrawn,
             userhidden: self.userhidden,
             wrapcoords: self.wrapcoords,
@@ -4163,28 +4169,28 @@ impl officekit_markup_base::Write for BezierCurve {
     }
 }
 
-impl<X: NodeExtra> DocumentBackgroundWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DocumentBackgroundWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> DocumentBackgroundWith<Y>
+    pub fn into_user_data<Y>(mut self) -> DocumentBackgroundWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DocumentBackgroundWith {
             bwmode: self.bwmode,
             bwnormal: self.bwnormal,
             bwpure: self.bwpure,
-            extra: Default::default(),
             fillcolor: self.fillcolor,
             filled: self.filled,
             id: self.id,
-            shape_fill_properties: officekit_markup_base::into_extra_optional(
+            shape_fill_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.shape_fill_properties,
-                ShapeFillPropertiesWith::into_extra,
+                ShapeFillPropertiesWith::into_user_data,
             ),
             targetscreensize: self.targetscreensize,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4273,13 +4279,13 @@ impl GradientFillComputationType {
     }
 }
 
-impl<X: NodeExtra> ImageDataWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ImageDataWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ImageDataWith<Y>
+    pub fn into_user_data<Y>(self) -> ImageDataWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ImageDataWith {
             althref: self.althref,
@@ -4292,7 +4298,6 @@ impl<X: NodeExtra> ImageDataWith<X> {
             croptop: self.croptop,
             detectmouseclick: self.detectmouseclick,
             embosscolor: self.embosscolor,
-            extra: Default::default(),
             gain: self.gain,
             gamma: self.gamma,
             grayscale: self.grayscale,
@@ -4308,6 +4313,7 @@ impl<X: NodeExtra> ImageDataWith<X> {
             src: self.src,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4357,13 +4363,13 @@ impl officekit_markup_base::Write for ImageData {
     }
 }
 
-impl<X: NodeExtra> ImageFileWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ImageFileWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ImageFileWith<Y>
+    pub fn into_user_data<Y>(self) -> ImageFileWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ImageFileWith {
             allowincell: self.allowincell,
@@ -4385,9 +4391,9 @@ impl<X: NodeExtra> ImageFileWith<X> {
             clip: self.clip,
             cliptowrap: self.cliptowrap,
             connectortype: self.connectortype,
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                ShapeElementContentWith::into_extra,
+                ShapeElementContentWith::into_user_data,
             ),
             coordorigin: self.coordorigin,
             coordsize: self.coordsize,
@@ -4399,7 +4405,6 @@ impl<X: NodeExtra> ImageFileWith<X> {
             dgmlayoutmru: self.dgmlayoutmru,
             dgmnodekind: self.dgmnodekind,
             doubleclicknotify: self.doubleclicknotify,
-            extra: Default::default(),
             fillcolor: self.fillcolor,
             filled: self.filled,
             forcedash: self.forcedash,
@@ -4432,6 +4437,7 @@ impl<X: NodeExtra> ImageFileWith<X> {
             target: self.target,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
             userdrawn: self.userdrawn,
             userhidden: self.userhidden,
             wrapcoords: self.wrapcoords,
@@ -4577,13 +4583,13 @@ impl ImageScalingBehavior {
     }
 }
 
-impl<X: NodeExtra> LineWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LineWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LineWith<Y>
+    pub fn into_user_data<Y>(self) -> LineWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LineWith {
             allowincell: self.allowincell,
@@ -4603,9 +4609,9 @@ impl<X: NodeExtra> LineWith<X> {
             clip: self.clip,
             cliptowrap: self.cliptowrap,
             connectortype: self.connectortype,
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                ShapeElementContentWith::into_extra,
+                ShapeElementContentWith::into_user_data,
             ),
             coordorigin: self.coordorigin,
             coordsize: self.coordsize,
@@ -4613,7 +4619,6 @@ impl<X: NodeExtra> LineWith<X> {
             dgmlayoutmru: self.dgmlayoutmru,
             dgmnodekind: self.dgmnodekind,
             doubleclicknotify: self.doubleclicknotify,
-            extra: Default::default(),
             fillcolor: self.fillcolor,
             filled: self.filled,
             forcedash: self.forcedash,
@@ -4644,6 +4649,7 @@ impl<X: NodeExtra> LineWith<X> {
             title: self.title,
             to: self.to,
             unknown: self.unknown,
+            user_data: Default::default(),
             userdrawn: self.userdrawn,
             userhidden: self.userhidden,
             wrapcoords: self.wrapcoords,
@@ -4777,13 +4783,13 @@ impl LineJoinType {
     }
 }
 
-impl<X: NodeExtra> LineStrokeSettingsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LineStrokeSettingsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> LineStrokeSettingsWith<Y>
+    pub fn into_user_data<Y>(mut self) -> LineStrokeSettingsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LineStrokeSettingsWith {
             althref: self.althref,
@@ -4794,7 +4800,6 @@ impl<X: NodeExtra> LineStrokeSettingsWith<X> {
             endarrowlength: self.endarrowlength,
             endarrowwidth: self.endarrowwidth,
             endcap: self.endcap,
-            extra: Default::default(),
             filltype: self.filltype,
             forcedash: self.forcedash,
             href: self.href,
@@ -4814,28 +4819,29 @@ impl<X: NodeExtra> LineStrokeSettingsWith<X> {
             startarrow: self.startarrow,
             startarrowlength: self.startarrowlength,
             startarrowwidth: self.startarrowwidth,
-            text_box_bottom_stroke: officekit_markup_base::into_extra_optional(
+            text_box_bottom_stroke: officekit_markup_base::into_user_data_optional(
                 &mut self.text_box_bottom_stroke,
-                super::vml_office_drawing::TextBoxBottomStrokeWith::into_extra,
+                super::vml_office_drawing::TextBoxBottomStrokeWith::into_user_data,
             ),
-            text_box_interior_stroke: officekit_markup_base::into_extra_optional(
+            text_box_interior_stroke: officekit_markup_base::into_user_data_optional(
                 &mut self.text_box_interior_stroke,
-                super::vml_office_drawing::TextBoxInteriorStrokeWith::into_extra,
+                super::vml_office_drawing::TextBoxInteriorStrokeWith::into_user_data,
             ),
-            text_box_left_stroke: officekit_markup_base::into_extra_optional(
+            text_box_left_stroke: officekit_markup_base::into_user_data_optional(
                 &mut self.text_box_left_stroke,
-                super::vml_office_drawing::TextBoxLeftStrokeWith::into_extra,
+                super::vml_office_drawing::TextBoxLeftStrokeWith::into_user_data,
             ),
-            text_box_right_stroke: officekit_markup_base::into_extra_optional(
+            text_box_right_stroke: officekit_markup_base::into_user_data_optional(
                 &mut self.text_box_right_stroke,
-                super::vml_office_drawing::TextBoxRightStrokeWith::into_extra,
+                super::vml_office_drawing::TextBoxRightStrokeWith::into_user_data,
             ),
-            text_box_top_stroke: officekit_markup_base::into_extra_optional(
+            text_box_top_stroke: officekit_markup_base::into_user_data_optional(
                 &mut self.text_box_top_stroke,
-                super::vml_office_drawing::TextBoxTopStrokeWith::into_extra,
+                super::vml_office_drawing::TextBoxTopStrokeWith::into_user_data,
             ),
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
             weight: self.weight,
         }
     }
@@ -4891,13 +4897,13 @@ impl officekit_markup_base::Write for LineStrokeSettings {
     }
 }
 
-impl<X: NodeExtra> MultiplePathLineWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MultiplePathLineWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MultiplePathLineWith<Y>
+    pub fn into_user_data<Y>(self) -> MultiplePathLineWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MultiplePathLineWith {
             allowincell: self.allowincell,
@@ -4917,9 +4923,9 @@ impl<X: NodeExtra> MultiplePathLineWith<X> {
             clip: self.clip,
             cliptowrap: self.cliptowrap,
             connectortype: self.connectortype,
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                MultiplePathLineContentWith::into_extra,
+                MultiplePathLineContentWith::into_user_data,
             ),
             coordorigin: self.coordorigin,
             coordsize: self.coordsize,
@@ -4927,7 +4933,6 @@ impl<X: NodeExtra> MultiplePathLineWith<X> {
             dgmlayoutmru: self.dgmlayoutmru,
             dgmnodekind: self.dgmnodekind,
             doubleclicknotify: self.doubleclicknotify,
-            extra: Default::default(),
             fillcolor: self.fillcolor,
             filled: self.filled,
             forcedash: self.forcedash,
@@ -4957,6 +4962,7 @@ impl<X: NodeExtra> MultiplePathLineWith<X> {
             target: self.target,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
             userdrawn: self.userdrawn,
             userhidden: self.userhidden,
             wrapcoords: self.wrapcoords,
@@ -5039,68 +5045,72 @@ impl officekit_markup_base::Write for MultiplePathLine {
     }
 }
 
-impl<X: NodeExtra> MultiplePathLineContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> MultiplePathLineContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MultiplePathLineContentWith<Y>
+    pub fn into_user_data<Y>(self) -> MultiplePathLineContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::AnchorLocationIsLocked(node) => {
-                MultiplePathLineContentWith::AnchorLocationIsLocked(node.into_extra())
+                MultiplePathLineContentWith::AnchorLocationIsLocked(node.into_user_data())
             }
             Self::AttachedObjectData(node) => {
-                MultiplePathLineContentWith::AttachedObjectData(node.into_extra())
+                MultiplePathLineContentWith::AttachedObjectData(node.into_user_data())
             }
             Self::BottomBorder(node) => {
-                MultiplePathLineContentWith::BottomBorder(node.into_extra())
+                MultiplePathLineContentWith::BottomBorder(node.into_user_data())
             }
-            Self::Callout(node) => MultiplePathLineContentWith::Callout(node.into_extra()),
+            Self::Callout(node) => MultiplePathLineContentWith::Callout(node.into_user_data()),
             Self::DigitalSignatureLine(node) => {
-                MultiplePathLineContentWith::DigitalSignatureLine(node.into_extra())
+                MultiplePathLineContentWith::DigitalSignatureLine(node.into_user_data())
             }
-            Self::Extrusion(node) => MultiplePathLineContentWith::Extrusion(node.into_extra()),
-            Self::ImageData(node) => MultiplePathLineContentWith::ImageData(node.into_extra()),
-            Self::Ink(node) => MultiplePathLineContentWith::Ink(node.into_extra()),
-            Self::LeftBorder(node) => MultiplePathLineContentWith::LeftBorder(node.into_extra()),
+            Self::Extrusion(node) => MultiplePathLineContentWith::Extrusion(node.into_user_data()),
+            Self::ImageData(node) => MultiplePathLineContentWith::ImageData(node.into_user_data()),
+            Self::Ink(node) => MultiplePathLineContentWith::Ink(node.into_user_data()),
+            Self::LeftBorder(node) => {
+                MultiplePathLineContentWith::LeftBorder(node.into_user_data())
+            }
             Self::LineStrokeSettings(node) => {
-                MultiplePathLineContentWith::LineStrokeSettings(node.into_extra())
+                MultiplePathLineContentWith::LineStrokeSettings(node.into_user_data())
             }
             Self::Other(node) => MultiplePathLineContentWith::Other(node),
-            Self::RightBorder(node) => MultiplePathLineContentWith::RightBorder(node.into_extra()),
+            Self::RightBorder(node) => {
+                MultiplePathLineContentWith::RightBorder(node.into_user_data())
+            }
             Self::SetOfFormulas(node) => {
-                MultiplePathLineContentWith::SetOfFormulas(node.into_extra())
+                MultiplePathLineContentWith::SetOfFormulas(node.into_user_data())
             }
             Self::SetOfHandles(node) => {
-                MultiplePathLineContentWith::SetOfHandles(node.into_extra())
+                MultiplePathLineContentWith::SetOfHandles(node.into_user_data())
             }
             Self::ShadowEffect(node) => {
-                MultiplePathLineContentWith::ShadowEffect(node.into_extra())
+                MultiplePathLineContentWith::ShadowEffect(node.into_user_data())
             }
             Self::ShapeClippingPath(node) => {
-                MultiplePathLineContentWith::ShapeClippingPath(node.into_extra())
+                MultiplePathLineContentWith::ShapeClippingPath(node.into_user_data())
             }
             Self::ShapeFillProperties(node) => {
-                MultiplePathLineContentWith::ShapeFillProperties(node.into_extra())
+                MultiplePathLineContentWith::ShapeFillProperties(node.into_user_data())
             }
-            Self::ShapePath(node) => MultiplePathLineContentWith::ShapePath(node.into_extra()),
+            Self::ShapePath(node) => MultiplePathLineContentWith::ShapePath(node.into_user_data()),
             Self::ShapeProtections(node) => {
-                MultiplePathLineContentWith::ShapeProtections(node.into_extra())
+                MultiplePathLineContentWith::ShapeProtections(node.into_user_data())
             }
             Self::SkewTransform(node) => {
-                MultiplePathLineContentWith::SkewTransform(node.into_extra())
+                MultiplePathLineContentWith::SkewTransform(node.into_user_data())
             }
-            Self::TextBox(node) => MultiplePathLineContentWith::TextBox(node.into_extra()),
+            Self::TextBox(node) => MultiplePathLineContentWith::TextBox(node.into_user_data()),
             Self::TextLayoutPath(node) => {
-                MultiplePathLineContentWith::TextLayoutPath(node.into_extra())
+                MultiplePathLineContentWith::TextLayoutPath(node.into_user_data())
             }
             Self::TextWrapping(node) => {
-                MultiplePathLineContentWith::TextWrapping(node.into_extra())
+                MultiplePathLineContentWith::TextWrapping(node.into_user_data())
             }
-            Self::TopBorder(node) => MultiplePathLineContentWith::TopBorder(node.into_extra()),
+            Self::TopBorder(node) => MultiplePathLineContentWith::TopBorder(node.into_user_data()),
             Self::VMLDiagramText(node) => {
-                MultiplePathLineContentWith::VMLDiagramText(node.into_extra())
+                MultiplePathLineContentWith::VMLDiagramText(node.into_user_data())
             }
         }
     }
@@ -5259,13 +5269,13 @@ impl TryFrom<MultiplePathLineContent> for ShapeElementContent {
     }
 }
 
-impl<X: NodeExtra> OvalWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> OvalWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> OvalWith<Y>
+    pub fn into_user_data<Y>(self) -> OvalWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         OvalWith {
             allowincell: self.allowincell,
@@ -5285,9 +5295,9 @@ impl<X: NodeExtra> OvalWith<X> {
             clip: self.clip,
             cliptowrap: self.cliptowrap,
             connectortype: self.connectortype,
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                ShapeElementContentWith::into_extra,
+                ShapeElementContentWith::into_user_data,
             ),
             coordorigin: self.coordorigin,
             coordsize: self.coordsize,
@@ -5295,7 +5305,6 @@ impl<X: NodeExtra> OvalWith<X> {
             dgmlayoutmru: self.dgmlayoutmru,
             dgmnodekind: self.dgmnodekind,
             doubleclicknotify: self.doubleclicknotify,
-            extra: Default::default(),
             fillcolor: self.fillcolor,
             filled: self.filled,
             forcedash: self.forcedash,
@@ -5324,6 +5333,7 @@ impl<X: NodeExtra> OvalWith<X> {
             target: self.target,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
             userdrawn: self.userdrawn,
             userhidden: self.userhidden,
             wrapcoords: self.wrapcoords,
@@ -5405,13 +5415,13 @@ impl officekit_markup_base::Write for Oval {
     }
 }
 
-impl<X: NodeExtra> RectangleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RectangleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RectangleWith<Y>
+    pub fn into_user_data<Y>(self) -> RectangleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RectangleWith {
             allowincell: self.allowincell,
@@ -5431,9 +5441,9 @@ impl<X: NodeExtra> RectangleWith<X> {
             clip: self.clip,
             cliptowrap: self.cliptowrap,
             connectortype: self.connectortype,
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                ShapeElementContentWith::into_extra,
+                ShapeElementContentWith::into_user_data,
             ),
             coordorigin: self.coordorigin,
             coordsize: self.coordsize,
@@ -5441,7 +5451,6 @@ impl<X: NodeExtra> RectangleWith<X> {
             dgmlayoutmru: self.dgmlayoutmru,
             dgmnodekind: self.dgmnodekind,
             doubleclicknotify: self.doubleclicknotify,
-            extra: Default::default(),
             fillcolor: self.fillcolor,
             filled: self.filled,
             forcedash: self.forcedash,
@@ -5470,6 +5479,7 @@ impl<X: NodeExtra> RectangleWith<X> {
             target: self.target,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
             userdrawn: self.userdrawn,
             userhidden: self.userhidden,
             wrapcoords: self.wrapcoords,
@@ -5551,13 +5561,13 @@ impl officekit_markup_base::Write for Rectangle {
     }
 }
 
-impl<X: NodeExtra> RoundedRectangleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RoundedRectangleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RoundedRectangleWith<Y>
+    pub fn into_user_data<Y>(self) -> RoundedRectangleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RoundedRectangleWith {
             allowincell: self.allowincell,
@@ -5578,9 +5588,9 @@ impl<X: NodeExtra> RoundedRectangleWith<X> {
             clip: self.clip,
             cliptowrap: self.cliptowrap,
             connectortype: self.connectortype,
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                ShapeElementContentWith::into_extra,
+                ShapeElementContentWith::into_user_data,
             ),
             coordorigin: self.coordorigin,
             coordsize: self.coordsize,
@@ -5588,7 +5598,6 @@ impl<X: NodeExtra> RoundedRectangleWith<X> {
             dgmlayoutmru: self.dgmlayoutmru,
             dgmnodekind: self.dgmnodekind,
             doubleclicknotify: self.doubleclicknotify,
-            extra: Default::default(),
             fillcolor: self.fillcolor,
             filled: self.filled,
             forcedash: self.forcedash,
@@ -5617,6 +5626,7 @@ impl<X: NodeExtra> RoundedRectangleWith<X> {
             target: self.target,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
             userdrawn: self.userdrawn,
             userhidden: self.userhidden,
             wrapcoords: self.wrapcoords,
@@ -5699,21 +5709,21 @@ impl officekit_markup_base::Write for RoundedRectangle {
     }
 }
 
-impl<X: NodeExtra> SetOfFormulasWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SetOfFormulasWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SetOfFormulasWith<Y>
+    pub fn into_user_data<Y>(self) -> SetOfFormulasWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SetOfFormulasWith {
-            extra: Default::default(),
-            single_formula: officekit_markup_base::into_extra_list(
+            single_formula: officekit_markup_base::into_user_data_list(
                 self.single_formula,
-                SingleFormulaWith::into_extra,
+                SingleFormulaWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5737,21 +5747,21 @@ impl officekit_markup_base::Write for SetOfFormulas {
     }
 }
 
-impl<X: NodeExtra> SetOfHandlesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SetOfHandlesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SetOfHandlesWith<Y>
+    pub fn into_user_data<Y>(self) -> SetOfHandlesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SetOfHandlesWith {
-            extra: Default::default(),
-            shape_handle: officekit_markup_base::into_extra_list(
+            shape_handle: officekit_markup_base::into_user_data_list(
                 self.shape_handle,
-                ShapeHandleWith::into_extra,
+                ShapeHandleWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5775,18 +5785,17 @@ impl officekit_markup_base::Write for SetOfHandles {
     }
 }
 
-impl<X: NodeExtra> ShadowEffectWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ShadowEffectWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ShadowEffectWith<Y>
+    pub fn into_user_data<Y>(self) -> ShadowEffectWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ShadowEffectWith {
             color: self.color,
             color2: self.color2,
-            extra: Default::default(),
             id: self.id,
             matrix: self.matrix,
             obscured: self.obscured,
@@ -5797,6 +5806,7 @@ impl<X: NodeExtra> ShadowEffectWith<X> {
             origin: self.origin,
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5884,13 +5894,13 @@ impl ShadowType {
     }
 }
 
-impl<X: NodeExtra> ShapeDefinitionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ShapeDefinitionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ShapeDefinitionWith<Y>
+    pub fn into_user_data<Y>(self) -> ShapeDefinitionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ShapeDefinitionWith {
             adj: self.adj,
@@ -5911,9 +5921,9 @@ impl<X: NodeExtra> ShapeDefinitionWith<X> {
             clip: self.clip,
             cliptowrap: self.cliptowrap,
             connectortype: self.connectortype,
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                ShapeDefinitionContentWith::into_extra,
+                ShapeDefinitionContentWith::into_user_data,
             ),
             coordorigin: self.coordorigin,
             coordsize: self.coordsize,
@@ -5922,7 +5932,6 @@ impl<X: NodeExtra> ShapeDefinitionWith<X> {
             dgmnodekind: self.dgmnodekind,
             doubleclicknotify: self.doubleclicknotify,
             equationxml: self.equationxml,
-            extra: Default::default(),
             fillcolor: self.fillcolor,
             filled: self.filled,
             forcedash: self.forcedash,
@@ -5954,6 +5963,7 @@ impl<X: NodeExtra> ShapeDefinitionWith<X> {
             title: self.title,
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
             userdrawn: self.userdrawn,
             userhidden: self.userhidden,
             wrapcoords: self.wrapcoords,
@@ -6040,66 +6050,76 @@ impl officekit_markup_base::Write for ShapeDefinition {
     }
 }
 
-impl<X: NodeExtra> ShapeDefinitionContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> ShapeDefinitionContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ShapeDefinitionContentWith<Y>
+    pub fn into_user_data<Y>(self) -> ShapeDefinitionContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::AnchorLocationIsLocked(node) => {
-                ShapeDefinitionContentWith::AnchorLocationIsLocked(node.into_extra())
+                ShapeDefinitionContentWith::AnchorLocationIsLocked(node.into_user_data())
             }
             Self::AttachedObjectData(node) => {
-                ShapeDefinitionContentWith::AttachedObjectData(node.into_extra())
+                ShapeDefinitionContentWith::AttachedObjectData(node.into_user_data())
             }
-            Self::BottomBorder(node) => ShapeDefinitionContentWith::BottomBorder(node.into_extra()),
-            Self::Callout(node) => ShapeDefinitionContentWith::Callout(node.into_extra()),
+            Self::BottomBorder(node) => {
+                ShapeDefinitionContentWith::BottomBorder(node.into_user_data())
+            }
+            Self::Callout(node) => ShapeDefinitionContentWith::Callout(node.into_user_data()),
             Self::DigitalSignatureLine(node) => {
-                ShapeDefinitionContentWith::DigitalSignatureLine(node.into_extra())
+                ShapeDefinitionContentWith::DigitalSignatureLine(node.into_user_data())
             }
-            Self::Extrusion(node) => ShapeDefinitionContentWith::Extrusion(node.into_extra()),
-            Self::ImageData(node) => ShapeDefinitionContentWith::ImageData(node.into_extra()),
-            Self::Ink(node) => ShapeDefinitionContentWith::Ink(node.into_extra()),
+            Self::Extrusion(node) => ShapeDefinitionContentWith::Extrusion(node.into_user_data()),
+            Self::ImageData(node) => ShapeDefinitionContentWith::ImageData(node.into_user_data()),
+            Self::Ink(node) => ShapeDefinitionContentWith::Ink(node.into_user_data()),
             Self::InkAnnotationFlag(node) => {
-                ShapeDefinitionContentWith::InkAnnotationFlag(node.into_extra())
+                ShapeDefinitionContentWith::InkAnnotationFlag(node.into_user_data())
             }
-            Self::LeftBorder(node) => ShapeDefinitionContentWith::LeftBorder(node.into_extra()),
+            Self::LeftBorder(node) => ShapeDefinitionContentWith::LeftBorder(node.into_user_data()),
             Self::LineStrokeSettings(node) => {
-                ShapeDefinitionContentWith::LineStrokeSettings(node.into_extra())
+                ShapeDefinitionContentWith::LineStrokeSettings(node.into_user_data())
             }
             Self::Other(node) => ShapeDefinitionContentWith::Other(node),
-            Self::RightBorder(node) => ShapeDefinitionContentWith::RightBorder(node.into_extra()),
-            Self::SetOfFormulas(node) => {
-                ShapeDefinitionContentWith::SetOfFormulas(node.into_extra())
+            Self::RightBorder(node) => {
+                ShapeDefinitionContentWith::RightBorder(node.into_user_data())
             }
-            Self::SetOfHandles(node) => ShapeDefinitionContentWith::SetOfHandles(node.into_extra()),
-            Self::ShadowEffect(node) => ShapeDefinitionContentWith::ShadowEffect(node.into_extra()),
+            Self::SetOfFormulas(node) => {
+                ShapeDefinitionContentWith::SetOfFormulas(node.into_user_data())
+            }
+            Self::SetOfHandles(node) => {
+                ShapeDefinitionContentWith::SetOfHandles(node.into_user_data())
+            }
+            Self::ShadowEffect(node) => {
+                ShapeDefinitionContentWith::ShadowEffect(node.into_user_data())
+            }
             Self::ShapeClippingPath(node) => {
-                ShapeDefinitionContentWith::ShapeClippingPath(node.into_extra())
+                ShapeDefinitionContentWith::ShapeClippingPath(node.into_user_data())
             }
             Self::ShapeFillProperties(node) => {
-                ShapeDefinitionContentWith::ShapeFillProperties(node.into_extra())
+                ShapeDefinitionContentWith::ShapeFillProperties(node.into_user_data())
             }
-            Self::ShapePath(node) => ShapeDefinitionContentWith::ShapePath(node.into_extra()),
+            Self::ShapePath(node) => ShapeDefinitionContentWith::ShapePath(node.into_user_data()),
             Self::ShapeProtections(node) => {
-                ShapeDefinitionContentWith::ShapeProtections(node.into_extra())
+                ShapeDefinitionContentWith::ShapeProtections(node.into_user_data())
             }
             Self::SkewTransform(node) => {
-                ShapeDefinitionContentWith::SkewTransform(node.into_extra())
+                ShapeDefinitionContentWith::SkewTransform(node.into_user_data())
             }
             Self::StorageForAlternateMathContent(node) => {
-                ShapeDefinitionContentWith::StorageForAlternateMathContent(node.into_extra())
+                ShapeDefinitionContentWith::StorageForAlternateMathContent(node.into_user_data())
             }
-            Self::TextBox(node) => ShapeDefinitionContentWith::TextBox(node.into_extra()),
+            Self::TextBox(node) => ShapeDefinitionContentWith::TextBox(node.into_user_data()),
             Self::TextLayoutPath(node) => {
-                ShapeDefinitionContentWith::TextLayoutPath(node.into_extra())
+                ShapeDefinitionContentWith::TextLayoutPath(node.into_user_data())
             }
-            Self::TextWrapping(node) => ShapeDefinitionContentWith::TextWrapping(node.into_extra()),
-            Self::TopBorder(node) => ShapeDefinitionContentWith::TopBorder(node.into_extra()),
+            Self::TextWrapping(node) => {
+                ShapeDefinitionContentWith::TextWrapping(node.into_user_data())
+            }
+            Self::TopBorder(node) => ShapeDefinitionContentWith::TopBorder(node.into_user_data()),
             Self::VMLDiagramText(node) => {
-                ShapeDefinitionContentWith::VMLDiagramText(node.into_extra())
+                ShapeDefinitionContentWith::VMLDiagramText(node.into_user_data())
             }
         }
     }
@@ -6350,55 +6370,67 @@ impl TryFrom<ShapeDefinitionContent> for MultiplePathLineContent {
     }
 }
 
-impl<X: NodeExtra> ShapeElementContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> ShapeElementContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ShapeElementContentWith<Y>
+    pub fn into_user_data<Y>(self) -> ShapeElementContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::AnchorLocationIsLocked(node) => {
-                ShapeElementContentWith::AnchorLocationIsLocked(node.into_extra())
+                ShapeElementContentWith::AnchorLocationIsLocked(node.into_user_data())
             }
             Self::AttachedObjectData(node) => {
-                ShapeElementContentWith::AttachedObjectData(node.into_extra())
+                ShapeElementContentWith::AttachedObjectData(node.into_user_data())
             }
-            Self::BottomBorder(node) => ShapeElementContentWith::BottomBorder(node.into_extra()),
-            Self::Callout(node) => ShapeElementContentWith::Callout(node.into_extra()),
+            Self::BottomBorder(node) => {
+                ShapeElementContentWith::BottomBorder(node.into_user_data())
+            }
+            Self::Callout(node) => ShapeElementContentWith::Callout(node.into_user_data()),
             Self::DigitalSignatureLine(node) => {
-                ShapeElementContentWith::DigitalSignatureLine(node.into_extra())
+                ShapeElementContentWith::DigitalSignatureLine(node.into_user_data())
             }
-            Self::Extrusion(node) => ShapeElementContentWith::Extrusion(node.into_extra()),
-            Self::ImageData(node) => ShapeElementContentWith::ImageData(node.into_extra()),
-            Self::LeftBorder(node) => ShapeElementContentWith::LeftBorder(node.into_extra()),
+            Self::Extrusion(node) => ShapeElementContentWith::Extrusion(node.into_user_data()),
+            Self::ImageData(node) => ShapeElementContentWith::ImageData(node.into_user_data()),
+            Self::LeftBorder(node) => ShapeElementContentWith::LeftBorder(node.into_user_data()),
             Self::LineStrokeSettings(node) => {
-                ShapeElementContentWith::LineStrokeSettings(node.into_extra())
+                ShapeElementContentWith::LineStrokeSettings(node.into_user_data())
             }
             Self::Other(node) => ShapeElementContentWith::Other(node),
-            Self::RightBorder(node) => ShapeElementContentWith::RightBorder(node.into_extra()),
-            Self::SetOfFormulas(node) => ShapeElementContentWith::SetOfFormulas(node.into_extra()),
-            Self::SetOfHandles(node) => ShapeElementContentWith::SetOfHandles(node.into_extra()),
-            Self::ShadowEffect(node) => ShapeElementContentWith::ShadowEffect(node.into_extra()),
+            Self::RightBorder(node) => ShapeElementContentWith::RightBorder(node.into_user_data()),
+            Self::SetOfFormulas(node) => {
+                ShapeElementContentWith::SetOfFormulas(node.into_user_data())
+            }
+            Self::SetOfHandles(node) => {
+                ShapeElementContentWith::SetOfHandles(node.into_user_data())
+            }
+            Self::ShadowEffect(node) => {
+                ShapeElementContentWith::ShadowEffect(node.into_user_data())
+            }
             Self::ShapeClippingPath(node) => {
-                ShapeElementContentWith::ShapeClippingPath(node.into_extra())
+                ShapeElementContentWith::ShapeClippingPath(node.into_user_data())
             }
             Self::ShapeFillProperties(node) => {
-                ShapeElementContentWith::ShapeFillProperties(node.into_extra())
+                ShapeElementContentWith::ShapeFillProperties(node.into_user_data())
             }
-            Self::ShapePath(node) => ShapeElementContentWith::ShapePath(node.into_extra()),
+            Self::ShapePath(node) => ShapeElementContentWith::ShapePath(node.into_user_data()),
             Self::ShapeProtections(node) => {
-                ShapeElementContentWith::ShapeProtections(node.into_extra())
+                ShapeElementContentWith::ShapeProtections(node.into_user_data())
             }
-            Self::SkewTransform(node) => ShapeElementContentWith::SkewTransform(node.into_extra()),
-            Self::TextBox(node) => ShapeElementContentWith::TextBox(node.into_extra()),
+            Self::SkewTransform(node) => {
+                ShapeElementContentWith::SkewTransform(node.into_user_data())
+            }
+            Self::TextBox(node) => ShapeElementContentWith::TextBox(node.into_user_data()),
             Self::TextLayoutPath(node) => {
-                ShapeElementContentWith::TextLayoutPath(node.into_extra())
+                ShapeElementContentWith::TextLayoutPath(node.into_user_data())
             }
-            Self::TextWrapping(node) => ShapeElementContentWith::TextWrapping(node.into_extra()),
-            Self::TopBorder(node) => ShapeElementContentWith::TopBorder(node.into_extra()),
+            Self::TextWrapping(node) => {
+                ShapeElementContentWith::TextWrapping(node.into_user_data())
+            }
+            Self::TopBorder(node) => ShapeElementContentWith::TopBorder(node.into_user_data()),
             Self::VMLDiagramText(node) => {
-                ShapeElementContentWith::VMLDiagramText(node.into_extra())
+                ShapeElementContentWith::VMLDiagramText(node.into_user_data())
             }
         }
     }
@@ -6486,13 +6518,13 @@ impl officekit_markup_base::Write for ShapeElementContent {
     }
 }
 
-impl<X: NodeExtra> ShapeFillPropertiesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ShapeFillPropertiesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ShapeFillPropertiesWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ShapeFillPropertiesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ShapeFillPropertiesWith {
             alignshape: self.alignshape,
@@ -6503,7 +6535,6 @@ impl<X: NodeExtra> ShapeFillPropertiesWith<X> {
             color2: self.color2,
             colors: self.colors,
             detectmouseclick: self.detectmouseclick,
-            extra: Default::default(),
             focus: self.focus,
             focusposition: self.focusposition,
             focussize: self.focussize,
@@ -6519,15 +6550,16 @@ impl<X: NodeExtra> ShapeFillPropertiesWith<X> {
             recolor: self.recolor,
             relid: self.relid,
             rotate: self.rotate,
-            shape_fill_extended_properties: officekit_markup_base::into_extra_optional(
+            shape_fill_extended_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.shape_fill_extended_properties,
-                super::vml_office_drawing::ShapeFillExtendedPropertiesWith::into_extra,
+                super::vml_office_drawing::ShapeFillExtendedPropertiesWith::into_user_data,
             ),
             size: self.size,
             src: self.src,
             title: self.title,
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -6633,13 +6665,13 @@ impl ShapeFillType {
     }
 }
 
-impl<X: NodeExtra> ShapeGroupWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ShapeGroupWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ShapeGroupWith<Y>
+    pub fn into_user_data<Y>(self) -> ShapeGroupWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ShapeGroupWith {
             allowincell: self.allowincell,
@@ -6652,9 +6684,9 @@ impl<X: NodeExtra> ShapeGroupWith<X> {
             bullet: self.bullet,
             button: self.button,
             class: self.class,
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                ShapeGroupContentWith::into_extra,
+                ShapeGroupContentWith::into_user_data,
             ),
             coordorigin: self.coordorigin,
             coordsize: self.coordsize,
@@ -6663,7 +6695,6 @@ impl<X: NodeExtra> ShapeGroupWith<X> {
             dgmnodekind: self.dgmnodekind,
             doubleclicknotify: self.doubleclicknotify,
             editas: self.editas,
-            extra: Default::default(),
             fillcolor: self.fillcolor,
             filled: self.filled,
             hr: self.hr,
@@ -6684,6 +6715,7 @@ impl<X: NodeExtra> ShapeGroupWith<X> {
             target: self.target,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
             userdrawn: self.userdrawn,
             userhidden: self.userhidden,
             wrapcoords: self.wrapcoords,
@@ -6751,70 +6783,80 @@ impl officekit_markup_base::Write for ShapeGroup {
     }
 }
 
-impl<X: NodeExtra> ShapeGroupContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> ShapeGroupContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ShapeGroupContentWith<Y>
+    pub fn into_user_data<Y>(self) -> ShapeGroupContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::AnchorLocationIsLocked(node) => {
-                ShapeGroupContentWith::AnchorLocationIsLocked(node.into_extra())
+                ShapeGroupContentWith::AnchorLocationIsLocked(node.into_user_data())
             }
-            Self::ArcSegment(node) => ShapeGroupContentWith::ArcSegment(node.into_extra()),
+            Self::ArcSegment(node) => ShapeGroupContentWith::ArcSegment(node.into_user_data()),
             Self::AttachedObjectData(node) => {
-                ShapeGroupContentWith::AttachedObjectData(node.into_extra())
+                ShapeGroupContentWith::AttachedObjectData(node.into_user_data())
             }
-            Self::BezierCurve(node) => ShapeGroupContentWith::BezierCurve(node.into_extra()),
-            Self::BottomBorder(node) => ShapeGroupContentWith::BottomBorder(node.into_extra()),
-            Self::Callout(node) => ShapeGroupContentWith::Callout(node.into_extra()),
+            Self::BezierCurve(node) => ShapeGroupContentWith::BezierCurve(node.into_user_data()),
+            Self::BottomBorder(node) => ShapeGroupContentWith::BottomBorder(node.into_user_data()),
+            Self::Callout(node) => ShapeGroupContentWith::Callout(node.into_user_data()),
             Self::DigitalSignatureLine(node) => {
-                ShapeGroupContentWith::DigitalSignatureLine(node.into_extra())
+                ShapeGroupContentWith::DigitalSignatureLine(node.into_user_data())
             }
-            Self::Extrusion(node) => ShapeGroupContentWith::Extrusion(node.into_extra()),
-            Self::ImageData(node) => ShapeGroupContentWith::ImageData(node.into_extra()),
-            Self::ImageFile(node) => ShapeGroupContentWith::ImageFile(node.into_extra()),
-            Self::LeftBorder(node) => ShapeGroupContentWith::LeftBorder(node.into_extra()),
-            Self::Line(node) => ShapeGroupContentWith::Line(node.into_extra()),
+            Self::Extrusion(node) => ShapeGroupContentWith::Extrusion(node.into_user_data()),
+            Self::ImageData(node) => ShapeGroupContentWith::ImageData(node.into_user_data()),
+            Self::ImageFile(node) => ShapeGroupContentWith::ImageFile(node.into_user_data()),
+            Self::LeftBorder(node) => ShapeGroupContentWith::LeftBorder(node.into_user_data()),
+            Self::Line(node) => ShapeGroupContentWith::Line(node.into_user_data()),
             Self::LineStrokeSettings(node) => {
-                ShapeGroupContentWith::LineStrokeSettings(node.into_extra())
+                ShapeGroupContentWith::LineStrokeSettings(node.into_user_data())
             }
             Self::MultiplePathLine(node) => {
-                ShapeGroupContentWith::MultiplePathLine(node.into_extra())
+                ShapeGroupContentWith::MultiplePathLine(node.into_user_data())
             }
             Self::Other(node) => ShapeGroupContentWith::Other(node),
-            Self::Oval(node) => ShapeGroupContentWith::Oval(node.into_extra()),
-            Self::Rectangle(node) => ShapeGroupContentWith::Rectangle(node.into_extra()),
-            Self::RightBorder(node) => ShapeGroupContentWith::RightBorder(node.into_extra()),
+            Self::Oval(node) => ShapeGroupContentWith::Oval(node.into_user_data()),
+            Self::Rectangle(node) => ShapeGroupContentWith::Rectangle(node.into_user_data()),
+            Self::RightBorder(node) => ShapeGroupContentWith::RightBorder(node.into_user_data()),
             Self::RoundedRectangle(node) => {
-                ShapeGroupContentWith::RoundedRectangle(node.into_extra())
+                ShapeGroupContentWith::RoundedRectangle(node.into_user_data())
             }
-            Self::SetOfFormulas(node) => ShapeGroupContentWith::SetOfFormulas(node.into_extra()),
-            Self::SetOfHandles(node) => ShapeGroupContentWith::SetOfHandles(node.into_extra()),
-            Self::ShadowEffect(node) => ShapeGroupContentWith::ShadowEffect(node.into_extra()),
+            Self::SetOfFormulas(node) => {
+                ShapeGroupContentWith::SetOfFormulas(node.into_user_data())
+            }
+            Self::SetOfHandles(node) => ShapeGroupContentWith::SetOfHandles(node.into_user_data()),
+            Self::ShadowEffect(node) => ShapeGroupContentWith::ShadowEffect(node.into_user_data()),
             Self::ShapeClippingPath(node) => {
-                ShapeGroupContentWith::ShapeClippingPath(node.into_extra())
+                ShapeGroupContentWith::ShapeClippingPath(node.into_user_data())
             }
             Self::ShapeDefinition(node) => {
-                ShapeGroupContentWith::ShapeDefinition(node.into_extra())
+                ShapeGroupContentWith::ShapeDefinition(node.into_user_data())
             }
             Self::ShapeFillProperties(node) => {
-                ShapeGroupContentWith::ShapeFillProperties(node.into_extra())
+                ShapeGroupContentWith::ShapeFillProperties(node.into_user_data())
             }
-            Self::ShapeGroup(node) => ShapeGroupContentWith::ShapeGroup(node.into_extra()),
-            Self::ShapePath(node) => ShapeGroupContentWith::ShapePath(node.into_extra()),
+            Self::ShapeGroup(node) => ShapeGroupContentWith::ShapeGroup(node.into_user_data()),
+            Self::ShapePath(node) => ShapeGroupContentWith::ShapePath(node.into_user_data()),
             Self::ShapeProtections(node) => {
-                ShapeGroupContentWith::ShapeProtections(node.into_extra())
+                ShapeGroupContentWith::ShapeProtections(node.into_user_data())
             }
-            Self::ShapeTemplate(node) => ShapeGroupContentWith::ShapeTemplate(node.into_extra()),
-            Self::SkewTransform(node) => ShapeGroupContentWith::SkewTransform(node.into_extra()),
-            Self::TextBox(node) => ShapeGroupContentWith::TextBox(node.into_extra()),
-            Self::TextLayoutPath(node) => ShapeGroupContentWith::TextLayoutPath(node.into_extra()),
-            Self::TextWrapping(node) => ShapeGroupContentWith::TextWrapping(node.into_extra()),
-            Self::TopBorder(node) => ShapeGroupContentWith::TopBorder(node.into_extra()),
-            Self::VMLDiagram(node) => ShapeGroupContentWith::VMLDiagram(node.into_extra()),
-            Self::VMLDiagramText(node) => ShapeGroupContentWith::VMLDiagramText(node.into_extra()),
+            Self::ShapeTemplate(node) => {
+                ShapeGroupContentWith::ShapeTemplate(node.into_user_data())
+            }
+            Self::SkewTransform(node) => {
+                ShapeGroupContentWith::SkewTransform(node.into_user_data())
+            }
+            Self::TextBox(node) => ShapeGroupContentWith::TextBox(node.into_user_data()),
+            Self::TextLayoutPath(node) => {
+                ShapeGroupContentWith::TextLayoutPath(node.into_user_data())
+            }
+            Self::TextWrapping(node) => ShapeGroupContentWith::TextWrapping(node.into_user_data()),
+            Self::TopBorder(node) => ShapeGroupContentWith::TopBorder(node.into_user_data()),
+            Self::VMLDiagram(node) => ShapeGroupContentWith::VMLDiagram(node.into_user_data()),
+            Self::VMLDiagramText(node) => {
+                ShapeGroupContentWith::VMLDiagramText(node.into_user_data())
+            }
         }
     }
 }
@@ -7063,16 +7105,15 @@ impl ShapeGroupingTypes {
     }
 }
 
-impl<X: NodeExtra> ShapeHandleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ShapeHandleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ShapeHandleWith<Y>
+    pub fn into_user_data<Y>(self) -> ShapeHandleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ShapeHandleWith {
-            extra: Default::default(),
             invx: self.invx,
             invy: self.invy,
             map: self.map,
@@ -7081,6 +7122,7 @@ impl<X: NodeExtra> ShapeHandleWith<X> {
             radiusrange: self.radiusrange,
             switch: self.switch,
             unknown: self.unknown,
+            user_data: Default::default(),
             xrange: self.xrange,
             yrange: self.yrange,
         }
@@ -7117,20 +7159,19 @@ impl officekit_markup_base::Write for ShapeHandle {
     }
 }
 
-impl<X: NodeExtra> ShapePathWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ShapePathWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ShapePathWith<Y>
+    pub fn into_user_data<Y>(self) -> ShapePathWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ShapePathWith {
             arrowok: self.arrowok,
             connectangles: self.connectangles,
             connectlocs: self.connectlocs,
             connecttype: self.connecttype,
-            extra: Default::default(),
             extrusionok: self.extrusionok,
             fillok: self.fillok,
             gradientshapeok: self.gradientshapeok,
@@ -7142,6 +7183,7 @@ impl<X: NodeExtra> ShapePathWith<X> {
             textboxrect: self.textboxrect,
             textpathok: self.textpathok,
             unknown: self.unknown,
+            user_data: Default::default(),
             v: self.v,
         }
     }
@@ -7183,13 +7225,13 @@ impl officekit_markup_base::Write for ShapePath {
     }
 }
 
-impl<X: NodeExtra> ShapeTemplateWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ShapeTemplateWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ShapeTemplateWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ShapeTemplateWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ShapeTemplateWith {
             adj: self.adj,
@@ -7209,14 +7251,14 @@ impl<X: NodeExtra> ShapeTemplateWith<X> {
             class: self.class,
             clip: self.clip,
             cliptowrap: self.cliptowrap,
-            complex: officekit_markup_base::into_extra_optional(
+            complex: officekit_markup_base::into_user_data_optional(
                 &mut self.complex,
-                super::vml_office_drawing::ComplexWith::into_extra,
+                super::vml_office_drawing::ComplexWith::into_user_data,
             ),
             connectortype: self.connectortype,
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                ShapeElementContentWith::into_extra,
+                ShapeElementContentWith::into_user_data,
             ),
             coordorigin: self.coordorigin,
             coordsize: self.coordsize,
@@ -7224,7 +7266,6 @@ impl<X: NodeExtra> ShapeTemplateWith<X> {
             dgmlayoutmru: self.dgmlayoutmru,
             dgmnodekind: self.dgmnodekind,
             doubleclicknotify: self.doubleclicknotify,
-            extra: Default::default(),
             fillcolor: self.fillcolor,
             filled: self.filled,
             forcedash: self.forcedash,
@@ -7255,6 +7296,7 @@ impl<X: NodeExtra> ShapeTemplateWith<X> {
             target: self.target,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
             userdrawn: self.userdrawn,
             userhidden: self.userhidden,
             wrapcoords: self.wrapcoords,
@@ -7339,18 +7381,18 @@ impl officekit_markup_base::Write for ShapeTemplate {
     }
 }
 
-impl<X: NodeExtra> SingleFormulaWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SingleFormulaWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SingleFormulaWith<Y>
+    pub fn into_user_data<Y>(self) -> SingleFormulaWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SingleFormulaWith {
             eqn: self.eqn,
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -7648,26 +7690,26 @@ impl StrokeLineStyle {
     }
 }
 
-impl<X: NodeExtra> TextBoxWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TextBoxWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> TextBoxWith<Y>
+    pub fn into_user_data<Y>(mut self) -> TextBoxWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TextBoxWith {
-            content: officekit_markup_base::into_extra_optional(
+            content: officekit_markup_base::into_user_data_optional(
                 &mut self.content,
-                TextBoxContentWith::into_extra,
+                TextBoxContentWith::into_user_data,
             ),
-            extra: Default::default(),
             id: self.id,
             inset: self.inset,
             insetmode: self.insetmode,
             singleclick: self.singleclick,
             style: self.style,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -7698,17 +7740,17 @@ impl officekit_markup_base::Write for TextBox {
     }
 }
 
-impl<X: NodeExtra> TextBoxContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> TextBoxContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TextBoxContentWith<Y>
+    pub fn into_user_data<Y>(self) -> TextBoxContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::Other(node) => TextBoxContentWith::Other(node),
             Self::RichTextBoxContentContainer(node) => {
-                TextBoxContentWith::RichTextBoxContentContainer(node.into_extra())
+                TextBoxContentWith::RichTextBoxContentContainer(node.into_user_data())
             }
         }
     }
@@ -7738,16 +7780,15 @@ impl officekit_markup_base::Write for TextBoxContent {
     }
 }
 
-impl<X: NodeExtra> TextLayoutPathWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TextLayoutPathWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TextLayoutPathWith<Y>
+    pub fn into_user_data<Y>(self) -> TextLayoutPathWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TextLayoutPathWith {
-            extra: Default::default(),
             fitpath: self.fitpath,
             fitshape: self.fitshape,
             id: self.id,
@@ -7756,6 +7797,7 @@ impl<X: NodeExtra> TextLayoutPathWith<X> {
             style: self.style,
             trim: self.trim,
             unknown: self.unknown,
+            user_data: Default::default(),
             xscale: self.xscale,
         }
     }

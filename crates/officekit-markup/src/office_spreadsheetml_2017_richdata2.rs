@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::office_spreadsheetml_2009_9_main;
 use officekit_markup_core::spreadsheet;
@@ -595,20 +595,20 @@ pub static RICH_FILTER_COLUMN_CONTENT_TAGS: officekit_markup_base::Accept =
 /// schema type is `CT_Array`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AArrayWith<X: NodeExtra> {
+pub struct AArrayWith<X: UserData> {
     /// The attribute `c`, when the element has it.
     pub c: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2AArray,
     /// The attribute `r`, when the element has it.
     pub r: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2AArray,
     /// The children that are `VArrayValue`, in order.
     pub v_array_value: Vec<VArrayValueWith<X>>,
 }
 
-/// The `xlrd2:a` element of the tree a read gives: [`AArrayWith`] holding nothing in `extra`.
+/// The `xlrd2:a` element of the tree a read gives: [`AArrayWith`] holding nothing in `user_data`.
 pub type AArray = AArrayWith<()>;
 
 impl Eq for AArrayWith<()> {}
@@ -617,19 +617,19 @@ impl Eq for AArrayWith<()> {}
 /// schema type is `CT_SupportingPropertyBagArray`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ASupportingPropertyBagArrayWith<X: NodeExtra> {
+pub struct ASupportingPropertyBagArrayWith<X: UserData> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2ASupportingPropertyBagArray,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2ASupportingPropertyBagArray,
     /// The children that are `VSupportingPropertyBagArrayValue`, in order.
     pub v_supporting_property_bag_array_value: Vec<VSupportingPropertyBagArrayValueWith<X>>,
 }
 
 /// The `xlrd2:a` element of the tree a read gives: [`ASupportingPropertyBagArrayWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ASupportingPropertyBagArray = ASupportingPropertyBagArrayWith<()>;
 
 impl Eq for ASupportingPropertyBagArrayWith<()> {}
@@ -638,21 +638,21 @@ impl Eq for ASupportingPropertyBagArrayWith<()> {}
 /// Its schema type is `CT_ArrayData`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArrayDataWith<X: NodeExtra> {
+pub struct ArrayDataWith<X: UserData> {
     /// The children that are `AArray`, in order.
     pub a_array: Vec<AArrayWith<X>>,
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2ArrayData,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2ArrayData,
 }
 
 /// The `xlrd2:arrayData` element of the tree a read gives: [`ArrayDataWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ArrayData = ArrayDataWith<()>;
 
 impl Eq for ArrayDataWith<()> {}
@@ -1457,21 +1457,21 @@ pub trait Context: crate::Context {
 /// 3.5.1. Its schema type is `CT_CustomRichFilter`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CustomFilterWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2CustomFilter,
+pub struct CustomFilterWith<X: UserData> {
     /// The attribute `key`, when the element has it.
     pub key: Option<String>,
     /// The attribute `operator`, when the element has it.
     pub operator: Option<spreadsheet::FilterOperator>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2CustomFilter,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `xlrd2:customFilter` element of the tree a read gives: [`CustomFilterWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type CustomFilter = CustomFilterWith<()>;
 
 impl Eq for CustomFilterWith<()> {}
@@ -1480,19 +1480,19 @@ impl Eq for CustomFilterWith<()> {}
 /// 3.5.1. Its schema type is `CT_CustomRichFilters`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CustomFiltersWith<X: NodeExtra> {
+pub struct CustomFiltersWith<X: UserData> {
     /// The attribute `and`, when the element has it.
     pub and: Option<String>,
     /// The children that are an item of `CustomRichFiltersContent`, in order.
     pub content: Vec<CustomRichFiltersContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2CustomFilters,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2CustomFilters,
 }
 
 /// The `xlrd2:customFilters` element of the tree a read gives: [`CustomFiltersWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type CustomFilters = CustomFiltersWith<()>;
 
 impl Eq for CustomFiltersWith<()> {}
@@ -1504,7 +1504,7 @@ impl Eq for CustomFiltersWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum CustomRichFiltersContentWith<X: NodeExtra> {
+pub enum CustomRichFiltersContentWith<X: UserData> {
     /// The element `xlrd2:customFilter`, a `CustomFilter`.
     CustomFilter(CustomFilterWith<X>),
     /// The element `xlrd2:extLst`, a `ExtLst`.
@@ -1514,7 +1514,7 @@ pub enum CustomRichFiltersContentWith<X: NodeExtra> {
 }
 
 /// [`CustomRichFiltersContentWith`] of the tree a read gives, where no node holds anything in
-/// `extra`.
+/// `user_data`.
 pub type CustomRichFiltersContent = CustomRichFiltersContentWith<()>;
 
 impl Eq for CustomRichFiltersContentWith<()> {}
@@ -1523,13 +1523,11 @@ impl Eq for CustomRichFiltersContentWith<()> {}
 /// 3.5.1. Its schema type is `CT_RichDateGroupItem`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DateGroupItemWith<X: NodeExtra> {
+pub struct DateGroupItemWith<X: UserData> {
     /// The attribute `dateTimeGrouping`, when the element has it.
     pub date_time_grouping: Option<spreadsheet::DateTimeGrouping>,
     /// The attribute `day`, when the element has it.
     pub day: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2DateGroupItem,
     /// The attribute `hour`, when the element has it.
     pub hour: Option<String>,
     /// The attribute `key`, when the element has it.
@@ -1542,12 +1540,14 @@ pub struct DateGroupItemWith<X: NodeExtra> {
     pub second: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2DateGroupItem,
     /// The attribute `year`, when the element has it.
     pub year: Option<String>,
 }
 
 /// The `xlrd2:dateGroupItem` element of the tree a read gives: [`DateGroupItemWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DateGroupItem = DateGroupItemWith<()>;
 
 impl Eq for DateGroupItemWith<()> {}
@@ -1556,18 +1556,18 @@ impl Eq for DateGroupItemWith<()> {}
 /// schema type is `CT_Dxfs`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DxfsWith<X: NodeExtra> {
+pub struct DxfsWith<X: UserData> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2Dxfs,
     /// The children that are `spreadsheet::Formatting`, in order.
     pub formatting: Vec<spreadsheet::FormattingWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2Dxfs,
 }
 
-/// The `xlrd2:dxfs` element of the tree a read gives: [`DxfsWith`] holding nothing in `extra`.
+/// The `xlrd2:dxfs` element of the tree a read gives: [`DxfsWith`] holding nothing in `user_data`.
 pub type Dxfs = DxfsWith<()>;
 
 impl Eq for DxfsWith<()> {}
@@ -1576,9 +1576,7 @@ impl Eq for DxfsWith<()> {}
 /// 3.5.1. Its schema type is `CT_DynamicRichFilter`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DynamicFilterWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2DynamicFilter,
+pub struct DynamicFilterWith<X: UserData> {
     /// The attribute `key`, when the element has it.
     pub key: Option<String>,
     /// The attribute `maxVal`, when the element has it.
@@ -1589,6 +1587,8 @@ pub struct DynamicFilterWith<X: NodeExtra> {
     pub r#type: Option<spreadsheet::StDynamicFilterType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2DynamicFilter,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
     /// The attribute `valIso`, when the element has it.
@@ -1596,7 +1596,7 @@ pub struct DynamicFilterWith<X: NodeExtra> {
 }
 
 /// The `xlrd2:dynamicFilter` element of the tree a read gives: [`DynamicFilterWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DynamicFilter = DynamicFilterWith<()>;
 
 impl Eq for DynamicFilterWith<()> {}
@@ -1605,16 +1605,17 @@ impl Eq for DynamicFilterWith<()> {}
 /// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2ExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2ExtLst,
 }
 
-/// The `xlrd2:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `xlrd2:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -1623,22 +1624,23 @@ impl Eq for ExtLstWith<()> {}
 /// schema type is `CT_RichFilter`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilterWith<X: NodeExtra> {
+pub struct FilterWith<X: UserData> {
     /// The attribute `blank`, when the element has it.
     pub blank: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2Filter,
     /// The attribute `key`, when the element has it.
     pub key: Option<String>,
     /// The attribute `nodata`, when the element has it.
     pub nodata: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2Filter,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The `xlrd2:filter` element of the tree a read gives: [`FilterWith`] holding nothing in `extra`.
+/// The `xlrd2:filter` element of the tree a read gives: [`FilterWith`] holding nothing in
+/// `user_data`.
 pub type Filter = FilterWith<()>;
 
 impl Eq for FilterWith<()> {}
@@ -1647,17 +1649,17 @@ impl Eq for FilterWith<()> {}
 /// 3.5.1. Its schema type is `CT_RichFilterColumn`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilterColumnWith<X: NodeExtra> {
+pub struct FilterColumnWith<X: UserData> {
     /// The child that is an item of `RichFilterColumnContent`, when there is one.
     pub content: Option<Box<RichFilterColumnContentWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2FilterColumn,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2FilterColumn,
 }
 
 /// The `xlrd2:filterColumn` element of the tree a read gives: [`FilterColumnWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type FilterColumn = FilterColumnWith<()>;
 
 impl Eq for FilterColumnWith<()> {}
@@ -1666,21 +1668,21 @@ impl Eq for FilterColumnWith<()> {}
 /// schema type is `CT_RichFilters`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FiltersWith<X: NodeExtra> {
+pub struct FiltersWith<X: UserData> {
     /// The children that are `DateGroupItem`, in order.
     pub date_group_item: Vec<DateGroupItemWith<X>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2Filters,
     /// The children that are `Filter`, in order.
     pub filter: Vec<FilterWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2Filters,
 }
 
 /// The `xlrd2:filters` element of the tree a read gives: [`FiltersWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Filters = FiltersWith<()>;
 
 impl Eq for FiltersWith<()> {}
@@ -1689,18 +1691,18 @@ impl Eq for FiltersWith<()> {}
 /// schema type is `CT_RichValueTypeReservedKeyFlag`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FlagWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2Flag,
+pub struct FlagWith<X: UserData> {
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2Flag,
     /// The attribute `value`, when the element has it.
     pub value: Option<String>,
 }
 
-/// The `xlrd2:flag` element of the tree a read gives: [`FlagWith`] holding nothing in `extra`.
+/// The `xlrd2:flag` element of the tree a read gives: [`FlagWith`] holding nothing in `user_data`.
 pub type Flag = FlagWith<()>;
 
 impl Eq for FlagWith<()> {}
@@ -1709,18 +1711,19 @@ impl Eq for FlagWith<()> {}
 /// schema type is `CT_RichValueGlobalType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GlobalWith<X: NodeExtra> {
+pub struct GlobalWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2Global,
     /// The child that is `KeyFlags`, when there is one.
     pub key_flags: Option<Box<KeyFlagsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2Global,
 }
 
-/// The `xlrd2:global` element of the tree a read gives: [`GlobalWith`] holding nothing in `extra`.
+/// The `xlrd2:global` element of the tree a read gives: [`GlobalWith`] holding nothing in
+/// `user_data`.
 pub type Global = GlobalWith<()>;
 
 impl Eq for GlobalWith<()> {}
@@ -1729,18 +1732,18 @@ impl Eq for GlobalWith<()> {}
 /// schema type is `CT_SupportingPropertyBagKey`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct KWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2K,
+pub struct KWith<X: UserData> {
     /// The attribute `n`, when the element has it.
     pub n: Option<String>,
     /// The attribute `t`, when the element has it.
     pub t: Option<SupportingPropertyBagValueType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2K,
 }
 
-/// The `xlrd2:k` element of the tree a read gives: [`KWith`] holding nothing in `extra`.
+/// The `xlrd2:k` element of the tree a read gives: [`KWith`] holding nothing in `user_data`.
 pub type K = KWith<()>;
 
 impl Eq for KWith<()> {}
@@ -1749,18 +1752,18 @@ impl Eq for KWith<()> {}
 /// schema type is `CT_RichValueTypeReservedKey`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct KeyWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2Key,
+pub struct KeyWith<X: UserData> {
     /// The children that are `Flag`, in order.
     pub flag: Vec<FlagWith<X>>,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2Key,
 }
 
-/// The `xlrd2:key` element of the tree a read gives: [`KeyWith`] holding nothing in `extra`.
+/// The `xlrd2:key` element of the tree a read gives: [`KeyWith`] holding nothing in `user_data`.
 pub type Key = KeyWith<()>;
 
 impl Eq for KeyWith<()> {}
@@ -1769,17 +1772,17 @@ impl Eq for KeyWith<()> {}
 /// Its schema type is `CT_RichValueTypeKeyFlags`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct KeyFlagsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2KeyFlags,
+pub struct KeyFlagsWith<X: UserData> {
     /// The children that are `Key`, in order.
     pub key: Vec<KeyWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2KeyFlags,
 }
 
 /// The `xlrd2:keyFlags` element of the tree a read gives: [`KeyFlagsWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type KeyFlags = KeyFlagsWith<()>;
 
 impl Eq for KeyFlagsWith<()> {}
@@ -1788,18 +1791,18 @@ impl Eq for KeyFlagsWith<()> {}
 /// schema type is `CT_RichFormatProperty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RPrWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2RPr,
+pub struct RPrWith<X: UserData> {
     /// The attribute `n`, when the element has it.
     pub n: Option<String>,
     /// The attribute `t`, when the element has it.
     pub t: Option<RichFormatPropertyType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2RPr,
 }
 
-/// The `xlrd2:rPr` element of the tree a read gives: [`RPrWith`] holding nothing in `extra`.
+/// The `xlrd2:rPr` element of the tree a read gives: [`RPrWith`] holding nothing in `user_data`.
 pub type RPr = RPrWith<()>;
 
 impl Eq for RPrWith<()> {}
@@ -1808,18 +1811,18 @@ impl Eq for RPrWith<()> {}
 /// schema type is `CT_RichStyle`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RStyWith<X: NodeExtra> {
+pub struct RStyWith<X: UserData> {
     /// The attribute `dxfid`, when the element has it.
     pub dxfid: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2RSty,
     /// The children that are `Rpv`, in order.
     pub rpv: Vec<RpvWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2RSty,
 }
 
-/// The `xlrd2:rSty` element of the tree a read gives: [`RStyWith`] holding nothing in `extra`.
+/// The `xlrd2:rSty` element of the tree a read gives: [`RStyWith`] holding nothing in `user_data`.
 pub type RSty = RStyWith<()>;
 
 impl Eq for RStyWith<()> {}
@@ -1831,7 +1834,7 @@ impl Eq for RStyWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum RichFilterColumnContentWith<X: NodeExtra> {
+pub enum RichFilterColumnContentWith<X: UserData> {
     /// The element `xlrd2:customFilters`, a `CustomFilters`.
     CustomFilters(CustomFiltersWith<X>),
     /// The element `xlrd2:dynamicFilter`, a `DynamicFilter`.
@@ -1847,7 +1850,7 @@ pub enum RichFilterColumnContentWith<X: NodeExtra> {
 }
 
 /// [`RichFilterColumnContentWith`] of the tree a read gives, where no node holds anything in
-/// `extra`.
+/// `user_data`.
 pub type RichFilterColumnContent = RichFilterColumnContentWith<()>;
 
 impl Eq for RichFilterColumnContentWith<()> {}
@@ -1883,17 +1886,17 @@ pub enum RichFormatPropertyTypeMember {
 /// 3.5.1. Its schema type is `CT_RichFormatProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RichPropertiesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2RichProperties,
+pub struct RichPropertiesWith<X: UserData> {
     /// The children that are `RPr`, in order.
     pub r_pr: Vec<RPrWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2RichProperties,
 }
 
 /// The `xlrd2:richProperties` element of the tree a read gives: [`RichPropertiesWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type RichProperties = RichPropertiesWith<()>;
 
 impl Eq for RichPropertiesWith<()> {}
@@ -1902,15 +1905,13 @@ impl Eq for RichPropertiesWith<()> {}
 /// 3.5.1. Its schema type is `CT_RichSortCondition`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RichSortConditionWith<X: NodeExtra> {
+pub struct RichSortConditionWith<X: UserData> {
     /// The attribute `customList`, when the element has it.
     pub custom_list: Option<String>,
     /// The attribute `descending`, when the element has it.
     pub descending: Option<String>,
     /// The attribute `dxfId`, when the element has it.
     pub dxf_id: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2RichSortCondition,
     /// The attribute `iconId`, when the element has it.
     pub icon_id: Option<String>,
     /// The attribute `iconSet`, when the element has it.
@@ -1923,10 +1924,12 @@ pub struct RichSortConditionWith<X: NodeExtra> {
     pub sort_by: Option<spreadsheet::SortBy>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2RichSortCondition,
 }
 
 /// The `xlrd2:richSortCondition` element of the tree a read gives: [`RichSortConditionWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type RichSortCondition = RichSortConditionWith<()>;
 
 impl Eq for RichSortConditionWith<()> {}
@@ -1935,23 +1938,23 @@ impl Eq for RichSortConditionWith<()> {}
 /// 3.5.1. Its schema type is `CT_RichStylesheet`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RichStyleSheetWith<X: NodeExtra> {
+pub struct RichStyleSheetWith<X: UserData> {
     /// The child that is `Dxfs`, when there is one.
     pub dxfs: Option<Box<DxfsWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2RichStyleSheet,
     /// The child that is `RichProperties`, when there is one.
     pub rich_properties: Option<Box<RichPropertiesWith<X>>>,
     /// The child that is `RichStyles`, when there is one.
     pub rich_styles: Option<Box<RichStylesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2RichStyleSheet,
 }
 
 /// The `xlrd2:richStyleSheet` element of the tree a read gives: [`RichStyleSheetWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type RichStyleSheet = RichStyleSheetWith<()>;
 
 impl Eq for RichStyleSheetWith<()> {}
@@ -1960,17 +1963,17 @@ impl Eq for RichStyleSheetWith<()> {}
 /// Its schema type is `CT_RichStyles`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RichStylesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2RichStyles,
+pub struct RichStylesWith<X: UserData> {
     /// The children that are `RSty`, in order.
     pub r_sty: Vec<RStyWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2RichStyles,
 }
 
 /// The `xlrd2:richStyles` element of the tree a read gives: [`RichStylesWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type RichStyles = RichStylesWith<()>;
 
 impl Eq for RichStylesWith<()> {}
@@ -1979,18 +1982,18 @@ impl Eq for RichStylesWith<()> {}
 /// schema type is `CT_RichStylePropertyValue`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RpvWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2Rpv,
+pub struct RpvWith<X: UserData> {
     /// The attribute `i`, when the element has it.
     pub i: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2Rpv,
     /// The element's text.
     pub value: String,
 }
 
-/// The `xlrd2:rpv` element of the tree a read gives: [`RpvWith`] holding nothing in `extra`.
+/// The `xlrd2:rpv` element of the tree a read gives: [`RpvWith`] holding nothing in `user_data`.
 pub type Rpv = RpvWith<()>;
 
 impl Eq for RpvWith<()> {}
@@ -1999,21 +2002,21 @@ impl Eq for RpvWith<()> {}
 /// Its schema type is `CT_RichValueTypesInfo`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RvTypesInfoWith<X: NodeExtra> {
+pub struct RvTypesInfoWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2RvTypesInfo,
     /// The child that is `Global`, when there is one.
     pub global: Option<Box<GlobalWith<X>>>,
     /// The child that is `Types`, when there is one.
     pub types: Option<Box<TypesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2RvTypesInfo,
 }
 
 /// The `xlrd2:rvTypesInfo` element of the tree a read gives: [`RvTypesInfoWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type RvTypesInfo = RvTypesInfoWith<()>;
 
 impl Eq for RvTypesInfoWith<()> {}
@@ -2022,16 +2025,16 @@ impl Eq for RvTypesInfoWith<()> {}
 /// schema type is `CT_SupportingPropertyBagStructure`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2S,
+pub struct SWith<X: UserData> {
     /// The children that are `K`, in order.
     pub k: Vec<KWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2S,
 }
 
-/// The `xlrd2:s` element of the tree a read gives: [`SWith`] holding nothing in `extra`.
+/// The `xlrd2:s` element of the tree a read gives: [`SWith`] holding nothing in `user_data`.
 pub type S = SWith<()>;
 
 impl Eq for SWith<()> {}
@@ -2040,18 +2043,18 @@ impl Eq for SWith<()> {}
 /// schema type is `CT_SupportingPropertyBag`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpbWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2Spb,
+pub struct SpbWith<X: UserData> {
     /// The attribute `s`, when the element has it.
     pub s: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2Spb,
     /// The children that are `VSupportingPropertyBagValue`, in order.
     pub v_supporting_property_bag_value: Vec<VSupportingPropertyBagValueWith<X>>,
 }
 
-/// The `xlrd2:spb` element of the tree a read gives: [`SpbWith`] holding nothing in `extra`.
+/// The `xlrd2:spb` element of the tree a read gives: [`SpbWith`] holding nothing in `user_data`.
 pub type Spb = SpbWith<()>;
 
 impl Eq for SpbWith<()> {}
@@ -2060,21 +2063,21 @@ impl Eq for SpbWith<()> {}
 /// Its schema type is `CT_SupportingPropertyBagArrayData`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpbArraysWith<X: NodeExtra> {
+pub struct SpbArraysWith<X: UserData> {
     /// The children that are `ASupportingPropertyBagArray`, in order.
     pub a_supporting_property_bag_array: Vec<ASupportingPropertyBagArrayWith<X>>,
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2SpbArrays,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2SpbArrays,
 }
 
 /// The `xlrd2:spbArrays` element of the tree a read gives: [`SpbArraysWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SpbArrays = SpbArraysWith<()>;
 
 impl Eq for SpbArraysWith<()> {}
@@ -2083,21 +2086,21 @@ impl Eq for SpbArraysWith<()> {}
 /// schema type is `CT_SupportingPropertyBagData`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpbDataWith<X: NodeExtra> {
+pub struct SpbDataWith<X: UserData> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2SpbData,
     /// The children that are `Spb`, in order.
     pub spb: Vec<SpbWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2SpbData,
 }
 
 /// The `xlrd2:spbData` element of the tree a read gives: [`SpbDataWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SpbData = SpbDataWith<()>;
 
 impl Eq for SpbDataWith<()> {}
@@ -2106,21 +2109,21 @@ impl Eq for SpbDataWith<()> {}
 /// 3.5.1. Its schema type is `CT_SupportingPropertyBagStructures`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpbStructuresWith<X: NodeExtra> {
+pub struct SpbStructuresWith<X: UserData> {
     /// The attribute `count`, when the element has it.
     pub count: Option<String>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2SpbStructures,
     /// The children that are `S`, in order.
     pub s: Vec<SWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2SpbStructures,
 }
 
 /// The `xlrd2:spbStructures` element of the tree a read gives: [`SpbStructuresWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type SpbStructures = SpbStructuresWith<()>;
 
 impl Eq for SpbStructuresWith<()> {}
@@ -2189,19 +2192,19 @@ pub enum SupportingPropertyBagValueTypeMember {
 /// version 3.5.1. Its schema type is `CT_SupportingPropertyBags`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SupportingPropertyBagsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2SupportingPropertyBags,
+pub struct SupportingPropertyBagsWith<X: UserData> {
     /// The child that is `SpbArrays`, when there is one.
     pub spb_arrays: Option<Box<SpbArraysWith<X>>>,
     /// The child that is `SpbData`, which the schema requires.
     pub spb_data: Box<SpbDataWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2SupportingPropertyBags,
 }
 
 /// The `xlrd2:supportingPropertyBags` element of the tree a read gives:
-/// [`SupportingPropertyBagsWith`] holding nothing in `extra`.
+/// [`SupportingPropertyBagsWith`] holding nothing in `user_data`.
 pub type SupportingPropertyBags = SupportingPropertyBagsWith<()>;
 
 impl Eq for SupportingPropertyBagsWith<()> {}
@@ -2210,9 +2213,7 @@ impl Eq for SupportingPropertyBagsWith<()> {}
 /// schema type is `CT_RichTop10`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Top10With<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2Top10,
+pub struct Top10With<X: UserData> {
     /// The attribute `filterVal`, when the element has it.
     pub filter_val: Option<String>,
     /// The attribute `key`, when the element has it.
@@ -2223,11 +2224,14 @@ pub struct Top10With<X: NodeExtra> {
     pub top: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2Top10,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The `xlrd2:top10` element of the tree a read gives: [`Top10With`] holding nothing in `extra`.
+/// The `xlrd2:top10` element of the tree a read gives: [`Top10With`] holding nothing in
+/// `user_data`.
 pub type Top10 = Top10With<()>;
 
 impl Eq for Top10With<()> {}
@@ -2236,20 +2240,20 @@ impl Eq for Top10With<()> {}
 /// schema type is `CT_RichValueType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TypeWith<X: NodeExtra> {
+pub struct TypeWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2Type,
     /// The child that is `KeyFlags`, when there is one.
     pub key_flags: Option<Box<KeyFlagsWith<X>>>,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2Type,
 }
 
-/// The `xlrd2:type` element of the tree a read gives: [`TypeWith`] holding nothing in `extra`.
+/// The `xlrd2:type` element of the tree a read gives: [`TypeWith`] holding nothing in `user_data`.
 pub type Type = TypeWith<()>;
 
 impl Eq for TypeWith<()> {}
@@ -2258,16 +2262,17 @@ impl Eq for TypeWith<()> {}
 /// schema type is `CT_RichValueTypes`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TypesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2Types,
+pub struct TypesWith<X: UserData> {
     /// The children that are `Type`, in order.
     pub r#type: Vec<TypeWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2Types,
 }
 
-/// The `xlrd2:types` element of the tree a read gives: [`TypesWith`] holding nothing in `extra`.
+/// The `xlrd2:types` element of the tree a read gives: [`TypesWith`] holding nothing in
+/// `user_data`.
 pub type Types = TypesWith<()>;
 
 impl Eq for TypesWith<()> {}
@@ -2276,18 +2281,19 @@ impl Eq for TypesWith<()> {}
 /// schema type is `CT_ArrayValue`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VArrayValueWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2VArrayValue,
+pub struct VArrayValueWith<X: UserData> {
     /// The attribute `t`, when the element has it.
     pub t: Option<ArrayValueType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2VArrayValue,
     /// The element's text.
     pub value: String,
 }
 
-/// The `xlrd2:v` element of the tree a read gives: [`VArrayValueWith`] holding nothing in `extra`.
+/// The `xlrd2:v` element of the tree a read gives: [`VArrayValueWith`] holding nothing in
+/// `user_data`.
 pub type VArrayValue = VArrayValueWith<()>;
 
 impl Eq for VArrayValueWith<()> {}
@@ -2296,19 +2302,19 @@ impl Eq for VArrayValueWith<()> {}
 /// schema type is `CT_SupportingPropertyBagArrayValue`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VSupportingPropertyBagArrayValueWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2VSupportingPropertyBagArrayValue,
+pub struct VSupportingPropertyBagArrayValueWith<X: UserData> {
     /// The attribute `t`, when the element has it.
     pub t: Option<SupportingPropertyBagArrayValueType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2VSupportingPropertyBagArrayValue,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xlrd2:v` element of the tree a read gives: [`VSupportingPropertyBagArrayValueWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type VSupportingPropertyBagArrayValue = VSupportingPropertyBagArrayValueWith<()>;
 
 impl Eq for VSupportingPropertyBagArrayValueWith<()> {}
@@ -2317,17 +2323,17 @@ impl Eq for VSupportingPropertyBagArrayValueWith<()> {}
 /// schema type is `CT_SupportingPropertyBagValue`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VSupportingPropertyBagValueWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2017Richdata2VSupportingPropertyBagValue,
+pub struct VSupportingPropertyBagValueWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2017Richdata2VSupportingPropertyBagValue,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xlrd2:v` element of the tree a read gives: [`VSupportingPropertyBagValueWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type VSupportingPropertyBagValue = VSupportingPropertyBagValueWith<()>;
 
 impl Eq for VSupportingPropertyBagValueWith<()> {}
@@ -2572,22 +2578,22 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> AArrayWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AArrayWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AArrayWith<Y>
+    pub fn into_user_data<Y>(self) -> AArrayWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AArrayWith {
             c: self.c,
-            extra: Default::default(),
             r: self.r,
             unknown: self.unknown,
-            v_array_value: officekit_markup_base::into_extra_list(
+            user_data: Default::default(),
+            v_array_value: officekit_markup_base::into_user_data_list(
                 self.v_array_value,
-                VArrayValueWith::into_extra,
+                VArrayValueWith::into_user_data,
             ),
         }
     }
@@ -2616,21 +2622,21 @@ impl officekit_markup_base::Write for AArray {
     }
 }
 
-impl<X: NodeExtra> ASupportingPropertyBagArrayWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ASupportingPropertyBagArrayWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ASupportingPropertyBagArrayWith<Y>
+    pub fn into_user_data<Y>(self) -> ASupportingPropertyBagArrayWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ASupportingPropertyBagArrayWith {
             count: self.count,
-            extra: Default::default(),
             unknown: self.unknown,
-            v_supporting_property_bag_array_value: officekit_markup_base::into_extra_list(
+            user_data: Default::default(),
+            v_supporting_property_bag_array_value: officekit_markup_base::into_user_data_list(
                 self.v_supporting_property_bag_array_value,
-                VSupportingPropertyBagArrayValueWith::into_extra,
+                VSupportingPropertyBagArrayValueWith::into_user_data,
             ),
         }
     }
@@ -2658,23 +2664,26 @@ impl officekit_markup_base::Write for ASupportingPropertyBagArray {
     }
 }
 
-impl<X: NodeExtra> ArrayDataWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArrayDataWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ArrayDataWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ArrayDataWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArrayDataWith {
-            a_array: officekit_markup_base::into_extra_list(self.a_array, AArrayWith::into_extra),
-            count: self.count,
-            ext_lst: officekit_markup_base::into_extra_optional(
-                &mut self.ext_lst,
-                ExtLstWith::into_extra,
+            a_array: officekit_markup_base::into_user_data_list(
+                self.a_array,
+                AArrayWith::into_user_data,
             ),
-            extra: Default::default(),
+            count: self.count,
+            ext_lst: officekit_markup_base::into_user_data_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2755,19 +2764,19 @@ impl ArrayValueType {
     }
 }
 
-impl<X: NodeExtra> CustomFilterWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CustomFilterWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CustomFilterWith<Y>
+    pub fn into_user_data<Y>(self) -> CustomFilterWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CustomFilterWith {
-            extra: Default::default(),
             key: self.key,
             operator: self.operator,
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -2797,22 +2806,22 @@ impl officekit_markup_base::Write for CustomFilter {
     }
 }
 
-impl<X: NodeExtra> CustomFiltersWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CustomFiltersWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CustomFiltersWith<Y>
+    pub fn into_user_data<Y>(self) -> CustomFiltersWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CustomFiltersWith {
             and: self.and,
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                CustomRichFiltersContentWith::into_extra,
+                CustomRichFiltersContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2839,18 +2848,18 @@ impl officekit_markup_base::Write for CustomFilters {
     }
 }
 
-impl<X: NodeExtra> CustomRichFiltersContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> CustomRichFiltersContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CustomRichFiltersContentWith<Y>
+    pub fn into_user_data<Y>(self) -> CustomRichFiltersContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::CustomFilter(node) => {
-                CustomRichFiltersContentWith::CustomFilter(node.into_extra())
+                CustomRichFiltersContentWith::CustomFilter(node.into_user_data())
             }
-            Self::ExtLst(node) => CustomRichFiltersContentWith::ExtLst(node.into_extra()),
+            Self::ExtLst(node) => CustomRichFiltersContentWith::ExtLst(node.into_user_data()),
             Self::Other(node) => CustomRichFiltersContentWith::Other(node),
         }
     }
@@ -2882,24 +2891,24 @@ impl officekit_markup_base::Write for CustomRichFiltersContent {
     }
 }
 
-impl<X: NodeExtra> DateGroupItemWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DateGroupItemWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DateGroupItemWith<Y>
+    pub fn into_user_data<Y>(self) -> DateGroupItemWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DateGroupItemWith {
             date_time_grouping: self.date_time_grouping,
             day: self.day,
-            extra: Default::default(),
             hour: self.hour,
             key: self.key,
             minute: self.minute,
             month: self.month,
             second: self.second,
             unknown: self.unknown,
+            user_data: Default::default(),
             year: self.year,
         }
     }
@@ -2934,22 +2943,22 @@ impl officekit_markup_base::Write for DateGroupItem {
     }
 }
 
-impl<X: NodeExtra> DxfsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DxfsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DxfsWith<Y>
+    pub fn into_user_data<Y>(self) -> DxfsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DxfsWith {
             count: self.count,
-            extra: Default::default(),
-            formatting: officekit_markup_base::into_extra_list(
+            formatting: officekit_markup_base::into_user_data_list(
                 self.formatting,
-                spreadsheet::FormattingWith::into_extra,
+                spreadsheet::FormattingWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2976,21 +2985,21 @@ impl officekit_markup_base::Write for Dxfs {
     }
 }
 
-impl<X: NodeExtra> DynamicFilterWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DynamicFilterWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DynamicFilterWith<Y>
+    pub fn into_user_data<Y>(self) -> DynamicFilterWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DynamicFilterWith {
-            extra: Default::default(),
             key: self.key,
             max_val: self.max_val,
             max_val_iso: self.max_val_iso,
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
             val_iso: self.val_iso,
         }
@@ -3024,21 +3033,21 @@ impl officekit_markup_base::Write for DynamicFilter {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                spreadsheet::ExtensionWith::into_extra,
+                spreadsheet::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3062,20 +3071,20 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> FilterWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FilterWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FilterWith<Y>
+    pub fn into_user_data<Y>(self) -> FilterWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FilterWith {
             blank: self.blank,
-            extra: Default::default(),
             key: self.key,
             nodata: self.nodata,
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -3106,21 +3115,21 @@ impl officekit_markup_base::Write for Filter {
     }
 }
 
-impl<X: NodeExtra> FilterColumnWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FilterColumnWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> FilterColumnWith<Y>
+    pub fn into_user_data<Y>(mut self) -> FilterColumnWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FilterColumnWith {
-            content: officekit_markup_base::into_extra_optional(
+            content: officekit_markup_base::into_user_data_optional(
                 &mut self.content,
-                RichFilterColumnContentWith::into_extra,
+                RichFilterColumnContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3144,26 +3153,29 @@ impl officekit_markup_base::Write for FilterColumn {
     }
 }
 
-impl<X: NodeExtra> FiltersWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FiltersWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> FiltersWith<Y>
+    pub fn into_user_data<Y>(mut self) -> FiltersWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FiltersWith {
-            date_group_item: officekit_markup_base::into_extra_list(
+            date_group_item: officekit_markup_base::into_user_data_list(
                 self.date_group_item,
-                DateGroupItemWith::into_extra,
+                DateGroupItemWith::into_user_data,
             ),
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            filter: officekit_markup_base::into_extra_list(self.filter, FilterWith::into_extra),
+            filter: officekit_markup_base::into_user_data_list(
+                self.filter,
+                FilterWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3187,18 +3199,18 @@ impl officekit_markup_base::Write for Filters {
     }
 }
 
-impl<X: NodeExtra> FlagWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FlagWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FlagWith<Y>
+    pub fn into_user_data<Y>(self) -> FlagWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FlagWith {
-            extra: Default::default(),
             name: self.name,
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3227,25 +3239,25 @@ impl officekit_markup_base::Write for Flag {
     }
 }
 
-impl<X: NodeExtra> GlobalWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> GlobalWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> GlobalWith<Y>
+    pub fn into_user_data<Y>(mut self) -> GlobalWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         GlobalWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            key_flags: officekit_markup_base::into_extra_optional(
+            key_flags: officekit_markup_base::into_user_data_optional(
                 &mut self.key_flags,
-                KeyFlagsWith::into_extra,
+                KeyFlagsWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3269,19 +3281,19 @@ impl officekit_markup_base::Write for Global {
     }
 }
 
-impl<X: NodeExtra> KWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> KWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> KWith<Y>
+    pub fn into_user_data<Y>(self) -> KWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         KWith {
-            extra: Default::default(),
             n: self.n,
             t: self.t,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3309,19 +3321,19 @@ impl officekit_markup_base::Write for K {
     }
 }
 
-impl<X: NodeExtra> KeyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> KeyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> KeyWith<Y>
+    pub fn into_user_data<Y>(self) -> KeyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         KeyWith {
-            extra: Default::default(),
-            flag: officekit_markup_base::into_extra_list(self.flag, FlagWith::into_extra),
+            flag: officekit_markup_base::into_user_data_list(self.flag, FlagWith::into_user_data),
             name: self.name,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3348,18 +3360,18 @@ impl officekit_markup_base::Write for Key {
     }
 }
 
-impl<X: NodeExtra> KeyFlagsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> KeyFlagsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> KeyFlagsWith<Y>
+    pub fn into_user_data<Y>(self) -> KeyFlagsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         KeyFlagsWith {
-            extra: Default::default(),
-            key: officekit_markup_base::into_extra_list(self.key, KeyWith::into_extra),
+            key: officekit_markup_base::into_user_data_list(self.key, KeyWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3383,19 +3395,19 @@ impl officekit_markup_base::Write for KeyFlags {
     }
 }
 
-impl<X: NodeExtra> RPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RPrWith<Y>
+    pub fn into_user_data<Y>(self) -> RPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RPrWith {
-            extra: Default::default(),
             n: self.n,
             t: self.t,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3423,19 +3435,19 @@ impl officekit_markup_base::Write for RPr {
     }
 }
 
-impl<X: NodeExtra> RStyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RStyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RStyWith<Y>
+    pub fn into_user_data<Y>(self) -> RStyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RStyWith {
             dxfid: self.dxfid,
-            extra: Default::default(),
-            rpv: officekit_markup_base::into_extra_list(self.rpv, RpvWith::into_extra),
+            rpv: officekit_markup_base::into_user_data_list(self.rpv, RpvWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3462,24 +3474,24 @@ impl officekit_markup_base::Write for RSty {
     }
 }
 
-impl<X: NodeExtra> RichFilterColumnContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> RichFilterColumnContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RichFilterColumnContentWith<Y>
+    pub fn into_user_data<Y>(self) -> RichFilterColumnContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::CustomFilters(node) => {
-                RichFilterColumnContentWith::CustomFilters(node.into_extra())
+                RichFilterColumnContentWith::CustomFilters(node.into_user_data())
             }
             Self::DynamicFilter(node) => {
-                RichFilterColumnContentWith::DynamicFilter(node.into_extra())
+                RichFilterColumnContentWith::DynamicFilter(node.into_user_data())
             }
-            Self::ExtLst(node) => RichFilterColumnContentWith::ExtLst(node.into_extra()),
-            Self::Filters(node) => RichFilterColumnContentWith::Filters(node.into_extra()),
+            Self::ExtLst(node) => RichFilterColumnContentWith::ExtLst(node.into_user_data()),
+            Self::Filters(node) => RichFilterColumnContentWith::Filters(node.into_user_data()),
             Self::Other(node) => RichFilterColumnContentWith::Other(node),
-            Self::Top10(node) => RichFilterColumnContentWith::Top10(node.into_extra()),
+            Self::Top10(node) => RichFilterColumnContentWith::Top10(node.into_user_data()),
         }
     }
 }
@@ -3573,18 +3585,18 @@ impl RichFormatPropertyType {
     }
 }
 
-impl<X: NodeExtra> RichPropertiesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RichPropertiesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RichPropertiesWith<Y>
+    pub fn into_user_data<Y>(self) -> RichPropertiesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RichPropertiesWith {
-            extra: Default::default(),
-            r_pr: officekit_markup_base::into_extra_list(self.r_pr, RPrWith::into_extra),
+            r_pr: officekit_markup_base::into_user_data_list(self.r_pr, RPrWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3608,25 +3620,25 @@ impl officekit_markup_base::Write for RichProperties {
     }
 }
 
-impl<X: NodeExtra> RichSortConditionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RichSortConditionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RichSortConditionWith<Y>
+    pub fn into_user_data<Y>(self) -> RichSortConditionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RichSortConditionWith {
             custom_list: self.custom_list,
             descending: self.descending,
             dxf_id: self.dxf_id,
-            extra: Default::default(),
             icon_id: self.icon_id,
             icon_set: self.icon_set,
             r#ref: self.r#ref,
             rich_sort_key: self.rich_sort_key,
             sort_by: self.sort_by,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3660,30 +3672,33 @@ impl officekit_markup_base::Write for RichSortCondition {
     }
 }
 
-impl<X: NodeExtra> RichStyleSheetWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RichStyleSheetWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> RichStyleSheetWith<Y>
+    pub fn into_user_data<Y>(mut self) -> RichStyleSheetWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RichStyleSheetWith {
-            dxfs: officekit_markup_base::into_extra_optional(&mut self.dxfs, DxfsWith::into_extra),
-            ext_lst: officekit_markup_base::into_extra_optional(
+            dxfs: officekit_markup_base::into_user_data_optional(
+                &mut self.dxfs,
+                DxfsWith::into_user_data,
+            ),
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            rich_properties: officekit_markup_base::into_extra_optional(
+            rich_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.rich_properties,
-                RichPropertiesWith::into_extra,
+                RichPropertiesWith::into_user_data,
             ),
-            rich_styles: officekit_markup_base::into_extra_optional(
+            rich_styles: officekit_markup_base::into_user_data_optional(
                 &mut self.rich_styles,
-                RichStylesWith::into_extra,
+                RichStylesWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3707,18 +3722,18 @@ impl officekit_markup_base::Write for RichStyleSheet {
     }
 }
 
-impl<X: NodeExtra> RichStylesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RichStylesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RichStylesWith<Y>
+    pub fn into_user_data<Y>(self) -> RichStylesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RichStylesWith {
-            extra: Default::default(),
-            r_sty: officekit_markup_base::into_extra_list(self.r_sty, RStyWith::into_extra),
+            r_sty: officekit_markup_base::into_user_data_list(self.r_sty, RStyWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3742,18 +3757,18 @@ impl officekit_markup_base::Write for RichStyles {
     }
 }
 
-impl<X: NodeExtra> RpvWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RpvWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RpvWith<Y>
+    pub fn into_user_data<Y>(self) -> RpvWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RpvWith {
-            extra: Default::default(),
             i: self.i,
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3782,29 +3797,29 @@ impl officekit_markup_base::Write for Rpv {
     }
 }
 
-impl<X: NodeExtra> RvTypesInfoWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RvTypesInfoWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> RvTypesInfoWith<Y>
+    pub fn into_user_data<Y>(mut self) -> RvTypesInfoWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RvTypesInfoWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            global: officekit_markup_base::into_extra_optional(
+            global: officekit_markup_base::into_user_data_optional(
                 &mut self.global,
-                GlobalWith::into_extra,
+                GlobalWith::into_user_data,
             ),
-            types: officekit_markup_base::into_extra_optional(
+            types: officekit_markup_base::into_user_data_optional(
                 &mut self.types,
-                TypesWith::into_extra,
+                TypesWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3828,18 +3843,18 @@ impl officekit_markup_base::Write for RvTypesInfo {
     }
 }
 
-impl<X: NodeExtra> SWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SWith<Y>
+    pub fn into_user_data<Y>(self) -> SWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SWith {
-            extra: Default::default(),
-            k: officekit_markup_base::into_extra_list(self.k, KWith::into_extra),
+            k: officekit_markup_base::into_user_data_list(self.k, KWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3863,21 +3878,21 @@ impl officekit_markup_base::Write for S {
     }
 }
 
-impl<X: NodeExtra> SpbWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SpbWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SpbWith<Y>
+    pub fn into_user_data<Y>(self) -> SpbWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SpbWith {
-            extra: Default::default(),
             s: self.s,
             unknown: self.unknown,
-            v_supporting_property_bag_value: officekit_markup_base::into_extra_list(
+            user_data: Default::default(),
+            v_supporting_property_bag_value: officekit_markup_base::into_user_data_list(
                 self.v_supporting_property_bag_value,
-                VSupportingPropertyBagValueWith::into_extra,
+                VSupportingPropertyBagValueWith::into_user_data,
             ),
         }
     }
@@ -3905,26 +3920,26 @@ impl officekit_markup_base::Write for Spb {
     }
 }
 
-impl<X: NodeExtra> SpbArraysWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SpbArraysWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SpbArraysWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SpbArraysWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SpbArraysWith {
-            a_supporting_property_bag_array: officekit_markup_base::into_extra_list(
+            a_supporting_property_bag_array: officekit_markup_base::into_user_data_list(
                 self.a_supporting_property_bag_array,
-                ASupportingPropertyBagArrayWith::into_extra,
+                ASupportingPropertyBagArrayWith::into_user_data,
             ),
             count: self.count,
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3951,23 +3966,23 @@ impl officekit_markup_base::Write for SpbArrays {
     }
 }
 
-impl<X: NodeExtra> SpbDataWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SpbDataWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SpbDataWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SpbDataWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SpbDataWith {
             count: self.count,
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            spb: officekit_markup_base::into_extra_list(self.spb, SpbWith::into_extra),
+            spb: officekit_markup_base::into_user_data_list(self.spb, SpbWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3994,23 +4009,23 @@ impl officekit_markup_base::Write for SpbData {
     }
 }
 
-impl<X: NodeExtra> SpbStructuresWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SpbStructuresWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SpbStructuresWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SpbStructuresWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SpbStructuresWith {
             count: self.count,
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            s: officekit_markup_base::into_extra_list(self.s, SWith::into_extra),
+            s: officekit_markup_base::into_user_data_list(self.s, SWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4150,25 +4165,25 @@ impl SupportingPropertyBagValueType {
     }
 }
 
-impl<X: NodeExtra> SupportingPropertyBagsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SupportingPropertyBagsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SupportingPropertyBagsWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SupportingPropertyBagsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SupportingPropertyBagsWith {
-            extra: Default::default(),
-            spb_arrays: officekit_markup_base::into_extra_optional(
+            spb_arrays: officekit_markup_base::into_user_data_optional(
                 &mut self.spb_arrays,
-                SpbArraysWith::into_extra,
+                SpbArraysWith::into_user_data,
             ),
-            spb_data: officekit_markup_base::into_extra_required(
+            spb_data: officekit_markup_base::into_user_data_required(
                 *self.spb_data,
-                SpbDataWith::into_extra,
+                SpbDataWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4192,21 +4207,21 @@ impl officekit_markup_base::Write for SupportingPropertyBags {
     }
 }
 
-impl<X: NodeExtra> Top10With<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> Top10With<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> Top10With<Y>
+    pub fn into_user_data<Y>(self) -> Top10With<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         Top10With {
-            extra: Default::default(),
             filter_val: self.filter_val,
             key: self.key,
             percent: self.percent,
             top: self.top,
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -4238,26 +4253,26 @@ impl officekit_markup_base::Write for Top10 {
     }
 }
 
-impl<X: NodeExtra> TypeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TypeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> TypeWith<Y>
+    pub fn into_user_data<Y>(mut self) -> TypeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TypeWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            key_flags: officekit_markup_base::into_extra_optional(
+            key_flags: officekit_markup_base::into_user_data_optional(
                 &mut self.key_flags,
-                KeyFlagsWith::into_extra,
+                KeyFlagsWith::into_user_data,
             ),
             name: self.name,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4284,18 +4299,21 @@ impl officekit_markup_base::Write for Type {
     }
 }
 
-impl<X: NodeExtra> TypesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TypesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TypesWith<Y>
+    pub fn into_user_data<Y>(self) -> TypesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TypesWith {
-            extra: Default::default(),
-            r#type: officekit_markup_base::into_extra_list(self.r#type, TypeWith::into_extra),
+            r#type: officekit_markup_base::into_user_data_list(
+                self.r#type,
+                TypeWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4319,18 +4337,18 @@ impl officekit_markup_base::Write for Types {
     }
 }
 
-impl<X: NodeExtra> VArrayValueWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> VArrayValueWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> VArrayValueWith<Y>
+    pub fn into_user_data<Y>(self) -> VArrayValueWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         VArrayValueWith {
-            extra: Default::default(),
             t: self.t,
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4359,18 +4377,18 @@ impl officekit_markup_base::Write for VArrayValue {
     }
 }
 
-impl<X: NodeExtra> VSupportingPropertyBagArrayValueWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> VSupportingPropertyBagArrayValueWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> VSupportingPropertyBagArrayValueWith<Y>
+    pub fn into_user_data<Y>(self) -> VSupportingPropertyBagArrayValueWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         VSupportingPropertyBagArrayValueWith {
-            extra: Default::default(),
             t: self.t,
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4399,17 +4417,17 @@ impl officekit_markup_base::Write for VSupportingPropertyBagArrayValue {
     }
 }
 
-impl<X: NodeExtra> VSupportingPropertyBagValueWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> VSupportingPropertyBagValueWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> VSupportingPropertyBagValueWith<Y>
+    pub fn into_user_data<Y>(self) -> VSupportingPropertyBagValueWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         VSupportingPropertyBagValueWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }

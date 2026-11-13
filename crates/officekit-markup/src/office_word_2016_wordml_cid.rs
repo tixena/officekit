@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -250,19 +250,19 @@ pub static COMMENTS_IDS_SHAPE: officekit_markup_base::Shape = officekit_markup_b
 /// Its schema type is `CT_CommentId`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentIdWith<X: NodeExtra> {
+pub struct CommentIdWith<X: UserData> {
     /// The attribute `w16cid:durableId`, when the element has it.
     pub durable_id: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2016WordmlCidCommentId,
     /// The attribute `w16cid:paraId`, when the element has it.
     pub para_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2016WordmlCidCommentId,
 }
 
 /// The `w16cid:commentId` element of the tree a read gives: [`CommentIdWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CommentId = CommentIdWith<()>;
 
 impl Eq for CommentIdWith<()> {}
@@ -271,17 +271,17 @@ impl Eq for CommentIdWith<()> {}
 /// 3.5.1. Its schema type is `CT_CommentsIds`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentsIdsWith<X: NodeExtra> {
+pub struct CommentsIdsWith<X: UserData> {
     /// The children that are `CommentId`, in order.
     pub comment_id: Vec<CommentIdWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2016WordmlCidCommentsIds,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2016WordmlCidCommentsIds,
 }
 
 /// The `w16cid:commentsIds` element of the tree a read gives: [`CommentsIdsWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type CommentsIds = CommentsIdsWith<()>;
 
 impl Eq for CommentsIdsWith<()> {}
@@ -355,19 +355,19 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> CommentIdWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CommentIdWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CommentIdWith<Y>
+    pub fn into_user_data<Y>(self) -> CommentIdWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CommentIdWith {
             durable_id: self.durable_id,
-            extra: Default::default(),
             para_id: self.para_id,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -395,21 +395,21 @@ impl officekit_markup_base::Write for CommentId {
     }
 }
 
-impl<X: NodeExtra> CommentsIdsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CommentsIdsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CommentsIdsWith<Y>
+    pub fn into_user_data<Y>(self) -> CommentsIdsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CommentsIdsWith {
-            comment_id: officekit_markup_base::into_extra_list(
+            comment_id: officekit_markup_base::into_user_data_list(
                 self.comment_id,
-                CommentIdWith::into_extra,
+                CommentIdWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

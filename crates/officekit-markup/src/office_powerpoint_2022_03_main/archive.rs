@@ -224,8 +224,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<presentation::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -234,36 +234,36 @@ pub struct ExtLstMirror {
 pub struct InstanceMirror {
     pub author_id: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub time: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Reactions)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReactionsMirror {
-    pub extra: (),
     pub rxn: Vec<super::Rxn>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Rxn)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RxnMirror {
-    pub extra: (),
     pub instance: Vec<super::Instance>,
     pub r#type: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -302,9 +302,9 @@ impl From<InstanceMirror> for super::Instance {
         Self {
             author_id: item.author_id,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             time: item.time,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -341,9 +341,9 @@ where
 impl From<ReactionsMirror> for super::Reactions {
     fn from(item: ReactionsMirror) -> Self {
         Self {
-            extra: item.extra,
             rxn: item.rxn,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -380,10 +380,10 @@ where
 impl From<RxnMirror> for super::Rxn {
     fn from(item: RxnMirror) -> Self {
         Self {
-            extra: item.extra,
             instance: item.instance,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

@@ -223,18 +223,18 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct SvgBlipMirror {
     pub embed: Option<String>,
-    pub extra: (),
     pub link: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<SvgBlipMirror> for super::SvgBlip {
     fn from(item: SvgBlipMirror) -> Self {
         Self {
             embed: item.embed,
-            extra: item.extra,
             link: item.link,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

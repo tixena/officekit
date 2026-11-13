@@ -223,8 +223,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Anchor)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AnchorMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -233,17 +233,17 @@ pub struct AnchorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AttachedObjectDataMirror {
     pub content: Vec<super::AttachedObjectDataContent>,
-    pub extra: (),
     pub object_type: Option<super::ObjectType>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::AutoFill)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutoFillMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -251,8 +251,8 @@ pub struct AutoFillMirror {
 #[rkyv(remote = super::AutoLine)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutoLineMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -260,8 +260,8 @@ pub struct AutoLineMirror {
 #[rkyv(remote = super::AutomaticallySize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutomaticallySizeMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -269,8 +269,8 @@ pub struct AutomaticallySizeMirror {
 #[rkyv(remote = super::CallbackType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CallbackTypeMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -278,8 +278,8 @@ pub struct CallbackTypeMirror {
 #[rkyv(remote = super::CameraSourceRange)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CameraSourceRangeMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -287,8 +287,8 @@ pub struct CameraSourceRangeMirror {
 #[rkyv(remote = super::CameraTool)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CameraToolMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -296,8 +296,8 @@ pub struct CameraToolMirror {
 #[rkyv(remote = super::CancelButton)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CancelButtonMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -305,8 +305,8 @@ pub struct CancelButtonMirror {
 #[rkyv(remote = super::Checked)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CheckedMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -314,8 +314,8 @@ pub struct CheckedMirror {
 #[rkyv(remote = super::ClipboardFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ClipboardFormatMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -323,8 +323,8 @@ pub struct ClipboardFormatMirror {
 #[rkyv(remote = super::CommentColumnTarget)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentColumnTargetMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -332,8 +332,8 @@ pub struct CommentColumnTargetMirror {
 #[rkyv(remote = super::CommentRowTarget)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentRowTargetMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -341,8 +341,8 @@ pub struct CommentRowTargetMirror {
 #[rkyv(remote = super::CommentVisibilityToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentVisibilityToggleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -350,8 +350,8 @@ pub struct CommentVisibilityToggleMirror {
 #[rkyv(remote = super::CommentsColumnIsHidden)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentsColumnIsHiddenMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -359,8 +359,8 @@ pub struct CommentsColumnIsHiddenMirror {
 #[rkyv(remote = super::CommentsRowIsHidden)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentsRowIsHiddenMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -368,8 +368,8 @@ pub struct CommentsRowIsHiddenMirror {
 #[rkyv(remote = super::DefaultButton)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultButtonMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -377,8 +377,8 @@ pub struct DefaultButtonMirror {
 #[rkyv(remote = super::DefaultSizeToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultSizeToggleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -386,8 +386,8 @@ pub struct DefaultSizeToggleMirror {
 #[rkyv(remote = super::Disable3DNoThreeD)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Disable3DNoThreeDMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -395,8 +395,8 @@ pub struct Disable3DNoThreeDMirror {
 #[rkyv(remote = super::Disable3DNoThreeD2)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Disable3DNoThreeD2Mirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -404,8 +404,8 @@ pub struct Disable3DNoThreeD2Mirror {
 #[rkyv(remote = super::DismissButton)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DismissButtonMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -413,8 +413,8 @@ pub struct DismissButtonMirror {
 #[rkyv(remote = super::DropdownColorToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropdownColorToggleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -422,8 +422,8 @@ pub struct DropdownColorToggleMirror {
 #[rkyv(remote = super::DropdownMaximumLines)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropdownMaximumLinesMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -431,8 +431,8 @@ pub struct DropdownMaximumLinesMirror {
 #[rkyv(remote = super::DropdownStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropdownStyleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -440,8 +440,8 @@ pub struct DropdownStyleMirror {
 #[rkyv(remote = super::DynamicDataExchange)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DynamicDataExchangeMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -449,8 +449,8 @@ pub struct DynamicDataExchangeMirror {
 #[rkyv(remote = super::EmbeddedControl)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbeddedControlMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -458,8 +458,8 @@ pub struct EmbeddedControlMirror {
 #[rkyv(remote = super::FarEastAlignmentToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FarEastAlignmentToggleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -467,8 +467,8 @@ pub struct FarEastAlignmentToggleMirror {
 #[rkyv(remote = super::FirstRadioButton)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FirstRadioButtonMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -476,8 +476,8 @@ pub struct FirstRadioButtonMirror {
 #[rkyv(remote = super::FontAutoScale)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FontAutoScaleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -485,8 +485,8 @@ pub struct FontAutoScaleMirror {
 #[rkyv(remote = super::HTMLScriptAttributes)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HTMLScriptAttributesMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -494,8 +494,8 @@ pub struct HTMLScriptAttributesMirror {
 #[rkyv(remote = super::HTMLScriptLanguage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HTMLScriptLanguageMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -503,8 +503,8 @@ pub struct HTMLScriptLanguageMirror {
 #[rkyv(remote = super::HTMLScriptLocation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HTMLScriptLocationMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -512,8 +512,8 @@ pub struct HTMLScriptLocationMirror {
 #[rkyv(remote = super::HTMLScriptText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HTMLScriptTextMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -521,8 +521,8 @@ pub struct HTMLScriptTextMirror {
 #[rkyv(remote = super::HelpButton)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HelpButtonMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -530,8 +530,8 @@ pub struct HelpButtonMirror {
 #[rkyv(remote = super::HorizontalTextAlignment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HorizontalTextAlignmentMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -539,8 +539,8 @@ pub struct HorizontalTextAlignmentMirror {
 #[rkyv(remote = super::LinkedFormula)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LinkedFormulaMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -548,8 +548,8 @@ pub struct LinkedFormulaMirror {
 #[rkyv(remote = super::LinkedFormulaGroupBox)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LinkedFormulaGroupBoxMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -557,8 +557,8 @@ pub struct LinkedFormulaGroupBoxMirror {
 #[rkyv(remote = super::ListItemsSourceRange)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ListItemsSourceRangeMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -566,8 +566,8 @@ pub struct ListItemsSourceRangeMirror {
 #[rkyv(remote = super::LockToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LockToggleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -575,8 +575,8 @@ pub struct LockToggleMirror {
 #[rkyv(remote = super::MacroDisableToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MacroDisableToggleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -584,8 +584,8 @@ pub struct MacroDisableToggleMirror {
 #[rkyv(remote = super::MinimumWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MinimumWidthMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -593,8 +593,8 @@ pub struct MinimumWidthMirror {
 #[rkyv(remote = super::MoveWithCells)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MoveWithCellsMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -602,8 +602,8 @@ pub struct MoveWithCellsMirror {
 #[rkyv(remote = super::MultiLine)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MultiLineMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -611,8 +611,8 @@ pub struct MultiLineMirror {
 #[rkyv(remote = super::MultipleSelections)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MultipleSelectionsMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -620,8 +620,8 @@ pub struct MultipleSelectionsMirror {
 #[rkyv(remote = super::NonLinkedListItem)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonLinkedListItemMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -629,8 +629,8 @@ pub struct NonLinkedListItemMirror {
 #[rkyv(remote = super::PasswordEdit)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PasswordEditMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -638,8 +638,8 @@ pub struct PasswordEditMirror {
 #[rkyv(remote = super::PrimaryKeyboardAccelerator)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrimaryKeyboardAcceleratorMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -647,8 +647,8 @@ pub struct PrimaryKeyboardAcceleratorMirror {
 #[rkyv(remote = super::PrintToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrintToggleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -656,8 +656,8 @@ pub struct PrintToggleMirror {
 #[rkyv(remote = super::RecalculationToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RecalculationToggleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -665,8 +665,8 @@ pub struct RecalculationToggleMirror {
 #[rkyv(remote = super::ReferenceToCustomFunction)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferenceToCustomFunctionMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -674,8 +674,8 @@ pub struct ReferenceToCustomFunctionMirror {
 #[rkyv(remote = super::ResizeWithCells)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ResizeWithCellsMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -683,8 +683,8 @@ pub struct ResizeWithCellsMirror {
 #[rkyv(remote = super::ScrollBarIncrement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScrollBarIncrementMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -692,8 +692,8 @@ pub struct ScrollBarIncrementMirror {
 #[rkyv(remote = super::ScrollBarMaximum)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScrollBarMaximumMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -701,8 +701,8 @@ pub struct ScrollBarMaximumMirror {
 #[rkyv(remote = super::ScrollBarMinimum)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScrollBarMinimumMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -710,8 +710,8 @@ pub struct ScrollBarMinimumMirror {
 #[rkyv(remote = super::ScrollBarOrientation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScrollBarOrientationMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -719,8 +719,8 @@ pub struct ScrollBarOrientationMirror {
 #[rkyv(remote = super::ScrollBarPageIncrement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScrollBarPageIncrementMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -728,8 +728,8 @@ pub struct ScrollBarPageIncrementMirror {
 #[rkyv(remote = super::ScrollBarPosition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScrollBarPositionMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -737,8 +737,8 @@ pub struct ScrollBarPositionMirror {
 #[rkyv(remote = super::ScrollBarWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScrollBarWidthMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -746,8 +746,8 @@ pub struct ScrollBarWidthMirror {
 #[rkyv(remote = super::SecondaryKeyboardAccelerator)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SecondaryKeyboardAcceleratorMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -755,8 +755,8 @@ pub struct SecondaryKeyboardAcceleratorMirror {
 #[rkyv(remote = super::SelectedEntry)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SelectedEntryMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -764,8 +764,8 @@ pub struct SelectedEntryMirror {
 #[rkyv(remote = super::SelectionType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SelectionTypeMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -773,8 +773,8 @@ pub struct SelectionTypeMirror {
 #[rkyv(remote = super::TextFormula)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextFormulaMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -782,8 +782,8 @@ pub struct TextFormulaMirror {
 #[rkyv(remote = super::TextLock)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextLockMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -791,8 +791,8 @@ pub struct TextLockMirror {
 #[rkyv(remote = super::UIObjectToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UIObjectToggleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -800,8 +800,8 @@ pub struct UIObjectToggleMirror {
 #[rkyv(remote = super::ValidID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ValidIDMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -809,8 +809,8 @@ pub struct ValidIDMirror {
 #[rkyv(remote = super::ValidationType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ValidationTypeMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -818,8 +818,8 @@ pub struct ValidationTypeMirror {
 #[rkyv(remote = super::VerticalScroll)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VerticalScrollMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
@@ -827,8 +827,8 @@ pub struct VerticalScrollMirror {
 #[rkyv(remote = super::VerticalTextAlignment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VerticalTextAlignmentMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -909,8 +909,8 @@ pub enum AttachedObjectDataContent {
 impl From<AnchorMirror> for super::Anchor {
     fn from(item: AnchorMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -949,9 +949,9 @@ impl From<AttachedObjectDataMirror> for super::AttachedObjectData {
     fn from(item: AttachedObjectDataMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             object_type: item.object_type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -988,8 +988,8 @@ where
 impl From<AutoFillMirror> for super::AutoFill {
     fn from(item: AutoFillMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1027,8 +1027,8 @@ where
 impl From<AutoLineMirror> for super::AutoLine {
     fn from(item: AutoLineMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1066,8 +1066,8 @@ where
 impl From<AutomaticallySizeMirror> for super::AutomaticallySize {
     fn from(item: AutomaticallySizeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1105,8 +1105,8 @@ where
 impl From<CallbackTypeMirror> for super::CallbackType {
     fn from(item: CallbackTypeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1144,8 +1144,8 @@ where
 impl From<CameraSourceRangeMirror> for super::CameraSourceRange {
     fn from(item: CameraSourceRangeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1183,8 +1183,8 @@ where
 impl From<CameraToolMirror> for super::CameraTool {
     fn from(item: CameraToolMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1222,8 +1222,8 @@ where
 impl From<CancelButtonMirror> for super::CancelButton {
     fn from(item: CancelButtonMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1261,8 +1261,8 @@ where
 impl From<CheckedMirror> for super::Checked {
     fn from(item: CheckedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1300,8 +1300,8 @@ where
 impl From<ClipboardFormatMirror> for super::ClipboardFormat {
     fn from(item: ClipboardFormatMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1339,8 +1339,8 @@ where
 impl From<CommentColumnTargetMirror> for super::CommentColumnTarget {
     fn from(item: CommentColumnTargetMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1381,8 +1381,8 @@ where
 impl From<CommentRowTargetMirror> for super::CommentRowTarget {
     fn from(item: CommentRowTargetMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1420,8 +1420,8 @@ where
 impl From<CommentVisibilityToggleMirror> for super::CommentVisibilityToggle {
     fn from(item: CommentVisibilityToggleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1463,8 +1463,8 @@ where
 impl From<CommentsColumnIsHiddenMirror> for super::CommentsColumnIsHidden {
     fn from(item: CommentsColumnIsHiddenMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1506,8 +1506,8 @@ where
 impl From<CommentsRowIsHiddenMirror> for super::CommentsRowIsHidden {
     fn from(item: CommentsRowIsHiddenMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1548,8 +1548,8 @@ where
 impl From<DefaultButtonMirror> for super::DefaultButton {
     fn from(item: DefaultButtonMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1587,8 +1587,8 @@ where
 impl From<DefaultSizeToggleMirror> for super::DefaultSizeToggle {
     fn from(item: DefaultSizeToggleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1626,8 +1626,8 @@ where
 impl From<Disable3DNoThreeDMirror> for super::Disable3DNoThreeD {
     fn from(item: Disable3DNoThreeDMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1665,8 +1665,8 @@ where
 impl From<Disable3DNoThreeD2Mirror> for super::Disable3DNoThreeD2 {
     fn from(item: Disable3DNoThreeD2Mirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1704,8 +1704,8 @@ where
 impl From<DismissButtonMirror> for super::DismissButton {
     fn from(item: DismissButtonMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1743,8 +1743,8 @@ where
 impl From<DropdownColorToggleMirror> for super::DropdownColorToggle {
     fn from(item: DropdownColorToggleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1785,8 +1785,8 @@ where
 impl From<DropdownMaximumLinesMirror> for super::DropdownMaximumLines {
     fn from(item: DropdownMaximumLinesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1827,8 +1827,8 @@ where
 impl From<DropdownStyleMirror> for super::DropdownStyle {
     fn from(item: DropdownStyleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1866,8 +1866,8 @@ where
 impl From<DynamicDataExchangeMirror> for super::DynamicDataExchange {
     fn from(item: DynamicDataExchangeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1908,8 +1908,8 @@ where
 impl From<EmbeddedControlMirror> for super::EmbeddedControl {
     fn from(item: EmbeddedControlMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1947,8 +1947,8 @@ where
 impl From<FarEastAlignmentToggleMirror> for super::FarEastAlignmentToggle {
     fn from(item: FarEastAlignmentToggleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1990,8 +1990,8 @@ where
 impl From<FirstRadioButtonMirror> for super::FirstRadioButton {
     fn from(item: FirstRadioButtonMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2029,8 +2029,8 @@ where
 impl From<FontAutoScaleMirror> for super::FontAutoScale {
     fn from(item: FontAutoScaleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2068,8 +2068,8 @@ where
 impl From<HTMLScriptAttributesMirror> for super::HTMLScriptAttributes {
     fn from(item: HTMLScriptAttributesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2110,8 +2110,8 @@ where
 impl From<HTMLScriptLanguageMirror> for super::HTMLScriptLanguage {
     fn from(item: HTMLScriptLanguageMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2149,8 +2149,8 @@ where
 impl From<HTMLScriptLocationMirror> for super::HTMLScriptLocation {
     fn from(item: HTMLScriptLocationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2188,8 +2188,8 @@ where
 impl From<HTMLScriptTextMirror> for super::HTMLScriptText {
     fn from(item: HTMLScriptTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2227,8 +2227,8 @@ where
 impl From<HelpButtonMirror> for super::HelpButton {
     fn from(item: HelpButtonMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2266,8 +2266,8 @@ where
 impl From<HorizontalTextAlignmentMirror> for super::HorizontalTextAlignment {
     fn from(item: HorizontalTextAlignmentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2309,8 +2309,8 @@ where
 impl From<LinkedFormulaMirror> for super::LinkedFormula {
     fn from(item: LinkedFormulaMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2348,8 +2348,8 @@ where
 impl From<LinkedFormulaGroupBoxMirror> for super::LinkedFormulaGroupBox {
     fn from(item: LinkedFormulaGroupBoxMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2391,8 +2391,8 @@ where
 impl From<ListItemsSourceRangeMirror> for super::ListItemsSourceRange {
     fn from(item: ListItemsSourceRangeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2433,8 +2433,8 @@ where
 impl From<LockToggleMirror> for super::LockToggle {
     fn from(item: LockToggleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2472,8 +2472,8 @@ where
 impl From<MacroDisableToggleMirror> for super::MacroDisableToggle {
     fn from(item: MacroDisableToggleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2511,8 +2511,8 @@ where
 impl From<MinimumWidthMirror> for super::MinimumWidth {
     fn from(item: MinimumWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2550,8 +2550,8 @@ where
 impl From<MoveWithCellsMirror> for super::MoveWithCells {
     fn from(item: MoveWithCellsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2589,8 +2589,8 @@ where
 impl From<MultiLineMirror> for super::MultiLine {
     fn from(item: MultiLineMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2628,8 +2628,8 @@ where
 impl From<MultipleSelectionsMirror> for super::MultipleSelections {
     fn from(item: MultipleSelectionsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2667,8 +2667,8 @@ where
 impl From<NonLinkedListItemMirror> for super::NonLinkedListItem {
     fn from(item: NonLinkedListItemMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2706,8 +2706,8 @@ where
 impl From<PasswordEditMirror> for super::PasswordEdit {
     fn from(item: PasswordEditMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2745,8 +2745,8 @@ where
 impl From<PrimaryKeyboardAcceleratorMirror> for super::PrimaryKeyboardAccelerator {
     fn from(item: PrimaryKeyboardAcceleratorMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2788,8 +2788,8 @@ where
 impl From<PrintToggleMirror> for super::PrintToggle {
     fn from(item: PrintToggleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2827,8 +2827,8 @@ where
 impl From<RecalculationToggleMirror> for super::RecalculationToggle {
     fn from(item: RecalculationToggleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2869,8 +2869,8 @@ where
 impl From<ReferenceToCustomFunctionMirror> for super::ReferenceToCustomFunction {
     fn from(item: ReferenceToCustomFunctionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2912,8 +2912,8 @@ where
 impl From<ResizeWithCellsMirror> for super::ResizeWithCells {
     fn from(item: ResizeWithCellsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2951,8 +2951,8 @@ where
 impl From<ScrollBarIncrementMirror> for super::ScrollBarIncrement {
     fn from(item: ScrollBarIncrementMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2990,8 +2990,8 @@ where
 impl From<ScrollBarMaximumMirror> for super::ScrollBarMaximum {
     fn from(item: ScrollBarMaximumMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3029,8 +3029,8 @@ where
 impl From<ScrollBarMinimumMirror> for super::ScrollBarMinimum {
     fn from(item: ScrollBarMinimumMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3068,8 +3068,8 @@ where
 impl From<ScrollBarOrientationMirror> for super::ScrollBarOrientation {
     fn from(item: ScrollBarOrientationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3110,8 +3110,8 @@ where
 impl From<ScrollBarPageIncrementMirror> for super::ScrollBarPageIncrement {
     fn from(item: ScrollBarPageIncrementMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3153,8 +3153,8 @@ where
 impl From<ScrollBarPositionMirror> for super::ScrollBarPosition {
     fn from(item: ScrollBarPositionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3192,8 +3192,8 @@ where
 impl From<ScrollBarWidthMirror> for super::ScrollBarWidth {
     fn from(item: ScrollBarWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3231,8 +3231,8 @@ where
 impl From<SecondaryKeyboardAcceleratorMirror> for super::SecondaryKeyboardAccelerator {
     fn from(item: SecondaryKeyboardAcceleratorMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3274,8 +3274,8 @@ where
 impl From<SelectedEntryMirror> for super::SelectedEntry {
     fn from(item: SelectedEntryMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3313,8 +3313,8 @@ where
 impl From<SelectionTypeMirror> for super::SelectionType {
     fn from(item: SelectionTypeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3352,8 +3352,8 @@ where
 impl From<TextFormulaMirror> for super::TextFormula {
     fn from(item: TextFormulaMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3391,8 +3391,8 @@ where
 impl From<TextLockMirror> for super::TextLock {
     fn from(item: TextLockMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3430,8 +3430,8 @@ where
 impl From<UIObjectToggleMirror> for super::UIObjectToggle {
     fn from(item: UIObjectToggleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3469,8 +3469,8 @@ where
 impl From<ValidIDMirror> for super::ValidID {
     fn from(item: ValidIDMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3508,8 +3508,8 @@ where
 impl From<ValidationTypeMirror> for super::ValidationType {
     fn from(item: ValidationTypeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3547,8 +3547,8 @@ where
 impl From<VerticalScrollMirror> for super::VerticalScroll {
     fn from(item: VerticalScrollMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3586,8 +3586,8 @@ where
 impl From<VerticalTextAlignmentMirror> for super::VerticalTextAlignment {
     fn from(item: VerticalTextAlignmentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }

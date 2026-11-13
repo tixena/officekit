@@ -222,8 +222,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::PctHeight)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PctHeightMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: super::super::drawing::PositivePercentageValueWithSign,
 }
 
@@ -231,8 +231,8 @@ pub struct PctHeightMirror {
 #[rkyv(remote = super::PctPosHOffset)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PctPosHOffsetMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: super::super::drawing::Percentage,
 }
 
@@ -240,8 +240,8 @@ pub struct PctPosHOffsetMirror {
 #[rkyv(remote = super::PctPosVOffset)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PctPosVOffsetMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: super::super::drawing::Percentage,
 }
 
@@ -249,8 +249,8 @@ pub struct PctPosVOffsetMirror {
 #[rkyv(remote = super::PctWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PctWidthMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: super::super::drawing::PositivePercentageValueWithSign,
 }
 
@@ -258,27 +258,27 @@ pub struct PctWidthMirror {
 #[rkyv(remote = super::SizeRelH)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SizeRelHMirror {
-    pub extra: (),
     pub pct_width: Box<super::PctWidth>,
     pub relative_from: Option<super::SizeRelFromH>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SizeRelV)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SizeRelVMirror {
-    pub extra: (),
     pub pct_height: Box<super::PctHeight>,
     pub relative_from: Option<super::SizeRelFromV>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<PctHeightMirror> for super::PctHeight {
     fn from(item: PctHeightMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -316,8 +316,8 @@ where
 impl From<PctPosHOffsetMirror> for super::PctPosHOffset {
     fn from(item: PctPosHOffsetMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -355,8 +355,8 @@ where
 impl From<PctPosVOffsetMirror> for super::PctPosVOffset {
     fn from(item: PctPosVOffsetMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -394,8 +394,8 @@ where
 impl From<PctWidthMirror> for super::PctWidth {
     fn from(item: PctWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -433,10 +433,10 @@ where
 impl From<SizeRelHMirror> for super::SizeRelH {
     fn from(item: SizeRelHMirror) -> Self {
         Self {
-            extra: item.extra,
             pct_width: item.pct_width,
             relative_from: item.relative_from,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -473,10 +473,10 @@ where
 impl From<SizeRelVMirror> for super::SizeRelV {
     fn from(item: SizeRelVMirror) -> Self {
         Self {
-            extra: item.extra,
             pct_height: item.pct_height,
             relative_from: item.relative_from,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

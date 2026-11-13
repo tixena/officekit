@@ -225,9 +225,9 @@ pub struct CalculatedTimeColumnMirror {
     pub column_id: Option<String>,
     pub column_name: Option<String>,
     pub content_type: Option<super::ModelTimeGroupingContentType>,
-    pub extra: (),
     pub is_selected: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -237,18 +237,18 @@ pub struct ModelTimeGroupingMirror {
     pub calculated_time_column: Vec<super::CalculatedTimeColumn>,
     pub column_id: Option<String>,
     pub column_name: Option<String>,
-    pub extra: (),
     pub table_name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ModelTimeGroupings)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ModelTimeGroupingsMirror {
-    pub extra: (),
     pub model_time_grouping: Vec<super::ModelTimeGrouping>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<CalculatedTimeColumnMirror> for super::CalculatedTimeColumn {
@@ -257,9 +257,9 @@ impl From<CalculatedTimeColumnMirror> for super::CalculatedTimeColumn {
             column_id: item.column_id,
             column_name: item.column_name,
             content_type: item.content_type,
-            extra: item.extra,
             is_selected: item.is_selected,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -302,9 +302,9 @@ impl From<ModelTimeGroupingMirror> for super::ModelTimeGrouping {
             calculated_time_column: item.calculated_time_column,
             column_id: item.column_id,
             column_name: item.column_name,
-            extra: item.extra,
             table_name: item.table_name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -341,9 +341,9 @@ where
 impl From<ModelTimeGroupingsMirror> for super::ModelTimeGroupings {
     fn from(item: ModelTimeGroupingsMirror) -> Self {
         Self {
-            extra: item.extra,
             model_time_grouping: item.model_time_grouping,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

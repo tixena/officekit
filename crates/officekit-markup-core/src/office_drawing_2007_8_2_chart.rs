@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -336,15 +336,15 @@ pub static STYLE_SHAPE: officekit_markup_base::Shape = officekit_markup_base::Sh
 /// 3.5.1. Its schema type is `CT_BooleanFalse`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropZoneCategoriesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing200782ChartDropZoneCategories,
+pub struct DropZoneCategoriesWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing200782ChartDropZoneCategories,
 }
 
 /// The `c14:dropZoneCategories` element of the tree a read gives: [`DropZoneCategoriesWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type DropZoneCategories = DropZoneCategoriesWith<()>;
 
 impl Eq for DropZoneCategoriesWith<()> {}
@@ -353,15 +353,15 @@ impl Eq for DropZoneCategoriesWith<()> {}
 /// Its schema type is `CT_BooleanFalse`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropZoneDataWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing200782ChartDropZoneData,
+pub struct DropZoneDataWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing200782ChartDropZoneData,
 }
 
 /// The `c14:dropZoneData` element of the tree a read gives: [`DropZoneDataWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type DropZoneData = DropZoneDataWith<()>;
 
 impl Eq for DropZoneDataWith<()> {}
@@ -370,15 +370,15 @@ impl Eq for DropZoneDataWith<()> {}
 /// 3.5.1. Its schema type is `CT_BooleanFalse`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropZoneFilterWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing200782ChartDropZoneFilter,
+pub struct DropZoneFilterWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing200782ChartDropZoneFilter,
 }
 
 /// The `c14:dropZoneFilter` element of the tree a read gives: [`DropZoneFilterWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DropZoneFilter = DropZoneFilterWith<()>;
 
 impl Eq for DropZoneFilterWith<()> {}
@@ -387,15 +387,15 @@ impl Eq for DropZoneFilterWith<()> {}
 /// 3.5.1. Its schema type is `CT_BooleanFalse`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropZoneSeriesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing200782ChartDropZoneSeries,
+pub struct DropZoneSeriesWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing200782ChartDropZoneSeries,
 }
 
 /// The `c14:dropZoneSeries` element of the tree a read gives: [`DropZoneSeriesWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DropZoneSeries = DropZoneSeriesWith<()>;
 
 impl Eq for DropZoneSeriesWith<()> {}
@@ -404,15 +404,15 @@ impl Eq for DropZoneSeriesWith<()> {}
 /// 3.5.1. Its schema type is `CT_BooleanFalse`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropZonesVisibleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing200782ChartDropZonesVisible,
+pub struct DropZonesVisibleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing200782ChartDropZonesVisible,
 }
 
 /// The `c14:dropZonesVisible` element of the tree a read gives: [`DropZonesVisibleWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DropZonesVisible = DropZonesVisibleWith<()>;
 
 impl Eq for DropZonesVisibleWith<()> {}
@@ -421,15 +421,15 @@ impl Eq for DropZonesVisibleWith<()> {}
 /// Its schema type is `CT_BooleanFalse`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InSketchModeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing200782ChartInSketchMode,
+pub struct InSketchModeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing200782ChartInSketchMode,
 }
 
 /// The `c14:inSketchMode` element of the tree a read gives: [`InSketchModeWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type InSketchMode = InSketchModeWith<()>;
 
 impl Eq for InSketchModeWith<()> {}
@@ -438,17 +438,17 @@ impl Eq for InSketchModeWith<()> {}
 /// 3.5.1. Its schema type is `CT_InvertSolidFillFmt`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InvertSolidFillFmtWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing200782ChartInvertSolidFillFmt,
+pub struct InvertSolidFillFmtWith<X: UserData> {
     /// The child that is `SpPr`, which the schema requires.
     pub sp_pr: Box<SpPrWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing200782ChartInvertSolidFillFmt,
 }
 
 /// The `c14:invertSolidFillFmt` element of the tree a read gives: [`InvertSolidFillFmtWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type InvertSolidFillFmt = InvertSolidFillFmtWith<()>;
 
 impl Eq for InvertSolidFillFmtWith<()> {}
@@ -457,7 +457,7 @@ impl Eq for InvertSolidFillFmtWith<()> {}
 /// Its schema type is `CT_PivotOptions`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotOptionsWith<X: NodeExtra> {
+pub struct PivotOptionsWith<X: UserData> {
     /// The child that is `DropZoneCategories`, when there is one.
     pub drop_zone_categories: Option<Box<DropZoneCategoriesWith<X>>>,
     /// The child that is `DropZoneData`, when there is one.
@@ -468,14 +468,14 @@ pub struct PivotOptionsWith<X: NodeExtra> {
     pub drop_zone_series: Option<Box<DropZoneSeriesWith<X>>>,
     /// The child that is `DropZonesVisible`, when there is one.
     pub drop_zones_visible: Option<Box<DropZonesVisibleWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing200782ChartPivotOptions,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing200782ChartPivotOptions,
 }
 
 /// The `c14:pivotOptions` element of the tree a read gives: [`PivotOptionsWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PivotOptions = PivotOptionsWith<()>;
 
 impl Eq for PivotOptionsWith<()> {}
@@ -484,17 +484,17 @@ impl Eq for PivotOptionsWith<()> {}
 /// Its schema type is `CT_BooleanTrue`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShowSketchBtnWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing200782ChartShowSketchBtn,
+pub struct ShowSketchBtnWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing200782ChartShowSketchBtn,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `c14:showSketchBtn` element of the tree a read gives: [`ShowSketchBtnWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type ShowSketchBtn = ShowSketchBtnWith<()>;
 
 impl Eq for ShowSketchBtnWith<()> {}
@@ -503,19 +503,19 @@ impl Eq for ShowSketchBtnWith<()> {}
 /// Its schema type is `CT_SketchOptions`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SketchOptionsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing200782ChartSketchOptions,
+pub struct SketchOptionsWith<X: UserData> {
     /// The child that is `InSketchMode`, when there is one.
     pub in_sketch_mode: Option<Box<InSketchModeWith<X>>>,
     /// The child that is `ShowSketchBtn`, when there is one.
     pub show_sketch_btn: Option<Box<ShowSketchBtnWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing200782ChartSketchOptions,
 }
 
 /// The `c14:sketchOptions` element of the tree a read gives: [`SketchOptionsWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type SketchOptions = SketchOptionsWith<()>;
 
 impl Eq for SketchOptionsWith<()> {}
@@ -524,7 +524,7 @@ impl Eq for SketchOptionsWith<()> {}
 /// schema type is `CT_ShapeProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpPrWith<X: NodeExtra> {
+pub struct SpPrWith<X: UserData> {
     /// The child that is `super::drawing::Apply3DShapeProperties`, when there is one.
     pub apply_3d_shape_properties: Option<Box<super::drawing::Apply3DShapePropertiesWith<X>>>,
     /// The attribute `bwMode`, when the element has it.
@@ -533,8 +533,6 @@ pub struct SpPrWith<X: NodeExtra> {
     pub effect_properties_content: Option<Box<super::drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing200782ChartSpPr,
     /// The child that is an item of `super::drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<super::drawing::FillPropertiesContentWith<X>>>,
     /// The child that is an item of `super::drawing::GeometryContent`, when there is one.
@@ -545,11 +543,13 @@ pub struct SpPrWith<X: NodeExtra> {
     pub scene3d: Option<Box<super::drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing200782ChartSpPr,
     /// The child that is `super::drawing::XfrmTransform2D`, when there is one.
     pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2DWith<X>>>,
 }
 
-/// The `c14:spPr` element of the tree a read gives: [`SpPrWith`] holding nothing in `extra`.
+/// The `c14:spPr` element of the tree a read gives: [`SpPrWith`] holding nothing in `user_data`.
 pub type SpPr = SpPrWith<()>;
 
 impl Eq for SpPrWith<()> {}
@@ -558,31 +558,31 @@ impl Eq for SpPrWith<()> {}
 /// schema type is `CT_Style`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StyleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing200782ChartStyle,
+pub struct StyleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing200782ChartStyle,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The `c14:style` element of the tree a read gives: [`StyleWith`] holding nothing in `extra`.
+/// The `c14:style` element of the tree a read gives: [`StyleWith`] holding nothing in `user_data`.
 pub type Style = StyleWith<()>;
 
 impl Eq for StyleWith<()> {}
 
-impl<X: NodeExtra> DropZoneCategoriesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DropZoneCategoriesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DropZoneCategoriesWith<Y>
+    pub fn into_user_data<Y>(self) -> DropZoneCategoriesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DropZoneCategoriesWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -606,17 +606,17 @@ impl officekit_markup_base::Write for DropZoneCategories {
     }
 }
 
-impl<X: NodeExtra> DropZoneDataWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DropZoneDataWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DropZoneDataWith<Y>
+    pub fn into_user_data<Y>(self) -> DropZoneDataWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DropZoneDataWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -640,17 +640,17 @@ impl officekit_markup_base::Write for DropZoneData {
     }
 }
 
-impl<X: NodeExtra> DropZoneFilterWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DropZoneFilterWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DropZoneFilterWith<Y>
+    pub fn into_user_data<Y>(self) -> DropZoneFilterWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DropZoneFilterWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -674,17 +674,17 @@ impl officekit_markup_base::Write for DropZoneFilter {
     }
 }
 
-impl<X: NodeExtra> DropZoneSeriesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DropZoneSeriesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DropZoneSeriesWith<Y>
+    pub fn into_user_data<Y>(self) -> DropZoneSeriesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DropZoneSeriesWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -708,17 +708,17 @@ impl officekit_markup_base::Write for DropZoneSeries {
     }
 }
 
-impl<X: NodeExtra> DropZonesVisibleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DropZonesVisibleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DropZonesVisibleWith<Y>
+    pub fn into_user_data<Y>(self) -> DropZonesVisibleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DropZonesVisibleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -742,17 +742,17 @@ impl officekit_markup_base::Write for DropZonesVisible {
     }
 }
 
-impl<X: NodeExtra> InSketchModeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> InSketchModeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> InSketchModeWith<Y>
+    pub fn into_user_data<Y>(self) -> InSketchModeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         InSketchModeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -776,18 +776,21 @@ impl officekit_markup_base::Write for InSketchMode {
     }
 }
 
-impl<X: NodeExtra> InvertSolidFillFmtWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> InvertSolidFillFmtWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> InvertSolidFillFmtWith<Y>
+    pub fn into_user_data<Y>(self) -> InvertSolidFillFmtWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         InvertSolidFillFmtWith {
-            extra: Default::default(),
-            sp_pr: officekit_markup_base::into_extra_required(*self.sp_pr, SpPrWith::into_extra),
+            sp_pr: officekit_markup_base::into_user_data_required(
+                *self.sp_pr,
+                SpPrWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -811,37 +814,37 @@ impl officekit_markup_base::Write for InvertSolidFillFmt {
     }
 }
 
-impl<X: NodeExtra> PivotOptionsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotOptionsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> PivotOptionsWith<Y>
+    pub fn into_user_data<Y>(mut self) -> PivotOptionsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotOptionsWith {
-            drop_zone_categories: officekit_markup_base::into_extra_optional(
+            drop_zone_categories: officekit_markup_base::into_user_data_optional(
                 &mut self.drop_zone_categories,
-                DropZoneCategoriesWith::into_extra,
+                DropZoneCategoriesWith::into_user_data,
             ),
-            drop_zone_data: officekit_markup_base::into_extra_optional(
+            drop_zone_data: officekit_markup_base::into_user_data_optional(
                 &mut self.drop_zone_data,
-                DropZoneDataWith::into_extra,
+                DropZoneDataWith::into_user_data,
             ),
-            drop_zone_filter: officekit_markup_base::into_extra_optional(
+            drop_zone_filter: officekit_markup_base::into_user_data_optional(
                 &mut self.drop_zone_filter,
-                DropZoneFilterWith::into_extra,
+                DropZoneFilterWith::into_user_data,
             ),
-            drop_zone_series: officekit_markup_base::into_extra_optional(
+            drop_zone_series: officekit_markup_base::into_user_data_optional(
                 &mut self.drop_zone_series,
-                DropZoneSeriesWith::into_extra,
+                DropZoneSeriesWith::into_user_data,
             ),
-            drop_zones_visible: officekit_markup_base::into_extra_optional(
+            drop_zones_visible: officekit_markup_base::into_user_data_optional(
                 &mut self.drop_zones_visible,
-                DropZonesVisibleWith::into_extra,
+                DropZonesVisibleWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -865,17 +868,17 @@ impl officekit_markup_base::Write for PivotOptions {
     }
 }
 
-impl<X: NodeExtra> ShowSketchBtnWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ShowSketchBtnWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ShowSketchBtnWith<Y>
+    pub fn into_user_data<Y>(self) -> ShowSketchBtnWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ShowSketchBtnWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -903,25 +906,25 @@ impl officekit_markup_base::Write for ShowSketchBtn {
     }
 }
 
-impl<X: NodeExtra> SketchOptionsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SketchOptionsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SketchOptionsWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SketchOptionsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SketchOptionsWith {
-            extra: Default::default(),
-            in_sketch_mode: officekit_markup_base::into_extra_optional(
+            in_sketch_mode: officekit_markup_base::into_user_data_optional(
                 &mut self.in_sketch_mode,
-                InSketchModeWith::into_extra,
+                InSketchModeWith::into_user_data,
             ),
-            show_sketch_btn: officekit_markup_base::into_extra_optional(
+            show_sketch_btn: officekit_markup_base::into_user_data_optional(
                 &mut self.show_sketch_btn,
-                ShowSketchBtnWith::into_extra,
+                ShowSketchBtnWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -945,49 +948,49 @@ impl officekit_markup_base::Write for SketchOptions {
     }
 }
 
-impl<X: NodeExtra> SpPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SpPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SpPrWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SpPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SpPrWith {
-            apply_3d_shape_properties: officekit_markup_base::into_extra_optional(
+            apply_3d_shape_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.apply_3d_shape_properties,
-                super::drawing::Apply3DShapePropertiesWith::into_extra,
+                super::drawing::Apply3DShapePropertiesWith::into_user_data,
             ),
             bw_mode: self.bw_mode,
-            effect_properties_content: officekit_markup_base::into_extra_optional(
+            effect_properties_content: officekit_markup_base::into_user_data_optional(
                 &mut self.effect_properties_content,
-                super::drawing::EffectPropertiesContentWith::into_extra,
+                super::drawing::EffectPropertiesContentWith::into_user_data,
             ),
-            extension_list: officekit_markup_base::into_extra_optional(
+            extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.extension_list,
-                super::drawing::ExtensionListWith::into_extra,
+                super::drawing::ExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            fill_properties_content: officekit_markup_base::into_extra_optional(
+            fill_properties_content: officekit_markup_base::into_user_data_optional(
                 &mut self.fill_properties_content,
-                super::drawing::FillPropertiesContentWith::into_extra,
+                super::drawing::FillPropertiesContentWith::into_user_data,
             ),
-            geometry_content: officekit_markup_base::into_extra_optional(
+            geometry_content: officekit_markup_base::into_user_data_optional(
                 &mut self.geometry_content,
-                super::drawing::GeometryContentWith::into_extra,
+                super::drawing::GeometryContentWith::into_user_data,
             ),
-            outline: officekit_markup_base::into_extra_optional(
+            outline: officekit_markup_base::into_user_data_optional(
                 &mut self.outline,
-                super::drawing::OutlineWith::into_extra,
+                super::drawing::OutlineWith::into_user_data,
             ),
-            scene3d: officekit_markup_base::into_extra_optional(
+            scene3d: officekit_markup_base::into_user_data_optional(
                 &mut self.scene3d,
-                super::drawing::Scene3dWith::into_extra,
+                super::drawing::Scene3dWith::into_user_data,
             ),
             unknown: self.unknown,
-            xfrm_transform2d: officekit_markup_base::into_extra_optional(
+            user_data: Default::default(),
+            xfrm_transform2d: officekit_markup_base::into_user_data_optional(
                 &mut self.xfrm_transform2d,
-                super::drawing::XfrmTransform2DWith::into_extra,
+                super::drawing::XfrmTransform2DWith::into_user_data,
             ),
         }
     }
@@ -1015,17 +1018,17 @@ impl officekit_markup_base::Write for SpPr {
     }
 }
 
-impl<X: NodeExtra> StyleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> StyleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> StyleWith<Y>
+    pub fn into_user_data<Y>(self) -> StyleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         StyleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }

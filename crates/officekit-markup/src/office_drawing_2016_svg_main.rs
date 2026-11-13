@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -274,18 +274,19 @@ pub trait Context: crate::Context {
 /// schema type is `CT_SVGBlip`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SvgBlipWith<X: NodeExtra> {
+pub struct SvgBlipWith<X: UserData> {
     /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2016SvgMainSvgBlip,
     /// The attribute `r:link`, when the element has it.
     pub link: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2016SvgMainSvgBlip,
 }
 
-/// The `asvg:svgBlip` element of the tree a read gives: [`SvgBlipWith`] holding nothing in `extra`.
+/// The `asvg:svgBlip` element of the tree a read gives: [`SvgBlipWith`] holding nothing in
+/// `user_data`.
 pub type SvgBlip = SvgBlipWith<()>;
 
 impl Eq for SvgBlipWith<()> {}
@@ -302,19 +303,19 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> SvgBlipWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SvgBlipWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SvgBlipWith<Y>
+    pub fn into_user_data<Y>(self) -> SvgBlipWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SvgBlipWith {
             embed: self.embed,
-            extra: Default::default(),
             link: self.link,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

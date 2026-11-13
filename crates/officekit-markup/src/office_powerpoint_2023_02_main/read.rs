@@ -223,7 +223,7 @@ use officekit_xml::element::Element;
 pub fn cameo(element: &Element) -> super::Cameo {
     let reader = officekit_markup_base::Reader::new(element, &super::CAMEO_SHAPE);
     super::Cameo {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -267,7 +267,7 @@ pub fn r#type(element: &Element) -> super::Type {
 pub fn unknown(element: &Element) -> super::Unknown {
     let reader = officekit_markup_base::Reader::new(element, &super::UNKNOWN_SHAPE);
     super::Unknown {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }

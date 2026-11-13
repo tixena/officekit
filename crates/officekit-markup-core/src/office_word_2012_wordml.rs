@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::common_simple_types;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
@@ -384,17 +384,17 @@ pub static SECTION_TITLE_SHAPE: officekit_markup_base::Shape = officekit_markup_
 /// Its schema type is `CT_SdtAppearance`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AppearanceWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlAppearance,
+pub struct AppearanceWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlAppearance,
     /// The attribute `w15:val`, when the element has it.
     pub val: Option<SdtAppearance>,
 }
 
 /// The `w15:appearance` element of the tree a read gives: [`AppearanceWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Appearance = AppearanceWith<()>;
 
 impl Eq for AppearanceWith<()> {}
@@ -403,17 +403,17 @@ impl Eq for AppearanceWith<()> {}
 /// version 3.5.1. Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ChartTrackingRefBasedWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlChartTrackingRefBased,
+pub struct ChartTrackingRefBasedWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlChartTrackingRefBased,
     /// The attribute `w:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
 /// The `w15:chartTrackingRefBased` element of the tree a read gives: [`ChartTrackingRefBasedWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ChartTrackingRefBased = ChartTrackingRefBasedWith<()>;
 
 impl Eq for ChartTrackingRefBasedWith<()> {}
@@ -422,17 +422,17 @@ impl Eq for ChartTrackingRefBasedWith<()> {}
 /// schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CollapsedWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlCollapsed,
+pub struct CollapsedWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlCollapsed,
     /// The attribute `w:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
 /// The `w15:collapsed` element of the tree a read gives: [`CollapsedWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Collapsed = CollapsedWith<()>;
 
 impl Eq for CollapsedWith<()> {}
@@ -441,9 +441,7 @@ impl Eq for CollapsedWith<()> {}
 /// schema type is `CT_Color`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlColor,
+pub struct ColorWith<X: UserData> {
     /// The attribute `w:themeColor`, when the element has it.
     pub theme_color: Option<super::wordprocessing::ThemeColor>,
     /// The attribute `w:themeShade`, when the element has it.
@@ -452,11 +450,13 @@ pub struct ColorWith<X: NodeExtra> {
     pub theme_tint: Option<super::wordprocessing::TwoDigitHexadecimalValue>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlColor,
     /// The attribute `w:val`, when the element has it.
     pub val: Option<super::wordprocessing::ColorValue>,
 }
 
-/// The `w15:color` element of the tree a read gives: [`ColorWith`] holding nothing in `extra`.
+/// The `w15:color` element of the tree a read gives: [`ColorWith`] holding nothing in `user_data`.
 pub type Color = ColorWith<()>;
 
 impl Eq for ColorWith<()> {}
@@ -465,21 +465,21 @@ impl Eq for ColorWith<()> {}
 /// schema type is `CT_CommentEx`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentExWith<X: NodeExtra> {
+pub struct CommentExWith<X: UserData> {
     /// The attribute `w15:done`, when the element has it.
     pub done: Option<common_simple_types::OnOffValue>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlCommentEx,
     /// The attribute `w15:paraId`, when the element has it.
     pub para_id: Option<String>,
     /// The attribute `w15:paraIdParent`, when the element has it.
     pub para_id_parent: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlCommentEx,
 }
 
 /// The `w15:commentEx` element of the tree a read gives: [`CommentExWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CommentEx = CommentExWith<()>;
 
 impl Eq for CommentExWith<()> {}
@@ -488,17 +488,17 @@ impl Eq for CommentExWith<()> {}
 /// Its schema type is `CT_CommentsEx`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentsExWith<X: NodeExtra> {
+pub struct CommentsExWith<X: UserData> {
     /// The children that are `CommentEx`, in order.
     pub comment_ex: Vec<CommentExWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlCommentsEx,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlCommentsEx,
 }
 
 /// The `w15:commentsEx` element of the tree a read gives: [`CommentsExWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CommentsEx = CommentsExWith<()>;
 
 impl Eq for CommentsExWith<()> {}
@@ -507,21 +507,21 @@ impl Eq for CommentsExWith<()> {}
 /// Its schema type is `CT_DataBinding`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataBindingWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlDataBinding,
+pub struct DataBindingWith<X: UserData> {
     /// The attribute `w:prefixMappings`, when the element has it.
     pub prefix_mappings: Option<String>,
     /// The attribute `w:storeItemID`, when the element has it.
     pub store_item_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlDataBinding,
     /// The attribute `w:xpath`, when the element has it.
     pub xpath: Option<String>,
 }
 
 /// The `w15:dataBinding` element of the tree a read gives: [`DataBindingWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type DataBinding = DataBindingWith<()>;
 
 impl Eq for DataBindingWith<()> {}
@@ -530,17 +530,17 @@ impl Eq for DataBindingWith<()> {}
 /// SDK, version 3.5.1. Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DoNotAllowInsertDeleteSectionWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlDoNotAllowInsertDeleteSection,
+pub struct DoNotAllowInsertDeleteSectionWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlDoNotAllowInsertDeleteSection,
     /// The attribute `w:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
 /// The `w15:doNotAllowInsertDeleteSection` element of the tree a read gives:
-/// [`DoNotAllowInsertDeleteSectionWith`] holding nothing in `extra`.
+/// [`DoNotAllowInsertDeleteSectionWith`] holding nothing in `user_data`.
 pub type DoNotAllowInsertDeleteSection = DoNotAllowInsertDeleteSectionWith<()>;
 
 impl Eq for DoNotAllowInsertDeleteSectionWith<()> {}
@@ -549,16 +549,16 @@ impl Eq for DoNotAllowInsertDeleteSectionWith<()> {}
 /// schema type is `CT_Guid`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DocIdWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlDocId,
+pub struct DocIdWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlDocId,
     /// The attribute `w15:val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The `w15:docId` element of the tree a read gives: [`DocIdWith`] holding nothing in `extra`.
+/// The `w15:docId` element of the tree a read gives: [`DocIdWith`] holding nothing in `user_data`.
 pub type DocId = DocIdWith<()>;
 
 impl Eq for DocIdWith<()> {}
@@ -567,17 +567,17 @@ impl Eq for DocIdWith<()> {}
 /// 3.5.1. Its schema type is `CT_DecimalNumber`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FootnoteColumnsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlFootnoteColumns,
+pub struct FootnoteColumnsWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlFootnoteColumns,
     /// The attribute `w:val`, when the element has it.
     pub val: Option<super::wordprocessing::DecimalNumberValue>,
 }
 
 /// The `w15:footnoteColumns` element of the tree a read gives: [`FootnoteColumnsWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type FootnoteColumns = FootnoteColumnsWith<()>;
 
 impl Eq for FootnoteColumnsWith<()> {}
@@ -586,16 +586,17 @@ impl Eq for FootnoteColumnsWith<()> {}
 /// schema type is `CT_People`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PeopleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlPeople,
+pub struct PeopleWith<X: UserData> {
     /// The children that are `Person`, in order.
     pub person: Vec<PersonWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlPeople,
 }
 
-/// The `w15:people` element of the tree a read gives: [`PeopleWith`] holding nothing in `extra`.
+/// The `w15:people` element of the tree a read gives: [`PeopleWith`] holding nothing in
+/// `user_data`.
 pub type People = PeopleWith<()>;
 
 impl Eq for PeopleWith<()> {}
@@ -604,18 +605,19 @@ impl Eq for PeopleWith<()> {}
 /// schema type is `CT_Person`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PersonWith<X: NodeExtra> {
+pub struct PersonWith<X: UserData> {
     /// The attribute `w15:author`, when the element has it.
     pub author: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlPerson,
     /// The child that is `PresenceInfo`, when there is one.
     pub presence_info: Option<Box<PresenceInfoWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlPerson,
 }
 
-/// The `w15:person` element of the tree a read gives: [`PersonWith`] holding nothing in `extra`.
+/// The `w15:person` element of the tree a read gives: [`PersonWith`] holding nothing in
+/// `user_data`.
 pub type Person = PersonWith<()>;
 
 impl Eq for PersonWith<()> {}
@@ -624,19 +626,19 @@ impl Eq for PersonWith<()> {}
 /// Its schema type is `CT_PresenceInfo`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PresenceInfoWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlPresenceInfo,
+pub struct PresenceInfoWith<X: UserData> {
     /// The attribute `w15:providerId`, when the element has it.
     pub provider_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlPresenceInfo,
     /// The attribute `w15:userId`, when the element has it.
     pub user_id: Option<String>,
 }
 
 /// The `w15:presenceInfo` element of the tree a read gives: [`PresenceInfoWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PresenceInfo = PresenceInfoWith<()>;
 
 impl Eq for PresenceInfoWith<()> {}
@@ -645,19 +647,19 @@ impl Eq for PresenceInfoWith<()> {}
 /// 3.5.1. Its schema type is `CT_SdtRepeatedSection`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RepeatingSectionWith<X: NodeExtra> {
+pub struct RepeatingSectionWith<X: UserData> {
     /// The child that is `DoNotAllowInsertDeleteSection`, when there is one.
     pub do_not_allow_insert_delete_section: Option<Box<DoNotAllowInsertDeleteSectionWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlRepeatingSection,
     /// The child that is `SectionTitle`, when there is one.
     pub title: Option<Box<SectionTitleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlRepeatingSection,
 }
 
 /// The `w15:repeatingSection` element of the tree a read gives: [`RepeatingSectionWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type RepeatingSection = RepeatingSectionWith<()>;
 
 impl Eq for RepeatingSectionWith<()> {}
@@ -666,15 +668,15 @@ impl Eq for RepeatingSectionWith<()> {}
 /// 3.5.1. Its schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RepeatingSectionItemWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlRepeatingSectionItem,
+pub struct RepeatingSectionItemWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlRepeatingSectionItem,
 }
 
 /// The `w15:repeatingSectionItem` element of the tree a read gives: [`RepeatingSectionItemWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type RepeatingSectionItem = RepeatingSectionItemWith<()>;
 
 impl Eq for RepeatingSectionItemWith<()> {}
@@ -708,17 +710,17 @@ pub enum SdtAppearanceMember {
 /// Its schema type is `CT_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SectionTitleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlSectionTitle,
+pub struct SectionTitleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlSectionTitle,
     /// The attribute `w:val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `w15:sectionTitle` element of the tree a read gives: [`SectionTitleWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SectionTitle = SectionTitleWith<()>;
 
 impl Eq for SectionTitleWith<()> {}
@@ -727,17 +729,17 @@ impl Eq for SectionTitleWith<()> {}
 /// 3.5.1. Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WebExtensionCreatedWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlWebExtensionCreated,
+pub struct WebExtensionCreatedWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlWebExtensionCreated,
     /// The attribute `w:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
 /// The `w15:webExtensionCreated` element of the tree a read gives: [`WebExtensionCreatedWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type WebExtensionCreated = WebExtensionCreatedWith<()>;
 
 impl Eq for WebExtensionCreatedWith<()> {}
@@ -746,32 +748,32 @@ impl Eq for WebExtensionCreatedWith<()> {}
 /// 3.5.1. Its schema type is `CT_OnOff`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WebExtensionLinkedWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordmlWebExtensionLinked,
+pub struct WebExtensionLinkedWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordmlWebExtensionLinked,
     /// The attribute `w:val`, when the element has it.
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
 /// The `w15:webExtensionLinked` element of the tree a read gives: [`WebExtensionLinkedWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type WebExtensionLinked = WebExtensionLinkedWith<()>;
 
 impl Eq for WebExtensionLinkedWith<()> {}
 
-impl<X: NodeExtra> AppearanceWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AppearanceWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AppearanceWith<Y>
+    pub fn into_user_data<Y>(self) -> AppearanceWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AppearanceWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -799,17 +801,17 @@ impl officekit_markup_base::Write for Appearance {
     }
 }
 
-impl<X: NodeExtra> ChartTrackingRefBasedWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ChartTrackingRefBasedWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ChartTrackingRefBasedWith<Y>
+    pub fn into_user_data<Y>(self) -> ChartTrackingRefBasedWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ChartTrackingRefBasedWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -837,17 +839,17 @@ impl officekit_markup_base::Write for ChartTrackingRefBased {
     }
 }
 
-impl<X: NodeExtra> CollapsedWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CollapsedWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CollapsedWith<Y>
+    pub fn into_user_data<Y>(self) -> CollapsedWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CollapsedWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -875,20 +877,20 @@ impl officekit_markup_base::Write for Collapsed {
     }
 }
 
-impl<X: NodeExtra> ColorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ColorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ColorWith<Y>
+    pub fn into_user_data<Y>(self) -> ColorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ColorWith {
-            extra: Default::default(),
             theme_color: self.theme_color,
             theme_shade: self.theme_shade,
             theme_tint: self.theme_tint,
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -919,20 +921,20 @@ impl officekit_markup_base::Write for Color {
     }
 }
 
-impl<X: NodeExtra> CommentExWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CommentExWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CommentExWith<Y>
+    pub fn into_user_data<Y>(self) -> CommentExWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CommentExWith {
             done: self.done,
-            extra: Default::default(),
             para_id: self.para_id,
             para_id_parent: self.para_id_parent,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -961,21 +963,21 @@ impl officekit_markup_base::Write for CommentEx {
     }
 }
 
-impl<X: NodeExtra> CommentsExWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CommentsExWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CommentsExWith<Y>
+    pub fn into_user_data<Y>(self) -> CommentsExWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CommentsExWith {
-            comment_ex: officekit_markup_base::into_extra_list(
+            comment_ex: officekit_markup_base::into_user_data_list(
                 self.comment_ex,
-                CommentExWith::into_extra,
+                CommentExWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -999,19 +1001,19 @@ impl officekit_markup_base::Write for CommentsEx {
     }
 }
 
-impl<X: NodeExtra> DataBindingWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DataBindingWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DataBindingWith<Y>
+    pub fn into_user_data<Y>(self) -> DataBindingWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DataBindingWith {
-            extra: Default::default(),
             prefix_mappings: self.prefix_mappings,
             store_item_id: self.store_item_id,
             unknown: self.unknown,
+            user_data: Default::default(),
             xpath: self.xpath,
         }
     }
@@ -1041,17 +1043,17 @@ impl officekit_markup_base::Write for DataBinding {
     }
 }
 
-impl<X: NodeExtra> DoNotAllowInsertDeleteSectionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DoNotAllowInsertDeleteSectionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DoNotAllowInsertDeleteSectionWith<Y>
+    pub fn into_user_data<Y>(self) -> DoNotAllowInsertDeleteSectionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DoNotAllowInsertDeleteSectionWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -1079,17 +1081,17 @@ impl officekit_markup_base::Write for DoNotAllowInsertDeleteSection {
     }
 }
 
-impl<X: NodeExtra> DocIdWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DocIdWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DocIdWith<Y>
+    pub fn into_user_data<Y>(self) -> DocIdWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DocIdWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -1117,17 +1119,17 @@ impl officekit_markup_base::Write for DocId {
     }
 }
 
-impl<X: NodeExtra> FootnoteColumnsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FootnoteColumnsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FootnoteColumnsWith<Y>
+    pub fn into_user_data<Y>(self) -> FootnoteColumnsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FootnoteColumnsWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -1155,18 +1157,21 @@ impl officekit_markup_base::Write for FootnoteColumns {
     }
 }
 
-impl<X: NodeExtra> PeopleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PeopleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PeopleWith<Y>
+    pub fn into_user_data<Y>(self) -> PeopleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PeopleWith {
-            extra: Default::default(),
-            person: officekit_markup_base::into_extra_list(self.person, PersonWith::into_extra),
+            person: officekit_markup_base::into_user_data_list(
+                self.person,
+                PersonWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1190,22 +1195,22 @@ impl officekit_markup_base::Write for People {
     }
 }
 
-impl<X: NodeExtra> PersonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PersonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> PersonWith<Y>
+    pub fn into_user_data<Y>(mut self) -> PersonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PersonWith {
             author: self.author,
-            extra: Default::default(),
-            presence_info: officekit_markup_base::into_extra_optional(
+            presence_info: officekit_markup_base::into_user_data_optional(
                 &mut self.presence_info,
-                PresenceInfoWith::into_extra,
+                PresenceInfoWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1232,18 +1237,18 @@ impl officekit_markup_base::Write for Person {
     }
 }
 
-impl<X: NodeExtra> PresenceInfoWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PresenceInfoWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PresenceInfoWith<Y>
+    pub fn into_user_data<Y>(self) -> PresenceInfoWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PresenceInfoWith {
-            extra: Default::default(),
             provider_id: self.provider_id,
             unknown: self.unknown,
+            user_data: Default::default(),
             user_id: self.user_id,
         }
     }
@@ -1272,25 +1277,25 @@ impl officekit_markup_base::Write for PresenceInfo {
     }
 }
 
-impl<X: NodeExtra> RepeatingSectionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RepeatingSectionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> RepeatingSectionWith<Y>
+    pub fn into_user_data<Y>(mut self) -> RepeatingSectionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RepeatingSectionWith {
-            do_not_allow_insert_delete_section: officekit_markup_base::into_extra_optional(
+            do_not_allow_insert_delete_section: officekit_markup_base::into_user_data_optional(
                 &mut self.do_not_allow_insert_delete_section,
-                DoNotAllowInsertDeleteSectionWith::into_extra,
+                DoNotAllowInsertDeleteSectionWith::into_user_data,
             ),
-            extra: Default::default(),
-            title: officekit_markup_base::into_extra_optional(
+            title: officekit_markup_base::into_user_data_optional(
                 &mut self.title,
-                SectionTitleWith::into_extra,
+                SectionTitleWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1314,17 +1319,17 @@ impl officekit_markup_base::Write for RepeatingSection {
     }
 }
 
-impl<X: NodeExtra> RepeatingSectionItemWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RepeatingSectionItemWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RepeatingSectionItemWith<Y>
+    pub fn into_user_data<Y>(self) -> RepeatingSectionItemWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RepeatingSectionItemWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1402,17 +1407,17 @@ impl SdtAppearance {
     }
 }
 
-impl<X: NodeExtra> SectionTitleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SectionTitleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SectionTitleWith<Y>
+    pub fn into_user_data<Y>(self) -> SectionTitleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SectionTitleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -1440,17 +1445,17 @@ impl officekit_markup_base::Write for SectionTitle {
     }
 }
 
-impl<X: NodeExtra> WebExtensionCreatedWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> WebExtensionCreatedWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> WebExtensionCreatedWith<Y>
+    pub fn into_user_data<Y>(self) -> WebExtensionCreatedWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         WebExtensionCreatedWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -1478,17 +1483,17 @@ impl officekit_markup_base::Write for WebExtensionCreated {
     }
 }
 
-impl<X: NodeExtra> WebExtensionLinkedWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> WebExtensionLinkedWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> WebExtensionLinkedWith<Y>
+    pub fn into_user_data<Y>(self) -> WebExtensionLinkedWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         WebExtensionLinkedWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }

@@ -230,9 +230,9 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct AccentMirror {
     #[rkyv(omit_bounds)]
     pub e: Box<super::E>,
-    pub extra: (),
     pub properties: Option<Box<super::AccentProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -241,16 +241,16 @@ pub struct AccentMirror {
 pub struct AccentPropertiesMirror {
     pub character: Option<Box<super::Character>>,
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::AlignScripts)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlignScriptsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -258,8 +258,8 @@ pub struct AlignScriptsMirror {
 #[rkyv(remote = super::Alignment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlignmentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -268,16 +268,16 @@ pub struct AlignmentMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ArgumentPropertiesMirror {
     pub argument_size: Option<Box<super::ArgumentSize>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArgumentSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArgumentSizeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Integer2>,
 }
 
@@ -291,8 +291,8 @@ pub struct ArrayObjectMirror {
     pub array_properties: Option<Box<super::ArrayProperties>>,
     #[rkyv(omit_bounds)]
     pub e: Vec<super::E>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -300,13 +300,13 @@ pub struct ArrayObjectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ArrayPropertiesMirror {
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub matrix_base_justification: Option<Box<super::MatrixBaseJustification>>,
     pub maximum_distribution: Option<Box<super::MaximumDistribution>>,
     pub object_distribution: Option<Box<super::ObjectDistribution>>,
     pub r_sp: Option<Box<super::RSp>>,
     pub row_spacing_rule: Option<Box<super::RowSpacingRule>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -318,9 +318,9 @@ pub struct ArrayPropertiesMirror {
 pub struct BarMirror {
     #[rkyv(omit_bounds)]
     pub e: Box<super::E>,
-    pub extra: (),
     pub properties: Option<Box<super::BarProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -328,9 +328,9 @@ pub struct BarMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BarPropertiesMirror {
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub position: Option<Box<super::Position>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -343,8 +343,8 @@ pub struct BorderBoxObjectMirror {
     pub border_box_properties: Option<Box<super::BorderBoxProperties>>,
     #[rkyv(omit_bounds)]
     pub e: Box<super::E>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -358,20 +358,20 @@ pub struct BorderBoxPropertiesMirror {
         Option<Box<super::BorderBoxStrikethroughTopLeftToBottomRight>>,
     pub border_box_strikethrough_vertical: Option<Box<super::BorderBoxStrikethroughVertical>>,
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub hide_bottom_edge: Option<Box<super::HideBottomEdge>>,
     pub hide_left_edge: Option<Box<super::HideLeftEdge>>,
     pub hide_right_edge: Option<Box<super::HideRightEdge>>,
     pub hide_top_edge: Option<Box<super::HideTopEdge>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BorderBoxStrikethroughBottomLeftToTopRight)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BorderBoxStrikethroughBottomLeftToTopRightMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -379,8 +379,8 @@ pub struct BorderBoxStrikethroughBottomLeftToTopRightMirror {
 #[rkyv(remote = super::BorderBoxStrikethroughHorizontal)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BorderBoxStrikethroughHorizontalMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -388,8 +388,8 @@ pub struct BorderBoxStrikethroughHorizontalMirror {
 #[rkyv(remote = super::BorderBoxStrikethroughTopLeftToBottomRight)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BorderBoxStrikethroughTopLeftToBottomRightMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -397,8 +397,8 @@ pub struct BorderBoxStrikethroughTopLeftToBottomRightMirror {
 #[rkyv(remote = super::BorderBoxStrikethroughVertical)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BorderBoxStrikethroughVerticalMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -412,8 +412,8 @@ pub struct BoxObjectMirror {
     pub box_properties: Option<Box<super::BoxProperties>>,
     #[rkyv(omit_bounds)]
     pub e: Box<super::E>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -424,10 +424,10 @@ pub struct BoxPropertiesMirror {
     pub r#break: Option<Box<super::Break>>,
     pub control_properties: Option<Box<super::ControlProperties>>,
     pub differential: Option<Box<super::Differential>>,
-    pub extra: (),
     pub no_break: Option<Box<super::NoBreak>>,
     pub operator_emulator: Option<Box<super::OperatorEmulator>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -435,16 +435,16 @@ pub struct BoxPropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BreakMirror {
     pub aln_at: Option<super::Integer255>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BreakOnBinaryOperators)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BreakOnBinaryOperatorsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::BreakBinaryOperators>,
 }
 
@@ -452,8 +452,8 @@ pub struct BreakOnBinaryOperatorsMirror {
 #[rkyv(remote = super::BreakOnBinarySubtraction)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BreakOnBinarySubtractionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StBreakBinSub>,
 }
 
@@ -461,8 +461,8 @@ pub struct BreakOnBinarySubtractionMirror {
 #[rkyv(remote = super::Character)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CharacterMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StChar>,
 }
 
@@ -471,16 +471,16 @@ pub struct CharacterMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ControlPropertiesMirror {
     pub content: Option<Box<super::ControlPropertiesContent>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DefaultJustification)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultJustificationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StJc>,
 }
 
@@ -495,16 +495,16 @@ pub struct DegreeMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::OfficeMathContent>,
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DelimiterBeginningCharacter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DelimiterBeginningCharacterMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StChar>,
 }
 
@@ -512,8 +512,8 @@ pub struct DelimiterBeginningCharacterMirror {
 #[rkyv(remote = super::DelimiterEndingCharacter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DelimiterEndingCharacterMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StChar>,
 }
 
@@ -527,8 +527,8 @@ pub struct DelimiterObjectMirror {
     pub delimiter_properties: Option<Box<super::DelimiterProperties>>,
     #[rkyv(omit_bounds)]
     pub e: Vec<super::E>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -539,18 +539,18 @@ pub struct DelimiterPropertiesMirror {
     pub delimiter_beginning_character: Option<Box<super::DelimiterBeginningCharacter>>,
     pub delimiter_ending_character: Option<Box<super::DelimiterEndingCharacter>>,
     pub delimiter_separator_character: Option<Box<super::DelimiterSeparatorCharacter>>,
-    pub extra: (),
     pub grow: Option<Box<super::Grow>>,
     pub shp: Option<Box<super::Shp>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DelimiterSeparatorCharacter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DelimiterSeparatorCharacterMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StChar>,
 }
 
@@ -565,16 +565,16 @@ pub struct DenominatorMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::OfficeMathContent>,
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Differential)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DifferentialMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -589,8 +589,8 @@ pub struct EMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::OfficeMathContent>,
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -602,11 +602,11 @@ pub struct EMirror {
 pub struct FractionObjectMirror {
     #[rkyv(omit_bounds)]
     pub denominator: Box<super::Denominator>,
-    pub extra: (),
     pub fraction_properties: Option<Box<super::FractionProperties>>,
     #[rkyv(omit_bounds)]
     pub numerator: Box<super::Numerator>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -614,17 +614,17 @@ pub struct FractionObjectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FractionPropertiesMirror {
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub fraction_type: Option<Box<super::FractionType>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FractionType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FractionTypeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StFType>,
 }
 
@@ -637,11 +637,11 @@ pub struct FractionTypeMirror {
 pub struct FunctionApplyObjectMirror {
     #[rkyv(omit_bounds)]
     pub e: Box<super::E>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub function_name: Box<super::FunctionName>,
     pub function_properties: Option<Box<super::FunctionProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -655,8 +655,8 @@ pub struct FunctionNameMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::OfficeMathContent>,
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -664,8 +664,8 @@ pub struct FunctionNameMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FunctionPropertiesMirror {
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -677,9 +677,9 @@ pub struct FunctionPropertiesMirror {
 pub struct GroupCharacterObjectMirror {
     #[rkyv(omit_bounds)]
     pub e: Box<super::E>,
-    pub extra: (),
     pub group_character_properties: Option<Box<super::GroupCharacterProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -688,9 +688,9 @@ pub struct GroupCharacterObjectMirror {
 pub struct GroupCharacterPropertiesMirror {
     pub character: Option<Box<super::Character>>,
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub position: Option<Box<super::Position>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub vertical_justification: Option<Box<super::VerticalJustification>>,
 }
 
@@ -698,8 +698,8 @@ pub struct GroupCharacterPropertiesMirror {
 #[rkyv(remote = super::Grow)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GrowMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -707,8 +707,8 @@ pub struct GrowMirror {
 #[rkyv(remote = super::HideBottomEdge)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HideBottomEdgeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -716,8 +716,8 @@ pub struct HideBottomEdgeMirror {
 #[rkyv(remote = super::HideDegree)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HideDegreeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -725,8 +725,8 @@ pub struct HideDegreeMirror {
 #[rkyv(remote = super::HideLeftEdge)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HideLeftEdgeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -734,8 +734,8 @@ pub struct HideLeftEdgeMirror {
 #[rkyv(remote = super::HideRightEdge)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HideRightEdgeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -743,8 +743,8 @@ pub struct HideRightEdgeMirror {
 #[rkyv(remote = super::HideTopEdge)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HideTopEdgeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -752,8 +752,8 @@ pub struct HideTopEdgeMirror {
 #[rkyv(remote = super::IntegralLimitLocations)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IntegralLimitLocationsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::LimitLocation>,
 }
 
@@ -761,8 +761,8 @@ pub struct IntegralLimitLocationsMirror {
 #[rkyv(remote = super::InterEquationSpacing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InterEquationSpacingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -770,8 +770,8 @@ pub struct InterEquationSpacingMirror {
 #[rkyv(remote = super::IntraEquationSpacing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IntraEquationSpacingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -779,8 +779,8 @@ pub struct IntraEquationSpacingMirror {
 #[rkyv(remote = super::Justification)]
 #[rkyv(attr(non_exhaustive))]
 pub struct JustificationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StJc>,
 }
 
@@ -788,8 +788,8 @@ pub struct JustificationMirror {
 #[rkyv(remote = super::LeftMargin)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LeftMarginMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -797,8 +797,8 @@ pub struct LeftMarginMirror {
 #[rkyv(remote = super::LimLoc)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LimLocMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::LimitLocation>,
 }
 
@@ -813,16 +813,16 @@ pub struct LimitMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::OfficeMathContent>,
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Literal)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LiteralMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -835,11 +835,11 @@ pub struct LiteralMirror {
 pub struct LowerLimitObjectMirror {
     #[rkyv(omit_bounds)]
     pub e: Box<super::E>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub limit: Box<super::Limit>,
     pub lower_limit_properties: Option<Box<super::LowerLimitProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -847,16 +847,16 @@ pub struct LowerLimitObjectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct LowerLimitPropertiesMirror {
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::MathFont)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MathFontMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -868,7 +868,6 @@ pub struct MathPropertiesMirror {
     pub break_on_binary_subtraction: Option<Box<super::BreakOnBinarySubtraction>>,
     pub content: Option<Box<super::MathPropertiesContent>>,
     pub default_justification: Option<Box<super::DefaultJustification>>,
-    pub extra: (),
     pub integral_limit_locations: Option<Box<super::IntegralLimitLocations>>,
     pub inter_equation_spacing: Option<Box<super::InterEquationSpacing>>,
     pub intra_equation_spacing: Option<Box<super::IntraEquationSpacing>>,
@@ -881,14 +880,15 @@ pub struct MathPropertiesMirror {
     pub small_fraction: Option<Box<super::SmallFraction>>,
     pub unknown: officekit_markup_base::Unknown,
     pub use_display_math_defaults: Option<Box<super::UseDisplayMathDefaults>>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::MatrixBaseJustification)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MatrixBaseJustificationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::VerticalAlignmentLocation>,
 }
 
@@ -896,17 +896,17 @@ pub struct MatrixBaseJustificationMirror {
 #[rkyv(remote = super::MatrixColumn)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MatrixColumnMirror {
-    pub extra: (),
     pub properties: Option<Box<super::MatrixColumnProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::MatrixColumnCount)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MatrixColumnCountMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Integer255>,
 }
 
@@ -914,8 +914,8 @@ pub struct MatrixColumnCountMirror {
 #[rkyv(remote = super::MatrixColumnGap)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MatrixColumnGapMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::UnsignedInteger>,
 }
 
@@ -923,8 +923,8 @@ pub struct MatrixColumnGapMirror {
 #[rkyv(remote = super::MatrixColumnGapRule)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MatrixColumnGapRuleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::SpacingRule>,
 }
 
@@ -932,8 +932,8 @@ pub struct MatrixColumnGapRuleMirror {
 #[rkyv(remote = super::MatrixColumnJustification)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MatrixColumnJustificationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::HorizontalAlignmentLocation>,
 }
 
@@ -941,19 +941,19 @@ pub struct MatrixColumnJustificationMirror {
 #[rkyv(remote = super::MatrixColumnProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MatrixColumnPropertiesMirror {
-    pub extra: (),
     pub matrix_column_count: Option<Box<super::MatrixColumnCount>>,
     pub matrix_column_justification: Option<Box<super::MatrixColumnJustification>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::MatrixColumns)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MatrixColumnsMirror {
-    pub extra: (),
     pub matrix_column: Vec<super::MatrixColumn>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -963,11 +963,11 @@ pub struct MatrixColumnsMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct MatrixObjectMirror {
-    pub extra: (),
     pub matrix_properties: Option<Box<super::MatrixProperties>>,
     #[rkyv(omit_bounds)]
     pub matrix_row: Vec<super::MatrixRow>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -975,7 +975,6 @@ pub struct MatrixObjectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct MatrixPropertiesMirror {
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub matrix_base_justification: Option<Box<super::MatrixBaseJustification>>,
     pub matrix_column_gap: Option<Box<super::MatrixColumnGap>>,
     pub matrix_column_gap_rule: Option<Box<super::MatrixColumnGapRule>>,
@@ -985,6 +984,7 @@ pub struct MatrixPropertiesMirror {
     pub r_sp: Option<Box<super::RSp>>,
     pub row_spacing_rule: Option<Box<super::RowSpacingRule>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -996,16 +996,16 @@ pub struct MatrixPropertiesMirror {
 pub struct MatrixRowMirror {
     #[rkyv(omit_bounds)]
     pub e: Vec<super::E>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::MaximumDistribution)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MaximumDistributionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1013,8 +1013,8 @@ pub struct MaximumDistributionMirror {
 #[rkyv(remote = super::MinimumMatrixColumnWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MinimumMatrixColumnWidthMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::UnsignedInteger>,
 }
 
@@ -1027,21 +1027,21 @@ pub struct MinimumMatrixColumnWidthMirror {
 pub struct NaryMirror {
     #[rkyv(omit_bounds)]
     pub e: Box<super::E>,
-    pub extra: (),
     pub pr: Option<Box<super::NaryPr>>,
     #[rkyv(omit_bounds)]
     pub sub: Box<super::Sub>,
     #[rkyv(omit_bounds)]
     pub sup: Box<super::Sup>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::NaryLim)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NaryLimMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::LimitLocation>,
 }
 
@@ -1051,20 +1051,20 @@ pub struct NaryLimMirror {
 pub struct NaryPrMirror {
     pub character: Option<Box<super::Character>>,
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub grow: Option<Box<super::Grow>>,
     pub lim_loc: Option<Box<super::LimLoc>>,
     pub sub_hide: Option<Box<super::SubHide>>,
     pub sup_hide: Option<Box<super::SupHide>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::NoBreak)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NoBreakMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1072,8 +1072,8 @@ pub struct NoBreakMirror {
 #[rkyv(remote = super::NormalText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NormalTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1088,16 +1088,16 @@ pub struct NumeratorMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::OfficeMathContent>,
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ObjectDistribution)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ObjectDistributionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1110,8 +1110,8 @@ pub struct ObjectDistributionMirror {
 pub struct OfficeMathMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::OfficeMathContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1135,28 +1135,28 @@ pub struct OfficeMathParagraphMirror {
         Vec<super::super::office_word_2010_wordml::CustomXmlConflictInsRangeEnd>,
     pub custom_xml_conflict_ins_range_start:
         Vec<super::super::office_word_2010_wordml::CustomXmlConflictInsRangeStart>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub office_math: Vec<super::OfficeMath>,
     pub properties: Option<Box<super::OfficeMathParagraphProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::OfficeMathParagraphProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OfficeMathParagraphPropertiesMirror {
-    pub extra: (),
     pub justification: Option<Box<super::Justification>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::OperatorEmulator)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OperatorEmulatorMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1169,9 +1169,9 @@ pub struct OperatorEmulatorMirror {
 pub struct PhantomObjectMirror {
     #[rkyv(omit_bounds)]
     pub e: Box<super::E>,
-    pub extra: (),
     pub phantom_properties: Option<Box<super::PhantomProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1179,21 +1179,21 @@ pub struct PhantomObjectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PhantomPropertiesMirror {
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub phantom_show: Option<Box<super::PhantomShow>>,
     pub phantom_zero_ascent: Option<Box<super::PhantomZeroAscent>>,
     pub phantom_zero_descent: Option<Box<super::PhantomZeroDescent>>,
     pub phantom_zero_width: Option<Box<super::PhantomZeroWidth>>,
     pub transp: Option<Box<super::Transp>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PhantomShow)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PhantomShowMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1201,8 +1201,8 @@ pub struct PhantomShowMirror {
 #[rkyv(remote = super::PhantomZeroAscent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PhantomZeroAscentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1210,8 +1210,8 @@ pub struct PhantomZeroAscentMirror {
 #[rkyv(remote = super::PhantomZeroDescent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PhantomZeroDescentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1219,8 +1219,8 @@ pub struct PhantomZeroDescentMirror {
 #[rkyv(remote = super::PhantomZeroWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PhantomZeroWidthMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1228,8 +1228,8 @@ pub struct PhantomZeroWidthMirror {
 #[rkyv(remote = super::PlcHide)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PlcHideMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1237,8 +1237,8 @@ pub struct PlcHideMirror {
 #[rkyv(remote = super::Position)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PositionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::TopBottom>,
 }
 
@@ -1246,8 +1246,8 @@ pub struct PositionMirror {
 #[rkyv(remote = super::PostParagraphSpacing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PostParagraphSpacingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -1255,8 +1255,8 @@ pub struct PostParagraphSpacingMirror {
 #[rkyv(remote = super::PreParagraphSpacing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PreParagraphSpacingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -1269,13 +1269,13 @@ pub struct PreParagraphSpacingMirror {
 pub struct PreSubSuperscriptObjectMirror {
     #[rkyv(omit_bounds)]
     pub e: Box<super::E>,
-    pub extra: (),
     pub pre_sub_superscript_properties: Option<Box<super::PreSubSuperscriptProperties>>,
     #[rkyv(omit_bounds)]
     pub sub: Box<super::Sub>,
     #[rkyv(omit_bounds)]
     pub sup: Box<super::Sup>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1283,16 +1283,16 @@ pub struct PreSubSuperscriptObjectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PreSubSuperscriptPropertiesMirror {
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RSp)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RSpMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::UnsignedInteger>,
 }
 
@@ -1307,9 +1307,9 @@ pub struct RadicalObjectMirror {
     pub degree: Box<super::Degree>,
     #[rkyv(omit_bounds)]
     pub e: Box<super::E>,
-    pub extra: (),
     pub radical_properties: Option<Box<super::RadicalProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1317,17 +1317,17 @@ pub struct RadicalObjectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RadicalPropertiesMirror {
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub hide_degree: Option<Box<super::HideDegree>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RightMargin)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RightMarginMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -1335,8 +1335,8 @@ pub struct RightMarginMirror {
 #[rkyv(remote = super::RowSpacingRule)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RowSpacingRuleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::SpacingRule>,
 }
 
@@ -1349,9 +1349,9 @@ pub struct RowSpacingRuleMirror {
 pub struct RunMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::RunContent>,
-    pub extra: (),
     pub properties: Option<Box<super::RunProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w_properties: Option<Box<super::super::wordprocessing::RunProperties>>,
 }
 
@@ -1362,17 +1362,17 @@ pub struct RunPropertiesMirror {
     pub alignment: Option<Box<super::Alignment>>,
     pub r#break: Option<Box<super::Break>>,
     pub content: Vec<super::RunPropertiesContent>,
-    pub extra: (),
     pub literal: Option<Box<super::Literal>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Script)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScriptMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StScript>,
 }
 
@@ -1380,8 +1380,8 @@ pub struct ScriptMirror {
 #[rkyv(remote = super::Shp)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShpMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StShp>,
 }
 
@@ -1389,8 +1389,8 @@ pub struct ShpMirror {
 #[rkyv(remote = super::SmallFraction)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SmallFractionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1398,8 +1398,8 @@ pub struct SmallFractionMirror {
 #[rkyv(remote = super::Sty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StyMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Style>,
 }
 
@@ -1414,16 +1414,16 @@ pub struct SubMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::OfficeMathContent>,
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SubHide)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SubHideMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1436,13 +1436,13 @@ pub struct SubHideMirror {
 pub struct SubSuperscriptObjectMirror {
     #[rkyv(omit_bounds)]
     pub e: Box<super::E>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub sub: Box<super::Sub>,
     pub sub_superscript_properties: Option<Box<super::SubSuperscriptProperties>>,
     #[rkyv(omit_bounds)]
     pub sup: Box<super::Sup>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1451,8 +1451,8 @@ pub struct SubSuperscriptObjectMirror {
 pub struct SubSuperscriptPropertiesMirror {
     pub align_scripts: Option<Box<super::AlignScripts>>,
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1464,11 +1464,11 @@ pub struct SubSuperscriptPropertiesMirror {
 pub struct SubscriptObjectMirror {
     #[rkyv(omit_bounds)]
     pub e: Box<super::E>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub sub: Box<super::Sub>,
     pub subscript_properties: Option<Box<super::SubscriptProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1476,8 +1476,8 @@ pub struct SubscriptObjectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SubscriptPropertiesMirror {
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1491,16 +1491,16 @@ pub struct SupMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::OfficeMathContent>,
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SupHide)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SupHideMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1513,11 +1513,11 @@ pub struct SupHideMirror {
 pub struct SuperscriptObjectMirror {
     #[rkyv(omit_bounds)]
     pub e: Box<super::E>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub sup: Box<super::Sup>,
     pub superscript_properties: Option<Box<super::SuperscriptProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1525,17 +1525,17 @@ pub struct SuperscriptObjectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SuperscriptPropertiesMirror {
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Text)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextMirror {
-    pub extra: (),
     pub space: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -1543,8 +1543,8 @@ pub struct TextMirror {
 #[rkyv(remote = super::Transp)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TranspMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1557,11 +1557,11 @@ pub struct TranspMirror {
 pub struct UpperLimitObjectMirror {
     #[rkyv(omit_bounds)]
     pub e: Box<super::E>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub limit: Box<super::Limit>,
     pub unknown: officekit_markup_base::Unknown,
     pub upper_limit_properties: Option<Box<super::UpperLimitProperties>>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1569,16 +1569,16 @@ pub struct UpperLimitObjectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct UpperLimitPropertiesMirror {
     pub control_properties: Option<Box<super::ControlProperties>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::UseDisplayMathDefaults)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseDisplayMathDefaultsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1586,8 +1586,8 @@ pub struct UseDisplayMathDefaultsMirror {
 #[rkyv(remote = super::VerticalJustification)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VerticalJustificationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::TopBottom>,
 }
 
@@ -1595,8 +1595,8 @@ pub struct VerticalJustificationMirror {
 #[rkyv(remote = super::WrapIndent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WrapIndentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
 
@@ -1604,8 +1604,8 @@ pub struct WrapIndentMirror {
 #[rkyv(remote = super::WrapRight)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WrapRightMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -1778,9 +1778,9 @@ impl From<AccentMirror> for super::Accent {
     fn from(item: AccentMirror) -> Self {
         Self {
             e: item.e,
-            extra: item.extra,
             properties: item.properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1819,8 +1819,8 @@ impl From<AccentPropertiesMirror> for super::AccentProperties {
         Self {
             character: item.character,
             control_properties: item.control_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1857,8 +1857,8 @@ where
 impl From<AlignScriptsMirror> for super::AlignScripts {
     fn from(item: AlignScriptsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -1896,8 +1896,8 @@ where
 impl From<AlignmentMirror> for super::Alignment {
     fn from(item: AlignmentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -1936,8 +1936,8 @@ impl From<ArgumentPropertiesMirror> for super::ArgumentProperties {
     fn from(item: ArgumentPropertiesMirror) -> Self {
         Self {
             argument_size: item.argument_size,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1974,8 +1974,8 @@ where
 impl From<ArgumentSizeMirror> for super::ArgumentSize {
     fn from(item: ArgumentSizeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -2015,8 +2015,8 @@ impl From<ArrayObjectMirror> for super::ArrayObject {
         Self {
             array_properties: item.array_properties,
             e: item.e,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2054,13 +2054,13 @@ impl From<ArrayPropertiesMirror> for super::ArrayProperties {
     fn from(item: ArrayPropertiesMirror) -> Self {
         Self {
             control_properties: item.control_properties,
-            extra: item.extra,
             matrix_base_justification: item.matrix_base_justification,
             maximum_distribution: item.maximum_distribution,
             object_distribution: item.object_distribution,
             r_sp: item.r_sp,
             row_spacing_rule: item.row_spacing_rule,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2098,9 +2098,9 @@ impl From<BarMirror> for super::Bar {
     fn from(item: BarMirror) -> Self {
         Self {
             e: item.e,
-            extra: item.extra,
             properties: item.properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2138,9 +2138,9 @@ impl From<BarPropertiesMirror> for super::BarProperties {
     fn from(item: BarPropertiesMirror) -> Self {
         Self {
             control_properties: item.control_properties,
-            extra: item.extra,
             position: item.position,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2179,8 +2179,8 @@ impl From<BorderBoxObjectMirror> for super::BorderBoxObject {
         Self {
             border_box_properties: item.border_box_properties,
             e: item.e,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2224,12 +2224,12 @@ impl From<BorderBoxPropertiesMirror> for super::BorderBoxProperties {
                 .border_box_strikethrough_top_left_to_bottom_right,
             border_box_strikethrough_vertical: item.border_box_strikethrough_vertical,
             control_properties: item.control_properties,
-            extra: item.extra,
             hide_bottom_edge: item.hide_bottom_edge,
             hide_left_edge: item.hide_left_edge,
             hide_right_edge: item.hide_right_edge,
             hide_top_edge: item.hide_top_edge,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2271,8 +2271,8 @@ impl From<BorderBoxStrikethroughBottomLeftToTopRightMirror>
 {
     fn from(item: BorderBoxStrikethroughBottomLeftToTopRightMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -2314,8 +2314,8 @@ where
 impl From<BorderBoxStrikethroughHorizontalMirror> for super::BorderBoxStrikethroughHorizontal {
     fn from(item: BorderBoxStrikethroughHorizontalMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -2359,8 +2359,8 @@ impl From<BorderBoxStrikethroughTopLeftToBottomRightMirror>
 {
     fn from(item: BorderBoxStrikethroughTopLeftToBottomRightMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -2402,8 +2402,8 @@ where
 impl From<BorderBoxStrikethroughVerticalMirror> for super::BorderBoxStrikethroughVertical {
     fn from(item: BorderBoxStrikethroughVerticalMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -2447,8 +2447,8 @@ impl From<BoxObjectMirror> for super::BoxObject {
         Self {
             box_properties: item.box_properties,
             e: item.e,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2489,10 +2489,10 @@ impl From<BoxPropertiesMirror> for super::BoxProperties {
             r#break: item.r#break,
             control_properties: item.control_properties,
             differential: item.differential,
-            extra: item.extra,
             no_break: item.no_break,
             operator_emulator: item.operator_emulator,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2530,8 +2530,8 @@ impl From<BreakMirror> for super::Break {
     fn from(item: BreakMirror) -> Self {
         Self {
             aln_at: item.aln_at,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2568,8 +2568,8 @@ where
 impl From<BreakOnBinaryOperatorsMirror> for super::BreakOnBinaryOperators {
     fn from(item: BreakOnBinaryOperatorsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -2611,8 +2611,8 @@ where
 impl From<BreakOnBinarySubtractionMirror> for super::BreakOnBinarySubtraction {
     fn from(item: BreakOnBinarySubtractionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -2654,8 +2654,8 @@ where
 impl From<CharacterMirror> for super::Character {
     fn from(item: CharacterMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -2694,8 +2694,8 @@ impl From<ControlPropertiesMirror> for super::ControlProperties {
     fn from(item: ControlPropertiesMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2732,8 +2732,8 @@ where
 impl From<DefaultJustificationMirror> for super::DefaultJustification {
     fn from(item: DefaultJustificationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -2777,8 +2777,8 @@ impl From<DegreeMirror> for super::Degree {
             argument_properties: item.argument_properties,
             content: item.content,
             control_properties: item.control_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2815,8 +2815,8 @@ where
 impl From<DelimiterBeginningCharacterMirror> for super::DelimiterBeginningCharacter {
     fn from(item: DelimiterBeginningCharacterMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -2858,8 +2858,8 @@ where
 impl From<DelimiterEndingCharacterMirror> for super::DelimiterEndingCharacter {
     fn from(item: DelimiterEndingCharacterMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -2903,8 +2903,8 @@ impl From<DelimiterObjectMirror> for super::DelimiterObject {
         Self {
             delimiter_properties: item.delimiter_properties,
             e: item.e,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2945,10 +2945,10 @@ impl From<DelimiterPropertiesMirror> for super::DelimiterProperties {
             delimiter_beginning_character: item.delimiter_beginning_character,
             delimiter_ending_character: item.delimiter_ending_character,
             delimiter_separator_character: item.delimiter_separator_character,
-            extra: item.extra,
             grow: item.grow,
             shp: item.shp,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2988,8 +2988,8 @@ where
 impl From<DelimiterSeparatorCharacterMirror> for super::DelimiterSeparatorCharacter {
     fn from(item: DelimiterSeparatorCharacterMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -3034,8 +3034,8 @@ impl From<DenominatorMirror> for super::Denominator {
             argument_properties: item.argument_properties,
             content: item.content,
             control_properties: item.control_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3072,8 +3072,8 @@ where
 impl From<DifferentialMirror> for super::Differential {
     fn from(item: DifferentialMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -3114,8 +3114,8 @@ impl From<EMirror> for super::E {
             argument_properties: item.argument_properties,
             content: item.content,
             control_properties: item.control_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3153,10 +3153,10 @@ impl From<FractionObjectMirror> for super::FractionObject {
     fn from(item: FractionObjectMirror) -> Self {
         Self {
             denominator: item.denominator,
-            extra: item.extra,
             fraction_properties: item.fraction_properties,
             numerator: item.numerator,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3194,9 +3194,9 @@ impl From<FractionPropertiesMirror> for super::FractionProperties {
     fn from(item: FractionPropertiesMirror) -> Self {
         Self {
             control_properties: item.control_properties,
-            extra: item.extra,
             fraction_type: item.fraction_type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3233,8 +3233,8 @@ where
 impl From<FractionTypeMirror> for super::FractionType {
     fn from(item: FractionTypeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -3273,10 +3273,10 @@ impl From<FunctionApplyObjectMirror> for super::FunctionApplyObject {
     fn from(item: FunctionApplyObjectMirror) -> Self {
         Self {
             e: item.e,
-            extra: item.extra,
             function_name: item.function_name,
             function_properties: item.function_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3319,8 +3319,8 @@ impl From<FunctionNameMirror> for super::FunctionName {
             argument_properties: item.argument_properties,
             content: item.content,
             control_properties: item.control_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3358,8 +3358,8 @@ impl From<FunctionPropertiesMirror> for super::FunctionProperties {
     fn from(item: FunctionPropertiesMirror) -> Self {
         Self {
             control_properties: item.control_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3397,9 +3397,9 @@ impl From<GroupCharacterObjectMirror> for super::GroupCharacterObject {
     fn from(item: GroupCharacterObjectMirror) -> Self {
         Self {
             e: item.e,
-            extra: item.extra,
             group_character_properties: item.group_character_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3441,9 +3441,9 @@ impl From<GroupCharacterPropertiesMirror> for super::GroupCharacterProperties {
         Self {
             character: item.character,
             control_properties: item.control_properties,
-            extra: item.extra,
             position: item.position,
             unknown: item.unknown,
+            user_data: item.user_data,
             vertical_justification: item.vertical_justification,
         }
     }
@@ -3485,8 +3485,8 @@ where
 impl From<GrowMirror> for super::Grow {
     fn from(item: GrowMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -3524,8 +3524,8 @@ where
 impl From<HideBottomEdgeMirror> for super::HideBottomEdge {
     fn from(item: HideBottomEdgeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -3563,8 +3563,8 @@ where
 impl From<HideDegreeMirror> for super::HideDegree {
     fn from(item: HideDegreeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -3602,8 +3602,8 @@ where
 impl From<HideLeftEdgeMirror> for super::HideLeftEdge {
     fn from(item: HideLeftEdgeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -3641,8 +3641,8 @@ where
 impl From<HideRightEdgeMirror> for super::HideRightEdge {
     fn from(item: HideRightEdgeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -3680,8 +3680,8 @@ where
 impl From<HideTopEdgeMirror> for super::HideTopEdge {
     fn from(item: HideTopEdgeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -3719,8 +3719,8 @@ where
 impl From<IntegralLimitLocationsMirror> for super::IntegralLimitLocations {
     fn from(item: IntegralLimitLocationsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -3762,8 +3762,8 @@ where
 impl From<InterEquationSpacingMirror> for super::InterEquationSpacing {
     fn from(item: InterEquationSpacingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -3804,8 +3804,8 @@ where
 impl From<IntraEquationSpacingMirror> for super::IntraEquationSpacing {
     fn from(item: IntraEquationSpacingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -3846,8 +3846,8 @@ where
 impl From<JustificationMirror> for super::Justification {
     fn from(item: JustificationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -3885,8 +3885,8 @@ where
 impl From<LeftMarginMirror> for super::LeftMargin {
     fn from(item: LeftMarginMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -3924,8 +3924,8 @@ where
 impl From<LimLocMirror> for super::LimLoc {
     fn from(item: LimLocMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -3966,8 +3966,8 @@ impl From<LimitMirror> for super::Limit {
             argument_properties: item.argument_properties,
             content: item.content,
             control_properties: item.control_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -4004,8 +4004,8 @@ where
 impl From<LiteralMirror> for super::Literal {
     fn from(item: LiteralMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -4044,10 +4044,10 @@ impl From<LowerLimitObjectMirror> for super::LowerLimitObject {
     fn from(item: LowerLimitObjectMirror) -> Self {
         Self {
             e: item.e,
-            extra: item.extra,
             limit: item.limit,
             lower_limit_properties: item.lower_limit_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -4085,8 +4085,8 @@ impl From<LowerLimitPropertiesMirror> for super::LowerLimitProperties {
     fn from(item: LowerLimitPropertiesMirror) -> Self {
         Self {
             control_properties: item.control_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -4126,8 +4126,8 @@ where
 impl From<MathFontMirror> for super::MathFont {
     fn from(item: MathFontMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -4169,7 +4169,6 @@ impl From<MathPropertiesMirror> for super::MathProperties {
             break_on_binary_subtraction: item.break_on_binary_subtraction,
             content: item.content,
             default_justification: item.default_justification,
-            extra: item.extra,
             integral_limit_locations: item.integral_limit_locations,
             inter_equation_spacing: item.inter_equation_spacing,
             intra_equation_spacing: item.intra_equation_spacing,
@@ -4182,6 +4181,7 @@ impl From<MathPropertiesMirror> for super::MathProperties {
             small_fraction: item.small_fraction,
             unknown: item.unknown,
             use_display_math_defaults: item.use_display_math_defaults,
+            user_data: item.user_data,
         }
     }
 }
@@ -4218,8 +4218,8 @@ where
 impl From<MatrixBaseJustificationMirror> for super::MatrixBaseJustification {
     fn from(item: MatrixBaseJustificationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -4261,9 +4261,9 @@ where
 impl From<MatrixColumnMirror> for super::MatrixColumn {
     fn from(item: MatrixColumnMirror) -> Self {
         Self {
-            extra: item.extra,
             properties: item.properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -4300,8 +4300,8 @@ where
 impl From<MatrixColumnCountMirror> for super::MatrixColumnCount {
     fn from(item: MatrixColumnCountMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -4339,8 +4339,8 @@ where
 impl From<MatrixColumnGapMirror> for super::MatrixColumnGap {
     fn from(item: MatrixColumnGapMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -4378,8 +4378,8 @@ where
 impl From<MatrixColumnGapRuleMirror> for super::MatrixColumnGapRule {
     fn from(item: MatrixColumnGapRuleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -4420,8 +4420,8 @@ where
 impl From<MatrixColumnJustificationMirror> for super::MatrixColumnJustification {
     fn from(item: MatrixColumnJustificationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -4463,10 +4463,10 @@ where
 impl From<MatrixColumnPropertiesMirror> for super::MatrixColumnProperties {
     fn from(item: MatrixColumnPropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             matrix_column_count: item.matrix_column_count,
             matrix_column_justification: item.matrix_column_justification,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -4507,9 +4507,9 @@ where
 impl From<MatrixColumnsMirror> for super::MatrixColumns {
     fn from(item: MatrixColumnsMirror) -> Self {
         Self {
-            extra: item.extra,
             matrix_column: item.matrix_column,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -4546,10 +4546,10 @@ where
 impl From<MatrixObjectMirror> for super::MatrixObject {
     fn from(item: MatrixObjectMirror) -> Self {
         Self {
-            extra: item.extra,
             matrix_properties: item.matrix_properties,
             matrix_row: item.matrix_row,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -4587,7 +4587,6 @@ impl From<MatrixPropertiesMirror> for super::MatrixProperties {
     fn from(item: MatrixPropertiesMirror) -> Self {
         Self {
             control_properties: item.control_properties,
-            extra: item.extra,
             matrix_base_justification: item.matrix_base_justification,
             matrix_column_gap: item.matrix_column_gap,
             matrix_column_gap_rule: item.matrix_column_gap_rule,
@@ -4597,6 +4596,7 @@ impl From<MatrixPropertiesMirror> for super::MatrixProperties {
             r_sp: item.r_sp,
             row_spacing_rule: item.row_spacing_rule,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -4634,8 +4634,8 @@ impl From<MatrixRowMirror> for super::MatrixRow {
     fn from(item: MatrixRowMirror) -> Self {
         Self {
             e: item.e,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -4672,8 +4672,8 @@ where
 impl From<MaximumDistributionMirror> for super::MaximumDistribution {
     fn from(item: MaximumDistributionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -4714,8 +4714,8 @@ where
 impl From<MinimumMatrixColumnWidthMirror> for super::MinimumMatrixColumnWidth {
     fn from(item: MinimumMatrixColumnWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -4758,11 +4758,11 @@ impl From<NaryMirror> for super::Nary {
     fn from(item: NaryMirror) -> Self {
         Self {
             e: item.e,
-            extra: item.extra,
             pr: item.pr,
             sub: item.sub,
             sup: item.sup,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -4799,8 +4799,8 @@ where
 impl From<NaryLimMirror> for super::NaryLim {
     fn from(item: NaryLimMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -4840,12 +4840,12 @@ impl From<NaryPrMirror> for super::NaryPr {
         Self {
             character: item.character,
             control_properties: item.control_properties,
-            extra: item.extra,
             grow: item.grow,
             lim_loc: item.lim_loc,
             sub_hide: item.sub_hide,
             sup_hide: item.sup_hide,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -4882,8 +4882,8 @@ where
 impl From<NoBreakMirror> for super::NoBreak {
     fn from(item: NoBreakMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -4921,8 +4921,8 @@ where
 impl From<NormalTextMirror> for super::NormalText {
     fn from(item: NormalTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -4963,8 +4963,8 @@ impl From<NumeratorMirror> for super::Numerator {
             argument_properties: item.argument_properties,
             content: item.content,
             control_properties: item.control_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5001,8 +5001,8 @@ where
 impl From<ObjectDistributionMirror> for super::ObjectDistribution {
     fn from(item: ObjectDistributionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -5041,8 +5041,8 @@ impl From<OfficeMathMirror> for super::OfficeMath {
     fn from(item: OfficeMathMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5085,10 +5085,10 @@ impl From<OfficeMathParagraphMirror> for super::OfficeMathParagraph {
             custom_xml_conflict_del_range_start: item.custom_xml_conflict_del_range_start,
             custom_xml_conflict_ins_range_end: item.custom_xml_conflict_ins_range_end,
             custom_xml_conflict_ins_range_start: item.custom_xml_conflict_ins_range_start,
-            extra: item.extra,
             office_math: item.office_math,
             properties: item.properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5128,9 +5128,9 @@ where
 impl From<OfficeMathParagraphPropertiesMirror> for super::OfficeMathParagraphProperties {
     fn from(item: OfficeMathParagraphPropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             justification: item.justification,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5171,8 +5171,8 @@ where
 impl From<OperatorEmulatorMirror> for super::OperatorEmulator {
     fn from(item: OperatorEmulatorMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -5211,9 +5211,9 @@ impl From<PhantomObjectMirror> for super::PhantomObject {
     fn from(item: PhantomObjectMirror) -> Self {
         Self {
             e: item.e,
-            extra: item.extra,
             phantom_properties: item.phantom_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5251,13 +5251,13 @@ impl From<PhantomPropertiesMirror> for super::PhantomProperties {
     fn from(item: PhantomPropertiesMirror) -> Self {
         Self {
             control_properties: item.control_properties,
-            extra: item.extra,
             phantom_show: item.phantom_show,
             phantom_zero_ascent: item.phantom_zero_ascent,
             phantom_zero_descent: item.phantom_zero_descent,
             phantom_zero_width: item.phantom_zero_width,
             transp: item.transp,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5294,8 +5294,8 @@ where
 impl From<PhantomShowMirror> for super::PhantomShow {
     fn from(item: PhantomShowMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -5333,8 +5333,8 @@ where
 impl From<PhantomZeroAscentMirror> for super::PhantomZeroAscent {
     fn from(item: PhantomZeroAscentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -5372,8 +5372,8 @@ where
 impl From<PhantomZeroDescentMirror> for super::PhantomZeroDescent {
     fn from(item: PhantomZeroDescentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -5411,8 +5411,8 @@ where
 impl From<PhantomZeroWidthMirror> for super::PhantomZeroWidth {
     fn from(item: PhantomZeroWidthMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -5450,8 +5450,8 @@ where
 impl From<PlcHideMirror> for super::PlcHide {
     fn from(item: PlcHideMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -5489,8 +5489,8 @@ where
 impl From<PositionMirror> for super::Position {
     fn from(item: PositionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -5528,8 +5528,8 @@ where
 impl From<PostParagraphSpacingMirror> for super::PostParagraphSpacing {
     fn from(item: PostParagraphSpacingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -5570,8 +5570,8 @@ where
 impl From<PreParagraphSpacingMirror> for super::PreParagraphSpacing {
     fn from(item: PreParagraphSpacingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -5613,11 +5613,11 @@ impl From<PreSubSuperscriptObjectMirror> for super::PreSubSuperscriptObject {
     fn from(item: PreSubSuperscriptObjectMirror) -> Self {
         Self {
             e: item.e,
-            extra: item.extra,
             pre_sub_superscript_properties: item.pre_sub_superscript_properties,
             sub: item.sub,
             sup: item.sup,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5659,8 +5659,8 @@ impl From<PreSubSuperscriptPropertiesMirror> for super::PreSubSuperscriptPropert
     fn from(item: PreSubSuperscriptPropertiesMirror) -> Self {
         Self {
             control_properties: item.control_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5701,8 +5701,8 @@ where
 impl From<RSpMirror> for super::RSp {
     fn from(item: RSpMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -5742,9 +5742,9 @@ impl From<RadicalObjectMirror> for super::RadicalObject {
         Self {
             degree: item.degree,
             e: item.e,
-            extra: item.extra,
             radical_properties: item.radical_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5782,9 +5782,9 @@ impl From<RadicalPropertiesMirror> for super::RadicalProperties {
     fn from(item: RadicalPropertiesMirror) -> Self {
         Self {
             control_properties: item.control_properties,
-            extra: item.extra,
             hide_degree: item.hide_degree,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5821,8 +5821,8 @@ where
 impl From<RightMarginMirror> for super::RightMargin {
     fn from(item: RightMarginMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -5860,8 +5860,8 @@ where
 impl From<RowSpacingRuleMirror> for super::RowSpacingRule {
     fn from(item: RowSpacingRuleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -5900,9 +5900,9 @@ impl From<RunMirror> for super::Run {
     fn from(item: RunMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             properties: item.properties,
             unknown: item.unknown,
+            user_data: item.user_data,
             w_properties: item.w_properties,
         }
     }
@@ -5943,9 +5943,9 @@ impl From<RunPropertiesMirror> for super::RunProperties {
             alignment: item.alignment,
             r#break: item.r#break,
             content: item.content,
-            extra: item.extra,
             literal: item.literal,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5982,8 +5982,8 @@ where
 impl From<ScriptMirror> for super::Script {
     fn from(item: ScriptMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -6021,8 +6021,8 @@ where
 impl From<ShpMirror> for super::Shp {
     fn from(item: ShpMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -6060,8 +6060,8 @@ where
 impl From<SmallFractionMirror> for super::SmallFraction {
     fn from(item: SmallFractionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -6099,8 +6099,8 @@ where
 impl From<StyMirror> for super::Sty {
     fn from(item: StyMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -6141,8 +6141,8 @@ impl From<SubMirror> for super::Sub {
             argument_properties: item.argument_properties,
             content: item.content,
             control_properties: item.control_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6179,8 +6179,8 @@ where
 impl From<SubHideMirror> for super::SubHide {
     fn from(item: SubHideMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -6219,11 +6219,11 @@ impl From<SubSuperscriptObjectMirror> for super::SubSuperscriptObject {
     fn from(item: SubSuperscriptObjectMirror) -> Self {
         Self {
             e: item.e,
-            extra: item.extra,
             sub: item.sub,
             sub_superscript_properties: item.sub_superscript_properties,
             sup: item.sup,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6265,8 +6265,8 @@ impl From<SubSuperscriptPropertiesMirror> for super::SubSuperscriptProperties {
         Self {
             align_scripts: item.align_scripts,
             control_properties: item.control_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6308,10 +6308,10 @@ impl From<SubscriptObjectMirror> for super::SubscriptObject {
     fn from(item: SubscriptObjectMirror) -> Self {
         Self {
             e: item.e,
-            extra: item.extra,
             sub: item.sub,
             subscript_properties: item.subscript_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6349,8 +6349,8 @@ impl From<SubscriptPropertiesMirror> for super::SubscriptProperties {
     fn from(item: SubscriptPropertiesMirror) -> Self {
         Self {
             control_properties: item.control_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6393,8 +6393,8 @@ impl From<SupMirror> for super::Sup {
             argument_properties: item.argument_properties,
             content: item.content,
             control_properties: item.control_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6431,8 +6431,8 @@ where
 impl From<SupHideMirror> for super::SupHide {
     fn from(item: SupHideMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -6471,10 +6471,10 @@ impl From<SuperscriptObjectMirror> for super::SuperscriptObject {
     fn from(item: SuperscriptObjectMirror) -> Self {
         Self {
             e: item.e,
-            extra: item.extra,
             sup: item.sup,
             superscript_properties: item.superscript_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6512,8 +6512,8 @@ impl From<SuperscriptPropertiesMirror> for super::SuperscriptProperties {
     fn from(item: SuperscriptPropertiesMirror) -> Self {
         Self {
             control_properties: item.control_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6554,9 +6554,9 @@ where
 impl From<TextMirror> for super::Text {
     fn from(item: TextMirror) -> Self {
         Self {
-            extra: item.extra,
             space: item.space,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -6594,8 +6594,8 @@ where
 impl From<TranspMirror> for super::Transp {
     fn from(item: TranspMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -6634,10 +6634,10 @@ impl From<UpperLimitObjectMirror> for super::UpperLimitObject {
     fn from(item: UpperLimitObjectMirror) -> Self {
         Self {
             e: item.e,
-            extra: item.extra,
             limit: item.limit,
             unknown: item.unknown,
             upper_limit_properties: item.upper_limit_properties,
+            user_data: item.user_data,
         }
     }
 }
@@ -6675,8 +6675,8 @@ impl From<UpperLimitPropertiesMirror> for super::UpperLimitProperties {
     fn from(item: UpperLimitPropertiesMirror) -> Self {
         Self {
             control_properties: item.control_properties,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6716,8 +6716,8 @@ where
 impl From<UseDisplayMathDefaultsMirror> for super::UseDisplayMathDefaults {
     fn from(item: UseDisplayMathDefaultsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -6759,8 +6759,8 @@ where
 impl From<VerticalJustificationMirror> for super::VerticalJustification {
     fn from(item: VerticalJustificationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -6802,8 +6802,8 @@ where
 impl From<WrapIndentMirror> for super::WrapIndent {
     fn from(item: WrapIndentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -6841,8 +6841,8 @@ where
 impl From<WrapRightMirror> for super::WrapRight {
     fn from(item: WrapRightMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }

@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -271,14 +271,14 @@ pub static PRED_DE_REF_SHAPE: officekit_markup_base::Shape = officekit_markup_ba
 /// schema type is `CT_Identifier`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColIdWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2014MainColId,
+pub struct ColIdWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2014MainColId,
 }
 
-/// The `a16:colId` element of the tree a read gives: [`ColIdWith`] holding nothing in `extra`.
+/// The `a16:colId` element of the tree a read gives: [`ColIdWith`] holding nothing in `user_data`.
 pub type ColId = ColIdWith<()>;
 
 impl Eq for ColIdWith<()> {}
@@ -389,17 +389,17 @@ pub trait Context: crate::Context {
 /// Its schema type is `CT_CreationId`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CreationIdWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2014MainCreationId,
+pub struct CreationIdWith<X: UserData> {
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2014MainCreationId,
 }
 
 /// The `a16:creationId` element of the tree a read gives: [`CreationIdWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CreationId = CreationIdWith<()>;
 
 impl Eq for CreationIdWith<()> {}
@@ -408,19 +408,19 @@ impl Eq for CreationIdWith<()> {}
 /// schema type is `CT_ConnectableReferences`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CxnDERefsWith<X: NodeExtra> {
+pub struct CxnDERefsWith<X: UserData> {
     /// The attribute `end`, when the element has it.
     pub end: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2014MainCxnDERefs,
     /// The attribute `st`, when the element has it.
     pub st: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2014MainCxnDERefs,
 }
 
 /// The `a16:cxnDERefs` element of the tree a read gives: [`CxnDERefsWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CxnDERefs = CxnDERefsWith<()>;
 
 impl Eq for CxnDERefsWith<()> {}
@@ -429,17 +429,17 @@ impl Eq for CxnDERefsWith<()> {}
 /// schema type is `CT_PredecessorDrawingElementReference`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PredDERefWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2014MainPredDERef,
+pub struct PredDERefWith<X: UserData> {
     /// The attribute `pred`, when the element has it.
     pub pred: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2014MainPredDERef,
 }
 
 /// The `a16:predDERef` element of the tree a read gives: [`PredDERefWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PredDERef = PredDERefWith<()>;
 
 impl Eq for PredDERefWith<()> {}
@@ -448,14 +448,14 @@ impl Eq for PredDERefWith<()> {}
 /// schema type is `CT_Identifier`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RowIdWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2014MainRowId,
+pub struct RowIdWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2014MainRowId,
 }
 
-/// The `a16:rowId` element of the tree a read gives: [`RowIdWith`] holding nothing in `extra`.
+/// The `a16:rowId` element of the tree a read gives: [`RowIdWith`] holding nothing in `user_data`.
 pub type RowId = RowIdWith<()>;
 
 impl Eq for RowIdWith<()> {}
@@ -495,17 +495,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> ColIdWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ColIdWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ColIdWith<Y>
+    pub fn into_user_data<Y>(self) -> ColIdWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ColIdWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -529,18 +529,18 @@ impl officekit_markup_base::Write for ColId {
     }
 }
 
-impl<X: NodeExtra> CreationIdWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CreationIdWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CreationIdWith<Y>
+    pub fn into_user_data<Y>(self) -> CreationIdWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CreationIdWith {
-            extra: Default::default(),
             id: self.id,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -567,19 +567,19 @@ impl officekit_markup_base::Write for CreationId {
     }
 }
 
-impl<X: NodeExtra> CxnDERefsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CxnDERefsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CxnDERefsWith<Y>
+    pub fn into_user_data<Y>(self) -> CxnDERefsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CxnDERefsWith {
             end: self.end,
-            extra: Default::default(),
             st: self.st,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -607,18 +607,18 @@ impl officekit_markup_base::Write for CxnDERefs {
     }
 }
 
-impl<X: NodeExtra> PredDERefWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PredDERefWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PredDERefWith<Y>
+    pub fn into_user_data<Y>(self) -> PredDERefWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PredDERefWith {
-            extra: Default::default(),
             pred: self.pred,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -645,17 +645,17 @@ impl officekit_markup_base::Write for PredDERef {
     }
 }
 
-impl<X: NodeExtra> RowIdWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RowIdWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RowIdWith<Y>
+    pub fn into_user_data<Y>(self) -> RowIdWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RowIdWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

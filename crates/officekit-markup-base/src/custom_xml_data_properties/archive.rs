@@ -222,19 +222,19 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::AssociatedXMLSchema)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AssociatedXMLSchemaMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
     pub uri: Option<String>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CustomXMLDataProperties)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXMLDataPropertiesMirror {
-    pub extra: (),
     pub item_id: Option<super::super::common_simple_types::Guid>,
     pub set_of_associated_xml_schemas: Option<Box<super::SetOfAssociatedXMLSchemas>>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -242,16 +242,16 @@ pub struct CustomXMLDataPropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SetOfAssociatedXMLSchemasMirror {
     pub associated_xml_schema: Vec<super::AssociatedXMLSchema>,
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 impl From<AssociatedXMLSchemaMirror> for super::AssociatedXMLSchema {
     fn from(item: AssociatedXMLSchemaMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
             uri: item.uri,
+            user_data: item.user_data,
         }
     }
 }
@@ -291,10 +291,10 @@ where
 impl From<CustomXMLDataPropertiesMirror> for super::CustomXMLDataProperties {
     fn from(item: CustomXMLDataPropertiesMirror) -> Self {
         Self {
-            extra: item.extra,
             item_id: item.item_id,
             set_of_associated_xml_schemas: item.set_of_associated_xml_schemas,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -336,8 +336,8 @@ impl From<SetOfAssociatedXMLSchemasMirror> for super::SetOfAssociatedXMLSchemas 
     fn from(item: SetOfAssociatedXMLSchemasMirror) -> Self {
         Self {
             associated_xml_schema: item.associated_xml_schema,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

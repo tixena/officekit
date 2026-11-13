@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -273,17 +273,17 @@ pub trait Context: crate::Context {
 /// Its schema type is `CT_DesignElement`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DesignElemWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint2015MainDesignElem,
+pub struct DesignElemWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint2015MainDesignElem,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `p16:designElem` element of the tree a read gives: [`DesignElemWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type DesignElem = DesignElemWith<()>;
 
 impl Eq for DesignElemWith<()> {}
@@ -301,17 +301,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> DesignElemWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DesignElemWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DesignElemWith<Y>
+    pub fn into_user_data<Y>(self) -> DesignElemWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DesignElemWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }

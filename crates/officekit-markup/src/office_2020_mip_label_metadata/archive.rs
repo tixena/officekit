@@ -224,9 +224,9 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtMirror {
     pub content: Box<drawing::AnyElementContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
     pub uri: Option<String>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -234,8 +234,8 @@ pub struct ExtMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub ext: Vec<super::Ext>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -245,7 +245,6 @@ pub struct LabelMirror {
     pub action_id: Option<String>,
     pub content_bits: Option<String>,
     pub enabled: Option<String>,
-    pub extra: (),
     pub id: Option<String>,
     pub method: Option<String>,
     pub name: Option<String>,
@@ -253,6 +252,7 @@ pub struct LabelMirror {
     pub set_date: Option<String>,
     pub site_id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -260,18 +260,18 @@ pub struct LabelMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct LabelListMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub label: Vec<super::Label>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<ExtMirror> for super::Ext {
     fn from(item: ExtMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
             uri: item.uri,
+            user_data: item.user_data,
         }
     }
 }
@@ -309,8 +309,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             ext: item.ext,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -350,7 +350,6 @@ impl From<LabelMirror> for super::Label {
             action_id: item.action_id,
             content_bits: item.content_bits,
             enabled: item.enabled,
-            extra: item.extra,
             id: item.id,
             method: item.method,
             name: item.name,
@@ -358,6 +357,7 @@ impl From<LabelMirror> for super::Label {
             set_date: item.set_date,
             site_id: item.site_id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -395,9 +395,9 @@ impl From<LabelListMirror> for super::LabelList {
     fn from(item: LabelListMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             label: item.label,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

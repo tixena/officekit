@@ -223,79 +223,79 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct AggregationInfoMirror {
     pub aggregation_type: Option<super::AggregationType>,
-    pub extra: (),
     pub source_field: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FeatureSupportInfo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FeatureSupportInfoMirror {
-    pub extra: (),
     pub feature_name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PivotAreaReferenceSubtotals)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotAreaReferenceSubtotalsMirror {
-    pub extra: (),
     pub subtotal_pivot_subtotal_type: Vec<super::SubtotalPivotSubtotalType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PivotFieldSubtotalLineItems)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotFieldSubtotalLineItemsMirror {
-    pub extra: (),
     pub subtotal_line_item: Vec<super::SubtotalLineItem>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PivotFieldSubtotals)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotFieldSubtotalsMirror {
-    pub extra: (),
     pub subtotal_pivot_item_subtotal: Vec<super::SubtotalPivotItemSubtotal>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SubtotalLineItem)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SubtotalLineItemMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SubtotalPivotItemSubtotal)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SubtotalPivotItemSubtotalMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SubtotalPivotSubtotalType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SubtotalPivotSubtotalTypeMirror {
-    pub extra: (),
     pub subtotal_type: Option<super::AggregationType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<AggregationInfoMirror> for super::AggregationInfo {
     fn from(item: AggregationInfoMirror) -> Self {
         Self {
             aggregation_type: item.aggregation_type,
-            extra: item.extra,
             source_field: item.source_field,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -332,9 +332,9 @@ where
 impl From<FeatureSupportInfoMirror> for super::FeatureSupportInfo {
     fn from(item: FeatureSupportInfoMirror) -> Self {
         Self {
-            extra: item.extra,
             feature_name: item.feature_name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -371,9 +371,9 @@ where
 impl From<PivotAreaReferenceSubtotalsMirror> for super::PivotAreaReferenceSubtotals {
     fn from(item: PivotAreaReferenceSubtotalsMirror) -> Self {
         Self {
-            extra: item.extra,
             subtotal_pivot_subtotal_type: item.subtotal_pivot_subtotal_type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -414,9 +414,9 @@ where
 impl From<PivotFieldSubtotalLineItemsMirror> for super::PivotFieldSubtotalLineItems {
     fn from(item: PivotFieldSubtotalLineItemsMirror) -> Self {
         Self {
-            extra: item.extra,
             subtotal_line_item: item.subtotal_line_item,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -457,9 +457,9 @@ where
 impl From<PivotFieldSubtotalsMirror> for super::PivotFieldSubtotals {
     fn from(item: PivotFieldSubtotalsMirror) -> Self {
         Self {
-            extra: item.extra,
             subtotal_pivot_item_subtotal: item.subtotal_pivot_item_subtotal,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -499,8 +499,8 @@ where
 impl From<SubtotalLineItemMirror> for super::SubtotalLineItem {
     fn from(item: SubtotalLineItemMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -537,8 +537,8 @@ where
 impl From<SubtotalPivotItemSubtotalMirror> for super::SubtotalPivotItemSubtotal {
     fn from(item: SubtotalPivotItemSubtotalMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -579,9 +579,9 @@ where
 impl From<SubtotalPivotSubtotalTypeMirror> for super::SubtotalPivotSubtotalType {
     fn from(item: SubtotalPivotSubtotalTypeMirror) -> Self {
         Self {
-            extra: item.extra,
             subtotal_type: item.subtotal_type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

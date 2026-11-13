@@ -223,7 +223,7 @@ use officekit_xml::element::Element;
 pub fn absolute_url(element: &Element) -> super::AbsoluteUrl {
     let reader = crate::Reader::new(element, &super::ABSOLUTE_URL_SHAPE);
     super::AbsoluteUrl {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -251,7 +251,7 @@ pub fn alternate_urls(element: &Element) -> super::AlternateUrls {
 pub fn relative_url(element: &Element) -> super::RelativeUrl {
     let reader = crate::Reader::new(element, &super::RELATIVE_URL_SHAPE);
     super::RelativeUrl {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }

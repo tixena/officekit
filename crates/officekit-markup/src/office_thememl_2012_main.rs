@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -362,16 +362,17 @@ pub trait Context: crate::Context {
 /// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeThememl2012MainExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeThememl2012MainExtLst,
 }
 
-/// The `thm15:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `thm15:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -380,23 +381,23 @@ impl Eq for ExtLstWith<()> {}
 /// Its schema type is `CT_ThemeFamily`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ThemeFamilyWith<X: NodeExtra> {
+pub struct ThemeFamilyWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeThememl2012MainThemeFamily,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeThememl2012MainThemeFamily,
     /// The attribute `vid`, when the element has it.
     pub vid: Option<String>,
 }
 
 /// The `thm15:themeFamily` element of the tree a read gives: [`ThemeFamilyWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ThemeFamily = ThemeFamilyWith<()>;
 
 impl Eq for ThemeFamilyWith<()> {}
@@ -405,27 +406,27 @@ impl Eq for ThemeFamilyWith<()> {}
 /// 3.5.1. Its schema type is `CT_ThemeVariant`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ThemeVariantWith<X: NodeExtra> {
+pub struct ThemeVariantWith<X: UserData> {
     /// The attribute `cx`, when the element has it.
     pub cx: Option<String>,
     /// The attribute `cy`, when the element has it.
     pub cy: Option<String>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeThememl2012MainThemeVariant,
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeThememl2012MainThemeVariant,
     /// The attribute `vid`, when the element has it.
     pub vid: Option<String>,
 }
 
 /// The `thm15:themeVariant` element of the tree a read gives: [`ThemeVariantWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type ThemeVariant = ThemeVariantWith<()>;
 
 impl Eq for ThemeVariantWith<()> {}
@@ -434,17 +435,17 @@ impl Eq for ThemeVariantWith<()> {}
 /// 3.5.1. Its schema type is `CT_ThemeVariantList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ThemeVariantLstWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeThememl2012MainThemeVariantLst,
+pub struct ThemeVariantLstWith<X: UserData> {
     /// The children that are `ThemeVariant`, in order.
     pub theme_variant: Vec<ThemeVariantWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeThememl2012MainThemeVariantLst,
 }
 
 /// The `thm15:themeVariantLst` element of the tree a read gives: [`ThemeVariantLstWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ThemeVariantLst = ThemeVariantLstWith<()>;
 
 impl Eq for ThemeVariantLstWith<()> {}
@@ -479,21 +480,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                drawing::ExtensionWith::into_extra,
+                drawing::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -517,23 +518,23 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> ThemeFamilyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ThemeFamilyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ThemeFamilyWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ThemeFamilyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ThemeFamilyWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             id: self.id,
             name: self.name,
             unknown: self.unknown,
+            user_data: Default::default(),
             vid: self.vid,
         }
     }
@@ -563,25 +564,25 @@ impl officekit_markup_base::Write for ThemeFamily {
     }
 }
 
-impl<X: NodeExtra> ThemeVariantWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ThemeVariantWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ThemeVariantWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ThemeVariantWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ThemeVariantWith {
             cx: self.cx,
             cy: self.cy,
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             id: self.id,
             name: self.name,
             unknown: self.unknown,
+            user_data: Default::default(),
             vid: self.vid,
         }
     }
@@ -613,21 +614,21 @@ impl officekit_markup_base::Write for ThemeVariant {
     }
 }
 
-impl<X: NodeExtra> ThemeVariantLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ThemeVariantLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ThemeVariantLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ThemeVariantLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ThemeVariantLstWith {
-            extra: Default::default(),
-            theme_variant: officekit_markup_base::into_extra_list(
+            theme_variant: officekit_markup_base::into_user_data_list(
                 self.theme_variant,
-                ThemeVariantWith::into_extra,
+                ThemeVariantWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

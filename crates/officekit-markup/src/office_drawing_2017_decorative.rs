@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -273,17 +273,17 @@ pub trait Context: crate::Context {
 /// Its schema type is `CT_Decorative`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DecorativeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2017DecorativeDecorative,
+pub struct DecorativeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2017DecorativeDecorative,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `adec:decorative` element of the tree a read gives: [`DecorativeWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Decorative = DecorativeWith<()>;
 
 impl Eq for DecorativeWith<()> {}
@@ -301,17 +301,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> DecorativeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DecorativeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DecorativeWith<Y>
+    pub fn into_user_data<Y>(self) -> DecorativeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DecorativeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }

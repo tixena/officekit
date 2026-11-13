@@ -17,13 +17,13 @@
 
 pub(crate) mod archive;
 mod enums;
-mod extra;
 pub(crate) mod names;
 mod readers;
 pub(crate) mod render;
 mod simple_types;
 pub mod structs;
 mod traversal;
+mod user_data;
 mod writers;
 
 use alloc::collections::{BTreeMap, BTreeSet};

@@ -222,16 +222,16 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::ReadonlyRecommended)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReadonlyRecommendedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
 impl From<ReadonlyRecommendedMirror> for super::ReadonlyRecommended {
     fn from(item: ReadonlyRecommendedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }

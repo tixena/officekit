@@ -222,8 +222,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::F)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -231,16 +231,16 @@ pub struct FMirror {
 #[rkyv(remote = super::Sqref)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SqrefMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
 impl From<FMirror> for super::F {
     fn from(item: FMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -278,8 +278,8 @@ where
 impl From<SqrefMirror> for super::Sqref {
     fn from(item: SqrefMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }

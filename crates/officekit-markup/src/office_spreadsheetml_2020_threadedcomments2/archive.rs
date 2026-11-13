@@ -223,8 +223,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Checksum)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ChecksumMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -233,8 +233,8 @@ pub struct ChecksumMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<spreadsheet::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -242,18 +242,18 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct HyperlinkMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub length: Option<String>,
     pub start_index: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
     pub url: Option<String>,
+    pub user_data: (),
 }
 
 impl From<ChecksumMirror> for super::Checksum {
     fn from(item: ChecksumMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -292,8 +292,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -331,11 +331,11 @@ impl From<HyperlinkMirror> for super::Hyperlink {
     fn from(item: HyperlinkMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             length: item.length,
             start_index: item.start_index,
             unknown: item.unknown,
             url: item.url,
+            user_data: item.user_data,
         }
     }
 }

@@ -222,19 +222,19 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::ExternalCodeServiceImageAsInput)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ExternalCodeServiceImageAsInputMirror {
-    pub extra: (),
     pub max_height: Option<String>,
     pub max_width: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<ExternalCodeServiceImageAsInputMirror> for super::ExternalCodeServiceImageAsInput {
     fn from(item: ExternalCodeServiceImageAsInputMirror) -> Self {
         Self {
-            extra: item.extra,
             max_height: item.max_height,
             max_width: item.max_width,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

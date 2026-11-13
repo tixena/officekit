@@ -419,7 +419,7 @@ pub fn freeze_panes(element: &Element) -> super::FreezePanes {
 pub fn future(element: &Element) -> super::Future {
     let reader = officekit_markup_base::Reader::new(element, &super::FUTURE_SHAPE);
     super::Future {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -1282,7 +1282,7 @@ pub fn xrrrc(element: &Element) -> super::Xrrrc {
 pub fn xrrtest(element: &Element) -> super::Xrrtest {
     let reader = officekit_markup_base::Reader::new(element, &super::XRRTEST_SHAPE);
     super::Xrrtest {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }

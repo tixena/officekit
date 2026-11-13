@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
@@ -2415,21 +2415,21 @@ pub static RIBBON_CONTENT_TAGS: officekit_markup_base::Accept = officekit_markup
 /// Its schema type is `CT_Backstage`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BackstageWith<X: NodeExtra> {
+pub struct BackstageWith<X: UserData> {
     /// The children that are an item of `BackstageContent`, in order.
     pub content: Vec<BackstageContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiBackstage,
     /// The attribute `onHide`, when the element has it.
     pub on_hide: Option<String>,
     /// The attribute `onShow`, when the element has it.
     pub on_show: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiBackstage,
 }
 
 /// The `mso14:backstage` element of the tree a read gives: [`BackstageWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Backstage = BackstageWith<()>;
 
 impl Eq for BackstageWith<()> {}
@@ -2441,7 +2441,7 @@ impl Eq for BackstageWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum BackstageContentWith<X: NodeExtra> {
+pub enum BackstageContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonBackstageFastCommandButton`.
     ButtonBackstageFastCommandButton(ButtonBackstageFastCommandButtonWith<X>),
     /// An element or node the schemas do not declare at this position.
@@ -2450,7 +2450,7 @@ pub enum BackstageContentWith<X: NodeExtra> {
     TabBackstageTab(TabBackstageTabWith<X>),
 }
 
-/// [`BackstageContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`BackstageContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
 pub type BackstageContent = BackstageContentWith<()>;
 
 impl Eq for BackstageContentWith<()> {}
@@ -2462,7 +2462,7 @@ impl Eq for BackstageContentWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum BackstageGroupsContentWith<X: NodeExtra> {
+pub enum BackstageGroupsContentWith<X: UserData> {
     /// The element `mso14:group`, a `GroupBackstageGroup`.
     GroupBackstageGroup(GroupBackstageGroupWith<X>),
     /// An element or node the schemas do not declare at this position.
@@ -2474,7 +2474,7 @@ pub enum BackstageGroupsContentWith<X: NodeExtra> {
 }
 
 /// [`BackstageGroupsContentWith`] of the tree a read gives, where no node holds anything in
-/// `extra`.
+/// `user_data`.
 pub type BackstageGroupsContent = BackstageGroupsContentWith<()>;
 
 impl Eq for BackstageGroupsContentWith<()> {}
@@ -2486,7 +2486,7 @@ impl Eq for BackstageGroupsContentWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum BackstageMenuGroupContentWith<X: NodeExtra> {
+pub enum BackstageMenuGroupContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonBackstageMenuButton`.
     ButtonBackstageMenuButton(ButtonBackstageMenuButtonWith<X>),
     /// The element `mso14:checkBox`, a `CheckBoxBackstageMenuCheckBox`.
@@ -2500,7 +2500,7 @@ pub enum BackstageMenuGroupContentWith<X: NodeExtra> {
 }
 
 /// [`BackstageMenuGroupContentWith`] of the tree a read gives, where no node holds anything in
-/// `extra`.
+/// `user_data`.
 pub type BackstageMenuGroupContent = BackstageMenuGroupContentWith<()>;
 
 impl Eq for BackstageMenuGroupContentWith<()> {}
@@ -2509,17 +2509,17 @@ impl Eq for BackstageMenuGroupContentWith<()> {}
 /// Its schema type is `CT_GroupControls`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BottomItemsWith<X: NodeExtra> {
+pub struct BottomItemsWith<X: UserData> {
     /// The children that are an item of `GroupControlsContent`, in order.
     pub content: Vec<GroupControlsContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiBottomItems,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiBottomItems,
 }
 
 /// The `mso14:bottomItems` element of the tree a read gives: [`BottomItemsWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type BottomItems = BottomItemsWith<()>;
 
 impl Eq for BottomItemsWith<()> {}
@@ -2528,13 +2528,11 @@ impl Eq for BottomItemsWith<()> {}
 /// schema type is `CT_Box`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BoxBoxWith<X: NodeExtra> {
+pub struct BoxBoxWith<X: UserData> {
     /// The attribute `boxStyle`, when the element has it.
     pub box_style: Option<BoxStyle>,
     /// The children that are an item of `BoxContent`, in order.
     pub content: Vec<BoxContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiBoxBox,
     /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
     /// The attribute `id`, when the element has it.
@@ -2553,11 +2551,13 @@ pub struct BoxBoxWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiBoxBox,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The `mso14:box` element of the tree a read gives: [`BoxBoxWith`] holding nothing in `extra`.
+/// The `mso14:box` element of the tree a read gives: [`BoxBoxWith`] holding nothing in `user_data`.
 pub type BoxBox = BoxBoxWith<()>;
 
 impl Eq for BoxBoxWith<()> {}
@@ -2569,7 +2569,7 @@ impl Eq for BoxBoxWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum BoxContentWith<X: NodeExtra> {
+pub enum BoxContentWith<X: UserData> {
     /// The element `mso14:box`, a `BoxBox`.
     BoxBox(BoxBoxWith<X>),
     /// The element `mso14:button`, a `ButtonButton`.
@@ -2602,7 +2602,7 @@ pub enum BoxContentWith<X: NodeExtra> {
     ToggleButtonToggleButton(ToggleButtonToggleButtonWith<X>),
 }
 
-/// [`BoxContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`BoxContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
 pub type BoxContent = BoxContentWith<()>;
 
 impl Eq for BoxContentWith<()> {}
@@ -2634,11 +2634,9 @@ pub enum BoxStyleMember {
 /// schema type is `CT_BackstageFastCommandButton`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ButtonBackstageFastCommandButtonWith<X: NodeExtra> {
+pub struct ButtonBackstageFastCommandButtonWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiButtonBackstageFastCommandButton,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -2679,12 +2677,14 @@ pub struct ButtonBackstageFastCommandButtonWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiButtonBackstageFastCommandButton,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:button` element of the tree a read gives: [`ButtonBackstageFastCommandButtonWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ButtonBackstageFastCommandButton = ButtonBackstageFastCommandButtonWith<()>;
 
 impl Eq for ButtonBackstageFastCommandButtonWith<()> {}
@@ -2693,13 +2693,11 @@ impl Eq for ButtonBackstageFastCommandButtonWith<()> {}
 /// schema type is `CT_BackstageGroupButton`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ButtonBackstageGroupButtonWith<X: NodeExtra> {
+pub struct ButtonBackstageGroupButtonWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiButtonBackstageGroupButton,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -2740,12 +2738,14 @@ pub struct ButtonBackstageGroupButtonWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiButtonBackstageGroupButton,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:button` element of the tree a read gives: [`ButtonBackstageGroupButtonWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ButtonBackstageGroupButton = ButtonBackstageGroupButtonWith<()>;
 
 impl Eq for ButtonBackstageGroupButtonWith<()> {}
@@ -2754,13 +2754,11 @@ impl Eq for ButtonBackstageGroupButtonWith<()> {}
 /// schema type is `CT_BackstageMenuButton`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ButtonBackstageMenuButtonWith<X: NodeExtra> {
+pub struct ButtonBackstageMenuButtonWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiButtonBackstageMenuButton,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -2793,12 +2791,14 @@ pub struct ButtonBackstageMenuButtonWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiButtonBackstageMenuButton,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:button` element of the tree a read gives: [`ButtonBackstageMenuButtonWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ButtonBackstageMenuButton = ButtonBackstageMenuButtonWith<()>;
 
 impl Eq for ButtonBackstageMenuButtonWith<()> {}
@@ -2807,11 +2807,9 @@ impl Eq for ButtonBackstageMenuButtonWith<()> {}
 /// schema type is `CT_BackstageRegularButton`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ButtonBackstageRegularButtonWith<X: NodeExtra> {
+pub struct ButtonBackstageRegularButtonWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiButtonBackstageRegularButton,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -2850,12 +2848,14 @@ pub struct ButtonBackstageRegularButtonWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiButtonBackstageRegularButton,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:button` element of the tree a read gives: [`ButtonBackstageRegularButtonWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ButtonBackstageRegularButton = ButtonBackstageRegularButtonWith<()>;
 
 impl Eq for ButtonBackstageRegularButtonWith<()> {}
@@ -2864,13 +2864,11 @@ impl Eq for ButtonBackstageRegularButtonWith<()> {}
 /// schema type is `CT_Button`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ButtonButtonWith<X: NodeExtra> {
+pub struct ButtonButtonWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiButtonButton,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -2931,12 +2929,14 @@ pub struct ButtonButtonWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiButtonButton,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:button` element of the tree a read gives: [`ButtonButtonWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ButtonButton = ButtonButtonWith<()>;
 
 impl Eq for ButtonButtonWith<()> {}
@@ -2945,13 +2945,11 @@ impl Eq for ButtonButtonWith<()> {}
 /// schema type is `CT_ButtonRegular`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ButtonButtonRegularWith<X: NodeExtra> {
+pub struct ButtonButtonRegularWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiButtonButtonRegular,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -3008,12 +3006,14 @@ pub struct ButtonButtonRegularWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiButtonButtonRegular,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:button` element of the tree a read gives: [`ButtonButtonRegularWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type ButtonButtonRegular = ButtonButtonRegularWith<()>;
 
 impl Eq for ButtonButtonRegularWith<()> {}
@@ -3022,11 +3022,9 @@ impl Eq for ButtonButtonRegularWith<()> {}
 /// Its schema type is `CT_ButtonGroup`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ButtonGroupWith<X: NodeExtra> {
+pub struct ButtonGroupWith<X: UserData> {
     /// The children that are an item of `ButtonGroupContent`, in order.
     pub content: Vec<ButtonGroupContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiButtonGroup,
     /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
     /// The attribute `id`, when the element has it.
@@ -3045,12 +3043,14 @@ pub struct ButtonGroupWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiButtonGroup,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:buttonGroup` element of the tree a read gives: [`ButtonGroupWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ButtonGroup = ButtonGroupWith<()>;
 
 impl Eq for ButtonGroupWith<()> {}
@@ -3062,7 +3062,7 @@ impl Eq for ButtonGroupWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum ButtonGroupContentWith<X: NodeExtra> {
+pub enum ButtonGroupContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonButtonRegular`.
     ButtonButtonRegular(ButtonButtonRegularWith<X>),
     /// The element `mso14:control`, a `ControlControlCloneRegular`.
@@ -3083,7 +3083,8 @@ pub enum ButtonGroupContentWith<X: NodeExtra> {
     ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegularWith<X>),
 }
 
-/// [`ButtonGroupContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`ButtonGroupContentWith`] of the tree a read gives, where no node holds anything in
+/// `user_data`.
 pub type ButtonGroupContent = ButtonGroupContentWith<()>;
 
 impl Eq for ButtonGroupContentWith<()> {}
@@ -3092,13 +3093,11 @@ impl Eq for ButtonGroupContentWith<()> {}
 /// schema type is `CT_VisibleButton`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ButtonVisibleButtonWith<X: NodeExtra> {
+pub struct ButtonVisibleButtonWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiButtonVisibleButton,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -3153,10 +3152,12 @@ pub struct ButtonVisibleButtonWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiButtonVisibleButton,
 }
 
 /// The `mso14:button` element of the tree a read gives: [`ButtonVisibleButtonWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type ButtonVisibleButton = ButtonVisibleButtonWith<()>;
 
 impl Eq for ButtonVisibleButtonWith<()> {}
@@ -3165,9 +3166,7 @@ impl Eq for ButtonVisibleButtonWith<()> {}
 /// Its schema type is `CT_TaskFormGroupCategory`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CategoryTaskFormGroupCategoryWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiCategoryTaskFormGroupCategory,
+pub struct CategoryTaskFormGroupCategoryWith<X: UserData> {
     /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
     /// The attribute `getVisible`, when the element has it.
@@ -3194,12 +3193,14 @@ pub struct CategoryTaskFormGroupCategoryWith<X: NodeExtra> {
     pub task_task_form_group_task: Vec<TaskTaskFormGroupTaskWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiCategoryTaskFormGroupCategory,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:category` element of the tree a read gives: [`CategoryTaskFormGroupCategoryWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type CategoryTaskFormGroupCategory = CategoryTaskFormGroupCategoryWith<()>;
 
 impl Eq for CategoryTaskFormGroupCategoryWith<()> {}
@@ -3208,9 +3209,7 @@ impl Eq for CategoryTaskFormGroupCategoryWith<()> {}
 /// Its schema type is `CT_TaskGroupCategory`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CategoryTaskGroupCategoryWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiCategoryTaskGroupCategory,
+pub struct CategoryTaskGroupCategoryWith<X: UserData> {
     /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
     /// The attribute `getVisible`, when the element has it.
@@ -3237,12 +3236,14 @@ pub struct CategoryTaskGroupCategoryWith<X: NodeExtra> {
     pub task_task_group_task: Vec<TaskTaskGroupTaskWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiCategoryTaskGroupCategory,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:category` element of the tree a read gives: [`CategoryTaskGroupCategoryWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type CategoryTaskGroupCategory = CategoryTaskGroupCategoryWith<()>;
 
 impl Eq for CategoryTaskGroupCategoryWith<()> {}
@@ -3251,15 +3252,13 @@ impl Eq for CategoryTaskGroupCategoryWith<()> {}
 /// Its schema type is `CT_BackstageCheckBox`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CheckBoxBackstageCheckBoxWith<X: NodeExtra> {
+pub struct CheckBoxBackstageCheckBoxWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiCheckBoxBackstageCheckBox,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -3294,12 +3293,14 @@ pub struct CheckBoxBackstageCheckBoxWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiCheckBoxBackstageCheckBox,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:checkBox` element of the tree a read gives: [`CheckBoxBackstageCheckBoxWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type CheckBoxBackstageCheckBox = CheckBoxBackstageCheckBoxWith<()>;
 
 impl Eq for CheckBoxBackstageCheckBoxWith<()> {}
@@ -3308,13 +3309,11 @@ impl Eq for CheckBoxBackstageCheckBoxWith<()> {}
 /// Its schema type is `CT_BackstageMenuCheckBox`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CheckBoxBackstageMenuCheckBoxWith<X: NodeExtra> {
+pub struct CheckBoxBackstageMenuCheckBoxWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiCheckBoxBackstageMenuCheckBox,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -3341,12 +3340,14 @@ pub struct CheckBoxBackstageMenuCheckBoxWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiCheckBoxBackstageMenuCheckBox,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:checkBox` element of the tree a read gives: [`CheckBoxBackstageMenuCheckBoxWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type CheckBoxBackstageMenuCheckBox = CheckBoxBackstageMenuCheckBoxWith<()>;
 
 impl Eq for CheckBoxBackstageMenuCheckBoxWith<()> {}
@@ -3355,13 +3356,11 @@ impl Eq for CheckBoxBackstageMenuCheckBoxWith<()> {}
 /// Its schema type is `CT_CheckBox`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CheckBoxCheckBoxWith<X: NodeExtra> {
+pub struct CheckBoxCheckBoxWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiCheckBoxCheckBox,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -3406,12 +3405,14 @@ pub struct CheckBoxCheckBoxWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiCheckBoxCheckBox,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:checkBox` element of the tree a read gives: [`CheckBoxCheckBoxWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type CheckBoxCheckBox = CheckBoxCheckBoxWith<()>;
 
 impl Eq for CheckBoxCheckBoxWith<()> {}
@@ -3420,15 +3421,13 @@ impl Eq for CheckBoxCheckBoxWith<()> {}
 /// Its schema type is `CT_BackstageComboBox`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ComboBoxBackstageComboBoxWith<X: NodeExtra> {
+pub struct ComboBoxBackstageComboBoxWith<X: UserData> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiComboBoxBackstageComboBox,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getItemCount`, when the element has it.
@@ -3463,12 +3462,14 @@ pub struct ComboBoxBackstageComboBoxWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiComboBoxBackstageComboBox,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:comboBox` element of the tree a read gives: [`ComboBoxBackstageComboBoxWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ComboBoxBackstageComboBox = ComboBoxBackstageComboBoxWith<()>;
 
 impl Eq for ComboBoxBackstageComboBoxWith<()> {}
@@ -3477,11 +3478,9 @@ impl Eq for ComboBoxBackstageComboBoxWith<()> {}
 /// Its schema type is `CT_ComboBox`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ComboBoxComboBoxWith<X: NodeExtra> {
+pub struct ComboBoxComboBoxWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiComboBoxComboBox,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -3560,12 +3559,14 @@ pub struct ComboBoxComboBoxWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiComboBoxComboBox,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:comboBox` element of the tree a read gives: [`ComboBoxComboBoxWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type ComboBoxComboBox = ComboBoxComboBoxWith<()>;
 
 impl Eq for ComboBoxComboBoxWith<()> {}
@@ -3574,11 +3575,9 @@ impl Eq for ComboBoxComboBoxWith<()> {}
 /// schema type is `CT_Command`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommandWith<X: NodeExtra> {
+pub struct CommandWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiCommand,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `idMso`, when the element has it.
@@ -3587,10 +3586,12 @@ pub struct CommandWith<X: NodeExtra> {
     pub on_action: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiCommand,
 }
 
 /// The `mso14:command` element of the tree a read gives: [`CommandWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Command = CommandWith<()>;
 
 impl Eq for CommandWith<()> {}
@@ -3599,17 +3600,17 @@ impl Eq for CommandWith<()> {}
 /// Its schema type is `CT_Commands`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommandsWith<X: NodeExtra> {
+pub struct CommandsWith<X: UserData> {
     /// The children that are `Command`, in order.
     pub command: Vec<CommandWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiCommands,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiCommands,
 }
 
 /// The `mso14:commands` element of the tree a read gives: [`CommandsWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Commands = CommandsWith<()>;
 
 impl Eq for CommandsWith<()> {}
@@ -5917,19 +5918,19 @@ pub trait Context: crate::Context {
 /// Its schema type is `CT_ContextMenu`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ContextMenuWith<X: NodeExtra> {
+pub struct ContextMenuWith<X: UserData> {
     /// The children that are an item of `ContextMenuContent`, in order.
     pub content: Vec<ContextMenuContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiContextMenu,
     /// The attribute `idMso`, when the element has it.
     pub id_mso: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiContextMenu,
 }
 
 /// The `mso14:contextMenu` element of the tree a read gives: [`ContextMenuWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ContextMenu = ContextMenuWith<()>;
 
 impl Eq for ContextMenuWith<()> {}
@@ -5941,7 +5942,7 @@ impl Eq for ContextMenuWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum ContextMenuContentWith<X: NodeExtra> {
+pub enum ContextMenuContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonButtonRegular`.
     ButtonButtonRegular(ButtonButtonRegularWith<X>),
     /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
@@ -5964,7 +5965,8 @@ pub enum ContextMenuContentWith<X: NodeExtra> {
     ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegularWith<X>),
 }
 
-/// [`ContextMenuContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`ContextMenuContentWith`] of the tree a read gives, where no node holds anything in
+/// `user_data`.
 pub type ContextMenuContent = ContextMenuContentWith<()>;
 
 impl Eq for ContextMenuContentWith<()> {}
@@ -5973,17 +5975,17 @@ impl Eq for ContextMenuContentWith<()> {}
 /// 3.5.1. Its schema type is `CT_ContextMenus`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ContextMenusWith<X: NodeExtra> {
+pub struct ContextMenusWith<X: UserData> {
     /// The children that are `ContextMenu`, in order.
     pub context_menu: Vec<ContextMenuWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiContextMenus,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiContextMenus,
 }
 
 /// The `mso14:contextMenus` element of the tree a read gives: [`ContextMenusWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type ContextMenus = ContextMenusWith<()>;
 
 impl Eq for ContextMenusWith<()> {}
@@ -5992,17 +5994,17 @@ impl Eq for ContextMenusWith<()> {}
 /// 3.5.1. Its schema type is `CT_ContextualTabs`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ContextualTabsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiContextualTabs,
+pub struct ContextualTabsWith<X: UserData> {
     /// The children that are `TabSet`, in order.
     pub tab_set: Vec<TabSetWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiContextualTabs,
 }
 
 /// The `mso14:contextualTabs` element of the tree a read gives: [`ContextualTabsWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ContextualTabs = ContextualTabsWith<()>;
 
 impl Eq for ContextualTabsWith<()> {}
@@ -6011,13 +6013,11 @@ impl Eq for ContextualTabsWith<()> {}
 /// schema type is `CT_ControlClone`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ControlControlCloneWith<X: NodeExtra> {
+pub struct ControlControlCloneWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiControlControlClone,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -6074,12 +6074,14 @@ pub struct ControlControlCloneWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiControlControlClone,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:control` element of the tree a read gives: [`ControlControlCloneWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ControlControlClone = ControlControlCloneWith<()>;
 
 impl Eq for ControlControlCloneWith<()> {}
@@ -6088,13 +6090,11 @@ impl Eq for ControlControlCloneWith<()> {}
 /// schema type is `CT_ControlCloneQat`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ControlControlCloneQatWith<X: NodeExtra> {
+pub struct ControlControlCloneQatWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiControlControlCloneQat,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -6151,12 +6151,14 @@ pub struct ControlControlCloneQatWith<X: NodeExtra> {
     pub supertip: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiControlControlCloneQat,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:control` element of the tree a read gives: [`ControlControlCloneQatWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ControlControlCloneQat = ControlControlCloneQatWith<()>;
 
 impl Eq for ControlControlCloneQatWith<()> {}
@@ -6165,11 +6167,9 @@ impl Eq for ControlControlCloneQatWith<()> {}
 /// schema type is `CT_ControlCloneRegular`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ControlControlCloneRegularWith<X: NodeExtra> {
+pub struct ControlControlCloneRegularWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiControlControlCloneRegular,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -6220,12 +6220,14 @@ pub struct ControlControlCloneRegularWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiControlControlCloneRegular,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:control` element of the tree a read gives: [`ControlControlCloneRegularWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ControlControlCloneRegular = ControlControlCloneRegularWith<()>;
 
 impl Eq for ControlControlCloneRegularWith<()> {}
@@ -6234,15 +6236,13 @@ impl Eq for ControlControlCloneRegularWith<()> {}
 /// Its schema type is `CT_CustomUI`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CustomUIWith<X: NodeExtra> {
+pub struct CustomUIWith<X: UserData> {
     /// The child that is `Backstage`, when there is one.
     pub backstage: Option<Box<BackstageWith<X>>>,
     /// The child that is `Commands`, when there is one.
     pub commands: Option<Box<CommandsWith<X>>>,
     /// The child that is `ContextMenus`, when there is one.
     pub context_menus: Option<Box<ContextMenusWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiCustomUI,
     /// The attribute `loadImage`, when the element has it.
     pub load_image: Option<String>,
     /// The attribute `onLoad`, when the element has it.
@@ -6251,10 +6251,12 @@ pub struct CustomUIWith<X: NodeExtra> {
     pub ribbon: Option<Box<RibbonWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiCustomUI,
 }
 
 /// The `mso14:customUI` element of the tree a read gives: [`CustomUIWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CustomUI = CustomUIWith<()>;
 
 impl Eq for CustomUIWith<()> {}
@@ -6263,17 +6265,17 @@ impl Eq for CustomUIWith<()> {}
 /// 3.5.1. Its schema type is `CT_DialogLauncher`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DialogBoxLauncherWith<X: NodeExtra> {
+pub struct DialogBoxLauncherWith<X: UserData> {
     /// The child that is `ButtonButtonRegular`, which the schema requires.
     pub button_button_regular: Box<ButtonButtonRegularWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiDialogBoxLauncher,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiDialogBoxLauncher,
 }
 
 /// The `mso14:dialogBoxLauncher` element of the tree a read gives: [`DialogBoxLauncherWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type DialogBoxLauncher = DialogBoxLauncherWith<()>;
 
 impl Eq for DialogBoxLauncherWith<()> {}
@@ -6282,17 +6284,17 @@ impl Eq for DialogBoxLauncherWith<()> {}
 /// 3.5.1. Its schema type is `CT_QatItems`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DocumentControlsWith<X: NodeExtra> {
+pub struct DocumentControlsWith<X: UserData> {
     /// The children that are an item of `QuickAccessToolbarItemsContent`, in order.
     pub content: Vec<QuickAccessToolbarItemsContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiDocumentControls,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiDocumentControls,
 }
 
 /// The `mso14:documentControls` element of the tree a read gives: [`DocumentControlsWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DocumentControls = DocumentControlsWith<()>;
 
 impl Eq for DocumentControlsWith<()> {}
@@ -6301,15 +6303,13 @@ impl Eq for DocumentControlsWith<()> {}
 /// Its schema type is `CT_BackstageDropDown`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropDownBackstageDropDownWith<X: NodeExtra> {
+pub struct DropDownBackstageDropDownWith<X: UserData> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiDropDownBackstageDropDown,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getItemCount`, when the element has it.
@@ -6352,12 +6352,14 @@ pub struct DropDownBackstageDropDownWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiDropDownBackstageDropDown,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:dropDown` element of the tree a read gives: [`DropDownBackstageDropDownWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DropDownBackstageDropDown = DropDownBackstageDropDownWith<()>;
 
 impl Eq for DropDownBackstageDropDownWith<()> {}
@@ -6366,13 +6368,11 @@ impl Eq for DropDownBackstageDropDownWith<()> {}
 /// Its schema type is `CT_DropDownRegular`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropDownDropDownRegularWith<X: NodeExtra> {
+pub struct DropDownDropDownRegularWith<X: UserData> {
     /// The children that are `ButtonButtonRegular`, in order.
     pub button_button_regular: Vec<ButtonButtonRegularWith<X>>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiDropDownDropDownRegular,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -6451,12 +6451,14 @@ pub struct DropDownDropDownRegularWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiDropDownDropDownRegular,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:dropDown` element of the tree a read gives: [`DropDownDropDownRegularWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DropDownDropDownRegular = DropDownDropDownRegularWith<()>;
 
 impl Eq for DropDownDropDownRegularWith<()> {}
@@ -6465,13 +6467,11 @@ impl Eq for DropDownDropDownRegularWith<()> {}
 /// Its schema type is `CT_DynamicMenu`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DynamicMenuDynamicMenuWith<X: NodeExtra> {
+pub struct DynamicMenuDynamicMenuWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiDynamicMenuDynamicMenu,
     /// The attribute `getContent`, when the element has it.
     pub get_content: Option<String>,
     /// The attribute `getDescription`, when the element has it.
@@ -6534,12 +6534,14 @@ pub struct DynamicMenuDynamicMenuWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiDynamicMenuDynamicMenu,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:dynamicMenu` element of the tree a read gives: [`DynamicMenuDynamicMenuWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DynamicMenuDynamicMenu = DynamicMenuDynamicMenuWith<()>;
 
 impl Eq for DynamicMenuDynamicMenuWith<()> {}
@@ -6548,13 +6550,11 @@ impl Eq for DynamicMenuDynamicMenuWith<()> {}
 /// Its schema type is `CT_DynamicMenuRegular`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DynamicMenuDynamicMenuRegularWith<X: NodeExtra> {
+pub struct DynamicMenuDynamicMenuRegularWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiDynamicMenuDynamicMenuRegular,
     /// The attribute `getContent`, when the element has it.
     pub get_content: Option<String>,
     /// The attribute `getDescription`, when the element has it.
@@ -6613,12 +6613,14 @@ pub struct DynamicMenuDynamicMenuRegularWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiDynamicMenuDynamicMenuRegular,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:dynamicMenu` element of the tree a read gives: [`DynamicMenuDynamicMenuRegularWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type DynamicMenuDynamicMenuRegular = DynamicMenuDynamicMenuRegularWith<()>;
 
 impl Eq for DynamicMenuDynamicMenuRegularWith<()> {}
@@ -6627,15 +6629,13 @@ impl Eq for DynamicMenuDynamicMenuRegularWith<()> {}
 /// schema type is `CT_BackstageEditBox`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EditBoxBackstageEditBoxWith<X: NodeExtra> {
+pub struct EditBoxBackstageEditBoxWith<X: UserData> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiEditBoxBackstageEditBox,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getKeytip`, when the element has it.
@@ -6664,12 +6664,14 @@ pub struct EditBoxBackstageEditBoxWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiEditBoxBackstageEditBox,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:editBox` element of the tree a read gives: [`EditBoxBackstageEditBoxWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type EditBoxBackstageEditBox = EditBoxBackstageEditBoxWith<()>;
 
 impl Eq for EditBoxBackstageEditBoxWith<()> {}
@@ -6678,11 +6680,9 @@ impl Eq for EditBoxBackstageEditBoxWith<()> {}
 /// schema type is `CT_EditBox`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EditBoxEditBoxWith<X: NodeExtra> {
+pub struct EditBoxEditBoxWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiEditBoxEditBox,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -6743,12 +6743,14 @@ pub struct EditBoxEditBoxWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiEditBoxEditBox,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:editBox` element of the tree a read gives: [`EditBoxEditBoxWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type EditBoxEditBox = EditBoxEditBoxWith<()>;
 
 impl Eq for EditBoxEditBoxWith<()> {}
@@ -6794,17 +6796,17 @@ pub enum ExpandMember {
 /// Its schema type is `CT_BackstageGroups`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FirstColumnWith<X: NodeExtra> {
+pub struct FirstColumnWith<X: UserData> {
     /// The children that are an item of `BackstageGroupsContent`, in order.
     pub content: Vec<BackstageGroupsContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiFirstColumn,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiFirstColumn,
 }
 
 /// The `mso14:firstColumn` element of the tree a read gives: [`FirstColumnWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type FirstColumn = FirstColumnWith<()>;
 
 impl Eq for FirstColumnWith<()> {}
@@ -6813,7 +6815,7 @@ impl Eq for FirstColumnWith<()> {}
 /// schema type is `CT_Gallery`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GalleryGalleryWith<X: NodeExtra> {
+pub struct GalleryGalleryWith<X: UserData> {
     /// The children that are `ButtonButtonRegular`, in order.
     pub button_button_regular: Vec<ButtonButtonRegularWith<X>>,
     /// The attribute `columns`, when the element has it.
@@ -6822,8 +6824,6 @@ pub struct GalleryGalleryWith<X: NodeExtra> {
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiGalleryGallery,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -6922,12 +6922,14 @@ pub struct GalleryGalleryWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiGalleryGallery,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:gallery` element of the tree a read gives: [`GalleryGalleryWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type GalleryGallery = GalleryGalleryWith<()>;
 
 impl Eq for GalleryGalleryWith<()> {}
@@ -6936,7 +6938,7 @@ impl Eq for GalleryGalleryWith<()> {}
 /// schema type is `CT_GalleryRegular`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GalleryGalleryRegularWith<X: NodeExtra> {
+pub struct GalleryGalleryRegularWith<X: UserData> {
     /// The children that are `ButtonButtonRegular`, in order.
     pub button_button_regular: Vec<ButtonButtonRegularWith<X>>,
     /// The attribute `columns`, when the element has it.
@@ -6945,8 +6947,6 @@ pub struct GalleryGalleryRegularWith<X: NodeExtra> {
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiGalleryGalleryRegular,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -7041,12 +7041,14 @@ pub struct GalleryGalleryRegularWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiGalleryGalleryRegular,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:gallery` element of the tree a read gives: [`GalleryGalleryRegularWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type GalleryGalleryRegular = GalleryGalleryRegularWith<()>;
 
 impl Eq for GalleryGalleryRegularWith<()> {}
@@ -7078,11 +7080,9 @@ pub enum GalleryShowInRibbonMember {
 /// schema type is `CT_BackstageGroup`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GroupBackstageGroupWith<X: NodeExtra> {
+pub struct GroupBackstageGroupWith<X: UserData> {
     /// The child that is `BottomItems`, when there is one.
     pub bottom_items: Option<Box<BottomItemsWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiGroupBackstageGroup,
     /// The attribute `getHelperText`, when the element has it.
     pub get_helper_text: Option<String>,
     /// The attribute `getLabel`, when the element has it.
@@ -7123,12 +7123,14 @@ pub struct GroupBackstageGroupWith<X: NodeExtra> {
     pub top_items: Option<Box<TopItemsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiGroupBackstageGroup,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:group` element of the tree a read gives: [`GroupBackstageGroupWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type GroupBackstageGroup = GroupBackstageGroupWith<()>;
 
 impl Eq for GroupBackstageGroupWith<()> {}
@@ -7137,13 +7139,11 @@ impl Eq for GroupBackstageGroupWith<()> {}
 /// Its schema type is `CT_GroupBox`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GroupBoxWith<X: NodeExtra> {
+pub struct GroupBoxWith<X: UserData> {
     /// The children that are an item of `GroupControlsContent`, in order.
     pub content: Vec<GroupControlsContentWith<X>>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiGroupBox,
     /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
     /// The attribute `id`, when the element has it.
@@ -7156,10 +7156,12 @@ pub struct GroupBoxWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiGroupBox,
 }
 
 /// The `mso14:groupBox` element of the tree a read gives: [`GroupBoxWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type GroupBox = GroupBoxWith<()>;
 
 impl Eq for GroupBoxWith<()> {}
@@ -7171,7 +7173,7 @@ impl Eq for GroupBoxWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum GroupContentWith<X: NodeExtra> {
+pub enum GroupContentWith<X: UserData> {
     /// The element `mso14:box`, a `BoxBox`.
     BoxBox(BoxBoxWith<X>),
     /// The element `mso14:button`, a `ButtonButton`.
@@ -7206,7 +7208,7 @@ pub enum GroupContentWith<X: NodeExtra> {
     ToggleButtonToggleButton(ToggleButtonToggleButtonWith<X>),
 }
 
-/// [`GroupContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`GroupContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
 pub type GroupContent = GroupContentWith<()>;
 
 impl Eq for GroupContentWith<()> {}
@@ -7219,7 +7221,7 @@ impl Eq for GroupContentWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum GroupControlsContentWith<X: NodeExtra> {
+pub enum GroupControlsContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonBackstageGroupButton`.
     ButtonBackstageGroupButton(ButtonBackstageGroupButtonWith<X>),
     /// The element `mso14:checkBox`, a `CheckBoxBackstageCheckBox`.
@@ -7246,7 +7248,8 @@ pub enum GroupControlsContentWith<X: NodeExtra> {
     RadioGroup(RadioGroupWith<X>),
 }
 
-/// [`GroupControlsContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`GroupControlsContentWith`] of the tree a read gives, where no node holds anything in
+/// `user_data`.
 pub type GroupControlsContent = GroupControlsContentWith<()>;
 
 impl Eq for GroupControlsContentWith<()> {}
@@ -7255,7 +7258,7 @@ impl Eq for GroupControlsContentWith<()> {}
 /// schema type is `CT_Group`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GroupGroupWith<X: NodeExtra> {
+pub struct GroupGroupWith<X: UserData> {
     /// The attribute `autoScale`, when the element has it.
     pub auto_scale: Option<String>,
     /// The attribute `centerVertically`, when the element has it.
@@ -7264,8 +7267,6 @@ pub struct GroupGroupWith<X: NodeExtra> {
     pub content: Vec<GroupContentWith<X>>,
     /// The child that is `DialogBoxLauncher`, when there is one.
     pub dialog_box_launcher: Option<Box<DialogBoxLauncherWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiGroupGroup,
     /// The attribute `getImage`, when the element has it.
     pub get_image: Option<String>,
     /// The attribute `getKeytip`, when the element has it.
@@ -7308,12 +7309,14 @@ pub struct GroupGroupWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiGroupGroup,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:group` element of the tree a read gives: [`GroupGroupWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type GroupGroup = GroupGroupWith<()>;
 
 impl Eq for GroupGroupWith<()> {}
@@ -7322,15 +7325,13 @@ impl Eq for GroupGroupWith<()> {}
 /// Its schema type is `CT_Hyperlink`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HyperlinkWith<X: NodeExtra> {
+pub struct HyperlinkWith<X: UserData> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiHyperlink,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -7371,12 +7372,14 @@ pub struct HyperlinkWith<X: NodeExtra> {
     pub target: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiHyperlink,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:hyperlink` element of the tree a read gives: [`HyperlinkWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Hyperlink = HyperlinkWith<()>;
 
 impl Eq for HyperlinkWith<()> {}
@@ -7385,13 +7388,11 @@ impl Eq for HyperlinkWith<()> {}
 /// 3.5.1. Its schema type is `CT_ImageControl`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ImageControlWith<X: NodeExtra> {
+pub struct ImageControlWith<X: UserData> {
     /// The attribute `altText`, when the element has it.
     pub alt_text: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiImageControl,
     /// The attribute `getAltText`, when the element has it.
     pub get_alt_text: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -7412,12 +7413,14 @@ pub struct ImageControlWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiImageControl,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:imageControl` element of the tree a read gives: [`ImageControlWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type ImageControl = ImageControlWith<()>;
 
 impl Eq for ImageControlWith<()> {}
@@ -7426,15 +7429,15 @@ impl Eq for ImageControlWith<()> {}
 /// schema type is `CT_BackstageItem`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ItemBackstageItemWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiItemBackstageItem,
+pub struct ItemBackstageItemWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiItemBackstageItem,
 }
 
 /// The `mso14:item` element of the tree a read gives: [`ItemBackstageItemWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ItemBackstageItem = ItemBackstageItemWith<()>;
 
 impl Eq for ItemBackstageItemWith<()> {}
@@ -7443,9 +7446,7 @@ impl Eq for ItemBackstageItemWith<()> {}
 /// schema type is `CT_Item`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ItemItemWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiItemItem,
+pub struct ItemItemWith<X: UserData> {
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `image`, when the element has it.
@@ -7460,9 +7461,12 @@ pub struct ItemItemWith<X: NodeExtra> {
     pub supertip: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiItemItem,
 }
 
-/// The `mso14:item` element of the tree a read gives: [`ItemItemWith`] holding nothing in `extra`.
+/// The `mso14:item` element of the tree a read gives: [`ItemItemWith`] holding nothing in
+/// `user_data`.
 pub type ItemItem = ItemItemWith<()>;
 
 impl Eq for ItemItemWith<()> {}
@@ -7494,15 +7498,13 @@ pub enum ItemSizeMember {
 /// 3.5.1. Its schema type is `CT_BackstageLabelControl`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LabelControlBackstageLabelControlWith<X: NodeExtra> {
+pub struct LabelControlBackstageLabelControlWith<X: UserData> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiLabelControlBackstageLabelControl,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getLabel`, when the element has it.
@@ -7521,12 +7523,14 @@ pub struct LabelControlBackstageLabelControlWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiLabelControlBackstageLabelControl,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:labelControl` element of the tree a read gives:
-/// [`LabelControlBackstageLabelControlWith`] holding nothing in `extra`.
+/// [`LabelControlBackstageLabelControlWith`] holding nothing in `user_data`.
 pub type LabelControlBackstageLabelControl = LabelControlBackstageLabelControlWith<()>;
 
 impl Eq for LabelControlBackstageLabelControlWith<()> {}
@@ -7535,11 +7539,9 @@ impl Eq for LabelControlBackstageLabelControlWith<()> {}
 /// 3.5.1. Its schema type is `CT_LabelControl`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LabelControlLabelControlWith<X: NodeExtra> {
+pub struct LabelControlLabelControlWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiLabelControlLabelControl,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getLabel`, when the element has it.
@@ -7578,12 +7580,14 @@ pub struct LabelControlLabelControlWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiLabelControlLabelControl,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:labelControl` element of the tree a read gives: [`LabelControlLabelControlWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type LabelControlLabelControl = LabelControlLabelControlWith<()>;
 
 impl Eq for LabelControlLabelControlWith<()> {}
@@ -7615,15 +7619,13 @@ pub enum LayoutChildrenMember {
 /// 3.5.1. Its schema type is `CT_LayoutContainer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LayoutContainerWith<X: NodeExtra> {
+pub struct LayoutContainerWith<X: UserData> {
     /// The attribute `align`, when the element has it.
     pub align: Option<Expand>,
     /// The children that are an item of `GroupControlsContent`, in order.
     pub content: Vec<GroupControlsContentWith<X>>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiLayoutContainer,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `idQ`, when the element has it.
@@ -7634,10 +7636,12 @@ pub struct LayoutContainerWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiLayoutContainer,
 }
 
 /// The `mso14:layoutContainer` element of the tree a read gives: [`LayoutContainerWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type LayoutContainer = LayoutContainerWith<()>;
 
 impl Eq for LayoutContainerWith<()> {}
@@ -7646,11 +7650,9 @@ impl Eq for LayoutContainerWith<()> {}
 /// schema type is `CT_BackstagePrimaryMenu`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuBackstagePrimaryMenuWith<X: NodeExtra> {
+pub struct MenuBackstagePrimaryMenuWith<X: UserData> {
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiMenuBackstagePrimaryMenu,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -7687,12 +7689,14 @@ pub struct MenuBackstagePrimaryMenuWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiMenuBackstagePrimaryMenu,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:menu` element of the tree a read gives: [`MenuBackstagePrimaryMenuWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type MenuBackstagePrimaryMenu = MenuBackstagePrimaryMenuWith<()>;
 
 impl Eq for MenuBackstagePrimaryMenuWith<()> {}
@@ -7701,13 +7705,11 @@ impl Eq for MenuBackstagePrimaryMenuWith<()> {}
 /// schema type is `CT_BackstageSubMenu`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuBackstageSubMenuWith<X: NodeExtra> {
+pub struct MenuBackstageSubMenuWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiMenuBackstageSubMenu,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -7738,12 +7740,14 @@ pub struct MenuBackstageSubMenuWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiMenuBackstageSubMenu,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:menu` element of the tree a read gives: [`MenuBackstageSubMenuWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type MenuBackstageSubMenu = MenuBackstageSubMenuWith<()>;
 
 impl Eq for MenuBackstageSubMenuWith<()> {}
@@ -7756,7 +7760,7 @@ impl Eq for MenuBackstageSubMenuWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum MenuContentWith<X: NodeExtra> {
+pub enum MenuContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonButtonRegular`.
     ButtonButtonRegular(ButtonButtonRegularWith<X>),
     /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
@@ -7779,7 +7783,7 @@ pub enum MenuContentWith<X: NodeExtra> {
     ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegularWith<X>),
 }
 
-/// [`MenuContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`MenuContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
 pub type MenuContent = MenuContentWith<()>;
 
 impl Eq for MenuContentWith<()> {}
@@ -7788,11 +7792,9 @@ impl Eq for MenuContentWith<()> {}
 /// Its schema type is `CT_BackstageMenuGroup`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuGroupWith<X: NodeExtra> {
+pub struct MenuGroupWith<X: UserData> {
     /// The children that are an item of `BackstageMenuGroupContent`, in order.
     pub content: Vec<BackstageMenuGroupContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiMenuGroup,
     /// The attribute `getLabel`, when the element has it.
     pub get_label: Option<String>,
     /// The attribute `id`, when the element has it.
@@ -7807,10 +7809,12 @@ pub struct MenuGroupWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiMenuGroup,
 }
 
 /// The `mso14:menuGroup` element of the tree a read gives: [`MenuGroupWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type MenuGroup = MenuGroupWith<()>;
 
 impl Eq for MenuGroupWith<()> {}
@@ -7819,15 +7823,13 @@ impl Eq for MenuGroupWith<()> {}
 /// schema type is `CT_Menu`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuMenuWith<X: NodeExtra> {
+pub struct MenuMenuWith<X: UserData> {
     /// The children that are an item of `MenuContent`, in order.
     pub content: Vec<MenuContentWith<X>>,
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiMenuMenu,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -7888,11 +7890,14 @@ pub struct MenuMenuWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiMenuMenu,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The `mso14:menu` element of the tree a read gives: [`MenuMenuWith`] holding nothing in `extra`.
+/// The `mso14:menu` element of the tree a read gives: [`MenuMenuWith`] holding nothing in
+/// `user_data`.
 pub type MenuMenu = MenuMenuWith<()>;
 
 impl Eq for MenuMenuWith<()> {}
@@ -7901,15 +7906,13 @@ impl Eq for MenuMenuWith<()> {}
 /// schema type is `CT_MenuRegular`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuMenuRegularWith<X: NodeExtra> {
+pub struct MenuMenuRegularWith<X: UserData> {
     /// The children that are an item of `MenuContent`, in order.
     pub content: Vec<MenuContentWith<X>>,
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiMenuMenuRegular,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -7966,12 +7969,14 @@ pub struct MenuMenuRegularWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiMenuMenuRegular,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:menu` element of the tree a read gives: [`MenuMenuRegularWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type MenuMenuRegular = MenuMenuRegularWith<()>;
 
 impl Eq for MenuMenuRegularWith<()> {}
@@ -7980,11 +7985,9 @@ impl Eq for MenuMenuRegularWith<()> {}
 /// schema type is `CT_MenuRoot`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuMenuRootWith<X: NodeExtra> {
+pub struct MenuMenuRootWith<X: UserData> {
     /// The children that are an item of `MenuContent`, in order.
     pub content: Vec<MenuContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiMenuMenuRoot,
     /// The attribute `getTitle`, when the element has it.
     pub get_title: Option<String>,
     /// The attribute `itemSize`, when the element has it.
@@ -7993,10 +7996,12 @@ pub struct MenuMenuRootWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiMenuMenuRoot,
 }
 
 /// The `mso14:menu` element of the tree a read gives: [`MenuMenuRootWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type MenuMenuRoot = MenuMenuRootWith<()>;
 
 impl Eq for MenuMenuRootWith<()> {}
@@ -8005,13 +8010,11 @@ impl Eq for MenuMenuRootWith<()> {}
 /// schema type is `CT_MenuWithTitle`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuMenuWithTitleWith<X: NodeExtra> {
+pub struct MenuMenuWithTitleWith<X: UserData> {
     /// The children that are an item of `MenuWithTitleContent`, in order.
     pub content: Vec<MenuWithTitleContentWith<X>>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiMenuMenuWithTitle,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getImage`, when the element has it.
@@ -8070,12 +8073,14 @@ pub struct MenuMenuWithTitleWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiMenuMenuWithTitle,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:menu` element of the tree a read gives: [`MenuMenuWithTitleWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type MenuMenuWithTitle = MenuMenuWithTitleWith<()>;
 
 impl Eq for MenuMenuWithTitleWith<()> {}
@@ -8084,9 +8089,7 @@ impl Eq for MenuMenuWithTitleWith<()> {}
 /// 3.5.1. Its schema type is `CT_MenuSeparator`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuSeparatorMenuSeparatorWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiMenuSeparatorMenuSeparator,
+pub struct MenuSeparatorMenuSeparatorWith<X: UserData> {
     /// The attribute `getTitle`, when the element has it.
     pub get_title: Option<String>,
     /// The attribute `id`, when the element has it.
@@ -8107,10 +8110,12 @@ pub struct MenuSeparatorMenuSeparatorWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiMenuSeparatorMenuSeparator,
 }
 
 /// The `mso14:menuSeparator` element of the tree a read gives: [`MenuSeparatorMenuSeparatorWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type MenuSeparatorMenuSeparator = MenuSeparatorMenuSeparatorWith<()>;
 
 impl Eq for MenuSeparatorMenuSeparatorWith<()> {}
@@ -8119,9 +8124,7 @@ impl Eq for MenuSeparatorMenuSeparatorWith<()> {}
 /// 3.5.1. Its schema type is `CT_MenuSeparatorNoTitle`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MenuSeparatorMenuSeparatorNoTitleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiMenuSeparatorMenuSeparatorNoTitle,
+pub struct MenuSeparatorMenuSeparatorNoTitleWith<X: UserData> {
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `idQ`, when the element has it.
@@ -8138,10 +8141,12 @@ pub struct MenuSeparatorMenuSeparatorNoTitleWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiMenuSeparatorMenuSeparatorNoTitle,
 }
 
 /// The `mso14:menuSeparator` element of the tree a read gives:
-/// [`MenuSeparatorMenuSeparatorNoTitleWith`] holding nothing in `extra`.
+/// [`MenuSeparatorMenuSeparatorNoTitleWith`] holding nothing in `user_data`.
 pub type MenuSeparatorMenuSeparatorNoTitle = MenuSeparatorMenuSeparatorNoTitleWith<()>;
 
 impl Eq for MenuSeparatorMenuSeparatorNoTitleWith<()> {}
@@ -8153,7 +8158,7 @@ impl Eq for MenuSeparatorMenuSeparatorNoTitleWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum MenuWithTitleContentWith<X: NodeExtra> {
+pub enum MenuWithTitleContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonButtonRegular`.
     ButtonButtonRegular(ButtonButtonRegularWith<X>),
     /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
@@ -8176,7 +8181,8 @@ pub enum MenuWithTitleContentWith<X: NodeExtra> {
     ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegularWith<X>),
 }
 
-/// [`MenuWithTitleContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`MenuWithTitleContentWith`] of the tree a read gives, where no node holds anything in
+/// `user_data`.
 pub type MenuWithTitleContent = MenuWithTitleContentWith<()>;
 
 impl Eq for MenuWithTitleContentWith<()> {}
@@ -8185,17 +8191,17 @@ impl Eq for MenuWithTitleContentWith<()> {}
 /// Its schema type is `CT_PrimaryItem`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PrimaryItemWith<X: NodeExtra> {
+pub struct PrimaryItemWith<X: UserData> {
     /// The child that is an item of `PrimaryItemContent`, which the schema requires.
     pub content: Box<PrimaryItemContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiPrimaryItem,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiPrimaryItem,
 }
 
 /// The `mso14:primaryItem` element of the tree a read gives: [`PrimaryItemWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PrimaryItem = PrimaryItemWith<()>;
 
 impl Eq for PrimaryItemWith<()> {}
@@ -8207,7 +8213,7 @@ impl Eq for PrimaryItemWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum PrimaryItemContentWith<X: NodeExtra> {
+pub enum PrimaryItemContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonBackstageRegularButton`.
     ButtonBackstageRegularButton(ButtonBackstageRegularButtonWith<X>),
     /// The element `mso14:menu`, a `MenuBackstagePrimaryMenu`.
@@ -8216,7 +8222,8 @@ pub enum PrimaryItemContentWith<X: NodeExtra> {
     Other(Node),
 }
 
-/// [`PrimaryItemContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`PrimaryItemContentWith`] of the tree a read gives, where no node holds anything in
+/// `user_data`.
 pub type PrimaryItemContent = PrimaryItemContentWith<()>;
 
 impl Eq for PrimaryItemContentWith<()> {}
@@ -8225,18 +8232,18 @@ impl Eq for PrimaryItemContentWith<()> {}
 /// schema type is `CT_Qat`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct QatWith<X: NodeExtra> {
+pub struct QatWith<X: UserData> {
     /// The child that is `DocumentControls`, when there is one.
     pub document_controls: Option<Box<DocumentControlsWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiQat,
     /// The child that is `SharedControls`, when there is one.
     pub shared_controls: Option<Box<SharedControlsWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiQat,
 }
 
-/// The `mso14:qat` element of the tree a read gives: [`QatWith`] holding nothing in `extra`.
+/// The `mso14:qat` element of the tree a read gives: [`QatWith`] holding nothing in `user_data`.
 pub type Qat = QatWith<()>;
 
 impl Eq for QatWith<()> {}
@@ -8248,7 +8255,7 @@ impl Eq for QatWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum QuickAccessToolbarItemsContentWith<X: NodeExtra> {
+pub enum QuickAccessToolbarItemsContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonButtonRegular`.
     ButtonButtonRegular(ButtonButtonRegularWith<X>),
     /// The element `mso14:control`, a `ControlControlCloneQat`.
@@ -8260,7 +8267,7 @@ pub enum QuickAccessToolbarItemsContentWith<X: NodeExtra> {
 }
 
 /// [`QuickAccessToolbarItemsContentWith`] of the tree a read gives, where no node holds anything in
-/// `extra`.
+/// `user_data`.
 pub type QuickAccessToolbarItemsContent = QuickAccessToolbarItemsContentWith<()>;
 
 impl Eq for QuickAccessToolbarItemsContentWith<()> {}
@@ -8269,15 +8276,15 @@ impl Eq for QuickAccessToolbarItemsContentWith<()> {}
 /// Its schema type is `CT_BackstageItem`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RadioButtonWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiRadioButton,
+pub struct RadioButtonWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiRadioButton,
 }
 
 /// The `mso14:radioButton` element of the tree a read gives: [`RadioButtonWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type RadioButton = RadioButtonWith<()>;
 
 impl Eq for RadioButtonWith<()> {}
@@ -8286,15 +8293,13 @@ impl Eq for RadioButtonWith<()> {}
 /// Its schema type is `CT_RadioGroup`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RadioGroupWith<X: NodeExtra> {
+pub struct RadioGroupWith<X: UserData> {
     /// The attribute `alignLabel`, when the element has it.
     pub align_label: Option<Expand>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
     /// The attribute `expand`, when the element has it.
     pub expand: Option<Expand>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiRadioGroup,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getItemCount`, when the element has it.
@@ -8327,12 +8332,14 @@ pub struct RadioGroupWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiRadioGroup,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:radioGroup` element of the tree a read gives: [`RadioGroupWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type RadioGroup = RadioGroupWith<()>;
 
 impl Eq for RadioGroupWith<()> {}
@@ -8341,18 +8348,19 @@ impl Eq for RadioGroupWith<()> {}
 /// schema type is `CT_Ribbon`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RibbonWith<X: NodeExtra> {
+pub struct RibbonWith<X: UserData> {
     /// The children that are an item of `RibbonContent`, in order.
     pub content: Vec<RibbonContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiRibbon,
     /// The attribute `startFromScratch`, when the element has it.
     pub start_from_scratch: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiRibbon,
 }
 
-/// The `mso14:ribbon` element of the tree a read gives: [`RibbonWith`] holding nothing in `extra`.
+/// The `mso14:ribbon` element of the tree a read gives: [`RibbonWith`] holding nothing in
+/// `user_data`.
 pub type Ribbon = RibbonWith<()>;
 
 impl Eq for RibbonWith<()> {}
@@ -8364,7 +8372,7 @@ impl Eq for RibbonWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum RibbonContentWith<X: NodeExtra> {
+pub enum RibbonContentWith<X: UserData> {
     /// The element `mso14:contextualTabs`, a `ContextualTabs`.
     ContextualTabs(ContextualTabsWith<X>),
     /// An element or node the schemas do not declare at this position.
@@ -8375,7 +8383,7 @@ pub enum RibbonContentWith<X: NodeExtra> {
     Tabs(TabsWith<X>),
 }
 
-/// [`RibbonContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`RibbonContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
 pub type RibbonContent = RibbonContentWith<()>;
 
 impl Eq for RibbonContentWith<()> {}
@@ -8384,17 +8392,17 @@ impl Eq for RibbonContentWith<()> {}
 /// 3.5.1. Its schema type is `CT_SimpleGroups`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SecondColumnWith<X: NodeExtra> {
+pub struct SecondColumnWith<X: UserData> {
     /// The children that are an item of `SimpleGroupsContent`, in order.
     pub content: Vec<SimpleGroupsContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiSecondColumn,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiSecondColumn,
 }
 
 /// The `mso14:secondColumn` element of the tree a read gives: [`SecondColumnWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type SecondColumn = SecondColumnWith<()>;
 
 impl Eq for SecondColumnWith<()> {}
@@ -8403,9 +8411,7 @@ impl Eq for SecondColumnWith<()> {}
 /// Its schema type is `CT_Separator`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SeparatorWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiSeparator,
+pub struct SeparatorWith<X: UserData> {
     /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
     /// The attribute `id`, when the element has it.
@@ -8424,12 +8430,14 @@ pub struct SeparatorWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiSeparator,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:separator` element of the tree a read gives: [`SeparatorWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Separator = SeparatorWith<()>;
 
 impl Eq for SeparatorWith<()> {}
@@ -8438,17 +8446,17 @@ impl Eq for SeparatorWith<()> {}
 /// 3.5.1. Its schema type is `CT_QatItems`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SharedControlsWith<X: NodeExtra> {
+pub struct SharedControlsWith<X: UserData> {
     /// The children that are an item of `QuickAccessToolbarItemsContent`, in order.
     pub content: Vec<QuickAccessToolbarItemsContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiSharedControls,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiSharedControls,
 }
 
 /// The `mso14:sharedControls` element of the tree a read gives: [`SharedControlsWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type SharedControls = SharedControlsWith<()>;
 
 impl Eq for SharedControlsWith<()> {}
@@ -8460,7 +8468,7 @@ impl Eq for SharedControlsWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum SimpleGroupsContentWith<X: NodeExtra> {
+pub enum SimpleGroupsContentWith<X: UserData> {
     /// The element `mso14:group`, a `GroupBackstageGroup`.
     GroupBackstageGroup(GroupBackstageGroupWith<X>),
     /// An element or node the schemas do not declare at this position.
@@ -8469,7 +8477,8 @@ pub enum SimpleGroupsContentWith<X: NodeExtra> {
     TaskGroup(TaskGroupWith<X>),
 }
 
-/// [`SimpleGroupsContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`SimpleGroupsContentWith`] of the tree a read gives, where no node holds anything in
+/// `user_data`.
 pub type SimpleGroupsContent = SimpleGroupsContentWith<()>;
 
 impl Eq for SimpleGroupsContentWith<()> {}
@@ -8506,7 +8515,7 @@ pub enum SizeMember {
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum SplitButtonContentWith<X: NodeExtra> {
+pub enum SplitButtonContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonVisibleButton`.
     ButtonVisibleButton(ButtonVisibleButtonWith<X>),
     /// An element or node the schemas do not declare at this position.
@@ -8515,7 +8524,8 @@ pub enum SplitButtonContentWith<X: NodeExtra> {
     ToggleButtonVisibleToggleButton(ToggleButtonVisibleToggleButtonWith<X>),
 }
 
-/// [`SplitButtonContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`SplitButtonContentWith`] of the tree a read gives, where no node holds anything in
+/// `user_data`.
 pub type SplitButtonContent = SplitButtonContentWith<()>;
 
 impl Eq for SplitButtonContentWith<()> {}
@@ -8524,13 +8534,11 @@ impl Eq for SplitButtonContentWith<()> {}
 /// Its schema type is `CT_SplitButton`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SplitButtonSplitButtonWith<X: NodeExtra> {
+pub struct SplitButtonSplitButtonWith<X: UserData> {
     /// The child that is an item of `SplitButtonContent`, when there is one.
     pub content: Option<Box<SplitButtonContentWith<X>>>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiSplitButtonSplitButton,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getKeytip`, when the element has it.
@@ -8567,12 +8575,14 @@ pub struct SplitButtonSplitButtonWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiSplitButtonSplitButton,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:splitButton` element of the tree a read gives: [`SplitButtonSplitButtonWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type SplitButtonSplitButton = SplitButtonSplitButtonWith<()>;
 
 impl Eq for SplitButtonSplitButtonWith<()> {}
@@ -8581,13 +8591,11 @@ impl Eq for SplitButtonSplitButtonWith<()> {}
 /// Its schema type is `CT_SplitButtonRegular`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SplitButtonSplitButtonRegularWith<X: NodeExtra> {
+pub struct SplitButtonSplitButtonRegularWith<X: UserData> {
     /// The child that is an item of `SplitButtonContent`, when there is one.
     pub content: Option<Box<SplitButtonContentWith<X>>>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiSplitButtonSplitButtonRegular,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getKeytip`, when the element has it.
@@ -8620,12 +8628,14 @@ pub struct SplitButtonSplitButtonRegularWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiSplitButtonSplitButtonRegular,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:splitButton` element of the tree a read gives: [`SplitButtonSplitButtonRegularWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type SplitButtonSplitButtonRegular = SplitButtonSplitButtonRegularWith<()>;
 
 impl Eq for SplitButtonSplitButtonRegularWith<()> {}
@@ -8634,13 +8644,11 @@ impl Eq for SplitButtonSplitButtonRegularWith<()> {}
 /// Its schema type is `CT_SplitButtonWithTitle`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SplitButtonSplitButtonWithTitleWith<X: NodeExtra> {
+pub struct SplitButtonSplitButtonWithTitleWith<X: UserData> {
     /// The child that is an item of `SplitButtonContent`, when there is one.
     pub content: Option<Box<SplitButtonContentWith<X>>>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiSplitButtonSplitButtonWithTitle,
     /// The attribute `getEnabled`, when the element has it.
     pub get_enabled: Option<String>,
     /// The attribute `getKeytip`, when the element has it.
@@ -8673,12 +8681,14 @@ pub struct SplitButtonSplitButtonWithTitleWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiSplitButtonSplitButtonWithTitle,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:splitButton` element of the tree a read gives:
-/// [`SplitButtonSplitButtonWithTitleWith`] holding nothing in `extra`.
+/// [`SplitButtonSplitButtonWithTitleWith`] holding nothing in `user_data`.
 pub type SplitButtonSplitButtonWithTitle = SplitButtonSplitButtonWithTitleWith<()>;
 
 impl Eq for SplitButtonSplitButtonWithTitleWith<()> {}
@@ -8737,13 +8747,11 @@ pub enum Style2Member {
 /// schema type is `CT_BackstageTab`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TabBackstageTabWith<X: NodeExtra> {
+pub struct TabBackstageTabWith<X: UserData> {
     /// The attribute `columnWidthPercent`, when the element has it.
     pub column_width_percent: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiTabBackstageTab,
     /// The child that is `FirstColumn`, when there is one.
     pub first_column: Option<Box<FirstColumnWith<X>>>,
     /// The attribute `firstColumnMaxWidth`, when the element has it.
@@ -8790,12 +8798,14 @@ pub struct TabBackstageTabWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiTabBackstageTab,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:tab` element of the tree a read gives: [`TabBackstageTabWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type TabBackstageTab = TabBackstageTabWith<()>;
 
 impl Eq for TabBackstageTabWith<()> {}
@@ -8804,9 +8814,7 @@ impl Eq for TabBackstageTabWith<()> {}
 /// schema type is `CT_TabSet`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TabSetWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiTabSet,
+pub struct TabSetWith<X: UserData> {
     /// The attribute `getVisible`, when the element has it.
     pub get_visible: Option<String>,
     /// The attribute `idMso`, when the element has it.
@@ -8815,11 +8823,14 @@ pub struct TabSetWith<X: NodeExtra> {
     pub tab_tab: Vec<TabTabWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiTabSet,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The `mso14:tabSet` element of the tree a read gives: [`TabSetWith`] holding nothing in `extra`.
+/// The `mso14:tabSet` element of the tree a read gives: [`TabSetWith`] holding nothing in
+/// `user_data`.
 pub type TabSet = TabSetWith<()>;
 
 impl Eq for TabSetWith<()> {}
@@ -8828,9 +8839,7 @@ impl Eq for TabSetWith<()> {}
 /// schema type is `CT_Tab`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TabTabWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiTabTab,
+pub struct TabTabWith<X: UserData> {
     /// The attribute `getKeytip`, when the element has it.
     pub get_keytip: Option<String>,
     /// The attribute `getLabel`, when the element has it.
@@ -8861,11 +8870,13 @@ pub struct TabTabWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiTabTab,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
-/// The `mso14:tab` element of the tree a read gives: [`TabTabWith`] holding nothing in `extra`.
+/// The `mso14:tab` element of the tree a read gives: [`TabTabWith`] holding nothing in `user_data`.
 pub type TabTab = TabTabWith<()>;
 
 impl Eq for TabTabWith<()> {}
@@ -8874,16 +8885,16 @@ impl Eq for TabTabWith<()> {}
 /// schema type is `CT_Tabs`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TabsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiTabs,
+pub struct TabsWith<X: UserData> {
     /// The children that are `TabTab`, in order.
     pub tab_tab: Vec<TabTabWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiTabs,
 }
 
-/// The `mso14:tabs` element of the tree a read gives: [`TabsWith`] holding nothing in `extra`.
+/// The `mso14:tabs` element of the tree a read gives: [`TabsWith`] holding nothing in `user_data`.
 pub type Tabs = TabsWith<()>;
 
 impl Eq for TabsWith<()> {}
@@ -8892,13 +8903,11 @@ impl Eq for TabsWith<()> {}
 /// 3.5.1. Its schema type is `CT_TaskFormGroup`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TaskFormGroupWith<X: NodeExtra> {
+pub struct TaskFormGroupWith<X: UserData> {
     /// The attribute `allowedTaskSizes`, when the element has it.
     pub allowed_task_sizes: Option<TaskSizes>,
     /// The children that are `CategoryTaskFormGroupCategory`, in order.
     pub category_task_form_group_category: Vec<CategoryTaskFormGroupCategoryWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiTaskFormGroup,
     /// The attribute `getHelperText`, when the element has it.
     pub get_helper_text: Option<String>,
     /// The attribute `getLabel`, when the element has it.
@@ -8923,12 +8932,14 @@ pub struct TaskFormGroupWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiTaskFormGroup,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:taskFormGroup` element of the tree a read gives: [`TaskFormGroupWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type TaskFormGroup = TaskFormGroupWith<()>;
 
 impl Eq for TaskFormGroupWith<()> {}
@@ -8937,13 +8948,11 @@ impl Eq for TaskFormGroupWith<()> {}
 /// Its schema type is `CT_TaskGroup`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TaskGroupWith<X: NodeExtra> {
+pub struct TaskGroupWith<X: UserData> {
     /// The attribute `allowedTaskSizes`, when the element has it.
     pub allowed_task_sizes: Option<TaskSizes>,
     /// The children that are `CategoryTaskGroupCategory`, in order.
     pub category_task_group_category: Vec<CategoryTaskGroupCategoryWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiTaskGroup,
     /// The attribute `getHelperText`, when the element has it.
     pub get_helper_text: Option<String>,
     /// The attribute `getLabel`, when the element has it.
@@ -8976,12 +8985,14 @@ pub struct TaskGroupWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiTaskGroup,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:taskGroup` element of the tree a read gives: [`TaskGroupWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type TaskGroup = TaskGroupWith<()>;
 
 impl Eq for TaskGroupWith<()> {}
@@ -9021,13 +9032,11 @@ pub enum TaskSizesMember {
 /// schema type is `CT_TaskFormGroupTask`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TaskTaskFormGroupTaskWith<X: NodeExtra> {
+pub struct TaskTaskFormGroupTaskWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiTaskTaskFormGroupTask,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -9068,12 +9077,14 @@ pub struct TaskTaskFormGroupTaskWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiTaskTaskFormGroupTask,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:task` element of the tree a read gives: [`TaskTaskFormGroupTaskWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type TaskTaskFormGroupTask = TaskTaskFormGroupTaskWith<()>;
 
 impl Eq for TaskTaskFormGroupTaskWith<()> {}
@@ -9082,13 +9093,11 @@ impl Eq for TaskTaskFormGroupTaskWith<()> {}
 /// schema type is `CT_TaskGroupTask`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TaskTaskGroupTaskWith<X: NodeExtra> {
+pub struct TaskTaskGroupTaskWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiTaskTaskGroupTask,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -9131,12 +9140,14 @@ pub struct TaskTaskGroupTaskWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiTaskTaskGroupTask,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:task` element of the tree a read gives: [`TaskTaskGroupTaskWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type TaskTaskGroupTask = TaskTaskGroupTaskWith<()>;
 
 impl Eq for TaskTaskGroupTaskWith<()> {}
@@ -9145,13 +9156,11 @@ impl Eq for TaskTaskGroupTaskWith<()> {}
 /// 3.5.1. Its schema type is `CT_BackstageMenuToggleButton`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ToggleButtonBackstageMenuToggleButtonWith<X: NodeExtra> {
+pub struct ToggleButtonBackstageMenuToggleButtonWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiToggleButtonBackstageMenuToggleButton,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -9184,12 +9193,14 @@ pub struct ToggleButtonBackstageMenuToggleButtonWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiToggleButtonBackstageMenuToggleButton,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:toggleButton` element of the tree a read gives:
-/// [`ToggleButtonBackstageMenuToggleButtonWith`] holding nothing in `extra`.
+/// [`ToggleButtonBackstageMenuToggleButtonWith`] holding nothing in `user_data`.
 pub type ToggleButtonBackstageMenuToggleButton = ToggleButtonBackstageMenuToggleButtonWith<()>;
 
 impl Eq for ToggleButtonBackstageMenuToggleButtonWith<()> {}
@@ -9198,13 +9209,11 @@ impl Eq for ToggleButtonBackstageMenuToggleButtonWith<()> {}
 /// 3.5.1. Its schema type is `CT_ToggleButton`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ToggleButtonToggleButtonWith<X: NodeExtra> {
+pub struct ToggleButtonToggleButtonWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiToggleButtonToggleButton,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -9267,12 +9276,14 @@ pub struct ToggleButtonToggleButtonWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiToggleButtonToggleButton,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:toggleButton` element of the tree a read gives: [`ToggleButtonToggleButtonWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ToggleButtonToggleButton = ToggleButtonToggleButtonWith<()>;
 
 impl Eq for ToggleButtonToggleButtonWith<()> {}
@@ -9281,13 +9292,11 @@ impl Eq for ToggleButtonToggleButtonWith<()> {}
 /// 3.5.1. Its schema type is `CT_ToggleButtonRegular`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ToggleButtonToggleButtonRegularWith<X: NodeExtra> {
+pub struct ToggleButtonToggleButtonRegularWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiToggleButtonToggleButtonRegular,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -9346,12 +9355,14 @@ pub struct ToggleButtonToggleButtonRegularWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiToggleButtonToggleButtonRegular,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `mso14:toggleButton` element of the tree a read gives:
-/// [`ToggleButtonToggleButtonRegularWith`] holding nothing in `extra`.
+/// [`ToggleButtonToggleButtonRegularWith`] holding nothing in `user_data`.
 pub type ToggleButtonToggleButtonRegular = ToggleButtonToggleButtonRegularWith<()>;
 
 impl Eq for ToggleButtonToggleButtonRegularWith<()> {}
@@ -9360,13 +9371,11 @@ impl Eq for ToggleButtonToggleButtonRegularWith<()> {}
 /// 3.5.1. Its schema type is `CT_VisibleToggleButton`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ToggleButtonVisibleToggleButtonWith<X: NodeExtra> {
+pub struct ToggleButtonVisibleToggleButtonWith<X: UserData> {
     /// The attribute `description`, when the element has it.
     pub description: Option<String>,
     /// The attribute `enabled`, when the element has it.
     pub enabled: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiToggleButtonVisibleToggleButton,
     /// The attribute `getDescription`, when the element has it.
     pub get_description: Option<String>,
     /// The attribute `getEnabled`, when the element has it.
@@ -9423,10 +9432,12 @@ pub struct ToggleButtonVisibleToggleButtonWith<X: NodeExtra> {
     pub tag: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiToggleButtonVisibleToggleButton,
 }
 
 /// The `mso14:toggleButton` element of the tree a read gives:
-/// [`ToggleButtonVisibleToggleButtonWith`] holding nothing in `extra`.
+/// [`ToggleButtonVisibleToggleButtonWith`] holding nothing in `user_data`.
 pub type ToggleButtonVisibleToggleButton = ToggleButtonVisibleToggleButtonWith<()>;
 
 impl Eq for ToggleButtonVisibleToggleButtonWith<()> {}
@@ -9435,17 +9446,17 @@ impl Eq for ToggleButtonVisibleToggleButtonWith<()> {}
 /// Its schema type is `CT_GroupControls`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TopItemsWith<X: NodeExtra> {
+pub struct TopItemsWith<X: UserData> {
     /// The children that are an item of `GroupControlsContent`, in order.
     pub content: Vec<GroupControlsContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::Office200907CustomuiTopItems,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::Office200907CustomuiTopItems,
 }
 
 /// The `mso14:topItems` element of the tree a read gives: [`TopItemsWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type TopItems = TopItemsWith<()>;
 
 impl Eq for TopItemsWith<()> {}
@@ -10149,23 +10160,23 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> BackstageWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BackstageWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BackstageWith<Y>
+    pub fn into_user_data<Y>(self) -> BackstageWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BackstageWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                BackstageContentWith::into_extra,
+                BackstageContentWith::into_user_data,
             ),
-            extra: Default::default(),
             on_hide: self.on_hide,
             on_show: self.on_show,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10193,19 +10204,21 @@ impl officekit_markup_base::Write for Backstage {
     }
 }
 
-impl<X: NodeExtra> BackstageContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> BackstageContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BackstageContentWith<Y>
+    pub fn into_user_data<Y>(self) -> BackstageContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::ButtonBackstageFastCommandButton(node) => {
-                BackstageContentWith::ButtonBackstageFastCommandButton(node.into_extra())
+                BackstageContentWith::ButtonBackstageFastCommandButton(node.into_user_data())
             }
             Self::Other(node) => BackstageContentWith::Other(node),
-            Self::TabBackstageTab(node) => BackstageContentWith::TabBackstageTab(node.into_extra()),
+            Self::TabBackstageTab(node) => {
+                BackstageContentWith::TabBackstageTab(node.into_user_data())
+            }
         }
     }
 }
@@ -10236,22 +10249,22 @@ impl officekit_markup_base::Write for BackstageContent {
     }
 }
 
-impl<X: NodeExtra> BackstageGroupsContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> BackstageGroupsContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BackstageGroupsContentWith<Y>
+    pub fn into_user_data<Y>(self) -> BackstageGroupsContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::GroupBackstageGroup(node) => {
-                BackstageGroupsContentWith::GroupBackstageGroup(node.into_extra())
+                BackstageGroupsContentWith::GroupBackstageGroup(node.into_user_data())
             }
             Self::Other(node) => BackstageGroupsContentWith::Other(node),
             Self::TaskFormGroup(node) => {
-                BackstageGroupsContentWith::TaskFormGroup(node.into_extra())
+                BackstageGroupsContentWith::TaskFormGroup(node.into_user_data())
             }
-            Self::TaskGroup(node) => BackstageGroupsContentWith::TaskGroup(node.into_extra()),
+            Self::TaskGroup(node) => BackstageGroupsContentWith::TaskGroup(node.into_user_data()),
         }
     }
 }
@@ -10311,27 +10324,27 @@ impl TryFrom<BackstageGroupsContent> for SimpleGroupsContent {
     }
 }
 
-impl<X: NodeExtra> BackstageMenuGroupContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> BackstageMenuGroupContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BackstageMenuGroupContentWith<Y>
+    pub fn into_user_data<Y>(self) -> BackstageMenuGroupContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::ButtonBackstageMenuButton(node) => {
-                BackstageMenuGroupContentWith::ButtonBackstageMenuButton(node.into_extra())
+                BackstageMenuGroupContentWith::ButtonBackstageMenuButton(node.into_user_data())
             }
             Self::CheckBoxBackstageMenuCheckBox(node) => {
-                BackstageMenuGroupContentWith::CheckBoxBackstageMenuCheckBox(node.into_extra())
+                BackstageMenuGroupContentWith::CheckBoxBackstageMenuCheckBox(node.into_user_data())
             }
             Self::MenuBackstageSubMenu(node) => {
-                BackstageMenuGroupContentWith::MenuBackstageSubMenu(node.into_extra())
+                BackstageMenuGroupContentWith::MenuBackstageSubMenu(node.into_user_data())
             }
             Self::Other(node) => BackstageMenuGroupContentWith::Other(node),
             Self::ToggleButtonBackstageMenuToggleButton(node) => {
                 BackstageMenuGroupContentWith::ToggleButtonBackstageMenuToggleButton(
-                    node.into_extra(),
+                    node.into_user_data(),
                 )
             }
         }
@@ -10374,21 +10387,21 @@ impl officekit_markup_base::Write for BackstageMenuGroupContent {
     }
 }
 
-impl<X: NodeExtra> BottomItemsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BottomItemsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BottomItemsWith<Y>
+    pub fn into_user_data<Y>(self) -> BottomItemsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BottomItemsWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                GroupControlsContentWith::into_extra,
+                GroupControlsContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -10412,21 +10425,20 @@ impl officekit_markup_base::Write for BottomItems {
     }
 }
 
-impl<X: NodeExtra> BoxBoxWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BoxBoxWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BoxBoxWith<Y>
+    pub fn into_user_data<Y>(self) -> BoxBoxWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BoxBoxWith {
             box_style: self.box_style,
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                BoxContentWith::into_extra,
+                BoxContentWith::into_user_data,
             ),
-            extra: Default::default(),
             get_visible: self.get_visible,
             id: self.id,
             id_q: self.id_q,
@@ -10436,6 +10448,7 @@ impl<X: NodeExtra> BoxBoxWith<X> {
             insert_before_q: self.insert_before_q,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -10472,42 +10485,42 @@ impl officekit_markup_base::Write for BoxBox {
     }
 }
 
-impl<X: NodeExtra> BoxContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> BoxContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BoxContentWith<Y>
+    pub fn into_user_data<Y>(self) -> BoxContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
-            Self::BoxBox(node) => BoxContentWith::BoxBox(node.into_extra()),
-            Self::ButtonButton(node) => BoxContentWith::ButtonButton(node.into_extra()),
-            Self::ButtonGroup(node) => BoxContentWith::ButtonGroup(node.into_extra()),
-            Self::CheckBoxCheckBox(node) => BoxContentWith::CheckBoxCheckBox(node.into_extra()),
-            Self::ComboBoxComboBox(node) => BoxContentWith::ComboBoxComboBox(node.into_extra()),
+            Self::BoxBox(node) => BoxContentWith::BoxBox(node.into_user_data()),
+            Self::ButtonButton(node) => BoxContentWith::ButtonButton(node.into_user_data()),
+            Self::ButtonGroup(node) => BoxContentWith::ButtonGroup(node.into_user_data()),
+            Self::CheckBoxCheckBox(node) => BoxContentWith::CheckBoxCheckBox(node.into_user_data()),
+            Self::ComboBoxComboBox(node) => BoxContentWith::ComboBoxComboBox(node.into_user_data()),
             Self::ControlControlClone(node) => {
-                BoxContentWith::ControlControlClone(node.into_extra())
+                BoxContentWith::ControlControlClone(node.into_user_data())
             }
             Self::DropDownDropDownRegular(node) => {
-                BoxContentWith::DropDownDropDownRegular(node.into_extra())
+                BoxContentWith::DropDownDropDownRegular(node.into_user_data())
             }
             Self::DynamicMenuDynamicMenu(node) => {
-                BoxContentWith::DynamicMenuDynamicMenu(node.into_extra())
+                BoxContentWith::DynamicMenuDynamicMenu(node.into_user_data())
             }
-            Self::EditBoxEditBox(node) => BoxContentWith::EditBoxEditBox(node.into_extra()),
+            Self::EditBoxEditBox(node) => BoxContentWith::EditBoxEditBox(node.into_user_data()),
             Self::GalleryGallery(node) => {
-                BoxContentWith::GalleryGallery(Box::new((*node).into_extra()))
+                BoxContentWith::GalleryGallery(Box::new((*node).into_user_data()))
             }
             Self::LabelControlLabelControl(node) => {
-                BoxContentWith::LabelControlLabelControl(node.into_extra())
+                BoxContentWith::LabelControlLabelControl(node.into_user_data())
             }
-            Self::MenuMenu(node) => BoxContentWith::MenuMenu(node.into_extra()),
+            Self::MenuMenu(node) => BoxContentWith::MenuMenu(node.into_user_data()),
             Self::Other(node) => BoxContentWith::Other(node),
             Self::SplitButtonSplitButton(node) => {
-                BoxContentWith::SplitButtonSplitButton(node.into_extra())
+                BoxContentWith::SplitButtonSplitButton(node.into_user_data())
             }
             Self::ToggleButtonToggleButton(node) => {
-                BoxContentWith::ToggleButtonToggleButton(node.into_extra())
+                BoxContentWith::ToggleButtonToggleButton(node.into_user_data())
             }
         }
     }
@@ -10636,17 +10649,16 @@ impl BoxStyle {
     }
 }
 
-impl<X: NodeExtra> ButtonBackstageFastCommandButtonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ButtonBackstageFastCommandButtonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ButtonBackstageFastCommandButtonWith<Y>
+    pub fn into_user_data<Y>(self) -> ButtonBackstageFastCommandButtonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ButtonBackstageFastCommandButtonWith {
             enabled: self.enabled,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_image: self.get_image,
             get_keytip: self.get_keytip,
@@ -10667,6 +10679,7 @@ impl<X: NodeExtra> ButtonBackstageFastCommandButtonWith<X> {
             on_action: self.on_action,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -10714,18 +10727,17 @@ impl officekit_markup_base::Write for ButtonBackstageFastCommandButton {
     }
 }
 
-impl<X: NodeExtra> ButtonBackstageGroupButtonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ButtonBackstageGroupButtonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ButtonBackstageGroupButtonWith<Y>
+    pub fn into_user_data<Y>(self) -> ButtonBackstageGroupButtonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ButtonBackstageGroupButtonWith {
             enabled: self.enabled,
             expand: self.expand,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_image: self.get_image,
             get_keytip: self.get_keytip,
@@ -10746,6 +10758,7 @@ impl<X: NodeExtra> ButtonBackstageGroupButtonWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -10794,18 +10807,17 @@ impl officekit_markup_base::Write for ButtonBackstageGroupButton {
     }
 }
 
-impl<X: NodeExtra> ButtonBackstageMenuButtonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ButtonBackstageMenuButtonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ButtonBackstageMenuButtonWith<Y>
+    pub fn into_user_data<Y>(self) -> ButtonBackstageMenuButtonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ButtonBackstageMenuButtonWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
@@ -10822,6 +10834,7 @@ impl<X: NodeExtra> ButtonBackstageMenuButtonWith<X> {
             on_action: self.on_action,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -10866,17 +10879,16 @@ impl officekit_markup_base::Write for ButtonBackstageMenuButton {
     }
 }
 
-impl<X: NodeExtra> ButtonBackstageRegularButtonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ButtonBackstageRegularButtonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ButtonBackstageRegularButtonWith<Y>
+    pub fn into_user_data<Y>(self) -> ButtonBackstageRegularButtonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ButtonBackstageRegularButtonWith {
             enabled: self.enabled,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_image: self.get_image,
             get_keytip: self.get_keytip,
@@ -10896,6 +10908,7 @@ impl<X: NodeExtra> ButtonBackstageRegularButtonWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -10942,18 +10955,17 @@ impl officekit_markup_base::Write for ButtonBackstageRegularButton {
     }
 }
 
-impl<X: NodeExtra> ButtonButtonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ButtonButtonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ButtonButtonWith<Y>
+    pub fn into_user_data<Y>(self) -> ButtonButtonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ButtonButtonWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
@@ -10984,6 +10996,7 @@ impl<X: NodeExtra> ButtonButtonWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -11042,18 +11055,17 @@ impl officekit_markup_base::Write for ButtonButton {
     }
 }
 
-impl<X: NodeExtra> ButtonButtonRegularWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ButtonButtonRegularWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ButtonButtonRegularWith<Y>
+    pub fn into_user_data<Y>(self) -> ButtonButtonRegularWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ButtonButtonRegularWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
@@ -11082,6 +11094,7 @@ impl<X: NodeExtra> ButtonButtonRegularWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -11138,20 +11151,19 @@ impl officekit_markup_base::Write for ButtonButtonRegular {
     }
 }
 
-impl<X: NodeExtra> ButtonGroupWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ButtonGroupWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ButtonGroupWith<Y>
+    pub fn into_user_data<Y>(self) -> ButtonGroupWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ButtonGroupWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                ButtonGroupContentWith::into_extra,
+                ButtonGroupContentWith::into_user_data,
             ),
-            extra: Default::default(),
             get_visible: self.get_visible,
             id: self.id,
             id_q: self.id_q,
@@ -11161,6 +11173,7 @@ impl<X: NodeExtra> ButtonGroupWith<X> {
             insert_before_q: self.insert_before_q,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -11196,36 +11209,36 @@ impl officekit_markup_base::Write for ButtonGroup {
     }
 }
 
-impl<X: NodeExtra> ButtonGroupContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> ButtonGroupContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ButtonGroupContentWith<Y>
+    pub fn into_user_data<Y>(self) -> ButtonGroupContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::ButtonButtonRegular(node) => {
-                ButtonGroupContentWith::ButtonButtonRegular(node.into_extra())
+                ButtonGroupContentWith::ButtonButtonRegular(node.into_user_data())
             }
             Self::ControlControlCloneRegular(node) => {
-                ButtonGroupContentWith::ControlControlCloneRegular(node.into_extra())
+                ButtonGroupContentWith::ControlControlCloneRegular(node.into_user_data())
             }
             Self::DynamicMenuDynamicMenuRegular(node) => {
-                ButtonGroupContentWith::DynamicMenuDynamicMenuRegular(node.into_extra())
+                ButtonGroupContentWith::DynamicMenuDynamicMenuRegular(node.into_user_data())
             }
             Self::GalleryGalleryRegular(node) => {
-                ButtonGroupContentWith::GalleryGalleryRegular(Box::new((*node).into_extra()))
+                ButtonGroupContentWith::GalleryGalleryRegular(Box::new((*node).into_user_data()))
             }
             Self::MenuMenuRegular(node) => {
-                ButtonGroupContentWith::MenuMenuRegular(node.into_extra())
+                ButtonGroupContentWith::MenuMenuRegular(node.into_user_data())
             }
             Self::Other(node) => ButtonGroupContentWith::Other(node),
-            Self::Separator(node) => ButtonGroupContentWith::Separator(node.into_extra()),
+            Self::Separator(node) => ButtonGroupContentWith::Separator(node.into_user_data()),
             Self::SplitButtonSplitButtonRegular(node) => {
-                ButtonGroupContentWith::SplitButtonSplitButtonRegular(node.into_extra())
+                ButtonGroupContentWith::SplitButtonSplitButtonRegular(node.into_user_data())
             }
             Self::ToggleButtonToggleButtonRegular(node) => {
-                ButtonGroupContentWith::ToggleButtonToggleButtonRegular(node.into_extra())
+                ButtonGroupContentWith::ToggleButtonToggleButtonRegular(node.into_user_data())
             }
         }
     }
@@ -11279,18 +11292,17 @@ impl officekit_markup_base::Write for ButtonGroupContent {
     }
 }
 
-impl<X: NodeExtra> ButtonVisibleButtonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ButtonVisibleButtonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ButtonVisibleButtonWith<Y>
+    pub fn into_user_data<Y>(self) -> ButtonVisibleButtonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ButtonVisibleButtonWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
@@ -11318,6 +11330,7 @@ impl<X: NodeExtra> ButtonVisibleButtonWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -11371,16 +11384,15 @@ impl officekit_markup_base::Write for ButtonVisibleButton {
     }
 }
 
-impl<X: NodeExtra> CategoryTaskFormGroupCategoryWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CategoryTaskFormGroupCategoryWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CategoryTaskFormGroupCategoryWith<Y>
+    pub fn into_user_data<Y>(self) -> CategoryTaskFormGroupCategoryWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CategoryTaskFormGroupCategoryWith {
-            extra: Default::default(),
             get_label: self.get_label,
             get_visible: self.get_visible,
             id: self.id,
@@ -11392,11 +11404,12 @@ impl<X: NodeExtra> CategoryTaskFormGroupCategoryWith<X> {
             insert_before_q: self.insert_before_q,
             label: self.label,
             tag: self.tag,
-            task_task_form_group_task: officekit_markup_base::into_extra_list(
+            task_task_form_group_task: officekit_markup_base::into_user_data_list(
                 self.task_task_form_group_task,
-                TaskTaskFormGroupTaskWith::into_extra,
+                TaskTaskFormGroupTaskWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -11435,16 +11448,15 @@ impl officekit_markup_base::Write for CategoryTaskFormGroupCategory {
     }
 }
 
-impl<X: NodeExtra> CategoryTaskGroupCategoryWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CategoryTaskGroupCategoryWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CategoryTaskGroupCategoryWith<Y>
+    pub fn into_user_data<Y>(self) -> CategoryTaskGroupCategoryWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CategoryTaskGroupCategoryWith {
-            extra: Default::default(),
             get_label: self.get_label,
             get_visible: self.get_visible,
             id: self.id,
@@ -11456,11 +11468,12 @@ impl<X: NodeExtra> CategoryTaskGroupCategoryWith<X> {
             insert_before_q: self.insert_before_q,
             label: self.label,
             tag: self.tag,
-            task_task_group_task: officekit_markup_base::into_extra_list(
+            task_task_group_task: officekit_markup_base::into_user_data_list(
                 self.task_task_group_task,
-                TaskTaskGroupTaskWith::into_extra,
+                TaskTaskGroupTaskWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -11499,19 +11512,18 @@ impl officekit_markup_base::Write for CategoryTaskGroupCategory {
     }
 }
 
-impl<X: NodeExtra> CheckBoxBackstageCheckBoxWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CheckBoxBackstageCheckBoxWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CheckBoxBackstageCheckBoxWith<Y>
+    pub fn into_user_data<Y>(self) -> CheckBoxBackstageCheckBoxWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CheckBoxBackstageCheckBoxWith {
             description: self.description,
             enabled: self.enabled,
             expand: self.expand,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_keytip: self.get_keytip,
@@ -11529,6 +11541,7 @@ impl<X: NodeExtra> CheckBoxBackstageCheckBoxWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -11575,18 +11588,17 @@ impl officekit_markup_base::Write for CheckBoxBackstageCheckBox {
     }
 }
 
-impl<X: NodeExtra> CheckBoxBackstageMenuCheckBoxWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CheckBoxBackstageMenuCheckBoxWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CheckBoxBackstageMenuCheckBoxWith<Y>
+    pub fn into_user_data<Y>(self) -> CheckBoxBackstageMenuCheckBoxWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CheckBoxBackstageMenuCheckBoxWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_keytip: self.get_keytip,
@@ -11600,6 +11612,7 @@ impl<X: NodeExtra> CheckBoxBackstageMenuCheckBoxWith<X> {
             on_action: self.on_action,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -11641,18 +11654,17 @@ impl officekit_markup_base::Write for CheckBoxBackstageMenuCheckBox {
     }
 }
 
-impl<X: NodeExtra> CheckBoxCheckBoxWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CheckBoxCheckBoxWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CheckBoxCheckBoxWith<Y>
+    pub fn into_user_data<Y>(self) -> CheckBoxCheckBoxWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CheckBoxCheckBoxWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_keytip: self.get_keytip,
@@ -11675,6 +11687,7 @@ impl<X: NodeExtra> CheckBoxCheckBoxWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -11725,19 +11738,18 @@ impl officekit_markup_base::Write for CheckBoxCheckBox {
     }
 }
 
-impl<X: NodeExtra> ComboBoxBackstageComboBoxWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ComboBoxBackstageComboBoxWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ComboBoxBackstageComboBoxWith<Y>
+    pub fn into_user_data<Y>(self) -> ComboBoxBackstageComboBoxWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ComboBoxBackstageComboBoxWith {
             align_label: self.align_label,
             enabled: self.enabled,
             expand: self.expand,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_item_count: self.get_item_count,
             get_item_id: self.get_item_id,
@@ -11748,9 +11760,9 @@ impl<X: NodeExtra> ComboBoxBackstageComboBoxWith<X> {
             get_visible: self.get_visible,
             id: self.id,
             id_q: self.id_q,
-            item_backstage_item: officekit_markup_base::into_extra_list(
+            item_backstage_item: officekit_markup_base::into_user_data_list(
                 self.item_backstage_item,
-                ItemBackstageItemWith::into_extra,
+                ItemBackstageItemWith::into_user_data,
             ),
             keytip: self.keytip,
             label: self.label,
@@ -11758,6 +11770,7 @@ impl<X: NodeExtra> ComboBoxBackstageComboBoxWith<X> {
             size_string: self.size_string,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -11803,17 +11816,16 @@ impl officekit_markup_base::Write for ComboBoxBackstageComboBox {
     }
 }
 
-impl<X: NodeExtra> ComboBoxComboBoxWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ComboBoxComboBoxWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ComboBoxComboBoxWith<Y>
+    pub fn into_user_data<Y>(self) -> ComboBoxComboBoxWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ComboBoxComboBoxWith {
             enabled: self.enabled,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_image: self.get_image,
             get_item_count: self.get_item_count,
@@ -11840,9 +11852,9 @@ impl<X: NodeExtra> ComboBoxComboBoxWith<X> {
             insert_before_mso: self.insert_before_mso,
             insert_before_q: self.insert_before_q,
             invalidate_content_on_drop: self.invalidate_content_on_drop,
-            item_item: officekit_markup_base::into_extra_list(
+            item_item: officekit_markup_base::into_user_data_list(
                 self.item_item,
-                ItemItemWith::into_extra,
+                ItemItemWith::into_user_data,
             ),
             keytip: self.keytip,
             label: self.label,
@@ -11856,6 +11868,7 @@ impl<X: NodeExtra> ComboBoxComboBoxWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -11921,21 +11934,21 @@ impl officekit_markup_base::Write for ComboBoxComboBox {
     }
 }
 
-impl<X: NodeExtra> CommandWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CommandWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CommandWith<Y>
+    pub fn into_user_data<Y>(self) -> CommandWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CommandWith {
             enabled: self.enabled,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             id_mso: self.id_mso,
             on_action: self.on_action,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -11965,18 +11978,21 @@ impl officekit_markup_base::Write for Command {
     }
 }
 
-impl<X: NodeExtra> CommandsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CommandsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CommandsWith<Y>
+    pub fn into_user_data<Y>(self) -> CommandsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CommandsWith {
-            command: officekit_markup_base::into_extra_list(self.command, CommandWith::into_extra),
-            extra: Default::default(),
+            command: officekit_markup_base::into_user_data_list(
+                self.command,
+                CommandWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -12000,22 +12016,22 @@ impl officekit_markup_base::Write for Commands {
     }
 }
 
-impl<X: NodeExtra> ContextMenuWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ContextMenuWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ContextMenuWith<Y>
+    pub fn into_user_data<Y>(self) -> ContextMenuWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ContextMenuWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                ContextMenuContentWith::into_extra,
+                ContextMenuContentWith::into_user_data,
             ),
-            extra: Default::default(),
             id_mso: self.id_mso,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -12042,41 +12058,41 @@ impl officekit_markup_base::Write for ContextMenu {
     }
 }
 
-impl<X: NodeExtra> ContextMenuContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> ContextMenuContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ContextMenuContentWith<Y>
+    pub fn into_user_data<Y>(self) -> ContextMenuContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::ButtonButtonRegular(node) => {
-                ContextMenuContentWith::ButtonButtonRegular(node.into_extra())
+                ContextMenuContentWith::ButtonButtonRegular(node.into_user_data())
             }
             Self::CheckBoxCheckBox(node) => {
-                ContextMenuContentWith::CheckBoxCheckBox(node.into_extra())
+                ContextMenuContentWith::CheckBoxCheckBox(node.into_user_data())
             }
             Self::ControlControlCloneRegular(node) => {
-                ContextMenuContentWith::ControlControlCloneRegular(node.into_extra())
+                ContextMenuContentWith::ControlControlCloneRegular(node.into_user_data())
             }
             Self::DynamicMenuDynamicMenuRegular(node) => {
-                ContextMenuContentWith::DynamicMenuDynamicMenuRegular(node.into_extra())
+                ContextMenuContentWith::DynamicMenuDynamicMenuRegular(node.into_user_data())
             }
             Self::GalleryGalleryRegular(node) => {
-                ContextMenuContentWith::GalleryGalleryRegular(Box::new((*node).into_extra()))
+                ContextMenuContentWith::GalleryGalleryRegular(Box::new((*node).into_user_data()))
             }
             Self::MenuMenuRegular(node) => {
-                ContextMenuContentWith::MenuMenuRegular(node.into_extra())
+                ContextMenuContentWith::MenuMenuRegular(node.into_user_data())
             }
             Self::MenuSeparatorMenuSeparatorNoTitle(node) => {
-                ContextMenuContentWith::MenuSeparatorMenuSeparatorNoTitle(node.into_extra())
+                ContextMenuContentWith::MenuSeparatorMenuSeparatorNoTitle(node.into_user_data())
             }
             Self::Other(node) => ContextMenuContentWith::Other(node),
             Self::SplitButtonSplitButtonRegular(node) => {
-                ContextMenuContentWith::SplitButtonSplitButtonRegular(node.into_extra())
+                ContextMenuContentWith::SplitButtonSplitButtonRegular(node.into_user_data())
             }
             Self::ToggleButtonToggleButtonRegular(node) => {
-                ContextMenuContentWith::ToggleButtonToggleButtonRegular(node.into_extra())
+                ContextMenuContentWith::ToggleButtonToggleButtonRegular(node.into_user_data())
             }
         }
     }
@@ -12136,21 +12152,21 @@ impl officekit_markup_base::Write for ContextMenuContent {
     }
 }
 
-impl<X: NodeExtra> ContextMenusWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ContextMenusWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ContextMenusWith<Y>
+    pub fn into_user_data<Y>(self) -> ContextMenusWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ContextMenusWith {
-            context_menu: officekit_markup_base::into_extra_list(
+            context_menu: officekit_markup_base::into_user_data_list(
                 self.context_menu,
-                ContextMenuWith::into_extra,
+                ContextMenuWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -12174,18 +12190,21 @@ impl officekit_markup_base::Write for ContextMenus {
     }
 }
 
-impl<X: NodeExtra> ContextualTabsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ContextualTabsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ContextualTabsWith<Y>
+    pub fn into_user_data<Y>(self) -> ContextualTabsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ContextualTabsWith {
-            extra: Default::default(),
-            tab_set: officekit_markup_base::into_extra_list(self.tab_set, TabSetWith::into_extra),
+            tab_set: officekit_markup_base::into_user_data_list(
+                self.tab_set,
+                TabSetWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -12209,18 +12228,17 @@ impl officekit_markup_base::Write for ContextualTabs {
     }
 }
 
-impl<X: NodeExtra> ControlControlCloneWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ControlControlCloneWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ControlControlCloneWith<Y>
+    pub fn into_user_data<Y>(self) -> ControlControlCloneWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ControlControlCloneWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
@@ -12249,6 +12267,7 @@ impl<X: NodeExtra> ControlControlCloneWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -12305,18 +12324,17 @@ impl officekit_markup_base::Write for ControlControlClone {
     }
 }
 
-impl<X: NodeExtra> ControlControlCloneQatWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ControlControlCloneQatWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ControlControlCloneQatWith<Y>
+    pub fn into_user_data<Y>(self) -> ControlControlCloneQatWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ControlControlCloneQatWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
@@ -12345,6 +12363,7 @@ impl<X: NodeExtra> ControlControlCloneQatWith<X> {
             size: self.size,
             supertip: self.supertip,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -12401,17 +12420,16 @@ impl officekit_markup_base::Write for ControlControlCloneQat {
     }
 }
 
-impl<X: NodeExtra> ControlControlCloneRegularWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ControlControlCloneRegularWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ControlControlCloneRegularWith<Y>
+    pub fn into_user_data<Y>(self) -> ControlControlCloneRegularWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ControlControlCloneRegularWith {
             enabled: self.enabled,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_image: self.get_image,
             get_keytip: self.get_keytip,
@@ -12437,6 +12455,7 @@ impl<X: NodeExtra> ControlControlCloneRegularWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -12489,35 +12508,35 @@ impl officekit_markup_base::Write for ControlControlCloneRegular {
     }
 }
 
-impl<X: NodeExtra> CustomUIWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CustomUIWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> CustomUIWith<Y>
+    pub fn into_user_data<Y>(mut self) -> CustomUIWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CustomUIWith {
-            backstage: officekit_markup_base::into_extra_optional(
+            backstage: officekit_markup_base::into_user_data_optional(
                 &mut self.backstage,
-                BackstageWith::into_extra,
+                BackstageWith::into_user_data,
             ),
-            commands: officekit_markup_base::into_extra_optional(
+            commands: officekit_markup_base::into_user_data_optional(
                 &mut self.commands,
-                CommandsWith::into_extra,
+                CommandsWith::into_user_data,
             ),
-            context_menus: officekit_markup_base::into_extra_optional(
+            context_menus: officekit_markup_base::into_user_data_optional(
                 &mut self.context_menus,
-                ContextMenusWith::into_extra,
+                ContextMenusWith::into_user_data,
             ),
-            extra: Default::default(),
             load_image: self.load_image,
             on_load: self.on_load,
-            ribbon: officekit_markup_base::into_extra_optional(
+            ribbon: officekit_markup_base::into_user_data_optional(
                 &mut self.ribbon,
-                RibbonWith::into_extra,
+                RibbonWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -12545,21 +12564,21 @@ impl officekit_markup_base::Write for CustomUI {
     }
 }
 
-impl<X: NodeExtra> DialogBoxLauncherWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DialogBoxLauncherWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DialogBoxLauncherWith<Y>
+    pub fn into_user_data<Y>(self) -> DialogBoxLauncherWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DialogBoxLauncherWith {
-            button_button_regular: officekit_markup_base::into_extra_required(
+            button_button_regular: officekit_markup_base::into_user_data_required(
                 *self.button_button_regular,
-                ButtonButtonRegularWith::into_extra,
+                ButtonButtonRegularWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -12583,21 +12602,21 @@ impl officekit_markup_base::Write for DialogBoxLauncher {
     }
 }
 
-impl<X: NodeExtra> DocumentControlsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DocumentControlsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DocumentControlsWith<Y>
+    pub fn into_user_data<Y>(self) -> DocumentControlsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DocumentControlsWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                QuickAccessToolbarItemsContentWith::into_extra,
+                QuickAccessToolbarItemsContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -12621,19 +12640,18 @@ impl officekit_markup_base::Write for DocumentControls {
     }
 }
 
-impl<X: NodeExtra> DropDownBackstageDropDownWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DropDownBackstageDropDownWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DropDownBackstageDropDownWith<Y>
+    pub fn into_user_data<Y>(self) -> DropDownBackstageDropDownWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DropDownBackstageDropDownWith {
             align_label: self.align_label,
             enabled: self.enabled,
             expand: self.expand,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_item_count: self.get_item_count,
             get_item_id: self.get_item_id,
@@ -12646,9 +12664,9 @@ impl<X: NodeExtra> DropDownBackstageDropDownWith<X> {
             get_visible: self.get_visible,
             id: self.id,
             id_q: self.id_q,
-            item_backstage_item: officekit_markup_base::into_extra_list(
+            item_backstage_item: officekit_markup_base::into_user_data_list(
                 self.item_backstage_item,
-                ItemBackstageItemWith::into_extra,
+                ItemBackstageItemWith::into_user_data,
             ),
             keytip: self.keytip,
             label: self.label,
@@ -12658,6 +12676,7 @@ impl<X: NodeExtra> DropDownBackstageDropDownWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -12707,21 +12726,20 @@ impl officekit_markup_base::Write for DropDownBackstageDropDown {
     }
 }
 
-impl<X: NodeExtra> DropDownDropDownRegularWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DropDownDropDownRegularWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DropDownDropDownRegularWith<Y>
+    pub fn into_user_data<Y>(self) -> DropDownDropDownRegularWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DropDownDropDownRegularWith {
-            button_button_regular: officekit_markup_base::into_extra_list(
+            button_button_regular: officekit_markup_base::into_user_data_list(
                 self.button_button_regular,
-                ButtonButtonRegularWith::into_extra,
+                ButtonButtonRegularWith::into_user_data,
             ),
             enabled: self.enabled,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_image: self.get_image,
             get_item_count: self.get_item_count,
@@ -12748,9 +12766,9 @@ impl<X: NodeExtra> DropDownDropDownRegularWith<X> {
             insert_after_q: self.insert_after_q,
             insert_before_mso: self.insert_before_mso,
             insert_before_q: self.insert_before_q,
-            item_item: officekit_markup_base::into_extra_list(
+            item_item: officekit_markup_base::into_user_data_list(
                 self.item_item,
-                ItemItemWith::into_extra,
+                ItemItemWith::into_user_data,
             ),
             keytip: self.keytip,
             label: self.label,
@@ -12764,6 +12782,7 @@ impl<X: NodeExtra> DropDownDropDownRegularWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -12829,18 +12848,17 @@ impl officekit_markup_base::Write for DropDownDropDownRegular {
     }
 }
 
-impl<X: NodeExtra> DynamicMenuDynamicMenuWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DynamicMenuDynamicMenuWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DynamicMenuDynamicMenuWith<Y>
+    pub fn into_user_data<Y>(self) -> DynamicMenuDynamicMenuWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DynamicMenuDynamicMenuWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_content: self.get_content,
             get_description: self.get_description,
             get_enabled: self.get_enabled,
@@ -12872,6 +12890,7 @@ impl<X: NodeExtra> DynamicMenuDynamicMenuWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -12931,18 +12950,17 @@ impl officekit_markup_base::Write for DynamicMenuDynamicMenu {
     }
 }
 
-impl<X: NodeExtra> DynamicMenuDynamicMenuRegularWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DynamicMenuDynamicMenuRegularWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DynamicMenuDynamicMenuRegularWith<Y>
+    pub fn into_user_data<Y>(self) -> DynamicMenuDynamicMenuRegularWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DynamicMenuDynamicMenuRegularWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_content: self.get_content,
             get_description: self.get_description,
             get_enabled: self.get_enabled,
@@ -12972,6 +12990,7 @@ impl<X: NodeExtra> DynamicMenuDynamicMenuRegularWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -13029,19 +13048,18 @@ impl officekit_markup_base::Write for DynamicMenuDynamicMenuRegular {
     }
 }
 
-impl<X: NodeExtra> EditBoxBackstageEditBoxWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> EditBoxBackstageEditBoxWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> EditBoxBackstageEditBoxWith<Y>
+    pub fn into_user_data<Y>(self) -> EditBoxBackstageEditBoxWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         EditBoxBackstageEditBoxWith {
             align_label: self.align_label,
             enabled: self.enabled,
             expand: self.expand,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_keytip: self.get_keytip,
             get_label: self.get_label,
@@ -13056,6 +13074,7 @@ impl<X: NodeExtra> EditBoxBackstageEditBoxWith<X> {
             size_string: self.size_string,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -13099,17 +13118,16 @@ impl officekit_markup_base::Write for EditBoxBackstageEditBox {
     }
 }
 
-impl<X: NodeExtra> EditBoxEditBoxWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> EditBoxEditBoxWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> EditBoxEditBoxWith<Y>
+    pub fn into_user_data<Y>(self) -> EditBoxEditBoxWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         EditBoxEditBoxWith {
             enabled: self.enabled,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_image: self.get_image,
             get_keytip: self.get_keytip,
@@ -13140,6 +13158,7 @@ impl<X: NodeExtra> EditBoxEditBoxWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -13261,21 +13280,21 @@ impl Expand {
     }
 }
 
-impl<X: NodeExtra> FirstColumnWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FirstColumnWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FirstColumnWith<Y>
+    pub fn into_user_data<Y>(self) -> FirstColumnWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FirstColumnWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                BackstageGroupsContentWith::into_extra,
+                BackstageGroupsContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -13299,23 +13318,22 @@ impl officekit_markup_base::Write for FirstColumn {
     }
 }
 
-impl<X: NodeExtra> GalleryGalleryWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> GalleryGalleryWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> GalleryGalleryWith<Y>
+    pub fn into_user_data<Y>(self) -> GalleryGalleryWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         GalleryGalleryWith {
-            button_button_regular: officekit_markup_base::into_extra_list(
+            button_button_regular: officekit_markup_base::into_user_data_list(
                 self.button_button_regular,
-                ButtonButtonRegularWith::into_extra,
+                ButtonButtonRegularWith::into_user_data,
             ),
             columns: self.columns,
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
@@ -13348,9 +13366,9 @@ impl<X: NodeExtra> GalleryGalleryWith<X> {
             insert_before_q: self.insert_before_q,
             invalidate_content_on_drop: self.invalidate_content_on_drop,
             item_height: self.item_height,
-            item_item: officekit_markup_base::into_extra_list(
+            item_item: officekit_markup_base::into_user_data_list(
                 self.item_item,
-                ItemItemWith::into_extra,
+                ItemItemWith::into_user_data,
             ),
             item_width: self.item_width,
             keytip: self.keytip,
@@ -13368,6 +13386,7 @@ impl<X: NodeExtra> GalleryGalleryWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -13445,23 +13464,22 @@ impl officekit_markup_base::Write for GalleryGallery {
     }
 }
 
-impl<X: NodeExtra> GalleryGalleryRegularWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> GalleryGalleryRegularWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> GalleryGalleryRegularWith<Y>
+    pub fn into_user_data<Y>(self) -> GalleryGalleryRegularWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         GalleryGalleryRegularWith {
-            button_button_regular: officekit_markup_base::into_extra_list(
+            button_button_regular: officekit_markup_base::into_user_data_list(
                 self.button_button_regular,
-                ButtonButtonRegularWith::into_extra,
+                ButtonButtonRegularWith::into_user_data,
             ),
             columns: self.columns,
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
@@ -13493,9 +13511,9 @@ impl<X: NodeExtra> GalleryGalleryRegularWith<X> {
             insert_before_q: self.insert_before_q,
             invalidate_content_on_drop: self.invalidate_content_on_drop,
             item_height: self.item_height,
-            item_item: officekit_markup_base::into_extra_list(
+            item_item: officekit_markup_base::into_user_data_list(
                 self.item_item,
-                ItemItemWith::into_extra,
+                ItemItemWith::into_user_data,
             ),
             item_width: self.item_width,
             keytip: self.keytip,
@@ -13512,6 +13530,7 @@ impl<X: NodeExtra> GalleryGalleryRegularWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -13640,20 +13659,19 @@ impl GalleryShowInRibbon {
     }
 }
 
-impl<X: NodeExtra> GroupBackstageGroupWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> GroupBackstageGroupWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> GroupBackstageGroupWith<Y>
+    pub fn into_user_data<Y>(mut self) -> GroupBackstageGroupWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         GroupBackstageGroupWith {
-            bottom_items: officekit_markup_base::into_extra_optional(
+            bottom_items: officekit_markup_base::into_user_data_optional(
                 &mut self.bottom_items,
-                BottomItemsWith::into_extra,
+                BottomItemsWith::into_user_data,
             ),
-            extra: Default::default(),
             get_helper_text: self.get_helper_text,
             get_label: self.get_label,
             get_show_label: self.get_show_label,
@@ -13668,18 +13686,19 @@ impl<X: NodeExtra> GroupBackstageGroupWith<X> {
             insert_before_mso: self.insert_before_mso,
             insert_before_q: self.insert_before_q,
             label: self.label,
-            primary_item: officekit_markup_base::into_extra_optional(
+            primary_item: officekit_markup_base::into_user_data_optional(
                 &mut self.primary_item,
-                PrimaryItemWith::into_extra,
+                PrimaryItemWith::into_user_data,
             ),
             show_label: self.show_label,
             style: self.style,
             tag: self.tag,
-            top_items: officekit_markup_base::into_extra_optional(
+            top_items: officekit_markup_base::into_user_data_optional(
                 &mut self.top_items,
-                TopItemsWith::into_extra,
+                TopItemsWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -13724,27 +13743,27 @@ impl officekit_markup_base::Write for GroupBackstageGroup {
     }
 }
 
-impl<X: NodeExtra> GroupBoxWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> GroupBoxWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> GroupBoxWith<Y>
+    pub fn into_user_data<Y>(self) -> GroupBoxWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         GroupBoxWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                GroupControlsContentWith::into_extra,
+                GroupControlsContentWith::into_user_data,
             ),
             expand: self.expand,
-            extra: Default::default(),
             get_label: self.get_label,
             id: self.id,
             id_q: self.id_q,
             label: self.label,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -13776,43 +13795,47 @@ impl officekit_markup_base::Write for GroupBox {
     }
 }
 
-impl<X: NodeExtra> GroupContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> GroupContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> GroupContentWith<Y>
+    pub fn into_user_data<Y>(self) -> GroupContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
-            Self::BoxBox(node) => GroupContentWith::BoxBox(node.into_extra()),
-            Self::ButtonButton(node) => GroupContentWith::ButtonButton(node.into_extra()),
-            Self::ButtonGroup(node) => GroupContentWith::ButtonGroup(node.into_extra()),
-            Self::CheckBoxCheckBox(node) => GroupContentWith::CheckBoxCheckBox(node.into_extra()),
-            Self::ComboBoxComboBox(node) => GroupContentWith::ComboBoxComboBox(node.into_extra()),
+            Self::BoxBox(node) => GroupContentWith::BoxBox(node.into_user_data()),
+            Self::ButtonButton(node) => GroupContentWith::ButtonButton(node.into_user_data()),
+            Self::ButtonGroup(node) => GroupContentWith::ButtonGroup(node.into_user_data()),
+            Self::CheckBoxCheckBox(node) => {
+                GroupContentWith::CheckBoxCheckBox(node.into_user_data())
+            }
+            Self::ComboBoxComboBox(node) => {
+                GroupContentWith::ComboBoxComboBox(node.into_user_data())
+            }
             Self::ControlControlClone(node) => {
-                GroupContentWith::ControlControlClone(node.into_extra())
+                GroupContentWith::ControlControlClone(node.into_user_data())
             }
             Self::DropDownDropDownRegular(node) => {
-                GroupContentWith::DropDownDropDownRegular(node.into_extra())
+                GroupContentWith::DropDownDropDownRegular(node.into_user_data())
             }
             Self::DynamicMenuDynamicMenu(node) => {
-                GroupContentWith::DynamicMenuDynamicMenu(node.into_extra())
+                GroupContentWith::DynamicMenuDynamicMenu(node.into_user_data())
             }
-            Self::EditBoxEditBox(node) => GroupContentWith::EditBoxEditBox(node.into_extra()),
+            Self::EditBoxEditBox(node) => GroupContentWith::EditBoxEditBox(node.into_user_data()),
             Self::GalleryGallery(node) => {
-                GroupContentWith::GalleryGallery(Box::new((*node).into_extra()))
+                GroupContentWith::GalleryGallery(Box::new((*node).into_user_data()))
             }
             Self::LabelControlLabelControl(node) => {
-                GroupContentWith::LabelControlLabelControl(node.into_extra())
+                GroupContentWith::LabelControlLabelControl(node.into_user_data())
             }
-            Self::MenuMenu(node) => GroupContentWith::MenuMenu(node.into_extra()),
+            Self::MenuMenu(node) => GroupContentWith::MenuMenu(node.into_user_data()),
             Self::Other(node) => GroupContentWith::Other(node),
-            Self::Separator(node) => GroupContentWith::Separator(node.into_extra()),
+            Self::Separator(node) => GroupContentWith::Separator(node.into_user_data()),
             Self::SplitButtonSplitButton(node) => {
-                GroupContentWith::SplitButtonSplitButton(node.into_extra())
+                GroupContentWith::SplitButtonSplitButton(node.into_user_data())
             }
             Self::ToggleButtonToggleButton(node) => {
-                GroupContentWith::ToggleButtonToggleButton(node.into_extra())
+                GroupContentWith::ToggleButtonToggleButton(node.into_user_data())
             }
         }
     }
@@ -13937,40 +13960,42 @@ impl TryFrom<GroupContent> for BoxContent {
     }
 }
 
-impl<X: NodeExtra> GroupControlsContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> GroupControlsContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> GroupControlsContentWith<Y>
+    pub fn into_user_data<Y>(self) -> GroupControlsContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::ButtonBackstageGroupButton(node) => {
-                GroupControlsContentWith::ButtonBackstageGroupButton(node.into_extra())
+                GroupControlsContentWith::ButtonBackstageGroupButton(node.into_user_data())
             }
             Self::CheckBoxBackstageCheckBox(node) => {
-                GroupControlsContentWith::CheckBoxBackstageCheckBox(node.into_extra())
+                GroupControlsContentWith::CheckBoxBackstageCheckBox(node.into_user_data())
             }
             Self::ComboBoxBackstageComboBox(node) => {
-                GroupControlsContentWith::ComboBoxBackstageComboBox(node.into_extra())
+                GroupControlsContentWith::ComboBoxBackstageComboBox(node.into_user_data())
             }
             Self::DropDownBackstageDropDown(node) => {
-                GroupControlsContentWith::DropDownBackstageDropDown(node.into_extra())
+                GroupControlsContentWith::DropDownBackstageDropDown(node.into_user_data())
             }
             Self::EditBoxBackstageEditBox(node) => {
-                GroupControlsContentWith::EditBoxBackstageEditBox(node.into_extra())
+                GroupControlsContentWith::EditBoxBackstageEditBox(node.into_user_data())
             }
-            Self::GroupBox(node) => GroupControlsContentWith::GroupBox(node.into_extra()),
-            Self::Hyperlink(node) => GroupControlsContentWith::Hyperlink(node.into_extra()),
-            Self::ImageControl(node) => GroupControlsContentWith::ImageControl(node.into_extra()),
+            Self::GroupBox(node) => GroupControlsContentWith::GroupBox(node.into_user_data()),
+            Self::Hyperlink(node) => GroupControlsContentWith::Hyperlink(node.into_user_data()),
+            Self::ImageControl(node) => {
+                GroupControlsContentWith::ImageControl(node.into_user_data())
+            }
             Self::LabelControlBackstageLabelControl(node) => {
-                GroupControlsContentWith::LabelControlBackstageLabelControl(node.into_extra())
+                GroupControlsContentWith::LabelControlBackstageLabelControl(node.into_user_data())
             }
             Self::LayoutContainer(node) => {
-                GroupControlsContentWith::LayoutContainer(node.into_extra())
+                GroupControlsContentWith::LayoutContainer(node.into_user_data())
             }
             Self::Other(node) => GroupControlsContentWith::Other(node),
-            Self::RadioGroup(node) => GroupControlsContentWith::RadioGroup(node.into_extra()),
+            Self::RadioGroup(node) => GroupControlsContentWith::RadioGroup(node.into_user_data()),
         }
     }
 }
@@ -14035,26 +14060,25 @@ impl officekit_markup_base::Write for GroupControlsContent {
     }
 }
 
-impl<X: NodeExtra> GroupGroupWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> GroupGroupWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> GroupGroupWith<Y>
+    pub fn into_user_data<Y>(mut self) -> GroupGroupWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         GroupGroupWith {
             auto_scale: self.auto_scale,
             center_vertically: self.center_vertically,
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                GroupContentWith::into_extra,
+                GroupContentWith::into_user_data,
             ),
-            dialog_box_launcher: officekit_markup_base::into_extra_optional(
+            dialog_box_launcher: officekit_markup_base::into_user_data_optional(
                 &mut self.dialog_box_launcher,
-                DialogBoxLauncherWith::into_extra,
+                DialogBoxLauncherWith::into_user_data,
             ),
-            extra: Default::default(),
             get_image: self.get_image,
             get_keytip: self.get_keytip,
             get_label: self.get_label,
@@ -14076,6 +14100,7 @@ impl<X: NodeExtra> GroupGroupWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -14125,19 +14150,18 @@ impl officekit_markup_base::Write for GroupGroup {
     }
 }
 
-impl<X: NodeExtra> HyperlinkWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HyperlinkWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> HyperlinkWith<Y>
+    pub fn into_user_data<Y>(self) -> HyperlinkWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HyperlinkWith {
             align_label: self.align_label,
             enabled: self.enabled,
             expand: self.expand,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_image: self.get_image,
             get_keytip: self.get_keytip,
@@ -14158,6 +14182,7 @@ impl<X: NodeExtra> HyperlinkWith<X> {
             tag: self.tag,
             target: self.target,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -14207,18 +14232,17 @@ impl officekit_markup_base::Write for Hyperlink {
     }
 }
 
-impl<X: NodeExtra> ImageControlWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ImageControlWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ImageControlWith<Y>
+    pub fn into_user_data<Y>(self) -> ImageControlWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ImageControlWith {
             alt_text: self.alt_text,
             enabled: self.enabled,
-            extra: Default::default(),
             get_alt_text: self.get_alt_text,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
@@ -14229,6 +14253,7 @@ impl<X: NodeExtra> ImageControlWith<X> {
             image_mso: self.image_mso,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -14267,17 +14292,17 @@ impl officekit_markup_base::Write for ImageControl {
     }
 }
 
-impl<X: NodeExtra> ItemBackstageItemWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ItemBackstageItemWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ItemBackstageItemWith<Y>
+    pub fn into_user_data<Y>(self) -> ItemBackstageItemWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ItemBackstageItemWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -14301,16 +14326,15 @@ impl officekit_markup_base::Write for ItemBackstageItem {
     }
 }
 
-impl<X: NodeExtra> ItemItemWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ItemItemWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ItemItemWith<Y>
+    pub fn into_user_data<Y>(self) -> ItemItemWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ItemItemWith {
-            extra: Default::default(),
             id: self.id,
             image: self.image,
             image_mso: self.image_mso,
@@ -14318,6 +14342,7 @@ impl<X: NodeExtra> ItemItemWith<X> {
             screentip: self.screentip,
             supertip: self.supertip,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -14398,19 +14423,18 @@ impl ItemSize {
     }
 }
 
-impl<X: NodeExtra> LabelControlBackstageLabelControlWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LabelControlBackstageLabelControlWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LabelControlBackstageLabelControlWith<Y>
+    pub fn into_user_data<Y>(self) -> LabelControlBackstageLabelControlWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LabelControlBackstageLabelControlWith {
             align_label: self.align_label,
             enabled: self.enabled,
             expand: self.expand,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_label: self.get_label,
             get_visible: self.get_visible,
@@ -14420,6 +14444,7 @@ impl<X: NodeExtra> LabelControlBackstageLabelControlWith<X> {
             no_wrap: self.no_wrap,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -14458,17 +14483,16 @@ impl officekit_markup_base::Write for LabelControlBackstageLabelControl {
     }
 }
 
-impl<X: NodeExtra> LabelControlLabelControlWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LabelControlLabelControlWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LabelControlLabelControlWith<Y>
+    pub fn into_user_data<Y>(self) -> LabelControlLabelControlWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LabelControlLabelControlWith {
             enabled: self.enabled,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_label: self.get_label,
             get_screentip: self.get_screentip,
@@ -14488,6 +14512,7 @@ impl<X: NodeExtra> LabelControlLabelControlWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -14587,27 +14612,27 @@ impl LayoutChildren {
     }
 }
 
-impl<X: NodeExtra> LayoutContainerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LayoutContainerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LayoutContainerWith<Y>
+    pub fn into_user_data<Y>(self) -> LayoutContainerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LayoutContainerWith {
             align: self.align,
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                GroupControlsContentWith::into_extra,
+                GroupControlsContentWith::into_user_data,
             ),
             expand: self.expand,
-            extra: Default::default(),
             id: self.id,
             id_q: self.id_q,
             layout_children: self.layout_children,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -14639,17 +14664,16 @@ impl officekit_markup_base::Write for LayoutContainer {
     }
 }
 
-impl<X: NodeExtra> MenuBackstagePrimaryMenuWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MenuBackstagePrimaryMenuWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MenuBackstagePrimaryMenuWith<Y>
+    pub fn into_user_data<Y>(self) -> MenuBackstagePrimaryMenuWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MenuBackstagePrimaryMenuWith {
             enabled: self.enabled,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_image: self.get_image,
             get_keytip: self.get_keytip,
@@ -14657,7 +14681,10 @@ impl<X: NodeExtra> MenuBackstagePrimaryMenuWith<X> {
             get_screentip: self.get_screentip,
             get_supertip: self.get_supertip,
             get_visible: self.get_visible,
-            group: officekit_markup_base::into_extra_list(self.group, MenuGroupWith::into_extra),
+            group: officekit_markup_base::into_user_data_list(
+                self.group,
+                MenuGroupWith::into_user_data,
+            ),
             id: self.id,
             id_q: self.id_q,
             image: self.image,
@@ -14668,6 +14695,7 @@ impl<X: NodeExtra> MenuBackstagePrimaryMenuWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -14712,25 +14740,27 @@ impl officekit_markup_base::Write for MenuBackstagePrimaryMenu {
     }
 }
 
-impl<X: NodeExtra> MenuBackstageSubMenuWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MenuBackstageSubMenuWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MenuBackstageSubMenuWith<Y>
+    pub fn into_user_data<Y>(self) -> MenuBackstageSubMenuWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MenuBackstageSubMenuWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
             get_keytip: self.get_keytip,
             get_label: self.get_label,
             get_visible: self.get_visible,
-            group: officekit_markup_base::into_extra_list(self.group, MenuGroupWith::into_extra),
+            group: officekit_markup_base::into_user_data_list(
+                self.group,
+                MenuGroupWith::into_user_data,
+            ),
             id: self.id,
             id_q: self.id_q,
             image: self.image,
@@ -14739,6 +14769,7 @@ impl<X: NodeExtra> MenuBackstageSubMenuWith<X> {
             label: self.label,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -14781,37 +14812,39 @@ impl officekit_markup_base::Write for MenuBackstageSubMenu {
     }
 }
 
-impl<X: NodeExtra> MenuContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> MenuContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MenuContentWith<Y>
+    pub fn into_user_data<Y>(self) -> MenuContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::ButtonButtonRegular(node) => {
-                MenuContentWith::ButtonButtonRegular(node.into_extra())
+                MenuContentWith::ButtonButtonRegular(node.into_user_data())
             }
-            Self::CheckBoxCheckBox(node) => MenuContentWith::CheckBoxCheckBox(node.into_extra()),
+            Self::CheckBoxCheckBox(node) => {
+                MenuContentWith::CheckBoxCheckBox(node.into_user_data())
+            }
             Self::ControlControlCloneRegular(node) => {
-                MenuContentWith::ControlControlCloneRegular(node.into_extra())
+                MenuContentWith::ControlControlCloneRegular(node.into_user_data())
             }
             Self::DynamicMenuDynamicMenuRegular(node) => {
-                MenuContentWith::DynamicMenuDynamicMenuRegular(node.into_extra())
+                MenuContentWith::DynamicMenuDynamicMenuRegular(node.into_user_data())
             }
             Self::GalleryGalleryRegular(node) => {
-                MenuContentWith::GalleryGalleryRegular(Box::new((*node).into_extra()))
+                MenuContentWith::GalleryGalleryRegular(Box::new((*node).into_user_data()))
             }
-            Self::MenuMenuRegular(node) => MenuContentWith::MenuMenuRegular(node.into_extra()),
+            Self::MenuMenuRegular(node) => MenuContentWith::MenuMenuRegular(node.into_user_data()),
             Self::MenuSeparatorMenuSeparator(node) => {
-                MenuContentWith::MenuSeparatorMenuSeparator(node.into_extra())
+                MenuContentWith::MenuSeparatorMenuSeparator(node.into_user_data())
             }
             Self::Other(node) => MenuContentWith::Other(node),
             Self::SplitButtonSplitButtonRegular(node) => {
-                MenuContentWith::SplitButtonSplitButtonRegular(node.into_extra())
+                MenuContentWith::SplitButtonSplitButtonRegular(node.into_user_data())
             }
             Self::ToggleButtonToggleButtonRegular(node) => {
-                MenuContentWith::ToggleButtonToggleButtonRegular(node.into_extra())
+                MenuContentWith::ToggleButtonToggleButtonRegular(node.into_user_data())
             }
         }
     }
@@ -14871,20 +14904,19 @@ impl officekit_markup_base::Write for MenuContent {
     }
 }
 
-impl<X: NodeExtra> MenuGroupWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MenuGroupWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MenuGroupWith<Y>
+    pub fn into_user_data<Y>(self) -> MenuGroupWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MenuGroupWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                BackstageMenuGroupContentWith::into_extra,
+                BackstageMenuGroupContentWith::into_user_data,
             ),
-            extra: Default::default(),
             get_label: self.get_label,
             id: self.id,
             id_q: self.id_q,
@@ -14892,6 +14924,7 @@ impl<X: NodeExtra> MenuGroupWith<X> {
             label: self.label,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -14923,22 +14956,21 @@ impl officekit_markup_base::Write for MenuGroup {
     }
 }
 
-impl<X: NodeExtra> MenuMenuWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MenuMenuWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MenuMenuWith<Y>
+    pub fn into_user_data<Y>(self) -> MenuMenuWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MenuMenuWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                MenuContentWith::into_extra,
+                MenuContentWith::into_user_data,
             ),
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
@@ -14969,6 +15001,7 @@ impl<X: NodeExtra> MenuMenuWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -15027,22 +15060,21 @@ impl officekit_markup_base::Write for MenuMenu {
     }
 }
 
-impl<X: NodeExtra> MenuMenuRegularWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MenuMenuRegularWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MenuMenuRegularWith<Y>
+    pub fn into_user_data<Y>(self) -> MenuMenuRegularWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MenuMenuRegularWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                MenuContentWith::into_extra,
+                MenuContentWith::into_user_data,
             ),
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
@@ -15071,6 +15103,7 @@ impl<X: NodeExtra> MenuMenuRegularWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -15127,24 +15160,24 @@ impl officekit_markup_base::Write for MenuMenuRegular {
     }
 }
 
-impl<X: NodeExtra> MenuMenuRootWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MenuMenuRootWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MenuMenuRootWith<Y>
+    pub fn into_user_data<Y>(self) -> MenuMenuRootWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MenuMenuRootWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                MenuContentWith::into_extra,
+                MenuContentWith::into_user_data,
             ),
-            extra: Default::default(),
             get_title: self.get_title,
             item_size: self.item_size,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -15173,21 +15206,20 @@ impl officekit_markup_base::Write for MenuMenuRoot {
     }
 }
 
-impl<X: NodeExtra> MenuMenuWithTitleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MenuMenuWithTitleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MenuMenuWithTitleWith<Y>
+    pub fn into_user_data<Y>(self) -> MenuMenuWithTitleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MenuMenuWithTitleWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                MenuWithTitleContentWith::into_extra,
+                MenuWithTitleContentWith::into_user_data,
             ),
             enabled: self.enabled,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_image: self.get_image,
             get_keytip: self.get_keytip,
@@ -15217,6 +15249,7 @@ impl<X: NodeExtra> MenuMenuWithTitleWith<X> {
             tag: self.tag,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -15273,16 +15306,15 @@ impl officekit_markup_base::Write for MenuMenuWithTitle {
     }
 }
 
-impl<X: NodeExtra> MenuSeparatorMenuSeparatorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MenuSeparatorMenuSeparatorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MenuSeparatorMenuSeparatorWith<Y>
+    pub fn into_user_data<Y>(self) -> MenuSeparatorMenuSeparatorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MenuSeparatorMenuSeparatorWith {
-            extra: Default::default(),
             get_title: self.get_title,
             id: self.id,
             id_q: self.id_q,
@@ -15293,6 +15325,7 @@ impl<X: NodeExtra> MenuSeparatorMenuSeparatorWith<X> {
             tag: self.tag,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -15327,16 +15360,15 @@ impl officekit_markup_base::Write for MenuSeparatorMenuSeparator {
     }
 }
 
-impl<X: NodeExtra> MenuSeparatorMenuSeparatorNoTitleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MenuSeparatorMenuSeparatorNoTitleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MenuSeparatorMenuSeparatorNoTitleWith<Y>
+    pub fn into_user_data<Y>(self) -> MenuSeparatorMenuSeparatorNoTitleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MenuSeparatorMenuSeparatorNoTitleWith {
-            extra: Default::default(),
             id: self.id,
             id_q: self.id_q,
             insert_after_mso: self.insert_after_mso,
@@ -15345,6 +15377,7 @@ impl<X: NodeExtra> MenuSeparatorMenuSeparatorNoTitleWith<X> {
             insert_before_q: self.insert_before_q,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -15377,41 +15410,41 @@ impl officekit_markup_base::Write for MenuSeparatorMenuSeparatorNoTitle {
     }
 }
 
-impl<X: NodeExtra> MenuWithTitleContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> MenuWithTitleContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MenuWithTitleContentWith<Y>
+    pub fn into_user_data<Y>(self) -> MenuWithTitleContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::ButtonButtonRegular(node) => {
-                MenuWithTitleContentWith::ButtonButtonRegular(node.into_extra())
+                MenuWithTitleContentWith::ButtonButtonRegular(node.into_user_data())
             }
             Self::CheckBoxCheckBox(node) => {
-                MenuWithTitleContentWith::CheckBoxCheckBox(node.into_extra())
+                MenuWithTitleContentWith::CheckBoxCheckBox(node.into_user_data())
             }
             Self::ControlControlCloneRegular(node) => {
-                MenuWithTitleContentWith::ControlControlCloneRegular(node.into_extra())
+                MenuWithTitleContentWith::ControlControlCloneRegular(node.into_user_data())
             }
             Self::DynamicMenuDynamicMenuRegular(node) => {
-                MenuWithTitleContentWith::DynamicMenuDynamicMenuRegular(node.into_extra())
+                MenuWithTitleContentWith::DynamicMenuDynamicMenuRegular(node.into_user_data())
             }
             Self::GalleryGalleryRegular(node) => {
-                MenuWithTitleContentWith::GalleryGalleryRegular(Box::new((*node).into_extra()))
+                MenuWithTitleContentWith::GalleryGalleryRegular(Box::new((*node).into_user_data()))
             }
             Self::MenuMenuWithTitle(node) => {
-                MenuWithTitleContentWith::MenuMenuWithTitle(node.into_extra())
+                MenuWithTitleContentWith::MenuMenuWithTitle(node.into_user_data())
             }
             Self::MenuSeparatorMenuSeparator(node) => {
-                MenuWithTitleContentWith::MenuSeparatorMenuSeparator(node.into_extra())
+                MenuWithTitleContentWith::MenuSeparatorMenuSeparator(node.into_user_data())
             }
             Self::Other(node) => MenuWithTitleContentWith::Other(node),
             Self::SplitButtonSplitButtonWithTitle(node) => {
-                MenuWithTitleContentWith::SplitButtonSplitButtonWithTitle(node.into_extra())
+                MenuWithTitleContentWith::SplitButtonSplitButtonWithTitle(node.into_user_data())
             }
             Self::ToggleButtonToggleButtonRegular(node) => {
-                MenuWithTitleContentWith::ToggleButtonToggleButtonRegular(node.into_extra())
+                MenuWithTitleContentWith::ToggleButtonToggleButtonRegular(node.into_user_data())
             }
         }
     }
@@ -15473,21 +15506,21 @@ impl officekit_markup_base::Write for MenuWithTitleContent {
     }
 }
 
-impl<X: NodeExtra> PrimaryItemWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PrimaryItemWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PrimaryItemWith<Y>
+    pub fn into_user_data<Y>(self) -> PrimaryItemWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PrimaryItemWith {
-            content: officekit_markup_base::into_extra_required(
+            content: officekit_markup_base::into_user_data_required(
                 *self.content,
-                PrimaryItemContentWith::into_extra,
+                PrimaryItemContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -15511,26 +15544,26 @@ impl officekit_markup_base::Write for PrimaryItem {
     }
 }
 
-impl<X: NodeExtra> PrimaryItemContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> PrimaryItemContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PrimaryItemContentWith<Y>
+    pub fn into_user_data<Y>(self) -> PrimaryItemContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::ButtonBackstageRegularButton(node) => {
-                PrimaryItemContentWith::ButtonBackstageRegularButton(node.into_extra())
+                PrimaryItemContentWith::ButtonBackstageRegularButton(node.into_user_data())
             }
             Self::MenuBackstagePrimaryMenu(node) => {
-                PrimaryItemContentWith::MenuBackstagePrimaryMenu(node.into_extra())
+                PrimaryItemContentWith::MenuBackstagePrimaryMenu(node.into_user_data())
             }
             Self::Other(node) => PrimaryItemContentWith::Other(node),
         }
     }
 }
 
-impl<X: NodeExtra> Default for PrimaryItemContentWith<X> {
+impl<X: UserData> Default for PrimaryItemContentWith<X> {
     fn default() -> Self {
         Self::ButtonBackstageRegularButton(ButtonBackstageRegularButtonWith::default())
     }
@@ -15564,25 +15597,25 @@ impl officekit_markup_base::Write for PrimaryItemContent {
     }
 }
 
-impl<X: NodeExtra> QatWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> QatWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> QatWith<Y>
+    pub fn into_user_data<Y>(mut self) -> QatWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         QatWith {
-            document_controls: officekit_markup_base::into_extra_optional(
+            document_controls: officekit_markup_base::into_user_data_optional(
                 &mut self.document_controls,
-                DocumentControlsWith::into_extra,
+                DocumentControlsWith::into_user_data,
             ),
-            extra: Default::default(),
-            shared_controls: officekit_markup_base::into_extra_optional(
+            shared_controls: officekit_markup_base::into_user_data_optional(
                 &mut self.shared_controls,
-                SharedControlsWith::into_extra,
+                SharedControlsWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -15606,23 +15639,23 @@ impl officekit_markup_base::Write for Qat {
     }
 }
 
-impl<X: NodeExtra> QuickAccessToolbarItemsContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> QuickAccessToolbarItemsContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> QuickAccessToolbarItemsContentWith<Y>
+    pub fn into_user_data<Y>(self) -> QuickAccessToolbarItemsContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::ButtonButtonRegular(node) => {
-                QuickAccessToolbarItemsContentWith::ButtonButtonRegular(node.into_extra())
+                QuickAccessToolbarItemsContentWith::ButtonButtonRegular(node.into_user_data())
             }
             Self::ControlControlCloneQat(node) => {
-                QuickAccessToolbarItemsContentWith::ControlControlCloneQat(node.into_extra())
+                QuickAccessToolbarItemsContentWith::ControlControlCloneQat(node.into_user_data())
             }
             Self::Other(node) => QuickAccessToolbarItemsContentWith::Other(node),
             Self::Separator(node) => {
-                QuickAccessToolbarItemsContentWith::Separator(node.into_extra())
+                QuickAccessToolbarItemsContentWith::Separator(node.into_user_data())
             }
         }
     }
@@ -15658,17 +15691,17 @@ impl officekit_markup_base::Write for QuickAccessToolbarItemsContent {
     }
 }
 
-impl<X: NodeExtra> RadioButtonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RadioButtonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RadioButtonWith<Y>
+    pub fn into_user_data<Y>(self) -> RadioButtonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RadioButtonWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -15692,19 +15725,18 @@ impl officekit_markup_base::Write for RadioButton {
     }
 }
 
-impl<X: NodeExtra> RadioGroupWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RadioGroupWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RadioGroupWith<Y>
+    pub fn into_user_data<Y>(self) -> RadioGroupWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RadioGroupWith {
             align_label: self.align_label,
             enabled: self.enabled,
             expand: self.expand,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_item_count: self.get_item_count,
             get_item_id: self.get_item_id,
@@ -15718,12 +15750,13 @@ impl<X: NodeExtra> RadioGroupWith<X> {
             keytip: self.keytip,
             label: self.label,
             on_action: self.on_action,
-            radio_button: officekit_markup_base::into_extra_list(
+            radio_button: officekit_markup_base::into_user_data_list(
                 self.radio_button,
-                RadioButtonWith::into_extra,
+                RadioButtonWith::into_user_data,
             ),
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -15768,22 +15801,22 @@ impl officekit_markup_base::Write for RadioGroup {
     }
 }
 
-impl<X: NodeExtra> RibbonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RibbonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RibbonWith<Y>
+    pub fn into_user_data<Y>(self) -> RibbonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RibbonWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                RibbonContentWith::into_extra,
+                RibbonContentWith::into_user_data,
             ),
-            extra: Default::default(),
             start_from_scratch: self.start_from_scratch,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -15810,18 +15843,18 @@ impl officekit_markup_base::Write for Ribbon {
     }
 }
 
-impl<X: NodeExtra> RibbonContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> RibbonContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RibbonContentWith<Y>
+    pub fn into_user_data<Y>(self) -> RibbonContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
-            Self::ContextualTabs(node) => RibbonContentWith::ContextualTabs(node.into_extra()),
+            Self::ContextualTabs(node) => RibbonContentWith::ContextualTabs(node.into_user_data()),
             Self::Other(node) => RibbonContentWith::Other(node),
-            Self::Qat(node) => RibbonContentWith::Qat(node.into_extra()),
-            Self::Tabs(node) => RibbonContentWith::Tabs(node.into_extra()),
+            Self::Qat(node) => RibbonContentWith::Qat(node.into_user_data()),
+            Self::Tabs(node) => RibbonContentWith::Tabs(node.into_user_data()),
         }
     }
 }
@@ -15854,21 +15887,21 @@ impl officekit_markup_base::Write for RibbonContent {
     }
 }
 
-impl<X: NodeExtra> SecondColumnWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SecondColumnWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SecondColumnWith<Y>
+    pub fn into_user_data<Y>(self) -> SecondColumnWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SecondColumnWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                SimpleGroupsContentWith::into_extra,
+                SimpleGroupsContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -15892,16 +15925,15 @@ impl officekit_markup_base::Write for SecondColumn {
     }
 }
 
-impl<X: NodeExtra> SeparatorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SeparatorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SeparatorWith<Y>
+    pub fn into_user_data<Y>(self) -> SeparatorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SeparatorWith {
-            extra: Default::default(),
             get_visible: self.get_visible,
             id: self.id,
             id_q: self.id_q,
@@ -15911,6 +15943,7 @@ impl<X: NodeExtra> SeparatorWith<X> {
             insert_before_q: self.insert_before_q,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -15946,21 +15979,21 @@ impl officekit_markup_base::Write for Separator {
     }
 }
 
-impl<X: NodeExtra> SharedControlsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SharedControlsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SharedControlsWith<Y>
+    pub fn into_user_data<Y>(self) -> SharedControlsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SharedControlsWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                QuickAccessToolbarItemsContentWith::into_extra,
+                QuickAccessToolbarItemsContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -15984,19 +16017,19 @@ impl officekit_markup_base::Write for SharedControls {
     }
 }
 
-impl<X: NodeExtra> SimpleGroupsContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> SimpleGroupsContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SimpleGroupsContentWith<Y>
+    pub fn into_user_data<Y>(self) -> SimpleGroupsContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::GroupBackstageGroup(node) => {
-                SimpleGroupsContentWith::GroupBackstageGroup(node.into_extra())
+                SimpleGroupsContentWith::GroupBackstageGroup(node.into_user_data())
             }
             Self::Other(node) => SimpleGroupsContentWith::Other(node),
-            Self::TaskGroup(node) => SimpleGroupsContentWith::TaskGroup(node.into_extra()),
+            Self::TaskGroup(node) => SimpleGroupsContentWith::TaskGroup(node.into_user_data()),
         }
     }
 }
@@ -16076,20 +16109,20 @@ impl Size {
     }
 }
 
-impl<X: NodeExtra> SplitButtonContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> SplitButtonContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SplitButtonContentWith<Y>
+    pub fn into_user_data<Y>(self) -> SplitButtonContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::ButtonVisibleButton(node) => {
-                SplitButtonContentWith::ButtonVisibleButton(node.into_extra())
+                SplitButtonContentWith::ButtonVisibleButton(node.into_user_data())
             }
             Self::Other(node) => SplitButtonContentWith::Other(node),
             Self::ToggleButtonVisibleToggleButton(node) => {
-                SplitButtonContentWith::ToggleButtonVisibleToggleButton(node.into_extra())
+                SplitButtonContentWith::ToggleButtonVisibleToggleButton(node.into_user_data())
             }
         }
     }
@@ -16123,21 +16156,20 @@ impl officekit_markup_base::Write for SplitButtonContent {
     }
 }
 
-impl<X: NodeExtra> SplitButtonSplitButtonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SplitButtonSplitButtonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SplitButtonSplitButtonWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SplitButtonSplitButtonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SplitButtonSplitButtonWith {
-            content: officekit_markup_base::into_extra_optional(
+            content: officekit_markup_base::into_user_data_optional(
                 &mut self.content,
-                SplitButtonContentWith::into_extra,
+                SplitButtonContentWith::into_user_data,
             ),
             enabled: self.enabled,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_keytip: self.get_keytip,
             get_show_label: self.get_show_label,
@@ -16151,14 +16183,15 @@ impl<X: NodeExtra> SplitButtonSplitButtonWith<X> {
             insert_before_mso: self.insert_before_mso,
             insert_before_q: self.insert_before_q,
             keytip: self.keytip,
-            menu_menu_regular: officekit_markup_base::into_extra_optional(
+            menu_menu_regular: officekit_markup_base::into_user_data_optional(
                 &mut self.menu_menu_regular,
-                MenuMenuRegularWith::into_extra,
+                MenuMenuRegularWith::into_user_data,
             ),
             show_label: self.show_label,
             size: self.size,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -16203,21 +16236,20 @@ impl officekit_markup_base::Write for SplitButtonSplitButton {
     }
 }
 
-impl<X: NodeExtra> SplitButtonSplitButtonRegularWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SplitButtonSplitButtonRegularWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SplitButtonSplitButtonRegularWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SplitButtonSplitButtonRegularWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SplitButtonSplitButtonRegularWith {
-            content: officekit_markup_base::into_extra_optional(
+            content: officekit_markup_base::into_user_data_optional(
                 &mut self.content,
-                SplitButtonContentWith::into_extra,
+                SplitButtonContentWith::into_user_data,
             ),
             enabled: self.enabled,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_keytip: self.get_keytip,
             get_show_label: self.get_show_label,
@@ -16230,13 +16262,14 @@ impl<X: NodeExtra> SplitButtonSplitButtonRegularWith<X> {
             insert_before_mso: self.insert_before_mso,
             insert_before_q: self.insert_before_q,
             keytip: self.keytip,
-            menu_menu_regular: officekit_markup_base::into_extra_optional(
+            menu_menu_regular: officekit_markup_base::into_user_data_optional(
                 &mut self.menu_menu_regular,
-                MenuMenuRegularWith::into_extra,
+                MenuMenuRegularWith::into_user_data,
             ),
             show_label: self.show_label,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -16279,21 +16312,20 @@ impl officekit_markup_base::Write for SplitButtonSplitButtonRegular {
     }
 }
 
-impl<X: NodeExtra> SplitButtonSplitButtonWithTitleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SplitButtonSplitButtonWithTitleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SplitButtonSplitButtonWithTitleWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SplitButtonSplitButtonWithTitleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SplitButtonSplitButtonWithTitleWith {
-            content: officekit_markup_base::into_extra_optional(
+            content: officekit_markup_base::into_user_data_optional(
                 &mut self.content,
-                SplitButtonContentWith::into_extra,
+                SplitButtonContentWith::into_user_data,
             ),
             enabled: self.enabled,
-            extra: Default::default(),
             get_enabled: self.get_enabled,
             get_keytip: self.get_keytip,
             get_show_label: self.get_show_label,
@@ -16306,13 +16338,14 @@ impl<X: NodeExtra> SplitButtonSplitButtonWithTitleWith<X> {
             insert_before_mso: self.insert_before_mso,
             insert_before_q: self.insert_before_q,
             keytip: self.keytip,
-            menu_menu_with_title: officekit_markup_base::into_extra_optional(
+            menu_menu_with_title: officekit_markup_base::into_user_data_optional(
                 &mut self.menu_menu_with_title,
-                MenuMenuWithTitleWith::into_extra,
+                MenuMenuWithTitleWith::into_user_data,
             ),
             show_label: self.show_label,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -16459,21 +16492,20 @@ impl Style2 {
     }
 }
 
-impl<X: NodeExtra> TabBackstageTabWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TabBackstageTabWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> TabBackstageTabWith<Y>
+    pub fn into_user_data<Y>(mut self) -> TabBackstageTabWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TabBackstageTabWith {
             column_width_percent: self.column_width_percent,
             enabled: self.enabled,
-            extra: Default::default(),
-            first_column: officekit_markup_base::into_extra_optional(
+            first_column: officekit_markup_base::into_user_data_optional(
                 &mut self.first_column,
-                FirstColumnWith::into_extra,
+                FirstColumnWith::into_user_data,
             ),
             first_column_max_width: self.first_column_max_width,
             first_column_min_width: self.first_column_min_width,
@@ -16491,15 +16523,16 @@ impl<X: NodeExtra> TabBackstageTabWith<X> {
             insert_before_q: self.insert_before_q,
             keytip: self.keytip,
             label: self.label,
-            second_column: officekit_markup_base::into_extra_optional(
+            second_column: officekit_markup_base::into_user_data_optional(
                 &mut self.second_column,
-                SecondColumnWith::into_extra,
+                SecondColumnWith::into_user_data,
             ),
             second_column_max_width: self.second_column_max_width,
             second_column_min_width: self.second_column_min_width,
             tag: self.tag,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -16549,20 +16582,23 @@ impl officekit_markup_base::Write for TabBackstageTab {
     }
 }
 
-impl<X: NodeExtra> TabSetWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TabSetWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TabSetWith<Y>
+    pub fn into_user_data<Y>(self) -> TabSetWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TabSetWith {
-            extra: Default::default(),
             get_visible: self.get_visible,
             id_mso: self.id_mso,
-            tab_tab: officekit_markup_base::into_extra_list(self.tab_tab, TabTabWith::into_extra),
+            tab_tab: officekit_markup_base::into_user_data_list(
+                self.tab_tab,
+                TabTabWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -16592,22 +16628,21 @@ impl officekit_markup_base::Write for TabSet {
     }
 }
 
-impl<X: NodeExtra> TabTabWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TabTabWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TabTabWith<Y>
+    pub fn into_user_data<Y>(self) -> TabTabWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TabTabWith {
-            extra: Default::default(),
             get_keytip: self.get_keytip,
             get_label: self.get_label,
             get_visible: self.get_visible,
-            group_group: officekit_markup_base::into_extra_list(
+            group_group: officekit_markup_base::into_user_data_list(
                 self.group_group,
-                GroupGroupWith::into_extra,
+                GroupGroupWith::into_user_data,
             ),
             id: self.id,
             id_mso: self.id_mso,
@@ -16620,6 +16655,7 @@ impl<X: NodeExtra> TabTabWith<X> {
             label: self.label,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -16660,18 +16696,21 @@ impl officekit_markup_base::Write for TabTab {
     }
 }
 
-impl<X: NodeExtra> TabsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TabsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TabsWith<Y>
+    pub fn into_user_data<Y>(self) -> TabsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TabsWith {
-            extra: Default::default(),
-            tab_tab: officekit_markup_base::into_extra_list(self.tab_tab, TabTabWith::into_extra),
+            tab_tab: officekit_markup_base::into_user_data_list(
+                self.tab_tab,
+                TabTabWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -16695,21 +16734,20 @@ impl officekit_markup_base::Write for Tabs {
     }
 }
 
-impl<X: NodeExtra> TaskFormGroupWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TaskFormGroupWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TaskFormGroupWith<Y>
+    pub fn into_user_data<Y>(self) -> TaskFormGroupWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TaskFormGroupWith {
             allowed_task_sizes: self.allowed_task_sizes,
-            category_task_form_group_category: officekit_markup_base::into_extra_list(
+            category_task_form_group_category: officekit_markup_base::into_user_data_list(
                 self.category_task_form_group_category,
-                CategoryTaskFormGroupCategoryWith::into_extra,
+                CategoryTaskFormGroupCategoryWith::into_user_data,
             ),
-            extra: Default::default(),
             get_helper_text: self.get_helper_text,
             get_label: self.get_label,
             get_show_label: self.get_show_label,
@@ -16722,6 +16760,7 @@ impl<X: NodeExtra> TaskFormGroupWith<X> {
             show_label: self.show_label,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -16761,21 +16800,20 @@ impl officekit_markup_base::Write for TaskFormGroup {
     }
 }
 
-impl<X: NodeExtra> TaskGroupWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TaskGroupWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TaskGroupWith<Y>
+    pub fn into_user_data<Y>(self) -> TaskGroupWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TaskGroupWith {
             allowed_task_sizes: self.allowed_task_sizes,
-            category_task_group_category: officekit_markup_base::into_extra_list(
+            category_task_group_category: officekit_markup_base::into_user_data_list(
                 self.category_task_group_category,
-                CategoryTaskGroupCategoryWith::into_extra,
+                CategoryTaskGroupCategoryWith::into_user_data,
             ),
-            extra: Default::default(),
             get_helper_text: self.get_helper_text,
             get_label: self.get_label,
             get_show_label: self.get_show_label,
@@ -16792,6 +16830,7 @@ impl<X: NodeExtra> TaskGroupWith<X> {
             show_label: self.show_label,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -16900,27 +16939,26 @@ impl TaskSizes {
     }
 }
 
-impl<X: NodeExtra> TaskTaskFormGroupTaskWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TaskTaskFormGroupTaskWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TaskTaskFormGroupTaskWith<Y>
+    pub fn into_user_data<Y>(self) -> TaskTaskFormGroupTaskWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TaskTaskFormGroupTaskWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
             get_keytip: self.get_keytip,
             get_label: self.get_label,
             get_visible: self.get_visible,
-            group_backstage_group: officekit_markup_base::into_extra_list(
+            group_backstage_group: officekit_markup_base::into_user_data_list(
                 self.group_backstage_group,
-                GroupBackstageGroupWith::into_extra,
+                GroupBackstageGroupWith::into_user_data,
             ),
             id: self.id,
             id_mso: self.id_mso,
@@ -16935,6 +16973,7 @@ impl<X: NodeExtra> TaskTaskFormGroupTaskWith<X> {
             label: self.label,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -16982,18 +17021,17 @@ impl officekit_markup_base::Write for TaskTaskFormGroupTask {
     }
 }
 
-impl<X: NodeExtra> TaskTaskGroupTaskWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TaskTaskGroupTaskWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TaskTaskGroupTaskWith<Y>
+    pub fn into_user_data<Y>(self) -> TaskTaskGroupTaskWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TaskTaskGroupTaskWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
@@ -17015,6 +17053,7 @@ impl<X: NodeExtra> TaskTaskGroupTaskWith<X> {
             on_action: self.on_action,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -17064,18 +17103,17 @@ impl officekit_markup_base::Write for TaskTaskGroupTask {
     }
 }
 
-impl<X: NodeExtra> ToggleButtonBackstageMenuToggleButtonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ToggleButtonBackstageMenuToggleButtonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ToggleButtonBackstageMenuToggleButtonWith<Y>
+    pub fn into_user_data<Y>(self) -> ToggleButtonBackstageMenuToggleButtonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ToggleButtonBackstageMenuToggleButtonWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
@@ -17092,6 +17130,7 @@ impl<X: NodeExtra> ToggleButtonBackstageMenuToggleButtonWith<X> {
             on_action: self.on_action,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -17136,18 +17175,17 @@ impl officekit_markup_base::Write for ToggleButtonBackstageMenuToggleButton {
     }
 }
 
-impl<X: NodeExtra> ToggleButtonToggleButtonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ToggleButtonToggleButtonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ToggleButtonToggleButtonWith<Y>
+    pub fn into_user_data<Y>(self) -> ToggleButtonToggleButtonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ToggleButtonToggleButtonWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
@@ -17179,6 +17217,7 @@ impl<X: NodeExtra> ToggleButtonToggleButtonWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -17238,18 +17277,17 @@ impl officekit_markup_base::Write for ToggleButtonToggleButton {
     }
 }
 
-impl<X: NodeExtra> ToggleButtonToggleButtonRegularWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ToggleButtonToggleButtonRegularWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ToggleButtonToggleButtonRegularWith<Y>
+    pub fn into_user_data<Y>(self) -> ToggleButtonToggleButtonRegularWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ToggleButtonToggleButtonRegularWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
@@ -17279,6 +17317,7 @@ impl<X: NodeExtra> ToggleButtonToggleButtonRegularWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -17336,18 +17375,17 @@ impl officekit_markup_base::Write for ToggleButtonToggleButtonRegular {
     }
 }
 
-impl<X: NodeExtra> ToggleButtonVisibleToggleButtonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ToggleButtonVisibleToggleButtonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ToggleButtonVisibleToggleButtonWith<Y>
+    pub fn into_user_data<Y>(self) -> ToggleButtonVisibleToggleButtonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ToggleButtonVisibleToggleButtonWith {
             description: self.description,
             enabled: self.enabled,
-            extra: Default::default(),
             get_description: self.get_description,
             get_enabled: self.get_enabled,
             get_image: self.get_image,
@@ -17376,6 +17414,7 @@ impl<X: NodeExtra> ToggleButtonVisibleToggleButtonWith<X> {
             supertip: self.supertip,
             tag: self.tag,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -17430,21 +17469,21 @@ impl officekit_markup_base::Write for ToggleButtonVisibleToggleButton {
     }
 }
 
-impl<X: NodeExtra> TopItemsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TopItemsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TopItemsWith<Y>
+    pub fn into_user_data<Y>(self) -> TopItemsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TopItemsWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                GroupControlsContentWith::into_extra,
+                GroupControlsContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

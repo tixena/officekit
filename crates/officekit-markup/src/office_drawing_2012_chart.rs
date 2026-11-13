@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::chart;
 use officekit_markup_core::drawing;
@@ -737,16 +737,17 @@ pub static TXFLD_GUID_SHAPE: officekit_markup_base::Shape = officekit_markup_bas
 /// schema type is `CT_Boolean`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AutoCatWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartAutoCat,
+pub struct AutoCatWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartAutoCat,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
-/// The `c15:autoCat` element of the tree a read gives: [`AutoCatWith`] holding nothing in `extra`.
+/// The `c15:autoCat` element of the tree a read gives: [`AutoCatWith`] holding nothing in
+/// `user_data`.
 pub type AutoCat = AutoCatWith<()>;
 
 impl Eq for AutoCatWith<()> {}
@@ -755,17 +756,17 @@ impl Eq for AutoCatWith<()> {}
 /// schema type is `CT_Boolean`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Bubble3DWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartBubble3D,
+pub struct Bubble3DWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartBubble3D,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `c15:bubble3D` element of the tree a read gives: [`Bubble3DWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Bubble3D = Bubble3DWith<()>;
 
 impl Eq for Bubble3DWith<()> {}
@@ -774,16 +775,16 @@ impl Eq for Bubble3DWith<()> {}
 /// schema type is `CT_AxDataSource`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CatWith<X: NodeExtra> {
+pub struct CatWith<X: UserData> {
     /// The child that is an item of `chart::AxisDataSourceContent`, which the schema requires.
     pub content: Box<chart::AxisDataSourceContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartCat,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartCat,
 }
 
-/// The `c15:cat` element of the tree a read gives: [`CatWith`] holding nothing in `extra`.
+/// The `c15:cat` element of the tree a read gives: [`CatWith`] holding nothing in `user_data`.
 pub type Cat = CatWith<()>;
 
 impl Eq for CatWith<()> {}
@@ -792,15 +793,13 @@ impl Eq for CatWith<()> {}
 /// version 3.5.1. Its schema type is `CT_CategoryFilterException`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CategoryFilterExceptionWith<X: NodeExtra> {
+pub struct CategoryFilterExceptionWith<X: UserData> {
     /// The child that is `Bubble3D`, when there is one.
     pub bubble3d: Option<Box<Bubble3DWith<X>>>,
     /// The child that is `DLbl`, when there is one.
     pub d_lbl: Option<Box<DLblWith<X>>>,
     /// The child that is `Explosion`, when there is one.
     pub explosion: Option<Box<ExplosionWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartCategoryFilterException,
     /// The child that is `InvertIfNegative`, when there is one.
     pub invert_if_negative: Option<Box<InvertIfNegativeWith<X>>>,
     /// The child that is `Marker`, when there is one.
@@ -811,10 +810,12 @@ pub struct CategoryFilterExceptionWith<X: NodeExtra> {
     pub sqref: Box<SqrefWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartCategoryFilterException,
 }
 
 /// The `c15:categoryFilterException` element of the tree a read gives:
-/// [`CategoryFilterExceptionWith`] holding nothing in `extra`.
+/// [`CategoryFilterExceptionWith`] holding nothing in `user_data`.
 pub type CategoryFilterException = CategoryFilterExceptionWith<()>;
 
 impl Eq for CategoryFilterExceptionWith<()> {}
@@ -823,17 +824,17 @@ impl Eq for CategoryFilterExceptionWith<()> {}
 /// version 3.5.1. Its schema type is `CT_CategoryFilterExceptions`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CategoryFilterExceptionsWith<X: NodeExtra> {
+pub struct CategoryFilterExceptionsWith<X: UserData> {
     /// The children that are `CategoryFilterException`, in order.
     pub category_filter_exception: Vec<CategoryFilterExceptionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartCategoryFilterExceptions,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartCategoryFilterExceptions,
 }
 
 /// The `c15:categoryFilterExceptions` element of the tree a read gives:
-/// [`CategoryFilterExceptionsWith`] holding nothing in `extra`.
+/// [`CategoryFilterExceptionsWith`] holding nothing in `user_data`.
 pub type CategoryFilterExceptions = CategoryFilterExceptionsWith<()>;
 
 impl Eq for CategoryFilterExceptionsWith<()> {}
@@ -1786,20 +1787,20 @@ pub trait Context: crate::Context {
 /// schema type is `CT_DLbl`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DLblWith<X: NodeExtra> {
+pub struct DLblWith<X: UserData> {
     /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibilityWith<X>>>,
     /// The children that are an item of `chart::DataLabelContent`, in order.
     pub content: Vec<chart::DataLabelContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartDLbl,
     /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::IndexWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartDLbl,
 }
 
-/// The `c15:dLbl` element of the tree a read gives: [`DLblWith`] holding nothing in `extra`.
+/// The `c15:dLbl` element of the tree a read gives: [`DLblWith`] holding nothing in `user_data`.
 pub type DLbl = DLblWith<()>;
 
 impl Eq for DLblWith<()> {}
@@ -1808,19 +1809,19 @@ impl Eq for DLblWith<()> {}
 /// 3.5.1. Its schema type is `CT_SeriesDataLabelsRange`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DatalabelsRangeWith<X: NodeExtra> {
+pub struct DatalabelsRangeWith<X: UserData> {
     /// The child that is `DlblRangeCache`, when there is one.
     pub dlbl_range_cache: Option<Box<DlblRangeCacheWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartDatalabelsRange,
     /// The child that is `F`, which the schema requires.
     pub f: Box<FWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartDatalabelsRange,
 }
 
 /// The `c15:datalabelsRange` element of the tree a read gives: [`DatalabelsRangeWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DatalabelsRange = DatalabelsRangeWith<()>;
 
 impl Eq for DatalabelsRangeWith<()> {}
@@ -1829,21 +1830,21 @@ impl Eq for DatalabelsRangeWith<()> {}
 /// Its schema type is `CT_DataLabelFieldTableEntry`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DlblFTEntryWith<X: NodeExtra> {
+pub struct DlblFTEntryWith<X: UserData> {
     /// The child that is `DlblFieldTableCache`, when there is one.
     pub dlbl_field_table_cache: Option<Box<DlblFieldTableCacheWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartDlblFTEntry,
     /// The child that is `F`, which the schema requires.
     pub f: Box<FWith<X>>,
     /// The child that is `TxfldGUID`, which the schema requires.
     pub txfld_guid: Box<TxfldGUIDWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartDlblFTEntry,
 }
 
 /// The `c15:dlblFTEntry` element of the tree a read gives: [`DlblFTEntryWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type DlblFTEntry = DlblFTEntryWith<()>;
 
 impl Eq for DlblFTEntryWith<()> {}
@@ -1852,17 +1853,17 @@ impl Eq for DlblFTEntryWith<()> {}
 /// 3.5.1. Its schema type is `CT_DataLabelFieldTable`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DlblFieldTableWith<X: NodeExtra> {
+pub struct DlblFieldTableWith<X: UserData> {
     /// The children that are `DlblFTEntry`, in order.
     pub dlbl_ft_entry: Vec<DlblFTEntryWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartDlblFieldTable,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartDlblFieldTable,
 }
 
 /// The `c15:dlblFieldTable` element of the tree a read gives: [`DlblFieldTableWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DlblFieldTable = DlblFieldTableWith<()>;
 
 impl Eq for DlblFieldTableWith<()> {}
@@ -1871,21 +1872,21 @@ impl Eq for DlblFieldTableWith<()> {}
 /// 3.5.1. Its schema type is `CT_StrData`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DlblFieldTableCacheWith<X: NodeExtra> {
+pub struct DlblFieldTableCacheWith<X: UserData> {
     /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibilityWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartDlblFieldTableCache,
     /// The child that is `chart::PointCount`, when there is one.
     pub point_count: Option<Box<chart::PointCountWith<X>>>,
     /// The children that are `chart::StringPoint`, in order.
     pub string_point: Vec<chart::StringPointWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartDlblFieldTableCache,
 }
 
 /// The `c15:dlblFieldTableCache` element of the tree a read gives: [`DlblFieldTableCacheWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type DlblFieldTableCache = DlblFieldTableCacheWith<()>;
 
 impl Eq for DlblFieldTableCacheWith<()> {}
@@ -1894,21 +1895,21 @@ impl Eq for DlblFieldTableCacheWith<()> {}
 /// 3.5.1. Its schema type is `CT_StrData`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DlblRangeCacheWith<X: NodeExtra> {
+pub struct DlblRangeCacheWith<X: UserData> {
     /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibilityWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartDlblRangeCache,
     /// The child that is `chart::PointCount`, when there is one.
     pub point_count: Option<Box<chart::PointCountWith<X>>>,
     /// The children that are `chart::StringPoint`, in order.
     pub string_point: Vec<chart::StringPointWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartDlblRangeCache,
 }
 
 /// The `c15:dlblRangeCache` element of the tree a read gives: [`DlblRangeCacheWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DlblRangeCache = DlblRangeCacheWith<()>;
 
 impl Eq for DlblRangeCacheWith<()> {}
@@ -1917,17 +1918,17 @@ impl Eq for DlblRangeCacheWith<()> {}
 /// schema type is `CT_UnsignedInt`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExplosionWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartExplosion,
+pub struct ExplosionWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartExplosion,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `c15:explosion` element of the tree a read gives: [`ExplosionWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Explosion = ExplosionWith<()>;
 
 impl Eq for ExplosionWith<()> {}
@@ -1936,16 +1937,16 @@ impl Eq for ExplosionWith<()> {}
 /// type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartF,
+pub struct FWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartF,
     /// The element's text.
     pub value: String,
 }
 
-/// The `c15:f` element of the tree a read gives: [`FWith`] holding nothing in `extra`.
+/// The `c15:f` element of the tree a read gives: [`FWith`] holding nothing in `user_data`.
 pub type F = FWith<()>;
 
 impl Eq for FWith<()> {}
@@ -1954,17 +1955,17 @@ impl Eq for FWith<()> {}
 /// 3.5.1. Its schema type is `CT_FilteredAreaSer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilteredAreaSeriesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartFilteredAreaSeries,
+pub struct FilteredAreaSeriesWith<X: UserData> {
     /// The child that is `SerAreaSer`, which the schema requires.
     pub ser_area_ser: Box<SerAreaSerWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartFilteredAreaSeries,
 }
 
 /// The `c15:filteredAreaSeries` element of the tree a read gives: [`FilteredAreaSeriesWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type FilteredAreaSeries = FilteredAreaSeriesWith<()>;
 
 impl Eq for FilteredAreaSeriesWith<()> {}
@@ -1973,17 +1974,17 @@ impl Eq for FilteredAreaSeriesWith<()> {}
 /// 3.5.1. Its schema type is `CT_FilteredBarSer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilteredBarSeriesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartFilteredBarSeries,
+pub struct FilteredBarSeriesWith<X: UserData> {
     /// The child that is `SerBarSer`, which the schema requires.
     pub ser_bar_ser: Box<SerBarSerWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartFilteredBarSeries,
 }
 
 /// The `c15:filteredBarSeries` element of the tree a read gives: [`FilteredBarSeriesWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type FilteredBarSeries = FilteredBarSeriesWith<()>;
 
 impl Eq for FilteredBarSeriesWith<()> {}
@@ -1992,17 +1993,17 @@ impl Eq for FilteredBarSeriesWith<()> {}
 /// 3.5.1. Its schema type is `CT_FilteredBubbleSer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilteredBubbleSeriesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartFilteredBubbleSeries,
+pub struct FilteredBubbleSeriesWith<X: UserData> {
     /// The child that is `SerBubbleSer`, which the schema requires.
     pub ser_bubble_ser: Box<SerBubbleSerWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartFilteredBubbleSeries,
 }
 
 /// The `c15:filteredBubbleSeries` element of the tree a read gives: [`FilteredBubbleSeriesWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type FilteredBubbleSeries = FilteredBubbleSeriesWith<()>;
 
 impl Eq for FilteredBubbleSeriesWith<()> {}
@@ -2011,17 +2012,17 @@ impl Eq for FilteredBubbleSeriesWith<()> {}
 /// version 3.5.1. Its schema type is `CT_FilteredCategoryTitle`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilteredCategoryTitleWith<X: NodeExtra> {
+pub struct FilteredCategoryTitleWith<X: UserData> {
     /// The child that is `Cat`, which the schema requires.
     pub cat: Box<CatWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartFilteredCategoryTitle,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartFilteredCategoryTitle,
 }
 
 /// The `c15:filteredCategoryTitle` element of the tree a read gives: [`FilteredCategoryTitleWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type FilteredCategoryTitle = FilteredCategoryTitleWith<()>;
 
 impl Eq for FilteredCategoryTitleWith<()> {}
@@ -2030,17 +2031,17 @@ impl Eq for FilteredCategoryTitleWith<()> {}
 /// 3.5.1. Its schema type is `CT_FilteredLineSer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilteredLineSeriesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartFilteredLineSeries,
+pub struct FilteredLineSeriesWith<X: UserData> {
     /// The child that is `SerLineSer`, which the schema requires.
     pub ser_line_ser: Box<SerLineSerWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartFilteredLineSeries,
 }
 
 /// The `c15:filteredLineSeries` element of the tree a read gives: [`FilteredLineSeriesWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type FilteredLineSeries = FilteredLineSeriesWith<()>;
 
 impl Eq for FilteredLineSeriesWith<()> {}
@@ -2049,17 +2050,17 @@ impl Eq for FilteredLineSeriesWith<()> {}
 /// 3.5.1. Its schema type is `CT_FilteredPieSer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilteredPieSeriesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartFilteredPieSeries,
+pub struct FilteredPieSeriesWith<X: UserData> {
     /// The child that is `SerPieSer`, which the schema requires.
     pub ser_pie_ser: Box<SerPieSerWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartFilteredPieSeries,
 }
 
 /// The `c15:filteredPieSeries` element of the tree a read gives: [`FilteredPieSeriesWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type FilteredPieSeries = FilteredPieSeriesWith<()>;
 
 impl Eq for FilteredPieSeriesWith<()> {}
@@ -2068,17 +2069,17 @@ impl Eq for FilteredPieSeriesWith<()> {}
 /// 3.5.1. Its schema type is `CT_FilteredRadarSer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilteredRadarSeriesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartFilteredRadarSeries,
+pub struct FilteredRadarSeriesWith<X: UserData> {
     /// The child that is `SerRadarSer`, which the schema requires.
     pub ser_radar_ser: Box<SerRadarSerWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartFilteredRadarSeries,
 }
 
 /// The `c15:filteredRadarSeries` element of the tree a read gives: [`FilteredRadarSeriesWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type FilteredRadarSeries = FilteredRadarSeriesWith<()>;
 
 impl Eq for FilteredRadarSeriesWith<()> {}
@@ -2087,17 +2088,17 @@ impl Eq for FilteredRadarSeriesWith<()> {}
 /// version 3.5.1. Its schema type is `CT_FilteredScatterSer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilteredScatterSeriesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartFilteredScatterSeries,
+pub struct FilteredScatterSeriesWith<X: UserData> {
     /// The child that is `SerScatterSer`, which the schema requires.
     pub ser_scatter_ser: Box<SerScatterSerWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartFilteredScatterSeries,
 }
 
 /// The `c15:filteredScatterSeries` element of the tree a read gives: [`FilteredScatterSeriesWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type FilteredScatterSeries = FilteredScatterSeriesWith<()>;
 
 impl Eq for FilteredScatterSeriesWith<()> {}
@@ -2106,17 +2107,17 @@ impl Eq for FilteredScatterSeriesWith<()> {}
 /// 3.5.1. Its schema type is `CT_FilteredSeriesTitle`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilteredSeriesTitleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartFilteredSeriesTitle,
+pub struct FilteredSeriesTitleWith<X: UserData> {
     /// The child that is `Tx`, which the schema requires.
     pub tx: Box<TxWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartFilteredSeriesTitle,
 }
 
 /// The `c15:filteredSeriesTitle` element of the tree a read gives: [`FilteredSeriesTitleWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type FilteredSeriesTitle = FilteredSeriesTitleWith<()>;
 
 impl Eq for FilteredSeriesTitleWith<()> {}
@@ -2125,17 +2126,17 @@ impl Eq for FilteredSeriesTitleWith<()> {}
 /// version 3.5.1. Its schema type is `CT_FilteredSurfaceSer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FilteredSurfaceSeriesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartFilteredSurfaceSeries,
+pub struct FilteredSurfaceSeriesWith<X: UserData> {
     /// The child that is `SerSurfaceSer`, which the schema requires.
     pub ser_surface_ser: Box<SerSurfaceSerWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartFilteredSurfaceSeries,
 }
 
 /// The `c15:filteredSurfaceSeries` element of the tree a read gives: [`FilteredSurfaceSeriesWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type FilteredSurfaceSeries = FilteredSurfaceSeriesWith<()>;
 
 impl Eq for FilteredSurfaceSeriesWith<()> {}
@@ -2144,17 +2145,17 @@ impl Eq for FilteredSurfaceSeriesWith<()> {}
 /// Its schema type is `CT_FormulaRef`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FormulaRefWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartFormulaRef,
+pub struct FormulaRefWith<X: UserData> {
     /// The child that is `Sqref`, which the schema requires.
     pub sqref: Box<SqrefWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartFormulaRef,
 }
 
 /// The `c15:formulaRef` element of the tree a read gives: [`FormulaRefWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type FormulaRef = FormulaRefWith<()>;
 
 impl Eq for FormulaRefWith<()> {}
@@ -2163,16 +2164,17 @@ impl Eq for FormulaRefWith<()> {}
 /// schema type is `CT_FullRef`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FullRefWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartFullRef,
+pub struct FullRefWith<X: UserData> {
     /// The child that is `Sqref`, which the schema requires.
     pub sqref: Box<SqrefWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartFullRef,
 }
 
-/// The `c15:fullRef` element of the tree a read gives: [`FullRefWith`] holding nothing in `extra`.
+/// The `c15:fullRef` element of the tree a read gives: [`FullRefWith`] holding nothing in
+/// `user_data`.
 pub type FullRef = FullRefWith<()>;
 
 impl Eq for FullRefWith<()> {}
@@ -2181,17 +2183,17 @@ impl Eq for FullRefWith<()> {}
 /// 3.5.1. Its schema type is `CT_Boolean`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InvertIfNegativeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartInvertIfNegative,
+pub struct InvertIfNegativeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartInvertIfNegative,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `c15:invertIfNegative` element of the tree a read gives: [`InvertIfNegativeWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type InvertIfNegative = InvertIfNegativeWith<()>;
 
 impl Eq for InvertIfNegativeWith<()> {}
@@ -2200,18 +2202,19 @@ impl Eq for InvertIfNegativeWith<()> {}
 /// schema type is `CT_Layout`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LayoutWith<X: NodeExtra> {
+pub struct LayoutWith<X: UserData> {
     /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibilityWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartLayout,
     /// The child that is `chart::ManualLayout`, when there is one.
     pub manual: Option<Box<chart::ManualLayoutWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartLayout,
 }
 
-/// The `c15:layout` element of the tree a read gives: [`LayoutWith`] holding nothing in `extra`.
+/// The `c15:layout` element of the tree a read gives: [`LayoutWith`] holding nothing in
+/// `user_data`.
 pub type Layout = LayoutWith<()>;
 
 impl Eq for LayoutWith<()> {}
@@ -2220,17 +2223,17 @@ impl Eq for LayoutWith<()> {}
 /// Its schema type is `CT_ChartLines`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LeaderLinesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartLeaderLines,
+pub struct LeaderLinesWith<X: UserData> {
     /// The child that is `chart::ShapeProperties`, when there is one.
     pub shape_properties: Option<Box<chart::ShapePropertiesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartLeaderLines,
 }
 
 /// The `c15:leaderLines` element of the tree a read gives: [`LeaderLinesWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type LeaderLines = LeaderLinesWith<()>;
 
 impl Eq for LeaderLinesWith<()> {}
@@ -2239,17 +2242,17 @@ impl Eq for LeaderLinesWith<()> {}
 /// schema type is `CT_LevelRef`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LevelRefWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartLevelRef,
+pub struct LevelRefWith<X: UserData> {
     /// The child that is `Sqref`, which the schema requires.
     pub sqref: Box<SqrefWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartLevelRef,
 }
 
 /// The `c15:levelRef` element of the tree a read gives: [`LevelRefWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type LevelRef = LevelRefWith<()>;
 
 impl Eq for LevelRefWith<()> {}
@@ -2258,11 +2261,9 @@ impl Eq for LevelRefWith<()> {}
 /// schema type is `CT_Marker`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MarkerWith<X: NodeExtra> {
+pub struct MarkerWith<X: UserData> {
     /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibilityWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartMarker,
     /// The child that is `chart::ShapeProperties`, when there is one.
     pub shape_properties: Option<Box<chart::ShapePropertiesWith<X>>>,
     /// The child that is `chart::Size`, when there is one.
@@ -2271,9 +2272,12 @@ pub struct MarkerWith<X: NodeExtra> {
     pub symbol: Option<Box<chart::SymbolWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartMarker,
 }
 
-/// The `c15:marker` element of the tree a read gives: [`MarkerWith`] holding nothing in `extra`.
+/// The `c15:marker` element of the tree a read gives: [`MarkerWith`] holding nothing in
+/// `user_data`.
 pub type Marker = MarkerWith<()>;
 
 impl Eq for MarkerWith<()> {}
@@ -2282,18 +2286,19 @@ impl Eq for MarkerWith<()> {}
 /// schema type is `CT_NumFmt`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NumFmtWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartNumFmt,
+pub struct NumFmtWith<X: UserData> {
     /// The attribute `formatCode`, when the element has it.
     pub format_code: Option<String>,
     /// The attribute `sourceLinked`, when the element has it.
     pub source_linked: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartNumFmt,
 }
 
-/// The `c15:numFmt` element of the tree a read gives: [`NumFmtWith`] holding nothing in `extra`.
+/// The `c15:numFmt` element of the tree a read gives: [`NumFmtWith`] holding nothing in
+/// `user_data`.
 pub type NumFmt = NumFmtWith<()>;
 
 impl Eq for NumFmtWith<()> {}
@@ -2302,21 +2307,21 @@ impl Eq for NumFmtWith<()> {}
 /// Its schema type is `CT_PivotSource`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotSourceWith<X: NodeExtra> {
+pub struct PivotSourceWith<X: UserData> {
     /// The children that are `chart::ChartExtensibility`, in order.
     pub chart_extensibility: Vec<chart::ChartExtensibilityWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartPivotSource,
     /// The child that is `chart::FormatID`, which the schema requires.
     pub format_id: Box<chart::FormatIDWith<X>>,
     /// The child that is `chart::PivotName`, which the schema requires.
     pub pivot_name: Box<chart::PivotNameWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartPivotSource,
 }
 
 /// The `c15:pivotSource` element of the tree a read gives: [`PivotSourceWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PivotSource = PivotSourceWith<()>;
 
 impl Eq for PivotSourceWith<()> {}
@@ -2325,7 +2330,7 @@ impl Eq for PivotSourceWith<()> {}
 /// schema type is `CT_AreaSer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SerAreaSerWith<X: NodeExtra> {
+pub struct SerAreaSerWith<X: UserData> {
     /// The child that is `chart::CategoryAxisDataCat`, when there is one.
     pub category_axis_data_cat: Option<Box<chart::CategoryAxisDataCatWith<X>>>,
     /// The child that is `chart::ChartExtensibility`, when there is one.
@@ -2336,8 +2341,6 @@ pub struct SerAreaSerWith<X: NodeExtra> {
     pub data_point: Vec<chart::DataPointWith<X>>,
     /// The children that are `chart::ErrorBars`, in order.
     pub error_bars: Vec<chart::ErrorBarsWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartSerAreaSer,
     /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::IndexWith<X>>,
     /// The child that is `chart::Order`, which the schema requires.
@@ -2352,11 +2355,14 @@ pub struct SerAreaSerWith<X: NodeExtra> {
     pub trendlines: Vec<chart::TrendlinesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartSerAreaSer,
     /// The child that is `chart::Values`, when there is one.
     pub values: Option<Box<chart::ValuesWith<X>>>,
 }
 
-/// The `c15:ser` element of the tree a read gives: [`SerAreaSerWith`] holding nothing in `extra`.
+/// The `c15:ser` element of the tree a read gives: [`SerAreaSerWith`] holding nothing in
+/// `user_data`.
 pub type SerAreaSer = SerAreaSerWith<()>;
 
 impl Eq for SerAreaSerWith<()> {}
@@ -2365,7 +2371,7 @@ impl Eq for SerAreaSerWith<()> {}
 /// schema type is `CT_BarSer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SerBarSerWith<X: NodeExtra> {
+pub struct SerBarSerWith<X: UserData> {
     /// The child that is `chart::CategoryAxisDataCat`, when there is one.
     pub category_axis_data_cat: Option<Box<chart::CategoryAxisDataCatWith<X>>>,
     /// The child that is `chart::ChartExtensibility`, when there is one.
@@ -2376,8 +2382,6 @@ pub struct SerBarSerWith<X: NodeExtra> {
     pub data_point: Vec<chart::DataPointWith<X>>,
     /// The child that is `chart::ErrorBars`, when there is one.
     pub error_bars: Option<Box<chart::ErrorBarsWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartSerBarSer,
     /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::IndexWith<X>>,
     /// The child that is `chart::InvertIfNegative`, when there is one.
@@ -2396,11 +2400,14 @@ pub struct SerBarSerWith<X: NodeExtra> {
     pub trendlines: Vec<chart::TrendlinesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartSerBarSer,
     /// The child that is `chart::Values`, when there is one.
     pub values: Option<Box<chart::ValuesWith<X>>>,
 }
 
-/// The `c15:ser` element of the tree a read gives: [`SerBarSerWith`] holding nothing in `extra`.
+/// The `c15:ser` element of the tree a read gives: [`SerBarSerWith`] holding nothing in
+/// `user_data`.
 pub type SerBarSer = SerBarSerWith<()>;
 
 impl Eq for SerBarSerWith<()> {}
@@ -2409,7 +2416,7 @@ impl Eq for SerBarSerWith<()> {}
 /// schema type is `CT_BubbleSer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SerBubbleSerWith<X: NodeExtra> {
+pub struct SerBubbleSerWith<X: UserData> {
     /// The child that is `chart::Bubble3D`, when there is one.
     pub bubble3d: Option<Box<chart::Bubble3DWith<X>>>,
     /// The child that is `chart::BubbleSize`, when there is one.
@@ -2422,8 +2429,6 @@ pub struct SerBubbleSerWith<X: NodeExtra> {
     pub data_point: Vec<chart::DataPointWith<X>>,
     /// The children that are `chart::ErrorBars`, in order.
     pub error_bars: Vec<chart::ErrorBarsWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartSerBubbleSer,
     /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::IndexWith<X>>,
     /// The child that is `chart::InvertIfNegative`, when there is one.
@@ -2438,13 +2443,16 @@ pub struct SerBubbleSerWith<X: NodeExtra> {
     pub trendlines: Vec<chart::TrendlinesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartSerBubbleSer,
     /// The child that is `chart::XValues`, when there is one.
     pub x_values: Option<Box<chart::XValuesWith<X>>>,
     /// The child that is `chart::YValues`, when there is one.
     pub y_values: Option<Box<chart::YValuesWith<X>>>,
 }
 
-/// The `c15:ser` element of the tree a read gives: [`SerBubbleSerWith`] holding nothing in `extra`.
+/// The `c15:ser` element of the tree a read gives: [`SerBubbleSerWith`] holding nothing in
+/// `user_data`.
 pub type SerBubbleSer = SerBubbleSerWith<()>;
 
 impl Eq for SerBubbleSerWith<()> {}
@@ -2453,7 +2461,7 @@ impl Eq for SerBubbleSerWith<()> {}
 /// schema type is `CT_LineSer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SerLineSerWith<X: NodeExtra> {
+pub struct SerLineSerWith<X: UserData> {
     /// The child that is `chart::CategoryAxisDataCat`, when there is one.
     pub category_axis_data_cat: Option<Box<chart::CategoryAxisDataCatWith<X>>>,
     /// The child that is `chart::ChartExtensibility`, when there is one.
@@ -2464,8 +2472,6 @@ pub struct SerLineSerWith<X: NodeExtra> {
     pub data_point: Vec<chart::DataPointWith<X>>,
     /// The child that is `chart::ErrorBars`, when there is one.
     pub error_bars: Option<Box<chart::ErrorBarsWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartSerLineSer,
     /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::IndexWith<X>>,
     /// The child that is `chart::Marker`, when there is one.
@@ -2482,11 +2488,14 @@ pub struct SerLineSerWith<X: NodeExtra> {
     pub trendlines: Vec<chart::TrendlinesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartSerLineSer,
     /// The child that is `chart::Values`, when there is one.
     pub values: Option<Box<chart::ValuesWith<X>>>,
 }
 
-/// The `c15:ser` element of the tree a read gives: [`SerLineSerWith`] holding nothing in `extra`.
+/// The `c15:ser` element of the tree a read gives: [`SerLineSerWith`] holding nothing in
+/// `user_data`.
 pub type SerLineSer = SerLineSerWith<()>;
 
 impl Eq for SerLineSerWith<()> {}
@@ -2495,7 +2504,7 @@ impl Eq for SerLineSerWith<()> {}
 /// schema type is `CT_PieSer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SerPieSerWith<X: NodeExtra> {
+pub struct SerPieSerWith<X: UserData> {
     /// The child that is `chart::CategoryAxisDataCat`, when there is one.
     pub category_axis_data_cat: Option<Box<chart::CategoryAxisDataCatWith<X>>>,
     /// The child that is `chart::ChartExtensibility`, when there is one.
@@ -2506,8 +2515,6 @@ pub struct SerPieSerWith<X: NodeExtra> {
     pub data_point: Vec<chart::DataPointWith<X>>,
     /// The child that is `chart::Explosion`, when there is one.
     pub explosion: Option<Box<chart::ExplosionWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartSerPieSer,
     /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::IndexWith<X>>,
     /// The child that is `chart::Order`, which the schema requires.
@@ -2518,11 +2525,14 @@ pub struct SerPieSerWith<X: NodeExtra> {
     pub shape_properties: Option<Box<chart::ShapePropertiesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartSerPieSer,
     /// The child that is `chart::Values`, when there is one.
     pub values: Option<Box<chart::ValuesWith<X>>>,
 }
 
-/// The `c15:ser` element of the tree a read gives: [`SerPieSerWith`] holding nothing in `extra`.
+/// The `c15:ser` element of the tree a read gives: [`SerPieSerWith`] holding nothing in
+/// `user_data`.
 pub type SerPieSer = SerPieSerWith<()>;
 
 impl Eq for SerPieSerWith<()> {}
@@ -2531,7 +2541,7 @@ impl Eq for SerPieSerWith<()> {}
 /// schema type is `CT_RadarSer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SerRadarSerWith<X: NodeExtra> {
+pub struct SerRadarSerWith<X: UserData> {
     /// The child that is `chart::CategoryAxisDataCat`, when there is one.
     pub category_axis_data_cat: Option<Box<chart::CategoryAxisDataCatWith<X>>>,
     /// The child that is `chart::ChartExtensibility`, when there is one.
@@ -2540,8 +2550,6 @@ pub struct SerRadarSerWith<X: NodeExtra> {
     pub data_labels: Option<Box<chart::DataLabelsWith<X>>>,
     /// The children that are `chart::DataPoint`, in order.
     pub data_point: Vec<chart::DataPointWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartSerRadarSer,
     /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::IndexWith<X>>,
     /// The child that is `chart::Marker`, when there is one.
@@ -2554,11 +2562,14 @@ pub struct SerRadarSerWith<X: NodeExtra> {
     pub shape_properties: Option<Box<chart::ShapePropertiesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartSerRadarSer,
     /// The child that is `chart::Values`, when there is one.
     pub values: Option<Box<chart::ValuesWith<X>>>,
 }
 
-/// The `c15:ser` element of the tree a read gives: [`SerRadarSerWith`] holding nothing in `extra`.
+/// The `c15:ser` element of the tree a read gives: [`SerRadarSerWith`] holding nothing in
+/// `user_data`.
 pub type SerRadarSer = SerRadarSerWith<()>;
 
 impl Eq for SerRadarSerWith<()> {}
@@ -2567,7 +2578,7 @@ impl Eq for SerRadarSerWith<()> {}
 /// schema type is `CT_ScatterSer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SerScatterSerWith<X: NodeExtra> {
+pub struct SerScatterSerWith<X: UserData> {
     /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibilityWith<X>>>,
     /// The child that is `chart::DataLabels`, when there is one.
@@ -2576,8 +2587,6 @@ pub struct SerScatterSerWith<X: NodeExtra> {
     pub data_point: Vec<chart::DataPointWith<X>>,
     /// The children that are `chart::ErrorBars`, in order.
     pub error_bars: Vec<chart::ErrorBarsWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartSerScatterSer,
     /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::IndexWith<X>>,
     /// The child that is `chart::Marker`, when there is one.
@@ -2594,6 +2603,8 @@ pub struct SerScatterSerWith<X: NodeExtra> {
     pub trendlines: Vec<chart::TrendlinesWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartSerScatterSer,
     /// The child that is `chart::XValues`, when there is one.
     pub x_values: Option<Box<chart::XValuesWith<X>>>,
     /// The child that is `chart::YValues`, when there is one.
@@ -2601,7 +2612,7 @@ pub struct SerScatterSerWith<X: NodeExtra> {
 }
 
 /// The `c15:ser` element of the tree a read gives: [`SerScatterSerWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SerScatterSer = SerScatterSerWith<()>;
 
 impl Eq for SerScatterSerWith<()> {}
@@ -2610,13 +2621,11 @@ impl Eq for SerScatterSerWith<()> {}
 /// schema type is `CT_SurfaceSer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SerSurfaceSerWith<X: NodeExtra> {
+pub struct SerSurfaceSerWith<X: UserData> {
     /// The child that is `chart::CategoryAxisDataCat`, when there is one.
     pub category_axis_data_cat: Option<Box<chart::CategoryAxisDataCatWith<X>>>,
     /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibilityWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartSerSurfaceSer,
     /// The child that is `chart::Index`, which the schema requires.
     pub index: Box<chart::IndexWith<X>>,
     /// The child that is `chart::Order`, which the schema requires.
@@ -2627,12 +2636,14 @@ pub struct SerSurfaceSerWith<X: NodeExtra> {
     pub shape_properties: Option<Box<chart::ShapePropertiesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartSerSurfaceSer,
     /// The child that is `chart::Values`, when there is one.
     pub values: Option<Box<chart::ValuesWith<X>>>,
 }
 
 /// The `c15:ser` element of the tree a read gives: [`SerSurfaceSerWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SerSurfaceSer = SerSurfaceSerWith<()>;
 
 impl Eq for SerSurfaceSerWith<()> {}
@@ -2641,17 +2652,17 @@ impl Eq for SerSurfaceSerWith<()> {}
 /// 3.5.1. Its schema type is `CT_Boolean`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShowDataLabelsRangeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartShowDataLabelsRange,
+pub struct ShowDataLabelsRangeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartShowDataLabelsRange,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `c15:showDataLabelsRange` element of the tree a read gives: [`ShowDataLabelsRangeWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ShowDataLabelsRange = ShowDataLabelsRangeWith<()>;
 
 impl Eq for ShowDataLabelsRangeWith<()> {}
@@ -2660,17 +2671,17 @@ impl Eq for ShowDataLabelsRangeWith<()> {}
 /// 3.5.1. Its schema type is `CT_Boolean`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShowLeaderLinesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartShowLeaderLines,
+pub struct ShowLeaderLinesWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartShowLeaderLines,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `c15:showLeaderLines` element of the tree a read gives: [`ShowLeaderLinesWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ShowLeaderLines = ShowLeaderLinesWith<()>;
 
 impl Eq for ShowLeaderLinesWith<()> {}
@@ -2679,7 +2690,7 @@ impl Eq for ShowLeaderLinesWith<()> {}
 /// schema type is `CT_ShapeProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpPrWith<X: NodeExtra> {
+pub struct SpPrWith<X: UserData> {
     /// The child that is `drawing::Apply3DShapeProperties`, when there is one.
     pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapePropertiesWith<X>>>,
     /// The attribute `bwMode`, when the element has it.
@@ -2688,8 +2699,6 @@ pub struct SpPrWith<X: NodeExtra> {
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartSpPr,
     /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContentWith<X>>>,
     /// The child that is an item of `drawing::GeometryContent`, when there is one.
@@ -2700,11 +2709,13 @@ pub struct SpPrWith<X: NodeExtra> {
     pub scene3d: Option<Box<drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartSpPr,
     /// The child that is `drawing::XfrmTransform2D`, when there is one.
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2DWith<X>>>,
 }
 
-/// The `c15:spPr` element of the tree a read gives: [`SpPrWith`] holding nothing in `extra`.
+/// The `c15:spPr` element of the tree a read gives: [`SpPrWith`] holding nothing in `user_data`.
 pub type SpPr = SpPrWith<()>;
 
 impl Eq for SpPrWith<()> {}
@@ -2713,16 +2724,16 @@ impl Eq for SpPrWith<()> {}
 /// schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SqrefWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartSqref,
+pub struct SqrefWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartSqref,
     /// The element's text.
     pub value: String,
 }
 
-/// The `c15:sqref` element of the tree a read gives: [`SqrefWith`] holding nothing in `extra`.
+/// The `c15:sqref` element of the tree a read gives: [`SqrefWith`] holding nothing in `user_data`.
 pub type Sqref = SqrefWith<()>;
 
 impl Eq for SqrefWith<()> {}
@@ -2731,16 +2742,16 @@ impl Eq for SqrefWith<()> {}
 /// type is `CT_Tx`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TxWith<X: NodeExtra> {
+pub struct TxWith<X: UserData> {
     /// The child that is an item of `chart::ChartTextContent`, which the schema requires.
     pub content: Box<chart::ChartTextContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartTx,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartTx,
 }
 
-/// The `c15:tx` element of the tree a read gives: [`TxWith`] holding nothing in `extra`.
+/// The `c15:tx` element of the tree a read gives: [`TxWith`] holding nothing in `user_data`.
 pub type Tx = TxWith<()>;
 
 impl Eq for TxWith<()> {}
@@ -2749,17 +2760,17 @@ impl Eq for TxWith<()> {}
 /// schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TxfldGUIDWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartTxfldGUID,
+pub struct TxfldGUIDWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartTxfldGUID,
     /// The element's text.
     pub value: String,
 }
 
 /// The `c15:txfldGUID` element of the tree a read gives: [`TxfldGUIDWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type TxfldGUID = TxfldGUIDWith<()>;
 
 impl Eq for TxfldGUIDWith<()> {}
@@ -3079,32 +3090,32 @@ pub trait Visitor: crate::Visitor {
 /// schema type is `CT_Boolean`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct XForSaveWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2012ChartXForSave,
+pub struct XForSaveWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2012ChartXForSave,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `c15:xForSave` element of the tree a read gives: [`XForSaveWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type XForSave = XForSaveWith<()>;
 
 impl Eq for XForSaveWith<()> {}
 
-impl<X: NodeExtra> AutoCatWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AutoCatWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AutoCatWith<Y>
+    pub fn into_user_data<Y>(self) -> AutoCatWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AutoCatWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -3132,17 +3143,17 @@ impl officekit_markup_base::Write for AutoCat {
     }
 }
 
-impl<X: NodeExtra> Bubble3DWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> Bubble3DWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> Bubble3DWith<Y>
+    pub fn into_user_data<Y>(self) -> Bubble3DWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         Bubble3DWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -3170,21 +3181,21 @@ impl officekit_markup_base::Write for Bubble3D {
     }
 }
 
-impl<X: NodeExtra> CatWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CatWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CatWith<Y>
+    pub fn into_user_data<Y>(self) -> CatWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CatWith {
-            content: officekit_markup_base::into_extra_required(
+            content: officekit_markup_base::into_user_data_required(
                 *self.content,
-                chart::AxisDataSourceContentWith::into_extra,
+                chart::AxisDataSourceContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3208,42 +3219,45 @@ impl officekit_markup_base::Write for Cat {
     }
 }
 
-impl<X: NodeExtra> CategoryFilterExceptionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CategoryFilterExceptionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> CategoryFilterExceptionWith<Y>
+    pub fn into_user_data<Y>(mut self) -> CategoryFilterExceptionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CategoryFilterExceptionWith {
-            bubble3d: officekit_markup_base::into_extra_optional(
+            bubble3d: officekit_markup_base::into_user_data_optional(
                 &mut self.bubble3d,
-                Bubble3DWith::into_extra,
+                Bubble3DWith::into_user_data,
             ),
-            d_lbl: officekit_markup_base::into_extra_optional(
+            d_lbl: officekit_markup_base::into_user_data_optional(
                 &mut self.d_lbl,
-                DLblWith::into_extra,
+                DLblWith::into_user_data,
             ),
-            explosion: officekit_markup_base::into_extra_optional(
+            explosion: officekit_markup_base::into_user_data_optional(
                 &mut self.explosion,
-                ExplosionWith::into_extra,
+                ExplosionWith::into_user_data,
             ),
-            extra: Default::default(),
-            invert_if_negative: officekit_markup_base::into_extra_optional(
+            invert_if_negative: officekit_markup_base::into_user_data_optional(
                 &mut self.invert_if_negative,
-                InvertIfNegativeWith::into_extra,
+                InvertIfNegativeWith::into_user_data,
             ),
-            marker: officekit_markup_base::into_extra_optional(
+            marker: officekit_markup_base::into_user_data_optional(
                 &mut self.marker,
-                MarkerWith::into_extra,
+                MarkerWith::into_user_data,
             ),
-            sp_pr: officekit_markup_base::into_extra_optional(
+            sp_pr: officekit_markup_base::into_user_data_optional(
                 &mut self.sp_pr,
-                SpPrWith::into_extra,
+                SpPrWith::into_user_data,
             ),
-            sqref: officekit_markup_base::into_extra_required(*self.sqref, SqrefWith::into_extra),
+            sqref: officekit_markup_base::into_user_data_required(
+                *self.sqref,
+                SqrefWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3267,21 +3281,21 @@ impl officekit_markup_base::Write for CategoryFilterException {
     }
 }
 
-impl<X: NodeExtra> CategoryFilterExceptionsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CategoryFilterExceptionsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CategoryFilterExceptionsWith<Y>
+    pub fn into_user_data<Y>(self) -> CategoryFilterExceptionsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CategoryFilterExceptionsWith {
-            category_filter_exception: officekit_markup_base::into_extra_list(
+            category_filter_exception: officekit_markup_base::into_user_data_list(
                 self.category_filter_exception,
-                CategoryFilterExceptionWith::into_extra,
+                CategoryFilterExceptionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3305,29 +3319,29 @@ impl officekit_markup_base::Write for CategoryFilterExceptions {
     }
 }
 
-impl<X: NodeExtra> DLblWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DLblWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> DLblWith<Y>
+    pub fn into_user_data<Y>(mut self) -> DLblWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DLblWith {
-            chart_extensibility: officekit_markup_base::into_extra_optional(
+            chart_extensibility: officekit_markup_base::into_user_data_optional(
                 &mut self.chart_extensibility,
-                chart::ChartExtensibilityWith::into_extra,
+                chart::ChartExtensibilityWith::into_user_data,
             ),
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                chart::DataLabelContentWith::into_extra,
+                chart::DataLabelContentWith::into_user_data,
             ),
-            extra: Default::default(),
-            index: officekit_markup_base::into_extra_required(
+            index: officekit_markup_base::into_user_data_required(
                 *self.index,
-                chart::IndexWith::into_extra,
+                chart::IndexWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3351,22 +3365,22 @@ impl officekit_markup_base::Write for DLbl {
     }
 }
 
-impl<X: NodeExtra> DatalabelsRangeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DatalabelsRangeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> DatalabelsRangeWith<Y>
+    pub fn into_user_data<Y>(mut self) -> DatalabelsRangeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DatalabelsRangeWith {
-            dlbl_range_cache: officekit_markup_base::into_extra_optional(
+            dlbl_range_cache: officekit_markup_base::into_user_data_optional(
                 &mut self.dlbl_range_cache,
-                DlblRangeCacheWith::into_extra,
+                DlblRangeCacheWith::into_user_data,
             ),
-            extra: Default::default(),
-            f: officekit_markup_base::into_extra_required(*self.f, FWith::into_extra),
+            f: officekit_markup_base::into_user_data_required(*self.f, FWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3390,26 +3404,26 @@ impl officekit_markup_base::Write for DatalabelsRange {
     }
 }
 
-impl<X: NodeExtra> DlblFTEntryWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DlblFTEntryWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> DlblFTEntryWith<Y>
+    pub fn into_user_data<Y>(mut self) -> DlblFTEntryWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DlblFTEntryWith {
-            dlbl_field_table_cache: officekit_markup_base::into_extra_optional(
+            dlbl_field_table_cache: officekit_markup_base::into_user_data_optional(
                 &mut self.dlbl_field_table_cache,
-                DlblFieldTableCacheWith::into_extra,
+                DlblFieldTableCacheWith::into_user_data,
             ),
-            extra: Default::default(),
-            f: officekit_markup_base::into_extra_required(*self.f, FWith::into_extra),
-            txfld_guid: officekit_markup_base::into_extra_required(
+            f: officekit_markup_base::into_user_data_required(*self.f, FWith::into_user_data),
+            txfld_guid: officekit_markup_base::into_user_data_required(
                 *self.txfld_guid,
-                TxfldGUIDWith::into_extra,
+                TxfldGUIDWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3433,21 +3447,21 @@ impl officekit_markup_base::Write for DlblFTEntry {
     }
 }
 
-impl<X: NodeExtra> DlblFieldTableWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DlblFieldTableWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DlblFieldTableWith<Y>
+    pub fn into_user_data<Y>(self) -> DlblFieldTableWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DlblFieldTableWith {
-            dlbl_ft_entry: officekit_markup_base::into_extra_list(
+            dlbl_ft_entry: officekit_markup_base::into_user_data_list(
                 self.dlbl_ft_entry,
-                DlblFTEntryWith::into_extra,
+                DlblFTEntryWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3471,29 +3485,29 @@ impl officekit_markup_base::Write for DlblFieldTable {
     }
 }
 
-impl<X: NodeExtra> DlblFieldTableCacheWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DlblFieldTableCacheWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> DlblFieldTableCacheWith<Y>
+    pub fn into_user_data<Y>(mut self) -> DlblFieldTableCacheWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DlblFieldTableCacheWith {
-            chart_extensibility: officekit_markup_base::into_extra_optional(
+            chart_extensibility: officekit_markup_base::into_user_data_optional(
                 &mut self.chart_extensibility,
-                chart::ChartExtensibilityWith::into_extra,
+                chart::ChartExtensibilityWith::into_user_data,
             ),
-            extra: Default::default(),
-            point_count: officekit_markup_base::into_extra_optional(
+            point_count: officekit_markup_base::into_user_data_optional(
                 &mut self.point_count,
-                chart::PointCountWith::into_extra,
+                chart::PointCountWith::into_user_data,
             ),
-            string_point: officekit_markup_base::into_extra_list(
+            string_point: officekit_markup_base::into_user_data_list(
                 self.string_point,
-                chart::StringPointWith::into_extra,
+                chart::StringPointWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3517,29 +3531,29 @@ impl officekit_markup_base::Write for DlblFieldTableCache {
     }
 }
 
-impl<X: NodeExtra> DlblRangeCacheWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DlblRangeCacheWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> DlblRangeCacheWith<Y>
+    pub fn into_user_data<Y>(mut self) -> DlblRangeCacheWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DlblRangeCacheWith {
-            chart_extensibility: officekit_markup_base::into_extra_optional(
+            chart_extensibility: officekit_markup_base::into_user_data_optional(
                 &mut self.chart_extensibility,
-                chart::ChartExtensibilityWith::into_extra,
+                chart::ChartExtensibilityWith::into_user_data,
             ),
-            extra: Default::default(),
-            point_count: officekit_markup_base::into_extra_optional(
+            point_count: officekit_markup_base::into_user_data_optional(
                 &mut self.point_count,
-                chart::PointCountWith::into_extra,
+                chart::PointCountWith::into_user_data,
             ),
-            string_point: officekit_markup_base::into_extra_list(
+            string_point: officekit_markup_base::into_user_data_list(
                 self.string_point,
-                chart::StringPointWith::into_extra,
+                chart::StringPointWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3563,17 +3577,17 @@ impl officekit_markup_base::Write for DlblRangeCache {
     }
 }
 
-impl<X: NodeExtra> ExplosionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExplosionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExplosionWith<Y>
+    pub fn into_user_data<Y>(self) -> ExplosionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExplosionWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -3601,17 +3615,17 @@ impl officekit_markup_base::Write for Explosion {
     }
 }
 
-impl<X: NodeExtra> FWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FWith<Y>
+    pub fn into_user_data<Y>(self) -> FWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3639,21 +3653,21 @@ impl officekit_markup_base::Write for F {
     }
 }
 
-impl<X: NodeExtra> FilteredAreaSeriesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FilteredAreaSeriesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FilteredAreaSeriesWith<Y>
+    pub fn into_user_data<Y>(self) -> FilteredAreaSeriesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FilteredAreaSeriesWith {
-            extra: Default::default(),
-            ser_area_ser: officekit_markup_base::into_extra_required(
+            ser_area_ser: officekit_markup_base::into_user_data_required(
                 *self.ser_area_ser,
-                SerAreaSerWith::into_extra,
+                SerAreaSerWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3677,21 +3691,21 @@ impl officekit_markup_base::Write for FilteredAreaSeries {
     }
 }
 
-impl<X: NodeExtra> FilteredBarSeriesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FilteredBarSeriesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FilteredBarSeriesWith<Y>
+    pub fn into_user_data<Y>(self) -> FilteredBarSeriesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FilteredBarSeriesWith {
-            extra: Default::default(),
-            ser_bar_ser: officekit_markup_base::into_extra_required(
+            ser_bar_ser: officekit_markup_base::into_user_data_required(
                 *self.ser_bar_ser,
-                SerBarSerWith::into_extra,
+                SerBarSerWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3715,21 +3729,21 @@ impl officekit_markup_base::Write for FilteredBarSeries {
     }
 }
 
-impl<X: NodeExtra> FilteredBubbleSeriesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FilteredBubbleSeriesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FilteredBubbleSeriesWith<Y>
+    pub fn into_user_data<Y>(self) -> FilteredBubbleSeriesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FilteredBubbleSeriesWith {
-            extra: Default::default(),
-            ser_bubble_ser: officekit_markup_base::into_extra_required(
+            ser_bubble_ser: officekit_markup_base::into_user_data_required(
                 *self.ser_bubble_ser,
-                SerBubbleSerWith::into_extra,
+                SerBubbleSerWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3753,18 +3767,18 @@ impl officekit_markup_base::Write for FilteredBubbleSeries {
     }
 }
 
-impl<X: NodeExtra> FilteredCategoryTitleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FilteredCategoryTitleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FilteredCategoryTitleWith<Y>
+    pub fn into_user_data<Y>(self) -> FilteredCategoryTitleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FilteredCategoryTitleWith {
-            cat: officekit_markup_base::into_extra_required(*self.cat, CatWith::into_extra),
-            extra: Default::default(),
+            cat: officekit_markup_base::into_user_data_required(*self.cat, CatWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3788,21 +3802,21 @@ impl officekit_markup_base::Write for FilteredCategoryTitle {
     }
 }
 
-impl<X: NodeExtra> FilteredLineSeriesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FilteredLineSeriesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FilteredLineSeriesWith<Y>
+    pub fn into_user_data<Y>(self) -> FilteredLineSeriesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FilteredLineSeriesWith {
-            extra: Default::default(),
-            ser_line_ser: officekit_markup_base::into_extra_required(
+            ser_line_ser: officekit_markup_base::into_user_data_required(
                 *self.ser_line_ser,
-                SerLineSerWith::into_extra,
+                SerLineSerWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3826,21 +3840,21 @@ impl officekit_markup_base::Write for FilteredLineSeries {
     }
 }
 
-impl<X: NodeExtra> FilteredPieSeriesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FilteredPieSeriesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FilteredPieSeriesWith<Y>
+    pub fn into_user_data<Y>(self) -> FilteredPieSeriesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FilteredPieSeriesWith {
-            extra: Default::default(),
-            ser_pie_ser: officekit_markup_base::into_extra_required(
+            ser_pie_ser: officekit_markup_base::into_user_data_required(
                 *self.ser_pie_ser,
-                SerPieSerWith::into_extra,
+                SerPieSerWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3864,21 +3878,21 @@ impl officekit_markup_base::Write for FilteredPieSeries {
     }
 }
 
-impl<X: NodeExtra> FilteredRadarSeriesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FilteredRadarSeriesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FilteredRadarSeriesWith<Y>
+    pub fn into_user_data<Y>(self) -> FilteredRadarSeriesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FilteredRadarSeriesWith {
-            extra: Default::default(),
-            ser_radar_ser: officekit_markup_base::into_extra_required(
+            ser_radar_ser: officekit_markup_base::into_user_data_required(
                 *self.ser_radar_ser,
-                SerRadarSerWith::into_extra,
+                SerRadarSerWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3902,21 +3916,21 @@ impl officekit_markup_base::Write for FilteredRadarSeries {
     }
 }
 
-impl<X: NodeExtra> FilteredScatterSeriesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FilteredScatterSeriesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FilteredScatterSeriesWith<Y>
+    pub fn into_user_data<Y>(self) -> FilteredScatterSeriesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FilteredScatterSeriesWith {
-            extra: Default::default(),
-            ser_scatter_ser: officekit_markup_base::into_extra_required(
+            ser_scatter_ser: officekit_markup_base::into_user_data_required(
                 *self.ser_scatter_ser,
-                SerScatterSerWith::into_extra,
+                SerScatterSerWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3940,18 +3954,18 @@ impl officekit_markup_base::Write for FilteredScatterSeries {
     }
 }
 
-impl<X: NodeExtra> FilteredSeriesTitleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FilteredSeriesTitleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FilteredSeriesTitleWith<Y>
+    pub fn into_user_data<Y>(self) -> FilteredSeriesTitleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FilteredSeriesTitleWith {
-            extra: Default::default(),
-            tx: officekit_markup_base::into_extra_required(*self.tx, TxWith::into_extra),
+            tx: officekit_markup_base::into_user_data_required(*self.tx, TxWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3975,21 +3989,21 @@ impl officekit_markup_base::Write for FilteredSeriesTitle {
     }
 }
 
-impl<X: NodeExtra> FilteredSurfaceSeriesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FilteredSurfaceSeriesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FilteredSurfaceSeriesWith<Y>
+    pub fn into_user_data<Y>(self) -> FilteredSurfaceSeriesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FilteredSurfaceSeriesWith {
-            extra: Default::default(),
-            ser_surface_ser: officekit_markup_base::into_extra_required(
+            ser_surface_ser: officekit_markup_base::into_user_data_required(
                 *self.ser_surface_ser,
-                SerSurfaceSerWith::into_extra,
+                SerSurfaceSerWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4013,18 +4027,21 @@ impl officekit_markup_base::Write for FilteredSurfaceSeries {
     }
 }
 
-impl<X: NodeExtra> FormulaRefWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FormulaRefWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FormulaRefWith<Y>
+    pub fn into_user_data<Y>(self) -> FormulaRefWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FormulaRefWith {
-            extra: Default::default(),
-            sqref: officekit_markup_base::into_extra_required(*self.sqref, SqrefWith::into_extra),
+            sqref: officekit_markup_base::into_user_data_required(
+                *self.sqref,
+                SqrefWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4048,18 +4065,21 @@ impl officekit_markup_base::Write for FormulaRef {
     }
 }
 
-impl<X: NodeExtra> FullRefWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FullRefWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FullRefWith<Y>
+    pub fn into_user_data<Y>(self) -> FullRefWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FullRefWith {
-            extra: Default::default(),
-            sqref: officekit_markup_base::into_extra_required(*self.sqref, SqrefWith::into_extra),
+            sqref: officekit_markup_base::into_user_data_required(
+                *self.sqref,
+                SqrefWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4083,17 +4103,17 @@ impl officekit_markup_base::Write for FullRef {
     }
 }
 
-impl<X: NodeExtra> InvertIfNegativeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> InvertIfNegativeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> InvertIfNegativeWith<Y>
+    pub fn into_user_data<Y>(self) -> InvertIfNegativeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         InvertIfNegativeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -4121,25 +4141,25 @@ impl officekit_markup_base::Write for InvertIfNegative {
     }
 }
 
-impl<X: NodeExtra> LayoutWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LayoutWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> LayoutWith<Y>
+    pub fn into_user_data<Y>(mut self) -> LayoutWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LayoutWith {
-            chart_extensibility: officekit_markup_base::into_extra_optional(
+            chart_extensibility: officekit_markup_base::into_user_data_optional(
                 &mut self.chart_extensibility,
-                chart::ChartExtensibilityWith::into_extra,
+                chart::ChartExtensibilityWith::into_user_data,
             ),
-            extra: Default::default(),
-            manual: officekit_markup_base::into_extra_optional(
+            manual: officekit_markup_base::into_user_data_optional(
                 &mut self.manual,
-                chart::ManualLayoutWith::into_extra,
+                chart::ManualLayoutWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4163,21 +4183,21 @@ impl officekit_markup_base::Write for Layout {
     }
 }
 
-impl<X: NodeExtra> LeaderLinesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LeaderLinesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> LeaderLinesWith<Y>
+    pub fn into_user_data<Y>(mut self) -> LeaderLinesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LeaderLinesWith {
-            extra: Default::default(),
-            shape_properties: officekit_markup_base::into_extra_optional(
+            shape_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.shape_properties,
-                chart::ShapePropertiesWith::into_extra,
+                chart::ShapePropertiesWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4201,18 +4221,21 @@ impl officekit_markup_base::Write for LeaderLines {
     }
 }
 
-impl<X: NodeExtra> LevelRefWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LevelRefWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LevelRefWith<Y>
+    pub fn into_user_data<Y>(self) -> LevelRefWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LevelRefWith {
-            extra: Default::default(),
-            sqref: officekit_markup_base::into_extra_required(*self.sqref, SqrefWith::into_extra),
+            sqref: officekit_markup_base::into_user_data_required(
+                *self.sqref,
+                SqrefWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4236,33 +4259,33 @@ impl officekit_markup_base::Write for LevelRef {
     }
 }
 
-impl<X: NodeExtra> MarkerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MarkerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> MarkerWith<Y>
+    pub fn into_user_data<Y>(mut self) -> MarkerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MarkerWith {
-            chart_extensibility: officekit_markup_base::into_extra_optional(
+            chart_extensibility: officekit_markup_base::into_user_data_optional(
                 &mut self.chart_extensibility,
-                chart::ChartExtensibilityWith::into_extra,
+                chart::ChartExtensibilityWith::into_user_data,
             ),
-            extra: Default::default(),
-            shape_properties: officekit_markup_base::into_extra_optional(
+            shape_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.shape_properties,
-                chart::ShapePropertiesWith::into_extra,
+                chart::ShapePropertiesWith::into_user_data,
             ),
-            size: officekit_markup_base::into_extra_optional(
+            size: officekit_markup_base::into_user_data_optional(
                 &mut self.size,
-                chart::SizeWith::into_extra,
+                chart::SizeWith::into_user_data,
             ),
-            symbol: officekit_markup_base::into_extra_optional(
+            symbol: officekit_markup_base::into_user_data_optional(
                 &mut self.symbol,
-                chart::SymbolWith::into_extra,
+                chart::SymbolWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4286,19 +4309,19 @@ impl officekit_markup_base::Write for Marker {
     }
 }
 
-impl<X: NodeExtra> NumFmtWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> NumFmtWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> NumFmtWith<Y>
+    pub fn into_user_data<Y>(self) -> NumFmtWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         NumFmtWith {
-            extra: Default::default(),
             format_code: self.format_code,
             source_linked: self.source_linked,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4326,29 +4349,29 @@ impl officekit_markup_base::Write for NumFmt {
     }
 }
 
-impl<X: NodeExtra> PivotSourceWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotSourceWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PivotSourceWith<Y>
+    pub fn into_user_data<Y>(self) -> PivotSourceWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotSourceWith {
-            chart_extensibility: officekit_markup_base::into_extra_list(
+            chart_extensibility: officekit_markup_base::into_user_data_list(
                 self.chart_extensibility,
-                chart::ChartExtensibilityWith::into_extra,
+                chart::ChartExtensibilityWith::into_user_data,
             ),
-            extra: Default::default(),
-            format_id: officekit_markup_base::into_extra_required(
+            format_id: officekit_markup_base::into_user_data_required(
                 *self.format_id,
-                chart::FormatIDWith::into_extra,
+                chart::FormatIDWith::into_user_data,
             ),
-            pivot_name: officekit_markup_base::into_extra_required(
+            pivot_name: officekit_markup_base::into_user_data_required(
                 *self.pivot_name,
-                chart::PivotNameWith::into_extra,
+                chart::PivotNameWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4372,64 +4395,64 @@ impl officekit_markup_base::Write for PivotSource {
     }
 }
 
-impl<X: NodeExtra> SerAreaSerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SerAreaSerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SerAreaSerWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SerAreaSerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SerAreaSerWith {
-            category_axis_data_cat: officekit_markup_base::into_extra_optional(
+            category_axis_data_cat: officekit_markup_base::into_user_data_optional(
                 &mut self.category_axis_data_cat,
-                chart::CategoryAxisDataCatWith::into_extra,
+                chart::CategoryAxisDataCatWith::into_user_data,
             ),
-            chart_extensibility: officekit_markup_base::into_extra_optional(
+            chart_extensibility: officekit_markup_base::into_user_data_optional(
                 &mut self.chart_extensibility,
-                chart::ChartExtensibilityWith::into_extra,
+                chart::ChartExtensibilityWith::into_user_data,
             ),
-            data_labels: officekit_markup_base::into_extra_optional(
+            data_labels: officekit_markup_base::into_user_data_optional(
                 &mut self.data_labels,
-                chart::DataLabelsWith::into_extra,
+                chart::DataLabelsWith::into_user_data,
             ),
-            data_point: officekit_markup_base::into_extra_list(
+            data_point: officekit_markup_base::into_user_data_list(
                 self.data_point,
-                chart::DataPointWith::into_extra,
+                chart::DataPointWith::into_user_data,
             ),
-            error_bars: officekit_markup_base::into_extra_list(
+            error_bars: officekit_markup_base::into_user_data_list(
                 self.error_bars,
-                chart::ErrorBarsWith::into_extra,
+                chart::ErrorBarsWith::into_user_data,
             ),
-            extra: Default::default(),
-            index: officekit_markup_base::into_extra_required(
+            index: officekit_markup_base::into_user_data_required(
                 *self.index,
-                chart::IndexWith::into_extra,
+                chart::IndexWith::into_user_data,
             ),
-            order: officekit_markup_base::into_extra_required(
+            order: officekit_markup_base::into_user_data_required(
                 *self.order,
-                chart::OrderWith::into_extra,
+                chart::OrderWith::into_user_data,
             ),
-            picture_options: officekit_markup_base::into_extra_optional(
+            picture_options: officekit_markup_base::into_user_data_optional(
                 &mut self.picture_options,
-                chart::PictureOptionsWith::into_extra,
+                chart::PictureOptionsWith::into_user_data,
             ),
-            series_text: officekit_markup_base::into_extra_optional(
+            series_text: officekit_markup_base::into_user_data_optional(
                 &mut self.series_text,
-                chart::SeriesTextWith::into_extra,
+                chart::SeriesTextWith::into_user_data,
             ),
-            shape_properties: officekit_markup_base::into_extra_optional(
+            shape_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.shape_properties,
-                chart::ShapePropertiesWith::into_extra,
+                chart::ShapePropertiesWith::into_user_data,
             ),
-            trendlines: officekit_markup_base::into_extra_list(
+            trendlines: officekit_markup_base::into_user_data_list(
                 self.trendlines,
-                chart::TrendlinesWith::into_extra,
+                chart::TrendlinesWith::into_user_data,
             ),
             unknown: self.unknown,
-            values: officekit_markup_base::into_extra_optional(
+            user_data: Default::default(),
+            values: officekit_markup_base::into_user_data_optional(
                 &mut self.values,
-                chart::ValuesWith::into_extra,
+                chart::ValuesWith::into_user_data,
             ),
         }
     }
@@ -4454,72 +4477,72 @@ impl officekit_markup_base::Write for SerAreaSer {
     }
 }
 
-impl<X: NodeExtra> SerBarSerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SerBarSerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SerBarSerWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SerBarSerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SerBarSerWith {
-            category_axis_data_cat: officekit_markup_base::into_extra_optional(
+            category_axis_data_cat: officekit_markup_base::into_user_data_optional(
                 &mut self.category_axis_data_cat,
-                chart::CategoryAxisDataCatWith::into_extra,
+                chart::CategoryAxisDataCatWith::into_user_data,
             ),
-            chart_extensibility: officekit_markup_base::into_extra_optional(
+            chart_extensibility: officekit_markup_base::into_user_data_optional(
                 &mut self.chart_extensibility,
-                chart::ChartExtensibilityWith::into_extra,
+                chart::ChartExtensibilityWith::into_user_data,
             ),
-            data_labels: officekit_markup_base::into_extra_optional(
+            data_labels: officekit_markup_base::into_user_data_optional(
                 &mut self.data_labels,
-                chart::DataLabelsWith::into_extra,
+                chart::DataLabelsWith::into_user_data,
             ),
-            data_point: officekit_markup_base::into_extra_list(
+            data_point: officekit_markup_base::into_user_data_list(
                 self.data_point,
-                chart::DataPointWith::into_extra,
+                chart::DataPointWith::into_user_data,
             ),
-            error_bars: officekit_markup_base::into_extra_optional(
+            error_bars: officekit_markup_base::into_user_data_optional(
                 &mut self.error_bars,
-                chart::ErrorBarsWith::into_extra,
+                chart::ErrorBarsWith::into_user_data,
             ),
-            extra: Default::default(),
-            index: officekit_markup_base::into_extra_required(
+            index: officekit_markup_base::into_user_data_required(
                 *self.index,
-                chart::IndexWith::into_extra,
+                chart::IndexWith::into_user_data,
             ),
-            invert_if_negative: officekit_markup_base::into_extra_optional(
+            invert_if_negative: officekit_markup_base::into_user_data_optional(
                 &mut self.invert_if_negative,
-                chart::InvertIfNegativeWith::into_extra,
+                chart::InvertIfNegativeWith::into_user_data,
             ),
-            order: officekit_markup_base::into_extra_required(
+            order: officekit_markup_base::into_user_data_required(
                 *self.order,
-                chart::OrderWith::into_extra,
+                chart::OrderWith::into_user_data,
             ),
-            picture_options: officekit_markup_base::into_extra_optional(
+            picture_options: officekit_markup_base::into_user_data_optional(
                 &mut self.picture_options,
-                chart::PictureOptionsWith::into_extra,
+                chart::PictureOptionsWith::into_user_data,
             ),
-            series_text: officekit_markup_base::into_extra_optional(
+            series_text: officekit_markup_base::into_user_data_optional(
                 &mut self.series_text,
-                chart::SeriesTextWith::into_extra,
+                chart::SeriesTextWith::into_user_data,
             ),
-            shape: officekit_markup_base::into_extra_optional(
+            shape: officekit_markup_base::into_user_data_optional(
                 &mut self.shape,
-                chart::ShapeWith::into_extra,
+                chart::ShapeWith::into_user_data,
             ),
-            shape_properties: officekit_markup_base::into_extra_optional(
+            shape_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.shape_properties,
-                chart::ShapePropertiesWith::into_extra,
+                chart::ShapePropertiesWith::into_user_data,
             ),
-            trendlines: officekit_markup_base::into_extra_list(
+            trendlines: officekit_markup_base::into_user_data_list(
                 self.trendlines,
-                chart::TrendlinesWith::into_extra,
+                chart::TrendlinesWith::into_user_data,
             ),
             unknown: self.unknown,
-            values: officekit_markup_base::into_extra_optional(
+            user_data: Default::default(),
+            values: officekit_markup_base::into_user_data_optional(
                 &mut self.values,
-                chart::ValuesWith::into_extra,
+                chart::ValuesWith::into_user_data,
             ),
         }
     }
@@ -4544,72 +4567,72 @@ impl officekit_markup_base::Write for SerBarSer {
     }
 }
 
-impl<X: NodeExtra> SerBubbleSerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SerBubbleSerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SerBubbleSerWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SerBubbleSerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SerBubbleSerWith {
-            bubble3d: officekit_markup_base::into_extra_optional(
+            bubble3d: officekit_markup_base::into_user_data_optional(
                 &mut self.bubble3d,
-                chart::Bubble3DWith::into_extra,
+                chart::Bubble3DWith::into_user_data,
             ),
-            bubble_size: officekit_markup_base::into_extra_optional(
+            bubble_size: officekit_markup_base::into_user_data_optional(
                 &mut self.bubble_size,
-                chart::BubbleSizeWith::into_extra,
+                chart::BubbleSizeWith::into_user_data,
             ),
-            chart_extensibility: officekit_markup_base::into_extra_optional(
+            chart_extensibility: officekit_markup_base::into_user_data_optional(
                 &mut self.chart_extensibility,
-                chart::ChartExtensibilityWith::into_extra,
+                chart::ChartExtensibilityWith::into_user_data,
             ),
-            data_labels: officekit_markup_base::into_extra_optional(
+            data_labels: officekit_markup_base::into_user_data_optional(
                 &mut self.data_labels,
-                chart::DataLabelsWith::into_extra,
+                chart::DataLabelsWith::into_user_data,
             ),
-            data_point: officekit_markup_base::into_extra_list(
+            data_point: officekit_markup_base::into_user_data_list(
                 self.data_point,
-                chart::DataPointWith::into_extra,
+                chart::DataPointWith::into_user_data,
             ),
-            error_bars: officekit_markup_base::into_extra_list(
+            error_bars: officekit_markup_base::into_user_data_list(
                 self.error_bars,
-                chart::ErrorBarsWith::into_extra,
+                chart::ErrorBarsWith::into_user_data,
             ),
-            extra: Default::default(),
-            index: officekit_markup_base::into_extra_required(
+            index: officekit_markup_base::into_user_data_required(
                 *self.index,
-                chart::IndexWith::into_extra,
+                chart::IndexWith::into_user_data,
             ),
-            invert_if_negative: officekit_markup_base::into_extra_optional(
+            invert_if_negative: officekit_markup_base::into_user_data_optional(
                 &mut self.invert_if_negative,
-                chart::InvertIfNegativeWith::into_extra,
+                chart::InvertIfNegativeWith::into_user_data,
             ),
-            order: officekit_markup_base::into_extra_required(
+            order: officekit_markup_base::into_user_data_required(
                 *self.order,
-                chart::OrderWith::into_extra,
+                chart::OrderWith::into_user_data,
             ),
-            series_text: officekit_markup_base::into_extra_optional(
+            series_text: officekit_markup_base::into_user_data_optional(
                 &mut self.series_text,
-                chart::SeriesTextWith::into_extra,
+                chart::SeriesTextWith::into_user_data,
             ),
-            shape_properties: officekit_markup_base::into_extra_optional(
+            shape_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.shape_properties,
-                chart::ShapePropertiesWith::into_extra,
+                chart::ShapePropertiesWith::into_user_data,
             ),
-            trendlines: officekit_markup_base::into_extra_list(
+            trendlines: officekit_markup_base::into_user_data_list(
                 self.trendlines,
-                chart::TrendlinesWith::into_extra,
+                chart::TrendlinesWith::into_user_data,
             ),
             unknown: self.unknown,
-            x_values: officekit_markup_base::into_extra_optional(
+            user_data: Default::default(),
+            x_values: officekit_markup_base::into_user_data_optional(
                 &mut self.x_values,
-                chart::XValuesWith::into_extra,
+                chart::XValuesWith::into_user_data,
             ),
-            y_values: officekit_markup_base::into_extra_optional(
+            y_values: officekit_markup_base::into_user_data_optional(
                 &mut self.y_values,
-                chart::YValuesWith::into_extra,
+                chart::YValuesWith::into_user_data,
             ),
         }
     }
@@ -4634,68 +4657,68 @@ impl officekit_markup_base::Write for SerBubbleSer {
     }
 }
 
-impl<X: NodeExtra> SerLineSerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SerLineSerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SerLineSerWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SerLineSerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SerLineSerWith {
-            category_axis_data_cat: officekit_markup_base::into_extra_optional(
+            category_axis_data_cat: officekit_markup_base::into_user_data_optional(
                 &mut self.category_axis_data_cat,
-                chart::CategoryAxisDataCatWith::into_extra,
+                chart::CategoryAxisDataCatWith::into_user_data,
             ),
-            chart_extensibility: officekit_markup_base::into_extra_optional(
+            chart_extensibility: officekit_markup_base::into_user_data_optional(
                 &mut self.chart_extensibility,
-                chart::ChartExtensibilityWith::into_extra,
+                chart::ChartExtensibilityWith::into_user_data,
             ),
-            data_labels: officekit_markup_base::into_extra_optional(
+            data_labels: officekit_markup_base::into_user_data_optional(
                 &mut self.data_labels,
-                chart::DataLabelsWith::into_extra,
+                chart::DataLabelsWith::into_user_data,
             ),
-            data_point: officekit_markup_base::into_extra_list(
+            data_point: officekit_markup_base::into_user_data_list(
                 self.data_point,
-                chart::DataPointWith::into_extra,
+                chart::DataPointWith::into_user_data,
             ),
-            error_bars: officekit_markup_base::into_extra_optional(
+            error_bars: officekit_markup_base::into_user_data_optional(
                 &mut self.error_bars,
-                chart::ErrorBarsWith::into_extra,
+                chart::ErrorBarsWith::into_user_data,
             ),
-            extra: Default::default(),
-            index: officekit_markup_base::into_extra_required(
+            index: officekit_markup_base::into_user_data_required(
                 *self.index,
-                chart::IndexWith::into_extra,
+                chart::IndexWith::into_user_data,
             ),
-            marker: officekit_markup_base::into_extra_optional(
+            marker: officekit_markup_base::into_user_data_optional(
                 &mut self.marker,
-                chart::MarkerWith::into_extra,
+                chart::MarkerWith::into_user_data,
             ),
-            order: officekit_markup_base::into_extra_required(
+            order: officekit_markup_base::into_user_data_required(
                 *self.order,
-                chart::OrderWith::into_extra,
+                chart::OrderWith::into_user_data,
             ),
-            series_text: officekit_markup_base::into_extra_optional(
+            series_text: officekit_markup_base::into_user_data_optional(
                 &mut self.series_text,
-                chart::SeriesTextWith::into_extra,
+                chart::SeriesTextWith::into_user_data,
             ),
-            shape_properties: officekit_markup_base::into_extra_optional(
+            shape_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.shape_properties,
-                chart::ShapePropertiesWith::into_extra,
+                chart::ShapePropertiesWith::into_user_data,
             ),
-            smoothing: officekit_markup_base::into_extra_optional(
+            smoothing: officekit_markup_base::into_user_data_optional(
                 &mut self.smoothing,
-                chart::SmoothingWith::into_extra,
+                chart::SmoothingWith::into_user_data,
             ),
-            trendlines: officekit_markup_base::into_extra_list(
+            trendlines: officekit_markup_base::into_user_data_list(
                 self.trendlines,
-                chart::TrendlinesWith::into_extra,
+                chart::TrendlinesWith::into_user_data,
             ),
             unknown: self.unknown,
-            values: officekit_markup_base::into_extra_optional(
+            user_data: Default::default(),
+            values: officekit_markup_base::into_user_data_optional(
                 &mut self.values,
-                chart::ValuesWith::into_extra,
+                chart::ValuesWith::into_user_data,
             ),
         }
     }
@@ -4720,56 +4743,56 @@ impl officekit_markup_base::Write for SerLineSer {
     }
 }
 
-impl<X: NodeExtra> SerPieSerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SerPieSerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SerPieSerWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SerPieSerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SerPieSerWith {
-            category_axis_data_cat: officekit_markup_base::into_extra_optional(
+            category_axis_data_cat: officekit_markup_base::into_user_data_optional(
                 &mut self.category_axis_data_cat,
-                chart::CategoryAxisDataCatWith::into_extra,
+                chart::CategoryAxisDataCatWith::into_user_data,
             ),
-            chart_extensibility: officekit_markup_base::into_extra_optional(
+            chart_extensibility: officekit_markup_base::into_user_data_optional(
                 &mut self.chart_extensibility,
-                chart::ChartExtensibilityWith::into_extra,
+                chart::ChartExtensibilityWith::into_user_data,
             ),
-            data_labels: officekit_markup_base::into_extra_optional(
+            data_labels: officekit_markup_base::into_user_data_optional(
                 &mut self.data_labels,
-                chart::DataLabelsWith::into_extra,
+                chart::DataLabelsWith::into_user_data,
             ),
-            data_point: officekit_markup_base::into_extra_list(
+            data_point: officekit_markup_base::into_user_data_list(
                 self.data_point,
-                chart::DataPointWith::into_extra,
+                chart::DataPointWith::into_user_data,
             ),
-            explosion: officekit_markup_base::into_extra_optional(
+            explosion: officekit_markup_base::into_user_data_optional(
                 &mut self.explosion,
-                chart::ExplosionWith::into_extra,
+                chart::ExplosionWith::into_user_data,
             ),
-            extra: Default::default(),
-            index: officekit_markup_base::into_extra_required(
+            index: officekit_markup_base::into_user_data_required(
                 *self.index,
-                chart::IndexWith::into_extra,
+                chart::IndexWith::into_user_data,
             ),
-            order: officekit_markup_base::into_extra_required(
+            order: officekit_markup_base::into_user_data_required(
                 *self.order,
-                chart::OrderWith::into_extra,
+                chart::OrderWith::into_user_data,
             ),
-            series_text: officekit_markup_base::into_extra_optional(
+            series_text: officekit_markup_base::into_user_data_optional(
                 &mut self.series_text,
-                chart::SeriesTextWith::into_extra,
+                chart::SeriesTextWith::into_user_data,
             ),
-            shape_properties: officekit_markup_base::into_extra_optional(
+            shape_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.shape_properties,
-                chart::ShapePropertiesWith::into_extra,
+                chart::ShapePropertiesWith::into_user_data,
             ),
             unknown: self.unknown,
-            values: officekit_markup_base::into_extra_optional(
+            user_data: Default::default(),
+            values: officekit_markup_base::into_user_data_optional(
                 &mut self.values,
-                chart::ValuesWith::into_extra,
+                chart::ValuesWith::into_user_data,
             ),
         }
     }
@@ -4794,56 +4817,56 @@ impl officekit_markup_base::Write for SerPieSer {
     }
 }
 
-impl<X: NodeExtra> SerRadarSerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SerRadarSerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SerRadarSerWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SerRadarSerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SerRadarSerWith {
-            category_axis_data_cat: officekit_markup_base::into_extra_optional(
+            category_axis_data_cat: officekit_markup_base::into_user_data_optional(
                 &mut self.category_axis_data_cat,
-                chart::CategoryAxisDataCatWith::into_extra,
+                chart::CategoryAxisDataCatWith::into_user_data,
             ),
-            chart_extensibility: officekit_markup_base::into_extra_optional(
+            chart_extensibility: officekit_markup_base::into_user_data_optional(
                 &mut self.chart_extensibility,
-                chart::ChartExtensibilityWith::into_extra,
+                chart::ChartExtensibilityWith::into_user_data,
             ),
-            data_labels: officekit_markup_base::into_extra_optional(
+            data_labels: officekit_markup_base::into_user_data_optional(
                 &mut self.data_labels,
-                chart::DataLabelsWith::into_extra,
+                chart::DataLabelsWith::into_user_data,
             ),
-            data_point: officekit_markup_base::into_extra_list(
+            data_point: officekit_markup_base::into_user_data_list(
                 self.data_point,
-                chart::DataPointWith::into_extra,
+                chart::DataPointWith::into_user_data,
             ),
-            extra: Default::default(),
-            index: officekit_markup_base::into_extra_required(
+            index: officekit_markup_base::into_user_data_required(
                 *self.index,
-                chart::IndexWith::into_extra,
+                chart::IndexWith::into_user_data,
             ),
-            marker: officekit_markup_base::into_extra_optional(
+            marker: officekit_markup_base::into_user_data_optional(
                 &mut self.marker,
-                chart::MarkerWith::into_extra,
+                chart::MarkerWith::into_user_data,
             ),
-            order: officekit_markup_base::into_extra_required(
+            order: officekit_markup_base::into_user_data_required(
                 *self.order,
-                chart::OrderWith::into_extra,
+                chart::OrderWith::into_user_data,
             ),
-            series_text: officekit_markup_base::into_extra_optional(
+            series_text: officekit_markup_base::into_user_data_optional(
                 &mut self.series_text,
-                chart::SeriesTextWith::into_extra,
+                chart::SeriesTextWith::into_user_data,
             ),
-            shape_properties: officekit_markup_base::into_extra_optional(
+            shape_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.shape_properties,
-                chart::ShapePropertiesWith::into_extra,
+                chart::ShapePropertiesWith::into_user_data,
             ),
             unknown: self.unknown,
-            values: officekit_markup_base::into_extra_optional(
+            user_data: Default::default(),
+            values: officekit_markup_base::into_user_data_optional(
                 &mut self.values,
-                chart::ValuesWith::into_extra,
+                chart::ValuesWith::into_user_data,
             ),
         }
     }
@@ -4868,68 +4891,68 @@ impl officekit_markup_base::Write for SerRadarSer {
     }
 }
 
-impl<X: NodeExtra> SerScatterSerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SerScatterSerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SerScatterSerWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SerScatterSerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SerScatterSerWith {
-            chart_extensibility: officekit_markup_base::into_extra_optional(
+            chart_extensibility: officekit_markup_base::into_user_data_optional(
                 &mut self.chart_extensibility,
-                chart::ChartExtensibilityWith::into_extra,
+                chart::ChartExtensibilityWith::into_user_data,
             ),
-            data_labels: officekit_markup_base::into_extra_optional(
+            data_labels: officekit_markup_base::into_user_data_optional(
                 &mut self.data_labels,
-                chart::DataLabelsWith::into_extra,
+                chart::DataLabelsWith::into_user_data,
             ),
-            data_point: officekit_markup_base::into_extra_list(
+            data_point: officekit_markup_base::into_user_data_list(
                 self.data_point,
-                chart::DataPointWith::into_extra,
+                chart::DataPointWith::into_user_data,
             ),
-            error_bars: officekit_markup_base::into_extra_list(
+            error_bars: officekit_markup_base::into_user_data_list(
                 self.error_bars,
-                chart::ErrorBarsWith::into_extra,
+                chart::ErrorBarsWith::into_user_data,
             ),
-            extra: Default::default(),
-            index: officekit_markup_base::into_extra_required(
+            index: officekit_markup_base::into_user_data_required(
                 *self.index,
-                chart::IndexWith::into_extra,
+                chart::IndexWith::into_user_data,
             ),
-            marker: officekit_markup_base::into_extra_optional(
+            marker: officekit_markup_base::into_user_data_optional(
                 &mut self.marker,
-                chart::MarkerWith::into_extra,
+                chart::MarkerWith::into_user_data,
             ),
-            order: officekit_markup_base::into_extra_required(
+            order: officekit_markup_base::into_user_data_required(
                 *self.order,
-                chart::OrderWith::into_extra,
+                chart::OrderWith::into_user_data,
             ),
-            series_text: officekit_markup_base::into_extra_optional(
+            series_text: officekit_markup_base::into_user_data_optional(
                 &mut self.series_text,
-                chart::SeriesTextWith::into_extra,
+                chart::SeriesTextWith::into_user_data,
             ),
-            shape_properties: officekit_markup_base::into_extra_optional(
+            shape_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.shape_properties,
-                chart::ShapePropertiesWith::into_extra,
+                chart::ShapePropertiesWith::into_user_data,
             ),
-            smoothing: officekit_markup_base::into_extra_optional(
+            smoothing: officekit_markup_base::into_user_data_optional(
                 &mut self.smoothing,
-                chart::SmoothingWith::into_extra,
+                chart::SmoothingWith::into_user_data,
             ),
-            trendlines: officekit_markup_base::into_extra_list(
+            trendlines: officekit_markup_base::into_user_data_list(
                 self.trendlines,
-                chart::TrendlinesWith::into_extra,
+                chart::TrendlinesWith::into_user_data,
             ),
             unknown: self.unknown,
-            x_values: officekit_markup_base::into_extra_optional(
+            user_data: Default::default(),
+            x_values: officekit_markup_base::into_user_data_optional(
                 &mut self.x_values,
-                chart::XValuesWith::into_extra,
+                chart::XValuesWith::into_user_data,
             ),
-            y_values: officekit_markup_base::into_extra_optional(
+            y_values: officekit_markup_base::into_user_data_optional(
                 &mut self.y_values,
-                chart::YValuesWith::into_extra,
+                chart::YValuesWith::into_user_data,
             ),
         }
     }
@@ -4954,44 +4977,44 @@ impl officekit_markup_base::Write for SerScatterSer {
     }
 }
 
-impl<X: NodeExtra> SerSurfaceSerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SerSurfaceSerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SerSurfaceSerWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SerSurfaceSerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SerSurfaceSerWith {
-            category_axis_data_cat: officekit_markup_base::into_extra_optional(
+            category_axis_data_cat: officekit_markup_base::into_user_data_optional(
                 &mut self.category_axis_data_cat,
-                chart::CategoryAxisDataCatWith::into_extra,
+                chart::CategoryAxisDataCatWith::into_user_data,
             ),
-            chart_extensibility: officekit_markup_base::into_extra_optional(
+            chart_extensibility: officekit_markup_base::into_user_data_optional(
                 &mut self.chart_extensibility,
-                chart::ChartExtensibilityWith::into_extra,
+                chart::ChartExtensibilityWith::into_user_data,
             ),
-            extra: Default::default(),
-            index: officekit_markup_base::into_extra_required(
+            index: officekit_markup_base::into_user_data_required(
                 *self.index,
-                chart::IndexWith::into_extra,
+                chart::IndexWith::into_user_data,
             ),
-            order: officekit_markup_base::into_extra_required(
+            order: officekit_markup_base::into_user_data_required(
                 *self.order,
-                chart::OrderWith::into_extra,
+                chart::OrderWith::into_user_data,
             ),
-            series_text: officekit_markup_base::into_extra_optional(
+            series_text: officekit_markup_base::into_user_data_optional(
                 &mut self.series_text,
-                chart::SeriesTextWith::into_extra,
+                chart::SeriesTextWith::into_user_data,
             ),
-            shape_properties: officekit_markup_base::into_extra_optional(
+            shape_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.shape_properties,
-                chart::ShapePropertiesWith::into_extra,
+                chart::ShapePropertiesWith::into_user_data,
             ),
             unknown: self.unknown,
-            values: officekit_markup_base::into_extra_optional(
+            user_data: Default::default(),
+            values: officekit_markup_base::into_user_data_optional(
                 &mut self.values,
-                chart::ValuesWith::into_extra,
+                chart::ValuesWith::into_user_data,
             ),
         }
     }
@@ -5016,17 +5039,17 @@ impl officekit_markup_base::Write for SerSurfaceSer {
     }
 }
 
-impl<X: NodeExtra> ShowDataLabelsRangeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ShowDataLabelsRangeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ShowDataLabelsRangeWith<Y>
+    pub fn into_user_data<Y>(self) -> ShowDataLabelsRangeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ShowDataLabelsRangeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -5054,17 +5077,17 @@ impl officekit_markup_base::Write for ShowDataLabelsRange {
     }
 }
 
-impl<X: NodeExtra> ShowLeaderLinesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ShowLeaderLinesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ShowLeaderLinesWith<Y>
+    pub fn into_user_data<Y>(self) -> ShowLeaderLinesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ShowLeaderLinesWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -5092,49 +5115,49 @@ impl officekit_markup_base::Write for ShowLeaderLines {
     }
 }
 
-impl<X: NodeExtra> SpPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SpPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SpPrWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SpPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SpPrWith {
-            apply_3d_shape_properties: officekit_markup_base::into_extra_optional(
+            apply_3d_shape_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.apply_3d_shape_properties,
-                drawing::Apply3DShapePropertiesWith::into_extra,
+                drawing::Apply3DShapePropertiesWith::into_user_data,
             ),
             bw_mode: self.bw_mode,
-            effect_properties_content: officekit_markup_base::into_extra_optional(
+            effect_properties_content: officekit_markup_base::into_user_data_optional(
                 &mut self.effect_properties_content,
-                drawing::EffectPropertiesContentWith::into_extra,
+                drawing::EffectPropertiesContentWith::into_user_data,
             ),
-            extension_list: officekit_markup_base::into_extra_optional(
+            extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.extension_list,
-                drawing::ExtensionListWith::into_extra,
+                drawing::ExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            fill_properties_content: officekit_markup_base::into_extra_optional(
+            fill_properties_content: officekit_markup_base::into_user_data_optional(
                 &mut self.fill_properties_content,
-                drawing::FillPropertiesContentWith::into_extra,
+                drawing::FillPropertiesContentWith::into_user_data,
             ),
-            geometry_content: officekit_markup_base::into_extra_optional(
+            geometry_content: officekit_markup_base::into_user_data_optional(
                 &mut self.geometry_content,
-                drawing::GeometryContentWith::into_extra,
+                drawing::GeometryContentWith::into_user_data,
             ),
-            outline: officekit_markup_base::into_extra_optional(
+            outline: officekit_markup_base::into_user_data_optional(
                 &mut self.outline,
-                drawing::OutlineWith::into_extra,
+                drawing::OutlineWith::into_user_data,
             ),
-            scene3d: officekit_markup_base::into_extra_optional(
+            scene3d: officekit_markup_base::into_user_data_optional(
                 &mut self.scene3d,
-                drawing::Scene3dWith::into_extra,
+                drawing::Scene3dWith::into_user_data,
             ),
             unknown: self.unknown,
-            xfrm_transform2d: officekit_markup_base::into_extra_optional(
+            user_data: Default::default(),
+            xfrm_transform2d: officekit_markup_base::into_user_data_optional(
                 &mut self.xfrm_transform2d,
-                drawing::XfrmTransform2DWith::into_extra,
+                drawing::XfrmTransform2DWith::into_user_data,
             ),
         }
     }
@@ -5162,17 +5185,17 @@ impl officekit_markup_base::Write for SpPr {
     }
 }
 
-impl<X: NodeExtra> SqrefWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SqrefWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SqrefWith<Y>
+    pub fn into_user_data<Y>(self) -> SqrefWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SqrefWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5200,21 +5223,21 @@ impl officekit_markup_base::Write for Sqref {
     }
 }
 
-impl<X: NodeExtra> TxWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TxWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TxWith<Y>
+    pub fn into_user_data<Y>(self) -> TxWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TxWith {
-            content: officekit_markup_base::into_extra_required(
+            content: officekit_markup_base::into_user_data_required(
                 *self.content,
-                chart::ChartTextContentWith::into_extra,
+                chart::ChartTextContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5238,17 +5261,17 @@ impl officekit_markup_base::Write for Tx {
     }
 }
 
-impl<X: NodeExtra> TxfldGUIDWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TxfldGUIDWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TxfldGUIDWith<Y>
+    pub fn into_user_data<Y>(self) -> TxfldGUIDWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TxfldGUIDWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5276,17 +5299,17 @@ impl officekit_markup_base::Write for TxfldGUID {
     }
 }
 
-impl<X: NodeExtra> XForSaveWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> XForSaveWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> XForSaveWith<Y>
+    pub fn into_user_data<Y>(self) -> XForSaveWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         XForSaveWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }

@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::chart;
 use officekit_xml::element::Element;
@@ -279,21 +279,21 @@ pub trait Context: crate::Context {
 /// 3.5.1. Its schema type is `CT_MultiLvlStrData`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MultiLvlStrLitWith<X: NodeExtra> {
+pub struct MultiLvlStrLitWith<X: UserData> {
     /// The child that is `chart::ChartExtensibility`, when there is one.
     pub chart_extensibility: Option<Box<chart::ChartExtensibilityWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2014ChartAcMultiLvlStrLit,
     /// The children that are `chart::Level`, in order.
     pub level: Vec<chart::LevelWith<X>>,
     /// The child that is `chart::PointCount`, when there is one.
     pub point_count: Option<Box<chart::PointCountWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2014ChartAcMultiLvlStrLit,
 }
 
 /// The `c16ac:multiLvlStrLit` element of the tree a read gives: [`MultiLvlStrLitWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type MultiLvlStrLit = MultiLvlStrLitWith<()>;
 
 impl Eq for MultiLvlStrLitWith<()> {}
@@ -311,26 +311,29 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> MultiLvlStrLitWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MultiLvlStrLitWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> MultiLvlStrLitWith<Y>
+    pub fn into_user_data<Y>(mut self) -> MultiLvlStrLitWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MultiLvlStrLitWith {
-            chart_extensibility: officekit_markup_base::into_extra_optional(
+            chart_extensibility: officekit_markup_base::into_user_data_optional(
                 &mut self.chart_extensibility,
-                chart::ChartExtensibilityWith::into_extra,
+                chart::ChartExtensibilityWith::into_user_data,
             ),
-            extra: Default::default(),
-            level: officekit_markup_base::into_extra_list(self.level, chart::LevelWith::into_extra),
-            point_count: officekit_markup_base::into_extra_optional(
+            level: officekit_markup_base::into_user_data_list(
+                self.level,
+                chart::LevelWith::into_user_data,
+            ),
+            point_count: officekit_markup_base::into_user_data_optional(
                 &mut self.point_count,
-                chart::PointCountWith::into_extra,
+                chart::PointCountWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

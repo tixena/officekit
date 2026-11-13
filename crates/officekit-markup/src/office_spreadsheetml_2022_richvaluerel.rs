@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::spreadsheet;
 use officekit_xml::element::Element;
@@ -325,17 +325,17 @@ pub trait Context: crate::Context {
 /// Its schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022RichvaluerelExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022RichvaluerelExtLst,
 }
 
 /// The `xlrvrel:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -344,16 +344,16 @@ impl Eq for ExtLstWith<()> {}
 /// schema type is `CT_RichValueRelRelationship`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RelWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022RichvaluerelRel,
+pub struct RelWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022RichvaluerelRel,
 }
 
-/// The `xlrvrel:rel` element of the tree a read gives: [`RelWith`] holding nothing in `extra`.
+/// The `xlrvrel:rel` element of the tree a read gives: [`RelWith`] holding nothing in `user_data`.
 pub type Rel = RelWith<()>;
 
 impl Eq for RelWith<()> {}
@@ -362,19 +362,19 @@ impl Eq for RelWith<()> {}
 /// 3.5.1. Its schema type is `CT_RichValueRels`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RichValueRelsWith<X: NodeExtra> {
+pub struct RichValueRelsWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022RichvaluerelRichValueRels,
     /// The children that are `Rel`, in order.
     pub rel: Vec<RelWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022RichvaluerelRichValueRels,
 }
 
 /// The `xlrvrel:richValueRels` element of the tree a read gives: [`RichValueRelsWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type RichValueRels = RichValueRelsWith<()>;
 
 impl Eq for RichValueRelsWith<()> {}
@@ -402,21 +402,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                spreadsheet::ExtensionWith::into_extra,
+                spreadsheet::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -440,18 +440,18 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> RelWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RelWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RelWith<Y>
+    pub fn into_user_data<Y>(self) -> RelWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RelWith {
-            extra: Default::default(),
             id: self.id,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -478,22 +478,22 @@ impl officekit_markup_base::Write for Rel {
     }
 }
 
-impl<X: NodeExtra> RichValueRelsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RichValueRelsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> RichValueRelsWith<Y>
+    pub fn into_user_data<Y>(mut self) -> RichValueRelsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RichValueRelsWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            rel: officekit_markup_base::into_extra_list(self.rel, RelWith::into_extra),
+            rel: officekit_markup_base::into_user_data_list(self.rel, RelWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

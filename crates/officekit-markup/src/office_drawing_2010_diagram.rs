@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -262,15 +262,13 @@ pub static RECOLOR_IMG_SHAPE: officekit_markup_base::Shape = officekit_markup_ba
 /// schema type is `CT_NonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvPrWith<X: NodeExtra> {
+pub struct CNvPrWith<X: UserData> {
     /// The child that is `drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
     /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010DiagramCNvPr,
     /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
     /// The child that is `drawing::HyperlinkForHover`, when there is one.
@@ -283,9 +281,12 @@ pub struct CNvPrWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010DiagramCNvPr,
 }
 
-/// The `dgm14:cNvPr` element of the tree a read gives: [`CNvPrWith`] holding nothing in `extra`.
+/// The `dgm14:cNvPr` element of the tree a read gives: [`CNvPrWith`] holding nothing in
+/// `user_data`.
 pub type CNvPr = CNvPrWith<()>;
 
 impl Eq for CNvPrWith<()> {}
@@ -340,17 +341,17 @@ pub trait Context: crate::Context {
 /// Its schema type is `CT_Boolean`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RecolorImgWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010DiagramRecolorImg,
+pub struct RecolorImgWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010DiagramRecolorImg,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `dgm14:recolorImg` element of the tree a read gives: [`RecolorImgWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type RecolorImg = RecolorImgWith<()>;
 
 impl Eq for RecolorImgWith<()> {}
@@ -373,34 +374,34 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> CNvPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CNvPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> CNvPrWith<Y>
+    pub fn into_user_data<Y>(mut self) -> CNvPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CNvPrWith {
-            click_hyperlink: officekit_markup_base::into_extra_optional(
+            click_hyperlink: officekit_markup_base::into_user_data_optional(
                 &mut self.click_hyperlink,
-                drawing::ClickHyperlinkWith::into_extra,
+                drawing::ClickHyperlinkWith::into_user_data,
             ),
             descr: self.descr,
-            extension_list: officekit_markup_base::into_extra_optional(
+            extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.extension_list,
-                drawing::ExtensionListWith::into_extra,
+                drawing::ExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
             hidden: self.hidden,
-            hyperlink_for_hover: officekit_markup_base::into_extra_optional(
+            hyperlink_for_hover: officekit_markup_base::into_user_data_optional(
                 &mut self.hyperlink_for_hover,
-                drawing::HyperlinkForHoverWith::into_extra,
+                drawing::HyperlinkForHoverWith::into_user_data,
             ),
             id: self.id,
             name: self.name,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -431,17 +432,17 @@ impl officekit_markup_base::Write for CNvPr {
     }
 }
 
-impl<X: NodeExtra> RecolorImgWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RecolorImgWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RecolorImgWith<Y>
+    pub fn into_user_data<Y>(self) -> RecolorImgWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RecolorImgWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }

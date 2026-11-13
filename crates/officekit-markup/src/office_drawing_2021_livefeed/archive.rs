@@ -226,8 +226,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct BackgroundPropsMirror {
     pub content: Option<Box<super::LiveFeedBackgroundPropertiesContent>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -235,8 +235,8 @@ pub struct BackgroundPropsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BlurMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -244,8 +244,8 @@ pub struct BlurMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -253,8 +253,8 @@ pub struct CustomMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -263,8 +263,8 @@ pub struct ExtLstMirror {
 pub struct LiveFeedPropsMirror {
     pub background_props: Option<Box<super::BackgroundProps>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -272,8 +272,8 @@ pub struct LiveFeedPropsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct NormalMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -281,8 +281,8 @@ pub struct NormalMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RemovedMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -301,8 +301,8 @@ impl From<BackgroundPropsMirror> for super::BackgroundProps {
         Self {
             content: item.content,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -340,8 +340,8 @@ impl From<BlurMirror> for super::Blur {
     fn from(item: BlurMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -379,8 +379,8 @@ impl From<CustomMirror> for super::Custom {
     fn from(item: CustomMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -418,8 +418,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -458,8 +458,8 @@ impl From<LiveFeedPropsMirror> for super::LiveFeedProps {
         Self {
             background_props: item.background_props,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -497,8 +497,8 @@ impl From<NormalMirror> for super::Normal {
     fn from(item: NormalMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -536,8 +536,8 @@ impl From<RemovedMirror> for super::Removed {
     fn from(item: RemovedMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

@@ -225,40 +225,40 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LineSketchCurved)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineSketchCurvedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LineSketchFreehand)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineSketchFreehandMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LineSketchNone)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineSketchNoneMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LineSketchScribble)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineSketchScribbleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -267,19 +267,19 @@ pub struct LineSketchScribbleMirror {
 pub struct LineSketchStylePropsMirror {
     pub content: Option<Box<drawing::GeometryContent>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub sd: Option<String>,
     pub seed: Option<Box<super::Seed>>,
     pub r#type: Option<Box<super::Type>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Seed)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SeedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -288,8 +288,8 @@ pub struct SeedMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TypeMirror {
     pub content: Option<Box<super::LineSketchTypePropertiesContent>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -307,8 +307,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -345,8 +345,8 @@ where
 impl From<LineSketchCurvedMirror> for super::LineSketchCurved {
     fn from(item: LineSketchCurvedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -383,8 +383,8 @@ where
 impl From<LineSketchFreehandMirror> for super::LineSketchFreehand {
     fn from(item: LineSketchFreehandMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -421,8 +421,8 @@ where
 impl From<LineSketchNoneMirror> for super::LineSketchNone {
     fn from(item: LineSketchNoneMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -459,8 +459,8 @@ where
 impl From<LineSketchScribbleMirror> for super::LineSketchScribble {
     fn from(item: LineSketchScribbleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -499,11 +499,11 @@ impl From<LineSketchStylePropsMirror> for super::LineSketchStyleProps {
         Self {
             content: item.content,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             sd: item.sd,
             seed: item.seed,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -543,8 +543,8 @@ where
 impl From<SeedMirror> for super::Seed {
     fn from(item: SeedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -583,8 +583,8 @@ impl From<TypeMirror> for super::Type {
     fn from(item: TypeMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

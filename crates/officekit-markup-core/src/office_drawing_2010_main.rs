@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 
@@ -697,17 +697,17 @@ pub static PICTURE_EFFECT_CONTENT_TAGS: officekit_markup_base::Accept =
 /// Its schema type is `CT_PictureEffectBlur`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticBlurWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticBlur,
+pub struct ArtisticBlurWith<X: UserData> {
     /// The attribute `radius`, when the element has it.
     pub radius: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticBlur,
 }
 
 /// The `a14:artisticBlur` element of the tree a read gives: [`ArtisticBlurWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ArtisticBlur = ArtisticBlurWith<()>;
 
 impl Eq for ArtisticBlurWith<()> {}
@@ -716,19 +716,19 @@ impl Eq for ArtisticBlurWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectCement`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticCementWith<X: NodeExtra> {
+pub struct ArtisticCementWith<X: UserData> {
     /// The attribute `crackSpacing`, when the element has it.
     pub crack_spacing: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticCement,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticCement,
 }
 
 /// The `a14:artisticCement` element of the tree a read gives: [`ArtisticCementWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ArtisticCement = ArtisticCementWith<()>;
 
 impl Eq for ArtisticCementWith<()> {}
@@ -737,19 +737,19 @@ impl Eq for ArtisticCementWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectChalkSketch`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticChalkSketchWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticChalkSketch,
+pub struct ArtisticChalkSketchWith<X: UserData> {
     /// The attribute `pressure`, when the element has it.
     pub pressure: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticChalkSketch,
 }
 
 /// The `a14:artisticChalkSketch` element of the tree a read gives: [`ArtisticChalkSketchWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ArtisticChalkSketch = ArtisticChalkSketchWith<()>;
 
 impl Eq for ArtisticChalkSketchWith<()> {}
@@ -758,19 +758,19 @@ impl Eq for ArtisticChalkSketchWith<()> {}
 /// version 3.5.1. Its schema type is `CT_PictureEffectCrisscrossEtching`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticCrisscrossEtchingWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticCrisscrossEtching,
+pub struct ArtisticCrisscrossEtchingWith<X: UserData> {
     /// The attribute `pressure`, when the element has it.
     pub pressure: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticCrisscrossEtching,
 }
 
 /// The `a14:artisticCrisscrossEtching` element of the tree a read gives:
-/// [`ArtisticCrisscrossEtchingWith`] holding nothing in `extra`.
+/// [`ArtisticCrisscrossEtchingWith`] holding nothing in `user_data`.
 pub type ArtisticCrisscrossEtching = ArtisticCrisscrossEtchingWith<()>;
 
 impl Eq for ArtisticCrisscrossEtchingWith<()> {}
@@ -779,19 +779,19 @@ impl Eq for ArtisticCrisscrossEtchingWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectCutout`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticCutoutWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticCutout,
+pub struct ArtisticCutoutWith<X: UserData> {
     /// The attribute `numberOfShades`, when the element has it.
     pub number_of_shades: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticCutout,
 }
 
 /// The `a14:artisticCutout` element of the tree a read gives: [`ArtisticCutoutWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ArtisticCutout = ArtisticCutoutWith<()>;
 
 impl Eq for ArtisticCutoutWith<()> {}
@@ -800,19 +800,19 @@ impl Eq for ArtisticCutoutWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectFilmGrain`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticFilmGrainWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticFilmGrain,
+pub struct ArtisticFilmGrainWith<X: UserData> {
     /// The attribute `grainSize`, when the element has it.
     pub grain_size: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticFilmGrain,
 }
 
 /// The `a14:artisticFilmGrain` element of the tree a read gives: [`ArtisticFilmGrainWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ArtisticFilmGrain = ArtisticFilmGrainWith<()>;
 
 impl Eq for ArtisticFilmGrainWith<()> {}
@@ -821,19 +821,19 @@ impl Eq for ArtisticFilmGrainWith<()> {}
 /// Its schema type is `CT_PictureEffectGlass`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticGlassWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticGlass,
+pub struct ArtisticGlassWith<X: UserData> {
     /// The attribute `scaling`, when the element has it.
     pub scaling: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticGlass,
 }
 
 /// The `a14:artisticGlass` element of the tree a read gives: [`ArtisticGlassWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type ArtisticGlass = ArtisticGlassWith<()>;
 
 impl Eq for ArtisticGlassWith<()> {}
@@ -842,19 +842,19 @@ impl Eq for ArtisticGlassWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectGlowDiffused`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticGlowDiffusedWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticGlowDiffused,
+pub struct ArtisticGlowDiffusedWith<X: UserData> {
     /// The attribute `intensity`, when the element has it.
     pub intensity: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticGlowDiffused,
 }
 
 /// The `a14:artisticGlowDiffused` element of the tree a read gives: [`ArtisticGlowDiffusedWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ArtisticGlowDiffused = ArtisticGlowDiffusedWith<()>;
 
 impl Eq for ArtisticGlowDiffusedWith<()> {}
@@ -863,19 +863,19 @@ impl Eq for ArtisticGlowDiffusedWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectGlowEdges`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticGlowEdgesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticGlowEdges,
+pub struct ArtisticGlowEdgesWith<X: UserData> {
     /// The attribute `smoothness`, when the element has it.
     pub smoothness: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticGlowEdges,
 }
 
 /// The `a14:artisticGlowEdges` element of the tree a read gives: [`ArtisticGlowEdgesWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ArtisticGlowEdges = ArtisticGlowEdgesWith<()>;
 
 impl Eq for ArtisticGlowEdgesWith<()> {}
@@ -884,19 +884,19 @@ impl Eq for ArtisticGlowEdgesWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectLightScreen`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticLightScreenWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticLightScreen,
+pub struct ArtisticLightScreenWith<X: UserData> {
     /// The attribute `gridSize`, when the element has it.
     pub grid_size: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticLightScreen,
 }
 
 /// The `a14:artisticLightScreen` element of the tree a read gives: [`ArtisticLightScreenWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ArtisticLightScreen = ArtisticLightScreenWith<()>;
 
 impl Eq for ArtisticLightScreenWith<()> {}
@@ -905,19 +905,19 @@ impl Eq for ArtisticLightScreenWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectLineDrawing`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticLineDrawingWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticLineDrawing,
+pub struct ArtisticLineDrawingWith<X: UserData> {
     /// The attribute `pencilSize`, when the element has it.
     pub pencil_size: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticLineDrawing,
 }
 
 /// The `a14:artisticLineDrawing` element of the tree a read gives: [`ArtisticLineDrawingWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ArtisticLineDrawing = ArtisticLineDrawingWith<()>;
 
 impl Eq for ArtisticLineDrawingWith<()> {}
@@ -926,19 +926,19 @@ impl Eq for ArtisticLineDrawingWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectMarker`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticMarkerWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticMarker,
+pub struct ArtisticMarkerWith<X: UserData> {
     /// The attribute `size`, when the element has it.
     pub size: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticMarker,
 }
 
 /// The `a14:artisticMarker` element of the tree a read gives: [`ArtisticMarkerWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ArtisticMarker = ArtisticMarkerWith<()>;
 
 impl Eq for ArtisticMarkerWith<()> {}
@@ -947,19 +947,19 @@ impl Eq for ArtisticMarkerWith<()> {}
 /// version 3.5.1. Its schema type is `CT_PictureEffectMosiaicBubbles`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticMosiaicBubblesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticMosiaicBubbles,
+pub struct ArtisticMosiaicBubblesWith<X: UserData> {
     /// The attribute `pressure`, when the element has it.
     pub pressure: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticMosiaicBubbles,
 }
 
 /// The `a14:artisticMosiaicBubbles` element of the tree a read gives:
-/// [`ArtisticMosiaicBubblesWith`] holding nothing in `extra`.
+/// [`ArtisticMosiaicBubblesWith`] holding nothing in `user_data`.
 pub type ArtisticMosiaicBubbles = ArtisticMosiaicBubblesWith<()>;
 
 impl Eq for ArtisticMosiaicBubblesWith<()> {}
@@ -968,19 +968,19 @@ impl Eq for ArtisticMosiaicBubblesWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectPaintBrush`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticPaintBrushWith<X: NodeExtra> {
+pub struct ArtisticPaintBrushWith<X: UserData> {
     /// The attribute `brushSize`, when the element has it.
     pub brush_size: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticPaintBrush,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticPaintBrush,
 }
 
 /// The `a14:artisticPaintBrush` element of the tree a read gives: [`ArtisticPaintBrushWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ArtisticPaintBrush = ArtisticPaintBrushWith<()>;
 
 impl Eq for ArtisticPaintBrushWith<()> {}
@@ -989,19 +989,19 @@ impl Eq for ArtisticPaintBrushWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectPaintStrokes`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticPaintStrokesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticPaintStrokes,
+pub struct ArtisticPaintStrokesWith<X: UserData> {
     /// The attribute `intensity`, when the element has it.
     pub intensity: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticPaintStrokes,
 }
 
 /// The `a14:artisticPaintStrokes` element of the tree a read gives: [`ArtisticPaintStrokesWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ArtisticPaintStrokes = ArtisticPaintStrokesWith<()>;
 
 impl Eq for ArtisticPaintStrokesWith<()> {}
@@ -1010,19 +1010,19 @@ impl Eq for ArtisticPaintStrokesWith<()> {}
 /// version 3.5.1. Its schema type is `CT_PictureEffectPastelsSmooth`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticPastelsSmoothWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticPastelsSmooth,
+pub struct ArtisticPastelsSmoothWith<X: UserData> {
     /// The attribute `scaling`, when the element has it.
     pub scaling: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticPastelsSmooth,
 }
 
 /// The `a14:artisticPastelsSmooth` element of the tree a read gives: [`ArtisticPastelsSmoothWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ArtisticPastelsSmooth = ArtisticPastelsSmoothWith<()>;
 
 impl Eq for ArtisticPastelsSmoothWith<()> {}
@@ -1031,19 +1031,19 @@ impl Eq for ArtisticPastelsSmoothWith<()> {}
 /// version 3.5.1. Its schema type is `CT_PictureEffectPencilGrayscale`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticPencilGrayscaleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticPencilGrayscale,
+pub struct ArtisticPencilGrayscaleWith<X: UserData> {
     /// The attribute `pencilSize`, when the element has it.
     pub pencil_size: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticPencilGrayscale,
 }
 
 /// The `a14:artisticPencilGrayscale` element of the tree a read gives:
-/// [`ArtisticPencilGrayscaleWith`] holding nothing in `extra`.
+/// [`ArtisticPencilGrayscaleWith`] holding nothing in `user_data`.
 pub type ArtisticPencilGrayscale = ArtisticPencilGrayscaleWith<()>;
 
 impl Eq for ArtisticPencilGrayscaleWith<()> {}
@@ -1052,19 +1052,19 @@ impl Eq for ArtisticPencilGrayscaleWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectPencilSketch`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticPencilSketchWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticPencilSketch,
+pub struct ArtisticPencilSketchWith<X: UserData> {
     /// The attribute `pressure`, when the element has it.
     pub pressure: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticPencilSketch,
 }
 
 /// The `a14:artisticPencilSketch` element of the tree a read gives: [`ArtisticPencilSketchWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ArtisticPencilSketch = ArtisticPencilSketchWith<()>;
 
 impl Eq for ArtisticPencilSketchWith<()> {}
@@ -1073,19 +1073,19 @@ impl Eq for ArtisticPencilSketchWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectPhotocopy`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticPhotocopyWith<X: NodeExtra> {
+pub struct ArtisticPhotocopyWith<X: UserData> {
     /// The attribute `detail`, when the element has it.
     pub detail: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticPhotocopy,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticPhotocopy,
 }
 
 /// The `a14:artisticPhotocopy` element of the tree a read gives: [`ArtisticPhotocopyWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ArtisticPhotocopy = ArtisticPhotocopyWith<()>;
 
 impl Eq for ArtisticPhotocopyWith<()> {}
@@ -1094,19 +1094,19 @@ impl Eq for ArtisticPhotocopyWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectPlasticWrap`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticPlasticWrapWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticPlasticWrap,
+pub struct ArtisticPlasticWrapWith<X: UserData> {
     /// The attribute `smoothness`, when the element has it.
     pub smoothness: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticPlasticWrap,
 }
 
 /// The `a14:artisticPlasticWrap` element of the tree a read gives: [`ArtisticPlasticWrapWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ArtisticPlasticWrap = ArtisticPlasticWrapWith<()>;
 
 impl Eq for ArtisticPlasticWrapWith<()> {}
@@ -1115,19 +1115,19 @@ impl Eq for ArtisticPlasticWrapWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectTexturizer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticTexturizerWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticTexturizer,
+pub struct ArtisticTexturizerWith<X: UserData> {
     /// The attribute `scaling`, when the element has it.
     pub scaling: Option<String>,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticTexturizer,
 }
 
 /// The `a14:artisticTexturizer` element of the tree a read gives: [`ArtisticTexturizerWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ArtisticTexturizer = ArtisticTexturizerWith<()>;
 
 impl Eq for ArtisticTexturizerWith<()> {}
@@ -1136,19 +1136,19 @@ impl Eq for ArtisticTexturizerWith<()> {}
 /// version 3.5.1. Its schema type is `CT_PictureEffectWatercolorSponge`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtisticWatercolorSpongeWith<X: NodeExtra> {
+pub struct ArtisticWatercolorSpongeWith<X: UserData> {
     /// The attribute `brushSize`, when the element has it.
     pub brush_size: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainArtisticWatercolorSponge,
     /// The attribute `trans`, when the element has it.
     pub trans: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainArtisticWatercolorSponge,
 }
 
 /// The `a14:artisticWatercolorSponge` element of the tree a read gives:
-/// [`ArtisticWatercolorSpongeWith`] holding nothing in `extra`.
+/// [`ArtisticWatercolorSpongeWith`] holding nothing in `user_data`.
 pub type ArtisticWatercolorSponge = ArtisticWatercolorSpongeWith<()>;
 
 impl Eq for ArtisticWatercolorSpongeWith<()> {}
@@ -1157,11 +1157,11 @@ impl Eq for ArtisticWatercolorSpongeWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectBackgroundRemovalBackgroundMark`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BackgroundMarkWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainBackgroundMark,
+pub struct BackgroundMarkWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainBackgroundMark,
     /// The attribute `x1`, when the element has it.
     pub x1: Option<String>,
     /// The attribute `x2`, when the element has it.
@@ -1173,7 +1173,7 @@ pub struct BackgroundMarkWith<X: NodeExtra> {
 }
 
 /// The `a14:backgroundMark` element of the tree a read gives: [`BackgroundMarkWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type BackgroundMark = BackgroundMarkWith<()>;
 
 impl Eq for BackgroundMarkWith<()> {}
@@ -1182,13 +1182,11 @@ impl Eq for BackgroundMarkWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectBackgroundRemoval`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BackgroundRemovalWith<X: NodeExtra> {
+pub struct BackgroundRemovalWith<X: UserData> {
     /// The attribute `b`, when the element has it.
     pub b: Option<String>,
     /// The children that are `BackgroundMark`, in order.
     pub background_mark: Vec<BackgroundMarkWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainBackgroundRemoval,
     /// The children that are `ForegroundMark`, in order.
     pub foreground_mark: Vec<ForegroundMarkWith<X>>,
     /// The attribute `l`, when the element has it.
@@ -1199,10 +1197,12 @@ pub struct BackgroundRemovalWith<X: NodeExtra> {
     pub t: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainBackgroundRemoval,
 }
 
 /// The `a14:backgroundRemoval` element of the tree a read gives: [`BackgroundRemovalWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type BackgroundRemoval = BackgroundRemovalWith<()>;
 
 impl Eq for BackgroundRemovalWith<()> {}
@@ -1211,19 +1211,19 @@ impl Eq for BackgroundRemovalWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectBrightnessContrast`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BrightnessContrastWith<X: NodeExtra> {
+pub struct BrightnessContrastWith<X: UserData> {
     /// The attribute `bright`, when the element has it.
     pub bright: Option<String>,
     /// The attribute `contrast`, when the element has it.
     pub contrast: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainBrightnessContrast,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainBrightnessContrast,
 }
 
 /// The `a14:brightnessContrast` element of the tree a read gives: [`BrightnessContrastWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type BrightnessContrast = BrightnessContrastWith<()>;
 
 impl Eq for BrightnessContrastWith<()> {}
@@ -1232,21 +1232,21 @@ impl Eq for BrightnessContrastWith<()> {}
 /// 3.5.1. Its schema type is `CT_NonVisualInkContentPartProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvContentPartPrWith<X: NodeExtra> {
+pub struct CNvContentPartPrWith<X: UserData> {
     /// The child that is `CpLocks`, when there is one.
     pub cp_locks: Option<Box<CpLocksWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainCNvContentPartPr,
     /// The attribute `isComment`, when the element has it.
     pub is_comment: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainCNvContentPartPr,
 }
 
 /// The `a14:cNvContentPartPr` element of the tree a read gives: [`CNvContentPartPrWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type CNvContentPartPr = CNvContentPartPrWith<()>;
 
 impl Eq for CNvContentPartPrWith<()> {}
@@ -1255,15 +1255,13 @@ impl Eq for CNvContentPartPrWith<()> {}
 /// schema type is `CT_NonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvPrWith<X: NodeExtra> {
+pub struct CNvPrWith<X: UserData> {
     /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainCNvPr,
     /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
     /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
@@ -1276,9 +1274,11 @@ pub struct CNvPrWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainCNvPr,
 }
 
-/// The `a14:cNvPr` element of the tree a read gives: [`CNvPrWith`] holding nothing in `extra`.
+/// The `a14:cNvPr` element of the tree a read gives: [`CNvPrWith`] holding nothing in `user_data`.
 pub type CNvPr = CNvPrWith<()>;
 
 impl Eq for CNvPrWith<()> {}
@@ -1287,19 +1287,19 @@ impl Eq for CNvPrWith<()> {}
 /// Its schema type is `CT_CameraTool`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CameraToolWith<X: NodeExtra> {
+pub struct CameraToolWith<X: UserData> {
     /// The attribute `cellRange`, when the element has it.
     pub cell_range: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainCameraTool,
     /// The attribute `spid`, when the element has it.
     pub spid: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainCameraTool,
 }
 
 /// The `a14:cameraTool` element of the tree a read gives: [`CameraToolWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CameraTool = CameraToolWith<()>;
 
 impl Eq for CameraToolWith<()> {}
@@ -1308,17 +1308,17 @@ impl Eq for CameraToolWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectColorTemperature`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColorTemperatureWith<X: NodeExtra> {
+pub struct ColorTemperatureWith<X: UserData> {
     /// The attribute `colorTemp`, when the element has it.
     pub color_temp: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainColorTemperature,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainColorTemperature,
 }
 
 /// The `a14:colorTemperature` element of the tree a read gives: [`ColorTemperatureWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ColorTemperature = ColorTemperatureWith<()>;
 
 impl Eq for ColorTemperatureWith<()> {}
@@ -1327,17 +1327,17 @@ impl Eq for ColorTemperatureWith<()> {}
 /// schema type is `CT_CompatExt`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CompatExtWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainCompatExt,
+pub struct CompatExtWith<X: UserData> {
     /// The attribute `spid`, when the element has it.
     pub spid: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainCompatExt,
 }
 
 /// The `a14:compatExt` element of the tree a read gives: [`CompatExtWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CompatExt = CompatExtWith<()>;
 
 impl Eq for CompatExtWith<()> {}
@@ -1346,25 +1346,25 @@ impl Eq for CompatExtWith<()> {}
 /// Its schema type is `CT_GvmlContentPart`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ContentPartWith<X: NodeExtra> {
+pub struct ContentPartWith<X: UserData> {
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainContentPart,
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// The child that is `NvContentPartPr`, when there is one.
     pub nv_content_part_pr: Option<Box<NvContentPartPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainContentPart,
     /// The child that is `Xfrm`, when there is one.
     pub xfrm: Option<Box<XfrmWith<X>>>,
 }
 
 /// The `a14:contentPart` element of the tree a read gives: [`ContentPartWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ContentPart = ContentPartWith<()>;
 
 impl Eq for ContentPartWith<()> {}
@@ -1373,11 +1373,9 @@ impl Eq for ContentPartWith<()> {}
 /// schema type is `CT_ContentPartLocking`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CpLocksWith<X: NodeExtra> {
+pub struct CpLocksWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainCpLocks,
     /// The attribute `noAdjustHandles`, when the element has it.
     pub no_adjust_handles: Option<String>,
     /// The attribute `noChangeArrowheads`, when the element has it.
@@ -1400,9 +1398,12 @@ pub struct CpLocksWith<X: NodeExtra> {
     pub no_select: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainCpLocks,
 }
 
-/// The `a14:cpLocks` element of the tree a read gives: [`CpLocksWith`] holding nothing in `extra`.
+/// The `a14:cpLocks` element of the tree a read gives: [`CpLocksWith`] holding nothing in
+/// `user_data`.
 pub type CpLocks = CpLocksWith<()>;
 
 impl Eq for CpLocksWith<()> {}
@@ -1411,16 +1412,17 @@ impl Eq for CpLocksWith<()> {}
 /// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `super::drawing::Extension`, in order.
     pub extension: Vec<super::drawing::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainExtLst,
 }
 
-/// The `a14:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `a14:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -1429,11 +1431,11 @@ impl Eq for ExtLstWith<()> {}
 /// 3.5.1. Its schema type is `CT_PictureEffectBackgroundRemovalForegroundMark`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ForegroundMarkWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainForegroundMark,
+pub struct ForegroundMarkWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainForegroundMark,
     /// The attribute `x1`, when the element has it.
     pub x1: Option<String>,
     /// The attribute `x2`, when the element has it.
@@ -1445,7 +1447,7 @@ pub struct ForegroundMarkWith<X: NodeExtra> {
 }
 
 /// The `a14:foregroundMark` element of the tree a read gives: [`ForegroundMarkWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ForegroundMark = ForegroundMarkWith<()>;
 
 impl Eq for ForegroundMarkWith<()> {}
@@ -1454,18 +1456,18 @@ impl Eq for ForegroundMarkWith<()> {}
 /// Its schema type is `CT_EffectProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HiddenEffectsWith<X: NodeExtra> {
+pub struct HiddenEffectsWith<X: UserData> {
     /// The child that is an item of `super::drawing::EffectPropertiesContent`, which the schema
     /// requires.
     pub content: Box<super::drawing::EffectPropertiesContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainHiddenEffects,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainHiddenEffects,
 }
 
 /// The `a14:hiddenEffects` element of the tree a read gives: [`HiddenEffectsWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type HiddenEffects = HiddenEffectsWith<()>;
 
 impl Eq for HiddenEffectsWith<()> {}
@@ -1474,18 +1476,18 @@ impl Eq for HiddenEffectsWith<()> {}
 /// Its schema type is `CT_FillProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HiddenFillWith<X: NodeExtra> {
+pub struct HiddenFillWith<X: UserData> {
     /// The child that is an item of `super::drawing::FillPropertiesContent`, which the schema
     /// requires.
     pub content: Box<super::drawing::FillPropertiesContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainHiddenFill,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainHiddenFill,
 }
 
 /// The `a14:hiddenFill` element of the tree a read gives: [`HiddenFillWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type HiddenFill = HiddenFillWith<()>;
 
 impl Eq for HiddenFillWith<()> {}
@@ -1494,7 +1496,7 @@ impl Eq for HiddenFillWith<()> {}
 /// Its schema type is `CT_LineProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HiddenLineWith<X: NodeExtra> {
+pub struct HiddenLineWith<X: UserData> {
     /// The attribute `algn`, when the element has it.
     pub algn: Option<super::drawing::AlignmentType>,
     /// The attribute `cap`, when the element has it.
@@ -1505,8 +1507,6 @@ pub struct HiddenLineWith<X: NodeExtra> {
     pub dash_content: Option<Box<super::drawing::LineDashContentWith<X>>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainHiddenLine,
     /// The child that is an item of `super::drawing::LineFillContent`, when there is one.
     pub fill_content: Option<Box<super::drawing::LineFillContentWith<X>>>,
     /// The child that is `super::drawing::LineHeadEndStyle`, when there is one.
@@ -1517,12 +1517,14 @@ pub struct HiddenLineWith<X: NodeExtra> {
     pub tail_line_end_style: Option<Box<super::drawing::TailLineEndStyleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainHiddenLine,
     /// The attribute `w`, when the element has it.
     pub w: Option<super::drawing::LineWidth>,
 }
 
 /// The `a14:hiddenLine` element of the tree a read gives: [`HiddenLineWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type HiddenLine = HiddenLineWith<()>;
 
 impl Eq for HiddenLineWith<()> {}
@@ -1531,23 +1533,23 @@ impl Eq for HiddenLineWith<()> {}
 /// Its schema type is `CT_Scene3D`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HiddenScene3dWith<X: NodeExtra> {
+pub struct HiddenScene3dWith<X: UserData> {
     /// The child that is `super::drawing::BackdropPlane`, when there is one.
     pub backdrop_plane: Option<Box<super::drawing::BackdropPlaneWith<X>>>,
     /// The child that is `super::drawing::Camera`, which the schema requires.
     pub camera: Box<super::drawing::CameraWith<X>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainHiddenScene3d,
     /// The child that is `super::drawing::LightRig`, which the schema requires.
     pub light_rig: Box<super::drawing::LightRigWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainHiddenScene3d,
 }
 
 /// The `a14:hiddenScene3d` element of the tree a read gives: [`HiddenScene3dWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type HiddenScene3d = HiddenScene3dWith<()>;
 
 impl Eq for HiddenScene3dWith<()> {}
@@ -1556,7 +1558,7 @@ impl Eq for HiddenScene3dWith<()> {}
 /// Its schema type is `CT_Shape3D`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HiddenSp3dWith<X: NodeExtra> {
+pub struct HiddenSp3dWith<X: UserData> {
     /// The child that is `super::drawing::BottomBevel`, when there is one.
     pub bottom_bevel: Option<Box<super::drawing::BottomBevelWith<X>>>,
     /// The child that is `super::drawing::ContourColor`, when there is one.
@@ -1565,8 +1567,6 @@ pub struct HiddenSp3dWith<X: NodeExtra> {
     pub contour_w: Option<super::drawing::PositiveCoordinate>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainHiddenSp3d,
     /// The child that is `super::drawing::ExtrusionColor`, when there is one.
     pub extrusion_color: Option<Box<super::drawing::ExtrusionColorWith<X>>>,
     /// The attribute `extrusionH`, when the element has it.
@@ -1577,12 +1577,14 @@ pub struct HiddenSp3dWith<X: NodeExtra> {
     pub top_bevel: Option<Box<super::drawing::TopBevelWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainHiddenSp3d,
     /// The attribute `z`, when the element has it.
     pub z: Option<super::drawing::Coordinate>,
 }
 
 /// The `a14:hiddenSp3d` element of the tree a read gives: [`HiddenSp3dWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type HiddenSp3d = HiddenSp3dWith<()>;
 
 impl Eq for HiddenSp3dWith<()> {}
@@ -1591,19 +1593,19 @@ impl Eq for HiddenSp3dWith<()> {}
 /// schema type is `CT_PictureEffect`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ImgEffectWith<X: NodeExtra> {
+pub struct ImgEffectWith<X: UserData> {
     /// The child that is an item of `PictureEffectContent`, which the schema requires.
     pub content: Box<PictureEffectContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainImgEffect,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainImgEffect,
     /// The attribute `visible`, when the element has it.
     pub visible: Option<String>,
 }
 
 /// The `a14:imgEffect` element of the tree a read gives: [`ImgEffectWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ImgEffect = ImgEffectWith<()>;
 
 impl Eq for ImgEffectWith<()> {}
@@ -1612,19 +1614,19 @@ impl Eq for ImgEffectWith<()> {}
 /// schema type is `CT_PictureLayer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ImgLayerWith<X: NodeExtra> {
+pub struct ImgLayerWith<X: UserData> {
     /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainImgLayer,
     /// The children that are `ImgEffect`, in order.
     pub img_effect: Vec<ImgEffectWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainImgLayer,
 }
 
 /// The `a14:imgLayer` element of the tree a read gives: [`ImgLayerWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ImgLayer = ImgLayerWith<()>;
 
 impl Eq for ImgLayerWith<()> {}
@@ -1633,17 +1635,17 @@ impl Eq for ImgLayerWith<()> {}
 /// schema type is `CT_Photo`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ImgPropsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainImgProps,
+pub struct ImgPropsWith<X: UserData> {
     /// The child that is `ImgLayer`, which the schema requires.
     pub img_layer: Box<ImgLayerWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainImgProps,
 }
 
 /// The `a14:imgProps` element of the tree a read gives: [`ImgPropsWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ImgProps = ImgPropsWith<()>;
 
 impl Eq for ImgPropsWith<()> {}
@@ -1652,17 +1654,17 @@ impl Eq for ImgPropsWith<()> {}
 /// schema type is `CT_IsGvmlCanvas`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IsCanvasWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainIsCanvas,
+pub struct IsCanvasWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainIsCanvas,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `a14:isCanvas` element of the tree a read gives: [`IsCanvasWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type IsCanvas = IsCanvasWith<()>;
 
 impl Eq for IsCanvasWith<()> {}
@@ -1671,14 +1673,14 @@ impl Eq for IsCanvasWith<()> {}
 /// type is `CT_TextMath`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainM,
+pub struct MWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainM,
 }
 
-/// The `a14:m` element of the tree a read gives: [`MWith`] holding nothing in `extra`.
+/// The `a14:m` element of the tree a read gives: [`MWith`] holding nothing in `user_data`.
 pub type M = MWith<()>;
 
 impl Eq for MWith<()> {}
@@ -1687,19 +1689,19 @@ impl Eq for MWith<()> {}
 /// 3.5.1. Its schema type is `CT_GvmlContentPartNonVisual`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NvContentPartPrWith<X: NodeExtra> {
+pub struct NvContentPartPrWith<X: UserData> {
     /// The child that is `CNvContentPartPr`, when there is one.
     pub c: Option<Box<CNvContentPartPrWith<X>>>,
     /// The child that is `CNvPr`, which the schema requires.
     pub c_nv_pr: Box<CNvPrWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainNvContentPartPr,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainNvContentPartPr,
 }
 
 /// The `a14:nvContentPartPr` element of the tree a read gives: [`NvContentPartPrWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type NvContentPartPr = NvContentPartPrWith<()>;
 
 impl Eq for NvContentPartPrWith<()> {}
@@ -1711,7 +1713,7 @@ impl Eq for NvContentPartPrWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum PictureEffectContentWith<X: NodeExtra> {
+pub enum PictureEffectContentWith<X: UserData> {
     /// The element `a14:artisticBlur`, a `ArtisticBlur`.
     ArtisticBlur(ArtisticBlurWith<X>),
     /// The element `a14:artisticCement`, a `ArtisticCement`.
@@ -1770,7 +1772,8 @@ pub enum PictureEffectContentWith<X: NodeExtra> {
     SharpenSoften(SharpenSoftenWith<X>),
 }
 
-/// [`PictureEffectContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`PictureEffectContentWith`] of the tree a read gives, where no node holds anything in
+/// `user_data`.
 pub type PictureEffectContent = PictureEffectContentWith<()>;
 
 impl Eq for PictureEffectContentWith<()> {}
@@ -1779,17 +1782,17 @@ impl Eq for PictureEffectContentWith<()> {}
 /// Its schema type is `CT_PictureEffectSaturation`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SaturationWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainSaturation,
+pub struct SaturationWith<X: UserData> {
     /// The attribute `sat`, when the element has it.
     pub sat: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainSaturation,
 }
 
 /// The `a14:saturation` element of the tree a read gives: [`SaturationWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Saturation = SaturationWith<()>;
 
 impl Eq for SaturationWith<()> {}
@@ -1798,17 +1801,17 @@ impl Eq for SaturationWith<()> {}
 /// 3.5.1. Its schema type is `CT_ShadowObscured`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShadowObscuredWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainShadowObscured,
+pub struct ShadowObscuredWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainShadowObscured,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `a14:shadowObscured` element of the tree a read gives: [`ShadowObscuredWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ShadowObscured = ShadowObscuredWith<()>;
 
 impl Eq for ShadowObscuredWith<()> {}
@@ -1817,17 +1820,17 @@ impl Eq for ShadowObscuredWith<()> {}
 /// Its schema type is `CT_PictureEffectSharpenSoften`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SharpenSoftenWith<X: NodeExtra> {
+pub struct SharpenSoftenWith<X: UserData> {
     /// The attribute `amount`, when the element has it.
     pub amount: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainSharpenSoften,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainSharpenSoften,
 }
 
 /// The `a14:sharpenSoften` element of the tree a read gives: [`SharpenSoftenWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type SharpenSoften = SharpenSoftenWith<()>;
 
 impl Eq for SharpenSoftenWith<()> {}
@@ -1836,17 +1839,17 @@ impl Eq for SharpenSoftenWith<()> {}
 /// Its schema type is `CT_UseLocalDpi`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct UseLocalDpiWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainUseLocalDpi,
+pub struct UseLocalDpiWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainUseLocalDpi,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `a14:useLocalDpi` element of the tree a read gives: [`UseLocalDpiWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type UseLocalDpi = UseLocalDpiWith<()>;
 
 impl Eq for UseLocalDpiWith<()> {}
@@ -1855,11 +1858,9 @@ impl Eq for UseLocalDpiWith<()> {}
 /// schema type is `CT_Transform2D`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct XfrmWith<X: NodeExtra> {
+pub struct XfrmWith<X: UserData> {
     /// The child that is `super::drawing::Extents`, when there is one.
     pub extents: Option<Box<super::drawing::ExtentsWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010MainXfrm,
     /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
     /// The attribute `flipV`, when the element has it.
@@ -1870,25 +1871,27 @@ pub struct XfrmWith<X: NodeExtra> {
     pub rot: Option<super::drawing::Angle>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010MainXfrm,
 }
 
-/// The `a14:xfrm` element of the tree a read gives: [`XfrmWith`] holding nothing in `extra`.
+/// The `a14:xfrm` element of the tree a read gives: [`XfrmWith`] holding nothing in `user_data`.
 pub type Xfrm = XfrmWith<()>;
 
 impl Eq for XfrmWith<()> {}
 
-impl<X: NodeExtra> ArtisticBlurWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticBlurWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticBlurWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticBlurWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticBlurWith {
-            extra: Default::default(),
             radius: self.radius,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1915,19 +1918,19 @@ impl officekit_markup_base::Write for ArtisticBlur {
     }
 }
 
-impl<X: NodeExtra> ArtisticCementWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticCementWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticCementWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticCementWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticCementWith {
             crack_spacing: self.crack_spacing,
-            extra: Default::default(),
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1955,19 +1958,19 @@ impl officekit_markup_base::Write for ArtisticCement {
     }
 }
 
-impl<X: NodeExtra> ArtisticChalkSketchWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticChalkSketchWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticChalkSketchWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticChalkSketchWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticChalkSketchWith {
-            extra: Default::default(),
             pressure: self.pressure,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1995,19 +1998,19 @@ impl officekit_markup_base::Write for ArtisticChalkSketch {
     }
 }
 
-impl<X: NodeExtra> ArtisticCrisscrossEtchingWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticCrisscrossEtchingWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticCrisscrossEtchingWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticCrisscrossEtchingWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticCrisscrossEtchingWith {
-            extra: Default::default(),
             pressure: self.pressure,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2035,19 +2038,19 @@ impl officekit_markup_base::Write for ArtisticCrisscrossEtching {
     }
 }
 
-impl<X: NodeExtra> ArtisticCutoutWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticCutoutWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticCutoutWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticCutoutWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticCutoutWith {
-            extra: Default::default(),
             number_of_shades: self.number_of_shades,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2075,19 +2078,19 @@ impl officekit_markup_base::Write for ArtisticCutout {
     }
 }
 
-impl<X: NodeExtra> ArtisticFilmGrainWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticFilmGrainWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticFilmGrainWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticFilmGrainWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticFilmGrainWith {
-            extra: Default::default(),
             grain_size: self.grain_size,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2115,19 +2118,19 @@ impl officekit_markup_base::Write for ArtisticFilmGrain {
     }
 }
 
-impl<X: NodeExtra> ArtisticGlassWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticGlassWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticGlassWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticGlassWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticGlassWith {
-            extra: Default::default(),
             scaling: self.scaling,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2155,19 +2158,19 @@ impl officekit_markup_base::Write for ArtisticGlass {
     }
 }
 
-impl<X: NodeExtra> ArtisticGlowDiffusedWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticGlowDiffusedWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticGlowDiffusedWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticGlowDiffusedWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticGlowDiffusedWith {
-            extra: Default::default(),
             intensity: self.intensity,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2195,19 +2198,19 @@ impl officekit_markup_base::Write for ArtisticGlowDiffused {
     }
 }
 
-impl<X: NodeExtra> ArtisticGlowEdgesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticGlowEdgesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticGlowEdgesWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticGlowEdgesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticGlowEdgesWith {
-            extra: Default::default(),
             smoothness: self.smoothness,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2235,19 +2238,19 @@ impl officekit_markup_base::Write for ArtisticGlowEdges {
     }
 }
 
-impl<X: NodeExtra> ArtisticLightScreenWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticLightScreenWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticLightScreenWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticLightScreenWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticLightScreenWith {
-            extra: Default::default(),
             grid_size: self.grid_size,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2275,19 +2278,19 @@ impl officekit_markup_base::Write for ArtisticLightScreen {
     }
 }
 
-impl<X: NodeExtra> ArtisticLineDrawingWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticLineDrawingWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticLineDrawingWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticLineDrawingWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticLineDrawingWith {
-            extra: Default::default(),
             pencil_size: self.pencil_size,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2315,19 +2318,19 @@ impl officekit_markup_base::Write for ArtisticLineDrawing {
     }
 }
 
-impl<X: NodeExtra> ArtisticMarkerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticMarkerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticMarkerWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticMarkerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticMarkerWith {
-            extra: Default::default(),
             size: self.size,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2355,19 +2358,19 @@ impl officekit_markup_base::Write for ArtisticMarker {
     }
 }
 
-impl<X: NodeExtra> ArtisticMosiaicBubblesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticMosiaicBubblesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticMosiaicBubblesWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticMosiaicBubblesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticMosiaicBubblesWith {
-            extra: Default::default(),
             pressure: self.pressure,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2395,19 +2398,19 @@ impl officekit_markup_base::Write for ArtisticMosiaicBubbles {
     }
 }
 
-impl<X: NodeExtra> ArtisticPaintBrushWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticPaintBrushWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticPaintBrushWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticPaintBrushWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticPaintBrushWith {
             brush_size: self.brush_size,
-            extra: Default::default(),
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2435,19 +2438,19 @@ impl officekit_markup_base::Write for ArtisticPaintBrush {
     }
 }
 
-impl<X: NodeExtra> ArtisticPaintStrokesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticPaintStrokesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticPaintStrokesWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticPaintStrokesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticPaintStrokesWith {
-            extra: Default::default(),
             intensity: self.intensity,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2475,19 +2478,19 @@ impl officekit_markup_base::Write for ArtisticPaintStrokes {
     }
 }
 
-impl<X: NodeExtra> ArtisticPastelsSmoothWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticPastelsSmoothWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticPastelsSmoothWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticPastelsSmoothWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticPastelsSmoothWith {
-            extra: Default::default(),
             scaling: self.scaling,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2515,19 +2518,19 @@ impl officekit_markup_base::Write for ArtisticPastelsSmooth {
     }
 }
 
-impl<X: NodeExtra> ArtisticPencilGrayscaleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticPencilGrayscaleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticPencilGrayscaleWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticPencilGrayscaleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticPencilGrayscaleWith {
-            extra: Default::default(),
             pencil_size: self.pencil_size,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2555,19 +2558,19 @@ impl officekit_markup_base::Write for ArtisticPencilGrayscale {
     }
 }
 
-impl<X: NodeExtra> ArtisticPencilSketchWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticPencilSketchWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticPencilSketchWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticPencilSketchWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticPencilSketchWith {
-            extra: Default::default(),
             pressure: self.pressure,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2595,19 +2598,19 @@ impl officekit_markup_base::Write for ArtisticPencilSketch {
     }
 }
 
-impl<X: NodeExtra> ArtisticPhotocopyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticPhotocopyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticPhotocopyWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticPhotocopyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticPhotocopyWith {
             detail: self.detail,
-            extra: Default::default(),
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2635,19 +2638,19 @@ impl officekit_markup_base::Write for ArtisticPhotocopy {
     }
 }
 
-impl<X: NodeExtra> ArtisticPlasticWrapWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticPlasticWrapWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticPlasticWrapWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticPlasticWrapWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticPlasticWrapWith {
-            extra: Default::default(),
             smoothness: self.smoothness,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2675,19 +2678,19 @@ impl officekit_markup_base::Write for ArtisticPlasticWrap {
     }
 }
 
-impl<X: NodeExtra> ArtisticTexturizerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticTexturizerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticTexturizerWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticTexturizerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticTexturizerWith {
-            extra: Default::default(),
             scaling: self.scaling,
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2715,19 +2718,19 @@ impl officekit_markup_base::Write for ArtisticTexturizer {
     }
 }
 
-impl<X: NodeExtra> ArtisticWatercolorSpongeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtisticWatercolorSpongeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtisticWatercolorSpongeWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtisticWatercolorSpongeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtisticWatercolorSpongeWith {
             brush_size: self.brush_size,
-            extra: Default::default(),
             trans: self.trans,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2755,17 +2758,17 @@ impl officekit_markup_base::Write for ArtisticWatercolorSponge {
     }
 }
 
-impl<X: NodeExtra> BackgroundMarkWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BackgroundMarkWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BackgroundMarkWith<Y>
+    pub fn into_user_data<Y>(self) -> BackgroundMarkWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BackgroundMarkWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             x1: self.x1,
             x2: self.x2,
             y1: self.y1,
@@ -2799,29 +2802,29 @@ impl officekit_markup_base::Write for BackgroundMark {
     }
 }
 
-impl<X: NodeExtra> BackgroundRemovalWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BackgroundRemovalWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BackgroundRemovalWith<Y>
+    pub fn into_user_data<Y>(self) -> BackgroundRemovalWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BackgroundRemovalWith {
             b: self.b,
-            background_mark: officekit_markup_base::into_extra_list(
+            background_mark: officekit_markup_base::into_user_data_list(
                 self.background_mark,
-                BackgroundMarkWith::into_extra,
+                BackgroundMarkWith::into_user_data,
             ),
-            extra: Default::default(),
-            foreground_mark: officekit_markup_base::into_extra_list(
+            foreground_mark: officekit_markup_base::into_user_data_list(
                 self.foreground_mark,
-                ForegroundMarkWith::into_extra,
+                ForegroundMarkWith::into_user_data,
             ),
             l: self.l,
             r: self.r,
             t: self.t,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2851,19 +2854,19 @@ impl officekit_markup_base::Write for BackgroundRemoval {
     }
 }
 
-impl<X: NodeExtra> BrightnessContrastWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BrightnessContrastWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BrightnessContrastWith<Y>
+    pub fn into_user_data<Y>(self) -> BrightnessContrastWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BrightnessContrastWith {
             bright: self.bright,
             contrast: self.contrast,
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2891,26 +2894,26 @@ impl officekit_markup_base::Write for BrightnessContrast {
     }
 }
 
-impl<X: NodeExtra> CNvContentPartPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CNvContentPartPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> CNvContentPartPrWith<Y>
+    pub fn into_user_data<Y>(mut self) -> CNvContentPartPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CNvContentPartPrWith {
-            cp_locks: officekit_markup_base::into_extra_optional(
+            cp_locks: officekit_markup_base::into_user_data_optional(
                 &mut self.cp_locks,
-                CpLocksWith::into_extra,
+                CpLocksWith::into_user_data,
             ),
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             is_comment: self.is_comment,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2937,34 +2940,34 @@ impl officekit_markup_base::Write for CNvContentPartPr {
     }
 }
 
-impl<X: NodeExtra> CNvPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CNvPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> CNvPrWith<Y>
+    pub fn into_user_data<Y>(mut self) -> CNvPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CNvPrWith {
-            click_hyperlink: officekit_markup_base::into_extra_optional(
+            click_hyperlink: officekit_markup_base::into_user_data_optional(
                 &mut self.click_hyperlink,
-                super::drawing::ClickHyperlinkWith::into_extra,
+                super::drawing::ClickHyperlinkWith::into_user_data,
             ),
             descr: self.descr,
-            extension_list: officekit_markup_base::into_extra_optional(
+            extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.extension_list,
-                super::drawing::ExtensionListWith::into_extra,
+                super::drawing::ExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
             hidden: self.hidden,
-            hyperlink_for_hover: officekit_markup_base::into_extra_optional(
+            hyperlink_for_hover: officekit_markup_base::into_user_data_optional(
                 &mut self.hyperlink_for_hover,
-                super::drawing::HyperlinkForHoverWith::into_extra,
+                super::drawing::HyperlinkForHoverWith::into_user_data,
             ),
             id: self.id,
             name: self.name,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2995,19 +2998,19 @@ impl officekit_markup_base::Write for CNvPr {
     }
 }
 
-impl<X: NodeExtra> CameraToolWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CameraToolWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CameraToolWith<Y>
+    pub fn into_user_data<Y>(self) -> CameraToolWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CameraToolWith {
             cell_range: self.cell_range,
-            extra: Default::default(),
             spid: self.spid,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3035,18 +3038,18 @@ impl officekit_markup_base::Write for CameraTool {
     }
 }
 
-impl<X: NodeExtra> ColorTemperatureWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ColorTemperatureWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ColorTemperatureWith<Y>
+    pub fn into_user_data<Y>(self) -> ColorTemperatureWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ColorTemperatureWith {
             color_temp: self.color_temp,
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3073,18 +3076,18 @@ impl officekit_markup_base::Write for ColorTemperature {
     }
 }
 
-impl<X: NodeExtra> CompatExtWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CompatExtWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CompatExtWith<Y>
+    pub fn into_user_data<Y>(self) -> CompatExtWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CompatExtWith {
-            extra: Default::default(),
             spid: self.spid,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3111,28 +3114,31 @@ impl officekit_markup_base::Write for CompatExt {
     }
 }
 
-impl<X: NodeExtra> ContentPartWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ContentPartWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ContentPartWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ContentPartWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ContentPartWith {
             bw_mode: self.bw_mode,
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             id: self.id,
-            nv_content_part_pr: officekit_markup_base::into_extra_optional(
+            nv_content_part_pr: officekit_markup_base::into_user_data_optional(
                 &mut self.nv_content_part_pr,
-                NvContentPartPrWith::into_extra,
+                NvContentPartPrWith::into_user_data,
             ),
             unknown: self.unknown,
-            xfrm: officekit_markup_base::into_extra_optional(&mut self.xfrm, XfrmWith::into_extra),
+            user_data: Default::default(),
+            xfrm: officekit_markup_base::into_user_data_optional(
+                &mut self.xfrm,
+                XfrmWith::into_user_data,
+            ),
         }
     }
 
@@ -3160,20 +3166,19 @@ impl officekit_markup_base::Write for ContentPart {
     }
 }
 
-impl<X: NodeExtra> CpLocksWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CpLocksWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> CpLocksWith<Y>
+    pub fn into_user_data<Y>(mut self) -> CpLocksWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CpLocksWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             no_adjust_handles: self.no_adjust_handles,
             no_change_arrowheads: self.no_change_arrowheads,
             no_change_aspect: self.no_change_aspect,
@@ -3185,6 +3190,7 @@ impl<X: NodeExtra> CpLocksWith<X> {
             no_rot: self.no_rot,
             no_select: self.no_select,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3220,21 +3226,21 @@ impl officekit_markup_base::Write for CpLocks {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                super::drawing::ExtensionWith::into_extra,
+                super::drawing::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3258,17 +3264,17 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> ForegroundMarkWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ForegroundMarkWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ForegroundMarkWith<Y>
+    pub fn into_user_data<Y>(self) -> ForegroundMarkWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ForegroundMarkWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             x1: self.x1,
             x2: self.x2,
             y1: self.y1,
@@ -3302,21 +3308,21 @@ impl officekit_markup_base::Write for ForegroundMark {
     }
 }
 
-impl<X: NodeExtra> HiddenEffectsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HiddenEffectsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> HiddenEffectsWith<Y>
+    pub fn into_user_data<Y>(self) -> HiddenEffectsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HiddenEffectsWith {
-            content: officekit_markup_base::into_extra_required(
+            content: officekit_markup_base::into_user_data_required(
                 *self.content,
-                super::drawing::EffectPropertiesContentWith::into_extra,
+                super::drawing::EffectPropertiesContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3340,21 +3346,21 @@ impl officekit_markup_base::Write for HiddenEffects {
     }
 }
 
-impl<X: NodeExtra> HiddenFillWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HiddenFillWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> HiddenFillWith<Y>
+    pub fn into_user_data<Y>(self) -> HiddenFillWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HiddenFillWith {
-            content: officekit_markup_base::into_extra_required(
+            content: officekit_markup_base::into_user_data_required(
                 *self.content,
-                super::drawing::FillPropertiesContentWith::into_extra,
+                super::drawing::FillPropertiesContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3378,44 +3384,44 @@ impl officekit_markup_base::Write for HiddenFill {
     }
 }
 
-impl<X: NodeExtra> HiddenLineWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HiddenLineWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> HiddenLineWith<Y>
+    pub fn into_user_data<Y>(mut self) -> HiddenLineWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HiddenLineWith {
             algn: self.algn,
             cap: self.cap,
             cmpd: self.cmpd,
-            dash_content: officekit_markup_base::into_extra_optional(
+            dash_content: officekit_markup_base::into_user_data_optional(
                 &mut self.dash_content,
-                super::drawing::LineDashContentWith::into_extra,
+                super::drawing::LineDashContentWith::into_user_data,
             ),
-            extension_list: officekit_markup_base::into_extra_optional(
+            extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.extension_list,
-                super::drawing::ExtensionListWith::into_extra,
+                super::drawing::ExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            fill_content: officekit_markup_base::into_extra_optional(
+            fill_content: officekit_markup_base::into_user_data_optional(
                 &mut self.fill_content,
-                super::drawing::LineFillContentWith::into_extra,
+                super::drawing::LineFillContentWith::into_user_data,
             ),
-            head_end_style: officekit_markup_base::into_extra_optional(
+            head_end_style: officekit_markup_base::into_user_data_optional(
                 &mut self.head_end_style,
-                super::drawing::LineHeadEndStyleWith::into_extra,
+                super::drawing::LineHeadEndStyleWith::into_user_data,
             ),
-            join_content: officekit_markup_base::into_extra_optional(
+            join_content: officekit_markup_base::into_user_data_optional(
                 &mut self.join_content,
-                super::drawing::LineJoinContentWith::into_extra,
+                super::drawing::LineJoinContentWith::into_user_data,
             ),
-            tail_line_end_style: officekit_markup_base::into_extra_optional(
+            tail_line_end_style: officekit_markup_base::into_user_data_optional(
                 &mut self.tail_line_end_style,
-                super::drawing::TailLineEndStyleWith::into_extra,
+                super::drawing::TailLineEndStyleWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
             w: self.w,
         }
     }
@@ -3446,33 +3452,33 @@ impl officekit_markup_base::Write for HiddenLine {
     }
 }
 
-impl<X: NodeExtra> HiddenScene3dWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HiddenScene3dWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> HiddenScene3dWith<Y>
+    pub fn into_user_data<Y>(mut self) -> HiddenScene3dWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HiddenScene3dWith {
-            backdrop_plane: officekit_markup_base::into_extra_optional(
+            backdrop_plane: officekit_markup_base::into_user_data_optional(
                 &mut self.backdrop_plane,
-                super::drawing::BackdropPlaneWith::into_extra,
+                super::drawing::BackdropPlaneWith::into_user_data,
             ),
-            camera: officekit_markup_base::into_extra_required(
+            camera: officekit_markup_base::into_user_data_required(
                 *self.camera,
-                super::drawing::CameraWith::into_extra,
+                super::drawing::CameraWith::into_user_data,
             ),
-            extension_list: officekit_markup_base::into_extra_optional(
+            extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.extension_list,
-                super::drawing::ExtensionListWith::into_extra,
+                super::drawing::ExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            light_rig: officekit_markup_base::into_extra_required(
+            light_rig: officekit_markup_base::into_user_data_required(
                 *self.light_rig,
-                super::drawing::LightRigWith::into_extra,
+                super::drawing::LightRigWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3496,40 +3502,40 @@ impl officekit_markup_base::Write for HiddenScene3d {
     }
 }
 
-impl<X: NodeExtra> HiddenSp3dWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HiddenSp3dWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> HiddenSp3dWith<Y>
+    pub fn into_user_data<Y>(mut self) -> HiddenSp3dWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HiddenSp3dWith {
-            bottom_bevel: officekit_markup_base::into_extra_optional(
+            bottom_bevel: officekit_markup_base::into_user_data_optional(
                 &mut self.bottom_bevel,
-                super::drawing::BottomBevelWith::into_extra,
+                super::drawing::BottomBevelWith::into_user_data,
             ),
-            contour_color: officekit_markup_base::into_extra_optional(
+            contour_color: officekit_markup_base::into_user_data_optional(
                 &mut self.contour_color,
-                super::drawing::ContourColorWith::into_extra,
+                super::drawing::ContourColorWith::into_user_data,
             ),
             contour_w: self.contour_w,
-            extension_list: officekit_markup_base::into_extra_optional(
+            extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.extension_list,
-                super::drawing::ExtensionListWith::into_extra,
+                super::drawing::ExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            extrusion_color: officekit_markup_base::into_extra_optional(
+            extrusion_color: officekit_markup_base::into_user_data_optional(
                 &mut self.extrusion_color,
-                super::drawing::ExtrusionColorWith::into_extra,
+                super::drawing::ExtrusionColorWith::into_user_data,
             ),
             extrusion_h: self.extrusion_h,
             prst_material: self.prst_material,
-            top_bevel: officekit_markup_base::into_extra_optional(
+            top_bevel: officekit_markup_base::into_user_data_optional(
                 &mut self.top_bevel,
-                super::drawing::TopBevelWith::into_extra,
+                super::drawing::TopBevelWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
             z: self.z,
         }
     }
@@ -3560,21 +3566,21 @@ impl officekit_markup_base::Write for HiddenSp3d {
     }
 }
 
-impl<X: NodeExtra> ImgEffectWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ImgEffectWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ImgEffectWith<Y>
+    pub fn into_user_data<Y>(self) -> ImgEffectWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ImgEffectWith {
-            content: officekit_markup_base::into_extra_required(
+            content: officekit_markup_base::into_user_data_required(
                 *self.content,
-                PictureEffectContentWith::into_extra,
+                PictureEffectContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             visible: self.visible,
         }
     }
@@ -3602,22 +3608,22 @@ impl officekit_markup_base::Write for ImgEffect {
     }
 }
 
-impl<X: NodeExtra> ImgLayerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ImgLayerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ImgLayerWith<Y>
+    pub fn into_user_data<Y>(self) -> ImgLayerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ImgLayerWith {
             embed: self.embed,
-            extra: Default::default(),
-            img_effect: officekit_markup_base::into_extra_list(
+            img_effect: officekit_markup_base::into_user_data_list(
                 self.img_effect,
-                ImgEffectWith::into_extra,
+                ImgEffectWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3644,21 +3650,21 @@ impl officekit_markup_base::Write for ImgLayer {
     }
 }
 
-impl<X: NodeExtra> ImgPropsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ImgPropsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ImgPropsWith<Y>
+    pub fn into_user_data<Y>(self) -> ImgPropsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ImgPropsWith {
-            extra: Default::default(),
-            img_layer: officekit_markup_base::into_extra_required(
+            img_layer: officekit_markup_base::into_user_data_required(
                 *self.img_layer,
-                ImgLayerWith::into_extra,
+                ImgLayerWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3682,17 +3688,17 @@ impl officekit_markup_base::Write for ImgProps {
     }
 }
 
-impl<X: NodeExtra> IsCanvasWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> IsCanvasWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> IsCanvasWith<Y>
+    pub fn into_user_data<Y>(self) -> IsCanvasWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         IsCanvasWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -3720,17 +3726,17 @@ impl officekit_markup_base::Write for IsCanvas {
     }
 }
 
-impl<X: NodeExtra> MWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MWith<Y>
+    pub fn into_user_data<Y>(self) -> MWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3754,25 +3760,25 @@ impl officekit_markup_base::Write for M {
     }
 }
 
-impl<X: NodeExtra> NvContentPartPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> NvContentPartPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> NvContentPartPrWith<Y>
+    pub fn into_user_data<Y>(mut self) -> NvContentPartPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         NvContentPartPrWith {
-            c: officekit_markup_base::into_extra_optional(
+            c: officekit_markup_base::into_user_data_optional(
                 &mut self.c,
-                CNvContentPartPrWith::into_extra,
+                CNvContentPartPrWith::into_user_data,
             ),
-            c_nv_pr: officekit_markup_base::into_extra_required(
+            c_nv_pr: officekit_markup_base::into_user_data_required(
                 *self.c_nv_pr,
-                CNvPrWith::into_extra,
+                CNvPrWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3796,93 +3802,99 @@ impl officekit_markup_base::Write for NvContentPartPr {
     }
 }
 
-impl<X: NodeExtra> PictureEffectContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> PictureEffectContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PictureEffectContentWith<Y>
+    pub fn into_user_data<Y>(self) -> PictureEffectContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
-            Self::ArtisticBlur(node) => PictureEffectContentWith::ArtisticBlur(node.into_extra()),
+            Self::ArtisticBlur(node) => {
+                PictureEffectContentWith::ArtisticBlur(node.into_user_data())
+            }
             Self::ArtisticCement(node) => {
-                PictureEffectContentWith::ArtisticCement(node.into_extra())
+                PictureEffectContentWith::ArtisticCement(node.into_user_data())
             }
             Self::ArtisticChalkSketch(node) => {
-                PictureEffectContentWith::ArtisticChalkSketch(node.into_extra())
+                PictureEffectContentWith::ArtisticChalkSketch(node.into_user_data())
             }
             Self::ArtisticCrisscrossEtching(node) => {
-                PictureEffectContentWith::ArtisticCrisscrossEtching(node.into_extra())
+                PictureEffectContentWith::ArtisticCrisscrossEtching(node.into_user_data())
             }
             Self::ArtisticCutout(node) => {
-                PictureEffectContentWith::ArtisticCutout(node.into_extra())
+                PictureEffectContentWith::ArtisticCutout(node.into_user_data())
             }
             Self::ArtisticFilmGrain(node) => {
-                PictureEffectContentWith::ArtisticFilmGrain(node.into_extra())
+                PictureEffectContentWith::ArtisticFilmGrain(node.into_user_data())
             }
-            Self::ArtisticGlass(node) => PictureEffectContentWith::ArtisticGlass(node.into_extra()),
+            Self::ArtisticGlass(node) => {
+                PictureEffectContentWith::ArtisticGlass(node.into_user_data())
+            }
             Self::ArtisticGlowDiffused(node) => {
-                PictureEffectContentWith::ArtisticGlowDiffused(node.into_extra())
+                PictureEffectContentWith::ArtisticGlowDiffused(node.into_user_data())
             }
             Self::ArtisticGlowEdges(node) => {
-                PictureEffectContentWith::ArtisticGlowEdges(node.into_extra())
+                PictureEffectContentWith::ArtisticGlowEdges(node.into_user_data())
             }
             Self::ArtisticLightScreen(node) => {
-                PictureEffectContentWith::ArtisticLightScreen(node.into_extra())
+                PictureEffectContentWith::ArtisticLightScreen(node.into_user_data())
             }
             Self::ArtisticLineDrawing(node) => {
-                PictureEffectContentWith::ArtisticLineDrawing(node.into_extra())
+                PictureEffectContentWith::ArtisticLineDrawing(node.into_user_data())
             }
             Self::ArtisticMarker(node) => {
-                PictureEffectContentWith::ArtisticMarker(node.into_extra())
+                PictureEffectContentWith::ArtisticMarker(node.into_user_data())
             }
             Self::ArtisticMosiaicBubbles(node) => {
-                PictureEffectContentWith::ArtisticMosiaicBubbles(node.into_extra())
+                PictureEffectContentWith::ArtisticMosiaicBubbles(node.into_user_data())
             }
             Self::ArtisticPaintBrush(node) => {
-                PictureEffectContentWith::ArtisticPaintBrush(node.into_extra())
+                PictureEffectContentWith::ArtisticPaintBrush(node.into_user_data())
             }
             Self::ArtisticPaintStrokes(node) => {
-                PictureEffectContentWith::ArtisticPaintStrokes(node.into_extra())
+                PictureEffectContentWith::ArtisticPaintStrokes(node.into_user_data())
             }
             Self::ArtisticPastelsSmooth(node) => {
-                PictureEffectContentWith::ArtisticPastelsSmooth(node.into_extra())
+                PictureEffectContentWith::ArtisticPastelsSmooth(node.into_user_data())
             }
             Self::ArtisticPencilGrayscale(node) => {
-                PictureEffectContentWith::ArtisticPencilGrayscale(node.into_extra())
+                PictureEffectContentWith::ArtisticPencilGrayscale(node.into_user_data())
             }
             Self::ArtisticPencilSketch(node) => {
-                PictureEffectContentWith::ArtisticPencilSketch(node.into_extra())
+                PictureEffectContentWith::ArtisticPencilSketch(node.into_user_data())
             }
             Self::ArtisticPhotocopy(node) => {
-                PictureEffectContentWith::ArtisticPhotocopy(node.into_extra())
+                PictureEffectContentWith::ArtisticPhotocopy(node.into_user_data())
             }
             Self::ArtisticPlasticWrap(node) => {
-                PictureEffectContentWith::ArtisticPlasticWrap(node.into_extra())
+                PictureEffectContentWith::ArtisticPlasticWrap(node.into_user_data())
             }
             Self::ArtisticTexturizer(node) => {
-                PictureEffectContentWith::ArtisticTexturizer(node.into_extra())
+                PictureEffectContentWith::ArtisticTexturizer(node.into_user_data())
             }
             Self::ArtisticWatercolorSponge(node) => {
-                PictureEffectContentWith::ArtisticWatercolorSponge(node.into_extra())
+                PictureEffectContentWith::ArtisticWatercolorSponge(node.into_user_data())
             }
             Self::BackgroundRemoval(node) => {
-                PictureEffectContentWith::BackgroundRemoval(node.into_extra())
+                PictureEffectContentWith::BackgroundRemoval(node.into_user_data())
             }
             Self::BrightnessContrast(node) => {
-                PictureEffectContentWith::BrightnessContrast(node.into_extra())
+                PictureEffectContentWith::BrightnessContrast(node.into_user_data())
             }
             Self::ColorTemperature(node) => {
-                PictureEffectContentWith::ColorTemperature(node.into_extra())
+                PictureEffectContentWith::ColorTemperature(node.into_user_data())
             }
             Self::Other(node) => PictureEffectContentWith::Other(node),
-            Self::Saturation(node) => PictureEffectContentWith::Saturation(node.into_extra()),
-            Self::SharpenSoften(node) => PictureEffectContentWith::SharpenSoften(node.into_extra()),
+            Self::Saturation(node) => PictureEffectContentWith::Saturation(node.into_user_data()),
+            Self::SharpenSoften(node) => {
+                PictureEffectContentWith::SharpenSoften(node.into_user_data())
+            }
         }
     }
 }
 
-impl<X: NodeExtra> Default for PictureEffectContentWith<X> {
+impl<X: UserData> Default for PictureEffectContentWith<X> {
     fn default() -> Self {
         Self::ArtisticBlur(ArtisticBlurWith::default())
     }
@@ -4014,18 +4026,18 @@ impl officekit_markup_base::Write for PictureEffectContent {
     }
 }
 
-impl<X: NodeExtra> SaturationWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SaturationWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SaturationWith<Y>
+    pub fn into_user_data<Y>(self) -> SaturationWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SaturationWith {
-            extra: Default::default(),
             sat: self.sat,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4052,17 +4064,17 @@ impl officekit_markup_base::Write for Saturation {
     }
 }
 
-impl<X: NodeExtra> ShadowObscuredWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ShadowObscuredWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ShadowObscuredWith<Y>
+    pub fn into_user_data<Y>(self) -> ShadowObscuredWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ShadowObscuredWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -4090,18 +4102,18 @@ impl officekit_markup_base::Write for ShadowObscured {
     }
 }
 
-impl<X: NodeExtra> SharpenSoftenWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SharpenSoftenWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SharpenSoftenWith<Y>
+    pub fn into_user_data<Y>(self) -> SharpenSoftenWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SharpenSoftenWith {
             amount: self.amount,
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4128,17 +4140,17 @@ impl officekit_markup_base::Write for SharpenSoften {
     }
 }
 
-impl<X: NodeExtra> UseLocalDpiWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> UseLocalDpiWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> UseLocalDpiWith<Y>
+    pub fn into_user_data<Y>(self) -> UseLocalDpiWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         UseLocalDpiWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }
@@ -4166,28 +4178,28 @@ impl officekit_markup_base::Write for UseLocalDpi {
     }
 }
 
-impl<X: NodeExtra> XfrmWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> XfrmWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> XfrmWith<Y>
+    pub fn into_user_data<Y>(mut self) -> XfrmWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         XfrmWith {
-            extents: officekit_markup_base::into_extra_optional(
+            extents: officekit_markup_base::into_user_data_optional(
                 &mut self.extents,
-                super::drawing::ExtentsWith::into_extra,
+                super::drawing::ExtentsWith::into_user_data,
             ),
-            extra: Default::default(),
             flip_h: self.flip_h,
             flip_v: self.flip_v,
-            offset: officekit_markup_base::into_extra_optional(
+            offset: officekit_markup_base::into_user_data_optional(
                 &mut self.offset,
-                super::drawing::OffsetWith::into_extra,
+                super::drawing::OffsetWith::into_user_data,
             ),
             rot: self.rot,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

@@ -223,16 +223,16 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Address)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AddressMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Blip)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BlipMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -240,16 +240,16 @@ pub struct BlipMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<spreadsheet::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::MoreImagesAddress)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MoreImagesAddressMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -258,9 +258,9 @@ pub struct MoreImagesAddressMirror {
 pub struct WebImageSrdMirror {
     pub address: Box<super::Address>,
     pub blip: Option<Box<super::Blip>>,
-    pub extra: (),
     pub more_images_address: Option<Box<super::MoreImagesAddress>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -268,16 +268,16 @@ pub struct WebImageSrdMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct WebImagesSrdMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub web_image_srd: Vec<super::WebImageSrd>,
 }
 
 impl From<AddressMirror> for super::Address {
     fn from(item: AddressMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -314,8 +314,8 @@ where
 impl From<BlipMirror> for super::Blip {
     fn from(item: BlipMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -353,8 +353,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -391,8 +391,8 @@ where
 impl From<MoreImagesAddressMirror> for super::MoreImagesAddress {
     fn from(item: MoreImagesAddressMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -431,9 +431,9 @@ impl From<WebImageSrdMirror> for super::WebImageSrd {
         Self {
             address: item.address,
             blip: item.blip,
-            extra: item.extra,
             more_images_address: item.more_images_address,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -471,8 +471,8 @@ impl From<WebImagesSrdMirror> for super::WebImagesSrd {
     fn from(item: WebImagesSrdMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             web_image_srd: item.web_image_srd,
         }
     }

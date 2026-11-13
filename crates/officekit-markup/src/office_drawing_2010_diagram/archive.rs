@@ -226,21 +226,21 @@ pub struct CNvPrMirror {
     pub click_hyperlink: Option<Box<drawing::ClickHyperlink>>,
     pub descr: Option<String>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub extra: (),
     pub hidden: Option<String>,
     pub hyperlink_for_hover: Option<Box<drawing::HyperlinkForHover>>,
     pub id: Option<drawing::DrawingElementID>,
     pub name: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RecolorImg)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RecolorImgMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -250,13 +250,13 @@ impl From<CNvPrMirror> for super::CNvPr {
             click_hyperlink: item.click_hyperlink,
             descr: item.descr,
             extension_list: item.extension_list,
-            extra: item.extra,
             hidden: item.hidden,
             hyperlink_for_hover: item.hyperlink_for_hover,
             id: item.id,
             name: item.name,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -293,8 +293,8 @@ where
 impl From<RecolorImgMirror> for super::RecolorImg {
     fn from(item: RecolorImgMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }

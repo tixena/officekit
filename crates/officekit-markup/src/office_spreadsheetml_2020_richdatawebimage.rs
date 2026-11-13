@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::spreadsheet;
 use officekit_xml::element::Element;
@@ -287,15 +287,15 @@ pub static WEB_IMAGES_SRD_SHAPE: officekit_markup_base::Shape = officekit_markup
 /// Its schema type is `CT_WebImageSupportingRichDataRelationship`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AddressWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2020RichdatawebimageAddress,
+pub struct AddressWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2020RichdatawebimageAddress,
 }
 
 /// The `xlrdwi:address` element of the tree a read gives: [`AddressWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Address = AddressWith<()>;
 
 impl Eq for AddressWith<()> {}
@@ -304,14 +304,14 @@ impl Eq for AddressWith<()> {}
 /// schema type is `CT_WebImageSupportingRichDataRelationship`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BlipWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2020RichdatawebimageBlip,
+pub struct BlipWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2020RichdatawebimageBlip,
 }
 
-/// The `xlrdwi:blip` element of the tree a read gives: [`BlipWith`] holding nothing in `extra`.
+/// The `xlrdwi:blip` element of the tree a read gives: [`BlipWith`] holding nothing in `user_data`.
 pub type Blip = BlipWith<()>;
 
 impl Eq for BlipWith<()> {}
@@ -439,16 +439,17 @@ pub trait Context: crate::Context {
 /// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2020RichdatawebimageExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2020RichdatawebimageExtLst,
 }
 
-/// The `xlrdwi:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `xlrdwi:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -457,15 +458,15 @@ impl Eq for ExtLstWith<()> {}
 /// 3.5.1. Its schema type is `CT_WebImageSupportingRichDataRelationship`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MoreImagesAddressWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2020RichdatawebimageMoreImagesAddress,
+pub struct MoreImagesAddressWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2020RichdatawebimageMoreImagesAddress,
 }
 
 /// The `xlrdwi:moreImagesAddress` element of the tree a read gives: [`MoreImagesAddressWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type MoreImagesAddress = MoreImagesAddressWith<()>;
 
 impl Eq for MoreImagesAddressWith<()> {}
@@ -514,21 +515,21 @@ pub trait Visitor: crate::Visitor {
 /// 3.5.1. Its schema type is `CT_WebImageSupportingRichData`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WebImageSrdWith<X: NodeExtra> {
+pub struct WebImageSrdWith<X: UserData> {
     /// The child that is `Address`, which the schema requires.
     pub address: Box<AddressWith<X>>,
     /// The child that is `Blip`, when there is one.
     pub blip: Option<Box<BlipWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2020RichdatawebimageWebImageSrd,
     /// The child that is `MoreImagesAddress`, when there is one.
     pub more_images_address: Option<Box<MoreImagesAddressWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2020RichdatawebimageWebImageSrd,
 }
 
 /// The `xlrdwi:webImageSrd` element of the tree a read gives: [`WebImageSrdWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type WebImageSrd = WebImageSrdWith<()>;
 
 impl Eq for WebImageSrdWith<()> {}
@@ -537,34 +538,34 @@ impl Eq for WebImageSrdWith<()> {}
 /// 3.5.1. Its schema type is `CT_WebImagesSupportingRichData`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WebImagesSrdWith<X: NodeExtra> {
+pub struct WebImagesSrdWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2020RichdatawebimageWebImagesSrd,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2020RichdatawebimageWebImagesSrd,
     /// The children that are `WebImageSrd`, in order.
     pub web_image_srd: Vec<WebImageSrdWith<X>>,
 }
 
 /// The `xlrdwi:webImagesSrd` element of the tree a read gives: [`WebImagesSrdWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type WebImagesSrd = WebImagesSrdWith<()>;
 
 impl Eq for WebImagesSrdWith<()> {}
 
-impl<X: NodeExtra> AddressWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AddressWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AddressWith<Y>
+    pub fn into_user_data<Y>(self) -> AddressWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AddressWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -588,17 +589,17 @@ impl officekit_markup_base::Write for Address {
     }
 }
 
-impl<X: NodeExtra> BlipWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BlipWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BlipWith<Y>
+    pub fn into_user_data<Y>(self) -> BlipWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BlipWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -622,21 +623,21 @@ impl officekit_markup_base::Write for Blip {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                spreadsheet::ExtensionWith::into_extra,
+                spreadsheet::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -660,17 +661,17 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> MoreImagesAddressWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MoreImagesAddressWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MoreImagesAddressWith<Y>
+    pub fn into_user_data<Y>(self) -> MoreImagesAddressWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MoreImagesAddressWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -694,26 +695,29 @@ impl officekit_markup_base::Write for MoreImagesAddress {
     }
 }
 
-impl<X: NodeExtra> WebImageSrdWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> WebImageSrdWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> WebImageSrdWith<Y>
+    pub fn into_user_data<Y>(mut self) -> WebImageSrdWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         WebImageSrdWith {
-            address: officekit_markup_base::into_extra_required(
+            address: officekit_markup_base::into_user_data_required(
                 *self.address,
-                AddressWith::into_extra,
+                AddressWith::into_user_data,
             ),
-            blip: officekit_markup_base::into_extra_optional(&mut self.blip, BlipWith::into_extra),
-            extra: Default::default(),
-            more_images_address: officekit_markup_base::into_extra_optional(
+            blip: officekit_markup_base::into_user_data_optional(
+                &mut self.blip,
+                BlipWith::into_user_data,
+            ),
+            more_images_address: officekit_markup_base::into_user_data_optional(
                 &mut self.more_images_address,
-                MoreImagesAddressWith::into_extra,
+                MoreImagesAddressWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -737,24 +741,24 @@ impl officekit_markup_base::Write for WebImageSrd {
     }
 }
 
-impl<X: NodeExtra> WebImagesSrdWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> WebImagesSrdWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> WebImagesSrdWith<Y>
+    pub fn into_user_data<Y>(mut self) -> WebImagesSrdWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         WebImagesSrdWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
-            web_image_srd: officekit_markup_base::into_extra_list(
+            user_data: Default::default(),
+            web_image_srd: officekit_markup_base::into_user_data_list(
                 self.web_image_srd,
-                WebImageSrdWith::into_extra,
+                WebImageSrdWith::into_user_data,
             ),
         }
     }

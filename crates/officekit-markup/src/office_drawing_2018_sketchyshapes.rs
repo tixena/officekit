@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::{Element, Node};
@@ -499,16 +499,17 @@ pub trait Context: crate::Context {
 /// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2018SketchyshapesExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2018SketchyshapesExtLst,
 }
 
-/// The `ask:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `ask:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -517,15 +518,15 @@ impl Eq for ExtLstWith<()> {}
 /// 3.5.1. Its schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LineSketchCurvedWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2018SketchyshapesLineSketchCurved,
+pub struct LineSketchCurvedWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2018SketchyshapesLineSketchCurved,
 }
 
 /// The `ask:lineSketchCurved` element of the tree a read gives: [`LineSketchCurvedWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type LineSketchCurved = LineSketchCurvedWith<()>;
 
 impl Eq for LineSketchCurvedWith<()> {}
@@ -534,15 +535,15 @@ impl Eq for LineSketchCurvedWith<()> {}
 /// 3.5.1. Its schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LineSketchFreehandWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2018SketchyshapesLineSketchFreehand,
+pub struct LineSketchFreehandWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2018SketchyshapesLineSketchFreehand,
 }
 
 /// The `ask:lineSketchFreehand` element of the tree a read gives: [`LineSketchFreehandWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type LineSketchFreehand = LineSketchFreehandWith<()>;
 
 impl Eq for LineSketchFreehandWith<()> {}
@@ -551,15 +552,15 @@ impl Eq for LineSketchFreehandWith<()> {}
 /// 3.5.1. Its schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LineSketchNoneWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2018SketchyshapesLineSketchNone,
+pub struct LineSketchNoneWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2018SketchyshapesLineSketchNone,
 }
 
 /// The `ask:lineSketchNone` element of the tree a read gives: [`LineSketchNoneWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type LineSketchNone = LineSketchNoneWith<()>;
 
 impl Eq for LineSketchNoneWith<()> {}
@@ -568,15 +569,15 @@ impl Eq for LineSketchNoneWith<()> {}
 /// 3.5.1. Its schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LineSketchScribbleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2018SketchyshapesLineSketchScribble,
+pub struct LineSketchScribbleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2018SketchyshapesLineSketchScribble,
 }
 
 /// The `ask:lineSketchScribble` element of the tree a read gives: [`LineSketchScribbleWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type LineSketchScribble = LineSketchScribbleWith<()>;
 
 impl Eq for LineSketchScribbleWith<()> {}
@@ -585,13 +586,11 @@ impl Eq for LineSketchScribbleWith<()> {}
 /// 3.5.1. Its schema type is `CT_LineSketchStyleProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LineSketchStylePropsWith<X: NodeExtra> {
+pub struct LineSketchStylePropsWith<X: UserData> {
     /// The child that is an item of `drawing::GeometryContent`, when there is one.
     pub content: Option<Box<drawing::GeometryContentWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2018SketchyshapesLineSketchStyleProps,
     /// The attribute `sd`, when the element has it.
     pub sd: Option<String>,
     /// The child that is `Seed`, when there is one.
@@ -600,10 +599,12 @@ pub struct LineSketchStylePropsWith<X: NodeExtra> {
     pub r#type: Option<Box<TypeWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2018SketchyshapesLineSketchStyleProps,
 }
 
 /// The `ask:lineSketchStyleProps` element of the tree a read gives: [`LineSketchStylePropsWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type LineSketchStyleProps = LineSketchStylePropsWith<()>;
 
 impl Eq for LineSketchStylePropsWith<()> {}
@@ -615,7 +616,7 @@ impl Eq for LineSketchStylePropsWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum LineSketchTypePropertiesContentWith<X: NodeExtra> {
+pub enum LineSketchTypePropertiesContentWith<X: UserData> {
     /// The element `ask:lineSketchCurved`, a `LineSketchCurved`.
     LineSketchCurved(LineSketchCurvedWith<X>),
     /// The element `ask:lineSketchFreehand`, a `LineSketchFreehand`.
@@ -629,7 +630,7 @@ pub enum LineSketchTypePropertiesContentWith<X: NodeExtra> {
 }
 
 /// [`LineSketchTypePropertiesContentWith`] of the tree a read gives, where no node holds anything
-/// in `extra`.
+/// in `user_data`.
 pub type LineSketchTypePropertiesContent = LineSketchTypePropertiesContentWith<()>;
 
 impl Eq for LineSketchTypePropertiesContentWith<()> {}
@@ -638,16 +639,16 @@ impl Eq for LineSketchTypePropertiesContentWith<()> {}
 /// schema type is `ST_LineSketchSeed`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SeedWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2018SketchyshapesSeed,
+pub struct SeedWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2018SketchyshapesSeed,
     /// The element's text.
     pub value: String,
 }
 
-/// The `ask:seed` element of the tree a read gives: [`SeedWith`] holding nothing in `extra`.
+/// The `ask:seed` element of the tree a read gives: [`SeedWith`] holding nothing in `user_data`.
 pub type Seed = SeedWith<()>;
 
 impl Eq for SeedWith<()> {}
@@ -656,16 +657,16 @@ impl Eq for SeedWith<()> {}
 /// schema type is `CT_LineSketchTypeProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TypeWith<X: NodeExtra> {
+pub struct TypeWith<X: UserData> {
     /// The child that is an item of `LineSketchTypePropertiesContent`, when there is one.
     pub content: Option<Box<LineSketchTypePropertiesContentWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2018SketchyshapesType,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2018SketchyshapesType,
 }
 
-/// The `ask:type` element of the tree a read gives: [`TypeWith`] holding nothing in `extra`.
+/// The `ask:type` element of the tree a read gives: [`TypeWith`] holding nothing in `user_data`.
 pub type Type = TypeWith<()>;
 
 impl Eq for TypeWith<()> {}
@@ -740,21 +741,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                drawing::ExtensionWith::into_extra,
+                drawing::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -778,17 +779,17 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> LineSketchCurvedWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LineSketchCurvedWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LineSketchCurvedWith<Y>
+    pub fn into_user_data<Y>(self) -> LineSketchCurvedWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LineSketchCurvedWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -812,17 +813,17 @@ impl officekit_markup_base::Write for LineSketchCurved {
     }
 }
 
-impl<X: NodeExtra> LineSketchFreehandWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LineSketchFreehandWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LineSketchFreehandWith<Y>
+    pub fn into_user_data<Y>(self) -> LineSketchFreehandWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LineSketchFreehandWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -846,17 +847,17 @@ impl officekit_markup_base::Write for LineSketchFreehand {
     }
 }
 
-impl<X: NodeExtra> LineSketchNoneWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LineSketchNoneWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LineSketchNoneWith<Y>
+    pub fn into_user_data<Y>(self) -> LineSketchNoneWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LineSketchNoneWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -880,17 +881,17 @@ impl officekit_markup_base::Write for LineSketchNone {
     }
 }
 
-impl<X: NodeExtra> LineSketchScribbleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LineSketchScribbleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LineSketchScribbleWith<Y>
+    pub fn into_user_data<Y>(self) -> LineSketchScribbleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LineSketchScribbleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -914,31 +915,34 @@ impl officekit_markup_base::Write for LineSketchScribble {
     }
 }
 
-impl<X: NodeExtra> LineSketchStylePropsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LineSketchStylePropsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> LineSketchStylePropsWith<Y>
+    pub fn into_user_data<Y>(mut self) -> LineSketchStylePropsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LineSketchStylePropsWith {
-            content: officekit_markup_base::into_extra_optional(
+            content: officekit_markup_base::into_user_data_optional(
                 &mut self.content,
-                drawing::GeometryContentWith::into_extra,
+                drawing::GeometryContentWith::into_user_data,
             ),
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             sd: self.sd,
-            seed: officekit_markup_base::into_extra_optional(&mut self.seed, SeedWith::into_extra),
-            r#type: officekit_markup_base::into_extra_optional(
+            seed: officekit_markup_base::into_user_data_optional(
+                &mut self.seed,
+                SeedWith::into_user_data,
+            ),
+            r#type: officekit_markup_base::into_user_data_optional(
                 &mut self.r#type,
-                TypeWith::into_extra,
+                TypeWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -965,25 +969,25 @@ impl officekit_markup_base::Write for LineSketchStyleProps {
     }
 }
 
-impl<X: NodeExtra> LineSketchTypePropertiesContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> LineSketchTypePropertiesContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LineSketchTypePropertiesContentWith<Y>
+    pub fn into_user_data<Y>(self) -> LineSketchTypePropertiesContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::LineSketchCurved(node) => {
-                LineSketchTypePropertiesContentWith::LineSketchCurved(node.into_extra())
+                LineSketchTypePropertiesContentWith::LineSketchCurved(node.into_user_data())
             }
             Self::LineSketchFreehand(node) => {
-                LineSketchTypePropertiesContentWith::LineSketchFreehand(node.into_extra())
+                LineSketchTypePropertiesContentWith::LineSketchFreehand(node.into_user_data())
             }
             Self::LineSketchNone(node) => {
-                LineSketchTypePropertiesContentWith::LineSketchNone(node.into_extra())
+                LineSketchTypePropertiesContentWith::LineSketchNone(node.into_user_data())
             }
             Self::LineSketchScribble(node) => {
-                LineSketchTypePropertiesContentWith::LineSketchScribble(node.into_extra())
+                LineSketchTypePropertiesContentWith::LineSketchScribble(node.into_user_data())
             }
             Self::Other(node) => LineSketchTypePropertiesContentWith::Other(node),
         }
@@ -1026,17 +1030,17 @@ impl officekit_markup_base::Write for LineSketchTypePropertiesContent {
     }
 }
 
-impl<X: NodeExtra> SeedWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SeedWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SeedWith<Y>
+    pub fn into_user_data<Y>(self) -> SeedWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SeedWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -1064,21 +1068,21 @@ impl officekit_markup_base::Write for Seed {
     }
 }
 
-impl<X: NodeExtra> TypeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TypeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> TypeWith<Y>
+    pub fn into_user_data<Y>(mut self) -> TypeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TypeWith {
-            content: officekit_markup_base::into_extra_optional(
+            content: officekit_markup_base::into_user_data_optional(
                 &mut self.content,
-                LineSketchTypePropertiesContentWith::into_extra,
+                LineSketchTypePropertiesContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

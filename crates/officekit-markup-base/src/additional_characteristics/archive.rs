@@ -222,19 +222,19 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::SetOfAdditionalCharacteristics)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SetOfAdditionalCharacteristicsMirror {
-    pub extra: (),
     pub single_characteristic: Vec<super::SingleCharacteristic>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SingleCharacteristic)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SingleCharacteristicMirror {
-    pub extra: (),
     pub name: Option<String>,
     pub relation: Option<super::CharacteristicRelationshipTypes>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
     pub vocabulary: Option<String>,
 }
@@ -242,9 +242,9 @@ pub struct SingleCharacteristicMirror {
 impl From<SetOfAdditionalCharacteristicsMirror> for super::SetOfAdditionalCharacteristics {
     fn from(item: SetOfAdditionalCharacteristicsMirror) -> Self {
         Self {
-            extra: item.extra,
             single_characteristic: item.single_characteristic,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -285,10 +285,10 @@ where
 impl From<SingleCharacteristicMirror> for super::SingleCharacteristic {
     fn from(item: SingleCharacteristicMirror) -> Self {
         Self {
-            extra: item.extra,
             name: item.name,
             relation: item.relation,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
             vocabulary: item.vocabulary,
         }

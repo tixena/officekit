@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use crate::NodeExtra;
+use crate::UserData;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
@@ -279,15 +279,15 @@ pub static TEXT_WRAPPING_SHAPE: crate::Shape = crate::Shape {
 /// schema type is `CT_AnchorLock`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AnchorLocationIsLockedWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlWordprocessingDrawingAnchorLocationIsLocked,
+pub struct AnchorLocationIsLockedWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlWordprocessingDrawingAnchorLocationIsLocked,
 }
 
 /// The `w10:anchorlock` element of the tree a read gives: [`AnchorLocationIsLockedWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type AnchorLocationIsLocked = AnchorLocationIsLockedWith<()>;
 
 impl Eq for AnchorLocationIsLockedWith<()> {}
@@ -398,21 +398,21 @@ pub enum BorderTypeMember {
 /// type is `CT_Border`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BottomBorderWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlWordprocessingDrawingBottomBorder,
+pub struct BottomBorderWith<X: UserData> {
     /// The attribute `shadow`, when the element has it.
     pub shadow: Option<BorderShadowType>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<BorderType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlWordprocessingDrawingBottomBorder,
     /// The attribute `width`, when the element has it.
     pub width: Option<String>,
 }
 
 /// The `w10:borderbottom` element of the tree a read gives: [`BottomBorderWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type BottomBorder = BottomBorderWith<()>;
 
 impl Eq for BottomBorderWith<()> {}
@@ -449,21 +449,21 @@ pub enum HorizontalAnchorTypeMember {
 /// is `CT_Border`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LeftBorderWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlWordprocessingDrawingLeftBorder,
+pub struct LeftBorderWith<X: UserData> {
     /// The attribute `shadow`, when the element has it.
     pub shadow: Option<BorderShadowType>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<BorderType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlWordprocessingDrawingLeftBorder,
     /// The attribute `width`, when the element has it.
     pub width: Option<String>,
 }
 
 /// The `w10:borderleft` element of the tree a read gives: [`LeftBorderWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type LeftBorder = LeftBorderWith<()>;
 
 impl Eq for LeftBorderWith<()> {}
@@ -472,21 +472,21 @@ impl Eq for LeftBorderWith<()> {}
 /// is `CT_Border`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RightBorderWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlWordprocessingDrawingRightBorder,
+pub struct RightBorderWith<X: UserData> {
     /// The attribute `shadow`, when the element has it.
     pub shadow: Option<BorderShadowType>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<BorderType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlWordprocessingDrawingRightBorder,
     /// The attribute `width`, when the element has it.
     pub width: Option<String>,
 }
 
 /// The `w10:borderright` element of the tree a read gives: [`RightBorderWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type RightBorder = RightBorderWith<()>;
 
 impl Eq for RightBorderWith<()> {}
@@ -495,23 +495,23 @@ impl Eq for RightBorderWith<()> {}
 /// `CT_Wrap`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextWrappingWith<X: NodeExtra> {
+pub struct TextWrappingWith<X: UserData> {
     /// The attribute `anchorx`, when the element has it.
     pub anchorx: Option<HorizontalAnchorType>,
     /// The attribute `anchory`, when the element has it.
     pub anchory: Option<VerticalAnchorType>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlWordprocessingDrawingTextWrapping,
     /// The attribute `side`, when the element has it.
     pub side: Option<TextWrappingSide>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<TextWrappingType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlWordprocessingDrawingTextWrapping,
 }
 
 /// The `w10:wrap` element of the tree a read gives: [`TextWrappingWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type TextWrapping = TextWrappingWith<()>;
 
 impl Eq for TextWrappingWith<()> {}
@@ -578,21 +578,21 @@ pub enum TextWrappingTypeMember {
 /// `CT_Border`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TopBorderWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlWordprocessingDrawingTopBorder,
+pub struct TopBorderWith<X: UserData> {
     /// The attribute `shadow`, when the element has it.
     pub shadow: Option<BorderShadowType>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<BorderType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlWordprocessingDrawingTopBorder,
     /// The attribute `width`, when the element has it.
     pub width: Option<String>,
 }
 
 /// The `w10:bordertop` element of the tree a read gives: [`TopBorderWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type TopBorder = TopBorderWith<()>;
 
 impl Eq for TopBorderWith<()> {}
@@ -625,17 +625,17 @@ pub enum VerticalAnchorTypeMember {
     Text,
 }
 
-impl<X: NodeExtra> AnchorLocationIsLockedWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AnchorLocationIsLockedWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AnchorLocationIsLockedWith<Y>
+    pub fn into_user_data<Y>(self) -> AnchorLocationIsLockedWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AnchorLocationIsLockedWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -784,19 +784,19 @@ impl BorderType {
     }
 }
 
-impl<X: NodeExtra> BottomBorderWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BottomBorderWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BottomBorderWith<Y>
+    pub fn into_user_data<Y>(self) -> BottomBorderWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BottomBorderWith {
-            extra: Default::default(),
             shadow: self.shadow,
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
             width: self.width,
         }
     }
@@ -881,19 +881,19 @@ impl HorizontalAnchorType {
     }
 }
 
-impl<X: NodeExtra> LeftBorderWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LeftBorderWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LeftBorderWith<Y>
+    pub fn into_user_data<Y>(self) -> LeftBorderWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LeftBorderWith {
-            extra: Default::default(),
             shadow: self.shadow,
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
             width: self.width,
         }
     }
@@ -923,19 +923,19 @@ impl crate::Write for LeftBorder {
     }
 }
 
-impl<X: NodeExtra> RightBorderWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RightBorderWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RightBorderWith<Y>
+    pub fn into_user_data<Y>(self) -> RightBorderWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RightBorderWith {
-            extra: Default::default(),
             shadow: self.shadow,
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
             width: self.width,
         }
     }
@@ -965,21 +965,21 @@ impl crate::Write for RightBorder {
     }
 }
 
-impl<X: NodeExtra> TextWrappingWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TextWrappingWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TextWrappingWith<Y>
+    pub fn into_user_data<Y>(self) -> TextWrappingWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TextWrappingWith {
             anchorx: self.anchorx,
             anchory: self.anchory,
-            extra: Default::default(),
             side: self.side,
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1112,19 +1112,19 @@ impl TextWrappingType {
     }
 }
 
-impl<X: NodeExtra> TopBorderWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TopBorderWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TopBorderWith<Y>
+    pub fn into_user_data<Y>(self) -> TopBorderWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TopBorderWith {
-            extra: Default::default(),
             shadow: self.shadow,
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
             width: self.width,
         }
     }

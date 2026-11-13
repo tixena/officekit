@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::spreadsheet;
 use officekit_xml::element::Element;
@@ -359,17 +359,17 @@ pub trait Context: crate::Context {
 /// Its schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023MsFormsExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023MsFormsExtLst,
 }
 
 /// The `xlmsforms:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -378,11 +378,9 @@ impl Eq for ExtLstWith<()> {}
 /// Its schema type is `CT_MsForm`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MsFormWith<X: NodeExtra> {
+pub struct MsFormWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023MsFormsMsForm,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `isFormConnected`, when the element has it.
@@ -395,10 +393,12 @@ pub struct MsFormWith<X: NodeExtra> {
     pub synced_question_id: Vec<SyncedQuestionIdWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023MsFormsMsForm,
 }
 
 /// The `xlmsforms:msForm` element of the tree a read gives: [`MsFormWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type MsForm = MsFormWith<()>;
 
 impl Eq for MsFormWith<()> {}
@@ -407,19 +407,19 @@ impl Eq for MsFormWith<()> {}
 /// 3.5.1. Its schema type is `CT_Question`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct QuestionWith<X: NodeExtra> {
+pub struct QuestionWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023MsFormsQuestion,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023MsFormsQuestion,
 }
 
 /// The `xlmsforms:question` element of the tree a read gives: [`QuestionWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Question = QuestionWith<()>;
 
 impl Eq for QuestionWith<()> {}
@@ -428,17 +428,17 @@ impl Eq for QuestionWith<()> {}
 /// version 3.5.1. Its schema type is `ST_Xstring`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SyncedQuestionIdWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023MsFormsSyncedQuestionId,
+pub struct SyncedQuestionIdWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023MsFormsSyncedQuestionId,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xlmsforms:syncedQuestionId` element of the tree a read gives: [`SyncedQuestionIdWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type SyncedQuestionId = SyncedQuestionIdWith<()>;
 
 impl Eq for SyncedQuestionIdWith<()> {}
@@ -471,21 +471,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                spreadsheet::ExtensionWith::into_extra,
+                spreadsheet::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -509,29 +509,29 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> MsFormWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MsFormWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> MsFormWith<Y>
+    pub fn into_user_data<Y>(mut self) -> MsFormWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MsFormWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             id: self.id,
             is_form_connected: self.is_form_connected,
             latest_event_marker: self.latest_event_marker,
             max_response_id: self.max_response_id,
-            synced_question_id: officekit_markup_base::into_extra_list(
+            synced_question_id: officekit_markup_base::into_user_data_list(
                 self.synced_question_id,
-                SyncedQuestionIdWith::into_extra,
+                SyncedQuestionIdWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -561,22 +561,22 @@ impl officekit_markup_base::Write for MsForm {
     }
 }
 
-impl<X: NodeExtra> QuestionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> QuestionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> QuestionWith<Y>
+    pub fn into_user_data<Y>(mut self) -> QuestionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         QuestionWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             id: self.id,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -603,17 +603,17 @@ impl officekit_markup_base::Write for Question {
     }
 }
 
-impl<X: NodeExtra> SyncedQuestionIdWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SyncedQuestionIdWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SyncedQuestionIdWith<Y>
+    pub fn into_user_data<Y>(self) -> SyncedQuestionIdWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SyncedQuestionIdWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }

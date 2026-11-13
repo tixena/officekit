@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -278,19 +278,19 @@ pub trait Context: crate::Context {
 /// XML SDK, version 3.5.1. Its schema type is `CT_ExternalCodeServiceImageAsInput`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExternalCodeServiceImageAsInputWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2025ExternalCodeService2ExternalCodeServiceImageAsInput,
+pub struct ExternalCodeServiceImageAsInputWith<X: UserData> {
     /// The attribute `maxHeight`, when the element has it.
     pub max_height: Option<String>,
     /// The attribute `maxWidth`, when the element has it.
     pub max_width: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2025ExternalCodeService2ExternalCodeServiceImageAsInput,
 }
 
 /// The `xlecs2:externalCodeServiceImageAsInput` element of the tree a read gives:
-/// [`ExternalCodeServiceImageAsInputWith`] holding nothing in `extra`.
+/// [`ExternalCodeServiceImageAsInputWith`] holding nothing in `user_data`.
 pub type ExternalCodeServiceImageAsInput = ExternalCodeServiceImageAsInputWith<()>;
 
 impl Eq for ExternalCodeServiceImageAsInputWith<()> {}
@@ -311,19 +311,19 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> ExternalCodeServiceImageAsInputWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExternalCodeServiceImageAsInputWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExternalCodeServiceImageAsInputWith<Y>
+    pub fn into_user_data<Y>(self) -> ExternalCodeServiceImageAsInputWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExternalCodeServiceImageAsInputWith {
-            extra: Default::default(),
             max_height: self.max_height,
             max_width: self.max_width,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

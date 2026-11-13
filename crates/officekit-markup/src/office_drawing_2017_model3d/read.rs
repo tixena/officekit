@@ -376,7 +376,7 @@ pub fn ext_lst_office_art_extension_list(element: &Element) -> super::ExtLstOffi
 pub fn illuminance(element: &Element) -> super::Illuminance {
     let reader = officekit_markup_base::Reader::new(element, &super::ILLUMINANCE_SHAPE);
     super::Illuminance {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -386,7 +386,7 @@ pub fn illuminance(element: &Element) -> super::Illuminance {
 pub fn intensity(element: &Element) -> super::Intensity {
     let reader = officekit_markup_base::Reader::new(element, &super::INTENSITY_SHAPE);
     super::Intensity {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -413,7 +413,7 @@ pub fn look_at(element: &Element) -> super::LookAt {
 pub fn meter_per_model_unit(element: &Element) -> super::MeterPerModelUnit {
     let reader = officekit_markup_base::Reader::new(element, &super::METER_PER_MODEL_UNIT_SHAPE);
     super::MeterPerModelUnit {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -719,7 +719,7 @@ pub fn sy(element: &Element) -> super::Sy {
 pub fn sz_positive_ratio(element: &Element) -> super::SzPositiveRatio {
     let reader = officekit_markup_base::Reader::new(element, &super::SZ_POSITIVE_RATIO_SHAPE);
     super::SzPositiveRatio {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -765,7 +765,7 @@ pub fn trans(element: &Element) -> super::Trans {
 pub fn unk_light(element: &Element) -> super::UnkLight {
     let reader = officekit_markup_base::Reader::new(element, &super::UNK_LIGHT_SHAPE);
     super::UnkLight {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }

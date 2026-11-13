@@ -224,8 +224,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Add)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AddMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -234,33 +234,33 @@ pub struct AddMirror {
 pub struct AnchrMirror {
     pub comment: Box<super::Comment>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Asgn)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AsgnMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Atrbtn)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AtrbtnMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Comment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -268,9 +268,9 @@ pub struct CommentMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DateMirror {
     pub end_dt: Option<String>,
-    pub extra: (),
     pub st_dt: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -281,10 +281,10 @@ pub struct EventMirror {
     pub atrbtn: Box<super::Atrbtn>,
     pub content: Option<Box<super::TaskHistoryEventContent>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub id: Option<String>,
     pub time: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -292,8 +292,8 @@ pub struct EventMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<presentation::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -301,16 +301,16 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct HistoryMirror {
     pub event: Vec<super::Event>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PcntCmplt)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PcntCmpltMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -318,8 +318,8 @@ pub struct PcntCmpltMirror {
 #[rkyv(remote = super::Pri)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PriMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -328,18 +328,18 @@ pub struct PriMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TaskHistoryDetailsMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub history: Box<super::History>,
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Title)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TitleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -347,33 +347,33 @@ pub struct TitleMirror {
 #[rkyv(remote = super::UnAsgn)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnAsgnMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::UnasgnAll)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnasgnAllMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Undo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UndoMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Unknown)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnknownMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -396,8 +396,8 @@ pub enum TaskHistoryEventContent {
 impl From<AddMirror> for super::Add {
     fn from(item: AddMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -436,8 +436,8 @@ impl From<AnchrMirror> for super::Anchr {
         Self {
             comment: item.comment,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -474,8 +474,8 @@ where
 impl From<AsgnMirror> for super::Asgn {
     fn from(item: AsgnMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -512,8 +512,8 @@ where
 impl From<AtrbtnMirror> for super::Atrbtn {
     fn from(item: AtrbtnMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -550,9 +550,9 @@ where
 impl From<CommentMirror> for super::Comment {
     fn from(item: CommentMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -590,9 +590,9 @@ impl From<DateMirror> for super::Date {
     fn from(item: DateMirror) -> Self {
         Self {
             end_dt: item.end_dt,
-            extra: item.extra,
             st_dt: item.st_dt,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -633,10 +633,10 @@ impl From<EventMirror> for super::Event {
             atrbtn: item.atrbtn,
             content: item.content,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             id: item.id,
             time: item.time,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -674,8 +674,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -713,8 +713,8 @@ impl From<HistoryMirror> for super::History {
     fn from(item: HistoryMirror) -> Self {
         Self {
             event: item.event,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -751,8 +751,8 @@ where
 impl From<PcntCmpltMirror> for super::PcntCmplt {
     fn from(item: PcntCmpltMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -790,8 +790,8 @@ where
 impl From<PriMirror> for super::Pri {
     fn from(item: PriMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -830,10 +830,10 @@ impl From<TaskHistoryDetailsMirror> for super::TaskHistoryDetails {
     fn from(item: TaskHistoryDetailsMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             history: item.history,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -870,8 +870,8 @@ where
 impl From<TitleMirror> for super::Title {
     fn from(item: TitleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -909,8 +909,8 @@ where
 impl From<UnAsgnMirror> for super::UnAsgn {
     fn from(item: UnAsgnMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -947,8 +947,8 @@ where
 impl From<UnasgnAllMirror> for super::UnasgnAll {
     fn from(item: UnasgnAllMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -985,9 +985,9 @@ where
 impl From<UndoMirror> for super::Undo {
     fn from(item: UndoMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1024,8 +1024,8 @@ where
 impl From<UnknownMirror> for super::Unknown {
     fn from(item: UnknownMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

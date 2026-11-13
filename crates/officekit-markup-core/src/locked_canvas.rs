@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -245,55 +245,55 @@ pub static LOCKED_CANVAS_CONTAINER_SHAPE: officekit_markup_base::Shape =
 /// schema type is `CT_GvmlGroupShape`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LockedCanvasContainerWith<X: NodeExtra> {
+pub struct LockedCanvasContainerWith<X: UserData> {
     /// The children that are an item of `super::drawing::GroupShapeContent`, in order.
     pub content: Vec<super::drawing::GroupShapeContentWith<X>>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::LockedCanvasLockedCanvasContainer,
     /// The child that is `super::drawing::NonVisualPropertiesForAGroupShape`, which the schema
     /// requires.
     pub non_visual_properties_for_a_group_shape:
         Box<super::drawing::NonVisualPropertiesForAGroupShapeWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::LockedCanvasLockedCanvasContainer,
     /// The child that is `super::drawing::VisualGroupShapeProperties`, which the schema requires.
     pub visual_group_shape_properties: Box<super::drawing::VisualGroupShapePropertiesWith<X>>,
 }
 
 /// The `lc:lockedCanvas` element of the tree a read gives: [`LockedCanvasContainerWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type LockedCanvasContainer = LockedCanvasContainerWith<()>;
 
 impl Eq for LockedCanvasContainerWith<()> {}
 
-impl<X: NodeExtra> LockedCanvasContainerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LockedCanvasContainerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> LockedCanvasContainerWith<Y>
+    pub fn into_user_data<Y>(mut self) -> LockedCanvasContainerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LockedCanvasContainerWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                super::drawing::GroupShapeContentWith::into_extra,
+                super::drawing::GroupShapeContentWith::into_user_data,
             ),
-            extension_list: officekit_markup_base::into_extra_optional(
+            extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.extension_list,
-                super::drawing::ExtensionListWith::into_extra,
+                super::drawing::ExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            non_visual_properties_for_a_group_shape: officekit_markup_base::into_extra_required(
+            non_visual_properties_for_a_group_shape: officekit_markup_base::into_user_data_required(
                 *self.non_visual_properties_for_a_group_shape,
-                super::drawing::NonVisualPropertiesForAGroupShapeWith::into_extra,
+                super::drawing::NonVisualPropertiesForAGroupShapeWith::into_user_data,
             ),
             unknown: self.unknown,
-            visual_group_shape_properties: officekit_markup_base::into_extra_required(
+            user_data: Default::default(),
+            visual_group_shape_properties: officekit_markup_base::into_user_data_required(
                 *self.visual_group_shape_properties,
-                super::drawing::VisualGroupShapePropertiesWith::into_extra,
+                super::drawing::VisualGroupShapePropertiesWith::into_user_data,
             ),
         }
     }

@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -362,16 +362,17 @@ pub trait Context: crate::Context {
 /// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWebextensionsTaskpanes201011ExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWebextensionsTaskpanes201011ExtLst,
 }
 
-/// The `wetp:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `wetp:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -380,19 +381,19 @@ impl Eq for ExtLstWith<()> {}
 /// schema type is `CT_OsfTaskpane`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TaskpaneWith<X: NodeExtra> {
+pub struct TaskpaneWith<X: UserData> {
     /// The attribute `dockstate`, when the element has it.
     pub dockstate: Option<String>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWebextensionsTaskpanes201011Taskpane,
     /// The attribute `locked`, when the element has it.
     pub locked: Option<String>,
     /// The attribute `row`, when the element has it.
     pub row: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWebextensionsTaskpanes201011Taskpane,
     /// The attribute `visibility`, when the element has it.
     pub visibility: Option<String>,
     /// The child that is `Webextensionref`, which the schema requires.
@@ -402,7 +403,7 @@ pub struct TaskpaneWith<X: NodeExtra> {
 }
 
 /// The `wetp:taskpane` element of the tree a read gives: [`TaskpaneWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Taskpane = TaskpaneWith<()>;
 
 impl Eq for TaskpaneWith<()> {}
@@ -411,17 +412,17 @@ impl Eq for TaskpaneWith<()> {}
 /// Its schema type is `CT_OsfTaskpanes`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TaskpanesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWebextensionsTaskpanes201011Taskpanes,
+pub struct TaskpanesWith<X: UserData> {
     /// The children that are `Taskpane`, in order.
     pub taskpane: Vec<TaskpaneWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWebextensionsTaskpanes201011Taskpanes,
 }
 
 /// The `wetp:taskpanes` element of the tree a read gives: [`TaskpanesWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Taskpanes = TaskpanesWith<()>;
 
 impl Eq for TaskpanesWith<()> {}
@@ -459,36 +460,36 @@ pub trait Visitor: crate::Visitor {
 /// 3.5.1. Its schema type is `CT_WebExtensionPartRef`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WebextensionrefWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWebextensionsTaskpanes201011Webextensionref,
+pub struct WebextensionrefWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWebextensionsTaskpanes201011Webextensionref,
 }
 
 /// The `wetp:webextensionref` element of the tree a read gives: [`WebextensionrefWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type Webextensionref = WebextensionrefWith<()>;
 
 impl Eq for WebextensionrefWith<()> {}
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                drawing::ExtensionWith::into_extra,
+                drawing::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -512,28 +513,28 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> TaskpaneWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TaskpaneWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> TaskpaneWith<Y>
+    pub fn into_user_data<Y>(mut self) -> TaskpaneWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TaskpaneWith {
             dockstate: self.dockstate,
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             locked: self.locked,
             row: self.row,
             unknown: self.unknown,
+            user_data: Default::default(),
             visibility: self.visibility,
-            webextensionref: officekit_markup_base::into_extra_required(
+            webextensionref: officekit_markup_base::into_user_data_required(
                 *self.webextensionref,
-                WebextensionrefWith::into_extra,
+                WebextensionrefWith::into_user_data,
             ),
             width: self.width,
         }
@@ -566,21 +567,21 @@ impl officekit_markup_base::Write for Taskpane {
     }
 }
 
-impl<X: NodeExtra> TaskpanesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TaskpanesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TaskpanesWith<Y>
+    pub fn into_user_data<Y>(self) -> TaskpanesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TaskpanesWith {
-            extra: Default::default(),
-            taskpane: officekit_markup_base::into_extra_list(
+            taskpane: officekit_markup_base::into_user_data_list(
                 self.taskpane,
-                TaskpaneWith::into_extra,
+                TaskpaneWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -604,18 +605,18 @@ impl officekit_markup_base::Write for Taskpanes {
     }
 }
 
-impl<X: NodeExtra> WebextensionrefWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> WebextensionrefWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> WebextensionrefWith<Y>
+    pub fn into_user_data<Y>(self) -> WebextensionrefWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         WebextensionrefWith {
-            extra: Default::default(),
             id: self.id,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

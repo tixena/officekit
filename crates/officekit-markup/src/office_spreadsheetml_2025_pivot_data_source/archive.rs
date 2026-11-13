@@ -223,19 +223,19 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::PivotCacheDataSource)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotCacheDataSourceMirror {
-    pub extra: (),
     pub f: Option<Box<office_excel_2006_main::F>>,
     pub r#ref: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<PivotCacheDataSourceMirror> for super::PivotCacheDataSource {
     fn from(item: PivotCacheDataSourceMirror) -> Self {
         Self {
-            extra: item.extra,
             f: item.f,
             r#ref: item.r#ref,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

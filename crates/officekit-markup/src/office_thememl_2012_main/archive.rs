@@ -224,8 +224,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -233,10 +233,10 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ThemeFamilyMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub id: Option<String>,
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub vid: Option<String>,
 }
 
@@ -247,10 +247,10 @@ pub struct ThemeVariantMirror {
     pub cx: Option<String>,
     pub cy: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub id: Option<String>,
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub vid: Option<String>,
 }
 
@@ -258,17 +258,17 @@ pub struct ThemeVariantMirror {
 #[rkyv(remote = super::ThemeVariantLst)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ThemeVariantLstMirror {
-    pub extra: (),
     pub theme_variant: Vec<super::ThemeVariant>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -306,10 +306,10 @@ impl From<ThemeFamilyMirror> for super::ThemeFamily {
     fn from(item: ThemeFamilyMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             id: item.id,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
             vid: item.vid,
         }
     }
@@ -350,10 +350,10 @@ impl From<ThemeVariantMirror> for super::ThemeVariant {
             cx: item.cx,
             cy: item.cy,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             id: item.id,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
             vid: item.vid,
         }
     }
@@ -391,9 +391,9 @@ where
 impl From<ThemeVariantLstMirror> for super::ThemeVariantLst {
     fn from(item: ThemeVariantLstMirror) -> Self {
         Self {
-            extra: item.extra,
             theme_variant: item.theme_variant,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

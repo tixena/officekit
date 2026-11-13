@@ -222,8 +222,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::AbsoluteUrl)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AbsoluteUrlMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -232,25 +232,25 @@ pub struct AbsoluteUrlMirror {
 pub struct AlternateUrlsMirror {
     pub absolute_url: Option<Box<super::AbsoluteUrl>>,
     pub drive_id: Option<String>,
-    pub extra: (),
     pub item_id: Option<String>,
     pub relative_url: Option<Box<super::RelativeUrl>>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RelativeUrl)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RelativeUrlMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 impl From<AbsoluteUrlMirror> for super::AbsoluteUrl {
     fn from(item: AbsoluteUrlMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -289,10 +289,10 @@ impl From<AlternateUrlsMirror> for super::AlternateUrls {
         Self {
             absolute_url: item.absolute_url,
             drive_id: item.drive_id,
-            extra: item.extra,
             item_id: item.item_id,
             relative_url: item.relative_url,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -329,8 +329,8 @@ where
 impl From<RelativeUrlMirror> for super::RelativeUrl {
     fn from(item: RelativeUrlMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

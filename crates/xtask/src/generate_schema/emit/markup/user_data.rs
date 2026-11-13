@@ -1,4 +1,4 @@
-//! `node_extra.rs` of `officekit-markup-base`: the `NodeExtra` trait, with one associated type for
+//! `user_data.rs` of `officekit-markup-base`: the `UserData` trait, with one associated type for
 //! each element struct of the typed tree, and the names those types take.
 
 use alloc::collections::{BTreeMap, BTreeSet};
@@ -14,7 +14,7 @@ use super::structs::{Body, Catalog, Node};
 pub const MACROS_FOLDER: &str = "crates/officekit-markup-macros/src";
 
 /// The field every element struct holds for the slot, which no attribute or child may take.
-const FIELD: &str = "extra";
+const FIELD: &str = "user_data";
 
 /// The associated type of a struct: the namespace module's name and the struct's, both in
 /// `UpperCamelCase`.
@@ -29,7 +29,7 @@ pub fn name(catalog: &Catalog, node: &Node) -> String {
 }
 
 /// Whether the catalog can be written: no two structs with one associated type name, no generic
-/// type named like another type of its module, and no struct with a field named `extra`.
+/// type named like another type of its module, and no struct with a field named `user_data`.
 ///
 /// # Errors
 ///
@@ -113,7 +113,7 @@ fn ordered(catalog: &Catalog) -> Vec<(String, &Node)> {
     order
 }
 
-/// The text of `kinds.rs` of `officekit-markup-macros`: the associated types of `NodeExtra`, in
+/// The text of `kinds.rs` of `officekit-markup-macros`: the associated types of `UserData`, in
 /// its order.
 ///
 /// # Errors
@@ -123,8 +123,8 @@ pub fn kinds_text(header: &str, catalog: &Catalog) -> Result<String> {
     check(catalog)?;
     let mut out = String::from(header);
     out.push_str(
-        "//! The kinds `#[node_extra]` knows.\n\n\
-         /// The associated types of `officekit_markup::NodeExtra`, in its order: one per element struct.\n\
+        "//! The kinds `#[user_data]` knows.\n\n\
+         /// The associated types of `officekit_markup::UserData`, in its order: one per element struct.\n\
          pub const KINDS: &[&str] = &[\n",
     );
     for (associated, _) in ordered(catalog) {
@@ -134,7 +134,7 @@ pub fn kinds_text(header: &str, catalog: &Catalog) -> Result<String> {
     Ok(out)
 }
 
-/// The text of `node_extra.rs`.
+/// The text of `user_data.rs`.
 ///
 /// # Errors
 ///
@@ -144,25 +144,25 @@ pub fn text(header: &str, catalog: &Catalog) -> Result<String> {
     let order = ordered(catalog);
     let mut out = String::from(header);
     out.push_str(
-        "//! What each kind of node of the typed tree holds in its `extra` field.\n\n\
+        "//! What each kind of node of the typed tree holds in its `user_data` field.\n\n\
          use core::fmt::Debug;\n\n\
-         /// A type the `extra` field of a node can hold.\n\
-         pub trait ExtraSlot: Clone + Debug + Default + PartialEq {}\n\n\
-         impl<T: Clone + Debug + Default + PartialEq> ExtraSlot for T {}\n\n\
-         /// What each kind of node of the typed tree holds in its `extra` field: one associated type\n\
+         /// A type the `user_data` field of a node can hold.\n\
+         pub trait UserDataSlot: Clone + Debug + Default + PartialEq {}\n\n\
+         impl<T: Clone + Debug + Default + PartialEq> UserDataSlot for T {}\n\n\
+         /// What each kind of node of the typed tree holds in its `user_data` field: one associated type\n\
          /// for each element struct, named after the struct's namespace module and the struct.\n\
          ///\n\
          /// `()` holds nothing in every node; it is the tree a read gives.\n\
-         pub trait NodeExtra: Clone + Debug + Default + PartialEq {\n",
+         pub trait UserData: Clone + Debug + Default + PartialEq {\n",
     );
     for (associated, node) in &order {
         let _ = write!(
             out,
-            "    /// What a `{}::{}With` holds.\n    type {associated}: ExtraSlot;\n",
+            "    /// What a `{}::{}With` holds.\n    type {associated}: UserDataSlot;\n",
             catalog.modules[node.module].name, node.name
         );
     }
-    out.push_str("}\n\nimpl NodeExtra for () {\n");
+    out.push_str("}\n\nimpl UserData for () {\n");
     for (associated, _) in &order {
         let _ = writeln!(out, "    type {associated} = ();");
     }

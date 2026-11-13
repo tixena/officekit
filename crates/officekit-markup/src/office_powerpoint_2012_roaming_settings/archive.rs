@@ -222,8 +222,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Key)]
 #[rkyv(attr(non_exhaustive))]
 pub struct KeyMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -231,9 +231,9 @@ pub struct KeyMirror {
 #[rkyv(remote = super::Props)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PropsMirror {
-    pub extra: (),
     pub key: Box<super::Key>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: Box<super::Value>,
 }
 
@@ -241,16 +241,16 @@ pub struct PropsMirror {
 #[rkyv(remote = super::Value)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ValueMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
 impl From<KeyMirror> for super::Key {
     fn from(item: KeyMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -288,9 +288,9 @@ where
 impl From<PropsMirror> for super::Props {
     fn from(item: PropsMirror) -> Self {
         Self {
-            extra: item.extra,
             key: item.key,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -328,8 +328,8 @@ where
 impl From<ValueMirror> for super::Value {
     fn from(item: ValueMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }

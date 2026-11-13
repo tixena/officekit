@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
@@ -274,17 +274,17 @@ pub trait Context: crate::Context {
 /// schema type is `CT_HyperlinkColor`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HlinkClrWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2018HyperlinkcolorHlinkClr,
+pub struct HlinkClrWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2018HyperlinkcolorHlinkClr,
     /// The attribute `val`, when the element has it.
     pub val: Option<HyperlinkColor>,
 }
 
 /// The `ahyp:hlinkClr` element of the tree a read gives: [`HlinkClrWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type HlinkClr = HlinkClrWith<()>;
 
 impl Eq for HlinkClrWith<()> {}
@@ -324,17 +324,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> HlinkClrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HlinkClrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> HlinkClrWith<Y>
+    pub fn into_user_data<Y>(self) -> HlinkClrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HlinkClrWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }

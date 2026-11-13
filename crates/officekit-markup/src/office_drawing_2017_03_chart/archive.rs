@@ -223,16 +223,16 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct DataDisplayOptions16Mirror {
     pub disp_na_as_blank: Option<Box<super::DispNaAsBlank>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DispNaAsBlank)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DispNaAsBlankMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -240,8 +240,8 @@ impl From<DataDisplayOptions16Mirror> for super::DataDisplayOptions16 {
     fn from(item: DataDisplayOptions16Mirror) -> Self {
         Self {
             disp_na_as_blank: item.disp_na_as_blank,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -281,8 +281,8 @@ where
 impl From<DispNaAsBlankMirror> for super::DispNaAsBlank {
     fn from(item: DispNaAsBlankMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }

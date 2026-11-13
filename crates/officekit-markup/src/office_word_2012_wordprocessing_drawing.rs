@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -286,38 +286,38 @@ pub trait Visitor: crate::Visitor {
 /// Its schema type is `CT_WebVideoPr`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WebVideoPrWith<X: NodeExtra> {
+pub struct WebVideoPrWith<X: UserData> {
     /// The attribute `embeddedHtml`, when the element has it.
     pub embedded_html: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2012WordprocessingDrawingWebVideoPr,
     /// The attribute `h`, when the element has it.
     pub h: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2012WordprocessingDrawingWebVideoPr,
     /// The attribute `w`, when the element has it.
     pub w: Option<String>,
 }
 
 /// The `wp15:webVideoPr` element of the tree a read gives: [`WebVideoPrWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type WebVideoPr = WebVideoPrWith<()>;
 
 impl Eq for WebVideoPrWith<()> {}
 
-impl<X: NodeExtra> WebVideoPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> WebVideoPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> WebVideoPrWith<Y>
+    pub fn into_user_data<Y>(self) -> WebVideoPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         WebVideoPrWith {
             embedded_html: self.embedded_html,
-            extra: Default::default(),
             h: self.h,
             unknown: self.unknown,
+            user_data: Default::default(),
             w: self.w,
         }
     }

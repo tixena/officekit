@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use crate::NodeExtra;
+use crate::UserData;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -238,31 +238,31 @@ pub static LIST_SHAPE: crate::Shape = crate::Shape {
 /// schema type is `ST_Xstring`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ListWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml20111AcList,
+pub struct ListWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml20111AcList,
     /// The element's text.
     pub value: String,
 }
 
-/// The `x12ac:list` element of the tree a read gives: [`ListWith`] holding nothing in `extra`.
+/// The `x12ac:list` element of the tree a read gives: [`ListWith`] holding nothing in `user_data`.
 pub type List = ListWith<()>;
 
 impl Eq for ListWith<()> {}
 
-impl<X: NodeExtra> ListWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ListWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ListWith<Y>
+    pub fn into_user_data<Y>(self) -> ListWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ListWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }

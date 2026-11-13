@@ -227,13 +227,13 @@ pub struct AxisTitleMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -245,7 +245,6 @@ pub struct BodyPrMirror {
     pub b_ins: Option<drawing::StCoordinate32>,
     pub compat_ln_spc: Option<String>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub extra: (),
     pub force_aa: Option<String>,
     pub from_word_art: Option<String>,
     pub horz_overflow: Option<drawing::TextHorizontalOverflowTypes>,
@@ -263,6 +262,7 @@ pub struct BodyPrMirror {
     pub text_autofit_content: Option<Box<drawing::TextAutofitContent>>,
     pub unknown: officekit_markup_base::Unknown,
     pub upright: Option<String>,
+    pub user_data: (),
     pub vert: Option<drawing::VerticalTextTypes>,
     pub vert_overflow: Option<drawing::TextVerticalOverflow>,
     pub wrap: Option<drawing::TextWrappingTypes>,
@@ -272,8 +272,8 @@ pub struct BodyPrMirror {
 #[rkyv(remote = super::CategoryAxisAxisProps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CategoryAxisAxisPropsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -284,13 +284,13 @@ pub struct CategoryAxisStyleEntryMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -301,13 +301,13 @@ pub struct ChartAreaMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -330,7 +330,6 @@ pub struct ChartStyleMirror {
     pub drop_line: Box<super::DropLine>,
     pub error_bar: Box<super::ErrorBar>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub floor: Box<super::Floor>,
     pub gridline_major: Box<super::GridlineMajor>,
     pub gridline_minor: Box<super::GridlineMinor>,
@@ -347,6 +346,7 @@ pub struct ChartStyleMirror {
     pub trendline_style_entry: Box<super::TrendlineStyleEntry>,
     pub unknown: officekit_markup_base::Unknown,
     pub up_bar: Box<super::UpBar>,
+    pub user_data: (),
     pub value_axis_style_entry: Box<super::ValueAxisStyleEntry>,
     pub wall: Box<super::Wall>,
 }
@@ -357,10 +357,10 @@ pub struct ChartStyleMirror {
 pub struct ColorStyleMirror {
     pub content: Vec<drawing::ColorContent>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub id: Option<String>,
     pub meth: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub variation: Vec<super::Variation>,
 }
 
@@ -372,13 +372,13 @@ pub struct DataLabelMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -389,13 +389,13 @@ pub struct DataLabelCalloutMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -403,12 +403,12 @@ pub struct DataLabelCalloutMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DataLabelsMirror {
     pub category_name: Option<super::Boolean>,
-    pub extra: (),
     pub legend_key: Option<super::Boolean>,
     pub percentage: Option<super::Boolean>,
     pub position: Option<super::DataLabelsPosition>,
     pub series_name: Option<super::Boolean>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: Option<super::Boolean>,
 }
 
@@ -420,13 +420,13 @@ pub struct DataPointMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -437,13 +437,13 @@ pub struct DataPoint3DMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -454,12 +454,12 @@ pub struct DataPointLineMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub width_scale: Option<Box<super::LineWidthScale>>,
 }
 
@@ -471,23 +471,23 @@ pub struct DataPointMarkerMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DataPointMarkerLayout)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataPointMarkerLayoutMirror {
-    pub extra: (),
     pub size: Option<String>,
     pub symbol: Option<super::MarkerStyle>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -498,13 +498,13 @@ pub struct DataPointWireframeMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -513,7 +513,6 @@ pub struct DataPointWireframeMirror {
 pub struct DataSeriesMirror {
     pub doughnut_hole_size: Option<String>,
     pub drop_lines: Option<super::Boolean>,
-    pub extra: (),
     pub gap_depth: Option<String>,
     pub gap_width: Option<String>,
     pub hilo_lines: Option<super::Boolean>,
@@ -521,17 +520,18 @@ pub struct DataSeriesMirror {
     pub overlap: Option<String>,
     pub series_lines: Option<super::Boolean>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DataTableDataTableProps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataTableDataTablePropsMirror {
-    pub extra: (),
     pub horizontal_border: Option<super::Boolean>,
     pub legend_keys: Option<super::Boolean>,
     pub outline_border: Option<super::Boolean>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub vertical_border: Option<super::Boolean>,
 }
 
@@ -543,13 +543,13 @@ pub struct DataTableStyleEntryMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -568,7 +568,6 @@ pub struct DefRPrMirror {
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
     pub err: Option<String>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub extra: (),
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
     pub highlight_color: Option<Box<drawing::HighlightColor>>,
     pub i: Option<String>,
@@ -591,6 +590,7 @@ pub struct DefRPrMirror {
     pub text_underline_line_content: Option<Box<drawing::TextUnderlineLineContent>>,
     pub u: Option<drawing::TextUnderlineTypes>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -601,13 +601,13 @@ pub struct DownBarMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -618,12 +618,12 @@ pub struct DropLineMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub width_scale: Option<Box<super::LineWidthScale>>,
 }
 
@@ -632,9 +632,9 @@ pub struct DropLineMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct EffectRefMirror {
     pub content: Option<Box<drawing::ColorContent>>,
-    pub extra: (),
     pub style_clr: Option<Box<super::StyleClr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -645,13 +645,13 @@ pub struct ErrorBarMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -659,8 +659,8 @@ pub struct ErrorBarMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -668,9 +668,9 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FillRefMirror {
     pub content: Option<Box<drawing::ColorContent>>,
-    pub extra: (),
     pub style_clr: Option<Box<super::StyleClr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -681,13 +681,13 @@ pub struct FloorMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -695,11 +695,11 @@ pub struct FloorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FontRefMirror {
     pub content: Option<Box<drawing::ColorContent>>,
-    pub extra: (),
     pub idx: Option<drawing::FontCollectionIndex>,
     pub mods: Option<String>,
     pub style_clr: Option<Box<super::StyleClr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -710,13 +710,13 @@ pub struct GridlineMajorMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -727,13 +727,13 @@ pub struct GridlineMinorMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -744,12 +744,12 @@ pub struct HiLoLineMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub width_scale: Option<Box<super::LineWidthScale>>,
 }
 
@@ -761,12 +761,12 @@ pub struct LeaderLineMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub width_scale: Option<Box<super::LineWidthScale>>,
 }
 
@@ -774,10 +774,10 @@ pub struct LeaderLineMirror {
 #[rkyv(remote = super::LegendLegendProps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LegendLegendPropsMirror {
-    pub extra: (),
     pub include_in_layout: Option<super::Boolean>,
     pub position: Option<super::LegendPosition>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<super::Boolean>,
 }
 
@@ -789,21 +789,21 @@ pub struct LegendStyleEntryMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LineWidthScale)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineWidthScaleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -812,9 +812,9 @@ pub struct LineWidthScaleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct LnRefMirror {
     pub content: Option<Box<drawing::ColorContent>>,
-    pub extra: (),
     pub style_clr: Option<Box<super::StyleClr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -825,13 +825,13 @@ pub struct PlotAreaMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -842,21 +842,21 @@ pub struct PlotArea3DMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SeriesAxisAxisProps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SeriesAxisAxisPropsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -867,13 +867,13 @@ pub struct SeriesAxisStyleEntryMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -884,12 +884,12 @@ pub struct SeriesLineMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub width_scale: Option<Box<super::LineWidthScale>>,
 }
 
@@ -901,12 +901,12 @@ pub struct SpPrMirror {
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub extra: (),
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
     pub outline: Option<Box<drawing::Outline>>,
     pub scene3d: Option<Box<drawing::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }
 
@@ -915,8 +915,8 @@ pub struct SpPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct StyleClrMirror {
     pub content: Vec<drawing::ColorTransformContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -928,22 +928,22 @@ pub struct TitleStyleEntryMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TitleTitleProps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TitleTitlePropsMirror {
-    pub extra: (),
     pub position: Option<super::TitlePosition>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -954,13 +954,13 @@ pub struct TrendlineLabelMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -971,13 +971,13 @@ pub struct TrendlineStyleEntryMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -986,9 +986,9 @@ pub struct TrendlineStyleEntryMirror {
 pub struct TrendlineTrendlinePropsMirror {
     pub add: Option<super::Boolean>,
     pub equation: Option<super::Boolean>,
-    pub extra: (),
     pub rsquared: Option<super::Boolean>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -999,21 +999,21 @@ pub struct UpBarMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ValueAxisAxisProps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ValueAxisAxisPropsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1024,13 +1024,13 @@ pub struct ValueAxisStyleEntryMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1038,8 +1038,8 @@ pub struct ValueAxisStyleEntryMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct VariationMirror {
     pub content: Vec<drawing::ColorTransformContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1047,13 +1047,13 @@ pub struct VariationMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct View3DMirror {
     pub depth_percent: Option<String>,
-    pub extra: (),
     pub height_percent: Option<String>,
     pub perspective: Option<String>,
     pub r_ang_ax: Option<super::Boolean>,
     pub rot_x: Option<String>,
     pub rot_y: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1064,13 +1064,13 @@ pub struct WallMirror {
     pub def_r_pr: Option<Box<super::DefRPr>>,
     pub effect_ref: Box<super::EffectRef>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub fill_ref: Box<super::FillRef>,
     pub font_ref: Box<super::FontRef>,
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<AxisTitleMirror> for super::AxisTitle {
@@ -1080,13 +1080,13 @@ impl From<AxisTitleMirror> for super::AxisTitle {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1128,7 +1128,6 @@ impl From<BodyPrMirror> for super::BodyPr {
             b_ins: item.b_ins,
             compat_ln_spc: item.compat_ln_spc,
             extension_list: item.extension_list,
-            extra: item.extra,
             force_aa: item.force_aa,
             from_word_art: item.from_word_art,
             horz_overflow: item.horz_overflow,
@@ -1146,6 +1145,7 @@ impl From<BodyPrMirror> for super::BodyPr {
             text_autofit_content: item.text_autofit_content,
             unknown: item.unknown,
             upright: item.upright,
+            user_data: item.user_data,
             vert: item.vert,
             vert_overflow: item.vert_overflow,
             wrap: item.wrap,
@@ -1185,8 +1185,8 @@ where
 impl From<CategoryAxisAxisPropsMirror> for super::CategoryAxisAxisProps {
     fn from(item: CategoryAxisAxisPropsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1231,13 +1231,13 @@ impl From<CategoryAxisStyleEntryMirror> for super::CategoryAxisStyleEntry {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1282,13 +1282,13 @@ impl From<ChartAreaMirror> for super::ChartArea {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1341,7 +1341,6 @@ impl From<ChartStyleMirror> for super::ChartStyle {
             drop_line: item.drop_line,
             error_bar: item.error_bar,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             floor: item.floor,
             gridline_major: item.gridline_major,
             gridline_minor: item.gridline_minor,
@@ -1358,6 +1357,7 @@ impl From<ChartStyleMirror> for super::ChartStyle {
             trendline_style_entry: item.trendline_style_entry,
             unknown: item.unknown,
             up_bar: item.up_bar,
+            user_data: item.user_data,
             value_axis_style_entry: item.value_axis_style_entry,
             wall: item.wall,
         }
@@ -1398,10 +1398,10 @@ impl From<ColorStyleMirror> for super::ColorStyle {
         Self {
             content: item.content,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             id: item.id,
             meth: item.meth,
             unknown: item.unknown,
+            user_data: item.user_data,
             variation: item.variation,
         }
     }
@@ -1443,13 +1443,13 @@ impl From<DataLabelMirror> for super::DataLabel {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1490,13 +1490,13 @@ impl From<DataLabelCalloutMirror> for super::DataLabelCallout {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1534,12 +1534,12 @@ impl From<DataLabelsMirror> for super::DataLabels {
     fn from(item: DataLabelsMirror) -> Self {
         Self {
             category_name: item.category_name,
-            extra: item.extra,
             legend_key: item.legend_key,
             percentage: item.percentage,
             position: item.position,
             series_name: item.series_name,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1581,13 +1581,13 @@ impl From<DataPointMirror> for super::DataPoint {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1628,13 +1628,13 @@ impl From<DataPoint3DMirror> for super::DataPoint3D {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1675,12 +1675,12 @@ impl From<DataPointLineMirror> for super::DataPointLine {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
             width_scale: item.width_scale,
         }
     }
@@ -1722,13 +1722,13 @@ impl From<DataPointMarkerMirror> for super::DataPointMarker {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1765,10 +1765,10 @@ where
 impl From<DataPointMarkerLayoutMirror> for super::DataPointMarkerLayout {
     fn from(item: DataPointMarkerLayoutMirror) -> Self {
         Self {
-            extra: item.extra,
             size: item.size,
             symbol: item.symbol,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1813,13 +1813,13 @@ impl From<DataPointWireframeMirror> for super::DataPointWireframe {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1858,7 +1858,6 @@ impl From<DataSeriesMirror> for super::DataSeries {
         Self {
             doughnut_hole_size: item.doughnut_hole_size,
             drop_lines: item.drop_lines,
-            extra: item.extra,
             gap_depth: item.gap_depth,
             gap_width: item.gap_width,
             hilo_lines: item.hilo_lines,
@@ -1866,6 +1865,7 @@ impl From<DataSeriesMirror> for super::DataSeries {
             overlap: item.overlap,
             series_lines: item.series_lines,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1902,11 +1902,11 @@ where
 impl From<DataTableDataTablePropsMirror> for super::DataTableDataTableProps {
     fn from(item: DataTableDataTablePropsMirror) -> Self {
         Self {
-            extra: item.extra,
             horizontal_border: item.horizontal_border,
             legend_keys: item.legend_keys,
             outline_border: item.outline_border,
             unknown: item.unknown,
+            user_data: item.user_data,
             vertical_border: item.vertical_border,
         }
     }
@@ -1952,13 +1952,13 @@ impl From<DataTableStyleEntryMirror> for super::DataTableStyleEntry {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2010,7 +2010,6 @@ impl From<DefRPrMirror> for super::DefRPr {
             effect_properties_content: item.effect_properties_content,
             err: item.err,
             extension_list: item.extension_list,
-            extra: item.extra,
             fill_properties_content: item.fill_properties_content,
             highlight_color: item.highlight_color,
             i: item.i,
@@ -2033,6 +2032,7 @@ impl From<DefRPrMirror> for super::DefRPr {
             text_underline_line_content: item.text_underline_line_content,
             u: item.u,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2073,13 +2073,13 @@ impl From<DownBarMirror> for super::DownBar {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2120,12 +2120,12 @@ impl From<DropLineMirror> for super::DropLine {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
             width_scale: item.width_scale,
         }
     }
@@ -2164,9 +2164,9 @@ impl From<EffectRefMirror> for super::EffectRef {
     fn from(item: EffectRefMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             style_clr: item.style_clr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2207,13 +2207,13 @@ impl From<ErrorBarMirror> for super::ErrorBar {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2251,8 +2251,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2290,9 +2290,9 @@ impl From<FillRefMirror> for super::FillRef {
     fn from(item: FillRefMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             style_clr: item.style_clr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2333,13 +2333,13 @@ impl From<FloorMirror> for super::Floor {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2377,11 +2377,11 @@ impl From<FontRefMirror> for super::FontRef {
     fn from(item: FontRefMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             idx: item.idx,
             mods: item.mods,
             style_clr: item.style_clr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2422,13 +2422,13 @@ impl From<GridlineMajorMirror> for super::GridlineMajor {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2469,13 +2469,13 @@ impl From<GridlineMinorMirror> for super::GridlineMinor {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2516,12 +2516,12 @@ impl From<HiLoLineMirror> for super::HiLoLine {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
             width_scale: item.width_scale,
         }
     }
@@ -2563,12 +2563,12 @@ impl From<LeaderLineMirror> for super::LeaderLine {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
             width_scale: item.width_scale,
         }
     }
@@ -2606,10 +2606,10 @@ where
 impl From<LegendLegendPropsMirror> for super::LegendLegendProps {
     fn from(item: LegendLegendPropsMirror) -> Self {
         Self {
-            extra: item.extra,
             include_in_layout: item.include_in_layout,
             position: item.position,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -2651,13 +2651,13 @@ impl From<LegendStyleEntryMirror> for super::LegendStyleEntry {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2694,8 +2694,8 @@ where
 impl From<LineWidthScaleMirror> for super::LineWidthScale {
     fn from(item: LineWidthScaleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2734,9 +2734,9 @@ impl From<LnRefMirror> for super::LnRef {
     fn from(item: LnRefMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             style_clr: item.style_clr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2777,13 +2777,13 @@ impl From<PlotAreaMirror> for super::PlotArea {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2824,13 +2824,13 @@ impl From<PlotArea3DMirror> for super::PlotArea3D {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2867,8 +2867,8 @@ where
 impl From<SeriesAxisAxisPropsMirror> for super::SeriesAxisAxisProps {
     fn from(item: SeriesAxisAxisPropsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2912,13 +2912,13 @@ impl From<SeriesAxisStyleEntryMirror> for super::SeriesAxisStyleEntry {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2962,12 +2962,12 @@ impl From<SeriesLineMirror> for super::SeriesLine {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
             width_scale: item.width_scale,
         }
     }
@@ -3009,12 +3009,12 @@ impl From<SpPrMirror> for super::SpPr {
             bw_mode: item.bw_mode,
             effect_properties_content: item.effect_properties_content,
             extension_list: item.extension_list,
-            extra: item.extra,
             fill_properties_content: item.fill_properties_content,
             geometry_content: item.geometry_content,
             outline: item.outline,
             scene3d: item.scene3d,
             unknown: item.unknown,
+            user_data: item.user_data,
             xfrm_transform2d: item.xfrm_transform2d,
         }
     }
@@ -3053,8 +3053,8 @@ impl From<StyleClrMirror> for super::StyleClr {
     fn from(item: StyleClrMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -3096,13 +3096,13 @@ impl From<TitleStyleEntryMirror> for super::TitleStyleEntry {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3139,9 +3139,9 @@ where
 impl From<TitleTitlePropsMirror> for super::TitleTitleProps {
     fn from(item: TitleTitlePropsMirror) -> Self {
         Self {
-            extra: item.extra,
             position: item.position,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3182,13 +3182,13 @@ impl From<TrendlineLabelMirror> for super::TrendlineLabel {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3229,13 +3229,13 @@ impl From<TrendlineStyleEntryMirror> for super::TrendlineStyleEntry {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3277,9 +3277,9 @@ impl From<TrendlineTrendlinePropsMirror> for super::TrendlineTrendlineProps {
         Self {
             add: item.add,
             equation: item.equation,
-            extra: item.extra,
             rsquared: item.rsquared,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3324,13 +3324,13 @@ impl From<UpBarMirror> for super::UpBar {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3367,8 +3367,8 @@ where
 impl From<ValueAxisAxisPropsMirror> for super::ValueAxisAxisProps {
     fn from(item: ValueAxisAxisPropsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3409,13 +3409,13 @@ impl From<ValueAxisStyleEntryMirror> for super::ValueAxisStyleEntry {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3456,8 +3456,8 @@ impl From<VariationMirror> for super::Variation {
     fn from(item: VariationMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3495,13 +3495,13 @@ impl From<View3DMirror> for super::View3D {
     fn from(item: View3DMirror) -> Self {
         Self {
             depth_percent: item.depth_percent,
-            extra: item.extra,
             height_percent: item.height_percent,
             perspective: item.perspective,
             r_ang_ax: item.r_ang_ax,
             rot_x: item.rot_x,
             rot_y: item.rot_y,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3542,13 +3542,13 @@ impl From<WallMirror> for super::Wall {
             def_r_pr: item.def_r_pr,
             effect_ref: item.effect_ref,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             fill_ref: item.fill_ref,
             font_ref: item.font_ref,
             line_width_scale: item.line_width_scale,
             ln_ref: item.ln_ref,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

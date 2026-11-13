@@ -222,9 +222,9 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::CmMK)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CmMKMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -232,18 +232,18 @@ pub struct CmMKMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CmMkLstMirror {
     pub cm_mk: Box<super::CmMK>,
-    pub extra: (),
     pub sld_mk_lst: Box<super::super::office_powerpoint_2013_main_command::SldMkLst>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CmRplyMk)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CmRplyMkMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -252,16 +252,16 @@ pub struct CmRplyMkMirror {
 pub struct CmRplyMkLstMirror {
     pub cm_mk_lst: Box<super::CmMkLst>,
     pub cm_rply_mk: Box<super::CmRplyMk>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<CmMKMirror> for super::CmMK {
     fn from(item: CmMKMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -299,9 +299,9 @@ impl From<CmMkLstMirror> for super::CmMkLst {
     fn from(item: CmMkLstMirror) -> Self {
         Self {
             cm_mk: item.cm_mk,
-            extra: item.extra,
             sld_mk_lst: item.sld_mk_lst,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -338,9 +338,9 @@ where
 impl From<CmRplyMkMirror> for super::CmRplyMk {
     fn from(item: CmRplyMkMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -379,8 +379,8 @@ impl From<CmRplyMkLstMirror> for super::CmRplyMkLst {
         Self {
             cm_mk_lst: item.cm_mk_lst,
             cm_rply_mk: item.cm_rply_mk,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

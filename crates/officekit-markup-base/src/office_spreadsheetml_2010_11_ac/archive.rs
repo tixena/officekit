@@ -222,17 +222,17 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::AbsPath)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AbsPathMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
     pub url: Option<String>,
+    pub user_data: (),
 }
 
 impl From<AbsPathMirror> for super::AbsPath {
     fn from(item: AbsPathMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
             url: item.url,
+            user_data: item.user_data,
         }
     }
 }

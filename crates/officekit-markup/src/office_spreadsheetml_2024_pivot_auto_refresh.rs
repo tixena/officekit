@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -243,17 +243,17 @@ pub static AUTO_REFRESH_SHAPE: officekit_markup_base::Shape = officekit_markup_b
 /// Its schema type is `boolean`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AutoRefreshWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2024PivotAutoRefreshAutoRefresh,
+pub struct AutoRefreshWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2024PivotAutoRefreshAutoRefresh,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xlpar:autoRefresh` element of the tree a read gives: [`AutoRefreshWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type AutoRefresh = AutoRefreshWith<()>;
 
 impl Eq for AutoRefreshWith<()> {}
@@ -302,17 +302,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> AutoRefreshWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AutoRefreshWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AutoRefreshWith<Y>
+    pub fn into_user_data<Y>(self) -> AutoRefreshWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AutoRefreshWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }

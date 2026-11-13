@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use crate::NodeExtra;
+use crate::UserData;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -245,16 +245,16 @@ pub static SQREF_SHAPE: crate::Shape = crate::Shape {
 /// type is `ST_Formula`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeExcel2006MainF,
+pub struct FWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeExcel2006MainF,
     /// The element's text.
     pub value: String,
 }
 
-/// The `xne:f` element of the tree a read gives: [`FWith`] holding nothing in `extra`.
+/// The `xne:f` element of the tree a read gives: [`FWith`] holding nothing in `user_data`.
 pub type F = FWith<()>;
 
 impl Eq for FWith<()> {}
@@ -263,31 +263,31 @@ impl Eq for FWith<()> {}
 /// schema type is `ST_Sqref`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SqrefWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeExcel2006MainSqref,
+pub struct SqrefWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeExcel2006MainSqref,
     /// The element's text.
     pub value: String,
 }
 
-/// The `xne:sqref` element of the tree a read gives: [`SqrefWith`] holding nothing in `extra`.
+/// The `xne:sqref` element of the tree a read gives: [`SqrefWith`] holding nothing in `user_data`.
 pub type Sqref = SqrefWith<()>;
 
 impl Eq for SqrefWith<()> {}
 
-impl<X: NodeExtra> FWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FWith<Y>
+    pub fn into_user_data<Y>(self) -> FWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -315,17 +315,17 @@ impl crate::Write for F {
     }
 }
 
-impl<X: NodeExtra> SqrefWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SqrefWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SqrefWith<Y>
+    pub fn into_user_data<Y>(self) -> SqrefWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SqrefWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }

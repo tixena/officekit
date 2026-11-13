@@ -222,12 +222,12 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::CustomXMLSchemaReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXMLSchemaReferenceMirror {
-    pub extra: (),
     pub manifest_location: Option<String>,
     pub schema_language: Option<String>,
     pub schema_location: Option<String>,
     pub unknown: crate::Unknown,
     pub uri: Option<String>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -235,19 +235,19 @@ pub struct CustomXMLSchemaReferenceMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbeddedCustomXMLSchemaSupplementaryDataMirror {
     pub custom_xml_schema_reference: Vec<super::CustomXMLSchemaReference>,
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 impl From<CustomXMLSchemaReferenceMirror> for super::CustomXMLSchemaReference {
     fn from(item: CustomXMLSchemaReferenceMirror) -> Self {
         Self {
-            extra: item.extra,
             manifest_location: item.manifest_location,
             schema_language: item.schema_language,
             schema_location: item.schema_location,
             unknown: item.unknown,
             uri: item.uri,
+            user_data: item.user_data,
         }
     }
 }
@@ -291,8 +291,8 @@ impl From<EmbeddedCustomXMLSchemaSupplementaryDataMirror>
     fn from(item: EmbeddedCustomXMLSchemaSupplementaryDataMirror) -> Self {
         Self {
             custom_xml_schema_reference: item.custom_xml_schema_reference,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

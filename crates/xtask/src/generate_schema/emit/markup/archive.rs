@@ -4,7 +4,7 @@
 //! the namespace's own crate, whose mirrors archive its structs and enums.
 //!
 //! A struct or an enum does not derive rkyv's traits itself: the struct is
-//! generic over `NodeExtra`, and the resolver enum the derive writes beside an
+//! generic over `UserData`, and the resolver enum the derive writes beside an
 //! enum would be public and exhaustive. Its mirror, a remote derive in the
 //! private module, holds the archived type and the resolver, and the type's
 //! `Archive`, `Serialize` and `Deserialize` hand the work to it.
@@ -173,7 +173,7 @@ fn mirror_name(name: &str) -> String {
 }
 
 /// The mirror struct of the struct `name`: the fields of the plain tree's
-/// struct, `extra` as `()`.
+/// struct, `user_data` as `()`.
 fn struct_mirror(name: &str, fields: &[Field], recursive: bool) -> String {
     let mut out = String::from("#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]\n");
     let _ = writeln!(out, "#[rkyv(remote = super::{name})]");

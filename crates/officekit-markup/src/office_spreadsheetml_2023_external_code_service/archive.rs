@@ -223,18 +223,18 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExternalCodeServiceMirror {
     pub auto_show: Option<String>,
-    pub extra: (),
     pub timeout: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<ExternalCodeServiceMirror> for super::ExternalCodeService {
     fn from(item: ExternalCodeServiceMirror) -> Self {
         Self {
             auto_show: item.auto_show,
-            extra: item.extra,
             timeout: item.timeout,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

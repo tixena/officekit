@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -250,17 +250,17 @@ pub static CALC_FEATURES_SHAPE: officekit_markup_base::Shape = officekit_markup_
 /// 3.5.1. Its schema type is `CT_CalcFeatures`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CalcFeaturesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2018CalcfeaturesCalcFeatures,
+pub struct CalcFeaturesWith<X: UserData> {
     /// The children that are `Feature`, in order.
     pub feature: Vec<FeatureWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2018CalcfeaturesCalcFeatures,
 }
 
 /// The `xcalcf:calcFeatures` element of the tree a read gives: [`CalcFeaturesWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type CalcFeatures = CalcFeaturesWith<()>;
 
 impl Eq for CalcFeaturesWith<()> {}
@@ -315,17 +315,17 @@ pub trait Context: crate::Context {
 /// Its schema type is `CT_CalcFeature`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FeatureWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2018CalcfeaturesFeature,
+pub struct FeatureWith<X: UserData> {
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2018CalcfeaturesFeature,
 }
 
 /// The `xcalcf:feature` element of the tree a read gives: [`FeatureWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Feature = FeatureWith<()>;
 
 impl Eq for FeatureWith<()> {}
@@ -348,18 +348,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> CalcFeaturesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CalcFeaturesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CalcFeaturesWith<Y>
+    pub fn into_user_data<Y>(self) -> CalcFeaturesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CalcFeaturesWith {
-            extra: Default::default(),
-            feature: officekit_markup_base::into_extra_list(self.feature, FeatureWith::into_extra),
+            feature: officekit_markup_base::into_user_data_list(
+                self.feature,
+                FeatureWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -383,18 +386,18 @@ impl officekit_markup_base::Write for CalcFeatures {
     }
 }
 
-impl<X: NodeExtra> FeatureWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FeatureWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FeatureWith<Y>
+    pub fn into_user_data<Y>(self) -> FeatureWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FeatureWith {
-            extra: Default::default(),
             name: self.name,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

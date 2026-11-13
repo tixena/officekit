@@ -222,21 +222,21 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::RichInfo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RichInfoMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub pivot_cache_guid: Option<String>,
     pub pivot_ignore_invalid_cache: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<RichInfoMirror> for super::RichInfo {
     fn from(item: RichInfoMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             pivot_cache_guid: item.pivot_cache_guid,
             pivot_ignore_invalid_cache: item.pivot_ignore_invalid_cache,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

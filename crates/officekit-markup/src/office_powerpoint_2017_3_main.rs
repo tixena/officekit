@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
@@ -354,11 +354,9 @@ pub enum DisplayLocationMember {
 /// schema type is `CT_Track`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TrackWith<X: NodeExtra> {
+pub struct TrackWith<X: UserData> {
     /// The attribute `r:embed`, when the element has it.
     pub embed: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint20173MainTrack,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `label`, when the element has it.
@@ -369,9 +367,11 @@ pub struct TrackWith<X: NodeExtra> {
     pub link: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint20173MainTrack,
 }
 
-/// The `p173:track` element of the tree a read gives: [`TrackWith`] holding nothing in `extra`.
+/// The `p173:track` element of the tree a read gives: [`TrackWith`] holding nothing in `user_data`.
 pub type Track = TrackWith<()>;
 
 impl Eq for TrackWith<()> {}
@@ -380,17 +380,17 @@ impl Eq for TrackWith<()> {}
 /// schema type is `CT_TrackList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TrackLstWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint20173MainTrackLst,
+pub struct TrackLstWith<X: UserData> {
     /// The children that are `Track`, in order.
     pub track: Vec<TrackWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint20173MainTrackLst,
 }
 
 /// The `p173:trackLst` element of the tree a read gives: [`TrackLstWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type TrackLst = TrackLstWith<()>;
 
 impl Eq for TrackLstWith<()> {}
@@ -399,19 +399,19 @@ impl Eq for TrackLstWith<()> {}
 /// Its schema type is `CT_TracksInfo`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TracksInfoWith<X: NodeExtra> {
+pub struct TracksInfoWith<X: UserData> {
     /// The attribute `displayLoc`, when the element has it.
     pub display_loc: Option<DisplayLocation>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint20173MainTracksInfo,
     /// The child that is `TrackLst`, when there is one.
     pub track_lst: Option<Box<TrackLstWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint20173MainTracksInfo,
 }
 
 /// The `p173:tracksInfo` element of the tree a read gives: [`TracksInfoWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type TracksInfo = TracksInfoWith<()>;
 
 impl Eq for TracksInfoWith<()> {}
@@ -492,22 +492,22 @@ impl DisplayLocation {
     }
 }
 
-impl<X: NodeExtra> TrackWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TrackWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TrackWith<Y>
+    pub fn into_user_data<Y>(self) -> TrackWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TrackWith {
             embed: self.embed,
-            extra: Default::default(),
             id: self.id,
             label: self.label,
             lang: self.lang,
             link: self.link,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -538,18 +538,21 @@ impl officekit_markup_base::Write for Track {
     }
 }
 
-impl<X: NodeExtra> TrackLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TrackLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TrackLstWith<Y>
+    pub fn into_user_data<Y>(self) -> TrackLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TrackLstWith {
-            extra: Default::default(),
-            track: officekit_markup_base::into_extra_list(self.track, TrackWith::into_extra),
+            track: officekit_markup_base::into_user_data_list(
+                self.track,
+                TrackWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -573,22 +576,22 @@ impl officekit_markup_base::Write for TrackLst {
     }
 }
 
-impl<X: NodeExtra> TracksInfoWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TracksInfoWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> TracksInfoWith<Y>
+    pub fn into_user_data<Y>(mut self) -> TracksInfoWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TracksInfoWith {
             display_loc: self.display_loc,
-            extra: Default::default(),
-            track_lst: officekit_markup_base::into_extra_optional(
+            track_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.track_lst,
-                TrackLstWith::into_extra,
+                TrackLstWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

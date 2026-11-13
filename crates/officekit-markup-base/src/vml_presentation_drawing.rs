@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use crate::NodeExtra;
+use crate::UserData;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -245,15 +245,15 @@ pub static VML_DIAGRAM_TEXT_SHAPE: crate::Shape = crate::Shape {
 /// schema type is `CT_Empty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InkAnnotationFlagWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlPresentationDrawingInkAnnotationFlag,
+pub struct InkAnnotationFlagWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlPresentationDrawingInkAnnotationFlag,
 }
 
 /// The `pvml:iscomment` element of the tree a read gives: [`InkAnnotationFlagWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type InkAnnotationFlag = InkAnnotationFlagWith<()>;
 
 impl Eq for InkAnnotationFlagWith<()> {}
@@ -262,32 +262,32 @@ impl Eq for InkAnnotationFlagWith<()> {}
 /// type is `CT_Rel`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VMLDiagramTextWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlPresentationDrawingVMLDiagramText,
+pub struct VMLDiagramTextWith<X: UserData> {
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlPresentationDrawingVMLDiagramText,
 }
 
 /// The `pvml:textdata` element of the tree a read gives: [`VMLDiagramTextWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type VMLDiagramText = VMLDiagramTextWith<()>;
 
 impl Eq for VMLDiagramTextWith<()> {}
 
-impl<X: NodeExtra> InkAnnotationFlagWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> InkAnnotationFlagWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> InkAnnotationFlagWith<Y>
+    pub fn into_user_data<Y>(self) -> InkAnnotationFlagWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         InkAnnotationFlagWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -311,18 +311,18 @@ impl crate::Write for InkAnnotationFlag {
     }
 }
 
-impl<X: NodeExtra> VMLDiagramTextWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> VMLDiagramTextWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> VMLDiagramTextWith<Y>
+    pub fn into_user_data<Y>(self) -> VMLDiagramTextWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         VMLDiagramTextWith {
-            extra: Default::default(),
             id: self.id,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

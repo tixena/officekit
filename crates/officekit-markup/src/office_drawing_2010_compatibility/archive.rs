@@ -222,17 +222,17 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::CompatSp)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CompatSpMirror {
-    pub extra: (),
     pub spid: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<CompatSpMirror> for super::CompatSp {
     fn from(item: CompatSpMirror) -> Self {
         Self {
-            extra: item.extra,
             spid: item.spid,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

@@ -210,9 +210,9 @@
 //   6833bb8339d1dc179b970db58c13333ff6139e649ef9e044ef10623bed172323  crates/xtask/data/sdk_corrections.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The kinds `#[node_extra]` knows.
+//! The kinds `#[user_data]` knows.
 
-/// The associated types of `officekit_markup::NodeExtra`, in its order: one per element struct.
+/// The associated types of `officekit_markup::UserData`, in its order: one per element struct.
 pub const KINDS: &[&str] = &[
     "AdditionalCharacteristicsSetOfAdditionalCharacteristics",
     "AdditionalCharacteristicsSingleCharacteristic",

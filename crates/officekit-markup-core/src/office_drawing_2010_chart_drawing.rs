@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -308,21 +308,21 @@ pub static NV_CONTENT_PART_PR_SHAPE: officekit_markup_base::Shape = officekit_ma
 /// 3.5.1. Its schema type is `CT_NonVisualInkContentPartProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvContentPartPrWith<X: NodeExtra> {
+pub struct CNvContentPartPrWith<X: UserData> {
     /// The child that is `super::office_drawing_2010_main::CpLocks`, when there is one.
     pub cp_locks: Option<Box<super::office_drawing_2010_main::CpLocksWith<X>>>,
     /// The child that is `super::office_drawing_2010_main::ExtLst`, when there is one.
     pub ext_lst: Option<Box<super::office_drawing_2010_main::ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010ChartDrawingCNvContentPartPr,
     /// The attribute `isComment`, when the element has it.
     pub is_comment: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010ChartDrawingCNvContentPartPr,
 }
 
 /// The `cdr14:cNvContentPartPr` element of the tree a read gives: [`CNvContentPartPrWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type CNvContentPartPr = CNvContentPartPrWith<()>;
 
 impl Eq for CNvContentPartPrWith<()> {}
@@ -331,15 +331,13 @@ impl Eq for CNvContentPartPrWith<()> {}
 /// schema type is `CT_NonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CNvPrWith<X: NodeExtra> {
+pub struct CNvPrWith<X: UserData> {
     /// The child that is `super::drawing::ClickHyperlink`, when there is one.
     pub click_hyperlink: Option<Box<super::drawing::ClickHyperlinkWith<X>>>,
     /// The attribute `descr`, when the element has it.
     pub descr: Option<String>,
     /// The child that is `super::drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<super::drawing::ExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010ChartDrawingCNvPr,
     /// The attribute `hidden`, when the element has it.
     pub hidden: Option<String>,
     /// The child that is `super::drawing::HyperlinkForHover`, when there is one.
@@ -352,9 +350,12 @@ pub struct CNvPrWith<X: NodeExtra> {
     pub title: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010ChartDrawingCNvPr,
 }
 
-/// The `cdr14:cNvPr` element of the tree a read gives: [`CNvPrWith`] holding nothing in `extra`.
+/// The `cdr14:cNvPr` element of the tree a read gives: [`CNvPrWith`] holding nothing in
+/// `user_data`.
 pub type CNvPr = CNvPrWith<()>;
 
 impl Eq for CNvPrWith<()> {}
@@ -363,13 +364,11 @@ impl Eq for CNvPrWith<()> {}
 /// Its schema type is `CT_ContentPart`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ContentPartWith<X: NodeExtra> {
+pub struct ContentPartWith<X: UserData> {
     /// The attribute `bwMode`, when the element has it.
     pub bw_mode: Option<super::drawing::BlackAndWhiteMode>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010ChartDrawingContentPart,
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// The child that is `NvContentPartPr`, when there is one.
@@ -378,12 +377,14 @@ pub struct ContentPartWith<X: NodeExtra> {
     pub nv_pr: Option<Box<NvPrWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010ChartDrawingContentPart,
     /// The child that is `Xfrm`, when there is one.
     pub xfrm: Option<Box<XfrmWith<X>>>,
 }
 
 /// The `cdr14:contentPart` element of the tree a read gives: [`ContentPartWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ContentPart = ContentPartWith<()>;
 
 impl Eq for ContentPartWith<()> {}
@@ -392,16 +393,17 @@ impl Eq for ContentPartWith<()> {}
 /// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `super::drawing::Extension`, in order.
     pub extension: Vec<super::drawing::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010ChartDrawingExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010ChartDrawingExtLst,
 }
 
-/// The `cdr14:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `cdr14:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -410,19 +412,19 @@ impl Eq for ExtLstWith<()> {}
 /// 3.5.1. Its schema type is `CT_ContentPartNonVisual`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NvContentPartPrWith<X: NodeExtra> {
+pub struct NvContentPartPrWith<X: UserData> {
     /// The child that is `CNvContentPartPr`, when there is one.
     pub c: Option<Box<CNvContentPartPrWith<X>>>,
     /// The child that is `CNvPr`, which the schema requires.
     pub c_nv_pr: Box<CNvPrWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010ChartDrawingNvContentPartPr,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010ChartDrawingNvContentPartPr,
 }
 
 /// The `cdr14:nvContentPartPr` element of the tree a read gives: [`NvContentPartPrWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type NvContentPartPr = NvContentPartPrWith<()>;
 
 impl Eq for NvContentPartPrWith<()> {}
@@ -431,18 +433,18 @@ impl Eq for NvContentPartPrWith<()> {}
 /// schema type is `CT_ApplicationNonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NvPrWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010ChartDrawingNvPr,
+pub struct NvPrWith<X: UserData> {
     /// The attribute `fPublished`, when the element has it.
     pub f_published: Option<String>,
     /// The attribute `macro`, when the element has it.
     pub r#macro: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010ChartDrawingNvPr,
 }
 
-/// The `cdr14:nvPr` element of the tree a read gives: [`NvPrWith`] holding nothing in `extra`.
+/// The `cdr14:nvPr` element of the tree a read gives: [`NvPrWith`] holding nothing in `user_data`.
 pub type NvPr = NvPrWith<()>;
 
 impl Eq for NvPrWith<()> {}
@@ -451,11 +453,9 @@ impl Eq for NvPrWith<()> {}
 /// schema type is `CT_Transform2D`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct XfrmWith<X: NodeExtra> {
+pub struct XfrmWith<X: UserData> {
     /// The child that is `super::drawing::Extents`, when there is one.
     pub extents: Option<Box<super::drawing::ExtentsWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing2010ChartDrawingXfrm,
     /// The attribute `flipH`, when the element has it.
     pub flip_h: Option<String>,
     /// The attribute `flipV`, when the element has it.
@@ -466,33 +466,35 @@ pub struct XfrmWith<X: NodeExtra> {
     pub rot: Option<super::drawing::Angle>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing2010ChartDrawingXfrm,
 }
 
-/// The `cdr14:xfrm` element of the tree a read gives: [`XfrmWith`] holding nothing in `extra`.
+/// The `cdr14:xfrm` element of the tree a read gives: [`XfrmWith`] holding nothing in `user_data`.
 pub type Xfrm = XfrmWith<()>;
 
 impl Eq for XfrmWith<()> {}
 
-impl<X: NodeExtra> CNvContentPartPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CNvContentPartPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> CNvContentPartPrWith<Y>
+    pub fn into_user_data<Y>(mut self) -> CNvContentPartPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CNvContentPartPrWith {
-            cp_locks: officekit_markup_base::into_extra_optional(
+            cp_locks: officekit_markup_base::into_user_data_optional(
                 &mut self.cp_locks,
-                super::office_drawing_2010_main::CpLocksWith::into_extra,
+                super::office_drawing_2010_main::CpLocksWith::into_user_data,
             ),
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                super::office_drawing_2010_main::ExtLstWith::into_extra,
+                super::office_drawing_2010_main::ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             is_comment: self.is_comment,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -519,34 +521,34 @@ impl officekit_markup_base::Write for CNvContentPartPr {
     }
 }
 
-impl<X: NodeExtra> CNvPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CNvPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> CNvPrWith<Y>
+    pub fn into_user_data<Y>(mut self) -> CNvPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CNvPrWith {
-            click_hyperlink: officekit_markup_base::into_extra_optional(
+            click_hyperlink: officekit_markup_base::into_user_data_optional(
                 &mut self.click_hyperlink,
-                super::drawing::ClickHyperlinkWith::into_extra,
+                super::drawing::ClickHyperlinkWith::into_user_data,
             ),
             descr: self.descr,
-            extension_list: officekit_markup_base::into_extra_optional(
+            extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.extension_list,
-                super::drawing::ExtensionListWith::into_extra,
+                super::drawing::ExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
             hidden: self.hidden,
-            hyperlink_for_hover: officekit_markup_base::into_extra_optional(
+            hyperlink_for_hover: officekit_markup_base::into_user_data_optional(
                 &mut self.hyperlink_for_hover,
-                super::drawing::HyperlinkForHoverWith::into_extra,
+                super::drawing::HyperlinkForHoverWith::into_user_data,
             ),
             id: self.id,
             name: self.name,
             title: self.title,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -577,32 +579,35 @@ impl officekit_markup_base::Write for CNvPr {
     }
 }
 
-impl<X: NodeExtra> ContentPartWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ContentPartWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ContentPartWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ContentPartWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ContentPartWith {
             bw_mode: self.bw_mode,
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             id: self.id,
-            nv_content_part_pr: officekit_markup_base::into_extra_optional(
+            nv_content_part_pr: officekit_markup_base::into_user_data_optional(
                 &mut self.nv_content_part_pr,
-                NvContentPartPrWith::into_extra,
+                NvContentPartPrWith::into_user_data,
             ),
-            nv_pr: officekit_markup_base::into_extra_optional(
+            nv_pr: officekit_markup_base::into_user_data_optional(
                 &mut self.nv_pr,
-                NvPrWith::into_extra,
+                NvPrWith::into_user_data,
             ),
             unknown: self.unknown,
-            xfrm: officekit_markup_base::into_extra_optional(&mut self.xfrm, XfrmWith::into_extra),
+            user_data: Default::default(),
+            xfrm: officekit_markup_base::into_user_data_optional(
+                &mut self.xfrm,
+                XfrmWith::into_user_data,
+            ),
         }
     }
 
@@ -630,21 +635,21 @@ impl officekit_markup_base::Write for ContentPart {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                super::drawing::ExtensionWith::into_extra,
+                super::drawing::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -668,25 +673,25 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> NvContentPartPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> NvContentPartPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> NvContentPartPrWith<Y>
+    pub fn into_user_data<Y>(mut self) -> NvContentPartPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         NvContentPartPrWith {
-            c: officekit_markup_base::into_extra_optional(
+            c: officekit_markup_base::into_user_data_optional(
                 &mut self.c,
-                CNvContentPartPrWith::into_extra,
+                CNvContentPartPrWith::into_user_data,
             ),
-            c_nv_pr: officekit_markup_base::into_extra_required(
+            c_nv_pr: officekit_markup_base::into_user_data_required(
                 *self.c_nv_pr,
-                CNvPrWith::into_extra,
+                CNvPrWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -710,19 +715,19 @@ impl officekit_markup_base::Write for NvContentPartPr {
     }
 }
 
-impl<X: NodeExtra> NvPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> NvPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> NvPrWith<Y>
+    pub fn into_user_data<Y>(self) -> NvPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         NvPrWith {
-            extra: Default::default(),
             f_published: self.f_published,
             r#macro: self.r#macro,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -750,28 +755,28 @@ impl officekit_markup_base::Write for NvPr {
     }
 }
 
-impl<X: NodeExtra> XfrmWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> XfrmWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> XfrmWith<Y>
+    pub fn into_user_data<Y>(mut self) -> XfrmWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         XfrmWith {
-            extents: officekit_markup_base::into_extra_optional(
+            extents: officekit_markup_base::into_user_data_optional(
                 &mut self.extents,
-                super::drawing::ExtentsWith::into_extra,
+                super::drawing::ExtentsWith::into_user_data,
             ),
-            extra: Default::default(),
             flip_h: self.flip_h,
             flip_v: self.flip_v,
-            offset: officekit_markup_base::into_extra_optional(
+            offset: officekit_markup_base::into_user_data_optional(
                 &mut self.offset,
-                super::drawing::OffsetWith::into_extra,
+                super::drawing::OffsetWith::into_user_data,
             ),
             rot: self.rot,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

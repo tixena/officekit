@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -360,17 +360,17 @@ pub trait Context: crate::Context {
 /// 3.5.1. Its schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LastEditFeatureWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023DataSourceVersioningLastEditFeature,
+pub struct LastEditFeatureWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023DataSourceVersioningLastEditFeature,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xxdsv:lastEditFeature` element of the tree a read gives: [`LastEditFeatureWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type LastEditFeature = LastEditFeatureWith<()>;
 
 impl Eq for LastEditFeatureWith<()> {}
@@ -379,17 +379,17 @@ impl Eq for LastEditFeatureWith<()> {}
 /// 3.5.1. Its schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LastRefreshFeatureWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023DataSourceVersioningLastRefreshFeature,
+pub struct LastRefreshFeatureWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023DataSourceVersioningLastRefreshFeature,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xxdsv:lastRefreshFeature` element of the tree a read gives: [`LastRefreshFeatureWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type LastRefreshFeature = LastRefreshFeatureWith<()>;
 
 impl Eq for LastRefreshFeatureWith<()> {}
@@ -398,17 +398,17 @@ impl Eq for LastRefreshFeatureWith<()> {}
 /// 3.5.1. Its schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RequiredFeatureWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023DataSourceVersioningRequiredFeature,
+pub struct RequiredFeatureWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023DataSourceVersioningRequiredFeature,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xxdsv:requiredFeature` element of the tree a read gives: [`RequiredFeatureWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type RequiredFeature = RequiredFeatureWith<()>;
 
 impl Eq for RequiredFeatureWith<()> {}
@@ -417,9 +417,7 @@ impl Eq for RequiredFeatureWith<()> {}
 /// Its schema type is `CT_VersionInfo`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VersionInfoWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023DataSourceVersioningVersionInfo,
+pub struct VersionInfoWith<X: UserData> {
     /// The children that are `LastEditFeature`, in order.
     pub last_edit_feature: Vec<LastEditFeatureWith<X>>,
     /// The children that are `LastRefreshFeature`, in order.
@@ -428,10 +426,12 @@ pub struct VersionInfoWith<X: NodeExtra> {
     pub required_feature: Vec<RequiredFeatureWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023DataSourceVersioningVersionInfo,
 }
 
 /// The `xxdsv:versionInfo` element of the tree a read gives: [`VersionInfoWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type VersionInfo = VersionInfoWith<()>;
 
 impl Eq for VersionInfoWith<()> {}
@@ -470,17 +470,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> LastEditFeatureWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LastEditFeatureWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LastEditFeatureWith<Y>
+    pub fn into_user_data<Y>(self) -> LastEditFeatureWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LastEditFeatureWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -508,17 +508,17 @@ impl officekit_markup_base::Write for LastEditFeature {
     }
 }
 
-impl<X: NodeExtra> LastRefreshFeatureWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LastRefreshFeatureWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LastRefreshFeatureWith<Y>
+    pub fn into_user_data<Y>(self) -> LastRefreshFeatureWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LastRefreshFeatureWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -546,17 +546,17 @@ impl officekit_markup_base::Write for LastRefreshFeature {
     }
 }
 
-impl<X: NodeExtra> RequiredFeatureWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RequiredFeatureWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RequiredFeatureWith<Y>
+    pub fn into_user_data<Y>(self) -> RequiredFeatureWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RequiredFeatureWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -584,29 +584,29 @@ impl officekit_markup_base::Write for RequiredFeature {
     }
 }
 
-impl<X: NodeExtra> VersionInfoWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> VersionInfoWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> VersionInfoWith<Y>
+    pub fn into_user_data<Y>(self) -> VersionInfoWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         VersionInfoWith {
-            extra: Default::default(),
-            last_edit_feature: officekit_markup_base::into_extra_list(
+            last_edit_feature: officekit_markup_base::into_user_data_list(
                 self.last_edit_feature,
-                LastEditFeatureWith::into_extra,
+                LastEditFeatureWith::into_user_data,
             ),
-            last_refresh_feature: officekit_markup_base::into_extra_list(
+            last_refresh_feature: officekit_markup_base::into_user_data_list(
                 self.last_refresh_feature,
-                LastRefreshFeatureWith::into_extra,
+                LastRefreshFeatureWith::into_user_data,
             ),
-            required_feature: officekit_markup_base::into_extra_list(
+            required_feature: officekit_markup_base::into_user_data_list(
                 self.required_feature,
-                RequiredFeatureWith::into_extra,
+                RequiredFeatureWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

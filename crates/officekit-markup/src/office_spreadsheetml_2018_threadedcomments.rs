@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::spreadsheet;
 use officekit_xml::element::Element;
@@ -476,16 +476,17 @@ pub trait Context: crate::Context {
 /// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2018ThreadedcommentsExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2018ThreadedcommentsExtLst,
 }
 
-/// The `xltc:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `xltc:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -494,9 +495,7 @@ impl Eq for ExtLstWith<()> {}
 /// schema type is `CT_Mention`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MentionWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2018ThreadedcommentsMention,
+pub struct MentionWith<X: UserData> {
     /// The attribute `length`, when the element has it.
     pub length: Option<String>,
     /// The attribute `mentionId`, when the element has it.
@@ -507,9 +506,12 @@ pub struct MentionWith<X: NodeExtra> {
     pub start_index: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2018ThreadedcommentsMention,
 }
 
-/// The `xltc:mention` element of the tree a read gives: [`MentionWith`] holding nothing in `extra`.
+/// The `xltc:mention` element of the tree a read gives: [`MentionWith`] holding nothing in
+/// `user_data`.
 pub type Mention = MentionWith<()>;
 
 impl Eq for MentionWith<()> {}
@@ -518,17 +520,17 @@ impl Eq for MentionWith<()> {}
 /// schema type is `CT_ThreadedCommentMentions`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MentionsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2018ThreadedcommentsMentions,
+pub struct MentionsWith<X: UserData> {
     /// The children that are `Mention`, in order.
     pub mention: Vec<MentionWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2018ThreadedcommentsMentions,
 }
 
 /// The `xltc:mentions` element of the tree a read gives: [`MentionsWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Mentions = MentionsWith<()>;
 
 impl Eq for MentionsWith<()> {}
@@ -537,24 +539,25 @@ impl Eq for MentionsWith<()> {}
 /// schema type is `CT_Person`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PersonWith<X: NodeExtra> {
+pub struct PersonWith<X: UserData> {
     /// The attribute `displayName`, when the element has it.
     pub display_name: Option<String>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2018ThreadedcommentsPerson,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `providerId`, when the element has it.
     pub provider_id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2018ThreadedcommentsPerson,
     /// The attribute `userId`, when the element has it.
     pub user_id: Option<String>,
 }
 
-/// The `xltc:person` element of the tree a read gives: [`PersonWith`] holding nothing in `extra`.
+/// The `xltc:person` element of the tree a read gives: [`PersonWith`] holding nothing in
+/// `user_data`.
 pub type Person = PersonWith<()>;
 
 impl Eq for PersonWith<()> {}
@@ -563,19 +566,19 @@ impl Eq for PersonWith<()> {}
 /// Its schema type is `CT_PersonList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PersonListWith<X: NodeExtra> {
+pub struct PersonListWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2018ThreadedcommentsPersonList,
     /// The children that are `Person`, in order.
     pub person: Vec<PersonWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2018ThreadedcommentsPersonList,
 }
 
 /// The `xltc:personList` element of the tree a read gives: [`PersonListWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PersonList = PersonListWith<()>;
 
 impl Eq for PersonListWith<()> {}
@@ -584,16 +587,16 @@ impl Eq for PersonListWith<()> {}
 /// schema type is `ST_Xstring`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2018ThreadedcommentsText,
+pub struct TextWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2018ThreadedcommentsText,
     /// The element's text.
     pub value: String,
 }
 
-/// The `xltc:text` element of the tree a read gives: [`TextWith`] holding nothing in `extra`.
+/// The `xltc:text` element of the tree a read gives: [`TextWith`] holding nothing in `user_data`.
 pub type Text = TextWith<()>;
 
 impl Eq for TextWith<()> {}
@@ -602,15 +605,13 @@ impl Eq for TextWith<()> {}
 /// 3.5.1. Its schema type is `CT_ThreadedComment`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ThreadedCommentWith<X: NodeExtra> {
+pub struct ThreadedCommentWith<X: UserData> {
     /// The attribute `dT`, when the element has it.
     pub d_t: Option<String>,
     /// The attribute `done`, when the element has it.
     pub done: Option<String>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2018ThreadedcommentsThreadedComment,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The child that is `Mentions`, when there is one.
@@ -625,10 +626,12 @@ pub struct ThreadedCommentWith<X: NodeExtra> {
     pub text: Option<Box<TextWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2018ThreadedcommentsThreadedComment,
 }
 
 /// The `xltc:threadedComment` element of the tree a read gives: [`ThreadedCommentWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ThreadedComment = ThreadedCommentWith<()>;
 
 impl Eq for ThreadedCommentWith<()> {}
@@ -637,19 +640,19 @@ impl Eq for ThreadedCommentWith<()> {}
 /// 3.5.1. Its schema type is `CT_ThreadedComments`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ThreadedCommentsWith<X: NodeExtra> {
+pub struct ThreadedCommentsWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2018ThreadedcommentsThreadedComments,
     /// The children that are `ThreadedComment`, in order.
     pub threaded_comment: Vec<ThreadedCommentWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2018ThreadedcommentsThreadedComments,
 }
 
 /// The `xltc:ThreadedComments` element of the tree a read gives: [`ThreadedCommentsWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ThreadedComments = ThreadedCommentsWith<()>;
 
 impl Eq for ThreadedCommentsWith<()> {}
@@ -704,21 +707,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                spreadsheet::ExtensionWith::into_extra,
+                spreadsheet::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -742,21 +745,21 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> MentionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MentionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MentionWith<Y>
+    pub fn into_user_data<Y>(self) -> MentionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MentionWith {
-            extra: Default::default(),
             length: self.length,
             mention_id: self.mention_id,
             mentionperson_id: self.mentionperson_id,
             start_index: self.start_index,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -786,18 +789,21 @@ impl officekit_markup_base::Write for Mention {
     }
 }
 
-impl<X: NodeExtra> MentionsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MentionsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MentionsWith<Y>
+    pub fn into_user_data<Y>(self) -> MentionsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MentionsWith {
-            extra: Default::default(),
-            mention: officekit_markup_base::into_extra_list(self.mention, MentionWith::into_extra),
+            mention: officekit_markup_base::into_user_data_list(
+                self.mention,
+                MentionWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -821,24 +827,24 @@ impl officekit_markup_base::Write for Mentions {
     }
 }
 
-impl<X: NodeExtra> PersonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PersonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> PersonWith<Y>
+    pub fn into_user_data<Y>(mut self) -> PersonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PersonWith {
             display_name: self.display_name,
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             id: self.id,
             provider_id: self.provider_id,
             unknown: self.unknown,
+            user_data: Default::default(),
             user_id: self.user_id,
         }
     }
@@ -869,22 +875,25 @@ impl officekit_markup_base::Write for Person {
     }
 }
 
-impl<X: NodeExtra> PersonListWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PersonListWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> PersonListWith<Y>
+    pub fn into_user_data<Y>(mut self) -> PersonListWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PersonListWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            person: officekit_markup_base::into_extra_list(self.person, PersonWith::into_extra),
+            person: officekit_markup_base::into_user_data_list(
+                self.person,
+                PersonWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -908,17 +917,17 @@ impl officekit_markup_base::Write for PersonList {
     }
 }
 
-impl<X: NodeExtra> TextWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TextWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TextWith<Y>
+    pub fn into_user_data<Y>(self) -> TextWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TextWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -946,32 +955,35 @@ impl officekit_markup_base::Write for Text {
     }
 }
 
-impl<X: NodeExtra> ThreadedCommentWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ThreadedCommentWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ThreadedCommentWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ThreadedCommentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ThreadedCommentWith {
             d_t: self.d_t,
             done: self.done,
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             id: self.id,
-            mentions: officekit_markup_base::into_extra_optional(
+            mentions: officekit_markup_base::into_user_data_optional(
                 &mut self.mentions,
-                MentionsWith::into_extra,
+                MentionsWith::into_user_data,
             ),
             parent_id: self.parent_id,
             person_id: self.person_id,
             r#ref: self.r#ref,
-            text: officekit_markup_base::into_extra_optional(&mut self.text, TextWith::into_extra),
+            text: officekit_markup_base::into_user_data_optional(
+                &mut self.text,
+                TextWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1003,25 +1015,25 @@ impl officekit_markup_base::Write for ThreadedComment {
     }
 }
 
-impl<X: NodeExtra> ThreadedCommentsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ThreadedCommentsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ThreadedCommentsWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ThreadedCommentsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ThreadedCommentsWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            threaded_comment: officekit_markup_base::into_extra_list(
+            threaded_comment: officekit_markup_base::into_user_data_list(
                 self.threaded_comment,
-                ThreadedCommentWith::into_extra,
+                ThreadedCommentWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

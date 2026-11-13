@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use crate::NodeExtra;
+use crate::UserData;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -250,9 +250,7 @@ pub static EMBEDDED_CUSTOM_XML_SCHEMA_SUPPLEMENTARY_DATA_SHAPE: crate::Shape = c
 /// schema type is `CT_Schema`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CustomXMLSchemaReferenceWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::CustomXmlSchemaPropertiesCustomXMLSchemaReference,
+pub struct CustomXMLSchemaReferenceWith<X: UserData> {
     /// The attribute `sl:manifestLocation`, when the element has it.
     pub manifest_location: Option<String>,
     /// The attribute `sl:schemaLanguage`, when the element has it.
@@ -263,10 +261,12 @@ pub struct CustomXMLSchemaReferenceWith<X: NodeExtra> {
     pub unknown: crate::Unknown,
     /// The attribute `sl:uri`, when the element has it.
     pub uri: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::CustomXmlSchemaPropertiesCustomXMLSchemaReference,
 }
 
 /// The `sl:schema` element of the tree a read gives: [`CustomXMLSchemaReferenceWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type CustomXMLSchemaReference = CustomXMLSchemaReferenceWith<()>;
 
 impl Eq for CustomXMLSchemaReferenceWith<()> {}
@@ -275,37 +275,37 @@ impl Eq for CustomXMLSchemaReferenceWith<()> {}
 /// section 23.2.2). Its schema type is `CT_SchemaLibrary`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EmbeddedCustomXMLSchemaSupplementaryDataWith<X: NodeExtra> {
+pub struct EmbeddedCustomXMLSchemaSupplementaryDataWith<X: UserData> {
     /// The children that are `CustomXMLSchemaReference`, in order.
     pub custom_xml_schema_reference: Vec<CustomXMLSchemaReferenceWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::CustomXmlSchemaPropertiesEmbeddedCustomXMLSchemaSupplementaryData,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::CustomXmlSchemaPropertiesEmbeddedCustomXMLSchemaSupplementaryData,
 }
 
 /// The `sl:schemaLibrary` element of the tree a read gives:
-/// [`EmbeddedCustomXMLSchemaSupplementaryDataWith`] holding nothing in `extra`.
+/// [`EmbeddedCustomXMLSchemaSupplementaryDataWith`] holding nothing in `user_data`.
 pub type EmbeddedCustomXMLSchemaSupplementaryData =
     EmbeddedCustomXMLSchemaSupplementaryDataWith<()>;
 
 impl Eq for EmbeddedCustomXMLSchemaSupplementaryDataWith<()> {}
 
-impl<X: NodeExtra> CustomXMLSchemaReferenceWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CustomXMLSchemaReferenceWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CustomXMLSchemaReferenceWith<Y>
+    pub fn into_user_data<Y>(self) -> CustomXMLSchemaReferenceWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CustomXMLSchemaReferenceWith {
-            extra: Default::default(),
             manifest_location: self.manifest_location,
             schema_language: self.schema_language,
             schema_location: self.schema_location,
             unknown: self.unknown,
             uri: self.uri,
+            user_data: Default::default(),
         }
     }
 
@@ -335,21 +335,21 @@ impl crate::Write for CustomXMLSchemaReference {
     }
 }
 
-impl<X: NodeExtra> EmbeddedCustomXMLSchemaSupplementaryDataWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> EmbeddedCustomXMLSchemaSupplementaryDataWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> EmbeddedCustomXMLSchemaSupplementaryDataWith<Y>
+    pub fn into_user_data<Y>(self) -> EmbeddedCustomXMLSchemaSupplementaryDataWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         EmbeddedCustomXMLSchemaSupplementaryDataWith {
-            custom_xml_schema_reference: crate::into_extra_list(
+            custom_xml_schema_reference: crate::into_user_data_list(
                 self.custom_xml_schema_reference,
-                CustomXMLSchemaReferenceWith::into_extra,
+                CustomXMLSchemaReferenceWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

@@ -110,9 +110,9 @@ extern crate alloc;
 include!("modules.rs");
 
 pub mod class_rules;
-mod node_extra;
+mod user_data;
 
-pub use node_extra::{ExtraSlot, NodeExtra};
+pub use user_data::{UserData, UserDataSlot};
 
 use alloc::collections::VecDeque;
 use core::num::ParseFloatError;
@@ -152,16 +152,16 @@ macro_rules! mirror_fields {
     }};
 }
 
-/// The `into_extra` of an enum too long to write out.
+/// The `into_user_data` of an enum too long to write out.
 ///
 /// It is the match that converts each arm of `$item`, the plain ones as they are and the `boxed`
 /// ones through their box, into the arm of the same name of `$enum`, and moves `Other`.
 #[macro_export]
-macro_rules! into_extra_match {
+macro_rules! into_user_data_match {
     ($item:expr, $enum:ident; plain [$($plain:ident,)*] boxed [$($boxed:ident,)*]) => {
         match $item {
-            $($enum::$plain(node) => $enum::$plain(node.into_extra()),)*
-            $($enum::$boxed(node) => $enum::$boxed(Box::new((*node).into_extra())),)*
+            $($enum::$plain(node) => $enum::$plain(node.into_user_data()),)*
+            $($enum::$boxed(node) => $enum::$boxed(Box::new((*node).into_user_data())),)*
             $enum::Other(node) => $enum::Other(node),
         }
     };
@@ -201,7 +201,7 @@ enum Accepted {
 /// declared child its place names.
 #[derive(Debug)]
 pub struct Children<'extra> {
-    extra: &'extra [Extra],
+    extras: &'extra [Extra],
     known: usize,
     out: Vec<Node>,
 }
@@ -478,7 +478,7 @@ impl<'extra> Children<'extra> {
     fn declared(&mut self, node: Node) {
         let known = self.known;
         self.out.extend(
-            self.extra
+            self.extras
                 .iter()
                 .filter(|extra| extra.after == known)
                 .map(|extra| extra.node.clone()),
@@ -493,7 +493,7 @@ impl<'extra> Children<'extra> {
     pub fn finish(mut self) -> Vec<Node> {
         let known = self.known;
         self.out.extend(
-            self.extra
+            self.extras
                 .iter()
                 .filter(|extra| extra.after >= known)
                 .map(|extra| extra.node.clone()),
@@ -510,7 +510,7 @@ impl<'extra> Children<'extra> {
     #[must_use = "this only builds the value"]
     pub const fn new(extra: &'extra [Extra]) -> Self {
         Self {
-            extra,
+            extras: extra,
             known: 0,
             out: Vec::new(),
         }
@@ -1137,25 +1137,28 @@ impl<'scope, 'node> Writer<'scope, 'node> {
 
 /// The children of a list field, each converted by `each`.
 ///
-/// `each` is the `into_extra` of the node a list holds.
+/// `each` is the `into_user_data` of the node a list holds.
 #[must_use = "this only returns the value"]
-pub fn into_extra_list<T, U>(items: Vec<T>, each: fn(T) -> U) -> Vec<U> {
+pub fn into_user_data_list<T, U>(items: Vec<T>, each: fn(T) -> U) -> Vec<U> {
     items.into_iter().map(each).collect()
 }
 
 /// The child of an optional field, taken out of the field and converted by `each`.
 ///
-/// `each` is the `into_extra` of the node the field holds.
+/// `each` is the `into_user_data` of the node the field holds.
 #[must_use = "the result is returned and kept nowhere else"]
-pub fn into_extra_optional<T, U>(item: &mut Option<Box<T>>, each: fn(T) -> U) -> Option<Box<U>> {
+pub fn into_user_data_optional<T, U>(
+    item: &mut Option<Box<T>>,
+    each: fn(T) -> U,
+) -> Option<Box<U>> {
     item.take().map(|boxed| Box::new(each(*boxed)))
 }
 
 /// The child of a required field, converted by `each` and boxed again.
 ///
-/// `each` is the `into_extra` of the node the field holds.
+/// `each` is the `into_user_data` of the node the field holds.
 #[must_use = "this only returns the value"]
-pub fn into_extra_required<T, U>(item: T, each: fn(T) -> U) -> Box<U> {
+pub fn into_user_data_required<T, U>(item: T, each: fn(T) -> U) -> Box<U> {
     Box::new(each(item))
 }
 

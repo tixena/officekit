@@ -299,7 +299,7 @@ pub fn pivot_field_subtotals(element: &Element) -> super::PivotFieldSubtotals {
 pub fn subtotal_line_item(element: &Element) -> super::SubtotalLineItem {
     let reader = officekit_markup_base::Reader::new(element, &super::SUBTOTAL_LINE_ITEM_SHAPE);
     super::SubtotalLineItem {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -310,7 +310,7 @@ pub fn subtotal_pivot_item_subtotal(element: &Element) -> super::SubtotalPivotIt
     let reader =
         officekit_markup_base::Reader::new(element, &super::SUBTOTAL_PIVOT_ITEM_SUBTOTAL_SHAPE);
     super::SubtotalPivotItemSubtotal {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }

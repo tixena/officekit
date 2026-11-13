@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -325,17 +325,17 @@ pub static WEBEXTENSIONREF_SHAPE: officekit_markup_base::Shape = officekit_marku
 /// 3.5.1. Its schema type is `CT_OsfWebExtensionReferenceList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AlternateReferencesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWebextensionsWebextension201011AlternateReferences,
+pub struct AlternateReferencesWith<X: UserData> {
     /// The children that are `Reference`, in order.
     pub reference: Vec<ReferenceWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWebextensionsWebextension201011AlternateReferences,
 }
 
 /// The `we:alternateReferences` element of the tree a read gives: [`AlternateReferencesWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type AlternateReferences = AlternateReferencesWith<()>;
 
 impl Eq for AlternateReferencesWith<()> {}
@@ -344,22 +344,23 @@ impl Eq for AlternateReferencesWith<()> {}
 /// schema type is `CT_OsfWebExtensionBinding`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BindingWith<X: NodeExtra> {
+pub struct BindingWith<X: UserData> {
     /// The attribute `appref`, when the element has it.
     pub appref: Option<String>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWebextensionsWebextension201011Binding,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWebextensionsWebextension201011Binding,
 }
 
-/// The `we:binding` element of the tree a read gives: [`BindingWith`] holding nothing in `extra`.
+/// The `we:binding` element of the tree a read gives: [`BindingWith`] holding nothing in
+/// `user_data`.
 pub type Binding = BindingWith<()>;
 
 impl Eq for BindingWith<()> {}
@@ -368,16 +369,17 @@ impl Eq for BindingWith<()> {}
 /// schema type is `CT_OsfWebExtensionBindingList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BindingsWith<X: NodeExtra> {
+pub struct BindingsWith<X: UserData> {
     /// The children that are `Binding`, in order.
     pub binding: Vec<BindingWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWebextensionsWebextension201011Bindings,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWebextensionsWebextension201011Bindings,
 }
 
-/// The `we:bindings` element of the tree a read gives: [`BindingsWith`] holding nothing in `extra`.
+/// The `we:bindings` element of the tree a read gives: [`BindingsWith`] holding nothing in
+/// `user_data`.
 pub type Bindings = BindingsWith<()>;
 
 impl Eq for BindingsWith<()> {}
@@ -589,16 +591,16 @@ pub trait Context: crate::Context {
 /// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWebextensionsWebextension201011ExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWebextensionsWebextension201011ExtLst,
 }
 
-/// The `we:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `we:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -607,17 +609,17 @@ impl Eq for ExtLstWith<()> {}
 /// schema type is `CT_OsfWebExtensionPropertyBag`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PropertiesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWebextensionsWebextension201011Properties,
+pub struct PropertiesWith<X: UserData> {
     /// The children that are `Property`, in order.
     pub property: Vec<PropertyWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWebextensionsWebextension201011Properties,
 }
 
 /// The `we:properties` element of the tree a read gives: [`PropertiesWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Properties = PropertiesWith<()>;
 
 impl Eq for PropertiesWith<()> {}
@@ -626,18 +628,19 @@ impl Eq for PropertiesWith<()> {}
 /// schema type is `CT_OsfWebExtensionProperty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PropertyWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWebextensionsWebextension201011Property,
+pub struct PropertyWith<X: UserData> {
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWebextensionsWebextension201011Property,
     /// The attribute `value`, when the element has it.
     pub value: Option<String>,
 }
 
-/// The `we:property` element of the tree a read gives: [`PropertyWith`] holding nothing in `extra`.
+/// The `we:property` element of the tree a read gives: [`PropertyWith`] holding nothing in
+/// `user_data`.
 pub type Property = PropertyWith<()>;
 
 impl Eq for PropertyWith<()> {}
@@ -646,11 +649,9 @@ impl Eq for PropertyWith<()> {}
 /// schema type is `CT_OsfWebExtensionReference`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ReferenceWith<X: NodeExtra> {
+pub struct ReferenceWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWebextensionsWebextension201011Reference,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
     /// The attribute `store`, when the element has it.
@@ -659,12 +660,14 @@ pub struct ReferenceWith<X: NodeExtra> {
     pub store_type: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWebextensionsWebextension201011Reference,
     /// The attribute `version`, when the element has it.
     pub version: Option<String>,
 }
 
 /// The `we:reference` element of the tree a read gives: [`ReferenceWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Reference = ReferenceWith<()>;
 
 impl Eq for ReferenceWith<()> {}
@@ -673,7 +676,7 @@ impl Eq for ReferenceWith<()> {}
 /// schema type is `CT_Blip`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SnapshotWith<X: NodeExtra> {
+pub struct SnapshotWith<X: UserData> {
     /// The children that are an item of `drawing::BlipContent`, in order.
     pub content: Vec<drawing::BlipContentWith<X>>,
     /// The attribute `cstate`, when the element has it.
@@ -682,15 +685,16 @@ pub struct SnapshotWith<X: NodeExtra> {
     pub embed: Option<String>,
     /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWebextensionsWebextension201011Snapshot,
     /// The attribute `r:link`, when the element has it.
     pub link: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWebextensionsWebextension201011Snapshot,
 }
 
-/// The `we:snapshot` element of the tree a read gives: [`SnapshotWith`] holding nothing in `extra`.
+/// The `we:snapshot` element of the tree a read gives: [`SnapshotWith`] holding nothing in
+/// `user_data`.
 pub type Snapshot = SnapshotWith<()>;
 
 impl Eq for SnapshotWith<()> {}
@@ -764,15 +768,13 @@ pub trait Visitor: crate::Visitor {
 /// Its schema type is `CT_OsfWebExtension`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WebextensionWith<X: NodeExtra> {
+pub struct WebextensionWith<X: UserData> {
     /// The child that is `AlternateReferences`, when there is one.
     pub alternate_references: Option<Box<AlternateReferencesWith<X>>>,
     /// The child that is `Bindings`, which the schema requires.
     pub bindings: Box<BindingsWith<X>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWebextensionsWebextension201011Webextension,
     /// The attribute `frozen`, when the element has it.
     pub frozen: Option<String>,
     /// The attribute `id`, when the element has it.
@@ -785,10 +787,12 @@ pub struct WebextensionWith<X: NodeExtra> {
     pub snapshot: Option<Box<SnapshotWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWebextensionsWebextension201011Webextension,
 }
 
 /// The `we:webextension` element of the tree a read gives: [`WebextensionWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Webextension = WebextensionWith<()>;
 
 impl Eq for WebextensionWith<()> {}
@@ -797,36 +801,36 @@ impl Eq for WebextensionWith<()> {}
 /// 3.5.1. Its schema type is `CT_WebExtensionPartRef`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WebextensionrefWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWebextensionsWebextension201011Webextensionref,
+pub struct WebextensionrefWith<X: UserData> {
     /// The attribute `r:id`, when the element has it.
     pub id: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWebextensionsWebextension201011Webextensionref,
 }
 
 /// The `we:webextensionref` element of the tree a read gives: [`WebextensionrefWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type Webextensionref = WebextensionrefWith<()>;
 
 impl Eq for WebextensionrefWith<()> {}
 
-impl<X: NodeExtra> AlternateReferencesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AlternateReferencesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AlternateReferencesWith<Y>
+    pub fn into_user_data<Y>(self) -> AlternateReferencesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AlternateReferencesWith {
-            extra: Default::default(),
-            reference: officekit_markup_base::into_extra_list(
+            reference: officekit_markup_base::into_user_data_list(
                 self.reference,
-                ReferenceWith::into_extra,
+                ReferenceWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -850,24 +854,24 @@ impl officekit_markup_base::Write for AlternateReferences {
     }
 }
 
-impl<X: NodeExtra> BindingWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BindingWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> BindingWith<Y>
+    pub fn into_user_data<Y>(mut self) -> BindingWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BindingWith {
             appref: self.appref,
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             id: self.id,
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -896,18 +900,21 @@ impl officekit_markup_base::Write for Binding {
     }
 }
 
-impl<X: NodeExtra> BindingsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BindingsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BindingsWith<Y>
+    pub fn into_user_data<Y>(self) -> BindingsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BindingsWith {
-            binding: officekit_markup_base::into_extra_list(self.binding, BindingWith::into_extra),
-            extra: Default::default(),
+            binding: officekit_markup_base::into_user_data_list(
+                self.binding,
+                BindingWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -931,21 +938,21 @@ impl officekit_markup_base::Write for Bindings {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                drawing::ExtensionWith::into_extra,
+                drawing::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -969,21 +976,21 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> PropertiesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PropertiesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PropertiesWith<Y>
+    pub fn into_user_data<Y>(self) -> PropertiesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PropertiesWith {
-            extra: Default::default(),
-            property: officekit_markup_base::into_extra_list(
+            property: officekit_markup_base::into_user_data_list(
                 self.property,
-                PropertyWith::into_extra,
+                PropertyWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1007,18 +1014,18 @@ impl officekit_markup_base::Write for Properties {
     }
 }
 
-impl<X: NodeExtra> PropertyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PropertyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PropertyWith<Y>
+    pub fn into_user_data<Y>(self) -> PropertyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PropertyWith {
-            extra: Default::default(),
             name: self.name,
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -1047,24 +1054,24 @@ impl officekit_markup_base::Write for Property {
     }
 }
 
-impl<X: NodeExtra> ReferenceWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ReferenceWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ReferenceWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ReferenceWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ReferenceWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             id: self.id,
             store: self.store,
             store_type: self.store_type,
             unknown: self.unknown,
+            user_data: Default::default(),
             version: self.version,
         }
     }
@@ -1095,28 +1102,28 @@ impl officekit_markup_base::Write for Reference {
     }
 }
 
-impl<X: NodeExtra> SnapshotWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SnapshotWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SnapshotWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SnapshotWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SnapshotWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                drawing::BlipContentWith::into_extra,
+                drawing::BlipContentWith::into_user_data,
             ),
             cstate: self.cstate,
             embed: self.embed,
-            extension_list: officekit_markup_base::into_extra_optional(
+            extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.extension_list,
-                drawing::ExtensionListWith::into_extra,
+                drawing::ExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
             link: self.link,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1145,43 +1152,43 @@ impl officekit_markup_base::Write for Snapshot {
     }
 }
 
-impl<X: NodeExtra> WebextensionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> WebextensionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> WebextensionWith<Y>
+    pub fn into_user_data<Y>(mut self) -> WebextensionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         WebextensionWith {
-            alternate_references: officekit_markup_base::into_extra_optional(
+            alternate_references: officekit_markup_base::into_user_data_optional(
                 &mut self.alternate_references,
-                AlternateReferencesWith::into_extra,
+                AlternateReferencesWith::into_user_data,
             ),
-            bindings: officekit_markup_base::into_extra_required(
+            bindings: officekit_markup_base::into_user_data_required(
                 *self.bindings,
-                BindingsWith::into_extra,
+                BindingsWith::into_user_data,
             ),
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             frozen: self.frozen,
             id: self.id,
-            properties: officekit_markup_base::into_extra_required(
+            properties: officekit_markup_base::into_user_data_required(
                 *self.properties,
-                PropertiesWith::into_extra,
+                PropertiesWith::into_user_data,
             ),
-            reference: officekit_markup_base::into_extra_required(
+            reference: officekit_markup_base::into_user_data_required(
                 *self.reference,
-                ReferenceWith::into_extra,
+                ReferenceWith::into_user_data,
             ),
-            snapshot: officekit_markup_base::into_extra_optional(
+            snapshot: officekit_markup_base::into_user_data_optional(
                 &mut self.snapshot,
-                SnapshotWith::into_extra,
+                SnapshotWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -1209,18 +1216,18 @@ impl officekit_markup_base::Write for Webextension {
     }
 }
 
-impl<X: NodeExtra> WebextensionrefWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> WebextensionrefWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> WebextensionrefWith<Y>
+    pub fn into_user_data<Y>(self) -> WebextensionrefWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         WebextensionrefWith {
-            extra: Default::default(),
             id: self.id,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

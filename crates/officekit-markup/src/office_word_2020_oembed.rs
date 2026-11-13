@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -273,9 +273,7 @@ pub trait Context: crate::Context {
 /// schema type is `CT_OEmbed`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct OembedWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2020OembedOembed,
+pub struct OembedWith<X: UserData> {
     /// The attribute `mediaType`, when the element has it.
     pub media_type: Option<String>,
     /// The attribute `oEmbedUrl`, when the element has it.
@@ -284,9 +282,12 @@ pub struct OembedWith<X: NodeExtra> {
     pub pic_locks_auto_for_o_embed: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2020OembedOembed,
 }
 
-/// The `woe:oembed` element of the tree a read gives: [`OembedWith`] holding nothing in `extra`.
+/// The `woe:oembed` element of the tree a read gives: [`OembedWith`] holding nothing in
+/// `user_data`.
 pub type Oembed = OembedWith<()>;
 
 impl Eq for OembedWith<()> {}
@@ -303,20 +304,20 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> OembedWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> OembedWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> OembedWith<Y>
+    pub fn into_user_data<Y>(self) -> OembedWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         OembedWith {
-            extra: Default::default(),
             media_type: self.media_type,
             o_embed_url: self.o_embed_url,
             pic_locks_auto_for_o_embed: self.pic_locks_auto_for_o_embed,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

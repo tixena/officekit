@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -307,17 +307,17 @@ pub trait Context: crate::Context {
 /// version 3.5.1. Its schema type is `CT_DataDisplayOptions16`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataDisplayOptions16With<X: NodeExtra> {
+pub struct DataDisplayOptions16With<X: UserData> {
     /// The child that is `DispNaAsBlank`, when there is one.
     pub disp_na_as_blank: Option<Box<DispNaAsBlankWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing201703ChartDataDisplayOptions16,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing201703ChartDataDisplayOptions16,
 }
 
 /// The `c16r3:dataDisplayOptions16` element of the tree a read gives: [`DataDisplayOptions16With`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type DataDisplayOptions16 = DataDisplayOptions16With<()>;
 
 impl Eq for DataDisplayOptions16With<()> {}
@@ -326,17 +326,17 @@ impl Eq for DataDisplayOptions16With<()> {}
 /// 3.5.1. Its schema type is `CT_BooleanFalse`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DispNaAsBlankWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing201703ChartDispNaAsBlank,
+pub struct DispNaAsBlankWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing201703ChartDispNaAsBlank,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
 }
 
 /// The `c16r3:dispNaAsBlank` element of the tree a read gives: [`DispNaAsBlankWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DispNaAsBlank = DispNaAsBlankWith<()>;
 
 impl Eq for DispNaAsBlankWith<()> {}
@@ -363,21 +363,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> DataDisplayOptions16With<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DataDisplayOptions16With<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> DataDisplayOptions16With<Y>
+    pub fn into_user_data<Y>(mut self) -> DataDisplayOptions16With<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DataDisplayOptions16With {
-            disp_na_as_blank: officekit_markup_base::into_extra_optional(
+            disp_na_as_blank: officekit_markup_base::into_user_data_optional(
                 &mut self.disp_na_as_blank,
-                DispNaAsBlankWith::into_extra,
+                DispNaAsBlankWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -401,17 +401,17 @@ impl officekit_markup_base::Write for DataDisplayOptions16 {
     }
 }
 
-impl<X: NodeExtra> DispNaAsBlankWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DispNaAsBlankWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DispNaAsBlankWith<Y>
+    pub fn into_user_data<Y>(self) -> DispNaAsBlankWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DispNaAsBlankWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }

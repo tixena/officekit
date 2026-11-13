@@ -224,9 +224,9 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::ArtisticBlur)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticBlurMirror {
-    pub extra: (),
     pub radius: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -234,119 +234,119 @@ pub struct ArtisticBlurMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticCementMirror {
     pub crack_spacing: Option<String>,
-    pub extra: (),
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticChalkSketch)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticChalkSketchMirror {
-    pub extra: (),
     pub pressure: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticCrisscrossEtching)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticCrisscrossEtchingMirror {
-    pub extra: (),
     pub pressure: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticCutout)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticCutoutMirror {
-    pub extra: (),
     pub number_of_shades: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticFilmGrain)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticFilmGrainMirror {
-    pub extra: (),
     pub grain_size: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticGlass)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticGlassMirror {
-    pub extra: (),
     pub scaling: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticGlowDiffused)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticGlowDiffusedMirror {
-    pub extra: (),
     pub intensity: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticGlowEdges)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticGlowEdgesMirror {
-    pub extra: (),
     pub smoothness: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticLightScreen)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticLightScreenMirror {
-    pub extra: (),
     pub grid_size: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticLineDrawing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticLineDrawingMirror {
-    pub extra: (),
     pub pencil_size: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticMarker)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticMarkerMirror {
-    pub extra: (),
     pub size: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticMosiaicBubbles)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticMosiaicBubblesMirror {
-    pub extra: (),
     pub pressure: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -354,49 +354,49 @@ pub struct ArtisticMosiaicBubblesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticPaintBrushMirror {
     pub brush_size: Option<String>,
-    pub extra: (),
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticPaintStrokes)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticPaintStrokesMirror {
-    pub extra: (),
     pub intensity: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticPastelsSmooth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticPastelsSmoothMirror {
-    pub extra: (),
     pub scaling: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticPencilGrayscale)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticPencilGrayscaleMirror {
-    pub extra: (),
     pub pencil_size: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticPencilSketch)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticPencilSketchMirror {
-    pub extra: (),
     pub pressure: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -404,29 +404,29 @@ pub struct ArtisticPencilSketchMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticPhotocopyMirror {
     pub detail: Option<String>,
-    pub extra: (),
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticPlasticWrap)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticPlasticWrapMirror {
-    pub extra: (),
     pub smoothness: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ArtisticTexturizer)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticTexturizerMirror {
-    pub extra: (),
     pub scaling: Option<String>,
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -434,17 +434,17 @@ pub struct ArtisticTexturizerMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtisticWatercolorSpongeMirror {
     pub brush_size: Option<String>,
-    pub extra: (),
     pub trans: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BackgroundMark)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BackgroundMarkMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub x1: Option<String>,
     pub x2: Option<String>,
     pub y1: Option<String>,
@@ -457,12 +457,12 @@ pub struct BackgroundMarkMirror {
 pub struct BackgroundRemovalMirror {
     pub b: Option<String>,
     pub background_mark: Vec<super::BackgroundMark>,
-    pub extra: (),
     pub foreground_mark: Vec<super::ForegroundMark>,
     pub l: Option<String>,
     pub r: Option<String>,
     pub t: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -471,8 +471,8 @@ pub struct BackgroundRemovalMirror {
 pub struct BrightnessContrastMirror {
     pub bright: Option<String>,
     pub contrast: Option<String>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -486,9 +486,9 @@ pub struct CNvContentPartPrMirror {
     pub cp_locks: Option<Box<super::CpLocks>>,
     #[rkyv(omit_bounds)]
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub is_comment: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -503,7 +503,6 @@ pub struct CNvPrMirror {
     pub descr: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     pub hidden: Option<String>,
     #[rkyv(omit_bounds)]
     pub hyperlink_for_hover: Option<Box<super::super::drawing::HyperlinkForHover>>,
@@ -511,6 +510,7 @@ pub struct CNvPrMirror {
     pub name: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -518,9 +518,9 @@ pub struct CNvPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CameraToolMirror {
     pub cell_range: Option<String>,
-    pub extra: (),
     pub spid: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -528,17 +528,17 @@ pub struct CameraToolMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ColorTemperatureMirror {
     pub color_temp: Option<String>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CompatExt)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CompatExtMirror {
-    pub extra: (),
     pub spid: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -551,11 +551,11 @@ pub struct ContentPartMirror {
     pub bw_mode: Option<super::super::drawing::BlackAndWhiteMode>,
     #[rkyv(omit_bounds)]
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub id: Option<String>,
     #[rkyv(omit_bounds)]
     pub nv_content_part_pr: Option<Box<super::NvContentPartPr>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xfrm: Option<Box<super::Xfrm>>,
 }
 
@@ -568,7 +568,6 @@ pub struct ContentPartMirror {
 pub struct CpLocksMirror {
     #[rkyv(omit_bounds)]
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub no_adjust_handles: Option<String>,
     pub no_change_arrowheads: Option<String>,
     pub no_change_aspect: Option<String>,
@@ -580,6 +579,7 @@ pub struct CpLocksMirror {
     pub no_rot: Option<String>,
     pub no_select: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -591,16 +591,16 @@ pub struct CpLocksMirror {
 pub struct ExtLstMirror {
     #[rkyv(omit_bounds)]
     pub extension: Vec<super::super::drawing::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ForegroundMark)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ForegroundMarkMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub x1: Option<String>,
     pub x2: Option<String>,
     pub y1: Option<String>,
@@ -612,8 +612,8 @@ pub struct ForegroundMarkMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct HiddenEffectsMirror {
     pub content: Box<super::super::drawing::EffectPropertiesContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -621,8 +621,8 @@ pub struct HiddenEffectsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct HiddenFillMirror {
     pub content: Box<super::super::drawing::FillPropertiesContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -634,12 +634,12 @@ pub struct HiddenLineMirror {
     pub cmpd: Option<super::super::drawing::CompoundLineType>,
     pub dash_content: Option<Box<super::super::drawing::LineDashContent>>,
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     pub fill_content: Option<Box<super::super::drawing::LineFillContent>>,
     pub head_end_style: Option<Box<super::super::drawing::LineHeadEndStyle>>,
     pub join_content: Option<Box<super::super::drawing::LineJoinContent>>,
     pub tail_line_end_style: Option<Box<super::super::drawing::TailLineEndStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::super::drawing::LineWidth>,
 }
 
@@ -650,9 +650,9 @@ pub struct HiddenScene3dMirror {
     pub backdrop_plane: Option<Box<super::super::drawing::BackdropPlane>>,
     pub camera: Box<super::super::drawing::Camera>,
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     pub light_rig: Box<super::super::drawing::LightRig>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -663,12 +663,12 @@ pub struct HiddenSp3dMirror {
     pub contour_color: Option<Box<super::super::drawing::ContourColor>>,
     pub contour_w: Option<super::super::drawing::PositiveCoordinate>,
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     pub extrusion_color: Option<Box<super::super::drawing::ExtrusionColor>>,
     pub extrusion_h: Option<super::super::drawing::PositiveCoordinate>,
     pub prst_material: Option<super::super::drawing::PresetMaterialType>,
     pub top_bevel: Option<Box<super::super::drawing::TopBevel>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub z: Option<super::super::drawing::Coordinate>,
 }
 
@@ -677,8 +677,8 @@ pub struct HiddenSp3dMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ImgEffectMirror {
     pub content: Box<super::PictureEffectContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub visible: Option<String>,
 }
 
@@ -687,26 +687,26 @@ pub struct ImgEffectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ImgLayerMirror {
     pub embed: Option<String>,
-    pub extra: (),
     pub img_effect: Vec<super::ImgEffect>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ImgProps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ImgPropsMirror {
-    pub extra: (),
     pub img_layer: Box<super::ImgLayer>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::IsCanvas)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IsCanvasMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -714,8 +714,8 @@ pub struct IsCanvasMirror {
 #[rkyv(remote = super::M)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -729,25 +729,25 @@ pub struct NvContentPartPrMirror {
     pub c: Option<Box<super::CNvContentPartPr>>,
     #[rkyv(omit_bounds)]
     pub c_nv_pr: Box<super::CNvPr>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Saturation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SaturationMirror {
-    pub extra: (),
     pub sat: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ShadowObscured)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShadowObscuredMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -756,16 +756,16 @@ pub struct ShadowObscuredMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SharpenSoftenMirror {
     pub amount: Option<String>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::UseLocalDpi)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseLocalDpiMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -774,12 +774,12 @@ pub struct UseLocalDpiMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct XfrmMirror {
     pub extents: Option<Box<super::super::drawing::Extents>>,
-    pub extra: (),
     pub flip_h: Option<String>,
     pub flip_v: Option<String>,
     pub offset: Option<Box<super::super::drawing::Offset>>,
     pub rot: Option<super::super::drawing::Angle>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -819,9 +819,9 @@ pub enum PictureEffectContent {
 impl From<ArtisticBlurMirror> for super::ArtisticBlur {
     fn from(item: ArtisticBlurMirror) -> Self {
         Self {
-            extra: item.extra,
             radius: item.radius,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -859,9 +859,9 @@ impl From<ArtisticCementMirror> for super::ArtisticCement {
     fn from(item: ArtisticCementMirror) -> Self {
         Self {
             crack_spacing: item.crack_spacing,
-            extra: item.extra,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -898,10 +898,10 @@ where
 impl From<ArtisticChalkSketchMirror> for super::ArtisticChalkSketch {
     fn from(item: ArtisticChalkSketchMirror) -> Self {
         Self {
-            extra: item.extra,
             pressure: item.pressure,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -941,10 +941,10 @@ where
 impl From<ArtisticCrisscrossEtchingMirror> for super::ArtisticCrisscrossEtching {
     fn from(item: ArtisticCrisscrossEtchingMirror) -> Self {
         Self {
-            extra: item.extra,
             pressure: item.pressure,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -985,10 +985,10 @@ where
 impl From<ArtisticCutoutMirror> for super::ArtisticCutout {
     fn from(item: ArtisticCutoutMirror) -> Self {
         Self {
-            extra: item.extra,
             number_of_shades: item.number_of_shades,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1025,10 +1025,10 @@ where
 impl From<ArtisticFilmGrainMirror> for super::ArtisticFilmGrain {
     fn from(item: ArtisticFilmGrainMirror) -> Self {
         Self {
-            extra: item.extra,
             grain_size: item.grain_size,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1065,10 +1065,10 @@ where
 impl From<ArtisticGlassMirror> for super::ArtisticGlass {
     fn from(item: ArtisticGlassMirror) -> Self {
         Self {
-            extra: item.extra,
             scaling: item.scaling,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1105,10 +1105,10 @@ where
 impl From<ArtisticGlowDiffusedMirror> for super::ArtisticGlowDiffused {
     fn from(item: ArtisticGlowDiffusedMirror) -> Self {
         Self {
-            extra: item.extra,
             intensity: item.intensity,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1148,10 +1148,10 @@ where
 impl From<ArtisticGlowEdgesMirror> for super::ArtisticGlowEdges {
     fn from(item: ArtisticGlowEdgesMirror) -> Self {
         Self {
-            extra: item.extra,
             smoothness: item.smoothness,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1188,10 +1188,10 @@ where
 impl From<ArtisticLightScreenMirror> for super::ArtisticLightScreen {
     fn from(item: ArtisticLightScreenMirror) -> Self {
         Self {
-            extra: item.extra,
             grid_size: item.grid_size,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1231,10 +1231,10 @@ where
 impl From<ArtisticLineDrawingMirror> for super::ArtisticLineDrawing {
     fn from(item: ArtisticLineDrawingMirror) -> Self {
         Self {
-            extra: item.extra,
             pencil_size: item.pencil_size,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1274,10 +1274,10 @@ where
 impl From<ArtisticMarkerMirror> for super::ArtisticMarker {
     fn from(item: ArtisticMarkerMirror) -> Self {
         Self {
-            extra: item.extra,
             size: item.size,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1314,10 +1314,10 @@ where
 impl From<ArtisticMosiaicBubblesMirror> for super::ArtisticMosiaicBubbles {
     fn from(item: ArtisticMosiaicBubblesMirror) -> Self {
         Self {
-            extra: item.extra,
             pressure: item.pressure,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1359,9 +1359,9 @@ impl From<ArtisticPaintBrushMirror> for super::ArtisticPaintBrush {
     fn from(item: ArtisticPaintBrushMirror) -> Self {
         Self {
             brush_size: item.brush_size,
-            extra: item.extra,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1398,10 +1398,10 @@ where
 impl From<ArtisticPaintStrokesMirror> for super::ArtisticPaintStrokes {
     fn from(item: ArtisticPaintStrokesMirror) -> Self {
         Self {
-            extra: item.extra,
             intensity: item.intensity,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1441,10 +1441,10 @@ where
 impl From<ArtisticPastelsSmoothMirror> for super::ArtisticPastelsSmooth {
     fn from(item: ArtisticPastelsSmoothMirror) -> Self {
         Self {
-            extra: item.extra,
             scaling: item.scaling,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1485,10 +1485,10 @@ where
 impl From<ArtisticPencilGrayscaleMirror> for super::ArtisticPencilGrayscale {
     fn from(item: ArtisticPencilGrayscaleMirror) -> Self {
         Self {
-            extra: item.extra,
             pencil_size: item.pencil_size,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1529,10 +1529,10 @@ where
 impl From<ArtisticPencilSketchMirror> for super::ArtisticPencilSketch {
     fn from(item: ArtisticPencilSketchMirror) -> Self {
         Self {
-            extra: item.extra,
             pressure: item.pressure,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1573,9 +1573,9 @@ impl From<ArtisticPhotocopyMirror> for super::ArtisticPhotocopy {
     fn from(item: ArtisticPhotocopyMirror) -> Self {
         Self {
             detail: item.detail,
-            extra: item.extra,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1612,10 +1612,10 @@ where
 impl From<ArtisticPlasticWrapMirror> for super::ArtisticPlasticWrap {
     fn from(item: ArtisticPlasticWrapMirror) -> Self {
         Self {
-            extra: item.extra,
             smoothness: item.smoothness,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1655,10 +1655,10 @@ where
 impl From<ArtisticTexturizerMirror> for super::ArtisticTexturizer {
     fn from(item: ArtisticTexturizerMirror) -> Self {
         Self {
-            extra: item.extra,
             scaling: item.scaling,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1696,9 +1696,9 @@ impl From<ArtisticWatercolorSpongeMirror> for super::ArtisticWatercolorSponge {
     fn from(item: ArtisticWatercolorSpongeMirror) -> Self {
         Self {
             brush_size: item.brush_size,
-            extra: item.extra,
             trans: item.trans,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1739,8 +1739,8 @@ where
 impl From<BackgroundMarkMirror> for super::BackgroundMark {
     fn from(item: BackgroundMarkMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             x1: item.x1,
             x2: item.x2,
             y1: item.y1,
@@ -1783,12 +1783,12 @@ impl From<BackgroundRemovalMirror> for super::BackgroundRemoval {
         Self {
             b: item.b,
             background_mark: item.background_mark,
-            extra: item.extra,
             foreground_mark: item.foreground_mark,
             l: item.l,
             r: item.r,
             t: item.t,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1827,8 +1827,8 @@ impl From<BrightnessContrastMirror> for super::BrightnessContrast {
         Self {
             bright: item.bright,
             contrast: item.contrast,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1867,9 +1867,9 @@ impl From<CNvContentPartPrMirror> for super::CNvContentPartPr {
         Self {
             cp_locks: item.cp_locks,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             is_comment: item.is_comment,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1909,13 +1909,13 @@ impl From<CNvPrMirror> for super::CNvPr {
             click_hyperlink: item.click_hyperlink,
             descr: item.descr,
             extension_list: item.extension_list,
-            extra: item.extra,
             hidden: item.hidden,
             hyperlink_for_hover: item.hyperlink_for_hover,
             id: item.id,
             name: item.name,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1953,9 +1953,9 @@ impl From<CameraToolMirror> for super::CameraTool {
     fn from(item: CameraToolMirror) -> Self {
         Self {
             cell_range: item.cell_range,
-            extra: item.extra,
             spid: item.spid,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1993,8 +1993,8 @@ impl From<ColorTemperatureMirror> for super::ColorTemperature {
     fn from(item: ColorTemperatureMirror) -> Self {
         Self {
             color_temp: item.color_temp,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2031,9 +2031,9 @@ where
 impl From<CompatExtMirror> for super::CompatExt {
     fn from(item: CompatExtMirror) -> Self {
         Self {
-            extra: item.extra,
             spid: item.spid,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2072,10 +2072,10 @@ impl From<ContentPartMirror> for super::ContentPart {
         Self {
             bw_mode: item.bw_mode,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             id: item.id,
             nv_content_part_pr: item.nv_content_part_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
             xfrm: item.xfrm,
         }
     }
@@ -2114,7 +2114,6 @@ impl From<CpLocksMirror> for super::CpLocks {
     fn from(item: CpLocksMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             no_adjust_handles: item.no_adjust_handles,
             no_change_arrowheads: item.no_change_arrowheads,
             no_change_aspect: item.no_change_aspect,
@@ -2126,6 +2125,7 @@ impl From<CpLocksMirror> for super::CpLocks {
             no_rot: item.no_rot,
             no_select: item.no_select,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2163,8 +2163,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2201,8 +2201,8 @@ where
 impl From<ForegroundMarkMirror> for super::ForegroundMark {
     fn from(item: ForegroundMarkMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             x1: item.x1,
             x2: item.x2,
             y1: item.y1,
@@ -2244,8 +2244,8 @@ impl From<HiddenEffectsMirror> for super::HiddenEffects {
     fn from(item: HiddenEffectsMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2283,8 +2283,8 @@ impl From<HiddenFillMirror> for super::HiddenFill {
     fn from(item: HiddenFillMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2326,12 +2326,12 @@ impl From<HiddenLineMirror> for super::HiddenLine {
             cmpd: item.cmpd,
             dash_content: item.dash_content,
             extension_list: item.extension_list,
-            extra: item.extra,
             fill_content: item.fill_content,
             head_end_style: item.head_end_style,
             join_content: item.join_content,
             tail_line_end_style: item.tail_line_end_style,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -2372,9 +2372,9 @@ impl From<HiddenScene3dMirror> for super::HiddenScene3d {
             backdrop_plane: item.backdrop_plane,
             camera: item.camera,
             extension_list: item.extension_list,
-            extra: item.extra,
             light_rig: item.light_rig,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2415,12 +2415,12 @@ impl From<HiddenSp3dMirror> for super::HiddenSp3d {
             contour_color: item.contour_color,
             contour_w: item.contour_w,
             extension_list: item.extension_list,
-            extra: item.extra,
             extrusion_color: item.extrusion_color,
             extrusion_h: item.extrusion_h,
             prst_material: item.prst_material,
             top_bevel: item.top_bevel,
             unknown: item.unknown,
+            user_data: item.user_data,
             z: item.z,
         }
     }
@@ -2459,8 +2459,8 @@ impl From<ImgEffectMirror> for super::ImgEffect {
     fn from(item: ImgEffectMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             visible: item.visible,
         }
     }
@@ -2499,9 +2499,9 @@ impl From<ImgLayerMirror> for super::ImgLayer {
     fn from(item: ImgLayerMirror) -> Self {
         Self {
             embed: item.embed,
-            extra: item.extra,
             img_effect: item.img_effect,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2538,9 +2538,9 @@ where
 impl From<ImgPropsMirror> for super::ImgProps {
     fn from(item: ImgPropsMirror) -> Self {
         Self {
-            extra: item.extra,
             img_layer: item.img_layer,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2577,8 +2577,8 @@ where
 impl From<IsCanvasMirror> for super::IsCanvas {
     fn from(item: IsCanvasMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -2616,8 +2616,8 @@ where
 impl From<MMirror> for super::M {
     fn from(item: MMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2656,8 +2656,8 @@ impl From<NvContentPartPrMirror> for super::NvContentPartPr {
         Self {
             c: item.c,
             c_nv_pr: item.c_nv_pr,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2694,9 +2694,9 @@ where
 impl From<SaturationMirror> for super::Saturation {
     fn from(item: SaturationMirror) -> Self {
         Self {
-            extra: item.extra,
             sat: item.sat,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2733,8 +2733,8 @@ where
 impl From<ShadowObscuredMirror> for super::ShadowObscured {
     fn from(item: ShadowObscuredMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -2773,8 +2773,8 @@ impl From<SharpenSoftenMirror> for super::SharpenSoften {
     fn from(item: SharpenSoftenMirror) -> Self {
         Self {
             amount: item.amount,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2811,8 +2811,8 @@ where
 impl From<UseLocalDpiMirror> for super::UseLocalDpi {
     fn from(item: UseLocalDpiMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -2851,12 +2851,12 @@ impl From<XfrmMirror> for super::Xfrm {
     fn from(item: XfrmMirror) -> Self {
         Self {
             extents: item.extents,
-            extra: item.extra,
             flip_h: item.flip_h,
             flip_v: item.flip_v,
             offset: item.offset,
             rot: item.rot,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

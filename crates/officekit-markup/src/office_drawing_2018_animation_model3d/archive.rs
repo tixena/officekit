@@ -227,12 +227,12 @@ pub struct AnimPrMirror {
     pub count: Option<String>,
     pub end: Option<String>,
     pub ext_lst: Option<Box<super::super::office_drawing_2018_animation::ExtLst>>,
-    pub extra: (),
     pub length: Option<String>,
     pub name: Option<String>,
     pub offset: Option<String>,
     pub st: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -241,9 +241,9 @@ pub struct AnimPrMirror {
 pub struct EmbedAnimMirror {
     pub anim_id: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub pr: Box<super::AnimPr>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -251,8 +251,8 @@ pub struct EmbedAnimMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -260,9 +260,9 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PosterFrameMirror {
     pub anim_id: Option<String>,
-    pub extra: (),
     pub frame: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<AnimPrMirror> for super::AnimPr {
@@ -272,12 +272,12 @@ impl From<AnimPrMirror> for super::AnimPr {
             count: item.count,
             end: item.end,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             length: item.length,
             name: item.name,
             offset: item.offset,
             st: item.st,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -316,9 +316,9 @@ impl From<EmbedAnimMirror> for super::EmbedAnim {
         Self {
             anim_id: item.anim_id,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             pr: item.pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -356,8 +356,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -395,9 +395,9 @@ impl From<PosterFrameMirror> for super::PosterFrame {
     fn from(item: PosterFrameMirror) -> Self {
         Self {
             anim_id: item.anim_id,
-            extra: item.extra,
             frame: item.frame,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

@@ -224,10 +224,10 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct AutoBuNodeInfoMirror {
     pub bu_pr: Box<super::BuPr>,
-    pub extra: (),
     pub lvl: Option<String>,
     pub pt_type: Option<super::STorageType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -235,8 +235,8 @@ pub struct AutoBuNodeInfoMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AutoBuNodeInfoLstMirror {
     pub auto_bu_node_info: Vec<super::AutoBuNodeInfo>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -244,20 +244,20 @@ pub struct AutoBuNodeInfoLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BuPrMirror {
     pub content: Box<drawing::TextBulletContent>,
-    pub extra: (),
     pub lead_zeros: Option<String>,
     pub prefix: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<AutoBuNodeInfoMirror> for super::AutoBuNodeInfo {
     fn from(item: AutoBuNodeInfoMirror) -> Self {
         Self {
             bu_pr: item.bu_pr,
-            extra: item.extra,
             lvl: item.lvl,
             pt_type: item.pt_type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -295,8 +295,8 @@ impl From<AutoBuNodeInfoLstMirror> for super::AutoBuNodeInfoLst {
     fn from(item: AutoBuNodeInfoLstMirror) -> Self {
         Self {
             auto_bu_node_info: item.auto_bu_node_info,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -334,10 +334,10 @@ impl From<BuPrMirror> for super::BuPr {
     fn from(item: BuPrMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             lead_zeros: item.lead_zeros,
             prefix: item.prefix,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

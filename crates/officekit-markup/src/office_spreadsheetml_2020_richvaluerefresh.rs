@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -308,9 +308,7 @@ pub trait Context: crate::Context {
 /// 3.5.1. Its schema type is `CT_RichValueRefreshInterval`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RefreshIntervalWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2020RichvaluerefreshRefreshInterval,
+pub struct RefreshIntervalWith<X: UserData> {
     /// The attribute `interval`, when the element has it.
     pub interval: Option<String>,
     /// The attribute `resourceIdInt`, when the element has it.
@@ -319,10 +317,12 @@ pub struct RefreshIntervalWith<X: NodeExtra> {
     pub resource_id_str: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2020RichvaluerefreshRefreshInterval,
 }
 
 /// The `xlrvr:refreshInterval` element of the tree a read gives: [`RefreshIntervalWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type RefreshInterval = RefreshIntervalWith<()>;
 
 impl Eq for RefreshIntervalWith<()> {}
@@ -331,17 +331,17 @@ impl Eq for RefreshIntervalWith<()> {}
 /// 3.5.1. Its schema type is `CT_RichValueRefreshIntervals`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RefreshIntervalsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2020RichvaluerefreshRefreshIntervals,
+pub struct RefreshIntervalsWith<X: UserData> {
     /// The children that are `RefreshInterval`, in order.
     pub refresh_interval: Vec<RefreshIntervalWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2020RichvaluerefreshRefreshIntervals,
 }
 
 /// The `xlrvr:refreshIntervals` element of the tree a read gives: [`RefreshIntervalsWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type RefreshIntervals = RefreshIntervalsWith<()>;
 
 impl Eq for RefreshIntervalsWith<()> {}
@@ -365,20 +365,20 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> RefreshIntervalWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RefreshIntervalWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RefreshIntervalWith<Y>
+    pub fn into_user_data<Y>(self) -> RefreshIntervalWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RefreshIntervalWith {
-            extra: Default::default(),
             interval: self.interval,
             resource_id_int: self.resource_id_int,
             resource_id_str: self.resource_id_str,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -407,21 +407,21 @@ impl officekit_markup_base::Write for RefreshInterval {
     }
 }
 
-impl<X: NodeExtra> RefreshIntervalsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RefreshIntervalsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RefreshIntervalsWith<Y>
+    pub fn into_user_data<Y>(self) -> RefreshIntervalsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RefreshIntervalsWith {
-            extra: Default::default(),
-            refresh_interval: officekit_markup_base::into_extra_list(
+            refresh_interval: officekit_markup_base::into_user_data_list(
                 self.refresh_interval,
-                RefreshIntervalWith::into_extra,
+                RefreshIntervalWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

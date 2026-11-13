@@ -225,7 +225,6 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct LstStyleMirror {
     pub default_paragraph_style: Option<Box<drawing::DefaultParagraphStyle>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub extra: (),
     pub list_level_1_text_style: Option<Box<drawing::ListLevel1TextStyle>>,
     pub list_level_2_text_style: Option<Box<drawing::ListLevel2TextStyle>>,
     pub list_level_3_text_style: Option<Box<drawing::ListLevel3TextStyle>>,
@@ -236,6 +235,7 @@ pub struct LstStyleMirror {
     pub list_level_8_text_style: Option<Box<drawing::ListLevel8TextStyle>>,
     pub list_level_9_text_style: Option<Box<drawing::ListLevel9TextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -246,12 +246,12 @@ pub struct SpPrMirror {
     pub bw_mode: Option<drawing::BlackAndWhiteMode>,
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub extra: (),
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
     pub outline: Option<Box<drawing::Outline>>,
     pub scene3d: Option<Box<drawing::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }
 
@@ -260,7 +260,6 @@ impl From<LstStyleMirror> for super::LstStyle {
         Self {
             default_paragraph_style: item.default_paragraph_style,
             extension_list: item.extension_list,
-            extra: item.extra,
             list_level_1_text_style: item.list_level_1_text_style,
             list_level_2_text_style: item.list_level_2_text_style,
             list_level_3_text_style: item.list_level_3_text_style,
@@ -271,6 +270,7 @@ impl From<LstStyleMirror> for super::LstStyle {
             list_level_8_text_style: item.list_level_8_text_style,
             list_level_9_text_style: item.list_level_9_text_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -311,12 +311,12 @@ impl From<SpPrMirror> for super::SpPr {
             bw_mode: item.bw_mode,
             effect_properties_content: item.effect_properties_content,
             extension_list: item.extension_list,
-            extra: item.extra,
             fill_properties_content: item.fill_properties_content,
             geometry_content: item.geometry_content,
             outline: item.outline,
             scene3d: item.scene3d,
             unknown: item.unknown,
+            user_data: item.user_data,
             xfrm_transform2d: item.xfrm_transform2d,
         }
     }

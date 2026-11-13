@@ -222,57 +222,57 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::DropZoneCategories)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropZoneCategoriesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DropZoneData)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropZoneDataMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DropZoneFilter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropZoneFilterMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DropZoneSeries)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropZoneSeriesMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DropZonesVisible)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropZonesVisibleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::InSketchMode)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InSketchModeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::InvertSolidFillFmt)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InvertSolidFillFmtMirror {
-    pub extra: (),
     pub sp_pr: Box<super::SpPr>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -284,16 +284,16 @@ pub struct PivotOptionsMirror {
     pub drop_zone_filter: Option<Box<super::DropZoneFilter>>,
     pub drop_zone_series: Option<Box<super::DropZoneSeries>>,
     pub drop_zones_visible: Option<Box<super::DropZonesVisible>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ShowSketchBtn)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShowSketchBtnMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
@@ -301,10 +301,10 @@ pub struct ShowSketchBtnMirror {
 #[rkyv(remote = super::SketchOptions)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SketchOptionsMirror {
-    pub extra: (),
     pub in_sketch_mode: Option<Box<super::InSketchMode>>,
     pub show_sketch_btn: Option<Box<super::ShowSketchBtn>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -315,12 +315,12 @@ pub struct SpPrMirror {
     pub bw_mode: Option<super::super::drawing::BlackAndWhiteMode>,
     pub effect_properties_content: Option<Box<super::super::drawing::EffectPropertiesContent>>,
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     pub fill_properties_content: Option<Box<super::super::drawing::FillPropertiesContent>>,
     pub geometry_content: Option<Box<super::super::drawing::GeometryContent>>,
     pub outline: Option<Box<super::super::drawing::Outline>>,
     pub scene3d: Option<Box<super::super::drawing::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xfrm_transform2d: Option<Box<super::super::drawing::XfrmTransform2D>>,
 }
 
@@ -328,16 +328,16 @@ pub struct SpPrMirror {
 #[rkyv(remote = super::Style)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StyleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<String>,
 }
 
 impl From<DropZoneCategoriesMirror> for super::DropZoneCategories {
     fn from(item: DropZoneCategoriesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -374,8 +374,8 @@ where
 impl From<DropZoneDataMirror> for super::DropZoneData {
     fn from(item: DropZoneDataMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -412,8 +412,8 @@ where
 impl From<DropZoneFilterMirror> for super::DropZoneFilter {
     fn from(item: DropZoneFilterMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -450,8 +450,8 @@ where
 impl From<DropZoneSeriesMirror> for super::DropZoneSeries {
     fn from(item: DropZoneSeriesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -488,8 +488,8 @@ where
 impl From<DropZonesVisibleMirror> for super::DropZonesVisible {
     fn from(item: DropZonesVisibleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -526,8 +526,8 @@ where
 impl From<InSketchModeMirror> for super::InSketchMode {
     fn from(item: InSketchModeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -564,9 +564,9 @@ where
 impl From<InvertSolidFillFmtMirror> for super::InvertSolidFillFmt {
     fn from(item: InvertSolidFillFmtMirror) -> Self {
         Self {
-            extra: item.extra,
             sp_pr: item.sp_pr,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -608,8 +608,8 @@ impl From<PivotOptionsMirror> for super::PivotOptions {
             drop_zone_filter: item.drop_zone_filter,
             drop_zone_series: item.drop_zone_series,
             drop_zones_visible: item.drop_zones_visible,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -646,8 +646,8 @@ where
 impl From<ShowSketchBtnMirror> for super::ShowSketchBtn {
     fn from(item: ShowSketchBtnMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -685,10 +685,10 @@ where
 impl From<SketchOptionsMirror> for super::SketchOptions {
     fn from(item: SketchOptionsMirror) -> Self {
         Self {
-            extra: item.extra,
             in_sketch_mode: item.in_sketch_mode,
             show_sketch_btn: item.show_sketch_btn,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -729,12 +729,12 @@ impl From<SpPrMirror> for super::SpPr {
             bw_mode: item.bw_mode,
             effect_properties_content: item.effect_properties_content,
             extension_list: item.extension_list,
-            extra: item.extra,
             fill_properties_content: item.fill_properties_content,
             geometry_content: item.geometry_content,
             outline: item.outline,
             scene3d: item.scene3d,
             unknown: item.unknown,
+            user_data: item.user_data,
             xfrm_transform2d: item.xfrm_transform2d,
         }
     }
@@ -772,8 +772,8 @@ where
 impl From<StyleMirror> for super::Style {
     fn from(item: StyleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }

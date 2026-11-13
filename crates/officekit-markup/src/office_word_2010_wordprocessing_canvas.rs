@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_markup_core::office_word_2010_wordml;
@@ -308,18 +308,18 @@ pub static WORDPROCESSING_CANVAS_CONTENT_TAGS: officekit_markup_base::Accept =
 /// type is `CT_BackgroundFormatting`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BgWith<X: NodeExtra> {
+pub struct BgWith<X: UserData> {
     /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContentWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2010WordprocessingCanvasBg,
     /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContentWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2010WordprocessingCanvasBg,
 }
 
-/// The `wpc:bg` element of the tree a read gives: [`BgWith`] holding nothing in `extra`.
+/// The `wpc:bg` element of the tree a read gives: [`BgWith`] holding nothing in `user_data`.
 pub type Bg = BgWith<()>;
 
 impl Eq for BgWith<()> {}
@@ -468,16 +468,17 @@ pub trait Context: crate::Context {
 /// schema type is `CT_OfficeArtExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2010WordprocessingCanvasExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2010WordprocessingCanvasExtLst,
 }
 
-/// The `wpc:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `wpc:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -486,7 +487,7 @@ impl Eq for ExtLstWith<()> {}
 /// Its schema type is `CT_GraphicFrame`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GraphicFrameWith<X: NodeExtra> {
+pub struct GraphicFrameWith<X: UserData> {
     /// The child that is `super::office_word_2010_wordprocessing_group::CNvFrPr`, which the schema
     /// requires.
     pub c_nv_fr_pr: Box<super::office_word_2010_wordprocessing_group::CNvFrPrWith<X>>,
@@ -495,19 +496,19 @@ pub struct GraphicFrameWith<X: NodeExtra> {
     pub c_nv_pr: Box<super::office_word_2010_wordprocessing_group::CNvPrWith<X>>,
     /// The child that is `super::office_word_2010_wordprocessing_group::ExtLst`, when there is one.
     pub ext_lst: Option<Box<super::office_word_2010_wordprocessing_group::ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2010WordprocessingCanvasGraphicFrame,
     /// The child that is `drawing::GraphicObject`, which the schema requires.
     pub graphic_object: Box<drawing::GraphicObjectWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2010WordprocessingCanvasGraphicFrame,
     /// The child that is `super::office_word_2010_wordprocessing_group::Xfrm`, which the schema
     /// requires.
     pub xfrm: Box<super::office_word_2010_wordprocessing_group::XfrmWith<X>>,
 }
 
 /// The `wpc:graphicFrame` element of the tree a read gives: [`GraphicFrameWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type GraphicFrame = GraphicFrameWith<()>;
 
 impl Eq for GraphicFrameWith<()> {}
@@ -558,18 +559,18 @@ pub trait Visitor: crate::Visitor {
 /// schema type is `CT_WholeE2oFormatting`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WholeWith<X: NodeExtra> {
+pub struct WholeWith<X: UserData> {
     /// The child that is an item of `drawing::EffectPropertiesContent`, when there is one.
     pub content: Option<Box<drawing::EffectPropertiesContentWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2010WordprocessingCanvasWhole,
     /// The child that is `drawing::Outline`, when there is one.
     pub outline: Option<Box<drawing::OutlineWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2010WordprocessingCanvasWhole,
 }
 
-/// The `wpc:whole` element of the tree a read gives: [`WholeWith`] holding nothing in `extra`.
+/// The `wpc:whole` element of the tree a read gives: [`WholeWith`] holding nothing in `user_data`.
 pub type Whole = WholeWith<()>;
 
 impl Eq for WholeWith<()> {}
@@ -581,7 +582,7 @@ impl Eq for WholeWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum WordprocessingCanvasContentWith<X: NodeExtra> {
+pub enum WordprocessingCanvasContentWith<X: UserData> {
     /// The element `w14:contentPart`, a `ContentPart`.
     ContentPart(office_word_2010_wordml::ContentPartWith<X>),
     /// The element `wpc:graphicFrame`, a `GraphicFrame`.
@@ -597,7 +598,7 @@ pub enum WordprocessingCanvasContentWith<X: NodeExtra> {
 }
 
 /// [`WordprocessingCanvasContentWith`] of the tree a read gives, where no node holds anything in
-/// `extra`.
+/// `user_data`.
 pub type WordprocessingCanvasContent = WordprocessingCanvasContentWith<()>;
 
 impl Eq for WordprocessingCanvasContentWith<()> {}
@@ -606,45 +607,45 @@ impl Eq for WordprocessingCanvasContentWith<()> {}
 /// schema type is `CT_WordprocessingCanvas`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WpcWith<X: NodeExtra> {
+pub struct WpcWith<X: UserData> {
     /// The child that is `Bg`, when there is one.
     pub bg: Option<Box<BgWith<X>>>,
     /// The children that are an item of `WordprocessingCanvasContent`, in order.
     pub content: Vec<WordprocessingCanvasContentWith<X>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2010WordprocessingCanvasWpc,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2010WordprocessingCanvasWpc,
     /// The child that is `Whole`, when there is one.
     pub whole: Option<Box<WholeWith<X>>>,
 }
 
-/// The `wpc:wpc` element of the tree a read gives: [`WpcWith`] holding nothing in `extra`.
+/// The `wpc:wpc` element of the tree a read gives: [`WpcWith`] holding nothing in `user_data`.
 pub type Wpc = WpcWith<()>;
 
 impl Eq for WpcWith<()> {}
 
-impl<X: NodeExtra> BgWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BgWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> BgWith<Y>
+    pub fn into_user_data<Y>(mut self) -> BgWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BgWith {
-            effect_properties_content: officekit_markup_base::into_extra_optional(
+            effect_properties_content: officekit_markup_base::into_user_data_optional(
                 &mut self.effect_properties_content,
-                drawing::EffectPropertiesContentWith::into_extra,
+                drawing::EffectPropertiesContentWith::into_user_data,
             ),
-            extra: Default::default(),
-            fill_properties_content: officekit_markup_base::into_extra_optional(
+            fill_properties_content: officekit_markup_base::into_user_data_optional(
                 &mut self.fill_properties_content,
-                drawing::FillPropertiesContentWith::into_extra,
+                drawing::FillPropertiesContentWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -668,21 +669,21 @@ impl officekit_markup_base::Write for Bg {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                drawing::ExtensionWith::into_extra,
+                drawing::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -706,36 +707,36 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> GraphicFrameWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> GraphicFrameWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> GraphicFrameWith<Y>
+    pub fn into_user_data<Y>(mut self) -> GraphicFrameWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         GraphicFrameWith {
-            c_nv_fr_pr: officekit_markup_base::into_extra_required(
+            c_nv_fr_pr: officekit_markup_base::into_user_data_required(
                 *self.c_nv_fr_pr,
-                super::office_word_2010_wordprocessing_group::CNvFrPrWith::into_extra,
+                super::office_word_2010_wordprocessing_group::CNvFrPrWith::into_user_data,
             ),
-            c_nv_pr: officekit_markup_base::into_extra_required(
+            c_nv_pr: officekit_markup_base::into_user_data_required(
                 *self.c_nv_pr,
-                super::office_word_2010_wordprocessing_group::CNvPrWith::into_extra,
+                super::office_word_2010_wordprocessing_group::CNvPrWith::into_user_data,
             ),
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                super::office_word_2010_wordprocessing_group::ExtLstWith::into_extra,
+                super::office_word_2010_wordprocessing_group::ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
-            graphic_object: officekit_markup_base::into_extra_required(
+            graphic_object: officekit_markup_base::into_user_data_required(
                 *self.graphic_object,
-                drawing::GraphicObjectWith::into_extra,
+                drawing::GraphicObjectWith::into_user_data,
             ),
             unknown: self.unknown,
-            xfrm: officekit_markup_base::into_extra_required(
+            user_data: Default::default(),
+            xfrm: officekit_markup_base::into_user_data_required(
                 *self.xfrm,
-                super::office_word_2010_wordprocessing_group::XfrmWith::into_extra,
+                super::office_word_2010_wordprocessing_group::XfrmWith::into_user_data,
             ),
         }
     }
@@ -760,25 +761,25 @@ impl officekit_markup_base::Write for GraphicFrame {
     }
 }
 
-impl<X: NodeExtra> WholeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> WholeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> WholeWith<Y>
+    pub fn into_user_data<Y>(mut self) -> WholeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         WholeWith {
-            content: officekit_markup_base::into_extra_optional(
+            content: officekit_markup_base::into_user_data_optional(
                 &mut self.content,
-                drawing::EffectPropertiesContentWith::into_extra,
+                drawing::EffectPropertiesContentWith::into_user_data,
             ),
-            extra: Default::default(),
-            outline: officekit_markup_base::into_extra_optional(
+            outline: officekit_markup_base::into_user_data_optional(
                 &mut self.outline,
-                drawing::OutlineWith::into_extra,
+                drawing::OutlineWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -802,24 +803,24 @@ impl officekit_markup_base::Write for Whole {
     }
 }
 
-impl<X: NodeExtra> WordprocessingCanvasContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> WordprocessingCanvasContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> WordprocessingCanvasContentWith<Y>
+    pub fn into_user_data<Y>(self) -> WordprocessingCanvasContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::ContentPart(node) => {
-                WordprocessingCanvasContentWith::ContentPart(node.into_extra())
+                WordprocessingCanvasContentWith::ContentPart(node.into_user_data())
             }
             Self::GraphicFrame(node) => {
-                WordprocessingCanvasContentWith::GraphicFrame(node.into_extra())
+                WordprocessingCanvasContentWith::GraphicFrame(node.into_user_data())
             }
             Self::Other(node) => WordprocessingCanvasContentWith::Other(node),
-            Self::Picture(node) => WordprocessingCanvasContentWith::Picture(node.into_extra()),
-            Self::Wgp(node) => WordprocessingCanvasContentWith::Wgp(node.into_extra()),
-            Self::Wsp(node) => WordprocessingCanvasContentWith::Wsp(node.into_extra()),
+            Self::Picture(node) => WordprocessingCanvasContentWith::Picture(node.into_user_data()),
+            Self::Wgp(node) => WordprocessingCanvasContentWith::Wgp(node.into_user_data()),
+            Self::Wsp(node) => WordprocessingCanvasContentWith::Wsp(node.into_user_data()),
         }
     }
 }
@@ -858,29 +859,32 @@ impl officekit_markup_base::Write for WordprocessingCanvasContent {
     }
 }
 
-impl<X: NodeExtra> WpcWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> WpcWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> WpcWith<Y>
+    pub fn into_user_data<Y>(mut self) -> WpcWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         WpcWith {
-            bg: officekit_markup_base::into_extra_optional(&mut self.bg, BgWith::into_extra),
-            content: officekit_markup_base::into_extra_list(
+            bg: officekit_markup_base::into_user_data_optional(
+                &mut self.bg,
+                BgWith::into_user_data,
+            ),
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                WordprocessingCanvasContentWith::into_extra,
+                WordprocessingCanvasContentWith::into_user_data,
             ),
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
-            whole: officekit_markup_base::into_extra_optional(
+            user_data: Default::default(),
+            whole: officekit_markup_base::into_user_data_optional(
                 &mut self.whole,
-                WholeWith::into_extra,
+                WholeWith::into_user_data,
             ),
         }
     }

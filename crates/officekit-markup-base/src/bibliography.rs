@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use crate::NodeExtra;
+use crate::UserData;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
@@ -853,17 +853,17 @@ pub static SOURCE_CONTENT_TAGS: crate::Accept = crate::Accept {
 /// 22.6.2.1). Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AbbreviatedCaseNumberWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyAbbreviatedCaseNumber,
+pub struct AbbreviatedCaseNumberWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyAbbreviatedCaseNumber,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:AbbreviatedCaseNumber` element of the tree a read gives: [`AbbreviatedCaseNumberWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type AbbreviatedCaseNumber = AbbreviatedCaseNumberWith<()>;
 
 impl Eq for AbbreviatedCaseNumberWith<()> {}
@@ -872,17 +872,17 @@ impl Eq for AbbreviatedCaseNumberWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AlbumTitleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyAlbumTitle,
+pub struct AlbumTitleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyAlbumTitle,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:AlbumTitle` element of the tree a read gives: [`AlbumTitleWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type AlbumTitle = AlbumTitleWith<()>;
 
 impl Eq for AlbumTitleWith<()> {}
@@ -891,16 +891,16 @@ impl Eq for AlbumTitleWith<()> {}
 /// `CT_NameType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ArtistWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyArtist,
+pub struct ArtistWith<X: UserData> {
     /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyArtist,
 }
 
-/// The `b:Artist` element of the tree a read gives: [`ArtistWith`] holding nothing in `extra`.
+/// The `b:Artist` element of the tree a read gives: [`ArtistWith`] holding nothing in `user_data`.
 pub type Artist = ArtistWith<()>;
 
 impl Eq for ArtistWith<()> {}
@@ -909,16 +909,16 @@ impl Eq for ArtistWith<()> {}
 /// `CT_NameOrCorporateType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AuthorWith<X: NodeExtra> {
+pub struct AuthorWith<X: UserData> {
     /// The child that is an item of `NameOrCorporateContent`, when there is one.
     pub content: Option<Box<NameOrCorporateContentWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyAuthor,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyAuthor,
 }
 
-/// The `b:Author` element of the tree a read gives: [`AuthorWith`] holding nothing in `extra`.
+/// The `b:Author` element of the tree a read gives: [`AuthorWith`] holding nothing in `user_data`.
 pub type Author = AuthorWith<()>;
 
 impl Eq for AuthorWith<()> {}
@@ -981,17 +981,17 @@ pub enum BibliographicDataSourceTypesMember {
 /// `CT_NameType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BookAuthorWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyBookAuthor,
+pub struct BookAuthorWith<X: UserData> {
     /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyBookAuthor,
 }
 
 /// The `b:BookAuthor` element of the tree a read gives: [`BookAuthorWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type BookAuthor = BookAuthorWith<()>;
 
 impl Eq for BookAuthorWith<()> {}
@@ -1000,17 +1000,17 @@ impl Eq for BookAuthorWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BookTitleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyBookTitle,
+pub struct BookTitleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyBookTitle,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:BookTitle` element of the tree a read gives: [`BookTitleWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type BookTitle = BookTitleWith<()>;
 
 impl Eq for BookTitleWith<()> {}
@@ -1019,17 +1019,17 @@ impl Eq for BookTitleWith<()> {}
 /// type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BroadcastTitleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyBroadcastTitle,
+pub struct BroadcastTitleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyBroadcastTitle,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:BroadcastTitle` element of the tree a read gives: [`BroadcastTitleWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type BroadcastTitle = BroadcastTitleWith<()>;
 
 impl Eq for BroadcastTitleWith<()> {}
@@ -1038,17 +1038,17 @@ impl Eq for BroadcastTitleWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BroadcasterWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyBroadcaster,
+pub struct BroadcasterWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyBroadcaster,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:Broadcaster` element of the tree a read gives: [`BroadcasterWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Broadcaster = BroadcasterWith<()>;
 
 impl Eq for BroadcasterWith<()> {}
@@ -1057,17 +1057,17 @@ impl Eq for BroadcasterWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CaseNumberWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyCaseNumber,
+pub struct CaseNumberWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyCaseNumber,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:CaseNumber` element of the tree a read gives: [`CaseNumberWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CaseNumber = CaseNumberWith<()>;
 
 impl Eq for CaseNumberWith<()> {}
@@ -1076,17 +1076,17 @@ impl Eq for CaseNumberWith<()> {}
 /// type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ChapterNumberWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyChapterNumber,
+pub struct ChapterNumberWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyChapterNumber,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:ChapterNumber` element of the tree a read gives: [`ChapterNumberWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ChapterNumber = ChapterNumberWith<()>;
 
 impl Eq for ChapterNumberWith<()> {}
@@ -1094,16 +1094,16 @@ impl Eq for ChapterNumberWith<()> {}
 /// The `b:City` element, City (ECMA-376 Part 1, section 22.6.2.12). Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CityWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyCity,
+pub struct CityWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyCity,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:City` element of the tree a read gives: [`CityWith`] holding nothing in `extra`.
+/// The `b:City` element of the tree a read gives: [`CityWith`] holding nothing in `user_data`.
 pub type City = CityWith<()>;
 
 impl Eq for CityWith<()> {}
@@ -1112,16 +1112,17 @@ impl Eq for CityWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyComments,
+pub struct CommentsWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyComments,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Comments` element of the tree a read gives: [`CommentsWith`] holding nothing in `extra`.
+/// The `b:Comments` element of the tree a read gives: [`CommentsWith`] holding nothing in
+/// `user_data`.
 pub type Comments = CommentsWith<()>;
 
 impl Eq for CommentsWith<()> {}
@@ -1130,16 +1131,17 @@ impl Eq for CommentsWith<()> {}
 /// `CT_NameType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CompilerWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyCompiler,
+pub struct CompilerWith<X: UserData> {
     /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyCompiler,
 }
 
-/// The `b:Compiler` element of the tree a read gives: [`CompilerWith`] holding nothing in `extra`.
+/// The `b:Compiler` element of the tree a read gives: [`CompilerWith`] holding nothing in
+/// `user_data`.
 pub type Compiler = CompilerWith<()>;
 
 impl Eq for CompilerWith<()> {}
@@ -1148,16 +1150,17 @@ impl Eq for CompilerWith<()> {}
 /// `CT_NameType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ComposerWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyComposer,
+pub struct ComposerWith<X: UserData> {
     /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyComposer,
 }
 
-/// The `b:Composer` element of the tree a read gives: [`ComposerWith`] holding nothing in `extra`.
+/// The `b:Composer` element of the tree a read gives: [`ComposerWith`] holding nothing in
+/// `user_data`.
 pub type Composer = ComposerWith<()>;
 
 impl Eq for ComposerWith<()> {}
@@ -1166,17 +1169,17 @@ impl Eq for ComposerWith<()> {}
 /// `CT_NameType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ConductorWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyConductor,
+pub struct ConductorWith<X: UserData> {
     /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyConductor,
 }
 
 /// The `b:Conductor` element of the tree a read gives: [`ConductorWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Conductor = ConductorWith<()>;
 
 impl Eq for ConductorWith<()> {}
@@ -1185,17 +1188,17 @@ impl Eq for ConductorWith<()> {}
 /// 22.6.2.17). Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ConferenceOrProceedingsNameWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyConferenceOrProceedingsName,
+pub struct ConferenceOrProceedingsNameWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyConferenceOrProceedingsName,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:ConferenceName` element of the tree a read gives: [`ConferenceOrProceedingsNameWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ConferenceOrProceedingsName = ConferenceOrProceedingsNameWith<()>;
 
 impl Eq for ConferenceOrProceedingsNameWith<()> {}
@@ -1204,17 +1207,17 @@ impl Eq for ConferenceOrProceedingsNameWith<()> {}
 /// is `CT_AuthorType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ContributorsListWith<X: NodeExtra> {
+pub struct ContributorsListWith<X: UserData> {
     /// The children that are an item of `ContributorsListContent`, in order.
     pub content: Vec<ContributorsListContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyContributorsList,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyContributorsList,
 }
 
 /// The `b:Author` element of the tree a read gives: [`ContributorsListWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ContributorsList = ContributorsListWith<()>;
 
 impl Eq for ContributorsListWith<()> {}
@@ -1226,7 +1229,7 @@ impl Eq for ContributorsListWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum ContributorsListContentWith<X: NodeExtra> {
+pub enum ContributorsListContentWith<X: UserData> {
     /// The element `b:Artist`, a `Artist`.
     Artist(ArtistWith<X>),
     /// The element `b:Author`, a `Author`.
@@ -1264,7 +1267,7 @@ pub enum ContributorsListContentWith<X: NodeExtra> {
 }
 
 /// [`ContributorsListContentWith`] of the tree a read gives, where no node holds anything in
-/// `extra`.
+/// `user_data`.
 pub type ContributorsListContent = ContributorsListContentWith<()>;
 
 impl Eq for ContributorsListContentWith<()> {}
@@ -1273,17 +1276,17 @@ impl Eq for ContributorsListContentWith<()> {}
 /// type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CorporateAuthorWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyCorporateAuthor,
+pub struct CorporateAuthorWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyCorporateAuthor,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:Corporate` element of the tree a read gives: [`CorporateAuthorWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CorporateAuthor = CorporateAuthorWith<()>;
 
 impl Eq for CorporateAuthorWith<()> {}
@@ -1292,16 +1295,17 @@ impl Eq for CorporateAuthorWith<()> {}
 /// `CT_NameType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CounselWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyCounsel,
+pub struct CounselWith<X: UserData> {
     /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyCounsel,
 }
 
-/// The `b:Counsel` element of the tree a read gives: [`CounselWith`] holding nothing in `extra`.
+/// The `b:Counsel` element of the tree a read gives: [`CounselWith`] holding nothing in
+/// `user_data`.
 pub type Counsel = CounselWith<()>;
 
 impl Eq for CounselWith<()> {}
@@ -1310,17 +1314,17 @@ impl Eq for CounselWith<()> {}
 /// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CountryOrRegionWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyCountryOrRegion,
+pub struct CountryOrRegionWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyCountryOrRegion,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:CountryRegion` element of the tree a read gives: [`CountryOrRegionWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type CountryOrRegion = CountryOrRegionWith<()>;
 
 impl Eq for CountryOrRegionWith<()> {}
@@ -1329,16 +1333,16 @@ impl Eq for CountryOrRegionWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CourtWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyCourt,
+pub struct CourtWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyCourt,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Court` element of the tree a read gives: [`CourtWith`] holding nothing in `extra`.
+/// The `b:Court` element of the tree a read gives: [`CourtWith`] holding nothing in `user_data`.
 pub type Court = CourtWith<()>;
 
 impl Eq for CourtWith<()> {}
@@ -1346,16 +1350,16 @@ impl Eq for CourtWith<()> {}
 /// The `b:Day` element, Day (ECMA-376 Part 1, section 22.6.2.22). Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DayWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyDay,
+pub struct DayWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyDay,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Day` element of the tree a read gives: [`DayWith`] holding nothing in `extra`.
+/// The `b:Day` element of the tree a read gives: [`DayWith`] holding nothing in `user_data`.
 pub type Day = DayWith<()>;
 
 impl Eq for DayWith<()> {}
@@ -1364,17 +1368,17 @@ impl Eq for DayWith<()> {}
 /// is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DayAccessedWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyDayAccessed,
+pub struct DayAccessedWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyDayAccessed,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:DayAccessed` element of the tree a read gives: [`DayAccessedWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type DayAccessed = DayAccessedWith<()>;
 
 impl Eq for DayAccessedWith<()> {}
@@ -1383,17 +1387,17 @@ impl Eq for DayAccessedWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DepartmentWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyDepartment,
+pub struct DepartmentWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyDepartment,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:Department` element of the tree a read gives: [`DepartmentWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Department = DepartmentWith<()>;
 
 impl Eq for DepartmentWith<()> {}
@@ -1402,16 +1406,17 @@ impl Eq for DepartmentWith<()> {}
 /// `CT_NameType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DirectorWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyDirector,
+pub struct DirectorWith<X: UserData> {
     /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyDirector,
 }
 
-/// The `b:Director` element of the tree a read gives: [`DirectorWith`] holding nothing in `extra`.
+/// The `b:Director` element of the tree a read gives: [`DirectorWith`] holding nothing in
+/// `user_data`.
 pub type Director = DirectorWith<()>;
 
 impl Eq for DirectorWith<()> {}
@@ -1420,17 +1425,17 @@ impl Eq for DirectorWith<()> {}
 /// is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DistributorWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyDistributor,
+pub struct DistributorWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyDistributor,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:Distributor` element of the tree a read gives: [`DistributorWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Distributor = DistributorWith<()>;
 
 impl Eq for DistributorWith<()> {}
@@ -1439,16 +1444,16 @@ impl Eq for DistributorWith<()> {}
 /// `CT_NameType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EditorWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyEditor,
+pub struct EditorWith<X: UserData> {
     /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyEditor,
 }
 
-/// The `b:Editor` element of the tree a read gives: [`EditorWith`] holding nothing in `extra`.
+/// The `b:Editor` element of the tree a read gives: [`EditorWith`] holding nothing in `user_data`.
 pub type Editor = EditorWith<()>;
 
 impl Eq for EditorWith<()> {}
@@ -1457,17 +1462,17 @@ impl Eq for EditorWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EditorEditionWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyEditorEdition,
+pub struct EditorEditionWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyEditorEdition,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:Edition` element of the tree a read gives: [`EditorEditionWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type EditorEdition = EditorEditionWith<()>;
 
 impl Eq for EditorEditionWith<()> {}
@@ -1475,16 +1480,16 @@ impl Eq for EditorEditionWith<()> {}
 /// The `b:Guid` element, GUID (ECMA-376 Part 1, section 22.6.2.30). Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct GuidWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyGuid,
+pub struct GuidWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyGuid,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Guid` element of the tree a read gives: [`GuidWith`] holding nothing in `extra`.
+/// The `b:Guid` element of the tree a read gives: [`GuidWith`] holding nothing in `user_data`.
 pub type Guid = GuidWith<()>;
 
 impl Eq for GuidWith<()> {}
@@ -1493,17 +1498,17 @@ impl Eq for GuidWith<()> {}
 /// is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InstitutionWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyInstitution,
+pub struct InstitutionWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyInstitution,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:Institution` element of the tree a read gives: [`InstitutionWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Institution = InstitutionWith<()>;
 
 impl Eq for InstitutionWith<()> {}
@@ -1512,17 +1517,17 @@ impl Eq for InstitutionWith<()> {}
 /// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InternetSiteTitleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyInternetSiteTitle,
+pub struct InternetSiteTitleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyInternetSiteTitle,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:InternetSiteTitle` element of the tree a read gives: [`InternetSiteTitleWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type InternetSiteTitle = InternetSiteTitleWith<()>;
 
 impl Eq for InternetSiteTitleWith<()> {}
@@ -1531,17 +1536,17 @@ impl Eq for InternetSiteTitleWith<()> {}
 /// is `CT_NameType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IntervieweeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyInterviewee,
+pub struct IntervieweeWith<X: UserData> {
     /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyInterviewee,
 }
 
 /// The `b:Interviewee` element of the tree a read gives: [`IntervieweeWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Interviewee = IntervieweeWith<()>;
 
 impl Eq for IntervieweeWith<()> {}
@@ -1550,17 +1555,17 @@ impl Eq for IntervieweeWith<()> {}
 /// is `CT_NameType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InterviewerWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyInterviewer,
+pub struct InterviewerWith<X: UserData> {
     /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyInterviewer,
 }
 
 /// The `b:Interviewer` element of the tree a read gives: [`InterviewerWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Interviewer = InterviewerWith<()>;
 
 impl Eq for InterviewerWith<()> {}
@@ -1569,16 +1574,17 @@ impl Eq for InterviewerWith<()> {}
 /// `CT_NameType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct InventorWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyInventor,
+pub struct InventorWith<X: UserData> {
     /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyInventor,
 }
 
-/// The `b:Inventor` element of the tree a read gives: [`InventorWith`] holding nothing in `extra`.
+/// The `b:Inventor` element of the tree a read gives: [`InventorWith`] holding nothing in
+/// `user_data`.
 pub type Inventor = InventorWith<()>;
 
 impl Eq for InventorWith<()> {}
@@ -1587,16 +1593,16 @@ impl Eq for InventorWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IssueWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyIssue,
+pub struct IssueWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyIssue,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Issue` element of the tree a read gives: [`IssueWith`] holding nothing in `extra`.
+/// The `b:Issue` element of the tree a read gives: [`IssueWith`] holding nothing in `user_data`.
 pub type Issue = IssueWith<()>;
 
 impl Eq for IssueWith<()> {}
@@ -1605,17 +1611,17 @@ impl Eq for IssueWith<()> {}
 /// is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct JournalNameWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyJournalName,
+pub struct JournalNameWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyJournalName,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:JournalName` element of the tree a read gives: [`JournalNameWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type JournalName = JournalNameWith<()>;
 
 impl Eq for JournalNameWith<()> {}
@@ -1624,16 +1630,16 @@ impl Eq for JournalNameWith<()> {}
 /// `ST_Lang`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LocaleIDWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyLocaleID,
+pub struct LocaleIDWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyLocaleID,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:LCID` element of the tree a read gives: [`LocaleIDWith`] holding nothing in `extra`.
+/// The `b:LCID` element of the tree a read gives: [`LocaleIDWith`] holding nothing in `user_data`.
 pub type LocaleID = LocaleIDWith<()>;
 
 impl Eq for LocaleIDWith<()> {}
@@ -1642,16 +1648,16 @@ impl Eq for LocaleIDWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MediumWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyMedium,
+pub struct MediumWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyMedium,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Medium` element of the tree a read gives: [`MediumWith`] holding nothing in `extra`.
+/// The `b:Medium` element of the tree a read gives: [`MediumWith`] holding nothing in `user_data`.
 pub type Medium = MediumWith<()>;
 
 impl Eq for MediumWith<()> {}
@@ -1660,16 +1666,16 @@ impl Eq for MediumWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MonthWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyMonth,
+pub struct MonthWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyMonth,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Month` element of the tree a read gives: [`MonthWith`] holding nothing in `extra`.
+/// The `b:Month` element of the tree a read gives: [`MonthWith`] holding nothing in `user_data`.
 pub type Month = MonthWith<()>;
 
 impl Eq for MonthWith<()> {}
@@ -1678,17 +1684,17 @@ impl Eq for MonthWith<()> {}
 /// type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MonthAccessedWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyMonthAccessed,
+pub struct MonthAccessedWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyMonthAccessed,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:MonthAccessed` element of the tree a read gives: [`MonthAccessedWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type MonthAccessed = MonthAccessedWith<()>;
 
 impl Eq for MonthAccessedWith<()> {}
@@ -1697,16 +1703,17 @@ impl Eq for MonthAccessedWith<()> {}
 /// `CT_NameListType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NameListWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyNameList,
+pub struct NameListWith<X: UserData> {
     /// The children that are `Person`, in order.
     pub person: Vec<PersonWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyNameList,
 }
 
-/// The `b:NameList` element of the tree a read gives: [`NameListWith`] holding nothing in `extra`.
+/// The `b:NameList` element of the tree a read gives: [`NameListWith`] holding nothing in
+/// `user_data`.
 pub type NameList = NameListWith<()>;
 
 impl Eq for NameListWith<()> {}
@@ -1718,7 +1725,7 @@ impl Eq for NameListWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum NameOrCorporateContentWith<X: NodeExtra> {
+pub enum NameOrCorporateContentWith<X: UserData> {
     /// The element `b:Corporate`, a `CorporateAuthor`.
     CorporateAuthor(CorporateAuthorWith<X>),
     /// The element `b:NameList`, a `NameList`.
@@ -1728,7 +1735,7 @@ pub enum NameOrCorporateContentWith<X: NodeExtra> {
 }
 
 /// [`NameOrCorporateContentWith`] of the tree a read gives, where no node holds anything in
-/// `extra`.
+/// `user_data`.
 pub type NameOrCorporateContent = NameOrCorporateContentWith<()>;
 
 impl Eq for NameOrCorporateContentWith<()> {}
@@ -1737,17 +1744,17 @@ impl Eq for NameOrCorporateContentWith<()> {}
 /// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NumberOfVolumesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyNumberOfVolumes,
+pub struct NumberOfVolumesWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyNumberOfVolumes,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:NumberVolumes` element of the tree a read gives: [`NumberOfVolumesWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type NumberOfVolumes = NumberOfVolumesWith<()>;
 
 impl Eq for NumberOfVolumesWith<()> {}
@@ -1756,16 +1763,16 @@ impl Eq for NumberOfVolumesWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PagesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyPages,
+pub struct PagesWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyPages,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Pages` element of the tree a read gives: [`PagesWith`] holding nothing in `extra`.
+/// The `b:Pages` element of the tree a read gives: [`PagesWith`] holding nothing in `user_data`.
 pub type Pages = PagesWith<()>;
 
 impl Eq for PagesWith<()> {}
@@ -1774,17 +1781,17 @@ impl Eq for PagesWith<()> {}
 /// type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PatentNumberWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyPatentNumber,
+pub struct PatentNumberWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyPatentNumber,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:PatentNumber` element of the tree a read gives: [`PatentNumberWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PatentNumber = PatentNumberWith<()>;
 
 impl Eq for PatentNumberWith<()> {}
@@ -1793,16 +1800,17 @@ impl Eq for PatentNumberWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PatentTypeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyPatentType,
+pub struct PatentTypeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyPatentType,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Type` element of the tree a read gives: [`PatentTypeWith`] holding nothing in `extra`.
+/// The `b:Type` element of the tree a read gives: [`PatentTypeWith`] holding nothing in
+/// `user_data`.
 pub type PatentType = PatentTypeWith<()>;
 
 impl Eq for PatentTypeWith<()> {}
@@ -1811,17 +1819,17 @@ impl Eq for PatentTypeWith<()> {}
 /// `CT_NameOrCorporateType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PerformerWith<X: NodeExtra> {
+pub struct PerformerWith<X: UserData> {
     /// The child that is an item of `NameOrCorporateContent`, when there is one.
     pub content: Option<Box<NameOrCorporateContentWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyPerformer,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyPerformer,
 }
 
 /// The `b:Performer` element of the tree a read gives: [`PerformerWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Performer = PerformerWith<()>;
 
 impl Eq for PerformerWith<()> {}
@@ -1830,17 +1838,17 @@ impl Eq for PerformerWith<()> {}
 /// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PeriodicalTitleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyPeriodicalTitle,
+pub struct PeriodicalTitleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyPeriodicalTitle,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:PeriodicalTitle` element of the tree a read gives: [`PeriodicalTitleWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type PeriodicalTitle = PeriodicalTitleWith<()>;
 
 impl Eq for PeriodicalTitleWith<()> {}
@@ -1849,9 +1857,7 @@ impl Eq for PeriodicalTitleWith<()> {}
 /// `CT_PersonType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PersonWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyPerson,
+pub struct PersonWith<X: UserData> {
     /// The children that are `PersonsFirstOrGivenName`, in order.
     pub persons_first_or_given_name: Vec<PersonsFirstOrGivenNameWith<X>>,
     /// The children that are `PersonsLastOrFamilyName`, in order.
@@ -1860,9 +1866,11 @@ pub struct PersonWith<X: NodeExtra> {
     pub persons_middle_or_other_name: Vec<PersonsMiddleOrOtherNameWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyPerson,
 }
 
-/// The `b:Person` element of the tree a read gives: [`PersonWith`] holding nothing in `extra`.
+/// The `b:Person` element of the tree a read gives: [`PersonWith`] holding nothing in `user_data`.
 pub type Person = PersonWith<()>;
 
 impl Eq for PersonWith<()> {}
@@ -1871,17 +1879,17 @@ impl Eq for PersonWith<()> {}
 /// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PersonsFirstOrGivenNameWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyPersonsFirstOrGivenName,
+pub struct PersonsFirstOrGivenNameWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyPersonsFirstOrGivenName,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:First` element of the tree a read gives: [`PersonsFirstOrGivenNameWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type PersonsFirstOrGivenName = PersonsFirstOrGivenNameWith<()>;
 
 impl Eq for PersonsFirstOrGivenNameWith<()> {}
@@ -1890,17 +1898,17 @@ impl Eq for PersonsFirstOrGivenNameWith<()> {}
 /// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PersonsLastOrFamilyNameWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyPersonsLastOrFamilyName,
+pub struct PersonsLastOrFamilyNameWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyPersonsLastOrFamilyName,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:Last` element of the tree a read gives: [`PersonsLastOrFamilyNameWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type PersonsLastOrFamilyName = PersonsLastOrFamilyNameWith<()>;
 
 impl Eq for PersonsLastOrFamilyNameWith<()> {}
@@ -1909,17 +1917,17 @@ impl Eq for PersonsLastOrFamilyNameWith<()> {}
 /// Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PersonsMiddleOrOtherNameWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyPersonsMiddleOrOtherName,
+pub struct PersonsMiddleOrOtherNameWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyPersonsMiddleOrOtherName,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:Middle` element of the tree a read gives: [`PersonsMiddleOrOtherNameWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type PersonsMiddleOrOtherName = PersonsMiddleOrOtherNameWith<()>;
 
 impl Eq for PersonsMiddleOrOtherNameWith<()> {}
@@ -1928,17 +1936,17 @@ impl Eq for PersonsMiddleOrOtherNameWith<()> {}
 /// type is `CT_NameType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ProducerNameWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyProducerName,
+pub struct ProducerNameWith<X: UserData> {
     /// The child that is `NameList`, which the schema requires.
     pub list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyProducerName,
 }
 
 /// The `b:ProducerName` element of the tree a read gives: [`ProducerNameWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ProducerName = ProducerNameWith<()>;
 
 impl Eq for ProducerNameWith<()> {}
@@ -1947,17 +1955,17 @@ impl Eq for ProducerNameWith<()> {}
 /// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ProductionCompanyWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyProductionCompany,
+pub struct ProductionCompanyWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyProductionCompany,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:ProductionCompany` element of the tree a read gives: [`ProductionCompanyWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ProductionCompany = ProductionCompanyWith<()>;
 
 impl Eq for ProductionCompanyWith<()> {}
@@ -1966,17 +1974,17 @@ impl Eq for ProductionCompanyWith<()> {}
 /// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PublicationTitleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyPublicationTitle,
+pub struct PublicationTitleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyPublicationTitle,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:PublicationTitle` element of the tree a read gives: [`PublicationTitleWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type PublicationTitle = PublicationTitleWith<()>;
 
 impl Eq for PublicationTitleWith<()> {}
@@ -1985,17 +1993,17 @@ impl Eq for PublicationTitleWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PublisherWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyPublisher,
+pub struct PublisherWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyPublisher,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:Publisher` element of the tree a read gives: [`PublisherWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Publisher = PublisherWith<()>;
 
 impl Eq for PublisherWith<()> {}
@@ -2004,17 +2012,17 @@ impl Eq for PublisherWith<()> {}
 /// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RecordingNumberWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyRecordingNumber,
+pub struct RecordingNumberWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyRecordingNumber,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:RecordingNumber` element of the tree a read gives: [`RecordingNumberWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type RecordingNumber = RecordingNumberWith<()>;
 
 impl Eq for RecordingNumberWith<()> {}
@@ -2023,17 +2031,17 @@ impl Eq for RecordingNumberWith<()> {}
 /// is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ReferenceOrderWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyReferenceOrder,
+pub struct ReferenceOrderWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyReferenceOrder,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:RefOrder` element of the tree a read gives: [`ReferenceOrderWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ReferenceOrder = ReferenceOrderWith<()>;
 
 impl Eq for ReferenceOrderWith<()> {}
@@ -2042,16 +2050,17 @@ impl Eq for ReferenceOrderWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ReporterWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyReporter,
+pub struct ReporterWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyReporter,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Reporter` element of the tree a read gives: [`ReporterWith`] holding nothing in `extra`.
+/// The `b:Reporter` element of the tree a read gives: [`ReporterWith`] holding nothing in
+/// `user_data`.
 pub type Reporter = ReporterWith<()>;
 
 impl Eq for ReporterWith<()> {}
@@ -2060,17 +2069,17 @@ impl Eq for ReporterWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ShortTitleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyShortTitle,
+pub struct ShortTitleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyShortTitle,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:ShortTitle` element of the tree a read gives: [`ShortTitleWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ShortTitle = ShortTitleWith<()>;
 
 impl Eq for ShortTitleWith<()> {}
@@ -2079,16 +2088,16 @@ impl Eq for ShortTitleWith<()> {}
 /// `CT_SourceType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SourceWith<X: NodeExtra> {
+pub struct SourceWith<X: UserData> {
     /// The children that are an item of `SourceContent`, in order.
     pub content: Vec<SourceContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographySource,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographySource,
 }
 
-/// The `b:Source` element of the tree a read gives: [`SourceWith`] holding nothing in `extra`.
+/// The `b:Source` element of the tree a read gives: [`SourceWith`] holding nothing in `user_data`.
 pub type Source = SourceWith<()>;
 
 impl Eq for SourceWith<()> {}
@@ -2100,7 +2109,7 @@ impl Eq for SourceWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum SourceContentWith<X: NodeExtra> {
+pub enum SourceContentWith<X: UserData> {
     /// The element `b:AbbreviatedCaseNumber`, a `AbbreviatedCaseNumber`.
     AbbreviatedCaseNumber(AbbreviatedCaseNumberWith<X>),
     /// The element `b:AlbumTitle`, a `AlbumTitle`.
@@ -2209,7 +2218,7 @@ pub enum SourceContentWith<X: NodeExtra> {
     YearAccessed(YearAccessedWith<X>),
 }
 
-/// [`SourceContentWith`] of the tree a read gives, where no node holds anything in `extra`.
+/// [`SourceContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
 pub type SourceContent = SourceContentWith<()>;
 
 impl Eq for SourceContentWith<()> {}
@@ -2218,17 +2227,17 @@ impl Eq for SourceContentWith<()> {}
 /// `ST_SourceType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SourceTypeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographySourceType,
+pub struct SourceTypeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographySourceType,
     /// The element's text.
     pub value: BibliographicDataSourceTypes,
 }
 
 /// The `b:SourceType` element of the tree a read gives: [`SourceTypeWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SourceType = SourceTypeWith<()>;
 
 impl Eq for SourceTypeWith<()> {}
@@ -2237,9 +2246,7 @@ impl Eq for SourceTypeWith<()> {}
 /// `CT_Sources`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SourcesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographySources,
+pub struct SourcesWith<X: UserData> {
     /// The attribute `SelectedStyle`, when the element has it.
     pub selected_style: Option<String>,
     /// The children that are `Source`, in order.
@@ -2250,9 +2257,12 @@ pub struct SourcesWith<X: NodeExtra> {
     pub unknown: crate::Unknown,
     /// The attribute `URI`, when the element has it.
     pub uri: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographySources,
 }
 
-/// The `b:Sources` element of the tree a read gives: [`SourcesWith`] holding nothing in `extra`.
+/// The `b:Sources` element of the tree a read gives: [`SourcesWith`] holding nothing in
+/// `user_data`.
 pub type Sources = SourcesWith<()>;
 
 impl Eq for SourcesWith<()> {}
@@ -2261,17 +2271,17 @@ impl Eq for SourcesWith<()> {}
 /// type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StandardNumberWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyStandardNumber,
+pub struct StandardNumberWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyStandardNumber,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:StandardNumber` element of the tree a read gives: [`StandardNumberWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type StandardNumber = StandardNumberWith<()>;
 
 impl Eq for StandardNumberWith<()> {}
@@ -2280,17 +2290,17 @@ impl Eq for StandardNumberWith<()> {}
 /// schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StateOrProvinceWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyStateOrProvince,
+pub struct StateOrProvinceWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyStateOrProvince,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:StateProvince` element of the tree a read gives: [`StateOrProvinceWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type StateOrProvince = StateOrProvinceWith<()>;
 
 impl Eq for StateOrProvinceWith<()> {}
@@ -2299,16 +2309,17 @@ impl Eq for StateOrProvinceWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct StationWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyStation,
+pub struct StationWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyStation,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Station` element of the tree a read gives: [`StationWith`] holding nothing in `extra`.
+/// The `b:Station` element of the tree a read gives: [`StationWith`] holding nothing in
+/// `user_data`.
 pub type Station = StationWith<()>;
 
 impl Eq for StationWith<()> {}
@@ -2316,16 +2327,16 @@ impl Eq for StationWith<()> {}
 /// The `b:Tag` element, Tag (ECMA-376 Part 1, section 22.6.2.65). Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TagWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyTag,
+pub struct TagWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyTag,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Tag` element of the tree a read gives: [`TagWith`] holding nothing in `extra`.
+/// The `b:Tag` element of the tree a read gives: [`TagWith`] holding nothing in `user_data`.
 pub type Tag = TagWith<()>;
 
 impl Eq for TagWith<()> {}
@@ -2334,16 +2345,17 @@ impl Eq for TagWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TheaterWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyTheater,
+pub struct TheaterWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyTheater,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Theater` element of the tree a read gives: [`TheaterWith`] holding nothing in `extra`.
+/// The `b:Theater` element of the tree a read gives: [`TheaterWith`] holding nothing in
+/// `user_data`.
 pub type Theater = TheaterWith<()>;
 
 impl Eq for TheaterWith<()> {}
@@ -2352,17 +2364,17 @@ impl Eq for TheaterWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ThesisTypeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyThesisType,
+pub struct ThesisTypeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyThesisType,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:ThesisType` element of the tree a read gives: [`ThesisTypeWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ThesisType = ThesisTypeWith<()>;
 
 impl Eq for ThesisTypeWith<()> {}
@@ -2371,16 +2383,16 @@ impl Eq for ThesisTypeWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TitleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyTitle,
+pub struct TitleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyTitle,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Title` element of the tree a read gives: [`TitleWith`] holding nothing in `extra`.
+/// The `b:Title` element of the tree a read gives: [`TitleWith`] holding nothing in `user_data`.
 pub type Title = TitleWith<()>;
 
 impl Eq for TitleWith<()> {}
@@ -2389,17 +2401,17 @@ impl Eq for TitleWith<()> {}
 /// `CT_NameType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TranslatorWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyTranslator,
+pub struct TranslatorWith<X: UserData> {
     /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyTranslator,
 }
 
 /// The `b:Translator` element of the tree a read gives: [`TranslatorWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Translator = TranslatorWith<()>;
 
 impl Eq for TranslatorWith<()> {}
@@ -2407,16 +2419,16 @@ impl Eq for TranslatorWith<()> {}
 /// The `b:URL` element, URL (ECMA-376 Part 1, section 22.6.2.71). Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct UrlWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyUrl,
+pub struct UrlWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyUrl,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:URL` element of the tree a read gives: [`UrlWith`] holding nothing in `extra`.
+/// The `b:URL` element of the tree a read gives: [`UrlWith`] holding nothing in `user_data`.
 pub type Url = UrlWith<()>;
 
 impl Eq for UrlWith<()> {}
@@ -2425,16 +2437,17 @@ impl Eq for UrlWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VersionWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyVersion,
+pub struct VersionWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyVersion,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Version` element of the tree a read gives: [`VersionWith`] holding nothing in `extra`.
+/// The `b:Version` element of the tree a read gives: [`VersionWith`] holding nothing in
+/// `user_data`.
 pub type Version = VersionWith<()>;
 
 impl Eq for VersionWith<()> {}
@@ -2443,16 +2456,16 @@ impl Eq for VersionWith<()> {}
 /// `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VolumeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyVolume,
+pub struct VolumeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyVolume,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Volume` element of the tree a read gives: [`VolumeWith`] holding nothing in `extra`.
+/// The `b:Volume` element of the tree a read gives: [`VolumeWith`] holding nothing in `user_data`.
 pub type Volume = VolumeWith<()>;
 
 impl Eq for VolumeWith<()> {}
@@ -2461,16 +2474,16 @@ impl Eq for VolumeWith<()> {}
 /// `CT_NameType`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct WriterWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyWriter,
+pub struct WriterWith<X: UserData> {
     /// The child that is `NameList`, which the schema requires.
     pub name_list: Box<NameListWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyWriter,
 }
 
-/// The `b:Writer` element of the tree a read gives: [`WriterWith`] holding nothing in `extra`.
+/// The `b:Writer` element of the tree a read gives: [`WriterWith`] holding nothing in `user_data`.
 pub type Writer = WriterWith<()>;
 
 impl Eq for WriterWith<()> {}
@@ -2478,16 +2491,16 @@ impl Eq for WriterWith<()> {}
 /// The `b:Year` element, Year (ECMA-376 Part 1, section 22.6.2.75). Its schema type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct YearWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyYear,
+pub struct YearWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyYear,
     /// The element's text.
     pub value: String,
 }
 
-/// The `b:Year` element of the tree a read gives: [`YearWith`] holding nothing in `extra`.
+/// The `b:Year` element of the tree a read gives: [`YearWith`] holding nothing in `user_data`.
 pub type Year = YearWith<()>;
 
 impl Eq for YearWith<()> {}
@@ -2496,32 +2509,32 @@ impl Eq for YearWith<()> {}
 /// type is `ST_String`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct YearAccessedWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::BibliographyYearAccessed,
+pub struct YearAccessedWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::BibliographyYearAccessed,
     /// The element's text.
     pub value: String,
 }
 
 /// The `b:YearAccessed` element of the tree a read gives: [`YearAccessedWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type YearAccessed = YearAccessedWith<()>;
 
 impl Eq for YearAccessedWith<()> {}
 
-impl<X: NodeExtra> AbbreviatedCaseNumberWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AbbreviatedCaseNumberWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AbbreviatedCaseNumberWith<Y>
+    pub fn into_user_data<Y>(self) -> AbbreviatedCaseNumberWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AbbreviatedCaseNumberWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2549,17 +2562,17 @@ impl crate::Write for AbbreviatedCaseNumber {
     }
 }
 
-impl<X: NodeExtra> AlbumTitleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AlbumTitleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AlbumTitleWith<Y>
+    pub fn into_user_data<Y>(self) -> AlbumTitleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AlbumTitleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2587,18 +2600,21 @@ impl crate::Write for AlbumTitle {
     }
 }
 
-impl<X: NodeExtra> ArtistWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ArtistWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArtistWith<Y>
+    pub fn into_user_data<Y>(self) -> ArtistWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ArtistWith {
-            extra: Default::default(),
-            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            name_list: crate::into_user_data_required(
+                *self.name_list,
+                NameListWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2622,21 +2638,21 @@ impl crate::Write for Artist {
     }
 }
 
-impl<X: NodeExtra> AuthorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AuthorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> AuthorWith<Y>
+    pub fn into_user_data<Y>(mut self) -> AuthorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AuthorWith {
-            content: crate::into_extra_optional(
+            content: crate::into_user_data_optional(
                 &mut self.content,
-                NameOrCorporateContentWith::into_extra,
+                NameOrCorporateContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2732,18 +2748,21 @@ impl BibliographicDataSourceTypes {
     }
 }
 
-impl<X: NodeExtra> BookAuthorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BookAuthorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BookAuthorWith<Y>
+    pub fn into_user_data<Y>(self) -> BookAuthorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BookAuthorWith {
-            extra: Default::default(),
-            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            name_list: crate::into_user_data_required(
+                *self.name_list,
+                NameListWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2767,17 +2786,17 @@ impl crate::Write for BookAuthor {
     }
 }
 
-impl<X: NodeExtra> BookTitleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BookTitleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BookTitleWith<Y>
+    pub fn into_user_data<Y>(self) -> BookTitleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BookTitleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2805,17 +2824,17 @@ impl crate::Write for BookTitle {
     }
 }
 
-impl<X: NodeExtra> BroadcastTitleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BroadcastTitleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BroadcastTitleWith<Y>
+    pub fn into_user_data<Y>(self) -> BroadcastTitleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BroadcastTitleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2843,17 +2862,17 @@ impl crate::Write for BroadcastTitle {
     }
 }
 
-impl<X: NodeExtra> BroadcasterWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BroadcasterWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BroadcasterWith<Y>
+    pub fn into_user_data<Y>(self) -> BroadcasterWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BroadcasterWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2881,17 +2900,17 @@ impl crate::Write for Broadcaster {
     }
 }
 
-impl<X: NodeExtra> CaseNumberWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CaseNumberWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CaseNumberWith<Y>
+    pub fn into_user_data<Y>(self) -> CaseNumberWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CaseNumberWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2919,17 +2938,17 @@ impl crate::Write for CaseNumber {
     }
 }
 
-impl<X: NodeExtra> ChapterNumberWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ChapterNumberWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ChapterNumberWith<Y>
+    pub fn into_user_data<Y>(self) -> ChapterNumberWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ChapterNumberWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2957,17 +2976,17 @@ impl crate::Write for ChapterNumber {
     }
 }
 
-impl<X: NodeExtra> CityWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CityWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CityWith<Y>
+    pub fn into_user_data<Y>(self) -> CityWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CityWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2995,17 +3014,17 @@ impl crate::Write for City {
     }
 }
 
-impl<X: NodeExtra> CommentsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CommentsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CommentsWith<Y>
+    pub fn into_user_data<Y>(self) -> CommentsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CommentsWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3033,18 +3052,21 @@ impl crate::Write for Comments {
     }
 }
 
-impl<X: NodeExtra> CompilerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CompilerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CompilerWith<Y>
+    pub fn into_user_data<Y>(self) -> CompilerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CompilerWith {
-            extra: Default::default(),
-            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            name_list: crate::into_user_data_required(
+                *self.name_list,
+                NameListWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3068,18 +3090,21 @@ impl crate::Write for Compiler {
     }
 }
 
-impl<X: NodeExtra> ComposerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ComposerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ComposerWith<Y>
+    pub fn into_user_data<Y>(self) -> ComposerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ComposerWith {
-            extra: Default::default(),
-            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            name_list: crate::into_user_data_required(
+                *self.name_list,
+                NameListWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3103,18 +3128,21 @@ impl crate::Write for Composer {
     }
 }
 
-impl<X: NodeExtra> ConductorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ConductorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ConductorWith<Y>
+    pub fn into_user_data<Y>(self) -> ConductorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ConductorWith {
-            extra: Default::default(),
-            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            name_list: crate::into_user_data_required(
+                *self.name_list,
+                NameListWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3138,17 +3166,17 @@ impl crate::Write for Conductor {
     }
 }
 
-impl<X: NodeExtra> ConferenceOrProceedingsNameWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ConferenceOrProceedingsNameWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ConferenceOrProceedingsNameWith<Y>
+    pub fn into_user_data<Y>(self) -> ConferenceOrProceedingsNameWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ConferenceOrProceedingsNameWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3176,18 +3204,21 @@ impl crate::Write for ConferenceOrProceedingsName {
     }
 }
 
-impl<X: NodeExtra> ContributorsListWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ContributorsListWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ContributorsListWith<Y>
+    pub fn into_user_data<Y>(self) -> ContributorsListWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ContributorsListWith {
-            content: crate::into_extra_list(self.content, ContributorsListContentWith::into_extra),
-            extra: Default::default(),
+            content: crate::into_user_data_list(
+                self.content,
+                ContributorsListContentWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3211,33 +3242,41 @@ impl crate::Write for ContributorsList {
     }
 }
 
-impl<X: NodeExtra> ContributorsListContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> ContributorsListContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ContributorsListContentWith<Y>
+    pub fn into_user_data<Y>(self) -> ContributorsListContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
-            Self::Artist(node) => ContributorsListContentWith::Artist(node.into_extra()),
-            Self::Author(node) => ContributorsListContentWith::Author(node.into_extra()),
-            Self::BookAuthor(node) => ContributorsListContentWith::BookAuthor(node.into_extra()),
-            Self::Compiler(node) => ContributorsListContentWith::Compiler(node.into_extra()),
-            Self::Composer(node) => ContributorsListContentWith::Composer(node.into_extra()),
-            Self::Conductor(node) => ContributorsListContentWith::Conductor(node.into_extra()),
-            Self::Counsel(node) => ContributorsListContentWith::Counsel(node.into_extra()),
-            Self::Director(node) => ContributorsListContentWith::Director(node.into_extra()),
-            Self::Editor(node) => ContributorsListContentWith::Editor(node.into_extra()),
-            Self::Interviewee(node) => ContributorsListContentWith::Interviewee(node.into_extra()),
-            Self::Interviewer(node) => ContributorsListContentWith::Interviewer(node.into_extra()),
-            Self::Inventor(node) => ContributorsListContentWith::Inventor(node.into_extra()),
-            Self::Other(node) => ContributorsListContentWith::Other(node),
-            Self::Performer(node) => ContributorsListContentWith::Performer(node.into_extra()),
-            Self::ProducerName(node) => {
-                ContributorsListContentWith::ProducerName(node.into_extra())
+            Self::Artist(node) => ContributorsListContentWith::Artist(node.into_user_data()),
+            Self::Author(node) => ContributorsListContentWith::Author(node.into_user_data()),
+            Self::BookAuthor(node) => {
+                ContributorsListContentWith::BookAuthor(node.into_user_data())
             }
-            Self::Translator(node) => ContributorsListContentWith::Translator(node.into_extra()),
-            Self::Writer(node) => ContributorsListContentWith::Writer(node.into_extra()),
+            Self::Compiler(node) => ContributorsListContentWith::Compiler(node.into_user_data()),
+            Self::Composer(node) => ContributorsListContentWith::Composer(node.into_user_data()),
+            Self::Conductor(node) => ContributorsListContentWith::Conductor(node.into_user_data()),
+            Self::Counsel(node) => ContributorsListContentWith::Counsel(node.into_user_data()),
+            Self::Director(node) => ContributorsListContentWith::Director(node.into_user_data()),
+            Self::Editor(node) => ContributorsListContentWith::Editor(node.into_user_data()),
+            Self::Interviewee(node) => {
+                ContributorsListContentWith::Interviewee(node.into_user_data())
+            }
+            Self::Interviewer(node) => {
+                ContributorsListContentWith::Interviewer(node.into_user_data())
+            }
+            Self::Inventor(node) => ContributorsListContentWith::Inventor(node.into_user_data()),
+            Self::Other(node) => ContributorsListContentWith::Other(node),
+            Self::Performer(node) => ContributorsListContentWith::Performer(node.into_user_data()),
+            Self::ProducerName(node) => {
+                ContributorsListContentWith::ProducerName(node.into_user_data())
+            }
+            Self::Translator(node) => {
+                ContributorsListContentWith::Translator(node.into_user_data())
+            }
+            Self::Writer(node) => ContributorsListContentWith::Writer(node.into_user_data()),
         }
     }
 }
@@ -3294,17 +3333,17 @@ impl crate::Write for ContributorsListContent {
     }
 }
 
-impl<X: NodeExtra> CorporateAuthorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CorporateAuthorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CorporateAuthorWith<Y>
+    pub fn into_user_data<Y>(self) -> CorporateAuthorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CorporateAuthorWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3332,18 +3371,21 @@ impl crate::Write for CorporateAuthor {
     }
 }
 
-impl<X: NodeExtra> CounselWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CounselWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CounselWith<Y>
+    pub fn into_user_data<Y>(self) -> CounselWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CounselWith {
-            extra: Default::default(),
-            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            name_list: crate::into_user_data_required(
+                *self.name_list,
+                NameListWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3367,17 +3409,17 @@ impl crate::Write for Counsel {
     }
 }
 
-impl<X: NodeExtra> CountryOrRegionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CountryOrRegionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CountryOrRegionWith<Y>
+    pub fn into_user_data<Y>(self) -> CountryOrRegionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CountryOrRegionWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3405,17 +3447,17 @@ impl crate::Write for CountryOrRegion {
     }
 }
 
-impl<X: NodeExtra> CourtWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CourtWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CourtWith<Y>
+    pub fn into_user_data<Y>(self) -> CourtWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CourtWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3443,17 +3485,17 @@ impl crate::Write for Court {
     }
 }
 
-impl<X: NodeExtra> DayWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DayWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DayWith<Y>
+    pub fn into_user_data<Y>(self) -> DayWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DayWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3481,17 +3523,17 @@ impl crate::Write for Day {
     }
 }
 
-impl<X: NodeExtra> DayAccessedWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DayAccessedWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DayAccessedWith<Y>
+    pub fn into_user_data<Y>(self) -> DayAccessedWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DayAccessedWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3519,17 +3561,17 @@ impl crate::Write for DayAccessed {
     }
 }
 
-impl<X: NodeExtra> DepartmentWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DepartmentWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DepartmentWith<Y>
+    pub fn into_user_data<Y>(self) -> DepartmentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DepartmentWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3557,18 +3599,21 @@ impl crate::Write for Department {
     }
 }
 
-impl<X: NodeExtra> DirectorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DirectorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DirectorWith<Y>
+    pub fn into_user_data<Y>(self) -> DirectorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DirectorWith {
-            extra: Default::default(),
-            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            name_list: crate::into_user_data_required(
+                *self.name_list,
+                NameListWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3592,17 +3637,17 @@ impl crate::Write for Director {
     }
 }
 
-impl<X: NodeExtra> DistributorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DistributorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DistributorWith<Y>
+    pub fn into_user_data<Y>(self) -> DistributorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DistributorWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3630,18 +3675,21 @@ impl crate::Write for Distributor {
     }
 }
 
-impl<X: NodeExtra> EditorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> EditorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> EditorWith<Y>
+    pub fn into_user_data<Y>(self) -> EditorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         EditorWith {
-            extra: Default::default(),
-            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            name_list: crate::into_user_data_required(
+                *self.name_list,
+                NameListWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3665,17 +3713,17 @@ impl crate::Write for Editor {
     }
 }
 
-impl<X: NodeExtra> EditorEditionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> EditorEditionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> EditorEditionWith<Y>
+    pub fn into_user_data<Y>(self) -> EditorEditionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         EditorEditionWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3703,17 +3751,17 @@ impl crate::Write for EditorEdition {
     }
 }
 
-impl<X: NodeExtra> GuidWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> GuidWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> GuidWith<Y>
+    pub fn into_user_data<Y>(self) -> GuidWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         GuidWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3741,17 +3789,17 @@ impl crate::Write for Guid {
     }
 }
 
-impl<X: NodeExtra> InstitutionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> InstitutionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> InstitutionWith<Y>
+    pub fn into_user_data<Y>(self) -> InstitutionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         InstitutionWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3779,17 +3827,17 @@ impl crate::Write for Institution {
     }
 }
 
-impl<X: NodeExtra> InternetSiteTitleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> InternetSiteTitleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> InternetSiteTitleWith<Y>
+    pub fn into_user_data<Y>(self) -> InternetSiteTitleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         InternetSiteTitleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3817,18 +3865,21 @@ impl crate::Write for InternetSiteTitle {
     }
 }
 
-impl<X: NodeExtra> IntervieweeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> IntervieweeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> IntervieweeWith<Y>
+    pub fn into_user_data<Y>(self) -> IntervieweeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         IntervieweeWith {
-            extra: Default::default(),
-            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            name_list: crate::into_user_data_required(
+                *self.name_list,
+                NameListWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3852,18 +3903,21 @@ impl crate::Write for Interviewee {
     }
 }
 
-impl<X: NodeExtra> InterviewerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> InterviewerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> InterviewerWith<Y>
+    pub fn into_user_data<Y>(self) -> InterviewerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         InterviewerWith {
-            extra: Default::default(),
-            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            name_list: crate::into_user_data_required(
+                *self.name_list,
+                NameListWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3887,18 +3941,21 @@ impl crate::Write for Interviewer {
     }
 }
 
-impl<X: NodeExtra> InventorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> InventorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> InventorWith<Y>
+    pub fn into_user_data<Y>(self) -> InventorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         InventorWith {
-            extra: Default::default(),
-            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            name_list: crate::into_user_data_required(
+                *self.name_list,
+                NameListWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3922,17 +3979,17 @@ impl crate::Write for Inventor {
     }
 }
 
-impl<X: NodeExtra> IssueWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> IssueWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> IssueWith<Y>
+    pub fn into_user_data<Y>(self) -> IssueWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         IssueWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3960,17 +4017,17 @@ impl crate::Write for Issue {
     }
 }
 
-impl<X: NodeExtra> JournalNameWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> JournalNameWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> JournalNameWith<Y>
+    pub fn into_user_data<Y>(self) -> JournalNameWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         JournalNameWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3998,17 +4055,17 @@ impl crate::Write for JournalName {
     }
 }
 
-impl<X: NodeExtra> LocaleIDWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LocaleIDWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LocaleIDWith<Y>
+    pub fn into_user_data<Y>(self) -> LocaleIDWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LocaleIDWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4036,17 +4093,17 @@ impl crate::Write for LocaleID {
     }
 }
 
-impl<X: NodeExtra> MediumWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MediumWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MediumWith<Y>
+    pub fn into_user_data<Y>(self) -> MediumWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MediumWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4074,17 +4131,17 @@ impl crate::Write for Medium {
     }
 }
 
-impl<X: NodeExtra> MonthWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MonthWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MonthWith<Y>
+    pub fn into_user_data<Y>(self) -> MonthWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MonthWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4112,17 +4169,17 @@ impl crate::Write for Month {
     }
 }
 
-impl<X: NodeExtra> MonthAccessedWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MonthAccessedWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MonthAccessedWith<Y>
+    pub fn into_user_data<Y>(self) -> MonthAccessedWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MonthAccessedWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4150,18 +4207,18 @@ impl crate::Write for MonthAccessed {
     }
 }
 
-impl<X: NodeExtra> NameListWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> NameListWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> NameListWith<Y>
+    pub fn into_user_data<Y>(self) -> NameListWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         NameListWith {
-            extra: Default::default(),
-            person: crate::into_extra_list(self.person, PersonWith::into_extra),
+            person: crate::into_user_data_list(self.person, PersonWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4185,18 +4242,18 @@ impl crate::Write for NameList {
     }
 }
 
-impl<X: NodeExtra> NameOrCorporateContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> NameOrCorporateContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> NameOrCorporateContentWith<Y>
+    pub fn into_user_data<Y>(self) -> NameOrCorporateContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::CorporateAuthor(node) => {
-                NameOrCorporateContentWith::CorporateAuthor(node.into_extra())
+                NameOrCorporateContentWith::CorporateAuthor(node.into_user_data())
             }
-            Self::NameList(node) => NameOrCorporateContentWith::NameList(node.into_extra()),
+            Self::NameList(node) => NameOrCorporateContentWith::NameList(node.into_user_data()),
             Self::Other(node) => NameOrCorporateContentWith::Other(node),
         }
     }
@@ -4226,17 +4283,17 @@ impl crate::Write for NameOrCorporateContent {
     }
 }
 
-impl<X: NodeExtra> NumberOfVolumesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> NumberOfVolumesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> NumberOfVolumesWith<Y>
+    pub fn into_user_data<Y>(self) -> NumberOfVolumesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         NumberOfVolumesWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4264,17 +4321,17 @@ impl crate::Write for NumberOfVolumes {
     }
 }
 
-impl<X: NodeExtra> PagesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PagesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PagesWith<Y>
+    pub fn into_user_data<Y>(self) -> PagesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PagesWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4302,17 +4359,17 @@ impl crate::Write for Pages {
     }
 }
 
-impl<X: NodeExtra> PatentNumberWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PatentNumberWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PatentNumberWith<Y>
+    pub fn into_user_data<Y>(self) -> PatentNumberWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PatentNumberWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4340,17 +4397,17 @@ impl crate::Write for PatentNumber {
     }
 }
 
-impl<X: NodeExtra> PatentTypeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PatentTypeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PatentTypeWith<Y>
+    pub fn into_user_data<Y>(self) -> PatentTypeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PatentTypeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4378,21 +4435,21 @@ impl crate::Write for PatentType {
     }
 }
 
-impl<X: NodeExtra> PerformerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PerformerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> PerformerWith<Y>
+    pub fn into_user_data<Y>(mut self) -> PerformerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PerformerWith {
-            content: crate::into_extra_optional(
+            content: crate::into_user_data_optional(
                 &mut self.content,
-                NameOrCorporateContentWith::into_extra,
+                NameOrCorporateContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4416,17 +4473,17 @@ impl crate::Write for Performer {
     }
 }
 
-impl<X: NodeExtra> PeriodicalTitleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PeriodicalTitleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PeriodicalTitleWith<Y>
+    pub fn into_user_data<Y>(self) -> PeriodicalTitleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PeriodicalTitleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4454,29 +4511,29 @@ impl crate::Write for PeriodicalTitle {
     }
 }
 
-impl<X: NodeExtra> PersonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PersonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PersonWith<Y>
+    pub fn into_user_data<Y>(self) -> PersonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PersonWith {
-            extra: Default::default(),
-            persons_first_or_given_name: crate::into_extra_list(
+            persons_first_or_given_name: crate::into_user_data_list(
                 self.persons_first_or_given_name,
-                PersonsFirstOrGivenNameWith::into_extra,
+                PersonsFirstOrGivenNameWith::into_user_data,
             ),
-            persons_last_or_family_name: crate::into_extra_list(
+            persons_last_or_family_name: crate::into_user_data_list(
                 self.persons_last_or_family_name,
-                PersonsLastOrFamilyNameWith::into_extra,
+                PersonsLastOrFamilyNameWith::into_user_data,
             ),
-            persons_middle_or_other_name: crate::into_extra_list(
+            persons_middle_or_other_name: crate::into_user_data_list(
                 self.persons_middle_or_other_name,
-                PersonsMiddleOrOtherNameWith::into_extra,
+                PersonsMiddleOrOtherNameWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4500,17 +4557,17 @@ impl crate::Write for Person {
     }
 }
 
-impl<X: NodeExtra> PersonsFirstOrGivenNameWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PersonsFirstOrGivenNameWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PersonsFirstOrGivenNameWith<Y>
+    pub fn into_user_data<Y>(self) -> PersonsFirstOrGivenNameWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PersonsFirstOrGivenNameWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4538,17 +4595,17 @@ impl crate::Write for PersonsFirstOrGivenName {
     }
 }
 
-impl<X: NodeExtra> PersonsLastOrFamilyNameWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PersonsLastOrFamilyNameWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PersonsLastOrFamilyNameWith<Y>
+    pub fn into_user_data<Y>(self) -> PersonsLastOrFamilyNameWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PersonsLastOrFamilyNameWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4576,17 +4633,17 @@ impl crate::Write for PersonsLastOrFamilyName {
     }
 }
 
-impl<X: NodeExtra> PersonsMiddleOrOtherNameWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PersonsMiddleOrOtherNameWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PersonsMiddleOrOtherNameWith<Y>
+    pub fn into_user_data<Y>(self) -> PersonsMiddleOrOtherNameWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PersonsMiddleOrOtherNameWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4614,18 +4671,18 @@ impl crate::Write for PersonsMiddleOrOtherName {
     }
 }
 
-impl<X: NodeExtra> ProducerNameWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ProducerNameWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ProducerNameWith<Y>
+    pub fn into_user_data<Y>(self) -> ProducerNameWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ProducerNameWith {
-            extra: Default::default(),
-            list: crate::into_extra_required(*self.list, NameListWith::into_extra),
+            list: crate::into_user_data_required(*self.list, NameListWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4649,17 +4706,17 @@ impl crate::Write for ProducerName {
     }
 }
 
-impl<X: NodeExtra> ProductionCompanyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ProductionCompanyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ProductionCompanyWith<Y>
+    pub fn into_user_data<Y>(self) -> ProductionCompanyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ProductionCompanyWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4687,17 +4744,17 @@ impl crate::Write for ProductionCompany {
     }
 }
 
-impl<X: NodeExtra> PublicationTitleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PublicationTitleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PublicationTitleWith<Y>
+    pub fn into_user_data<Y>(self) -> PublicationTitleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PublicationTitleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4725,17 +4782,17 @@ impl crate::Write for PublicationTitle {
     }
 }
 
-impl<X: NodeExtra> PublisherWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PublisherWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PublisherWith<Y>
+    pub fn into_user_data<Y>(self) -> PublisherWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PublisherWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4763,17 +4820,17 @@ impl crate::Write for Publisher {
     }
 }
 
-impl<X: NodeExtra> RecordingNumberWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RecordingNumberWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RecordingNumberWith<Y>
+    pub fn into_user_data<Y>(self) -> RecordingNumberWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RecordingNumberWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4801,17 +4858,17 @@ impl crate::Write for RecordingNumber {
     }
 }
 
-impl<X: NodeExtra> ReferenceOrderWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ReferenceOrderWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ReferenceOrderWith<Y>
+    pub fn into_user_data<Y>(self) -> ReferenceOrderWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ReferenceOrderWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4839,17 +4896,17 @@ impl crate::Write for ReferenceOrder {
     }
 }
 
-impl<X: NodeExtra> ReporterWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ReporterWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ReporterWith<Y>
+    pub fn into_user_data<Y>(self) -> ReporterWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ReporterWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4877,17 +4934,17 @@ impl crate::Write for Reporter {
     }
 }
 
-impl<X: NodeExtra> ShortTitleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ShortTitleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ShortTitleWith<Y>
+    pub fn into_user_data<Y>(self) -> ShortTitleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ShortTitleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4915,18 +4972,18 @@ impl crate::Write for ShortTitle {
     }
 }
 
-impl<X: NodeExtra> SourceWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SourceWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SourceWith<Y>
+    pub fn into_user_data<Y>(self) -> SourceWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SourceWith {
-            content: crate::into_extra_list(self.content, SourceContentWith::into_extra),
-            extra: Default::default(),
+            content: crate::into_user_data_list(self.content, SourceContentWith::into_user_data),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -4950,75 +5007,89 @@ impl crate::Write for Source {
     }
 }
 
-impl<X: NodeExtra> SourceContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> SourceContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SourceContentWith<Y>
+    pub fn into_user_data<Y>(self) -> SourceContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
             Self::AbbreviatedCaseNumber(node) => {
-                SourceContentWith::AbbreviatedCaseNumber(node.into_extra())
+                SourceContentWith::AbbreviatedCaseNumber(node.into_user_data())
             }
-            Self::AlbumTitle(node) => SourceContentWith::AlbumTitle(node.into_extra()),
-            Self::BookTitle(node) => SourceContentWith::BookTitle(node.into_extra()),
-            Self::BroadcastTitle(node) => SourceContentWith::BroadcastTitle(node.into_extra()),
-            Self::Broadcaster(node) => SourceContentWith::Broadcaster(node.into_extra()),
-            Self::CaseNumber(node) => SourceContentWith::CaseNumber(node.into_extra()),
-            Self::ChapterNumber(node) => SourceContentWith::ChapterNumber(node.into_extra()),
-            Self::City(node) => SourceContentWith::City(node.into_extra()),
-            Self::Comments(node) => SourceContentWith::Comments(node.into_extra()),
+            Self::AlbumTitle(node) => SourceContentWith::AlbumTitle(node.into_user_data()),
+            Self::BookTitle(node) => SourceContentWith::BookTitle(node.into_user_data()),
+            Self::BroadcastTitle(node) => SourceContentWith::BroadcastTitle(node.into_user_data()),
+            Self::Broadcaster(node) => SourceContentWith::Broadcaster(node.into_user_data()),
+            Self::CaseNumber(node) => SourceContentWith::CaseNumber(node.into_user_data()),
+            Self::ChapterNumber(node) => SourceContentWith::ChapterNumber(node.into_user_data()),
+            Self::City(node) => SourceContentWith::City(node.into_user_data()),
+            Self::Comments(node) => SourceContentWith::Comments(node.into_user_data()),
             Self::ConferenceOrProceedingsName(node) => {
-                SourceContentWith::ConferenceOrProceedingsName(node.into_extra())
+                SourceContentWith::ConferenceOrProceedingsName(node.into_user_data())
             }
-            Self::ContributorsList(node) => SourceContentWith::ContributorsList(node.into_extra()),
-            Self::CountryOrRegion(node) => SourceContentWith::CountryOrRegion(node.into_extra()),
-            Self::Court(node) => SourceContentWith::Court(node.into_extra()),
-            Self::Day(node) => SourceContentWith::Day(node.into_extra()),
-            Self::DayAccessed(node) => SourceContentWith::DayAccessed(node.into_extra()),
-            Self::Department(node) => SourceContentWith::Department(node.into_extra()),
-            Self::Distributor(node) => SourceContentWith::Distributor(node.into_extra()),
-            Self::EditorEdition(node) => SourceContentWith::EditorEdition(node.into_extra()),
-            Self::Guid(node) => SourceContentWith::Guid(node.into_extra()),
-            Self::Institution(node) => SourceContentWith::Institution(node.into_extra()),
+            Self::ContributorsList(node) => {
+                SourceContentWith::ContributorsList(node.into_user_data())
+            }
+            Self::CountryOrRegion(node) => {
+                SourceContentWith::CountryOrRegion(node.into_user_data())
+            }
+            Self::Court(node) => SourceContentWith::Court(node.into_user_data()),
+            Self::Day(node) => SourceContentWith::Day(node.into_user_data()),
+            Self::DayAccessed(node) => SourceContentWith::DayAccessed(node.into_user_data()),
+            Self::Department(node) => SourceContentWith::Department(node.into_user_data()),
+            Self::Distributor(node) => SourceContentWith::Distributor(node.into_user_data()),
+            Self::EditorEdition(node) => SourceContentWith::EditorEdition(node.into_user_data()),
+            Self::Guid(node) => SourceContentWith::Guid(node.into_user_data()),
+            Self::Institution(node) => SourceContentWith::Institution(node.into_user_data()),
             Self::InternetSiteTitle(node) => {
-                SourceContentWith::InternetSiteTitle(node.into_extra())
+                SourceContentWith::InternetSiteTitle(node.into_user_data())
             }
-            Self::Issue(node) => SourceContentWith::Issue(node.into_extra()),
-            Self::JournalName(node) => SourceContentWith::JournalName(node.into_extra()),
-            Self::LocaleID(node) => SourceContentWith::LocaleID(node.into_extra()),
-            Self::Medium(node) => SourceContentWith::Medium(node.into_extra()),
-            Self::Month(node) => SourceContentWith::Month(node.into_extra()),
-            Self::MonthAccessed(node) => SourceContentWith::MonthAccessed(node.into_extra()),
-            Self::NumberOfVolumes(node) => SourceContentWith::NumberOfVolumes(node.into_extra()),
+            Self::Issue(node) => SourceContentWith::Issue(node.into_user_data()),
+            Self::JournalName(node) => SourceContentWith::JournalName(node.into_user_data()),
+            Self::LocaleID(node) => SourceContentWith::LocaleID(node.into_user_data()),
+            Self::Medium(node) => SourceContentWith::Medium(node.into_user_data()),
+            Self::Month(node) => SourceContentWith::Month(node.into_user_data()),
+            Self::MonthAccessed(node) => SourceContentWith::MonthAccessed(node.into_user_data()),
+            Self::NumberOfVolumes(node) => {
+                SourceContentWith::NumberOfVolumes(node.into_user_data())
+            }
             Self::Other(node) => SourceContentWith::Other(node),
-            Self::Pages(node) => SourceContentWith::Pages(node.into_extra()),
-            Self::PatentNumber(node) => SourceContentWith::PatentNumber(node.into_extra()),
-            Self::PatentType(node) => SourceContentWith::PatentType(node.into_extra()),
-            Self::PeriodicalTitle(node) => SourceContentWith::PeriodicalTitle(node.into_extra()),
-            Self::ProductionCompany(node) => {
-                SourceContentWith::ProductionCompany(node.into_extra())
+            Self::Pages(node) => SourceContentWith::Pages(node.into_user_data()),
+            Self::PatentNumber(node) => SourceContentWith::PatentNumber(node.into_user_data()),
+            Self::PatentType(node) => SourceContentWith::PatentType(node.into_user_data()),
+            Self::PeriodicalTitle(node) => {
+                SourceContentWith::PeriodicalTitle(node.into_user_data())
             }
-            Self::PublicationTitle(node) => SourceContentWith::PublicationTitle(node.into_extra()),
-            Self::Publisher(node) => SourceContentWith::Publisher(node.into_extra()),
-            Self::RecordingNumber(node) => SourceContentWith::RecordingNumber(node.into_extra()),
-            Self::ReferenceOrder(node) => SourceContentWith::ReferenceOrder(node.into_extra()),
-            Self::Reporter(node) => SourceContentWith::Reporter(node.into_extra()),
-            Self::ShortTitle(node) => SourceContentWith::ShortTitle(node.into_extra()),
-            Self::SourceType(node) => SourceContentWith::SourceType(node.into_extra()),
-            Self::StandardNumber(node) => SourceContentWith::StandardNumber(node.into_extra()),
-            Self::StateOrProvince(node) => SourceContentWith::StateOrProvince(node.into_extra()),
-            Self::Station(node) => SourceContentWith::Station(node.into_extra()),
-            Self::Tag(node) => SourceContentWith::Tag(node.into_extra()),
-            Self::Theater(node) => SourceContentWith::Theater(node.into_extra()),
-            Self::ThesisType(node) => SourceContentWith::ThesisType(node.into_extra()),
-            Self::Title(node) => SourceContentWith::Title(node.into_extra()),
-            Self::Url(node) => SourceContentWith::Url(node.into_extra()),
-            Self::Version(node) => SourceContentWith::Version(node.into_extra()),
-            Self::Volume(node) => SourceContentWith::Volume(node.into_extra()),
-            Self::Year(node) => SourceContentWith::Year(node.into_extra()),
-            Self::YearAccessed(node) => SourceContentWith::YearAccessed(node.into_extra()),
+            Self::ProductionCompany(node) => {
+                SourceContentWith::ProductionCompany(node.into_user_data())
+            }
+            Self::PublicationTitle(node) => {
+                SourceContentWith::PublicationTitle(node.into_user_data())
+            }
+            Self::Publisher(node) => SourceContentWith::Publisher(node.into_user_data()),
+            Self::RecordingNumber(node) => {
+                SourceContentWith::RecordingNumber(node.into_user_data())
+            }
+            Self::ReferenceOrder(node) => SourceContentWith::ReferenceOrder(node.into_user_data()),
+            Self::Reporter(node) => SourceContentWith::Reporter(node.into_user_data()),
+            Self::ShortTitle(node) => SourceContentWith::ShortTitle(node.into_user_data()),
+            Self::SourceType(node) => SourceContentWith::SourceType(node.into_user_data()),
+            Self::StandardNumber(node) => SourceContentWith::StandardNumber(node.into_user_data()),
+            Self::StateOrProvince(node) => {
+                SourceContentWith::StateOrProvince(node.into_user_data())
+            }
+            Self::Station(node) => SourceContentWith::Station(node.into_user_data()),
+            Self::Tag(node) => SourceContentWith::Tag(node.into_user_data()),
+            Self::Theater(node) => SourceContentWith::Theater(node.into_user_data()),
+            Self::ThesisType(node) => SourceContentWith::ThesisType(node.into_user_data()),
+            Self::Title(node) => SourceContentWith::Title(node.into_user_data()),
+            Self::Url(node) => SourceContentWith::Url(node.into_user_data()),
+            Self::Version(node) => SourceContentWith::Version(node.into_user_data()),
+            Self::Volume(node) => SourceContentWith::Volume(node.into_user_data()),
+            Self::Year(node) => SourceContentWith::Year(node.into_user_data()),
+            Self::YearAccessed(node) => SourceContentWith::YearAccessed(node.into_user_data()),
         }
     }
 }
@@ -5151,17 +5222,17 @@ impl crate::Write for SourceContent {
     }
 }
 
-impl<X: NodeExtra> SourceTypeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SourceTypeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SourceTypeWith<Y>
+    pub fn into_user_data<Y>(self) -> SourceTypeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SourceTypeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5189,21 +5260,21 @@ impl crate::Write for SourceType {
     }
 }
 
-impl<X: NodeExtra> SourcesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SourcesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SourcesWith<Y>
+    pub fn into_user_data<Y>(self) -> SourcesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SourcesWith {
-            extra: Default::default(),
             selected_style: self.selected_style,
-            source: crate::into_extra_list(self.source, SourceWith::into_extra),
+            source: crate::into_user_data_list(self.source, SourceWith::into_user_data),
             style_name: self.style_name,
             unknown: self.unknown,
             uri: self.uri,
+            user_data: Default::default(),
         }
     }
 
@@ -5232,17 +5303,17 @@ impl crate::Write for Sources {
     }
 }
 
-impl<X: NodeExtra> StandardNumberWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> StandardNumberWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> StandardNumberWith<Y>
+    pub fn into_user_data<Y>(self) -> StandardNumberWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         StandardNumberWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5270,17 +5341,17 @@ impl crate::Write for StandardNumber {
     }
 }
 
-impl<X: NodeExtra> StateOrProvinceWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> StateOrProvinceWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> StateOrProvinceWith<Y>
+    pub fn into_user_data<Y>(self) -> StateOrProvinceWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         StateOrProvinceWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5308,17 +5379,17 @@ impl crate::Write for StateOrProvince {
     }
 }
 
-impl<X: NodeExtra> StationWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> StationWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> StationWith<Y>
+    pub fn into_user_data<Y>(self) -> StationWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         StationWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5346,17 +5417,17 @@ impl crate::Write for Station {
     }
 }
 
-impl<X: NodeExtra> TagWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TagWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TagWith<Y>
+    pub fn into_user_data<Y>(self) -> TagWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TagWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5384,17 +5455,17 @@ impl crate::Write for Tag {
     }
 }
 
-impl<X: NodeExtra> TheaterWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TheaterWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TheaterWith<Y>
+    pub fn into_user_data<Y>(self) -> TheaterWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TheaterWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5422,17 +5493,17 @@ impl crate::Write for Theater {
     }
 }
 
-impl<X: NodeExtra> ThesisTypeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ThesisTypeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ThesisTypeWith<Y>
+    pub fn into_user_data<Y>(self) -> ThesisTypeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ThesisTypeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5460,17 +5531,17 @@ impl crate::Write for ThesisType {
     }
 }
 
-impl<X: NodeExtra> TitleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TitleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TitleWith<Y>
+    pub fn into_user_data<Y>(self) -> TitleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TitleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5498,18 +5569,21 @@ impl crate::Write for Title {
     }
 }
 
-impl<X: NodeExtra> TranslatorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TranslatorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TranslatorWith<Y>
+    pub fn into_user_data<Y>(self) -> TranslatorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TranslatorWith {
-            extra: Default::default(),
-            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            name_list: crate::into_user_data_required(
+                *self.name_list,
+                NameListWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5533,17 +5607,17 @@ impl crate::Write for Translator {
     }
 }
 
-impl<X: NodeExtra> UrlWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> UrlWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> UrlWith<Y>
+    pub fn into_user_data<Y>(self) -> UrlWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         UrlWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5571,17 +5645,17 @@ impl crate::Write for Url {
     }
 }
 
-impl<X: NodeExtra> VersionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> VersionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> VersionWith<Y>
+    pub fn into_user_data<Y>(self) -> VersionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         VersionWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5609,17 +5683,17 @@ impl crate::Write for Version {
     }
 }
 
-impl<X: NodeExtra> VolumeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> VolumeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> VolumeWith<Y>
+    pub fn into_user_data<Y>(self) -> VolumeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         VolumeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5647,18 +5721,21 @@ impl crate::Write for Volume {
     }
 }
 
-impl<X: NodeExtra> WriterWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> WriterWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> WriterWith<Y>
+    pub fn into_user_data<Y>(self) -> WriterWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         WriterWith {
-            extra: Default::default(),
-            name_list: crate::into_extra_required(*self.name_list, NameListWith::into_extra),
+            name_list: crate::into_user_data_required(
+                *self.name_list,
+                NameListWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -5682,17 +5759,17 @@ impl crate::Write for Writer {
     }
 }
 
-impl<X: NodeExtra> YearWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> YearWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> YearWith<Y>
+    pub fn into_user_data<Y>(self) -> YearWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         YearWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5720,17 +5797,17 @@ impl crate::Write for Year {
     }
 }
 
-impl<X: NodeExtra> YearAccessedWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> YearAccessedWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> YearAccessedWith<Y>
+    pub fn into_user_data<Y>(self) -> YearAccessedWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         YearAccessedWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }

@@ -222,17 +222,17 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::ImageFormula)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ImageFormulaMirror {
-    pub extra: (),
     pub formula: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<ImageFormulaMirror> for super::ImageFormula {
     fn from(item: ImageFormulaMirror) -> Self {
         Self {
-            extra: item.extra,
             formula: item.formula,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

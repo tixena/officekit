@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -278,19 +278,19 @@ pub trait Context: crate::Context {
 /// version 3.5.1. Its schema type is `CT_ExternalCodeService`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExternalCodeServiceWith<X: NodeExtra> {
+pub struct ExternalCodeServiceWith<X: UserData> {
     /// The attribute `autoShow`, when the element has it.
     pub auto_show: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2023ExternalCodeServiceExternalCodeService,
     /// The attribute `timeout`, when the element has it.
     pub timeout: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2023ExternalCodeServiceExternalCodeService,
 }
 
 /// The `xlecs:externalCodeService` element of the tree a read gives: [`ExternalCodeServiceWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ExternalCodeService = ExternalCodeServiceWith<()>;
 
 impl Eq for ExternalCodeServiceWith<()> {}
@@ -311,19 +311,19 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> ExternalCodeServiceWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExternalCodeServiceWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExternalCodeServiceWith<Y>
+    pub fn into_user_data<Y>(self) -> ExternalCodeServiceWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExternalCodeServiceWith {
             auto_show: self.auto_show,
-            extra: Default::default(),
             timeout: self.timeout,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

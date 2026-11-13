@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use crate::NodeExtra;
+use crate::UserData;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
@@ -781,16 +781,17 @@ pub static ATTACHED_OBJECT_DATA_CONTENT_TAGS: crate::Accept = crate::Accept {
 /// `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AnchorWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingAnchor,
+pub struct AnchorWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingAnchor,
     /// The element's text.
     pub value: String,
 }
 
-/// The `xvml:Anchor` element of the tree a read gives: [`AnchorWith`] holding nothing in `extra`.
+/// The `xvml:Anchor` element of the tree a read gives: [`AnchorWith`] holding nothing in
+/// `user_data`.
 pub type Anchor = AnchorWith<()>;
 
 impl Eq for AnchorWith<()> {}
@@ -799,19 +800,19 @@ impl Eq for AnchorWith<()> {}
 /// schema type is `CT_ClientData`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AttachedObjectDataWith<X: NodeExtra> {
+pub struct AttachedObjectDataWith<X: UserData> {
     /// The children that are an item of `AttachedObjectDataContent`, in order.
     pub content: Vec<AttachedObjectDataContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingAttachedObjectData,
     /// The attribute `ObjectType`, when the element has it.
     pub object_type: Option<ObjectType>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingAttachedObjectData,
 }
 
 /// The `xvml:ClientData` element of the tree a read gives: [`AttachedObjectDataWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type AttachedObjectData = AttachedObjectDataWith<()>;
 
 impl Eq for AttachedObjectDataWith<()> {}
@@ -823,7 +824,7 @@ impl Eq for AttachedObjectDataWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum AttachedObjectDataContentWith<X: NodeExtra> {
+pub enum AttachedObjectDataContentWith<X: UserData> {
     /// The element `xvml:Anchor`, a `Anchor`.
     Anchor(AnchorWith<X>),
     /// The element `xvml:AutoFill`, a `AutoFill`.
@@ -963,7 +964,7 @@ pub enum AttachedObjectDataContentWith<X: NodeExtra> {
 }
 
 /// [`AttachedObjectDataContentWith`] of the tree a read gives, where no node holds anything in
-/// `extra`.
+/// `user_data`.
 pub type AttachedObjectDataContent = AttachedObjectDataContentWith<()>;
 
 impl Eq for AttachedObjectDataContentWith<()> {}
@@ -972,17 +973,17 @@ impl Eq for AttachedObjectDataContentWith<()> {}
 /// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AutoFillWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingAutoFill,
+pub struct AutoFillWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingAutoFill,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:AutoFill` element of the tree a read gives: [`AutoFillWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type AutoFill = AutoFillWith<()>;
 
 impl Eq for AutoFillWith<()> {}
@@ -991,17 +992,17 @@ impl Eq for AutoFillWith<()> {}
 /// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AutoLineWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingAutoLine,
+pub struct AutoLineWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingAutoLine,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:AutoLine` element of the tree a read gives: [`AutoLineWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type AutoLine = AutoLineWith<()>;
 
 impl Eq for AutoLineWith<()> {}
@@ -1010,17 +1011,17 @@ impl Eq for AutoLineWith<()> {}
 /// type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AutomaticallySizeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingAutomaticallySize,
+pub struct AutomaticallySizeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingAutomaticallySize,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:AutoPict` element of the tree a read gives: [`AutomaticallySizeWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type AutomaticallySize = AutomaticallySizeWith<()>;
 
 impl Eq for AutomaticallySizeWith<()> {}
@@ -1029,17 +1030,17 @@ impl Eq for AutomaticallySizeWith<()> {}
 /// `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CallbackTypeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingCallbackType,
+pub struct CallbackTypeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingCallbackType,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:LCT` element of the tree a read gives: [`CallbackTypeWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CallbackType = CallbackTypeWith<()>;
 
 impl Eq for CallbackTypeWith<()> {}
@@ -1048,17 +1049,17 @@ impl Eq for CallbackTypeWith<()> {}
 /// schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CameraSourceRangeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingCameraSourceRange,
+pub struct CameraSourceRangeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingCameraSourceRange,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:FmlaPict` element of the tree a read gives: [`CameraSourceRangeWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type CameraSourceRange = CameraSourceRangeWith<()>;
 
 impl Eq for CameraSourceRangeWith<()> {}
@@ -1067,17 +1068,17 @@ impl Eq for CameraSourceRangeWith<()> {}
 /// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CameraToolWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingCameraTool,
+pub struct CameraToolWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingCameraTool,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:Camera` element of the tree a read gives: [`CameraToolWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CameraTool = CameraToolWith<()>;
 
 impl Eq for CameraToolWith<()> {}
@@ -1086,17 +1087,17 @@ impl Eq for CameraToolWith<()> {}
 /// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CancelButtonWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingCancelButton,
+pub struct CancelButtonWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingCancelButton,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:Cancel` element of the tree a read gives: [`CancelButtonWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CancelButton = CancelButtonWith<()>;
 
 impl Eq for CancelButtonWith<()> {}
@@ -1105,16 +1106,17 @@ impl Eq for CancelButtonWith<()> {}
 /// `integer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CheckedWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingChecked,
+pub struct CheckedWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingChecked,
     /// The element's text.
     pub value: String,
 }
 
-/// The `xvml:Checked` element of the tree a read gives: [`CheckedWith`] holding nothing in `extra`.
+/// The `xvml:Checked` element of the tree a read gives: [`CheckedWith`] holding nothing in
+/// `user_data`.
 pub type Checked = CheckedWith<()>;
 
 impl Eq for CheckedWith<()> {}
@@ -1123,17 +1125,17 @@ impl Eq for CheckedWith<()> {}
 /// `ST_CF`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ClipboardFormatWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingClipboardFormat,
+pub struct ClipboardFormatWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingClipboardFormat,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:CF` element of the tree a read gives: [`ClipboardFormatWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ClipboardFormat = ClipboardFormatWith<()>;
 
 impl Eq for ClipboardFormatWith<()> {}
@@ -1142,17 +1144,17 @@ impl Eq for ClipboardFormatWith<()> {}
 /// schema type is `integer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentColumnTargetWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingCommentColumnTarget,
+pub struct CommentColumnTargetWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingCommentColumnTarget,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:Column` element of the tree a read gives: [`CommentColumnTargetWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type CommentColumnTarget = CommentColumnTargetWith<()>;
 
 impl Eq for CommentColumnTargetWith<()> {}
@@ -1161,17 +1163,17 @@ impl Eq for CommentColumnTargetWith<()> {}
 /// is `integer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentRowTargetWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingCommentRowTarget,
+pub struct CommentRowTargetWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingCommentRowTarget,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:Row` element of the tree a read gives: [`CommentRowTargetWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type CommentRowTarget = CommentRowTargetWith<()>;
 
 impl Eq for CommentRowTargetWith<()> {}
@@ -1180,17 +1182,17 @@ impl Eq for CommentRowTargetWith<()> {}
 /// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentVisibilityToggleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingCommentVisibilityToggle,
+pub struct CommentVisibilityToggleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingCommentVisibilityToggle,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:Visible` element of the tree a read gives: [`CommentVisibilityToggleWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type CommentVisibilityToggle = CommentVisibilityToggleWith<()>;
 
 impl Eq for CommentVisibilityToggleWith<()> {}
@@ -1199,17 +1201,17 @@ impl Eq for CommentVisibilityToggleWith<()> {}
 /// Its schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentsColumnIsHiddenWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingCommentsColumnIsHidden,
+pub struct CommentsColumnIsHiddenWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingCommentsColumnIsHidden,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:ColHidden` element of the tree a read gives: [`CommentsColumnIsHiddenWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type CommentsColumnIsHidden = CommentsColumnIsHiddenWith<()>;
 
 impl Eq for CommentsColumnIsHiddenWith<()> {}
@@ -1218,17 +1220,17 @@ impl Eq for CommentsColumnIsHiddenWith<()> {}
 /// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct CommentsRowIsHiddenWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingCommentsRowIsHidden,
+pub struct CommentsRowIsHiddenWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingCommentsRowIsHidden,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:RowHidden` element of the tree a read gives: [`CommentsRowIsHiddenWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type CommentsRowIsHidden = CommentsRowIsHiddenWith<()>;
 
 impl Eq for CommentsRowIsHiddenWith<()> {}
@@ -1237,17 +1239,17 @@ impl Eq for CommentsRowIsHiddenWith<()> {}
 /// is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DefaultButtonWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingDefaultButton,
+pub struct DefaultButtonWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingDefaultButton,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:Default` element of the tree a read gives: [`DefaultButtonWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type DefaultButton = DefaultButtonWith<()>;
 
 impl Eq for DefaultButtonWith<()> {}
@@ -1256,17 +1258,17 @@ impl Eq for DefaultButtonWith<()> {}
 /// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DefaultSizeToggleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingDefaultSizeToggle,
+pub struct DefaultSizeToggleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingDefaultSizeToggle,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:DefaultSize` element of the tree a read gives: [`DefaultSizeToggleWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DefaultSizeToggle = DefaultSizeToggleWith<()>;
 
 impl Eq for DefaultSizeToggleWith<()> {}
@@ -1275,17 +1277,17 @@ impl Eq for DefaultSizeToggleWith<()> {}
 /// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Disable3DNoThreeDWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingDisable3DNoThreeD,
+pub struct Disable3DNoThreeDWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingDisable3DNoThreeD,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:NoThreeD` element of the tree a read gives: [`Disable3DNoThreeDWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type Disable3DNoThreeD = Disable3DNoThreeDWith<()>;
 
 impl Eq for Disable3DNoThreeDWith<()> {}
@@ -1294,17 +1296,17 @@ impl Eq for Disable3DNoThreeDWith<()> {}
 /// is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct Disable3DNoThreeD2With<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingDisable3DNoThreeD2,
+pub struct Disable3DNoThreeD2With<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingDisable3DNoThreeD2,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:NoThreeD2` element of the tree a read gives: [`Disable3DNoThreeD2With`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type Disable3DNoThreeD2 = Disable3DNoThreeD2With<()>;
 
 impl Eq for Disable3DNoThreeD2With<()> {}
@@ -1313,17 +1315,17 @@ impl Eq for Disable3DNoThreeD2With<()> {}
 /// is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DismissButtonWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingDismissButton,
+pub struct DismissButtonWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingDismissButton,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:Dismiss` element of the tree a read gives: [`DismissButtonWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type DismissButton = DismissButtonWith<()>;
 
 impl Eq for DismissButtonWith<()> {}
@@ -1332,17 +1334,17 @@ impl Eq for DismissButtonWith<()> {}
 /// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropdownColorToggleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingDropdownColorToggle,
+pub struct DropdownColorToggleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingDropdownColorToggle,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:Colored` element of the tree a read gives: [`DropdownColorToggleWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type DropdownColorToggle = DropdownColorToggleWith<()>;
 
 impl Eq for DropdownColorToggleWith<()> {}
@@ -1351,17 +1353,17 @@ impl Eq for DropdownColorToggleWith<()> {}
 /// schema type is `integer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropdownMaximumLinesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingDropdownMaximumLines,
+pub struct DropdownMaximumLinesWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingDropdownMaximumLines,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:DropLines` element of the tree a read gives: [`DropdownMaximumLinesWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type DropdownMaximumLines = DropdownMaximumLinesWith<()>;
 
 impl Eq for DropdownMaximumLinesWith<()> {}
@@ -1370,17 +1372,17 @@ impl Eq for DropdownMaximumLinesWith<()> {}
 /// type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DropdownStyleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingDropdownStyle,
+pub struct DropdownStyleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingDropdownStyle,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:DropStyle` element of the tree a read gives: [`DropdownStyleWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type DropdownStyle = DropdownStyleWith<()>;
 
 impl Eq for DropdownStyleWith<()> {}
@@ -1389,17 +1391,17 @@ impl Eq for DropdownStyleWith<()> {}
 /// type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DynamicDataExchangeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingDynamicDataExchange,
+pub struct DynamicDataExchangeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingDynamicDataExchange,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:DDE` element of the tree a read gives: [`DynamicDataExchangeWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type DynamicDataExchange = DynamicDataExchangeWith<()>;
 
 impl Eq for DynamicDataExchangeWith<()> {}
@@ -1408,17 +1410,17 @@ impl Eq for DynamicDataExchangeWith<()> {}
 /// type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct EmbeddedControlWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingEmbeddedControl,
+pub struct EmbeddedControlWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingEmbeddedControl,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:MapOCX` element of the tree a read gives: [`EmbeddedControlWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type EmbeddedControl = EmbeddedControlWith<()>;
 
 impl Eq for EmbeddedControlWith<()> {}
@@ -1427,17 +1429,17 @@ impl Eq for EmbeddedControlWith<()> {}
 /// Its schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FarEastAlignmentToggleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingFarEastAlignmentToggle,
+pub struct FarEastAlignmentToggleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingFarEastAlignmentToggle,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:JustLastX` element of the tree a read gives: [`FarEastAlignmentToggleWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type FarEastAlignmentToggle = FarEastAlignmentToggleWith<()>;
 
 impl Eq for FarEastAlignmentToggleWith<()> {}
@@ -1446,17 +1448,17 @@ impl Eq for FarEastAlignmentToggleWith<()> {}
 /// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FirstRadioButtonWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingFirstRadioButton,
+pub struct FirstRadioButtonWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingFirstRadioButton,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:FirstButton` element of the tree a read gives: [`FirstRadioButtonWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type FirstRadioButton = FirstRadioButtonWith<()>;
 
 impl Eq for FirstRadioButtonWith<()> {}
@@ -1465,17 +1467,17 @@ impl Eq for FirstRadioButtonWith<()> {}
 /// type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FontAutoScaleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingFontAutoScale,
+pub struct FontAutoScaleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingFontAutoScale,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:AutoScale` element of the tree a read gives: [`FontAutoScaleWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type FontAutoScale = FontAutoScaleWith<()>;
 
 impl Eq for FontAutoScaleWith<()> {}
@@ -1484,17 +1486,17 @@ impl Eq for FontAutoScaleWith<()> {}
 /// Its schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HTMLScriptAttributesWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingHTMLScriptAttributes,
+pub struct HTMLScriptAttributesWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingHTMLScriptAttributes,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:ScriptExtended` element of the tree a read gives: [`HTMLScriptAttributesWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type HTMLScriptAttributes = HTMLScriptAttributesWith<()>;
 
 impl Eq for HTMLScriptAttributesWith<()> {}
@@ -1503,17 +1505,17 @@ impl Eq for HTMLScriptAttributesWith<()> {}
 /// Its schema type is `nonNegativeInteger`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HTMLScriptLanguageWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingHTMLScriptLanguage,
+pub struct HTMLScriptLanguageWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingHTMLScriptLanguage,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:ScriptLanguage` element of the tree a read gives: [`HTMLScriptLanguageWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type HTMLScriptLanguage = HTMLScriptLanguageWith<()>;
 
 impl Eq for HTMLScriptLanguageWith<()> {}
@@ -1522,17 +1524,17 @@ impl Eq for HTMLScriptLanguageWith<()> {}
 /// Its schema type is `nonNegativeInteger`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HTMLScriptLocationWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingHTMLScriptLocation,
+pub struct HTMLScriptLocationWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingHTMLScriptLocation,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:ScriptLocation` element of the tree a read gives: [`HTMLScriptLocationWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type HTMLScriptLocation = HTMLScriptLocationWith<()>;
 
 impl Eq for HTMLScriptLocationWith<()> {}
@@ -1541,17 +1543,17 @@ impl Eq for HTMLScriptLocationWith<()> {}
 /// type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HTMLScriptTextWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingHTMLScriptText,
+pub struct HTMLScriptTextWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingHTMLScriptText,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:ScriptText` element of the tree a read gives: [`HTMLScriptTextWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type HTMLScriptText = HTMLScriptTextWith<()>;
 
 impl Eq for HTMLScriptTextWith<()> {}
@@ -1560,16 +1562,17 @@ impl Eq for HTMLScriptTextWith<()> {}
 /// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HelpButtonWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingHelpButton,
+pub struct HelpButtonWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingHelpButton,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
-/// The `xvml:Help` element of the tree a read gives: [`HelpButtonWith`] holding nothing in `extra`.
+/// The `xvml:Help` element of the tree a read gives: [`HelpButtonWith`] holding nothing in
+/// `user_data`.
 pub type HelpButton = HelpButtonWith<()>;
 
 impl Eq for HelpButtonWith<()> {}
@@ -1578,17 +1581,17 @@ impl Eq for HelpButtonWith<()> {}
 /// Its schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HorizontalTextAlignmentWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingHorizontalTextAlignment,
+pub struct HorizontalTextAlignmentWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingHorizontalTextAlignment,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:TextHAlign` element of the tree a read gives: [`HorizontalTextAlignmentWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type HorizontalTextAlignment = HorizontalTextAlignmentWith<()>;
 
 impl Eq for HorizontalTextAlignmentWith<()> {}
@@ -1597,17 +1600,17 @@ impl Eq for HorizontalTextAlignmentWith<()> {}
 /// type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LinkedFormulaWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingLinkedFormula,
+pub struct LinkedFormulaWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingLinkedFormula,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:FmlaLink` element of the tree a read gives: [`LinkedFormulaWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type LinkedFormula = LinkedFormulaWith<()>;
 
 impl Eq for LinkedFormulaWith<()> {}
@@ -1616,17 +1619,17 @@ impl Eq for LinkedFormulaWith<()> {}
 /// Its schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LinkedFormulaGroupBoxWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingLinkedFormulaGroupBox,
+pub struct LinkedFormulaGroupBoxWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingLinkedFormulaGroupBox,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:FmlaGroup` element of the tree a read gives: [`LinkedFormulaGroupBoxWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type LinkedFormulaGroupBox = LinkedFormulaGroupBoxWith<()>;
 
 impl Eq for LinkedFormulaGroupBoxWith<()> {}
@@ -1635,17 +1638,17 @@ impl Eq for LinkedFormulaGroupBoxWith<()> {}
 /// schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ListItemsSourceRangeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingListItemsSourceRange,
+pub struct ListItemsSourceRangeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingListItemsSourceRange,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:FmlaRange` element of the tree a read gives: [`ListItemsSourceRangeWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ListItemsSourceRange = ListItemsSourceRangeWith<()>;
 
 impl Eq for ListItemsSourceRangeWith<()> {}
@@ -1654,17 +1657,17 @@ impl Eq for ListItemsSourceRangeWith<()> {}
 /// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LockToggleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingLockToggle,
+pub struct LockToggleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingLockToggle,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:Locked` element of the tree a read gives: [`LockToggleWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type LockToggle = LockToggleWith<()>;
 
 impl Eq for LockToggleWith<()> {}
@@ -1673,17 +1676,17 @@ impl Eq for LockToggleWith<()> {}
 /// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MacroDisableToggleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingMacroDisableToggle,
+pub struct MacroDisableToggleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingMacroDisableToggle,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:Disabled` element of the tree a read gives: [`MacroDisableToggleWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type MacroDisableToggle = MacroDisableToggleWith<()>;
 
 impl Eq for MacroDisableToggleWith<()> {}
@@ -1692,17 +1695,17 @@ impl Eq for MacroDisableToggleWith<()> {}
 /// is `integer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MinimumWidthWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingMinimumWidth,
+pub struct MinimumWidthWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingMinimumWidth,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:WidthMin` element of the tree a read gives: [`MinimumWidthWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type MinimumWidth = MinimumWidthWith<()>;
 
 impl Eq for MinimumWidthWith<()> {}
@@ -1711,17 +1714,17 @@ impl Eq for MinimumWidthWith<()> {}
 /// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MoveWithCellsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingMoveWithCells,
+pub struct MoveWithCellsWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingMoveWithCells,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:MoveWithCells` element of the tree a read gives: [`MoveWithCellsWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type MoveWithCells = MoveWithCellsWith<()>;
 
 impl Eq for MoveWithCellsWith<()> {}
@@ -1730,17 +1733,17 @@ impl Eq for MoveWithCellsWith<()> {}
 /// is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MultiLineWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingMultiLine,
+pub struct MultiLineWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingMultiLine,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:MultiLine` element of the tree a read gives: [`MultiLineWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type MultiLine = MultiLineWith<()>;
 
 impl Eq for MultiLineWith<()> {}
@@ -1749,17 +1752,17 @@ impl Eq for MultiLineWith<()> {}
 /// schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct MultipleSelectionsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingMultipleSelections,
+pub struct MultipleSelectionsWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingMultipleSelections,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:MultiSel` element of the tree a read gives: [`MultipleSelectionsWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type MultipleSelections = MultipleSelectionsWith<()>;
 
 impl Eq for MultipleSelectionsWith<()> {}
@@ -1768,17 +1771,17 @@ impl Eq for MultipleSelectionsWith<()> {}
 /// schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct NonLinkedListItemWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingNonLinkedListItem,
+pub struct NonLinkedListItemWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingNonLinkedListItem,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:ListItem` element of the tree a read gives: [`NonLinkedListItemWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type NonLinkedListItem = NonLinkedListItemWith<()>;
 
 impl Eq for NonLinkedListItemWith<()> {}
@@ -1845,17 +1848,17 @@ pub enum ObjectTypeMember {
 /// type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PasswordEditWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingPasswordEdit,
+pub struct PasswordEditWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingPasswordEdit,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:SecretEdit` element of the tree a read gives: [`PasswordEditWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PasswordEdit = PasswordEditWith<()>;
 
 impl Eq for PasswordEditWith<()> {}
@@ -1864,17 +1867,17 @@ impl Eq for PasswordEditWith<()> {}
 /// schema type is `integer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PrimaryKeyboardAcceleratorWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingPrimaryKeyboardAccelerator,
+pub struct PrimaryKeyboardAcceleratorWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingPrimaryKeyboardAccelerator,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:Accel` element of the tree a read gives: [`PrimaryKeyboardAcceleratorWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type PrimaryKeyboardAccelerator = PrimaryKeyboardAcceleratorWith<()>;
 
 impl Eq for PrimaryKeyboardAcceleratorWith<()> {}
@@ -1883,17 +1886,17 @@ impl Eq for PrimaryKeyboardAcceleratorWith<()> {}
 /// type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PrintToggleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingPrintToggle,
+pub struct PrintToggleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingPrintToggle,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:PrintObject` element of the tree a read gives: [`PrintToggleWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type PrintToggle = PrintToggleWith<()>;
 
 impl Eq for PrintToggleWith<()> {}
@@ -1902,17 +1905,17 @@ impl Eq for PrintToggleWith<()> {}
 /// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RecalculationToggleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingRecalculationToggle,
+pub struct RecalculationToggleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingRecalculationToggle,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:RecalcAlways` element of the tree a read gives: [`RecalculationToggleWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type RecalculationToggle = RecalculationToggleWith<()>;
 
 impl Eq for RecalculationToggleWith<()> {}
@@ -1921,17 +1924,17 @@ impl Eq for RecalculationToggleWith<()> {}
 /// Its schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ReferenceToCustomFunctionWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingReferenceToCustomFunction,
+pub struct ReferenceToCustomFunctionWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingReferenceToCustomFunction,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:FmlaMacro` element of the tree a read gives: [`ReferenceToCustomFunctionWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ReferenceToCustomFunction = ReferenceToCustomFunctionWith<()>;
 
 impl Eq for ReferenceToCustomFunctionWith<()> {}
@@ -1940,17 +1943,17 @@ impl Eq for ReferenceToCustomFunctionWith<()> {}
 /// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ResizeWithCellsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingResizeWithCells,
+pub struct ResizeWithCellsWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingResizeWithCells,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:SizeWithCells` element of the tree a read gives: [`ResizeWithCellsWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ResizeWithCells = ResizeWithCellsWith<()>;
 
 impl Eq for ResizeWithCellsWith<()> {}
@@ -1959,17 +1962,17 @@ impl Eq for ResizeWithCellsWith<()> {}
 /// type is `integer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ScrollBarIncrementWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingScrollBarIncrement,
+pub struct ScrollBarIncrementWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingScrollBarIncrement,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:Inc` element of the tree a read gives: [`ScrollBarIncrementWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ScrollBarIncrement = ScrollBarIncrementWith<()>;
 
 impl Eq for ScrollBarIncrementWith<()> {}
@@ -1978,17 +1981,17 @@ impl Eq for ScrollBarIncrementWith<()> {}
 /// is `integer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ScrollBarMaximumWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingScrollBarMaximum,
+pub struct ScrollBarMaximumWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingScrollBarMaximum,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:Max` element of the tree a read gives: [`ScrollBarMaximumWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ScrollBarMaximum = ScrollBarMaximumWith<()>;
 
 impl Eq for ScrollBarMaximumWith<()> {}
@@ -1997,17 +2000,17 @@ impl Eq for ScrollBarMaximumWith<()> {}
 /// is `integer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ScrollBarMinimumWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingScrollBarMinimum,
+pub struct ScrollBarMinimumWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingScrollBarMinimum,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:Min` element of the tree a read gives: [`ScrollBarMinimumWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ScrollBarMinimum = ScrollBarMinimumWith<()>;
 
 impl Eq for ScrollBarMinimumWith<()> {}
@@ -2016,17 +2019,17 @@ impl Eq for ScrollBarMinimumWith<()> {}
 /// schema type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ScrollBarOrientationWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingScrollBarOrientation,
+pub struct ScrollBarOrientationWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingScrollBarOrientation,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:Horiz` element of the tree a read gives: [`ScrollBarOrientationWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type ScrollBarOrientation = ScrollBarOrientationWith<()>;
 
 impl Eq for ScrollBarOrientationWith<()> {}
@@ -2035,17 +2038,17 @@ impl Eq for ScrollBarOrientationWith<()> {}
 /// schema type is `integer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ScrollBarPageIncrementWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingScrollBarPageIncrement,
+pub struct ScrollBarPageIncrementWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingScrollBarPageIncrement,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:Page` element of the tree a read gives: [`ScrollBarPageIncrementWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type ScrollBarPageIncrement = ScrollBarPageIncrementWith<()>;
 
 impl Eq for ScrollBarPageIncrementWith<()> {}
@@ -2054,17 +2057,17 @@ impl Eq for ScrollBarPageIncrementWith<()> {}
 /// type is `integer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ScrollBarPositionWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingScrollBarPosition,
+pub struct ScrollBarPositionWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingScrollBarPosition,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:Val` element of the tree a read gives: [`ScrollBarPositionWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ScrollBarPosition = ScrollBarPositionWith<()>;
 
 impl Eq for ScrollBarPositionWith<()> {}
@@ -2073,17 +2076,17 @@ impl Eq for ScrollBarPositionWith<()> {}
 /// `integer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ScrollBarWidthWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingScrollBarWidth,
+pub struct ScrollBarWidthWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingScrollBarWidth,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:Dx` element of the tree a read gives: [`ScrollBarWidthWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ScrollBarWidth = ScrollBarWidthWith<()>;
 
 impl Eq for ScrollBarWidthWith<()> {}
@@ -2092,17 +2095,17 @@ impl Eq for ScrollBarWidthWith<()> {}
 /// Its schema type is `integer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SecondaryKeyboardAcceleratorWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingSecondaryKeyboardAccelerator,
+pub struct SecondaryKeyboardAcceleratorWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingSecondaryKeyboardAccelerator,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:Accel2` element of the tree a read gives: [`SecondaryKeyboardAcceleratorWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type SecondaryKeyboardAccelerator = SecondaryKeyboardAcceleratorWith<()>;
 
 impl Eq for SecondaryKeyboardAcceleratorWith<()> {}
@@ -2111,17 +2114,17 @@ impl Eq for SecondaryKeyboardAcceleratorWith<()> {}
 /// `integer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SelectedEntryWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingSelectedEntry,
+pub struct SelectedEntryWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingSelectedEntry,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:Sel` element of the tree a read gives: [`SelectedEntryWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SelectedEntry = SelectedEntryWith<()>;
 
 impl Eq for SelectedEntryWith<()> {}
@@ -2130,17 +2133,17 @@ impl Eq for SelectedEntryWith<()> {}
 /// is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SelectionTypeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingSelectionType,
+pub struct SelectionTypeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingSelectionType,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:SelType` element of the tree a read gives: [`SelectionTypeWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SelectionType = SelectionTypeWith<()>;
 
 impl Eq for SelectionTypeWith<()> {}
@@ -2149,17 +2152,17 @@ impl Eq for SelectionTypeWith<()> {}
 /// is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextFormulaWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingTextFormula,
+pub struct TextFormulaWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingTextFormula,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:FmlaTxbx` element of the tree a read gives: [`TextFormulaWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type TextFormula = TextFormulaWith<()>;
 
 impl Eq for TextFormulaWith<()> {}
@@ -2168,17 +2171,17 @@ impl Eq for TextFormulaWith<()> {}
 /// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TextLockWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingTextLock,
+pub struct TextLockWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingTextLock,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:LockText` element of the tree a read gives: [`TextLockWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type TextLock = TextLockWith<()>;
 
 impl Eq for TextLockWith<()> {}
@@ -2187,17 +2190,17 @@ impl Eq for TextLockWith<()> {}
 /// is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct UIObjectToggleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingUIObjectToggle,
+pub struct UIObjectToggleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingUIObjectToggle,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:UIObj` element of the tree a read gives: [`UIObjectToggleWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type UIObjectToggle = UIObjectToggleWith<()>;
 
 impl Eq for UIObjectToggleWith<()> {}
@@ -2206,17 +2209,17 @@ impl Eq for UIObjectToggleWith<()> {}
 /// `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ValidIDWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingValidID,
+pub struct ValidIDWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingValidID,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:ValidIds` element of the tree a read gives: [`ValidIDWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ValidID = ValidIDWith<()>;
 
 impl Eq for ValidIDWith<()> {}
@@ -2225,17 +2228,17 @@ impl Eq for ValidIDWith<()> {}
 /// is `integer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ValidationTypeWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingValidationType,
+pub struct ValidationTypeWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingValidationType,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:VTEdit` element of the tree a read gives: [`ValidationTypeWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type ValidationType = ValidationTypeWith<()>;
 
 impl Eq for ValidationTypeWith<()> {}
@@ -2244,17 +2247,17 @@ impl Eq for ValidationTypeWith<()> {}
 /// type is `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VerticalScrollWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingVerticalScroll,
+pub struct VerticalScrollWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingVerticalScroll,
     /// The element's text.
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
 /// The `xvml:VScroll` element of the tree a read gives: [`VerticalScrollWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type VerticalScroll = VerticalScrollWith<()>;
 
 impl Eq for VerticalScrollWith<()> {}
@@ -2263,32 +2266,32 @@ impl Eq for VerticalScrollWith<()> {}
 /// schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VerticalTextAlignmentWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::VmlSpreadsheetDrawingVerticalTextAlignment,
+pub struct VerticalTextAlignmentWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::VmlSpreadsheetDrawingVerticalTextAlignment,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xvml:TextVAlign` element of the tree a read gives: [`VerticalTextAlignmentWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type VerticalTextAlignment = VerticalTextAlignmentWith<()>;
 
 impl Eq for VerticalTextAlignmentWith<()> {}
 
-impl<X: NodeExtra> AnchorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AnchorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AnchorWith<Y>
+    pub fn into_user_data<Y>(self) -> AnchorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AnchorWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2316,22 +2319,22 @@ impl crate::Write for Anchor {
     }
 }
 
-impl<X: NodeExtra> AttachedObjectDataWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AttachedObjectDataWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AttachedObjectDataWith<Y>
+    pub fn into_user_data<Y>(self) -> AttachedObjectDataWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AttachedObjectDataWith {
-            content: crate::into_extra_list(
+            content: crate::into_user_data_list(
                 self.content,
-                AttachedObjectDataContentWith::into_extra,
+                AttachedObjectDataContentWith::into_user_data,
             ),
-            extra: Default::default(),
             object_type: self.object_type,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2358,14 +2361,14 @@ impl crate::Write for AttachedObjectData {
     }
 }
 
-impl<X: NodeExtra> AttachedObjectDataContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> AttachedObjectDataContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AttachedObjectDataContentWith<Y>
+    pub fn into_user_data<Y>(self) -> AttachedObjectDataContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
-        crate::into_extra_match!(self, AttachedObjectDataContentWith;
+        crate::into_user_data_match!(self, AttachedObjectDataContentWith;
             plain [
                 Anchor, AutoFill, AutoLine, AutomaticallySize, CallbackType, CameraSourceRange,
                 CameraTool, CancelButton, Checked, ClipboardFormat, CommentColumnTarget,
@@ -2544,17 +2547,17 @@ impl crate::Write for AttachedObjectDataContent {
     }
 }
 
-impl<X: NodeExtra> AutoFillWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AutoFillWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AutoFillWith<Y>
+    pub fn into_user_data<Y>(self) -> AutoFillWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AutoFillWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2582,17 +2585,17 @@ impl crate::Write for AutoFill {
     }
 }
 
-impl<X: NodeExtra> AutoLineWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AutoLineWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AutoLineWith<Y>
+    pub fn into_user_data<Y>(self) -> AutoLineWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AutoLineWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2620,17 +2623,17 @@ impl crate::Write for AutoLine {
     }
 }
 
-impl<X: NodeExtra> AutomaticallySizeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AutomaticallySizeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AutomaticallySizeWith<Y>
+    pub fn into_user_data<Y>(self) -> AutomaticallySizeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AutomaticallySizeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2658,17 +2661,17 @@ impl crate::Write for AutomaticallySize {
     }
 }
 
-impl<X: NodeExtra> CallbackTypeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CallbackTypeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CallbackTypeWith<Y>
+    pub fn into_user_data<Y>(self) -> CallbackTypeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CallbackTypeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2696,17 +2699,17 @@ impl crate::Write for CallbackType {
     }
 }
 
-impl<X: NodeExtra> CameraSourceRangeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CameraSourceRangeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CameraSourceRangeWith<Y>
+    pub fn into_user_data<Y>(self) -> CameraSourceRangeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CameraSourceRangeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2734,17 +2737,17 @@ impl crate::Write for CameraSourceRange {
     }
 }
 
-impl<X: NodeExtra> CameraToolWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CameraToolWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CameraToolWith<Y>
+    pub fn into_user_data<Y>(self) -> CameraToolWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CameraToolWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2772,17 +2775,17 @@ impl crate::Write for CameraTool {
     }
 }
 
-impl<X: NodeExtra> CancelButtonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CancelButtonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CancelButtonWith<Y>
+    pub fn into_user_data<Y>(self) -> CancelButtonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CancelButtonWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2810,17 +2813,17 @@ impl crate::Write for CancelButton {
     }
 }
 
-impl<X: NodeExtra> CheckedWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CheckedWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CheckedWith<Y>
+    pub fn into_user_data<Y>(self) -> CheckedWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CheckedWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2848,17 +2851,17 @@ impl crate::Write for Checked {
     }
 }
 
-impl<X: NodeExtra> ClipboardFormatWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ClipboardFormatWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ClipboardFormatWith<Y>
+    pub fn into_user_data<Y>(self) -> ClipboardFormatWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ClipboardFormatWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2886,17 +2889,17 @@ impl crate::Write for ClipboardFormat {
     }
 }
 
-impl<X: NodeExtra> CommentColumnTargetWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CommentColumnTargetWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CommentColumnTargetWith<Y>
+    pub fn into_user_data<Y>(self) -> CommentColumnTargetWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CommentColumnTargetWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2924,17 +2927,17 @@ impl crate::Write for CommentColumnTarget {
     }
 }
 
-impl<X: NodeExtra> CommentRowTargetWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CommentRowTargetWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CommentRowTargetWith<Y>
+    pub fn into_user_data<Y>(self) -> CommentRowTargetWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CommentRowTargetWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2962,17 +2965,17 @@ impl crate::Write for CommentRowTarget {
     }
 }
 
-impl<X: NodeExtra> CommentVisibilityToggleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CommentVisibilityToggleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CommentVisibilityToggleWith<Y>
+    pub fn into_user_data<Y>(self) -> CommentVisibilityToggleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CommentVisibilityToggleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3000,17 +3003,17 @@ impl crate::Write for CommentVisibilityToggle {
     }
 }
 
-impl<X: NodeExtra> CommentsColumnIsHiddenWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CommentsColumnIsHiddenWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CommentsColumnIsHiddenWith<Y>
+    pub fn into_user_data<Y>(self) -> CommentsColumnIsHiddenWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CommentsColumnIsHiddenWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3038,17 +3041,17 @@ impl crate::Write for CommentsColumnIsHidden {
     }
 }
 
-impl<X: NodeExtra> CommentsRowIsHiddenWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> CommentsRowIsHiddenWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> CommentsRowIsHiddenWith<Y>
+    pub fn into_user_data<Y>(self) -> CommentsRowIsHiddenWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         CommentsRowIsHiddenWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3076,17 +3079,17 @@ impl crate::Write for CommentsRowIsHidden {
     }
 }
 
-impl<X: NodeExtra> DefaultButtonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DefaultButtonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DefaultButtonWith<Y>
+    pub fn into_user_data<Y>(self) -> DefaultButtonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DefaultButtonWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3114,17 +3117,17 @@ impl crate::Write for DefaultButton {
     }
 }
 
-impl<X: NodeExtra> DefaultSizeToggleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DefaultSizeToggleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DefaultSizeToggleWith<Y>
+    pub fn into_user_data<Y>(self) -> DefaultSizeToggleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DefaultSizeToggleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3152,17 +3155,17 @@ impl crate::Write for DefaultSizeToggle {
     }
 }
 
-impl<X: NodeExtra> Disable3DNoThreeDWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> Disable3DNoThreeDWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> Disable3DNoThreeDWith<Y>
+    pub fn into_user_data<Y>(self) -> Disable3DNoThreeDWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         Disable3DNoThreeDWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3190,17 +3193,17 @@ impl crate::Write for Disable3DNoThreeD {
     }
 }
 
-impl<X: NodeExtra> Disable3DNoThreeD2With<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> Disable3DNoThreeD2With<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> Disable3DNoThreeD2With<Y>
+    pub fn into_user_data<Y>(self) -> Disable3DNoThreeD2With<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         Disable3DNoThreeD2With {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3228,17 +3231,17 @@ impl crate::Write for Disable3DNoThreeD2 {
     }
 }
 
-impl<X: NodeExtra> DismissButtonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DismissButtonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DismissButtonWith<Y>
+    pub fn into_user_data<Y>(self) -> DismissButtonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DismissButtonWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3266,17 +3269,17 @@ impl crate::Write for DismissButton {
     }
 }
 
-impl<X: NodeExtra> DropdownColorToggleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DropdownColorToggleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DropdownColorToggleWith<Y>
+    pub fn into_user_data<Y>(self) -> DropdownColorToggleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DropdownColorToggleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3304,17 +3307,17 @@ impl crate::Write for DropdownColorToggle {
     }
 }
 
-impl<X: NodeExtra> DropdownMaximumLinesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DropdownMaximumLinesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DropdownMaximumLinesWith<Y>
+    pub fn into_user_data<Y>(self) -> DropdownMaximumLinesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DropdownMaximumLinesWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3342,17 +3345,17 @@ impl crate::Write for DropdownMaximumLines {
     }
 }
 
-impl<X: NodeExtra> DropdownStyleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DropdownStyleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DropdownStyleWith<Y>
+    pub fn into_user_data<Y>(self) -> DropdownStyleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DropdownStyleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3380,17 +3383,17 @@ impl crate::Write for DropdownStyle {
     }
 }
 
-impl<X: NodeExtra> DynamicDataExchangeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DynamicDataExchangeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DynamicDataExchangeWith<Y>
+    pub fn into_user_data<Y>(self) -> DynamicDataExchangeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DynamicDataExchangeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3418,17 +3421,17 @@ impl crate::Write for DynamicDataExchange {
     }
 }
 
-impl<X: NodeExtra> EmbeddedControlWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> EmbeddedControlWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> EmbeddedControlWith<Y>
+    pub fn into_user_data<Y>(self) -> EmbeddedControlWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         EmbeddedControlWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3456,17 +3459,17 @@ impl crate::Write for EmbeddedControl {
     }
 }
 
-impl<X: NodeExtra> FarEastAlignmentToggleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FarEastAlignmentToggleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FarEastAlignmentToggleWith<Y>
+    pub fn into_user_data<Y>(self) -> FarEastAlignmentToggleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FarEastAlignmentToggleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3494,17 +3497,17 @@ impl crate::Write for FarEastAlignmentToggle {
     }
 }
 
-impl<X: NodeExtra> FirstRadioButtonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FirstRadioButtonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FirstRadioButtonWith<Y>
+    pub fn into_user_data<Y>(self) -> FirstRadioButtonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FirstRadioButtonWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3532,17 +3535,17 @@ impl crate::Write for FirstRadioButton {
     }
 }
 
-impl<X: NodeExtra> FontAutoScaleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FontAutoScaleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FontAutoScaleWith<Y>
+    pub fn into_user_data<Y>(self) -> FontAutoScaleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FontAutoScaleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3570,17 +3573,17 @@ impl crate::Write for FontAutoScale {
     }
 }
 
-impl<X: NodeExtra> HTMLScriptAttributesWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HTMLScriptAttributesWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> HTMLScriptAttributesWith<Y>
+    pub fn into_user_data<Y>(self) -> HTMLScriptAttributesWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HTMLScriptAttributesWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3608,17 +3611,17 @@ impl crate::Write for HTMLScriptAttributes {
     }
 }
 
-impl<X: NodeExtra> HTMLScriptLanguageWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HTMLScriptLanguageWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> HTMLScriptLanguageWith<Y>
+    pub fn into_user_data<Y>(self) -> HTMLScriptLanguageWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HTMLScriptLanguageWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3646,17 +3649,17 @@ impl crate::Write for HTMLScriptLanguage {
     }
 }
 
-impl<X: NodeExtra> HTMLScriptLocationWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HTMLScriptLocationWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> HTMLScriptLocationWith<Y>
+    pub fn into_user_data<Y>(self) -> HTMLScriptLocationWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HTMLScriptLocationWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3684,17 +3687,17 @@ impl crate::Write for HTMLScriptLocation {
     }
 }
 
-impl<X: NodeExtra> HTMLScriptTextWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HTMLScriptTextWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> HTMLScriptTextWith<Y>
+    pub fn into_user_data<Y>(self) -> HTMLScriptTextWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HTMLScriptTextWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3722,17 +3725,17 @@ impl crate::Write for HTMLScriptText {
     }
 }
 
-impl<X: NodeExtra> HelpButtonWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HelpButtonWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> HelpButtonWith<Y>
+    pub fn into_user_data<Y>(self) -> HelpButtonWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HelpButtonWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3760,17 +3763,17 @@ impl crate::Write for HelpButton {
     }
 }
 
-impl<X: NodeExtra> HorizontalTextAlignmentWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HorizontalTextAlignmentWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> HorizontalTextAlignmentWith<Y>
+    pub fn into_user_data<Y>(self) -> HorizontalTextAlignmentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HorizontalTextAlignmentWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3798,17 +3801,17 @@ impl crate::Write for HorizontalTextAlignment {
     }
 }
 
-impl<X: NodeExtra> LinkedFormulaWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LinkedFormulaWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LinkedFormulaWith<Y>
+    pub fn into_user_data<Y>(self) -> LinkedFormulaWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LinkedFormulaWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3836,17 +3839,17 @@ impl crate::Write for LinkedFormula {
     }
 }
 
-impl<X: NodeExtra> LinkedFormulaGroupBoxWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LinkedFormulaGroupBoxWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LinkedFormulaGroupBoxWith<Y>
+    pub fn into_user_data<Y>(self) -> LinkedFormulaGroupBoxWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LinkedFormulaGroupBoxWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3874,17 +3877,17 @@ impl crate::Write for LinkedFormulaGroupBox {
     }
 }
 
-impl<X: NodeExtra> ListItemsSourceRangeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ListItemsSourceRangeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ListItemsSourceRangeWith<Y>
+    pub fn into_user_data<Y>(self) -> ListItemsSourceRangeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ListItemsSourceRangeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3912,17 +3915,17 @@ impl crate::Write for ListItemsSourceRange {
     }
 }
 
-impl<X: NodeExtra> LockToggleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LockToggleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> LockToggleWith<Y>
+    pub fn into_user_data<Y>(self) -> LockToggleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LockToggleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3950,17 +3953,17 @@ impl crate::Write for LockToggle {
     }
 }
 
-impl<X: NodeExtra> MacroDisableToggleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MacroDisableToggleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MacroDisableToggleWith<Y>
+    pub fn into_user_data<Y>(self) -> MacroDisableToggleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MacroDisableToggleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3988,17 +3991,17 @@ impl crate::Write for MacroDisableToggle {
     }
 }
 
-impl<X: NodeExtra> MinimumWidthWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MinimumWidthWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MinimumWidthWith<Y>
+    pub fn into_user_data<Y>(self) -> MinimumWidthWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MinimumWidthWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4026,17 +4029,17 @@ impl crate::Write for MinimumWidth {
     }
 }
 
-impl<X: NodeExtra> MoveWithCellsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MoveWithCellsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MoveWithCellsWith<Y>
+    pub fn into_user_data<Y>(self) -> MoveWithCellsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MoveWithCellsWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4064,17 +4067,17 @@ impl crate::Write for MoveWithCells {
     }
 }
 
-impl<X: NodeExtra> MultiLineWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MultiLineWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MultiLineWith<Y>
+    pub fn into_user_data<Y>(self) -> MultiLineWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MultiLineWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4102,17 +4105,17 @@ impl crate::Write for MultiLine {
     }
 }
 
-impl<X: NodeExtra> MultipleSelectionsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> MultipleSelectionsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> MultipleSelectionsWith<Y>
+    pub fn into_user_data<Y>(self) -> MultipleSelectionsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         MultipleSelectionsWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4140,17 +4143,17 @@ impl crate::Write for MultipleSelections {
     }
 }
 
-impl<X: NodeExtra> NonLinkedListItemWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> NonLinkedListItemWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> NonLinkedListItemWith<Y>
+    pub fn into_user_data<Y>(self) -> NonLinkedListItemWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         NonLinkedListItemWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4244,17 +4247,17 @@ impl ObjectType {
     }
 }
 
-impl<X: NodeExtra> PasswordEditWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PasswordEditWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PasswordEditWith<Y>
+    pub fn into_user_data<Y>(self) -> PasswordEditWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PasswordEditWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4282,17 +4285,17 @@ impl crate::Write for PasswordEdit {
     }
 }
 
-impl<X: NodeExtra> PrimaryKeyboardAcceleratorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PrimaryKeyboardAcceleratorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PrimaryKeyboardAcceleratorWith<Y>
+    pub fn into_user_data<Y>(self) -> PrimaryKeyboardAcceleratorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PrimaryKeyboardAcceleratorWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4320,17 +4323,17 @@ impl crate::Write for PrimaryKeyboardAccelerator {
     }
 }
 
-impl<X: NodeExtra> PrintToggleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PrintToggleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PrintToggleWith<Y>
+    pub fn into_user_data<Y>(self) -> PrintToggleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PrintToggleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4358,17 +4361,17 @@ impl crate::Write for PrintToggle {
     }
 }
 
-impl<X: NodeExtra> RecalculationToggleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RecalculationToggleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RecalculationToggleWith<Y>
+    pub fn into_user_data<Y>(self) -> RecalculationToggleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RecalculationToggleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4396,17 +4399,17 @@ impl crate::Write for RecalculationToggle {
     }
 }
 
-impl<X: NodeExtra> ReferenceToCustomFunctionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ReferenceToCustomFunctionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ReferenceToCustomFunctionWith<Y>
+    pub fn into_user_data<Y>(self) -> ReferenceToCustomFunctionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ReferenceToCustomFunctionWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4434,17 +4437,17 @@ impl crate::Write for ReferenceToCustomFunction {
     }
 }
 
-impl<X: NodeExtra> ResizeWithCellsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ResizeWithCellsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ResizeWithCellsWith<Y>
+    pub fn into_user_data<Y>(self) -> ResizeWithCellsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ResizeWithCellsWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4472,17 +4475,17 @@ impl crate::Write for ResizeWithCells {
     }
 }
 
-impl<X: NodeExtra> ScrollBarIncrementWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ScrollBarIncrementWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ScrollBarIncrementWith<Y>
+    pub fn into_user_data<Y>(self) -> ScrollBarIncrementWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ScrollBarIncrementWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4510,17 +4513,17 @@ impl crate::Write for ScrollBarIncrement {
     }
 }
 
-impl<X: NodeExtra> ScrollBarMaximumWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ScrollBarMaximumWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ScrollBarMaximumWith<Y>
+    pub fn into_user_data<Y>(self) -> ScrollBarMaximumWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ScrollBarMaximumWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4548,17 +4551,17 @@ impl crate::Write for ScrollBarMaximum {
     }
 }
 
-impl<X: NodeExtra> ScrollBarMinimumWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ScrollBarMinimumWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ScrollBarMinimumWith<Y>
+    pub fn into_user_data<Y>(self) -> ScrollBarMinimumWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ScrollBarMinimumWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4586,17 +4589,17 @@ impl crate::Write for ScrollBarMinimum {
     }
 }
 
-impl<X: NodeExtra> ScrollBarOrientationWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ScrollBarOrientationWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ScrollBarOrientationWith<Y>
+    pub fn into_user_data<Y>(self) -> ScrollBarOrientationWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ScrollBarOrientationWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4624,17 +4627,17 @@ impl crate::Write for ScrollBarOrientation {
     }
 }
 
-impl<X: NodeExtra> ScrollBarPageIncrementWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ScrollBarPageIncrementWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ScrollBarPageIncrementWith<Y>
+    pub fn into_user_data<Y>(self) -> ScrollBarPageIncrementWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ScrollBarPageIncrementWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4662,17 +4665,17 @@ impl crate::Write for ScrollBarPageIncrement {
     }
 }
 
-impl<X: NodeExtra> ScrollBarPositionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ScrollBarPositionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ScrollBarPositionWith<Y>
+    pub fn into_user_data<Y>(self) -> ScrollBarPositionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ScrollBarPositionWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4700,17 +4703,17 @@ impl crate::Write for ScrollBarPosition {
     }
 }
 
-impl<X: NodeExtra> ScrollBarWidthWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ScrollBarWidthWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ScrollBarWidthWith<Y>
+    pub fn into_user_data<Y>(self) -> ScrollBarWidthWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ScrollBarWidthWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4738,17 +4741,17 @@ impl crate::Write for ScrollBarWidth {
     }
 }
 
-impl<X: NodeExtra> SecondaryKeyboardAcceleratorWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SecondaryKeyboardAcceleratorWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SecondaryKeyboardAcceleratorWith<Y>
+    pub fn into_user_data<Y>(self) -> SecondaryKeyboardAcceleratorWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SecondaryKeyboardAcceleratorWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4776,17 +4779,17 @@ impl crate::Write for SecondaryKeyboardAccelerator {
     }
 }
 
-impl<X: NodeExtra> SelectedEntryWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SelectedEntryWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SelectedEntryWith<Y>
+    pub fn into_user_data<Y>(self) -> SelectedEntryWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SelectedEntryWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4814,17 +4817,17 @@ impl crate::Write for SelectedEntry {
     }
 }
 
-impl<X: NodeExtra> SelectionTypeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SelectionTypeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SelectionTypeWith<Y>
+    pub fn into_user_data<Y>(self) -> SelectionTypeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SelectionTypeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4852,17 +4855,17 @@ impl crate::Write for SelectionType {
     }
 }
 
-impl<X: NodeExtra> TextFormulaWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TextFormulaWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TextFormulaWith<Y>
+    pub fn into_user_data<Y>(self) -> TextFormulaWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TextFormulaWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4890,17 +4893,17 @@ impl crate::Write for TextFormula {
     }
 }
 
-impl<X: NodeExtra> TextLockWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TextLockWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> TextLockWith<Y>
+    pub fn into_user_data<Y>(self) -> TextLockWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TextLockWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4928,17 +4931,17 @@ impl crate::Write for TextLock {
     }
 }
 
-impl<X: NodeExtra> UIObjectToggleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> UIObjectToggleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> UIObjectToggleWith<Y>
+    pub fn into_user_data<Y>(self) -> UIObjectToggleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         UIObjectToggleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -4966,17 +4969,17 @@ impl crate::Write for UIObjectToggle {
     }
 }
 
-impl<X: NodeExtra> ValidIDWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ValidIDWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ValidIDWith<Y>
+    pub fn into_user_data<Y>(self) -> ValidIDWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ValidIDWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5004,17 +5007,17 @@ impl crate::Write for ValidID {
     }
 }
 
-impl<X: NodeExtra> ValidationTypeWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ValidationTypeWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ValidationTypeWith<Y>
+    pub fn into_user_data<Y>(self) -> ValidationTypeWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ValidationTypeWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5042,17 +5045,17 @@ impl crate::Write for ValidationType {
     }
 }
 
-impl<X: NodeExtra> VerticalScrollWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> VerticalScrollWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> VerticalScrollWith<Y>
+    pub fn into_user_data<Y>(self) -> VerticalScrollWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         VerticalScrollWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -5080,17 +5083,17 @@ impl crate::Write for VerticalScroll {
     }
 }
 
-impl<X: NodeExtra> VerticalTextAlignmentWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> VerticalTextAlignmentWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> VerticalTextAlignmentWith<Y>
+    pub fn into_user_data<Y>(self) -> VerticalTextAlignmentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         VerticalTextAlignmentWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }

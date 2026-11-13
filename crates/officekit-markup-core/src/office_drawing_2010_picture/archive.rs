@@ -228,8 +228,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct ExtLstMirror {
     #[rkyv(omit_bounds)]
     pub extension: Vec<super::super::drawing::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -237,19 +237,19 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct StyleMirror {
     pub effect_reference: Box<super::super::drawing::EffectReference>,
-    pub extra: (),
     pub fill_reference: Box<super::super::drawing::FillReference>,
     pub font_reference: Box<super::super::drawing::FontReference>,
     pub line_reference: Box<super::super::drawing::LineReference>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -287,11 +287,11 @@ impl From<StyleMirror> for super::Style {
     fn from(item: StyleMirror) -> Self {
         Self {
             effect_reference: item.effect_reference,
-            extra: item.extra,
             fill_reference: item.fill_reference,
             font_reference: item.font_reference,
             line_reference: item.line_reference,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

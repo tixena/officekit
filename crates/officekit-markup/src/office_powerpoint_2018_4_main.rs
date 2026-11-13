@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
@@ -244,17 +244,17 @@ pub static CLASSIFICATION_SHAPE: officekit_markup_base::Shape = officekit_markup
 /// 3.5.1. Its schema type is `CT_ClassificationOutcome`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ClassificationWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficePowerpoint20184MainClassification,
+pub struct ClassificationWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficePowerpoint20184MainClassification,
     /// The attribute `val`, when the element has it.
     pub val: Option<ClassificationOutcomeType>,
 }
 
 /// The `p184:classification` element of the tree a read gives: [`ClassificationWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type Classification = ClassificationWith<()>;
 
 impl Eq for ClassificationWith<()> {}
@@ -329,17 +329,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> ClassificationWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ClassificationWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ClassificationWith<Y>
+    pub fn into_user_data<Y>(self) -> ClassificationWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ClassificationWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
         }
     }

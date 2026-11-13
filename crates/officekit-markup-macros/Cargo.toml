@@ -1,6 +1,6 @@
 [package]
 name = "officekit-markup-macros"
-description = "The #[node_extra] attribute of officekit's typed tree"
+description = "The #[user_data] attribute of officekit's typed tree"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true

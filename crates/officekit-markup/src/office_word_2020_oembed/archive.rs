@@ -222,21 +222,21 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Oembed)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OembedMirror {
-    pub extra: (),
     pub media_type: Option<String>,
     pub o_embed_url: Option<String>,
     pub pic_locks_auto_for_o_embed: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<OembedMirror> for super::Oembed {
     fn from(item: OembedMirror) -> Self {
         Self {
-            extra: item.extra,
             media_type: item.media_type,
             o_embed_url: item.o_embed_url,
             pic_locks_auto_for_o_embed: item.pic_locks_auto_for_o_embed,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

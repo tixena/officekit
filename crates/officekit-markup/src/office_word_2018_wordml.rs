@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -272,18 +272,18 @@ pub trait Context: crate::Context {
 /// schema type is `CT_Extension`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtWith<X: NodeExtra> {
+pub struct ExtWith<X: UserData> {
     /// The child that is an item of `drawing::AnyElementContent`, which the schema requires.
     pub content: Box<drawing::AnyElementContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeWord2018WordmlExt,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `w16cur:uri`, when the element has it.
     pub uri: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeWord2018WordmlExt,
 }
 
-/// The `w16cur:ext` element of the tree a read gives: [`ExtWith`] holding nothing in `extra`.
+/// The `w16cur:ext` element of the tree a read gives: [`ExtWith`] holding nothing in `user_data`.
 pub type Ext = ExtWith<()>;
 
 impl Eq for ExtWith<()> {}
@@ -300,22 +300,22 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> ExtWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtWith {
-            content: officekit_markup_base::into_extra_required(
+            content: officekit_markup_base::into_user_data_required(
                 *self.content,
-                drawing::AnyElementContentWith::into_extra,
+                drawing::AnyElementContentWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
             uri: self.uri,
+            user_data: Default::default(),
         }
     }
 

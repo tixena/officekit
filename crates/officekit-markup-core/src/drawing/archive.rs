@@ -236,8 +236,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct Accent1Mirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -245,8 +245,8 @@ pub struct Accent1Mirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct Accent2Mirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -254,8 +254,8 @@ pub struct Accent2Mirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct Accent3Mirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -263,8 +263,8 @@ pub struct Accent3Mirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct Accent4Mirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -272,8 +272,8 @@ pub struct Accent4Mirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct Accent5Mirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -281,16 +281,16 @@ pub struct Accent5Mirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct Accent6Mirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Alpha)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlphaMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::PositiveFixedPercentage>,
 }
 
@@ -298,34 +298,34 @@ pub struct AlphaMirror {
 #[rkyv(remote = super::AlphaBiLevelEffect)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlphaBiLevelEffectMirror {
-    pub extra: (),
     pub thresh: Option<super::PositiveFixedPercentage>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::AlphaCeilingEffect)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlphaCeilingEffectMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::AlphaFloorEffect)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlphaFloorEffectMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::AlphaInsetOutsetEffect)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlphaInsetOutsetEffectMirror {
-    pub extra: (),
     pub rad: Option<super::Coordinate>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -333,8 +333,8 @@ pub struct AlphaInsetOutsetEffectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AlphaInverseEffectMirror {
     pub content: Option<Box<super::ColorContent>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -346,8 +346,8 @@ pub struct AlphaInverseEffectMirror {
 pub struct AlphaModulateEffectMirror {
     #[rkyv(omit_bounds)]
     pub container_cont: Box<super::EffectContainerCont>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -355,16 +355,16 @@ pub struct AlphaModulateEffectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AlphaModulateFixedEffectMirror {
     pub amt: Option<super::PositivePercentageValueWithSign>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::AlphaModulation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlphaModulationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::PositivePercentageValueWithSign>,
 }
 
@@ -372,8 +372,8 @@ pub struct AlphaModulationMirror {
 #[rkyv(remote = super::AlphaOffset)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlphaOffsetMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::FixedPercentage>,
 }
 
@@ -382,16 +382,16 @@ pub struct AlphaOffsetMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AlphaReplaceEffectMirror {
     pub a: Option<super::PositiveFixedPercentage>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::AnchorPoint)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AnchorPointMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub x: Option<super::Coordinate>,
     pub y: Option<super::Coordinate>,
     pub z: Option<super::Coordinate>,
@@ -409,12 +409,12 @@ pub struct Apply3DShapePropertiesMirror {
     pub contour_w: Option<super::PositiveCoordinate>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub extrusion_color: Option<Box<super::ExtrusionColor>>,
     pub extrusion_h: Option<super::PositiveCoordinate>,
     pub prst_material: Option<super::PresetMaterialType>,
     pub top_bevel: Option<Box<super::TopBevel>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub z: Option<super::Coordinate>,
 }
 
@@ -422,10 +422,10 @@ pub struct Apply3DShapePropertiesMirror {
 #[rkyv(remote = super::AudioEndTime)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AudioEndTimeMirror {
-    pub extra: (),
     pub time: Option<String>,
     pub track: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -439,8 +439,8 @@ pub struct AudioFromCDMirror {
     pub audio_start_time: Box<super::AudioStartTime>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -453,9 +453,9 @@ pub struct AudioFromFileMirror {
     pub content_type: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub link: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -463,29 +463,29 @@ pub struct AudioFromFileMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AudioFromWAVFileMirror {
     pub embed: Option<String>,
-    pub extra: (),
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::AudioStartTime)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AudioStartTimeMirror {
-    pub extra: (),
     pub time: Option<String>,
     pub track: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::AutoNumberedBullet)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutoNumberedBulletMirror {
-    pub extra: (),
     pub start_at: Option<super::StartBulletAtNumber>,
     pub r#type: Option<super::TextAutoNumberSchemes>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -498,10 +498,10 @@ pub struct BackdropPlaneMirror {
     pub anchor_point: Box<super::AnchorPoint>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub normal: Box<super::Normal>,
     pub unknown: officekit_markup_base::Unknown,
     pub up_vector: Box<super::UpVector>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -509,8 +509,8 @@ pub struct BackdropPlaneMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BackgroundColorMirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -522,8 +522,8 @@ pub struct BackgroundColorMirror {
 pub struct BackgroundFillStyleListMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::FillPropertiesContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -533,12 +533,12 @@ pub struct BackgroundFillStyleListMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct Band1HorizontalMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub table_cell_style: Option<Box<super::TableCellStyle>>,
     #[rkyv(omit_bounds)]
     pub table_cell_text_style: Option<Box<super::TableCellTextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -548,12 +548,12 @@ pub struct Band1HorizontalMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct Band1VerticalMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub table_cell_style: Option<Box<super::TableCellStyle>>,
     #[rkyv(omit_bounds)]
     pub table_cell_text_style: Option<Box<super::TableCellTextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -563,12 +563,12 @@ pub struct Band1VerticalMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct Band2HorizontalMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub table_cell_style: Option<Box<super::TableCellStyle>>,
     #[rkyv(omit_bounds)]
     pub table_cell_text_style: Option<Box<super::TableCellTextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -578,22 +578,22 @@ pub struct Band2HorizontalMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct Band2VerticalMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub table_cell_style: Option<Box<super::TableCellStyle>>,
     #[rkyv(omit_bounds)]
     pub table_cell_text_style: Option<Box<super::TableCellTextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Bevel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BevelMirror {
-    pub extra: (),
     pub h: Option<super::PositiveCoordinate>,
     pub prst: Option<super::BevelPresets>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::PositiveCoordinate>,
 }
 
@@ -601,9 +601,9 @@ pub struct BevelMirror {
 #[rkyv(remote = super::BiLevel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BiLevelMirror {
-    pub extra: (),
     pub thresh: Option<super::PositiveFixedPercentage>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -616,8 +616,8 @@ pub struct BlendEffectMirror {
     pub blend: Option<super::BlendMode>,
     #[rkyv(omit_bounds)]
     pub container_cont: Box<super::EffectContainerCont>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -633,17 +633,17 @@ pub struct BlipMirror {
     pub embed: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub link: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Blue)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BlueMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Percentage>,
 }
 
@@ -651,8 +651,8 @@ pub struct BlueMirror {
 #[rkyv(remote = super::BlueModulation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BlueModulationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Percentage>,
 }
 
@@ -660,8 +660,8 @@ pub struct BlueModulationMirror {
 #[rkyv(remote = super::BlueOffset)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BlueOffsetMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Percentage>,
 }
 
@@ -669,10 +669,10 @@ pub struct BlueOffsetMirror {
 #[rkyv(remote = super::BlurEffect)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BlurEffectMirror {
-    pub extra: (),
     pub grow: Option<String>,
     pub rad: Option<super::PositiveCoordinate>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -688,7 +688,6 @@ pub struct BodyPropertiesMirror {
     pub compat_ln_spc: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub force_aa: Option<String>,
     pub from_word_art: Option<String>,
     pub horz_overflow: Option<super::TextHorizontalOverflowTypes>,
@@ -708,6 +707,7 @@ pub struct BodyPropertiesMirror {
     pub text_autofit_content: Option<Box<super::TextAutofitContent>>,
     pub unknown: officekit_markup_base::Unknown,
     pub upright: Option<String>,
+    pub user_data: (),
     pub vert: Option<super::VerticalTextTypes>,
     pub vert_overflow: Option<super::TextVerticalOverflow>,
     pub wrap: Option<super::TextWrappingTypes>,
@@ -717,10 +717,10 @@ pub struct BodyPropertiesMirror {
 #[rkyv(remote = super::BottomBevel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BottomBevelMirror {
-    pub extra: (),
     pub h: Option<super::PositiveCoordinate>,
     pub prst: Option<super::BevelPresets>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::PositiveCoordinate>,
 }
 
@@ -733,8 +733,8 @@ pub struct BottomBevelMirror {
 pub struct BottomBorderMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::ThemeableLineStyleContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -749,13 +749,13 @@ pub struct BottomBorderLinePropertiesMirror {
     pub cmpd: Option<super::CompoundLineType>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub line_dash_content: Option<Box<super::LineDashContent>>,
     pub line_fill_content: Option<Box<super::LineFillContent>>,
     pub line_head_end_style: Option<Box<super::LineHeadEndStyle>>,
     pub line_join_content: Option<Box<super::LineJoinContent>>,
     pub tail_line_end_style: Option<Box<super::TailLineEndStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::LineWidth>,
 }
 
@@ -771,13 +771,13 @@ pub struct BottomLeftToTopRightBorderLinePropertiesMirror {
     pub cmpd: Option<super::CompoundLineType>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub line_dash_content: Option<Box<super::LineDashContent>>,
     pub line_fill_content: Option<Box<super::LineFillContent>>,
     pub line_head_end_style: Option<Box<super::LineHeadEndStyle>>,
     pub line_join_content: Option<Box<super::LineJoinContent>>,
     pub tail_line_end_style: Option<Box<super::TailLineEndStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::LineWidth>,
 }
 
@@ -787,8 +787,8 @@ pub struct BottomLeftToTopRightBorderLinePropertiesMirror {
 pub struct BuildChartMirror {
     pub anim_bg: Option<String>,
     pub bld: Option<super::ChartAnimationBuildType>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -796,25 +796,25 @@ pub struct BuildChartMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BuildDiagramMirror {
     pub bld: Option<super::DiagramAnimationBuildType>,
-    pub extra: (),
     pub rev: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BulletSizeFollowsText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BulletSizeFollowsTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BulletSizePercentage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BulletSizePercentageMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StTextBulletSizePercent>,
 }
 
@@ -822,8 +822,8 @@ pub struct BulletSizePercentageMirror {
 #[rkyv(remote = super::BulletSizePoints)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BulletSizePointsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::TextFontSize>,
 }
 
@@ -831,11 +831,11 @@ pub struct BulletSizePointsMirror {
 #[rkyv(remote = super::Camera)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CameraMirror {
-    pub extra: (),
     pub fov: Option<super::FieldOfViewAngle>,
     pub prst: Option<super::PresetCameraType>,
     pub rotation: Option<Box<super::Rotation>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub zoom: Option<super::PositivePercentageValueWithSign>,
 }
 
@@ -849,10 +849,10 @@ pub struct Cell3DMirror {
     pub bevel: Box<super::Bevel>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub light_rig: Option<Box<super::LightRig>>,
     pub prst_material: Option<super::PresetMaterialType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -860,8 +860,8 @@ pub struct Cell3DMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ChangeColorFromMirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -869,8 +869,8 @@ pub struct ChangeColorFromMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ChangeColorToMirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -878,8 +878,8 @@ pub struct ChangeColorToMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CharacterBulletMirror {
     pub char: Option<String>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -888,9 +888,9 @@ pub struct CharacterBulletMirror {
 pub struct ChartToAnimateMirror {
     pub bld_step: Option<super::ChartAnimationBuildStep>,
     pub category_idx: Option<String>,
-    pub extra: (),
     pub series_idx: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -899,16 +899,16 @@ pub struct ChartToAnimateMirror {
 pub struct ChildExtentsMirror {
     pub cx: Option<super::PositiveCoordinate>,
     pub cy: Option<super::PositiveCoordinate>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ChildOffset)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ChildOffsetMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub x: Option<super::Coordinate>,
     pub y: Option<super::Coordinate>,
 }
@@ -924,7 +924,6 @@ pub struct ClickHyperlinkMirror {
     pub end_snd: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub highlight_click: Option<String>,
     pub history: Option<String>,
     pub id: Option<String>,
@@ -933,14 +932,15 @@ pub struct ClickHyperlinkMirror {
     pub tgt_frame: Option<String>,
     pub tooltip: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CloseShapePath)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CloseShapePathMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -949,9 +949,9 @@ pub struct CloseShapePathMirror {
 pub struct ColorChangeEffectMirror {
     pub change_color_from: Box<super::ChangeColorFrom>,
     pub change_color_to: Box<super::ChangeColorTo>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
     pub use_a: Option<String>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -971,12 +971,12 @@ pub struct ColorMapMirror {
     pub bg2: Option<super::ThemeColorReference>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub fol_hlink: Option<super::ThemeColorReference>,
     pub hlink: Option<super::ThemeColorReference>,
     pub tx1: Option<super::ThemeColorReference>,
     pub tx2: Option<super::ThemeColorReference>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -996,13 +996,13 @@ pub struct ColorSchemeMirror {
     pub dark_2: Box<super::Dark2>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub followed_hyperlink: Box<super::FollowedHyperlink>,
     pub hyperlink: Box<super::Hyperlink>,
     pub light_1: Box<super::Light1>,
     pub light_2: Box<super::Light2>,
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1010,16 +1010,16 @@ pub struct ColorSchemeMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ColorSpecifiedMirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Complement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ComplementMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1027,21 +1027,21 @@ pub struct ComplementMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ComplexScriptFontMirror {
     pub charset: Option<String>,
-    pub extra: (),
     pub panose: Option<common_simple_types::Panose1Number>,
     pub pitch_family: Option<super::PitchFamily>,
     pub typeface: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ConnectionEnd)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ConnectionEndMirror {
-    pub extra: (),
     pub id: Option<super::DrawingElementID>,
     pub idx: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1053,13 +1053,13 @@ pub struct ConnectionEndMirror {
 pub struct ConnectionShapeMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub non_visual_properties: Box<super::NonVisualPropertiesForAConnectionShape>,
     #[rkyv(omit_bounds)]
     pub properties: Box<super::ShapeProperties>,
     pub style: Option<Box<super::ShapeStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1071,7 +1071,6 @@ pub struct ConnectionShapeMirror {
 pub struct ConnectionShapeLocksMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub no_adjust_handles: Option<String>,
     pub no_change_arrowheads: Option<String>,
     pub no_change_aspect: Option<String>,
@@ -1083,16 +1082,17 @@ pub struct ConnectionShapeLocksMirror {
     pub no_rot: Option<String>,
     pub no_select: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ConnectionStart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ConnectionStartMirror {
-    pub extra: (),
     pub id: Option<super::DrawingElementID>,
     pub idx: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1104,7 +1104,6 @@ pub struct ConnectionStartMirror {
 pub struct ContentPartLocksMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub no_adjust_handles: Option<String>,
     pub no_change_arrowheads: Option<String>,
     pub no_change_aspect: Option<String>,
@@ -1116,6 +1115,7 @@ pub struct ContentPartLocksMirror {
     pub no_rot: Option<String>,
     pub no_select: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1123,8 +1123,8 @@ pub struct ContentPartLocksMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ContourColorMirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1132,9 +1132,9 @@ pub struct ContourColorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomColorMirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1142,24 +1142,23 @@ pub struct CustomColorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomColorListMirror {
     pub custom_color: Vec<super::CustomColor>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CustomDash)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomDashMirror {
-    pub extra: (),
     pub stop: Vec<super::DashStop>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CustomGeometry)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomGeometryMirror {
-    pub extra: (),
     pub list_of_shape_adjust_handles: Option<Box<super::ListOfShapeAdjustHandles>>,
     pub list_of_shape_adjust_values: Option<Box<super::ListOfShapeAdjustValues>>,
     pub list_of_shape_connection_sites: Option<Box<super::ListOfShapeConnectionSites>>,
@@ -1167,6 +1166,7 @@ pub struct CustomGeometryMirror {
     pub list_of_shape_paths: Box<super::ListOfShapePaths>,
     pub shape_text_rectangle: Option<Box<super::ShapeTextRectangle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1174,8 +1174,8 @@ pub struct CustomGeometryMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct Dark1Mirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1183,8 +1183,8 @@ pub struct Dark1Mirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct Dark2Mirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1192,9 +1192,9 @@ pub struct Dark2Mirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DashStopMirror {
     pub d: Option<super::PositivePercentageValueWithSign>,
-    pub extra: (),
     pub sp: Option<super::PositivePercentageValueWithSign>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1211,7 +1211,6 @@ pub struct DefaultParagraphStyleMirror {
     pub ea_ln_brk: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub font_algn: Option<super::FontAlignmentTypes>,
     pub hanging_punct: Option<String>,
     pub indent: Option<super::TextIndentation>,
@@ -1230,6 +1229,7 @@ pub struct DefaultParagraphStyleMirror {
     pub text_bullet_size_content: Option<Box<super::TextBulletSizeContent>>,
     pub text_bullet_typeface_content: Option<Box<super::TextBulletTypefaceContent>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1254,7 +1254,6 @@ pub struct DefaultTextRunPropertiesMirror {
     pub err: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::FillPropertiesContent>>,
     pub highlight_color: Option<Box<super::HighlightColor>>,
@@ -1282,6 +1281,7 @@ pub struct DefaultTextRunPropertiesMirror {
     pub text_underline_line_content: Option<Box<super::TextUnderlineLineContent>>,
     pub u: Option<super::TextUnderlineTypes>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1289,20 +1289,20 @@ pub struct DefaultTextRunPropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DiagramToAnimateMirror {
     pub bld_step: Option<super::DiagramAnimationBuildSteps>,
-    pub extra: (),
     pub id: Option<common_simple_types::Guid>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DrawArcTo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DrawArcToMirror {
-    pub extra: (),
     pub h_r: Option<super::AdjustableCoordinateMethods>,
     pub st_ang: Option<super::AdjustableAngleMethods>,
     pub sw_ang: Option<super::AdjustableAngleMethods>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w_r: Option<super::AdjustableCoordinateMethods>,
 }
 
@@ -1310,27 +1310,27 @@ pub struct DrawArcToMirror {
 #[rkyv(remote = super::DrawCubicBezierCurveTo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DrawCubicBezierCurveToMirror {
-    pub extra: (),
     pub shape_path_point: Vec<super::ShapePathPoint>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DrawLineTo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DrawLineToMirror {
-    pub extra: (),
     pub shape_path_point: Box<super::ShapePathPoint>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DrawQuadraticBezierCurveTo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DrawQuadraticBezierCurveToMirror {
-    pub extra: (),
     pub shape_path_point: Vec<super::ShapePathPoint>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1338,8 +1338,8 @@ pub struct DrawQuadraticBezierCurveToMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DuotoneEffectMirror {
     pub content: Vec<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1347,11 +1347,11 @@ pub struct DuotoneEffectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct EastAsianFontMirror {
     pub charset: Option<String>,
-    pub extra: (),
     pub panose: Option<common_simple_types::Panose1Number>,
     pub pitch_family: Option<super::PitchFamily>,
     pub typeface: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1363,8 +1363,8 @@ pub struct EastAsianFontMirror {
 pub struct EffectMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::EffectPropertiesContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1376,10 +1376,10 @@ pub struct EffectMirror {
 pub struct EffectContainerContMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::EffectContainerContent>,
-    pub extra: (),
     pub name: Option<String>,
     pub r#type: Option<super::EffectContainerType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1391,10 +1391,10 @@ pub struct EffectContainerContMirror {
 pub struct EffectContainerEffectDagMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::EffectContainerContent>,
-    pub extra: (),
     pub name: Option<String>,
     pub r#type: Option<super::EffectContainerType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1405,7 +1405,6 @@ pub struct EffectContainerEffectDagMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct EffectContainerEffectLstMirror {
     pub blur_effect: Option<Box<super::BlurEffect>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub fill_overlay_effect: Option<Box<super::FillOverlayEffect>>,
     pub glow_effect: Option<Box<super::GlowEffect>>,
@@ -1415,15 +1414,16 @@ pub struct EffectContainerEffectLstMirror {
     pub reflection_effect: Option<Box<super::ReflectionEffect>>,
     pub soft_edge_effect: Option<Box<super::SoftEdgeEffect>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::EffectEffectReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EffectEffectReferenceMirror {
-    pub extra: (),
     pub r#ref: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1431,9 +1431,9 @@ pub struct EffectEffectReferenceMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct EffectReferenceMirror {
     pub content: Option<Box<super::ColorContent>>,
-    pub extra: (),
     pub idx: Option<super::StyleMatrixColumnIndex>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1447,10 +1447,10 @@ pub struct EffectStyleMirror {
     pub apply_3d_shape_properties: Option<Box<super::Apply3DShapeProperties>>,
     #[rkyv(omit_bounds)]
     pub content: Box<super::EffectPropertiesContent>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub scene3d: Option<Box<super::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1462,8 +1462,8 @@ pub struct EffectStyleMirror {
 pub struct EffectStyleListMirror {
     #[rkyv(omit_bounds)]
     pub effect_style: Vec<super::EffectStyle>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1488,7 +1488,6 @@ pub struct EndParagraphRunPropertiesMirror {
     pub err: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::FillPropertiesContent>>,
     pub highlight_color: Option<Box<super::HighlightColor>>,
@@ -1516,6 +1515,7 @@ pub struct EndParagraphRunPropertiesMirror {
     pub text_underline_line_content: Option<Box<super::TextUnderlineLineContent>>,
     pub u: Option<super::TextUnderlineTypes>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1527,9 +1527,9 @@ pub struct EndParagraphRunPropertiesMirror {
 pub struct ExtensionMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::AnyElementContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
     pub uri: Option<String>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1541,8 +1541,8 @@ pub struct ExtensionMirror {
 pub struct ExtensionListMirror {
     #[rkyv(omit_bounds)]
     pub extension: Vec<super::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1551,8 +1551,8 @@ pub struct ExtensionListMirror {
 pub struct ExtentsMirror {
     pub cx: Option<super::PositiveCoordinate>,
     pub cy: Option<super::PositiveCoordinate>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1566,8 +1566,8 @@ pub struct ExtraColorSchemeMirror {
     pub color_map: Option<Box<super::ColorMap>>,
     #[rkyv(omit_bounds)]
     pub color_scheme: Box<super::ColorScheme>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1577,10 +1577,10 @@ pub struct ExtraColorSchemeMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtraColorSchemeListMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub extra_color_scheme: Vec<super::ExtraColorScheme>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1588,8 +1588,8 @@ pub struct ExtraColorSchemeListMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtrusionColorMirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1601,8 +1601,8 @@ pub struct ExtrusionColorMirror {
 pub struct FillMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::FillPropertiesContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1614,8 +1614,8 @@ pub struct FillMirror {
 pub struct FillFillEffectMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::FillPropertiesContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1628,8 +1628,8 @@ pub struct FillOverlayEffectMirror {
     pub blend: Option<super::BlendMode>,
     #[rkyv(omit_bounds)]
     pub content: Box<super::FillPropertiesContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1637,11 +1637,11 @@ pub struct FillOverlayEffectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FillRectangleMirror {
     pub b: Option<super::Percentage>,
-    pub extra: (),
     pub l: Option<super::Percentage>,
     pub r: Option<super::Percentage>,
     pub t: Option<super::Percentage>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1649,9 +1649,9 @@ pub struct FillRectangleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FillReferenceMirror {
     pub content: Option<Box<super::ColorContent>>,
-    pub extra: (),
     pub idx: Option<super::StyleMatrixColumnIndex>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1663,8 +1663,8 @@ pub struct FillReferenceMirror {
 pub struct FillStyleListMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::FillPropertiesContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1672,11 +1672,11 @@ pub struct FillStyleListMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FillToRectangleMirror {
     pub b: Option<super::Percentage>,
-    pub extra: (),
     pub l: Option<super::Percentage>,
     pub r: Option<super::Percentage>,
     pub t: Option<super::Percentage>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1686,12 +1686,12 @@ pub struct FillToRectangleMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct FirstColumnMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub table_cell_style: Option<Box<super::TableCellStyle>>,
     #[rkyv(omit_bounds)]
     pub table_cell_text_style: Option<Box<super::TableCellTextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1701,28 +1701,28 @@ pub struct FirstColumnMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct FirstRowMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub table_cell_style: Option<Box<super::TableCellStyle>>,
     #[rkyv(omit_bounds)]
     pub table_cell_text_style: Option<Box<super::TableCellTextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FollowTextBuClrTx)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FollowTextBuClrTxMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FollowTextBuFontTx)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FollowTextBuFontTxMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1730,18 +1730,18 @@ pub struct FollowTextBuFontTxMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FollowedHyperlinkMirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Font)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FontMirror {
-    pub extra: (),
     pub script: Option<String>,
     pub typeface: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1755,10 +1755,10 @@ pub struct FontFontCollectionMirror {
     pub east_asian_font: Box<super::EastAsianFont>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub font: Vec<super::Font>,
     pub latin_font: Box<super::LatinFont>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1766,9 +1766,9 @@ pub struct FontFontCollectionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FontReferenceMirror {
     pub content: Option<Box<super::ColorContent>>,
-    pub extra: (),
     pub idx: Option<super::FontCollectionIndex>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1780,13 +1780,13 @@ pub struct FontReferenceMirror {
 pub struct FontSchemeMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub major_font: Box<super::MajorFont>,
     #[rkyv(omit_bounds)]
     pub minor_fonts: Box<super::MinorFonts>,
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1794,8 +1794,8 @@ pub struct FontSchemeMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ForegroundColorMirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1809,21 +1809,21 @@ pub struct FormatSchemeMirror {
     pub background_fill_style_list: Box<super::BackgroundFillStyleList>,
     #[rkyv(omit_bounds)]
     pub effect_style_list: Box<super::EffectStyleList>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub fill_style_list: Box<super::FillStyleList>,
     #[rkyv(omit_bounds)]
     pub line_style_list: Box<super::LineStyleList>,
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Gamma)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GammaMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1831,9 +1831,9 @@ pub struct GammaMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct GlowEffectMirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub rad: Option<super::PositiveCoordinate>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1841,21 +1841,21 @@ pub struct GlowEffectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct GradientFillMirror {
     pub content: Option<Box<super::GradientFillContent>>,
-    pub extra: (),
     pub flip: Option<super::TileFlipMode>,
     pub gradient_stop_list: Option<Box<super::GradientStopList>>,
     pub rot_with_shape: Option<String>,
     pub tile_rectangle: Option<Box<super::TileRectangle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::GradientStopList)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GradientStopListMirror {
-    pub extra: (),
     pub gradient_stops: Vec<super::GradientStops>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1863,9 +1863,9 @@ pub struct GradientStopListMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct GradientStopsMirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub pos: Option<super::PositiveFixedPercentage>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1877,12 +1877,12 @@ pub struct GradientStopsMirror {
 pub struct GraphicFrameMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub graphic_object: Box<super::GraphicObject>,
     #[rkyv(omit_bounds)]
     pub non_visual_properties: Box<super::NonVisualPropertiesForAGraphicFrame>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xfrm_transform2d: Box<super::XfrmTransform2D>,
 }
 
@@ -1895,7 +1895,6 @@ pub struct GraphicFrameMirror {
 pub struct GraphicFrameLocksMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub no_change_aspect: Option<String>,
     pub no_drilldown: Option<String>,
     pub no_grp: Option<String>,
@@ -1903,6 +1902,7 @@ pub struct GraphicFrameLocksMirror {
     pub no_resize: Option<String>,
     pub no_select: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1914,8 +1914,8 @@ pub struct GraphicFrameLocksMirror {
 pub struct GraphicObjectMirror {
     #[rkyv(omit_bounds)]
     pub data: Box<super::GraphicObjectData>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1927,33 +1927,33 @@ pub struct GraphicObjectMirror {
 pub struct GraphicObjectDataMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::AnyElementContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
     pub uri: Option<String>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Gray)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GrayMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::GrayScaleEffect)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GrayScaleEffectMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Green)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GreenMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Percentage>,
 }
 
@@ -1961,8 +1961,8 @@ pub struct GreenMirror {
 #[rkyv(remote = super::GreenModulation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GreenModulationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Percentage>,
 }
 
@@ -1970,8 +1970,8 @@ pub struct GreenModulationMirror {
 #[rkyv(remote = super::GreenOffset)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GreenOffsetMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Percentage>,
 }
 
@@ -1979,8 +1979,8 @@ pub struct GreenOffsetMirror {
 #[rkyv(remote = super::GroupFill)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GroupFillMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1994,10 +1994,10 @@ pub struct GroupShapeMirror {
     pub content: Vec<super::GroupShapeContent>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub non_visual_properties: Box<super::NonVisualPropertiesForAGroupShape>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     #[rkyv(omit_bounds)]
     pub visual_group_shape_properties: Box<super::VisualGroupShapeProperties>,
 }
@@ -2011,7 +2011,6 @@ pub struct GroupShapeMirror {
 pub struct GroupShapeLocksMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub no_change_aspect: Option<String>,
     pub no_grp: Option<String>,
     pub no_move: Option<String>,
@@ -2020,14 +2019,15 @@ pub struct GroupShapeLocksMirror {
     pub no_select: Option<String>,
     pub no_ungrp: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::HeaderCellReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HeaderCellReferenceMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -2035,9 +2035,9 @@ pub struct HeaderCellReferenceMirror {
 #[rkyv(remote = super::HeaderCellsAssociatedWithTableCell)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HeaderCellsAssociatedWithTableCellMirror {
-    pub extra: (),
     pub header_cell_reference: Vec<super::HeaderCellReference>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2045,8 +2045,8 @@ pub struct HeaderCellsAssociatedWithTableCellMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct HighlightColorMirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2054,17 +2054,17 @@ pub struct HighlightColorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct HorizontalRatioMirror {
     pub d: Option<String>,
-    pub extra: (),
     pub n: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Hue)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HueMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::PositiveFixedAngle>,
 }
 
@@ -2072,8 +2072,8 @@ pub struct HueMirror {
 #[rkyv(remote = super::HueModulate)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HueModulateMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::PositivePercentageValueWithSign>,
 }
 
@@ -2081,8 +2081,8 @@ pub struct HueModulateMirror {
 #[rkyv(remote = super::HueOffset)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HueOffsetMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Angle>,
 }
 
@@ -2091,22 +2091,22 @@ pub struct HueOffsetMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct HueSaturationLuminanceColorModelMirror {
     pub content: Vec<super::ColorTransformContent>,
-    pub extra: (),
     pub hue: Option<super::PositiveFixedAngle>,
     pub lum: Option<super::Percentage>,
     pub sat: Option<super::Percentage>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::HueSaturationLuminanceEffect)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HueSaturationLuminanceEffectMirror {
-    pub extra: (),
     pub hue: Option<super::PositiveFixedAngle>,
     pub lum: Option<super::FixedPercentage>,
     pub sat: Option<super::FixedPercentage>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2114,8 +2114,8 @@ pub struct HueSaturationLuminanceEffectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct HyperlinkMirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2129,7 +2129,6 @@ pub struct HyperlinkForHoverMirror {
     pub end_snd: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub highlight_click: Option<String>,
     pub history: Option<String>,
     pub hyperlink_sound: Option<Box<super::HyperlinkSound>>,
@@ -2138,6 +2137,7 @@ pub struct HyperlinkForHoverMirror {
     pub tgt_frame: Option<String>,
     pub tooltip: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2145,9 +2145,9 @@ pub struct HyperlinkForHoverMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct HyperlinkSoundMirror {
     pub embed: Option<String>,
-    pub extra: (),
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2158,8 +2158,8 @@ pub struct InnerShadowEffectMirror {
     pub content: Box<super::ColorContent>,
     pub dir: Option<super::PositiveFixedAngle>,
     pub dist: Option<super::PositiveCoordinate>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2171,8 +2171,8 @@ pub struct InnerShadowEffectMirror {
 pub struct InsideHorizontalBorderMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::ThemeableLineStyleContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2184,24 +2184,24 @@ pub struct InsideHorizontalBorderMirror {
 pub struct InsideVerticalBorderMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::ThemeableLineStyleContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Inverse)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InverseMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::InverseGamma)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InverseGammaMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2211,12 +2211,12 @@ pub struct InverseGammaMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct LastColumnMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub table_cell_style: Option<Box<super::TableCellStyle>>,
     #[rkyv(omit_bounds)]
     pub table_cell_text_style: Option<Box<super::TableCellTextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2226,12 +2226,12 @@ pub struct LastColumnMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct LastRowMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub table_cell_style: Option<Box<super::TableCellStyle>>,
     #[rkyv(omit_bounds)]
     pub table_cell_text_style: Option<Box<super::TableCellTextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2239,11 +2239,11 @@ pub struct LastRowMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct LatinFontMirror {
     pub charset: Option<String>,
-    pub extra: (),
     pub panose: Option<common_simple_types::Panose1Number>,
     pub pitch_family: Option<super::PitchFamily>,
     pub typeface: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2255,8 +2255,8 @@ pub struct LatinFontMirror {
 pub struct LeftBorderMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::ThemeableLineStyleContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2271,13 +2271,13 @@ pub struct LeftBorderLinePropertiesMirror {
     pub cmpd: Option<super::CompoundLineType>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub line_dash_content: Option<Box<super::LineDashContent>>,
     pub line_fill_content: Option<Box<super::LineFillContent>>,
     pub line_head_end_style: Option<Box<super::LineHeadEndStyle>>,
     pub line_join_content: Option<Box<super::LineJoinContent>>,
     pub tail_line_end_style: Option<Box<super::TailLineEndStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::LineWidth>,
 }
 
@@ -2286,8 +2286,8 @@ pub struct LeftBorderLinePropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct Light1Mirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2295,8 +2295,8 @@ pub struct Light1Mirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct Light2Mirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2304,10 +2304,10 @@ pub struct Light2Mirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct LightRigMirror {
     pub dir: Option<super::LightRigDirection>,
-    pub extra: (),
     pub rig: Option<super::LightRigType>,
     pub rotation: Option<Box<super::Rotation>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2321,23 +2321,23 @@ pub struct LineDefaultMirror {
     pub body_properties: Box<super::BodyProperties>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub shape_properties: Box<super::ShapeProperties>,
     pub shape_style: Option<Box<super::ShapeStyle>>,
     #[rkyv(omit_bounds)]
     pub text_list_styles: Box<super::TextListStyles>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LineHeadEndStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineHeadEndStyleMirror {
-    pub extra: (),
     pub len: Option<super::LineEndLength>,
     pub r#type: Option<super::LineEndType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::LineEndWidth>,
 }
 
@@ -2345,8 +2345,8 @@ pub struct LineHeadEndStyleMirror {
 #[rkyv(remote = super::LineJoinBevel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineJoinBevelMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2354,9 +2354,9 @@ pub struct LineJoinBevelMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct LineReferenceMirror {
     pub content: Option<Box<super::ColorContent>>,
-    pub extra: (),
     pub idx: Option<super::StyleMatrixColumnIndex>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2364,8 +2364,8 @@ pub struct LineReferenceMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct LineSpacingMirror {
     pub content: Box<super::TextSpacingContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2375,10 +2375,10 @@ pub struct LineSpacingMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineStyleListMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub outline: Vec<super::Outline>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2386,9 +2386,9 @@ pub struct LineStyleListMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct LinearGradientFillMirror {
     pub ang: Option<super::PositiveFixedAngle>,
-    pub extra: (),
     pub scaled: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2405,7 +2405,6 @@ pub struct ListLevel1TextStyleMirror {
     pub ea_ln_brk: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub font_algn: Option<super::FontAlignmentTypes>,
     pub hanging_punct: Option<String>,
     pub indent: Option<super::TextIndentation>,
@@ -2424,6 +2423,7 @@ pub struct ListLevel1TextStyleMirror {
     pub text_bullet_size_content: Option<Box<super::TextBulletSizeContent>>,
     pub text_bullet_typeface_content: Option<Box<super::TextBulletTypefaceContent>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2440,7 +2440,6 @@ pub struct ListLevel2TextStyleMirror {
     pub ea_ln_brk: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub font_algn: Option<super::FontAlignmentTypes>,
     pub hanging_punct: Option<String>,
     pub indent: Option<super::TextIndentation>,
@@ -2459,6 +2458,7 @@ pub struct ListLevel2TextStyleMirror {
     pub text_bullet_size_content: Option<Box<super::TextBulletSizeContent>>,
     pub text_bullet_typeface_content: Option<Box<super::TextBulletTypefaceContent>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2475,7 +2475,6 @@ pub struct ListLevel3TextStyleMirror {
     pub ea_ln_brk: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub font_algn: Option<super::FontAlignmentTypes>,
     pub hanging_punct: Option<String>,
     pub indent: Option<super::TextIndentation>,
@@ -2494,6 +2493,7 @@ pub struct ListLevel3TextStyleMirror {
     pub text_bullet_size_content: Option<Box<super::TextBulletSizeContent>>,
     pub text_bullet_typeface_content: Option<Box<super::TextBulletTypefaceContent>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2510,7 +2510,6 @@ pub struct ListLevel4TextStyleMirror {
     pub ea_ln_brk: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub font_algn: Option<super::FontAlignmentTypes>,
     pub hanging_punct: Option<String>,
     pub indent: Option<super::TextIndentation>,
@@ -2529,6 +2528,7 @@ pub struct ListLevel4TextStyleMirror {
     pub text_bullet_size_content: Option<Box<super::TextBulletSizeContent>>,
     pub text_bullet_typeface_content: Option<Box<super::TextBulletTypefaceContent>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2545,7 +2545,6 @@ pub struct ListLevel5TextStyleMirror {
     pub ea_ln_brk: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub font_algn: Option<super::FontAlignmentTypes>,
     pub hanging_punct: Option<String>,
     pub indent: Option<super::TextIndentation>,
@@ -2564,6 +2563,7 @@ pub struct ListLevel5TextStyleMirror {
     pub text_bullet_size_content: Option<Box<super::TextBulletSizeContent>>,
     pub text_bullet_typeface_content: Option<Box<super::TextBulletTypefaceContent>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2580,7 +2580,6 @@ pub struct ListLevel6TextStyleMirror {
     pub ea_ln_brk: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub font_algn: Option<super::FontAlignmentTypes>,
     pub hanging_punct: Option<String>,
     pub indent: Option<super::TextIndentation>,
@@ -2599,6 +2598,7 @@ pub struct ListLevel6TextStyleMirror {
     pub text_bullet_size_content: Option<Box<super::TextBulletSizeContent>>,
     pub text_bullet_typeface_content: Option<Box<super::TextBulletTypefaceContent>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2615,7 +2615,6 @@ pub struct ListLevel7TextStyleMirror {
     pub ea_ln_brk: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub font_algn: Option<super::FontAlignmentTypes>,
     pub hanging_punct: Option<String>,
     pub indent: Option<super::TextIndentation>,
@@ -2634,6 +2633,7 @@ pub struct ListLevel7TextStyleMirror {
     pub text_bullet_size_content: Option<Box<super::TextBulletSizeContent>>,
     pub text_bullet_typeface_content: Option<Box<super::TextBulletTypefaceContent>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2650,7 +2650,6 @@ pub struct ListLevel8TextStyleMirror {
     pub ea_ln_brk: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub font_algn: Option<super::FontAlignmentTypes>,
     pub hanging_punct: Option<String>,
     pub indent: Option<super::TextIndentation>,
@@ -2669,6 +2668,7 @@ pub struct ListLevel8TextStyleMirror {
     pub text_bullet_size_content: Option<Box<super::TextBulletSizeContent>>,
     pub text_bullet_typeface_content: Option<Box<super::TextBulletTypefaceContent>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2685,7 +2685,6 @@ pub struct ListLevel9TextStyleMirror {
     pub ea_ln_brk: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub font_algn: Option<super::FontAlignmentTypes>,
     pub hanging_punct: Option<String>,
     pub indent: Option<super::TextIndentation>,
@@ -2704,6 +2703,7 @@ pub struct ListLevel9TextStyleMirror {
     pub text_bullet_size_content: Option<Box<super::TextBulletSizeContent>>,
     pub text_bullet_typeface_content: Option<Box<super::TextBulletTypefaceContent>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2711,52 +2711,52 @@ pub struct ListLevel9TextStyleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ListOfShapeAdjustHandlesMirror {
     pub content: Vec<super::ShapeAdjustHandlesContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ListOfShapeAdjustValues)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ListOfShapeAdjustValuesMirror {
-    pub extra: (),
     pub shape_guide: Vec<super::ShapeGuide>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ListOfShapeConnectionSites)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ListOfShapeConnectionSitesMirror {
-    pub extra: (),
     pub shape_connection_site: Vec<super::ShapeConnectionSite>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ListOfShapeGuides)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ListOfShapeGuidesMirror {
-    pub extra: (),
     pub shape_guide: Vec<super::ShapeGuide>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ListOfShapePaths)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ListOfShapePathsMirror {
-    pub extra: (),
     pub shape_path: Vec<super::ShapePath>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Luminance)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LuminanceMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Percentage>,
 }
 
@@ -2766,16 +2766,16 @@ pub struct LuminanceMirror {
 pub struct LuminanceEffectMirror {
     pub bright: Option<super::FixedPercentage>,
     pub contrast: Option<super::FixedPercentage>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LuminanceModulation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LuminanceModulationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Percentage>,
 }
 
@@ -2783,8 +2783,8 @@ pub struct LuminanceModulationMirror {
 #[rkyv(remote = super::LuminanceOffset)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LuminanceOffsetMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Percentage>,
 }
 
@@ -2799,18 +2799,18 @@ pub struct MajorFontMirror {
     pub east_asian_font: Box<super::EastAsianFont>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub font: Vec<super::Font>,
     pub latin_font: Box<super::LatinFont>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::MasterColorMapping)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MasterColorMappingMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2824,19 +2824,19 @@ pub struct MinorFontsMirror {
     pub east_asian_font: Box<super::EastAsianFont>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub font: Vec<super::Font>,
     pub latin_font: Box<super::LatinFont>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::MiterLineJoin)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MiterLineJoinMirror {
-    pub extra: (),
     pub lim: Option<super::PositivePercentageValueWithSign>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2850,7 +2850,6 @@ pub struct MouseOverHyperlinkMirror {
     pub end_snd: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub highlight_click: Option<String>,
     pub history: Option<String>,
     pub id: Option<String>,
@@ -2859,47 +2858,48 @@ pub struct MouseOverHyperlinkMirror {
     pub tgt_frame: Option<String>,
     pub tooltip: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::MovePathTo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MovePathToMirror {
-    pub extra: (),
     pub shape_path_point: Box<super::ShapePathPoint>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::NoAutoFit)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NoAutoFitMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::NoBullet)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NoBulletMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::NoFill)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NoFillMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::NoTextIn3DScene)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NoTextIn3DSceneMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub z: Option<super::Coordinate>,
 }
 
@@ -2916,8 +2916,8 @@ pub struct NonVisualConnectorShapeDrawingPropertiesMirror {
     pub connection_start: Option<Box<super::ConnectionStart>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2932,7 +2932,6 @@ pub struct NonVisualDrawingPropertiesMirror {
     pub descr: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub hidden: Option<String>,
     #[rkyv(omit_bounds)]
     pub hyperlink_for_hover: Option<Box<super::HyperlinkForHover>>,
@@ -2940,6 +2939,7 @@ pub struct NonVisualDrawingPropertiesMirror {
     pub name: Option<String>,
     pub title: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2951,10 +2951,10 @@ pub struct NonVisualDrawingPropertiesMirror {
 pub struct NonVisualGraphicFrameDrawingPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub graphic_frame_locks: Option<Box<super::GraphicFrameLocks>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2966,10 +2966,10 @@ pub struct NonVisualGraphicFrameDrawingPropertiesMirror {
 pub struct NonVisualGroupShapeDrawingPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub group_shape_locks: Option<Box<super::GroupShapeLocks>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2981,11 +2981,11 @@ pub struct NonVisualGroupShapeDrawingPropertiesMirror {
 pub struct NonVisualPictureDrawingPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub picture_locks: Option<Box<super::PictureLocks>>,
     pub prefer_relative_resize: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2995,13 +2995,13 @@ pub struct NonVisualPictureDrawingPropertiesMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonVisualPropertiesForAConnectionShapeMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub non_visual_connector_shape_drawing_properties:
         Box<super::NonVisualConnectorShapeDrawingProperties>,
     #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3011,13 +3011,13 @@ pub struct NonVisualPropertiesForAConnectionShapeMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonVisualPropertiesForAGraphicFrameMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
     #[rkyv(omit_bounds)]
     pub non_visual_graphic_frame_drawing_properties:
         Box<super::NonVisualGraphicFrameDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3027,12 +3027,12 @@ pub struct NonVisualPropertiesForAGraphicFrameMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonVisualPropertiesForAGroupShapeMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
     #[rkyv(omit_bounds)]
     pub non_visual_group_shape_drawing_properties: Box<super::NonVisualGroupShapeDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3042,12 +3042,12 @@ pub struct NonVisualPropertiesForAGroupShapeMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonVisualPropertiesForAPictureMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
     #[rkyv(omit_bounds)]
     pub non_visual_picture_drawing_properties: Box<super::NonVisualPictureDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3057,12 +3057,12 @@ pub struct NonVisualPropertiesForAPictureMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonVisualPropertiesForAShapeMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
     #[rkyv(omit_bounds)]
     pub non_visual_shape_drawing_properties: Box<super::NonVisualShapeDrawingProperties>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3074,11 +3074,11 @@ pub struct NonVisualPropertiesForAShapeMirror {
 pub struct NonVisualShapeDrawingPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub shape_locks: Option<Box<super::ShapeLocks>>,
     pub tx_box: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3088,18 +3088,18 @@ pub struct NormalMirror {
     pub dx: Option<super::Coordinate>,
     pub dy: Option<super::Coordinate>,
     pub dz: Option<super::Coordinate>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::NormalAutoFit)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NormalAutoFitMirror {
-    pub extra: (),
     pub font_scale: Option<super::StTextFontScalePercentOrPercentString>,
     pub ln_spc_reduction: Option<super::StTextSpacingPercentOrPercentString>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3109,12 +3109,12 @@ pub struct NormalAutoFitMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct NortheastCellMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub table_cell_style: Option<Box<super::TableCellStyle>>,
     #[rkyv(omit_bounds)]
     pub table_cell_text_style: Option<Box<super::TableCellTextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3124,12 +3124,12 @@ pub struct NortheastCellMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct NorthwestCellMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub table_cell_style: Option<Box<super::TableCellStyle>>,
     #[rkyv(omit_bounds)]
     pub table_cell_text_style: Option<Box<super::TableCellTextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3141,7 +3141,6 @@ pub struct NorthwestCellMirror {
 pub struct ObjectDefaultsMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub line_default: Option<Box<super::LineDefault>>,
     #[rkyv(omit_bounds)]
@@ -3149,14 +3148,15 @@ pub struct ObjectDefaultsMirror {
     #[rkyv(omit_bounds)]
     pub text_default: Option<Box<super::TextDefault>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Offset)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OffsetMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub x: Option<super::Coordinate>,
     pub y: Option<super::Coordinate>,
 }
@@ -3170,13 +3170,13 @@ pub struct OuterShadowEffectMirror {
     pub content: Box<super::ColorContent>,
     pub dir: Option<super::PositiveFixedAngle>,
     pub dist: Option<super::PositiveCoordinate>,
-    pub extra: (),
     pub kx: Option<super::FixedAngle>,
     pub ky: Option<super::FixedAngle>,
     pub rot_with_shape: Option<String>,
     pub sx: Option<super::Percentage>,
     pub sy: Option<super::Percentage>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3191,13 +3191,13 @@ pub struct OutlineMirror {
     pub cmpd: Option<super::CompoundLineType>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub line_dash_content: Option<Box<super::LineDashContent>>,
     pub line_fill_content: Option<Box<super::LineFillContent>>,
     pub line_head_end_style: Option<Box<super::LineHeadEndStyle>>,
     pub line_join_content: Option<Box<super::LineJoinContent>>,
     pub tail_line_end_style: Option<Box<super::TailLineEndStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::LineWidth>,
 }
 
@@ -3218,22 +3218,22 @@ pub struct OverrideColorMappingMirror {
     pub bg2: Option<super::ThemeColorReference>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub fol_hlink: Option<super::ThemeColorReference>,
     pub hlink: Option<super::ThemeColorReference>,
     pub tx1: Option<super::ThemeColorReference>,
     pub tx2: Option<super::ThemeColorReference>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PathGradient)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PathGradientMirror {
-    pub extra: (),
     pub fill_to_rectangle: Option<Box<super::FillToRectangle>>,
     pub path: Option<super::PathShadeType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3241,10 +3241,10 @@ pub struct PathGradientMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PatternFillMirror {
     pub background_color: Option<Box<super::BackgroundColor>>,
-    pub extra: (),
     pub foreground_color: Option<Box<super::ForegroundColor>>,
     pub prst: Option<super::PresetPatternValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3256,7 +3256,6 @@ pub struct PatternFillMirror {
 pub struct PictureMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub fill: Box<super::PictureFill>,
     #[rkyv(omit_bounds)]
@@ -3265,6 +3264,7 @@ pub struct PictureMirror {
     pub shape_properties: Box<super::ShapeProperties>,
     pub shape_style: Option<Box<super::ShapeStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3276,8 +3276,8 @@ pub struct PictureMirror {
 pub struct PictureBulletMirror {
     #[rkyv(omit_bounds)]
     pub blip: Box<super::Blip>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3291,10 +3291,10 @@ pub struct PictureFillMirror {
     pub blip: Option<Box<super::Blip>>,
     pub content: Option<Box<super::FillModeContent>>,
     pub dpi: Option<String>,
-    pub extra: (),
     pub rot_with_shape: Option<String>,
     pub source_rectangle: Option<Box<super::SourceRectangle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3306,7 +3306,6 @@ pub struct PictureFillMirror {
 pub struct PictureLocksMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub no_adjust_handles: Option<String>,
     pub no_change_arrowheads: Option<String>,
     pub no_change_aspect: Option<String>,
@@ -3319,13 +3318,13 @@ pub struct PictureLocksMirror {
     pub no_rot: Option<String>,
     pub no_select: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PolarAdjustHandle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PolarAdjustHandleMirror {
-    pub extra: (),
     pub gd_ref_ang: Option<String>,
     pub gd_ref_r: Option<String>,
     pub max_ang: Option<super::AdjustableAngleMethods>,
@@ -3334,6 +3333,7 @@ pub struct PolarAdjustHandleMirror {
     pub min_r: Option<super::AdjustableCoordinateMethods>,
     pub shape_position_coordinate: Box<super::ShapePositionCoordinate>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3341,8 +3341,8 @@ pub struct PolarAdjustHandleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PresetColorMirror {
     pub content: Vec<super::ColorTransformContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::PresetColorValue>,
 }
 
@@ -3350,8 +3350,8 @@ pub struct PresetColorMirror {
 #[rkyv(remote = super::PresetDash)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PresetDashMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::PresetLineDashValue>,
 }
 
@@ -3359,10 +3359,10 @@ pub struct PresetDashMirror {
 #[rkyv(remote = super::PresetGeometry)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PresetGeometryMirror {
-    pub extra: (),
     pub list_of_shape_adjust_values: Option<Box<super::ListOfShapeAdjustValues>>,
     pub prst: Option<super::PresetShapeTypes>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3372,19 +3372,19 @@ pub struct PresetShadowMirror {
     pub content: Box<super::ColorContent>,
     pub dir: Option<super::PositiveFixedAngle>,
     pub dist: Option<super::PositiveCoordinate>,
-    pub extra: (),
     pub prst: Option<super::PresetShadowType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PresetTextWarp)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PresetTextWarpMirror {
-    pub extra: (),
     pub list_of_shape_adjust_values: Option<Box<super::ListOfShapeAdjustValues>>,
     pub prst: Option<super::PresetTextShapeTypes>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3396,9 +3396,9 @@ pub struct PresetTextWarpMirror {
 pub struct QuickTimeFromFileMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub link: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3406,9 +3406,9 @@ pub struct QuickTimeFromFileMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RGBColorModelHexVariantMirror {
     pub content: Vec<super::ColorTransformContent>,
-    pub extra: (),
     pub legacy_spreadsheet_color_index: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::HexadecimalColorValue>,
 }
 
@@ -3418,18 +3418,18 @@ pub struct RGBColorModelHexVariantMirror {
 pub struct RGBColorModelPercentageVariantMirror {
     pub b: Option<super::Percentage>,
     pub content: Vec<super::ColorTransformContent>,
-    pub extra: (),
     pub g: Option<super::Percentage>,
     pub r: Option<super::Percentage>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Red)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RedMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Percentage>,
 }
 
@@ -3437,8 +3437,8 @@ pub struct RedMirror {
 #[rkyv(remote = super::RedModulation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RedModulationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Percentage>,
 }
 
@@ -3446,8 +3446,8 @@ pub struct RedModulationMirror {
 #[rkyv(remote = super::RedOffset)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RedOffsetMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Percentage>,
 }
 
@@ -3461,7 +3461,6 @@ pub struct ReflectionEffectMirror {
     pub dist: Option<super::PositiveCoordinate>,
     pub end_a: Option<super::PositiveFixedPercentage>,
     pub end_pos: Option<super::PositiveFixedPercentage>,
-    pub extra: (),
     pub fade_dir: Option<super::PositiveFixedAngle>,
     pub kx: Option<super::FixedAngle>,
     pub ky: Option<super::FixedAngle>,
@@ -3471,16 +3470,17 @@ pub struct ReflectionEffectMirror {
     pub sx: Option<super::Percentage>,
     pub sy: Option<super::Percentage>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RelativeOffsetEffect)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RelativeOffsetEffectMirror {
-    pub extra: (),
     pub tx: Option<super::Percentage>,
     pub ty: Option<super::Percentage>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3492,8 +3492,8 @@ pub struct RelativeOffsetEffectMirror {
 pub struct RightBorderMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::ThemeableLineStyleContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3508,13 +3508,13 @@ pub struct RightBorderLinePropertiesMirror {
     pub cmpd: Option<super::CompoundLineType>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub line_dash_content: Option<Box<super::LineDashContent>>,
     pub line_fill_content: Option<Box<super::LineFillContent>>,
     pub line_head_end_style: Option<Box<super::LineHeadEndStyle>>,
     pub line_join_content: Option<Box<super::LineJoinContent>>,
     pub tail_line_end_style: Option<Box<super::TailLineEndStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::LineWidth>,
 }
 
@@ -3522,8 +3522,8 @@ pub struct RightBorderLinePropertiesMirror {
 #[rkyv(remote = super::RightToLeftRun)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RightToLeftRunMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
 
@@ -3531,27 +3531,27 @@ pub struct RightToLeftRunMirror {
 #[rkyv(remote = super::Rotation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RotationMirror {
-    pub extra: (),
     pub lat: Option<super::PositiveFixedAngle>,
     pub lon: Option<super::PositiveFixedAngle>,
     pub rev: Option<super::PositiveFixedAngle>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RoundLineJoin)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RoundLineJoinMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Saturation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SaturationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Percentage>,
 }
 
@@ -3559,8 +3559,8 @@ pub struct SaturationMirror {
 #[rkyv(remote = super::SaturationModulation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SaturationModulationMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Percentage>,
 }
 
@@ -3568,8 +3568,8 @@ pub struct SaturationModulationMirror {
 #[rkyv(remote = super::SaturationOffset)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SaturationOffsetMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::Percentage>,
 }
 
@@ -3585,9 +3585,9 @@ pub struct Scene3dMirror {
     pub camera: Box<super::Camera>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub light_rig: Box<super::LightRig>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3595,8 +3595,8 @@ pub struct Scene3dMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SchemeColorMirror {
     pub content: Vec<super::ColorTransformContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StSchemeColorVal>,
 }
 
@@ -3604,8 +3604,8 @@ pub struct SchemeColorMirror {
 #[rkyv(remote = super::Shade)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShadeMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::PositiveFixedPercentage>,
 }
 
@@ -3618,7 +3618,6 @@ pub struct ShadeMirror {
 pub struct ShapeMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub non_visual_properties: Box<super::NonVisualPropertiesForAShape>,
     #[rkyv(omit_bounds)]
@@ -3627,14 +3626,15 @@ pub struct ShapeMirror {
     #[rkyv(omit_bounds)]
     pub text: Option<Box<super::TextShape>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ShapeAutoFit)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeAutoFitMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3642,9 +3642,9 @@ pub struct ShapeAutoFitMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeConnectionSiteMirror {
     pub ang: Option<super::AdjustableAngleMethods>,
-    pub extra: (),
     pub shape_position_coordinate: Box<super::ShapePositionCoordinate>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3658,23 +3658,23 @@ pub struct ShapeDefaultMirror {
     pub body_properties: Box<super::BodyProperties>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub shape_properties: Box<super::ShapeProperties>,
     pub shape_style: Option<Box<super::ShapeStyle>>,
     #[rkyv(omit_bounds)]
     pub text_list_styles: Box<super::TextListStyles>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ShapeGuide)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeGuideMirror {
-    pub extra: (),
     pub fmla: Option<String>,
     pub name: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3686,7 +3686,6 @@ pub struct ShapeGuideMirror {
 pub struct ShapeLocksMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub no_adjust_handles: Option<String>,
     pub no_change_arrowheads: Option<String>,
     pub no_change_aspect: Option<String>,
@@ -3699,6 +3698,7 @@ pub struct ShapeLocksMirror {
     pub no_select: Option<String>,
     pub no_text_edit: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3706,12 +3706,12 @@ pub struct ShapeLocksMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapePathMirror {
     pub content: Vec<super::ShapePathContent>,
-    pub extra: (),
     pub extrusion_ok: Option<String>,
     pub fill: Option<super::PathFillMode>,
     pub h: Option<super::PositiveCoordinate>,
     pub stroke: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::PositiveCoordinate>,
 }
 
@@ -3719,8 +3719,8 @@ pub struct ShapePathMirror {
 #[rkyv(remote = super::ShapePathPoint)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapePathPointMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub x: Option<super::AdjustableCoordinateMethods>,
     pub y: Option<super::AdjustableCoordinateMethods>,
 }
@@ -3729,8 +3729,8 @@ pub struct ShapePathPointMirror {
 #[rkyv(remote = super::ShapePositionCoordinate)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapePositionCoordinateMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub x: Option<super::AdjustableCoordinateMethods>,
     pub y: Option<super::AdjustableCoordinateMethods>,
 }
@@ -3749,7 +3749,6 @@ pub struct ShapePropertiesMirror {
     pub effect_properties_content: Option<Box<super::EffectPropertiesContent>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::FillPropertiesContent>>,
     pub geometry_content: Option<Box<super::GeometryContent>>,
@@ -3758,6 +3757,7 @@ pub struct ShapePropertiesMirror {
     #[rkyv(omit_bounds)]
     pub scene3d: Option<Box<super::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xfrm_transform2d: Option<Box<super::XfrmTransform2D>>,
 }
 
@@ -3766,11 +3766,11 @@ pub struct ShapePropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeStyleMirror {
     pub effect_reference: Box<super::EffectReference>,
-    pub extra: (),
     pub fill_reference: Box<super::FillReference>,
     pub font_reference: Box<super::FontReference>,
     pub line_reference: Box<super::LineReference>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3780,7 +3780,6 @@ pub struct ShapeStyleMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeTextBodyMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub properties: Box<super::BodyProperties>,
     #[rkyv(omit_bounds)]
@@ -3788,6 +3787,7 @@ pub struct ShapeTextBodyMirror {
     #[rkyv(omit_bounds)]
     pub text_paragraphs: Vec<super::TextParagraphs>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3795,20 +3795,20 @@ pub struct ShapeTextBodyMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeTextRectangleMirror {
     pub b: Option<super::AdjustableCoordinateMethods>,
-    pub extra: (),
     pub l: Option<super::AdjustableCoordinateMethods>,
     pub r: Option<super::AdjustableCoordinateMethods>,
     pub t: Option<super::AdjustableCoordinateMethods>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SoftEdgeEffect)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SoftEdgeEffectMirror {
-    pub extra: (),
     pub rad: Option<super::PositiveCoordinate>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3816,8 +3816,8 @@ pub struct SoftEdgeEffectMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SolidColorReplacementMirror {
     pub content: Box<super::ColorContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3825,8 +3825,8 @@ pub struct SolidColorReplacementMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SolidFillMirror {
     pub content: Option<Box<super::ColorContent>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3834,11 +3834,11 @@ pub struct SolidFillMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SourceRectangleMirror {
     pub b: Option<super::Percentage>,
-    pub extra: (),
     pub l: Option<super::Percentage>,
     pub r: Option<super::Percentage>,
     pub t: Option<super::Percentage>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3848,12 +3848,12 @@ pub struct SourceRectangleMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct SoutheastCellMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub table_cell_style: Option<Box<super::TableCellStyle>>,
     #[rkyv(omit_bounds)]
     pub table_cell_text_style: Option<Box<super::TableCellTextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3863,12 +3863,12 @@ pub struct SoutheastCellMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct SouthwestCellMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub table_cell_style: Option<Box<super::TableCellStyle>>,
     #[rkyv(omit_bounds)]
     pub table_cell_text_style: Option<Box<super::TableCellTextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3876,8 +3876,8 @@ pub struct SouthwestCellMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SpaceAfterMirror {
     pub content: Box<super::TextSpacingContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3885,16 +3885,16 @@ pub struct SpaceAfterMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SpaceBeforeMirror {
     pub content: Box<super::TextSpacingContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SpacingPercent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SpacingPercentMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::StTextSpacingPercentOrPercentString>,
 }
 
@@ -3902,8 +3902,8 @@ pub struct SpacingPercentMirror {
 #[rkyv(remote = super::SpacingPoints)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SpacingPointsMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::TextSpacingPoint>,
 }
 
@@ -3912,20 +3912,20 @@ pub struct SpacingPointsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SpecifiedMirror {
     pub charset: Option<String>,
-    pub extra: (),
     pub panose: Option<common_simple_types::Panose1Number>,
     pub pitch_family: Option<super::PitchFamily>,
     pub typeface: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Stretch)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StretchMirror {
-    pub extra: (),
     pub fill_rectangle: Option<Box<super::FillRectangle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3933,11 +3933,11 @@ pub struct StretchMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SymbolFontMirror {
     pub charset: Option<String>,
-    pub extra: (),
     pub panose: Option<common_simple_types::Panose1Number>,
     pub pitch_family: Option<super::PitchFamily>,
     pub typeface: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3945,9 +3945,9 @@ pub struct SymbolFontMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SystemColorMirror {
     pub content: Vec<super::ColorTransformContent>,
-    pub extra: (),
     pub last_clr: Option<common_simple_types::HexadecimalColorValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::SystemColorValue>,
 }
 
@@ -3955,9 +3955,9 @@ pub struct SystemColorMirror {
 #[rkyv(remote = super::TabList)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TabListMirror {
-    pub extra: (),
     pub tab_stop: Vec<super::TabStop>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3965,9 +3965,9 @@ pub struct TabListMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TabStopMirror {
     pub algn: Option<super::TextTabAlignmentTypes>,
-    pub extra: (),
     pub pos: Option<super::StCoordinate32>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3977,7 +3977,6 @@ pub struct TabStopMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub grid: Box<super::TableGrid>,
     #[rkyv(omit_bounds)]
@@ -3985,6 +3984,7 @@ pub struct TableMirror {
     #[rkyv(omit_bounds)]
     pub row: Vec<super::TableRow>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3996,10 +3996,10 @@ pub struct TableMirror {
 pub struct TableBackgroundMirror {
     #[rkyv(omit_bounds)]
     pub effect_content: Option<Box<super::TableBackgroundEffectContent>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub themeable_fill_style_content: Option<Box<super::ThemeableFillStyleContent>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4011,7 +4011,6 @@ pub struct TableBackgroundMirror {
 pub struct TableCellMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub grid_span: Option<String>,
     pub h_merge: Option<String>,
     pub id: Option<String>,
@@ -4021,6 +4020,7 @@ pub struct TableCellMirror {
     #[rkyv(omit_bounds)]
     pub shape_text_body: Option<Box<super::ShapeTextBody>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub v_merge: Option<String>,
 }
 
@@ -4035,7 +4035,6 @@ pub struct TableCellBordersMirror {
     pub bottom_border: Option<Box<super::BottomBorder>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub inside_horizontal_border: Option<Box<super::InsideHorizontalBorder>>,
     #[rkyv(omit_bounds)]
@@ -4051,6 +4050,7 @@ pub struct TableCellBordersMirror {
     #[rkyv(omit_bounds)]
     pub top_right_to_bottom_left_border: Option<Box<super::TopRightToBottomLeftBorder>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4073,7 +4073,6 @@ pub struct TableCellPropertiesMirror {
     pub content: Option<Box<super::FillPropertiesContent>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub header_cells_associated_with_table_cell:
         Option<Box<super::HeaderCellsAssociatedWithTableCell>>,
     pub horz_overflow: Option<super::TextHorizontalOverflowTypes>,
@@ -4091,6 +4090,7 @@ pub struct TableCellPropertiesMirror {
     pub top_left_to_bottom_right_border_line_properties:
         Option<Box<super::TopLeftToBottomRightBorderLineProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub vert: Option<super::VerticalTextTypes>,
 }
 
@@ -4105,10 +4105,10 @@ pub struct TableCellStyleMirror {
     pub cell_3_d: Option<Box<super::Cell3D>>,
     #[rkyv(omit_bounds)]
     pub content: Option<Box<super::ThemeableFillStyleContent>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub table_cell_borders: Option<Box<super::TableCellBorders>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4122,11 +4122,11 @@ pub struct TableCellTextStyleMirror {
     pub color_content: Option<Box<super::ColorContent>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub font_content: Option<Box<super::TableCellTextStyleFontContent>>,
     pub i: Option<super::OnOffStyleType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4138,8 +4138,8 @@ pub struct TableCellTextStyleMirror {
 pub struct TableGridMirror {
     #[rkyv(omit_bounds)]
     pub column: Vec<super::TableGridColumn>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4151,8 +4151,8 @@ pub struct TableGridMirror {
 pub struct TableGridColumnMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::Coordinate>,
 }
 
@@ -4169,7 +4169,6 @@ pub struct TablePropertiesMirror {
     pub effect_properties_content: Option<Box<super::EffectPropertiesContent>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::FillPropertiesContent>>,
     pub first_col: Option<String>,
@@ -4180,6 +4179,7 @@ pub struct TablePropertiesMirror {
     #[rkyv(omit_bounds)]
     pub style_content: Option<Box<super::TablePropertiesStyleContent>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4191,11 +4191,11 @@ pub struct TablePropertiesMirror {
 pub struct TableRowMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub h: Option<super::Coordinate>,
     #[rkyv(omit_bounds)]
     pub table_cell: Vec<super::TableCell>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4215,7 +4215,6 @@ pub struct TableStyleMirror {
     pub band_2_vertical: Option<Box<super::Band2Vertical>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub first_column: Option<Box<super::FirstColumn>>,
     #[rkyv(omit_bounds)]
@@ -4237,6 +4236,7 @@ pub struct TableStyleMirror {
     #[rkyv(omit_bounds)]
     pub table_background: Option<Box<super::TableBackground>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     #[rkyv(omit_bounds)]
     pub whole_table: Option<Box<super::WholeTable>>,
 }
@@ -4245,8 +4245,8 @@ pub struct TableStyleMirror {
 #[rkyv(remote = super::TableStyleID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableStyleIDMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: common_simple_types::Guid,
 }
 
@@ -4258,10 +4258,10 @@ pub struct TableStyleIDMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TableStyleListMirror {
     pub def: Option<common_simple_types::Guid>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub table_style_tbl_style: Vec<super::TableStyleTblStyle>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4281,7 +4281,6 @@ pub struct TableStyleTblStyleMirror {
     pub band_2_vertical: Option<Box<super::Band2Vertical>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub first_column: Option<Box<super::FirstColumn>>,
     #[rkyv(omit_bounds)]
@@ -4303,6 +4302,7 @@ pub struct TableStyleTblStyleMirror {
     #[rkyv(omit_bounds)]
     pub table_background: Option<Box<super::TableBackground>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     #[rkyv(omit_bounds)]
     pub whole_table: Option<Box<super::WholeTable>>,
 }
@@ -4311,10 +4311,10 @@ pub struct TableStyleTblStyleMirror {
 #[rkyv(remote = super::TailLineEndStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TailLineEndStyleMirror {
-    pub extra: (),
     pub len: Option<super::LineEndLength>,
     pub r#type: Option<super::LineEndType>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::LineEndWidth>,
 }
 
@@ -4329,13 +4329,13 @@ pub struct TextDefaultMirror {
     pub body_properties: Box<super::BodyProperties>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub shape_properties: Box<super::ShapeProperties>,
     pub shape_style: Option<Box<super::ShapeStyle>>,
     #[rkyv(omit_bounds)]
     pub text_list_styles: Box<super::TextListStyles>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4345,7 +4345,6 @@ pub struct TextDefaultMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextFieldMirror {
-    pub extra: (),
     pub id: Option<common_simple_types::Guid>,
     #[rkyv(omit_bounds)]
     pub text_paragraph_properties: Option<Box<super::TextParagraphProperties>>,
@@ -4354,6 +4353,7 @@ pub struct TextFieldMirror {
     pub text_string: Option<Box<super::TextString>>,
     pub r#type: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4363,10 +4363,10 @@ pub struct TextFieldMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextLineBreakMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub text_run_properties: Option<Box<super::TextRunProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4380,7 +4380,6 @@ pub struct TextListStylesMirror {
     pub default_paragraph_style: Option<Box<super::DefaultParagraphStyle>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub list_level_1_text_style: Option<Box<super::ListLevel1TextStyle>>,
     #[rkyv(omit_bounds)]
@@ -4400,6 +4399,7 @@ pub struct TextListStylesMirror {
     #[rkyv(omit_bounds)]
     pub list_level_9_text_style: Option<Box<super::ListLevel9TextStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4416,7 +4416,6 @@ pub struct TextParagraphPropertiesMirror {
     pub ea_ln_brk: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub font_algn: Option<super::FontAlignmentTypes>,
     pub hanging_punct: Option<String>,
     pub indent: Option<super::TextIndentation>,
@@ -4435,6 +4434,7 @@ pub struct TextParagraphPropertiesMirror {
     pub text_bullet_size_content: Option<Box<super::TextBulletSizeContent>>,
     pub text_bullet_typeface_content: Option<Box<super::TextBulletTypefaceContent>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4448,10 +4448,10 @@ pub struct TextParagraphsMirror {
     pub content: Vec<super::TextParagraphsContent>,
     #[rkyv(omit_bounds)]
     pub end_paragraph_run_properties: Option<Box<super::EndParagraphRunProperties>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub text_paragraph_properties: Option<Box<super::TextParagraphProperties>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4461,11 +4461,11 @@ pub struct TextParagraphsMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextRunMirror {
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub properties: Option<Box<super::TextRunProperties>>,
     pub text_string: Box<super::TextString>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4490,7 +4490,6 @@ pub struct TextRunPropertiesMirror {
     pub err: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::FillPropertiesContent>>,
     pub highlight_color: Option<Box<super::HighlightColor>>,
@@ -4518,6 +4517,7 @@ pub struct TextRunPropertiesMirror {
     pub text_underline_line_content: Option<Box<super::TextUnderlineLineContent>>,
     pub u: Option<super::TextUnderlineTypes>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4530,18 +4530,18 @@ pub struct TextShapeMirror {
     pub content: Box<super::TextShapeContent>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub text_body: Box<super::ShapeTextBody>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextString)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextStringMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -4557,7 +4557,6 @@ pub struct ThemeMirror {
     pub elements: Box<super::ThemeElements>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub extra_color_scheme_list: Option<Box<super::ExtraColorSchemeList>>,
     pub id: Option<String>,
@@ -4565,6 +4564,7 @@ pub struct ThemeMirror {
     #[rkyv(omit_bounds)]
     pub object_defaults: Option<Box<super::ObjectDefaults>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4578,20 +4578,20 @@ pub struct ThemeElementsMirror {
     pub color_scheme: Box<super::ColorScheme>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub font_scheme: Box<super::FontScheme>,
     #[rkyv(omit_bounds)]
     pub format_scheme: Box<super::FormatScheme>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ThemeManager)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ThemeManagerMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4603,12 +4603,12 @@ pub struct ThemeManagerMirror {
 pub struct ThemeOverrideMirror {
     #[rkyv(omit_bounds)]
     pub color_scheme: Option<Box<super::ColorScheme>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub font_scheme: Option<Box<super::FontScheme>>,
     #[rkyv(omit_bounds)]
     pub format_scheme: Option<Box<super::FormatScheme>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4616,13 +4616,13 @@ pub struct ThemeOverrideMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TileMirror {
     pub algn: Option<super::RectangleAlignments>,
-    pub extra: (),
     pub flip: Option<super::TileFlipMode>,
     pub sx: Option<super::Percentage>,
     pub sy: Option<super::Percentage>,
     pub tx: Option<super::Coordinate>,
     pub ty: Option<super::Coordinate>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4630,19 +4630,19 @@ pub struct TileMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TileRectangleMirror {
     pub b: Option<super::Percentage>,
-    pub extra: (),
     pub l: Option<super::Percentage>,
     pub r: Option<super::Percentage>,
     pub t: Option<super::Percentage>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Tint)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TintMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub val: Option<super::PositiveFixedPercentage>,
 }
 
@@ -4651,19 +4651,19 @@ pub struct TintMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TintEffectMirror {
     pub amt: Option<super::FixedPercentage>,
-    pub extra: (),
     pub hue: Option<super::PositiveFixedAngle>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TopBevel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TopBevelMirror {
-    pub extra: (),
     pub h: Option<super::PositiveCoordinate>,
     pub prst: Option<super::BevelPresets>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::PositiveCoordinate>,
 }
 
@@ -4676,8 +4676,8 @@ pub struct TopBevelMirror {
 pub struct TopBorderMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::ThemeableLineStyleContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4692,13 +4692,13 @@ pub struct TopBorderLinePropertiesMirror {
     pub cmpd: Option<super::CompoundLineType>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub line_dash_content: Option<Box<super::LineDashContent>>,
     pub line_fill_content: Option<Box<super::LineFillContent>>,
     pub line_head_end_style: Option<Box<super::LineHeadEndStyle>>,
     pub line_join_content: Option<Box<super::LineJoinContent>>,
     pub tail_line_end_style: Option<Box<super::TailLineEndStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::LineWidth>,
 }
 
@@ -4711,8 +4711,8 @@ pub struct TopBorderLinePropertiesMirror {
 pub struct TopLeftToBottomRightBorderMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::ThemeableLineStyleContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4727,13 +4727,13 @@ pub struct TopLeftToBottomRightBorderLinePropertiesMirror {
     pub cmpd: Option<super::CompoundLineType>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub line_dash_content: Option<Box<super::LineDashContent>>,
     pub line_fill_content: Option<Box<super::LineFillContent>>,
     pub line_head_end_style: Option<Box<super::LineHeadEndStyle>>,
     pub line_join_content: Option<Box<super::LineJoinContent>>,
     pub tail_line_end_style: Option<Box<super::TailLineEndStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::LineWidth>,
 }
 
@@ -4746,15 +4746,14 @@ pub struct TopLeftToBottomRightBorderLinePropertiesMirror {
 pub struct TopRightToBottomLeftBorderMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::ThemeableLineStyleContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TransformEffect)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TransformEffectMirror {
-    pub extra: (),
     pub kx: Option<super::FixedAngle>,
     pub ky: Option<super::FixedAngle>,
     pub sx: Option<super::Percentage>,
@@ -4762,6 +4761,7 @@ pub struct TransformEffectMirror {
     pub tx: Option<super::Coordinate>,
     pub ty: Option<super::Coordinate>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4773,24 +4773,24 @@ pub struct TransformEffectMirror {
 pub struct UnderlineFillMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::FillPropertiesContent>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::UnderlineFillPropertiesFollowText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnderlineFillPropertiesFollowTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::UnderlineFollowsText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnderlineFollowsTextMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4805,13 +4805,13 @@ pub struct UnderlineStrokeMirror {
     pub cmpd: Option<super::CompoundLineType>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub line_dash_content: Option<Box<super::LineDashContent>>,
     pub line_fill_content: Option<Box<super::LineFillContent>>,
     pub line_head_end_style: Option<Box<super::LineHeadEndStyle>>,
     pub line_join_content: Option<Box<super::LineJoinContent>>,
     pub tail_line_end_style: Option<Box<super::TailLineEndStyle>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<super::LineWidth>,
 }
 
@@ -4822,16 +4822,16 @@ pub struct UpVectorMirror {
     pub dx: Option<super::Coordinate>,
     pub dy: Option<super::Coordinate>,
     pub dz: Option<super::Coordinate>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::UseShapeTextRectangle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseShapeTextRectangleMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4839,9 +4839,9 @@ pub struct UseShapeTextRectangleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct VerticalRatioMirror {
     pub d: Option<String>,
-    pub extra: (),
     pub n: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4854,9 +4854,9 @@ pub struct VideoFromFileMirror {
     pub content_type: Option<String>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     pub link: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4871,12 +4871,12 @@ pub struct VisualGroupShapePropertiesMirror {
     pub effect_properties_content: Option<Box<super::EffectPropertiesContent>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::FillPropertiesContent>>,
     #[rkyv(omit_bounds)]
     pub scene3d: Option<Box<super::Scene3d>>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub xfrm_group_transform2d: Option<Box<super::XfrmGroupTransform2D>>,
 }
 
@@ -4891,15 +4891,14 @@ pub struct WholeTableMirror {
     pub cell_style: Option<Box<super::TableCellStyle>>,
     #[rkyv(omit_bounds)]
     pub cell_text_style: Option<Box<super::TableCellTextStyle>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::XYAdjustHandle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct XYAdjustHandleMirror {
-    pub extra: (),
     pub gd_ref_x: Option<String>,
     pub gd_ref_y: Option<String>,
     pub max_x: Option<super::AdjustableCoordinateMethods>,
@@ -4908,6 +4907,7 @@ pub struct XYAdjustHandleMirror {
     pub min_y: Option<super::AdjustableCoordinateMethods>,
     pub shape_position_coordinate: Box<super::ShapePositionCoordinate>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4917,12 +4917,12 @@ pub struct XfrmGroupTransform2DMirror {
     pub child_extents: Option<Box<super::ChildExtents>>,
     pub child_offset: Option<Box<super::ChildOffset>>,
     pub extents: Option<Box<super::Extents>>,
-    pub extra: (),
     pub flip_h: Option<String>,
     pub flip_v: Option<String>,
     pub offset: Option<Box<super::Offset>>,
     pub rot: Option<super::Angle>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -4930,12 +4930,12 @@ pub struct XfrmGroupTransform2DMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct XfrmTransform2DMirror {
     pub extents: Option<Box<super::Extents>>,
-    pub extra: (),
     pub flip_h: Option<String>,
     pub flip_v: Option<String>,
     pub offset: Option<Box<super::Offset>>,
     pub rot: Option<super::Angle>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5615,8 +5615,8 @@ impl From<Accent1Mirror> for super::Accent1 {
     fn from(item: Accent1Mirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5654,8 +5654,8 @@ impl From<Accent2Mirror> for super::Accent2 {
     fn from(item: Accent2Mirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5693,8 +5693,8 @@ impl From<Accent3Mirror> for super::Accent3 {
     fn from(item: Accent3Mirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5732,8 +5732,8 @@ impl From<Accent4Mirror> for super::Accent4 {
     fn from(item: Accent4Mirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5771,8 +5771,8 @@ impl From<Accent5Mirror> for super::Accent5 {
     fn from(item: Accent5Mirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5810,8 +5810,8 @@ impl From<Accent6Mirror> for super::Accent6 {
     fn from(item: Accent6Mirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5848,8 +5848,8 @@ where
 impl From<AlphaMirror> for super::Alpha {
     fn from(item: AlphaMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -5887,9 +5887,9 @@ where
 impl From<AlphaBiLevelEffectMirror> for super::AlphaBiLevelEffect {
     fn from(item: AlphaBiLevelEffectMirror) -> Self {
         Self {
-            extra: item.extra,
             thresh: item.thresh,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5926,8 +5926,8 @@ where
 impl From<AlphaCeilingEffectMirror> for super::AlphaCeilingEffect {
     fn from(item: AlphaCeilingEffectMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -5964,8 +5964,8 @@ where
 impl From<AlphaFloorEffectMirror> for super::AlphaFloorEffect {
     fn from(item: AlphaFloorEffectMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6002,9 +6002,9 @@ where
 impl From<AlphaInsetOutsetEffectMirror> for super::AlphaInsetOutsetEffect {
     fn from(item: AlphaInsetOutsetEffectMirror) -> Self {
         Self {
-            extra: item.extra,
             rad: item.rad,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6046,8 +6046,8 @@ impl From<AlphaInverseEffectMirror> for super::AlphaInverseEffect {
     fn from(item: AlphaInverseEffectMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6085,8 +6085,8 @@ impl From<AlphaModulateEffectMirror> for super::AlphaModulateEffect {
     fn from(item: AlphaModulateEffectMirror) -> Self {
         Self {
             container_cont: item.container_cont,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6127,8 +6127,8 @@ impl From<AlphaModulateFixedEffectMirror> for super::AlphaModulateFixedEffect {
     fn from(item: AlphaModulateFixedEffectMirror) -> Self {
         Self {
             amt: item.amt,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6169,8 +6169,8 @@ where
 impl From<AlphaModulationMirror> for super::AlphaModulation {
     fn from(item: AlphaModulationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -6208,8 +6208,8 @@ where
 impl From<AlphaOffsetMirror> for super::AlphaOffset {
     fn from(item: AlphaOffsetMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -6248,8 +6248,8 @@ impl From<AlphaReplaceEffectMirror> for super::AlphaReplaceEffect {
     fn from(item: AlphaReplaceEffectMirror) -> Self {
         Self {
             a: item.a,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6286,8 +6286,8 @@ where
 impl From<AnchorPointMirror> for super::AnchorPoint {
     fn from(item: AnchorPointMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             x: item.x,
             y: item.y,
             z: item.z,
@@ -6331,12 +6331,12 @@ impl From<Apply3DShapePropertiesMirror> for super::Apply3DShapeProperties {
             contour_color: item.contour_color,
             contour_w: item.contour_w,
             extension_list: item.extension_list,
-            extra: item.extra,
             extrusion_color: item.extrusion_color,
             extrusion_h: item.extrusion_h,
             prst_material: item.prst_material,
             top_bevel: item.top_bevel,
             unknown: item.unknown,
+            user_data: item.user_data,
             z: item.z,
         }
     }
@@ -6378,10 +6378,10 @@ where
 impl From<AudioEndTimeMirror> for super::AudioEndTime {
     fn from(item: AudioEndTimeMirror) -> Self {
         Self {
-            extra: item.extra,
             time: item.time,
             track: item.track,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6421,8 +6421,8 @@ impl From<AudioFromCDMirror> for super::AudioFromCD {
             audio_end_time: item.audio_end_time,
             audio_start_time: item.audio_start_time,
             extension_list: item.extension_list,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6461,9 +6461,9 @@ impl From<AudioFromFileMirror> for super::AudioFromFile {
         Self {
             content_type: item.content_type,
             extension_list: item.extension_list,
-            extra: item.extra,
             link: item.link,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6501,9 +6501,9 @@ impl From<AudioFromWAVFileMirror> for super::AudioFromWAVFile {
     fn from(item: AudioFromWAVFileMirror) -> Self {
         Self {
             embed: item.embed,
-            extra: item.extra,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6540,10 +6540,10 @@ where
 impl From<AudioStartTimeMirror> for super::AudioStartTime {
     fn from(item: AudioStartTimeMirror) -> Self {
         Self {
-            extra: item.extra,
             time: item.time,
             track: item.track,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6580,10 +6580,10 @@ where
 impl From<AutoNumberedBulletMirror> for super::AutoNumberedBullet {
     fn from(item: AutoNumberedBulletMirror) -> Self {
         Self {
-            extra: item.extra,
             start_at: item.start_at,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6622,10 +6622,10 @@ impl From<BackdropPlaneMirror> for super::BackdropPlane {
         Self {
             anchor_point: item.anchor_point,
             extension_list: item.extension_list,
-            extra: item.extra,
             normal: item.normal,
             unknown: item.unknown,
             up_vector: item.up_vector,
+            user_data: item.user_data,
         }
     }
 }
@@ -6663,8 +6663,8 @@ impl From<BackgroundColorMirror> for super::BackgroundColor {
     fn from(item: BackgroundColorMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6702,8 +6702,8 @@ impl From<BackgroundFillStyleListMirror> for super::BackgroundFillStyleList {
     fn from(item: BackgroundFillStyleListMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6744,10 +6744,10 @@ where
 impl From<Band1HorizontalMirror> for super::Band1Horizontal {
     fn from(item: Band1HorizontalMirror) -> Self {
         Self {
-            extra: item.extra,
             table_cell_style: item.table_cell_style,
             table_cell_text_style: item.table_cell_text_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6784,10 +6784,10 @@ where
 impl From<Band1VerticalMirror> for super::Band1Vertical {
     fn from(item: Band1VerticalMirror) -> Self {
         Self {
-            extra: item.extra,
             table_cell_style: item.table_cell_style,
             table_cell_text_style: item.table_cell_text_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6824,10 +6824,10 @@ where
 impl From<Band2HorizontalMirror> for super::Band2Horizontal {
     fn from(item: Band2HorizontalMirror) -> Self {
         Self {
-            extra: item.extra,
             table_cell_style: item.table_cell_style,
             table_cell_text_style: item.table_cell_text_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6864,10 +6864,10 @@ where
 impl From<Band2VerticalMirror> for super::Band2Vertical {
     fn from(item: Band2VerticalMirror) -> Self {
         Self {
-            extra: item.extra,
             table_cell_style: item.table_cell_style,
             table_cell_text_style: item.table_cell_text_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6904,10 +6904,10 @@ where
 impl From<BevelMirror> for super::Bevel {
     fn from(item: BevelMirror) -> Self {
         Self {
-            extra: item.extra,
             h: item.h,
             prst: item.prst,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -6945,9 +6945,9 @@ where
 impl From<BiLevelMirror> for super::BiLevel {
     fn from(item: BiLevelMirror) -> Self {
         Self {
-            extra: item.extra,
             thresh: item.thresh,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -6986,8 +6986,8 @@ impl From<BlendEffectMirror> for super::BlendEffect {
         Self {
             blend: item.blend,
             container_cont: item.container_cont,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -7028,9 +7028,9 @@ impl From<BlipMirror> for super::Blip {
             cstate: item.cstate,
             embed: item.embed,
             extension_list: item.extension_list,
-            extra: item.extra,
             link: item.link,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -7067,8 +7067,8 @@ where
 impl From<BlueMirror> for super::Blue {
     fn from(item: BlueMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -7106,8 +7106,8 @@ where
 impl From<BlueModulationMirror> for super::BlueModulation {
     fn from(item: BlueModulationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -7145,8 +7145,8 @@ where
 impl From<BlueOffsetMirror> for super::BlueOffset {
     fn from(item: BlueOffsetMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -7184,10 +7184,10 @@ where
 impl From<BlurEffectMirror> for super::BlurEffect {
     fn from(item: BlurEffectMirror) -> Self {
         Self {
-            extra: item.extra,
             grow: item.grow,
             rad: item.rad,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -7229,7 +7229,6 @@ impl From<BodyPropertiesMirror> for super::BodyProperties {
             b_ins: item.b_ins,
             compat_ln_spc: item.compat_ln_spc,
             extension_list: item.extension_list,
-            extra: item.extra,
             force_aa: item.force_aa,
             from_word_art: item.from_word_art,
             horz_overflow: item.horz_overflow,
@@ -7247,6 +7246,7 @@ impl From<BodyPropertiesMirror> for super::BodyProperties {
             text_autofit_content: item.text_autofit_content,
             unknown: item.unknown,
             upright: item.upright,
+            user_data: item.user_data,
             vert: item.vert,
             vert_overflow: item.vert_overflow,
             wrap: item.wrap,
@@ -7286,10 +7286,10 @@ where
 impl From<BottomBevelMirror> for super::BottomBevel {
     fn from(item: BottomBevelMirror) -> Self {
         Self {
-            extra: item.extra,
             h: item.h,
             prst: item.prst,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -7328,8 +7328,8 @@ impl From<BottomBorderMirror> for super::BottomBorder {
     fn from(item: BottomBorderMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -7370,13 +7370,13 @@ impl From<BottomBorderLinePropertiesMirror> for super::BottomBorderLinePropertie
             cap: item.cap,
             cmpd: item.cmpd,
             extension_list: item.extension_list,
-            extra: item.extra,
             line_dash_content: item.line_dash_content,
             line_fill_content: item.line_fill_content,
             line_head_end_style: item.line_head_end_style,
             line_join_content: item.line_join_content,
             tail_line_end_style: item.tail_line_end_style,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -7424,13 +7424,13 @@ impl From<BottomLeftToTopRightBorderLinePropertiesMirror>
             cap: item.cap,
             cmpd: item.cmpd,
             extension_list: item.extension_list,
-            extra: item.extra,
             line_dash_content: item.line_dash_content,
             line_fill_content: item.line_fill_content,
             line_head_end_style: item.line_head_end_style,
             line_join_content: item.line_join_content,
             tail_line_end_style: item.tail_line_end_style,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -7474,8 +7474,8 @@ impl From<BuildChartMirror> for super::BuildChart {
         Self {
             anim_bg: item.anim_bg,
             bld: item.bld,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -7513,9 +7513,9 @@ impl From<BuildDiagramMirror> for super::BuildDiagram {
     fn from(item: BuildDiagramMirror) -> Self {
         Self {
             bld: item.bld,
-            extra: item.extra,
             rev: item.rev,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -7552,8 +7552,8 @@ where
 impl From<BulletSizeFollowsTextMirror> for super::BulletSizeFollowsText {
     fn from(item: BulletSizeFollowsTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -7594,8 +7594,8 @@ where
 impl From<BulletSizePercentageMirror> for super::BulletSizePercentage {
     fn from(item: BulletSizePercentageMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -7636,8 +7636,8 @@ where
 impl From<BulletSizePointsMirror> for super::BulletSizePoints {
     fn from(item: BulletSizePointsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -7675,11 +7675,11 @@ where
 impl From<CameraMirror> for super::Camera {
     fn from(item: CameraMirror) -> Self {
         Self {
-            extra: item.extra,
             fov: item.fov,
             prst: item.prst,
             rotation: item.rotation,
             unknown: item.unknown,
+            user_data: item.user_data,
             zoom: item.zoom,
         }
     }
@@ -7719,10 +7719,10 @@ impl From<Cell3DMirror> for super::Cell3D {
         Self {
             bevel: item.bevel,
             extension_list: item.extension_list,
-            extra: item.extra,
             light_rig: item.light_rig,
             prst_material: item.prst_material,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -7760,8 +7760,8 @@ impl From<ChangeColorFromMirror> for super::ChangeColorFrom {
     fn from(item: ChangeColorFromMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -7799,8 +7799,8 @@ impl From<ChangeColorToMirror> for super::ChangeColorTo {
     fn from(item: ChangeColorToMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -7838,8 +7838,8 @@ impl From<CharacterBulletMirror> for super::CharacterBullet {
     fn from(item: CharacterBulletMirror) -> Self {
         Self {
             char: item.char,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -7878,9 +7878,9 @@ impl From<ChartToAnimateMirror> for super::ChartToAnimate {
         Self {
             bld_step: item.bld_step,
             category_idx: item.category_idx,
-            extra: item.extra,
             series_idx: item.series_idx,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -7919,8 +7919,8 @@ impl From<ChildExtentsMirror> for super::ChildExtents {
         Self {
             cx: item.cx,
             cy: item.cy,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -7957,8 +7957,8 @@ where
 impl From<ChildOffsetMirror> for super::ChildOffset {
     fn from(item: ChildOffsetMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             x: item.x,
             y: item.y,
         }
@@ -8000,7 +8000,6 @@ impl From<ClickHyperlinkMirror> for super::ClickHyperlink {
             action: item.action,
             end_snd: item.end_snd,
             extension_list: item.extension_list,
-            extra: item.extra,
             highlight_click: item.highlight_click,
             history: item.history,
             id: item.id,
@@ -8009,6 +8008,7 @@ impl From<ClickHyperlinkMirror> for super::ClickHyperlink {
             tgt_frame: item.tgt_frame,
             tooltip: item.tooltip,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8045,8 +8045,8 @@ where
 impl From<CloseShapePathMirror> for super::CloseShapePath {
     fn from(item: CloseShapePathMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8085,9 +8085,9 @@ impl From<ColorChangeEffectMirror> for super::ColorChangeEffect {
         Self {
             change_color_from: item.change_color_from,
             change_color_to: item.change_color_to,
-            extra: item.extra,
             unknown: item.unknown,
             use_a: item.use_a,
+            user_data: item.user_data,
         }
     }
 }
@@ -8133,12 +8133,12 @@ impl From<ColorMapMirror> for super::ColorMap {
             bg1: item.bg1,
             bg2: item.bg2,
             extension_list: item.extension_list,
-            extra: item.extra,
             fol_hlink: item.fol_hlink,
             hlink: item.hlink,
             tx1: item.tx1,
             tx2: item.tx2,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8184,13 +8184,13 @@ impl From<ColorSchemeMirror> for super::ColorScheme {
             dark_1: item.dark_1,
             dark_2: item.dark_2,
             extension_list: item.extension_list,
-            extra: item.extra,
             followed_hyperlink: item.followed_hyperlink,
             hyperlink: item.hyperlink,
             light_1: item.light_1,
             light_2: item.light_2,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8228,8 +8228,8 @@ impl From<ColorSpecifiedMirror> for super::ColorSpecified {
     fn from(item: ColorSpecifiedMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8266,8 +8266,8 @@ where
 impl From<ComplementMirror> for super::Complement {
     fn from(item: ComplementMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8305,11 +8305,11 @@ impl From<ComplexScriptFontMirror> for super::ComplexScriptFont {
     fn from(item: ComplexScriptFontMirror) -> Self {
         Self {
             charset: item.charset,
-            extra: item.extra,
             panose: item.panose,
             pitch_family: item.pitch_family,
             typeface: item.typeface,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8346,10 +8346,10 @@ where
 impl From<ConnectionEndMirror> for super::ConnectionEnd {
     fn from(item: ConnectionEndMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             idx: item.idx,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8387,11 +8387,11 @@ impl From<ConnectionShapeMirror> for super::ConnectionShape {
     fn from(item: ConnectionShapeMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             non_visual_properties: item.non_visual_properties,
             properties: item.properties,
             style: item.style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8429,7 +8429,6 @@ impl From<ConnectionShapeLocksMirror> for super::ConnectionShapeLocks {
     fn from(item: ConnectionShapeLocksMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             no_adjust_handles: item.no_adjust_handles,
             no_change_arrowheads: item.no_change_arrowheads,
             no_change_aspect: item.no_change_aspect,
@@ -8441,6 +8440,7 @@ impl From<ConnectionShapeLocksMirror> for super::ConnectionShapeLocks {
             no_rot: item.no_rot,
             no_select: item.no_select,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8480,10 +8480,10 @@ where
 impl From<ConnectionStartMirror> for super::ConnectionStart {
     fn from(item: ConnectionStartMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             idx: item.idx,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8521,7 +8521,6 @@ impl From<ContentPartLocksMirror> for super::ContentPartLocks {
     fn from(item: ContentPartLocksMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             no_adjust_handles: item.no_adjust_handles,
             no_change_arrowheads: item.no_change_arrowheads,
             no_change_aspect: item.no_change_aspect,
@@ -8533,6 +8532,7 @@ impl From<ContentPartLocksMirror> for super::ContentPartLocks {
             no_rot: item.no_rot,
             no_select: item.no_select,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8570,8 +8570,8 @@ impl From<ContourColorMirror> for super::ContourColor {
     fn from(item: ContourColorMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8609,9 +8609,9 @@ impl From<CustomColorMirror> for super::CustomColor {
     fn from(item: CustomColorMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8649,8 +8649,8 @@ impl From<CustomColorListMirror> for super::CustomColorList {
     fn from(item: CustomColorListMirror) -> Self {
         Self {
             custom_color: item.custom_color,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8687,9 +8687,9 @@ where
 impl From<CustomDashMirror> for super::CustomDash {
     fn from(item: CustomDashMirror) -> Self {
         Self {
-            extra: item.extra,
             stop: item.stop,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8726,7 +8726,6 @@ where
 impl From<CustomGeometryMirror> for super::CustomGeometry {
     fn from(item: CustomGeometryMirror) -> Self {
         Self {
-            extra: item.extra,
             list_of_shape_adjust_handles: item.list_of_shape_adjust_handles,
             list_of_shape_adjust_values: item.list_of_shape_adjust_values,
             list_of_shape_connection_sites: item.list_of_shape_connection_sites,
@@ -8734,6 +8733,7 @@ impl From<CustomGeometryMirror> for super::CustomGeometry {
             list_of_shape_paths: item.list_of_shape_paths,
             shape_text_rectangle: item.shape_text_rectangle,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8771,8 +8771,8 @@ impl From<Dark1Mirror> for super::Dark1 {
     fn from(item: Dark1Mirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8810,8 +8810,8 @@ impl From<Dark2Mirror> for super::Dark2 {
     fn from(item: Dark2Mirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8849,9 +8849,9 @@ impl From<DashStopMirror> for super::DashStop {
     fn from(item: DashStopMirror) -> Self {
         Self {
             d: item.d,
-            extra: item.extra,
             sp: item.sp,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8893,7 +8893,6 @@ impl From<DefaultParagraphStyleMirror> for super::DefaultParagraphStyle {
             default_text_run_properties: item.default_text_run_properties,
             ea_ln_brk: item.ea_ln_brk,
             extension_list: item.extension_list,
-            extra: item.extra,
             font_algn: item.font_algn,
             hanging_punct: item.hanging_punct,
             indent: item.indent,
@@ -8911,6 +8910,7 @@ impl From<DefaultParagraphStyleMirror> for super::DefaultParagraphStyle {
             text_bullet_size_content: item.text_bullet_size_content,
             text_bullet_typeface_content: item.text_bullet_typeface_content,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -8963,7 +8963,6 @@ impl From<DefaultTextRunPropertiesMirror> for super::DefaultTextRunProperties {
             effect_properties_content: item.effect_properties_content,
             err: item.err,
             extension_list: item.extension_list,
-            extra: item.extra,
             fill_properties_content: item.fill_properties_content,
             highlight_color: item.highlight_color,
             i: item.i,
@@ -8986,6 +8985,7 @@ impl From<DefaultTextRunPropertiesMirror> for super::DefaultTextRunProperties {
             text_underline_line_content: item.text_underline_line_content,
             u: item.u,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9027,9 +9027,9 @@ impl From<DiagramToAnimateMirror> for super::DiagramToAnimate {
     fn from(item: DiagramToAnimateMirror) -> Self {
         Self {
             bld_step: item.bld_step,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9066,11 +9066,11 @@ where
 impl From<DrawArcToMirror> for super::DrawArcTo {
     fn from(item: DrawArcToMirror) -> Self {
         Self {
-            extra: item.extra,
             h_r: item.h_r,
             st_ang: item.st_ang,
             sw_ang: item.sw_ang,
             unknown: item.unknown,
+            user_data: item.user_data,
             w_r: item.w_r,
         }
     }
@@ -9108,9 +9108,9 @@ where
 impl From<DrawCubicBezierCurveToMirror> for super::DrawCubicBezierCurveTo {
     fn from(item: DrawCubicBezierCurveToMirror) -> Self {
         Self {
-            extra: item.extra,
             shape_path_point: item.shape_path_point,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9151,9 +9151,9 @@ where
 impl From<DrawLineToMirror> for super::DrawLineTo {
     fn from(item: DrawLineToMirror) -> Self {
         Self {
-            extra: item.extra,
             shape_path_point: item.shape_path_point,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9190,9 +9190,9 @@ where
 impl From<DrawQuadraticBezierCurveToMirror> for super::DrawQuadraticBezierCurveTo {
     fn from(item: DrawQuadraticBezierCurveToMirror) -> Self {
         Self {
-            extra: item.extra,
             shape_path_point: item.shape_path_point,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9234,8 +9234,8 @@ impl From<DuotoneEffectMirror> for super::DuotoneEffect {
     fn from(item: DuotoneEffectMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9273,11 +9273,11 @@ impl From<EastAsianFontMirror> for super::EastAsianFont {
     fn from(item: EastAsianFontMirror) -> Self {
         Self {
             charset: item.charset,
-            extra: item.extra,
             panose: item.panose,
             pitch_family: item.pitch_family,
             typeface: item.typeface,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9315,8 +9315,8 @@ impl From<EffectMirror> for super::Effect {
     fn from(item: EffectMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9354,10 +9354,10 @@ impl From<EffectContainerContMirror> for super::EffectContainerCont {
     fn from(item: EffectContainerContMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             name: item.name,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9398,10 +9398,10 @@ impl From<EffectContainerEffectDagMirror> for super::EffectContainerEffectDag {
     fn from(item: EffectContainerEffectDagMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             name: item.name,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9443,7 +9443,6 @@ impl From<EffectContainerEffectLstMirror> for super::EffectContainerEffectLst {
     fn from(item: EffectContainerEffectLstMirror) -> Self {
         Self {
             blur_effect: item.blur_effect,
-            extra: item.extra,
             fill_overlay_effect: item.fill_overlay_effect,
             glow_effect: item.glow_effect,
             inner_shadow_effect: item.inner_shadow_effect,
@@ -9452,6 +9451,7 @@ impl From<EffectContainerEffectLstMirror> for super::EffectContainerEffectLst {
             reflection_effect: item.reflection_effect,
             soft_edge_effect: item.soft_edge_effect,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9492,9 +9492,9 @@ where
 impl From<EffectEffectReferenceMirror> for super::EffectEffectReference {
     fn from(item: EffectEffectReferenceMirror) -> Self {
         Self {
-            extra: item.extra,
             r#ref: item.r#ref,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9536,9 +9536,9 @@ impl From<EffectReferenceMirror> for super::EffectReference {
     fn from(item: EffectReferenceMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             idx: item.idx,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9577,9 +9577,9 @@ impl From<EffectStyleMirror> for super::EffectStyle {
         Self {
             apply_3d_shape_properties: item.apply_3d_shape_properties,
             content: item.content,
-            extra: item.extra,
             scene3d: item.scene3d,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9617,8 +9617,8 @@ impl From<EffectStyleListMirror> for super::EffectStyleList {
     fn from(item: EffectStyleListMirror) -> Self {
         Self {
             effect_style: item.effect_style,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9667,7 +9667,6 @@ impl From<EndParagraphRunPropertiesMirror> for super::EndParagraphRunProperties 
             effect_properties_content: item.effect_properties_content,
             err: item.err,
             extension_list: item.extension_list,
-            extra: item.extra,
             fill_properties_content: item.fill_properties_content,
             highlight_color: item.highlight_color,
             i: item.i,
@@ -9690,6 +9689,7 @@ impl From<EndParagraphRunPropertiesMirror> for super::EndParagraphRunProperties 
             text_underline_line_content: item.text_underline_line_content,
             u: item.u,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9731,9 +9731,9 @@ impl From<ExtensionMirror> for super::Extension {
     fn from(item: ExtensionMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
             uri: item.uri,
+            user_data: item.user_data,
         }
     }
 }
@@ -9771,8 +9771,8 @@ impl From<ExtensionListMirror> for super::ExtensionList {
     fn from(item: ExtensionListMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9811,8 +9811,8 @@ impl From<ExtentsMirror> for super::Extents {
         Self {
             cx: item.cx,
             cy: item.cy,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9851,8 +9851,8 @@ impl From<ExtraColorSchemeMirror> for super::ExtraColorScheme {
         Self {
             color_map: item.color_map,
             color_scheme: item.color_scheme,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9889,9 +9889,9 @@ where
 impl From<ExtraColorSchemeListMirror> for super::ExtraColorSchemeList {
     fn from(item: ExtraColorSchemeListMirror) -> Self {
         Self {
-            extra: item.extra,
             extra_color_scheme: item.extra_color_scheme,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9932,8 +9932,8 @@ impl From<ExtrusionColorMirror> for super::ExtrusionColor {
     fn from(item: ExtrusionColorMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -9971,8 +9971,8 @@ impl From<FillMirror> for super::Fill {
     fn from(item: FillMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10010,8 +10010,8 @@ impl From<FillFillEffectMirror> for super::FillFillEffect {
     fn from(item: FillFillEffectMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10050,8 +10050,8 @@ impl From<FillOverlayEffectMirror> for super::FillOverlayEffect {
         Self {
             blend: item.blend,
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10089,11 +10089,11 @@ impl From<FillRectangleMirror> for super::FillRectangle {
     fn from(item: FillRectangleMirror) -> Self {
         Self {
             b: item.b,
-            extra: item.extra,
             l: item.l,
             r: item.r,
             t: item.t,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10131,9 +10131,9 @@ impl From<FillReferenceMirror> for super::FillReference {
     fn from(item: FillReferenceMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             idx: item.idx,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10171,8 +10171,8 @@ impl From<FillStyleListMirror> for super::FillStyleList {
     fn from(item: FillStyleListMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10210,11 +10210,11 @@ impl From<FillToRectangleMirror> for super::FillToRectangle {
     fn from(item: FillToRectangleMirror) -> Self {
         Self {
             b: item.b,
-            extra: item.extra,
             l: item.l,
             r: item.r,
             t: item.t,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10251,10 +10251,10 @@ where
 impl From<FirstColumnMirror> for super::FirstColumn {
     fn from(item: FirstColumnMirror) -> Self {
         Self {
-            extra: item.extra,
             table_cell_style: item.table_cell_style,
             table_cell_text_style: item.table_cell_text_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10291,10 +10291,10 @@ where
 impl From<FirstRowMirror> for super::FirstRow {
     fn from(item: FirstRowMirror) -> Self {
         Self {
-            extra: item.extra,
             table_cell_style: item.table_cell_style,
             table_cell_text_style: item.table_cell_text_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10331,8 +10331,8 @@ where
 impl From<FollowTextBuClrTxMirror> for super::FollowTextBuClrTx {
     fn from(item: FollowTextBuClrTxMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10369,8 +10369,8 @@ where
 impl From<FollowTextBuFontTxMirror> for super::FollowTextBuFontTx {
     fn from(item: FollowTextBuFontTxMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10408,8 +10408,8 @@ impl From<FollowedHyperlinkMirror> for super::FollowedHyperlink {
     fn from(item: FollowedHyperlinkMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10446,10 +10446,10 @@ where
 impl From<FontMirror> for super::Font {
     fn from(item: FontMirror) -> Self {
         Self {
-            extra: item.extra,
             script: item.script,
             typeface: item.typeface,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10489,10 +10489,10 @@ impl From<FontFontCollectionMirror> for super::FontFontCollection {
             complex_script_font: item.complex_script_font,
             east_asian_font: item.east_asian_font,
             extension_list: item.extension_list,
-            extra: item.extra,
             font: item.font,
             latin_font: item.latin_font,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10530,9 +10530,9 @@ impl From<FontReferenceMirror> for super::FontReference {
     fn from(item: FontReferenceMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             idx: item.idx,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10570,11 +10570,11 @@ impl From<FontSchemeMirror> for super::FontScheme {
     fn from(item: FontSchemeMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             major_font: item.major_font,
             minor_fonts: item.minor_fonts,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10612,8 +10612,8 @@ impl From<ForegroundColorMirror> for super::ForegroundColor {
     fn from(item: ForegroundColorMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10652,11 +10652,11 @@ impl From<FormatSchemeMirror> for super::FormatScheme {
         Self {
             background_fill_style_list: item.background_fill_style_list,
             effect_style_list: item.effect_style_list,
-            extra: item.extra,
             fill_style_list: item.fill_style_list,
             line_style_list: item.line_style_list,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10693,8 +10693,8 @@ where
 impl From<GammaMirror> for super::Gamma {
     fn from(item: GammaMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10732,9 +10732,9 @@ impl From<GlowEffectMirror> for super::GlowEffect {
     fn from(item: GlowEffectMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             rad: item.rad,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10772,12 +10772,12 @@ impl From<GradientFillMirror> for super::GradientFill {
     fn from(item: GradientFillMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             flip: item.flip,
             gradient_stop_list: item.gradient_stop_list,
             rot_with_shape: item.rot_with_shape,
             tile_rectangle: item.tile_rectangle,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10814,9 +10814,9 @@ where
 impl From<GradientStopListMirror> for super::GradientStopList {
     fn from(item: GradientStopListMirror) -> Self {
         Self {
-            extra: item.extra,
             gradient_stops: item.gradient_stops,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10854,9 +10854,9 @@ impl From<GradientStopsMirror> for super::GradientStops {
     fn from(item: GradientStopsMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             pos: item.pos,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10894,10 +10894,10 @@ impl From<GraphicFrameMirror> for super::GraphicFrame {
     fn from(item: GraphicFrameMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             graphic_object: item.graphic_object,
             non_visual_properties: item.non_visual_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
             xfrm_transform2d: item.xfrm_transform2d,
         }
     }
@@ -10936,7 +10936,6 @@ impl From<GraphicFrameLocksMirror> for super::GraphicFrameLocks {
     fn from(item: GraphicFrameLocksMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             no_change_aspect: item.no_change_aspect,
             no_drilldown: item.no_drilldown,
             no_grp: item.no_grp,
@@ -10944,6 +10943,7 @@ impl From<GraphicFrameLocksMirror> for super::GraphicFrameLocks {
             no_resize: item.no_resize,
             no_select: item.no_select,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -10981,8 +10981,8 @@ impl From<GraphicObjectMirror> for super::GraphicObject {
     fn from(item: GraphicObjectMirror) -> Self {
         Self {
             data: item.data,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11020,9 +11020,9 @@ impl From<GraphicObjectDataMirror> for super::GraphicObjectData {
     fn from(item: GraphicObjectDataMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
             uri: item.uri,
+            user_data: item.user_data,
         }
     }
 }
@@ -11059,8 +11059,8 @@ where
 impl From<GrayMirror> for super::Gray {
     fn from(item: GrayMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11097,8 +11097,8 @@ where
 impl From<GrayScaleEffectMirror> for super::GrayScaleEffect {
     fn from(item: GrayScaleEffectMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11135,8 +11135,8 @@ where
 impl From<GreenMirror> for super::Green {
     fn from(item: GreenMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -11174,8 +11174,8 @@ where
 impl From<GreenModulationMirror> for super::GreenModulation {
     fn from(item: GreenModulationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -11213,8 +11213,8 @@ where
 impl From<GreenOffsetMirror> for super::GreenOffset {
     fn from(item: GreenOffsetMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -11252,8 +11252,8 @@ where
 impl From<GroupFillMirror> for super::GroupFill {
     fn from(item: GroupFillMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11292,9 +11292,9 @@ impl From<GroupShapeMirror> for super::GroupShape {
         Self {
             content: item.content,
             extension_list: item.extension_list,
-            extra: item.extra,
             non_visual_properties: item.non_visual_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
             visual_group_shape_properties: item.visual_group_shape_properties,
         }
     }
@@ -11333,7 +11333,6 @@ impl From<GroupShapeLocksMirror> for super::GroupShapeLocks {
     fn from(item: GroupShapeLocksMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             no_change_aspect: item.no_change_aspect,
             no_grp: item.no_grp,
             no_move: item.no_move,
@@ -11342,6 +11341,7 @@ impl From<GroupShapeLocksMirror> for super::GroupShapeLocks {
             no_select: item.no_select,
             no_ungrp: item.no_ungrp,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11378,8 +11378,8 @@ where
 impl From<HeaderCellReferenceMirror> for super::HeaderCellReference {
     fn from(item: HeaderCellReferenceMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -11420,9 +11420,9 @@ where
 impl From<HeaderCellsAssociatedWithTableCellMirror> for super::HeaderCellsAssociatedWithTableCell {
     fn from(item: HeaderCellsAssociatedWithTableCellMirror) -> Self {
         Self {
-            extra: item.extra,
             header_cell_reference: item.header_cell_reference,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11464,8 +11464,8 @@ impl From<HighlightColorMirror> for super::HighlightColor {
     fn from(item: HighlightColorMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11503,9 +11503,9 @@ impl From<HorizontalRatioMirror> for super::HorizontalRatio {
     fn from(item: HorizontalRatioMirror) -> Self {
         Self {
             d: item.d,
-            extra: item.extra,
             n: item.n,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11542,8 +11542,8 @@ where
 impl From<HueMirror> for super::Hue {
     fn from(item: HueMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -11581,8 +11581,8 @@ where
 impl From<HueModulateMirror> for super::HueModulate {
     fn from(item: HueModulateMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -11620,8 +11620,8 @@ where
 impl From<HueOffsetMirror> for super::HueOffset {
     fn from(item: HueOffsetMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -11660,11 +11660,11 @@ impl From<HueSaturationLuminanceColorModelMirror> for super::HueSaturationLumina
     fn from(item: HueSaturationLuminanceColorModelMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             hue: item.hue,
             lum: item.lum,
             sat: item.sat,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11705,11 +11705,11 @@ where
 impl From<HueSaturationLuminanceEffectMirror> for super::HueSaturationLuminanceEffect {
     fn from(item: HueSaturationLuminanceEffectMirror) -> Self {
         Self {
-            extra: item.extra,
             hue: item.hue,
             lum: item.lum,
             sat: item.sat,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11751,8 +11751,8 @@ impl From<HyperlinkMirror> for super::Hyperlink {
     fn from(item: HyperlinkMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11792,7 +11792,6 @@ impl From<HyperlinkForHoverMirror> for super::HyperlinkForHover {
             action: item.action,
             end_snd: item.end_snd,
             extension_list: item.extension_list,
-            extra: item.extra,
             highlight_click: item.highlight_click,
             history: item.history,
             hyperlink_sound: item.hyperlink_sound,
@@ -11801,6 +11800,7 @@ impl From<HyperlinkForHoverMirror> for super::HyperlinkForHover {
             tgt_frame: item.tgt_frame,
             tooltip: item.tooltip,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11838,9 +11838,9 @@ impl From<HyperlinkSoundMirror> for super::HyperlinkSound {
     fn from(item: HyperlinkSoundMirror) -> Self {
         Self {
             embed: item.embed,
-            extra: item.extra,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11881,8 +11881,8 @@ impl From<InnerShadowEffectMirror> for super::InnerShadowEffect {
             content: item.content,
             dir: item.dir,
             dist: item.dist,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11920,8 +11920,8 @@ impl From<InsideHorizontalBorderMirror> for super::InsideHorizontalBorder {
     fn from(item: InsideHorizontalBorderMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -11963,8 +11963,8 @@ impl From<InsideVerticalBorderMirror> for super::InsideVerticalBorder {
     fn from(item: InsideVerticalBorderMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12004,8 +12004,8 @@ where
 impl From<InverseMirror> for super::Inverse {
     fn from(item: InverseMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12042,8 +12042,8 @@ where
 impl From<InverseGammaMirror> for super::InverseGamma {
     fn from(item: InverseGammaMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12080,10 +12080,10 @@ where
 impl From<LastColumnMirror> for super::LastColumn {
     fn from(item: LastColumnMirror) -> Self {
         Self {
-            extra: item.extra,
             table_cell_style: item.table_cell_style,
             table_cell_text_style: item.table_cell_text_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12120,10 +12120,10 @@ where
 impl From<LastRowMirror> for super::LastRow {
     fn from(item: LastRowMirror) -> Self {
         Self {
-            extra: item.extra,
             table_cell_style: item.table_cell_style,
             table_cell_text_style: item.table_cell_text_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12161,11 +12161,11 @@ impl From<LatinFontMirror> for super::LatinFont {
     fn from(item: LatinFontMirror) -> Self {
         Self {
             charset: item.charset,
-            extra: item.extra,
             panose: item.panose,
             pitch_family: item.pitch_family,
             typeface: item.typeface,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12203,8 +12203,8 @@ impl From<LeftBorderMirror> for super::LeftBorder {
     fn from(item: LeftBorderMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12245,13 +12245,13 @@ impl From<LeftBorderLinePropertiesMirror> for super::LeftBorderLineProperties {
             cap: item.cap,
             cmpd: item.cmpd,
             extension_list: item.extension_list,
-            extra: item.extra,
             line_dash_content: item.line_dash_content,
             line_fill_content: item.line_fill_content,
             line_head_end_style: item.line_head_end_style,
             line_join_content: item.line_join_content,
             tail_line_end_style: item.tail_line_end_style,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -12294,8 +12294,8 @@ impl From<Light1Mirror> for super::Light1 {
     fn from(item: Light1Mirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12333,8 +12333,8 @@ impl From<Light2Mirror> for super::Light2 {
     fn from(item: Light2Mirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12372,10 +12372,10 @@ impl From<LightRigMirror> for super::LightRig {
     fn from(item: LightRigMirror) -> Self {
         Self {
             dir: item.dir,
-            extra: item.extra,
             rig: item.rig,
             rotation: item.rotation,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12414,11 +12414,11 @@ impl From<LineDefaultMirror> for super::LineDefault {
         Self {
             body_properties: item.body_properties,
             extension_list: item.extension_list,
-            extra: item.extra,
             shape_properties: item.shape_properties,
             shape_style: item.shape_style,
             text_list_styles: item.text_list_styles,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12455,10 +12455,10 @@ where
 impl From<LineHeadEndStyleMirror> for super::LineHeadEndStyle {
     fn from(item: LineHeadEndStyleMirror) -> Self {
         Self {
-            extra: item.extra,
             len: item.len,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -12496,8 +12496,8 @@ where
 impl From<LineJoinBevelMirror> for super::LineJoinBevel {
     fn from(item: LineJoinBevelMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12535,9 +12535,9 @@ impl From<LineReferenceMirror> for super::LineReference {
     fn from(item: LineReferenceMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             idx: item.idx,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12575,8 +12575,8 @@ impl From<LineSpacingMirror> for super::LineSpacing {
     fn from(item: LineSpacingMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12613,9 +12613,9 @@ where
 impl From<LineStyleListMirror> for super::LineStyleList {
     fn from(item: LineStyleListMirror) -> Self {
         Self {
-            extra: item.extra,
             outline: item.outline,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12653,9 +12653,9 @@ impl From<LinearGradientFillMirror> for super::LinearGradientFill {
     fn from(item: LinearGradientFillMirror) -> Self {
         Self {
             ang: item.ang,
-            extra: item.extra,
             scaled: item.scaled,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12697,7 +12697,6 @@ impl From<ListLevel1TextStyleMirror> for super::ListLevel1TextStyle {
             default_text_run_properties: item.default_text_run_properties,
             ea_ln_brk: item.ea_ln_brk,
             extension_list: item.extension_list,
-            extra: item.extra,
             font_algn: item.font_algn,
             hanging_punct: item.hanging_punct,
             indent: item.indent,
@@ -12715,6 +12714,7 @@ impl From<ListLevel1TextStyleMirror> for super::ListLevel1TextStyle {
             text_bullet_size_content: item.text_bullet_size_content,
             text_bullet_typeface_content: item.text_bullet_typeface_content,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12759,7 +12759,6 @@ impl From<ListLevel2TextStyleMirror> for super::ListLevel2TextStyle {
             default_text_run_properties: item.default_text_run_properties,
             ea_ln_brk: item.ea_ln_brk,
             extension_list: item.extension_list,
-            extra: item.extra,
             font_algn: item.font_algn,
             hanging_punct: item.hanging_punct,
             indent: item.indent,
@@ -12777,6 +12776,7 @@ impl From<ListLevel2TextStyleMirror> for super::ListLevel2TextStyle {
             text_bullet_size_content: item.text_bullet_size_content,
             text_bullet_typeface_content: item.text_bullet_typeface_content,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12821,7 +12821,6 @@ impl From<ListLevel3TextStyleMirror> for super::ListLevel3TextStyle {
             default_text_run_properties: item.default_text_run_properties,
             ea_ln_brk: item.ea_ln_brk,
             extension_list: item.extension_list,
-            extra: item.extra,
             font_algn: item.font_algn,
             hanging_punct: item.hanging_punct,
             indent: item.indent,
@@ -12839,6 +12838,7 @@ impl From<ListLevel3TextStyleMirror> for super::ListLevel3TextStyle {
             text_bullet_size_content: item.text_bullet_size_content,
             text_bullet_typeface_content: item.text_bullet_typeface_content,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12883,7 +12883,6 @@ impl From<ListLevel4TextStyleMirror> for super::ListLevel4TextStyle {
             default_text_run_properties: item.default_text_run_properties,
             ea_ln_brk: item.ea_ln_brk,
             extension_list: item.extension_list,
-            extra: item.extra,
             font_algn: item.font_algn,
             hanging_punct: item.hanging_punct,
             indent: item.indent,
@@ -12901,6 +12900,7 @@ impl From<ListLevel4TextStyleMirror> for super::ListLevel4TextStyle {
             text_bullet_size_content: item.text_bullet_size_content,
             text_bullet_typeface_content: item.text_bullet_typeface_content,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -12945,7 +12945,6 @@ impl From<ListLevel5TextStyleMirror> for super::ListLevel5TextStyle {
             default_text_run_properties: item.default_text_run_properties,
             ea_ln_brk: item.ea_ln_brk,
             extension_list: item.extension_list,
-            extra: item.extra,
             font_algn: item.font_algn,
             hanging_punct: item.hanging_punct,
             indent: item.indent,
@@ -12963,6 +12962,7 @@ impl From<ListLevel5TextStyleMirror> for super::ListLevel5TextStyle {
             text_bullet_size_content: item.text_bullet_size_content,
             text_bullet_typeface_content: item.text_bullet_typeface_content,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13007,7 +13007,6 @@ impl From<ListLevel6TextStyleMirror> for super::ListLevel6TextStyle {
             default_text_run_properties: item.default_text_run_properties,
             ea_ln_brk: item.ea_ln_brk,
             extension_list: item.extension_list,
-            extra: item.extra,
             font_algn: item.font_algn,
             hanging_punct: item.hanging_punct,
             indent: item.indent,
@@ -13025,6 +13024,7 @@ impl From<ListLevel6TextStyleMirror> for super::ListLevel6TextStyle {
             text_bullet_size_content: item.text_bullet_size_content,
             text_bullet_typeface_content: item.text_bullet_typeface_content,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13069,7 +13069,6 @@ impl From<ListLevel7TextStyleMirror> for super::ListLevel7TextStyle {
             default_text_run_properties: item.default_text_run_properties,
             ea_ln_brk: item.ea_ln_brk,
             extension_list: item.extension_list,
-            extra: item.extra,
             font_algn: item.font_algn,
             hanging_punct: item.hanging_punct,
             indent: item.indent,
@@ -13087,6 +13086,7 @@ impl From<ListLevel7TextStyleMirror> for super::ListLevel7TextStyle {
             text_bullet_size_content: item.text_bullet_size_content,
             text_bullet_typeface_content: item.text_bullet_typeface_content,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13131,7 +13131,6 @@ impl From<ListLevel8TextStyleMirror> for super::ListLevel8TextStyle {
             default_text_run_properties: item.default_text_run_properties,
             ea_ln_brk: item.ea_ln_brk,
             extension_list: item.extension_list,
-            extra: item.extra,
             font_algn: item.font_algn,
             hanging_punct: item.hanging_punct,
             indent: item.indent,
@@ -13149,6 +13148,7 @@ impl From<ListLevel8TextStyleMirror> for super::ListLevel8TextStyle {
             text_bullet_size_content: item.text_bullet_size_content,
             text_bullet_typeface_content: item.text_bullet_typeface_content,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13193,7 +13193,6 @@ impl From<ListLevel9TextStyleMirror> for super::ListLevel9TextStyle {
             default_text_run_properties: item.default_text_run_properties,
             ea_ln_brk: item.ea_ln_brk,
             extension_list: item.extension_list,
-            extra: item.extra,
             font_algn: item.font_algn,
             hanging_punct: item.hanging_punct,
             indent: item.indent,
@@ -13211,6 +13210,7 @@ impl From<ListLevel9TextStyleMirror> for super::ListLevel9TextStyle {
             text_bullet_size_content: item.text_bullet_size_content,
             text_bullet_typeface_content: item.text_bullet_typeface_content,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13251,8 +13251,8 @@ impl From<ListOfShapeAdjustHandlesMirror> for super::ListOfShapeAdjustHandles {
     fn from(item: ListOfShapeAdjustHandlesMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13293,9 +13293,9 @@ where
 impl From<ListOfShapeAdjustValuesMirror> for super::ListOfShapeAdjustValues {
     fn from(item: ListOfShapeAdjustValuesMirror) -> Self {
         Self {
-            extra: item.extra,
             shape_guide: item.shape_guide,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13336,9 +13336,9 @@ where
 impl From<ListOfShapeConnectionSitesMirror> for super::ListOfShapeConnectionSites {
     fn from(item: ListOfShapeConnectionSitesMirror) -> Self {
         Self {
-            extra: item.extra,
             shape_connection_site: item.shape_connection_site,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13379,9 +13379,9 @@ where
 impl From<ListOfShapeGuidesMirror> for super::ListOfShapeGuides {
     fn from(item: ListOfShapeGuidesMirror) -> Self {
         Self {
-            extra: item.extra,
             shape_guide: item.shape_guide,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13418,9 +13418,9 @@ where
 impl From<ListOfShapePathsMirror> for super::ListOfShapePaths {
     fn from(item: ListOfShapePathsMirror) -> Self {
         Self {
-            extra: item.extra,
             shape_path: item.shape_path,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13457,8 +13457,8 @@ where
 impl From<LuminanceMirror> for super::Luminance {
     fn from(item: LuminanceMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -13498,8 +13498,8 @@ impl From<LuminanceEffectMirror> for super::LuminanceEffect {
         Self {
             bright: item.bright,
             contrast: item.contrast,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13536,8 +13536,8 @@ where
 impl From<LuminanceModulationMirror> for super::LuminanceModulation {
     fn from(item: LuminanceModulationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -13578,8 +13578,8 @@ where
 impl From<LuminanceOffsetMirror> for super::LuminanceOffset {
     fn from(item: LuminanceOffsetMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -13620,10 +13620,10 @@ impl From<MajorFontMirror> for super::MajorFont {
             complex_script_font: item.complex_script_font,
             east_asian_font: item.east_asian_font,
             extension_list: item.extension_list,
-            extra: item.extra,
             font: item.font,
             latin_font: item.latin_font,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13660,8 +13660,8 @@ where
 impl From<MasterColorMappingMirror> for super::MasterColorMapping {
     fn from(item: MasterColorMappingMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13701,10 +13701,10 @@ impl From<MinorFontsMirror> for super::MinorFonts {
             complex_script_font: item.complex_script_font,
             east_asian_font: item.east_asian_font,
             extension_list: item.extension_list,
-            extra: item.extra,
             font: item.font,
             latin_font: item.latin_font,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13741,9 +13741,9 @@ where
 impl From<MiterLineJoinMirror> for super::MiterLineJoin {
     fn from(item: MiterLineJoinMirror) -> Self {
         Self {
-            extra: item.extra,
             lim: item.lim,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13783,7 +13783,6 @@ impl From<MouseOverHyperlinkMirror> for super::MouseOverHyperlink {
             action: item.action,
             end_snd: item.end_snd,
             extension_list: item.extension_list,
-            extra: item.extra,
             highlight_click: item.highlight_click,
             history: item.history,
             id: item.id,
@@ -13792,6 +13791,7 @@ impl From<MouseOverHyperlinkMirror> for super::MouseOverHyperlink {
             tgt_frame: item.tgt_frame,
             tooltip: item.tooltip,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13828,9 +13828,9 @@ where
 impl From<MovePathToMirror> for super::MovePathTo {
     fn from(item: MovePathToMirror) -> Self {
         Self {
-            extra: item.extra,
             shape_path_point: item.shape_path_point,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13867,8 +13867,8 @@ where
 impl From<NoAutoFitMirror> for super::NoAutoFit {
     fn from(item: NoAutoFitMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13905,8 +13905,8 @@ where
 impl From<NoBulletMirror> for super::NoBullet {
     fn from(item: NoBulletMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13943,8 +13943,8 @@ where
 impl From<NoFillMirror> for super::NoFill {
     fn from(item: NoFillMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -13981,8 +13981,8 @@ where
 impl From<NoTextIn3DSceneMirror> for super::NoTextIn3DScene {
     fn from(item: NoTextIn3DSceneMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             z: item.z,
         }
     }
@@ -14026,8 +14026,8 @@ impl From<NonVisualConnectorShapeDrawingPropertiesMirror>
             connection_shape_locks: item.connection_shape_locks,
             connection_start: item.connection_start,
             extension_list: item.extension_list,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14071,13 +14071,13 @@ impl From<NonVisualDrawingPropertiesMirror> for super::NonVisualDrawingPropertie
             click_hyperlink: item.click_hyperlink,
             descr: item.descr,
             extension_list: item.extension_list,
-            extra: item.extra,
             hidden: item.hidden,
             hyperlink_for_hover: item.hyperlink_for_hover,
             id: item.id,
             name: item.name,
             title: item.title,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14121,9 +14121,9 @@ impl From<NonVisualGraphicFrameDrawingPropertiesMirror>
     fn from(item: NonVisualGraphicFrameDrawingPropertiesMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             graphic_frame_locks: item.graphic_frame_locks,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14167,9 +14167,9 @@ impl From<NonVisualGroupShapeDrawingPropertiesMirror>
     fn from(item: NonVisualGroupShapeDrawingPropertiesMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             group_shape_locks: item.group_shape_locks,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14211,10 +14211,10 @@ impl From<NonVisualPictureDrawingPropertiesMirror> for super::NonVisualPictureDr
     fn from(item: NonVisualPictureDrawingPropertiesMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             picture_locks: item.picture_locks,
             prefer_relative_resize: item.prefer_relative_resize,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14257,11 +14257,11 @@ impl From<NonVisualPropertiesForAConnectionShapeMirror>
 {
     fn from(item: NonVisualPropertiesForAConnectionShapeMirror) -> Self {
         Self {
-            extra: item.extra,
             non_visual_connector_shape_drawing_properties: item
                 .non_visual_connector_shape_drawing_properties,
             non_visual_drawing_properties: item.non_visual_drawing_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14304,11 +14304,11 @@ impl From<NonVisualPropertiesForAGraphicFrameMirror>
 {
     fn from(item: NonVisualPropertiesForAGraphicFrameMirror) -> Self {
         Self {
-            extra: item.extra,
             non_visual_drawing_properties: item.non_visual_drawing_properties,
             non_visual_graphic_frame_drawing_properties: item
                 .non_visual_graphic_frame_drawing_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14349,11 +14349,11 @@ where
 impl From<NonVisualPropertiesForAGroupShapeMirror> for super::NonVisualPropertiesForAGroupShape {
     fn from(item: NonVisualPropertiesForAGroupShapeMirror) -> Self {
         Self {
-            extra: item.extra,
             non_visual_drawing_properties: item.non_visual_drawing_properties,
             non_visual_group_shape_drawing_properties: item
                 .non_visual_group_shape_drawing_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14394,10 +14394,10 @@ where
 impl From<NonVisualPropertiesForAPictureMirror> for super::NonVisualPropertiesForAPicture {
     fn from(item: NonVisualPropertiesForAPictureMirror) -> Self {
         Self {
-            extra: item.extra,
             non_visual_drawing_properties: item.non_visual_drawing_properties,
             non_visual_picture_drawing_properties: item.non_visual_picture_drawing_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14438,10 +14438,10 @@ where
 impl From<NonVisualPropertiesForAShapeMirror> for super::NonVisualPropertiesForAShape {
     fn from(item: NonVisualPropertiesForAShapeMirror) -> Self {
         Self {
-            extra: item.extra,
             non_visual_drawing_properties: item.non_visual_drawing_properties,
             non_visual_shape_drawing_properties: item.non_visual_shape_drawing_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14483,10 +14483,10 @@ impl From<NonVisualShapeDrawingPropertiesMirror> for super::NonVisualShapeDrawin
     fn from(item: NonVisualShapeDrawingPropertiesMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             shape_locks: item.shape_locks,
             tx_box: item.tx_box,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14530,8 +14530,8 @@ impl From<NormalMirror> for super::Normal {
             dx: item.dx,
             dy: item.dy,
             dz: item.dz,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14568,10 +14568,10 @@ where
 impl From<NormalAutoFitMirror> for super::NormalAutoFit {
     fn from(item: NormalAutoFitMirror) -> Self {
         Self {
-            extra: item.extra,
             font_scale: item.font_scale,
             ln_spc_reduction: item.ln_spc_reduction,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14608,10 +14608,10 @@ where
 impl From<NortheastCellMirror> for super::NortheastCell {
     fn from(item: NortheastCellMirror) -> Self {
         Self {
-            extra: item.extra,
             table_cell_style: item.table_cell_style,
             table_cell_text_style: item.table_cell_text_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14648,10 +14648,10 @@ where
 impl From<NorthwestCellMirror> for super::NorthwestCell {
     fn from(item: NorthwestCellMirror) -> Self {
         Self {
-            extra: item.extra,
             table_cell_style: item.table_cell_style,
             table_cell_text_style: item.table_cell_text_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14689,11 +14689,11 @@ impl From<ObjectDefaultsMirror> for super::ObjectDefaults {
     fn from(item: ObjectDefaultsMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             line_default: item.line_default,
             shape_default: item.shape_default,
             text_default: item.text_default,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14730,8 +14730,8 @@ where
 impl From<OffsetMirror> for super::Offset {
     fn from(item: OffsetMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             x: item.x,
             y: item.y,
         }
@@ -14775,13 +14775,13 @@ impl From<OuterShadowEffectMirror> for super::OuterShadowEffect {
             content: item.content,
             dir: item.dir,
             dist: item.dist,
-            extra: item.extra,
             kx: item.kx,
             ky: item.ky,
             rot_with_shape: item.rot_with_shape,
             sx: item.sx,
             sy: item.sy,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14822,13 +14822,13 @@ impl From<OutlineMirror> for super::Outline {
             cap: item.cap,
             cmpd: item.cmpd,
             extension_list: item.extension_list,
-            extra: item.extra,
             line_dash_content: item.line_dash_content,
             line_fill_content: item.line_fill_content,
             line_head_end_style: item.line_head_end_style,
             line_join_content: item.line_join_content,
             tail_line_end_style: item.tail_line_end_style,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -14875,12 +14875,12 @@ impl From<OverrideColorMappingMirror> for super::OverrideColorMapping {
             bg1: item.bg1,
             bg2: item.bg2,
             extension_list: item.extension_list,
-            extra: item.extra,
             fol_hlink: item.fol_hlink,
             hlink: item.hlink,
             tx1: item.tx1,
             tx2: item.tx2,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14920,10 +14920,10 @@ where
 impl From<PathGradientMirror> for super::PathGradient {
     fn from(item: PathGradientMirror) -> Self {
         Self {
-            extra: item.extra,
             fill_to_rectangle: item.fill_to_rectangle,
             path: item.path,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -14961,10 +14961,10 @@ impl From<PatternFillMirror> for super::PatternFill {
     fn from(item: PatternFillMirror) -> Self {
         Self {
             background_color: item.background_color,
-            extra: item.extra,
             foreground_color: item.foreground_color,
             prst: item.prst,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15002,12 +15002,12 @@ impl From<PictureMirror> for super::Picture {
     fn from(item: PictureMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             fill: item.fill,
             non_visual_properties: item.non_visual_properties,
             shape_properties: item.shape_properties,
             shape_style: item.shape_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15045,8 +15045,8 @@ impl From<PictureBulletMirror> for super::PictureBullet {
     fn from(item: PictureBulletMirror) -> Self {
         Self {
             blip: item.blip,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15086,10 +15086,10 @@ impl From<PictureFillMirror> for super::PictureFill {
             blip: item.blip,
             content: item.content,
             dpi: item.dpi,
-            extra: item.extra,
             rot_with_shape: item.rot_with_shape,
             source_rectangle: item.source_rectangle,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15127,7 +15127,6 @@ impl From<PictureLocksMirror> for super::PictureLocks {
     fn from(item: PictureLocksMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             no_adjust_handles: item.no_adjust_handles,
             no_change_arrowheads: item.no_change_arrowheads,
             no_change_aspect: item.no_change_aspect,
@@ -15140,6 +15139,7 @@ impl From<PictureLocksMirror> for super::PictureLocks {
             no_rot: item.no_rot,
             no_select: item.no_select,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15176,7 +15176,6 @@ where
 impl From<PolarAdjustHandleMirror> for super::PolarAdjustHandle {
     fn from(item: PolarAdjustHandleMirror) -> Self {
         Self {
-            extra: item.extra,
             gd_ref_ang: item.gd_ref_ang,
             gd_ref_r: item.gd_ref_r,
             max_ang: item.max_ang,
@@ -15185,6 +15184,7 @@ impl From<PolarAdjustHandleMirror> for super::PolarAdjustHandle {
             min_r: item.min_r,
             shape_position_coordinate: item.shape_position_coordinate,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15222,8 +15222,8 @@ impl From<PresetColorMirror> for super::PresetColor {
     fn from(item: PresetColorMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15261,8 +15261,8 @@ where
 impl From<PresetDashMirror> for super::PresetDash {
     fn from(item: PresetDashMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15300,10 +15300,10 @@ where
 impl From<PresetGeometryMirror> for super::PresetGeometry {
     fn from(item: PresetGeometryMirror) -> Self {
         Self {
-            extra: item.extra,
             list_of_shape_adjust_values: item.list_of_shape_adjust_values,
             prst: item.prst,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15343,9 +15343,9 @@ impl From<PresetShadowMirror> for super::PresetShadow {
             content: item.content,
             dir: item.dir,
             dist: item.dist,
-            extra: item.extra,
             prst: item.prst,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15382,10 +15382,10 @@ where
 impl From<PresetTextWarpMirror> for super::PresetTextWarp {
     fn from(item: PresetTextWarpMirror) -> Self {
         Self {
-            extra: item.extra,
             list_of_shape_adjust_values: item.list_of_shape_adjust_values,
             prst: item.prst,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15423,9 +15423,9 @@ impl From<QuickTimeFromFileMirror> for super::QuickTimeFromFile {
     fn from(item: QuickTimeFromFileMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             link: item.link,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15463,9 +15463,9 @@ impl From<RGBColorModelHexVariantMirror> for super::RGBColorModelHexVariant {
     fn from(item: RGBColorModelHexVariantMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             legacy_spreadsheet_color_index: item.legacy_spreadsheet_color_index,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15509,10 +15509,10 @@ impl From<RGBColorModelPercentageVariantMirror> for super::RGBColorModelPercenta
         Self {
             b: item.b,
             content: item.content,
-            extra: item.extra,
             g: item.g,
             r: item.r,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15553,8 +15553,8 @@ where
 impl From<RedMirror> for super::Red {
     fn from(item: RedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15592,8 +15592,8 @@ where
 impl From<RedModulationMirror> for super::RedModulation {
     fn from(item: RedModulationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15631,8 +15631,8 @@ where
 impl From<RedOffsetMirror> for super::RedOffset {
     fn from(item: RedOffsetMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15676,7 +15676,6 @@ impl From<ReflectionEffectMirror> for super::ReflectionEffect {
             dist: item.dist,
             end_a: item.end_a,
             end_pos: item.end_pos,
-            extra: item.extra,
             fade_dir: item.fade_dir,
             kx: item.kx,
             ky: item.ky,
@@ -15686,6 +15685,7 @@ impl From<ReflectionEffectMirror> for super::ReflectionEffect {
             sx: item.sx,
             sy: item.sy,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15722,10 +15722,10 @@ where
 impl From<RelativeOffsetEffectMirror> for super::RelativeOffsetEffect {
     fn from(item: RelativeOffsetEffectMirror) -> Self {
         Self {
-            extra: item.extra,
             tx: item.tx,
             ty: item.ty,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15766,8 +15766,8 @@ impl From<RightBorderMirror> for super::RightBorder {
     fn from(item: RightBorderMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15808,13 +15808,13 @@ impl From<RightBorderLinePropertiesMirror> for super::RightBorderLineProperties 
             cap: item.cap,
             cmpd: item.cmpd,
             extension_list: item.extension_list,
-            extra: item.extra,
             line_dash_content: item.line_dash_content,
             line_fill_content: item.line_fill_content,
             line_head_end_style: item.line_head_end_style,
             line_join_content: item.line_join_content,
             tail_line_end_style: item.tail_line_end_style,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -15856,8 +15856,8 @@ where
 impl From<RightToLeftRunMirror> for super::RightToLeftRun {
     fn from(item: RightToLeftRunMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -15895,11 +15895,11 @@ where
 impl From<RotationMirror> for super::Rotation {
     fn from(item: RotationMirror) -> Self {
         Self {
-            extra: item.extra,
             lat: item.lat,
             lon: item.lon,
             rev: item.rev,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15936,8 +15936,8 @@ where
 impl From<RoundLineJoinMirror> for super::RoundLineJoin {
     fn from(item: RoundLineJoinMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -15974,8 +15974,8 @@ where
 impl From<SaturationMirror> for super::Saturation {
     fn from(item: SaturationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16013,8 +16013,8 @@ where
 impl From<SaturationModulationMirror> for super::SaturationModulation {
     fn from(item: SaturationModulationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16055,8 +16055,8 @@ where
 impl From<SaturationOffsetMirror> for super::SaturationOffset {
     fn from(item: SaturationOffsetMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16097,9 +16097,9 @@ impl From<Scene3dMirror> for super::Scene3d {
             backdrop_plane: item.backdrop_plane,
             camera: item.camera,
             extension_list: item.extension_list,
-            extra: item.extra,
             light_rig: item.light_rig,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -16137,8 +16137,8 @@ impl From<SchemeColorMirror> for super::SchemeColor {
     fn from(item: SchemeColorMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16176,8 +16176,8 @@ where
 impl From<ShadeMirror> for super::Shade {
     fn from(item: ShadeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -16216,12 +16216,12 @@ impl From<ShapeMirror> for super::Shape {
     fn from(item: ShapeMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             non_visual_properties: item.non_visual_properties,
             properties: item.properties,
             style: item.style,
             text: item.text,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -16258,8 +16258,8 @@ where
 impl From<ShapeAutoFitMirror> for super::ShapeAutoFit {
     fn from(item: ShapeAutoFitMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -16297,9 +16297,9 @@ impl From<ShapeConnectionSiteMirror> for super::ShapeConnectionSite {
     fn from(item: ShapeConnectionSiteMirror) -> Self {
         Self {
             ang: item.ang,
-            extra: item.extra,
             shape_position_coordinate: item.shape_position_coordinate,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -16341,11 +16341,11 @@ impl From<ShapeDefaultMirror> for super::ShapeDefault {
         Self {
             body_properties: item.body_properties,
             extension_list: item.extension_list,
-            extra: item.extra,
             shape_properties: item.shape_properties,
             shape_style: item.shape_style,
             text_list_styles: item.text_list_styles,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -16382,10 +16382,10 @@ where
 impl From<ShapeGuideMirror> for super::ShapeGuide {
     fn from(item: ShapeGuideMirror) -> Self {
         Self {
-            extra: item.extra,
             fmla: item.fmla,
             name: item.name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -16423,7 +16423,6 @@ impl From<ShapeLocksMirror> for super::ShapeLocks {
     fn from(item: ShapeLocksMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             no_adjust_handles: item.no_adjust_handles,
             no_change_arrowheads: item.no_change_arrowheads,
             no_change_aspect: item.no_change_aspect,
@@ -16436,6 +16435,7 @@ impl From<ShapeLocksMirror> for super::ShapeLocks {
             no_select: item.no_select,
             no_text_edit: item.no_text_edit,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -16473,12 +16473,12 @@ impl From<ShapePathMirror> for super::ShapePath {
     fn from(item: ShapePathMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             extrusion_ok: item.extrusion_ok,
             fill: item.fill,
             h: item.h,
             stroke: item.stroke,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -16516,8 +16516,8 @@ where
 impl From<ShapePathPointMirror> for super::ShapePathPoint {
     fn from(item: ShapePathPointMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             x: item.x,
             y: item.y,
         }
@@ -16556,8 +16556,8 @@ where
 impl From<ShapePositionCoordinateMirror> for super::ShapePositionCoordinate {
     fn from(item: ShapePositionCoordinateMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             x: item.x,
             y: item.y,
         }
@@ -16604,12 +16604,12 @@ impl From<ShapePropertiesMirror> for super::ShapeProperties {
             bw_mode: item.bw_mode,
             effect_properties_content: item.effect_properties_content,
             extension_list: item.extension_list,
-            extra: item.extra,
             fill_properties_content: item.fill_properties_content,
             geometry_content: item.geometry_content,
             outline: item.outline,
             scene3d: item.scene3d,
             unknown: item.unknown,
+            user_data: item.user_data,
             xfrm_transform2d: item.xfrm_transform2d,
         }
     }
@@ -16648,11 +16648,11 @@ impl From<ShapeStyleMirror> for super::ShapeStyle {
     fn from(item: ShapeStyleMirror) -> Self {
         Self {
             effect_reference: item.effect_reference,
-            extra: item.extra,
             fill_reference: item.fill_reference,
             font_reference: item.font_reference,
             line_reference: item.line_reference,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -16689,11 +16689,11 @@ where
 impl From<ShapeTextBodyMirror> for super::ShapeTextBody {
     fn from(item: ShapeTextBodyMirror) -> Self {
         Self {
-            extra: item.extra,
             properties: item.properties,
             text_list_styles: item.text_list_styles,
             text_paragraphs: item.text_paragraphs,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -16731,11 +16731,11 @@ impl From<ShapeTextRectangleMirror> for super::ShapeTextRectangle {
     fn from(item: ShapeTextRectangleMirror) -> Self {
         Self {
             b: item.b,
-            extra: item.extra,
             l: item.l,
             r: item.r,
             t: item.t,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -16772,9 +16772,9 @@ where
 impl From<SoftEdgeEffectMirror> for super::SoftEdgeEffect {
     fn from(item: SoftEdgeEffectMirror) -> Self {
         Self {
-            extra: item.extra,
             rad: item.rad,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -16812,8 +16812,8 @@ impl From<SolidColorReplacementMirror> for super::SolidColorReplacement {
     fn from(item: SolidColorReplacementMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -16855,8 +16855,8 @@ impl From<SolidFillMirror> for super::SolidFill {
     fn from(item: SolidFillMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -16894,11 +16894,11 @@ impl From<SourceRectangleMirror> for super::SourceRectangle {
     fn from(item: SourceRectangleMirror) -> Self {
         Self {
             b: item.b,
-            extra: item.extra,
             l: item.l,
             r: item.r,
             t: item.t,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -16935,10 +16935,10 @@ where
 impl From<SoutheastCellMirror> for super::SoutheastCell {
     fn from(item: SoutheastCellMirror) -> Self {
         Self {
-            extra: item.extra,
             table_cell_style: item.table_cell_style,
             table_cell_text_style: item.table_cell_text_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -16975,10 +16975,10 @@ where
 impl From<SouthwestCellMirror> for super::SouthwestCell {
     fn from(item: SouthwestCellMirror) -> Self {
         Self {
-            extra: item.extra,
             table_cell_style: item.table_cell_style,
             table_cell_text_style: item.table_cell_text_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17016,8 +17016,8 @@ impl From<SpaceAfterMirror> for super::SpaceAfter {
     fn from(item: SpaceAfterMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17055,8 +17055,8 @@ impl From<SpaceBeforeMirror> for super::SpaceBefore {
     fn from(item: SpaceBeforeMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17093,8 +17093,8 @@ where
 impl From<SpacingPercentMirror> for super::SpacingPercent {
     fn from(item: SpacingPercentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -17132,8 +17132,8 @@ where
 impl From<SpacingPointsMirror> for super::SpacingPoints {
     fn from(item: SpacingPointsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -17172,11 +17172,11 @@ impl From<SpecifiedMirror> for super::Specified {
     fn from(item: SpecifiedMirror) -> Self {
         Self {
             charset: item.charset,
-            extra: item.extra,
             panose: item.panose,
             pitch_family: item.pitch_family,
             typeface: item.typeface,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17213,9 +17213,9 @@ where
 impl From<StretchMirror> for super::Stretch {
     fn from(item: StretchMirror) -> Self {
         Self {
-            extra: item.extra,
             fill_rectangle: item.fill_rectangle,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17253,11 +17253,11 @@ impl From<SymbolFontMirror> for super::SymbolFont {
     fn from(item: SymbolFontMirror) -> Self {
         Self {
             charset: item.charset,
-            extra: item.extra,
             panose: item.panose,
             pitch_family: item.pitch_family,
             typeface: item.typeface,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17295,9 +17295,9 @@ impl From<SystemColorMirror> for super::SystemColor {
     fn from(item: SystemColorMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             last_clr: item.last_clr,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -17335,9 +17335,9 @@ where
 impl From<TabListMirror> for super::TabList {
     fn from(item: TabListMirror) -> Self {
         Self {
-            extra: item.extra,
             tab_stop: item.tab_stop,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17375,9 +17375,9 @@ impl From<TabStopMirror> for super::TabStop {
     fn from(item: TabStopMirror) -> Self {
         Self {
             algn: item.algn,
-            extra: item.extra,
             pos: item.pos,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17414,11 +17414,11 @@ where
 impl From<TableMirror> for super::Table {
     fn from(item: TableMirror) -> Self {
         Self {
-            extra: item.extra,
             grid: item.grid,
             properties: item.properties,
             row: item.row,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17456,9 +17456,9 @@ impl From<TableBackgroundMirror> for super::TableBackground {
     fn from(item: TableBackgroundMirror) -> Self {
         Self {
             effect_content: item.effect_content,
-            extra: item.extra,
             themeable_fill_style_content: item.themeable_fill_style_content,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17496,7 +17496,6 @@ impl From<TableCellMirror> for super::TableCell {
     fn from(item: TableCellMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             grid_span: item.grid_span,
             h_merge: item.h_merge,
             id: item.id,
@@ -17504,6 +17503,7 @@ impl From<TableCellMirror> for super::TableCell {
             row_span: item.row_span,
             shape_text_body: item.shape_text_body,
             unknown: item.unknown,
+            user_data: item.user_data,
             v_merge: item.v_merge,
         }
     }
@@ -17543,7 +17543,6 @@ impl From<TableCellBordersMirror> for super::TableCellBorders {
         Self {
             bottom_border: item.bottom_border,
             extension_list: item.extension_list,
-            extra: item.extra,
             inside_horizontal_border: item.inside_horizontal_border,
             inside_vertical_border: item.inside_vertical_border,
             left_border: item.left_border,
@@ -17552,6 +17551,7 @@ impl From<TableCellBordersMirror> for super::TableCellBorders {
             top_left_to_bottom_right_border: item.top_left_to_bottom_right_border,
             top_right_to_bottom_left_border: item.top_right_to_bottom_left_border,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17596,7 +17596,6 @@ impl From<TableCellPropertiesMirror> for super::TableCellProperties {
             cell_3_d: item.cell_3_d,
             content: item.content,
             extension_list: item.extension_list,
-            extra: item.extra,
             header_cells_associated_with_table_cell: item.header_cells_associated_with_table_cell,
             horz_overflow: item.horz_overflow,
             left_border_line_properties: item.left_border_line_properties,
@@ -17609,6 +17608,7 @@ impl From<TableCellPropertiesMirror> for super::TableCellProperties {
             top_left_to_bottom_right_border_line_properties: item
                 .top_left_to_bottom_right_border_line_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
             vert: item.vert,
         }
     }
@@ -17651,9 +17651,9 @@ impl From<TableCellStyleMirror> for super::TableCellStyle {
         Self {
             cell_3_d: item.cell_3_d,
             content: item.content,
-            extra: item.extra,
             table_cell_borders: item.table_cell_borders,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17693,10 +17693,10 @@ impl From<TableCellTextStyleMirror> for super::TableCellTextStyle {
             b: item.b,
             color_content: item.color_content,
             extension_list: item.extension_list,
-            extra: item.extra,
             font_content: item.font_content,
             i: item.i,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17734,8 +17734,8 @@ impl From<TableGridMirror> for super::TableGrid {
     fn from(item: TableGridMirror) -> Self {
         Self {
             column: item.column,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17773,8 +17773,8 @@ impl From<TableGridColumnMirror> for super::TableGridColumn {
     fn from(item: TableGridColumnMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -17816,7 +17816,6 @@ impl From<TablePropertiesMirror> for super::TableProperties {
             band_row: item.band_row,
             effect_properties_content: item.effect_properties_content,
             extension_list: item.extension_list,
-            extra: item.extra,
             fill_properties_content: item.fill_properties_content,
             first_col: item.first_col,
             first_row: item.first_row,
@@ -17825,6 +17824,7 @@ impl From<TablePropertiesMirror> for super::TableProperties {
             rtl: item.rtl,
             style_content: item.style_content,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17862,10 +17862,10 @@ impl From<TableRowMirror> for super::TableRow {
     fn from(item: TableRowMirror) -> Self {
         Self {
             extension_list: item.extension_list,
-            extra: item.extra,
             h: item.h,
             table_cell: item.table_cell,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -17907,7 +17907,6 @@ impl From<TableStyleMirror> for super::TableStyle {
             band_2_horizontal: item.band_2_horizontal,
             band_2_vertical: item.band_2_vertical,
             extension_list: item.extension_list,
-            extra: item.extra,
             first_column: item.first_column,
             first_row: item.first_row,
             last_column: item.last_column,
@@ -17920,6 +17919,7 @@ impl From<TableStyleMirror> for super::TableStyle {
             style_name: item.style_name,
             table_background: item.table_background,
             unknown: item.unknown,
+            user_data: item.user_data,
             whole_table: item.whole_table,
         }
     }
@@ -17957,8 +17957,8 @@ where
 impl From<TableStyleIDMirror> for super::TableStyleID {
     fn from(item: TableStyleIDMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -17997,9 +17997,9 @@ impl From<TableStyleListMirror> for super::TableStyleList {
     fn from(item: TableStyleListMirror) -> Self {
         Self {
             def: item.def,
-            extra: item.extra,
             table_style_tbl_style: item.table_style_tbl_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18041,7 +18041,6 @@ impl From<TableStyleTblStyleMirror> for super::TableStyleTblStyle {
             band_2_horizontal: item.band_2_horizontal,
             band_2_vertical: item.band_2_vertical,
             extension_list: item.extension_list,
-            extra: item.extra,
             first_column: item.first_column,
             first_row: item.first_row,
             last_column: item.last_column,
@@ -18054,6 +18053,7 @@ impl From<TableStyleTblStyleMirror> for super::TableStyleTblStyle {
             style_name: item.style_name,
             table_background: item.table_background,
             unknown: item.unknown,
+            user_data: item.user_data,
             whole_table: item.whole_table,
         }
     }
@@ -18091,10 +18091,10 @@ where
 impl From<TailLineEndStyleMirror> for super::TailLineEndStyle {
     fn from(item: TailLineEndStyleMirror) -> Self {
         Self {
-            extra: item.extra,
             len: item.len,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -18134,11 +18134,11 @@ impl From<TextDefaultMirror> for super::TextDefault {
         Self {
             body_properties: item.body_properties,
             extension_list: item.extension_list,
-            extra: item.extra,
             shape_properties: item.shape_properties,
             shape_style: item.shape_style,
             text_list_styles: item.text_list_styles,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18175,13 +18175,13 @@ where
 impl From<TextFieldMirror> for super::TextField {
     fn from(item: TextFieldMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             text_paragraph_properties: item.text_paragraph_properties,
             text_run_properties: item.text_run_properties,
             text_string: item.text_string,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18218,9 +18218,9 @@ where
 impl From<TextLineBreakMirror> for super::TextLineBreak {
     fn from(item: TextLineBreakMirror) -> Self {
         Self {
-            extra: item.extra,
             text_run_properties: item.text_run_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18259,7 +18259,6 @@ impl From<TextListStylesMirror> for super::TextListStyles {
         Self {
             default_paragraph_style: item.default_paragraph_style,
             extension_list: item.extension_list,
-            extra: item.extra,
             list_level_1_text_style: item.list_level_1_text_style,
             list_level_2_text_style: item.list_level_2_text_style,
             list_level_3_text_style: item.list_level_3_text_style,
@@ -18270,6 +18269,7 @@ impl From<TextListStylesMirror> for super::TextListStyles {
             list_level_8_text_style: item.list_level_8_text_style,
             list_level_9_text_style: item.list_level_9_text_style,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18311,7 +18311,6 @@ impl From<TextParagraphPropertiesMirror> for super::TextParagraphProperties {
             default_text_run_properties: item.default_text_run_properties,
             ea_ln_brk: item.ea_ln_brk,
             extension_list: item.extension_list,
-            extra: item.extra,
             font_algn: item.font_algn,
             hanging_punct: item.hanging_punct,
             indent: item.indent,
@@ -18329,6 +18328,7 @@ impl From<TextParagraphPropertiesMirror> for super::TextParagraphProperties {
             text_bullet_size_content: item.text_bullet_size_content,
             text_bullet_typeface_content: item.text_bullet_typeface_content,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18371,9 +18371,9 @@ impl From<TextParagraphsMirror> for super::TextParagraphs {
         Self {
             content: item.content,
             end_paragraph_run_properties: item.end_paragraph_run_properties,
-            extra: item.extra,
             text_paragraph_properties: item.text_paragraph_properties,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18410,10 +18410,10 @@ where
 impl From<TextRunMirror> for super::TextRun {
     fn from(item: TextRunMirror) -> Self {
         Self {
-            extra: item.extra,
             properties: item.properties,
             text_string: item.text_string,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18462,7 +18462,6 @@ impl From<TextRunPropertiesMirror> for super::TextRunProperties {
             effect_properties_content: item.effect_properties_content,
             err: item.err,
             extension_list: item.extension_list,
-            extra: item.extra,
             fill_properties_content: item.fill_properties_content,
             highlight_color: item.highlight_color,
             i: item.i,
@@ -18485,6 +18484,7 @@ impl From<TextRunPropertiesMirror> for super::TextRunProperties {
             text_underline_line_content: item.text_underline_line_content,
             u: item.u,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18523,9 +18523,9 @@ impl From<TextShapeMirror> for super::TextShape {
         Self {
             content: item.content,
             extension_list: item.extension_list,
-            extra: item.extra,
             text_body: item.text_body,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18562,8 +18562,8 @@ where
 impl From<TextStringMirror> for super::TextString {
     fn from(item: TextStringMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -18604,12 +18604,12 @@ impl From<ThemeMirror> for super::Theme {
             custom_color_list: item.custom_color_list,
             elements: item.elements,
             extension_list: item.extension_list,
-            extra: item.extra,
             extra_color_scheme_list: item.extra_color_scheme_list,
             id: item.id,
             name: item.name,
             object_defaults: item.object_defaults,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18648,10 +18648,10 @@ impl From<ThemeElementsMirror> for super::ThemeElements {
         Self {
             color_scheme: item.color_scheme,
             extension_list: item.extension_list,
-            extra: item.extra,
             font_scheme: item.font_scheme,
             format_scheme: item.format_scheme,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18688,8 +18688,8 @@ where
 impl From<ThemeManagerMirror> for super::ThemeManager {
     fn from(item: ThemeManagerMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18727,10 +18727,10 @@ impl From<ThemeOverrideMirror> for super::ThemeOverride {
     fn from(item: ThemeOverrideMirror) -> Self {
         Self {
             color_scheme: item.color_scheme,
-            extra: item.extra,
             font_scheme: item.font_scheme,
             format_scheme: item.format_scheme,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18768,13 +18768,13 @@ impl From<TileMirror> for super::Tile {
     fn from(item: TileMirror) -> Self {
         Self {
             algn: item.algn,
-            extra: item.extra,
             flip: item.flip,
             sx: item.sx,
             sy: item.sy,
             tx: item.tx,
             ty: item.ty,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18812,11 +18812,11 @@ impl From<TileRectangleMirror> for super::TileRectangle {
     fn from(item: TileRectangleMirror) -> Self {
         Self {
             b: item.b,
-            extra: item.extra,
             l: item.l,
             r: item.r,
             t: item.t,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18853,8 +18853,8 @@ where
 impl From<TintMirror> for super::Tint {
     fn from(item: TintMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             val: item.val,
         }
     }
@@ -18893,9 +18893,9 @@ impl From<TintEffectMirror> for super::TintEffect {
     fn from(item: TintEffectMirror) -> Self {
         Self {
             amt: item.amt,
-            extra: item.extra,
             hue: item.hue,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -18932,10 +18932,10 @@ where
 impl From<TopBevelMirror> for super::TopBevel {
     fn from(item: TopBevelMirror) -> Self {
         Self {
-            extra: item.extra,
             h: item.h,
             prst: item.prst,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -18974,8 +18974,8 @@ impl From<TopBorderMirror> for super::TopBorder {
     fn from(item: TopBorderMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19016,13 +19016,13 @@ impl From<TopBorderLinePropertiesMirror> for super::TopBorderLineProperties {
             cap: item.cap,
             cmpd: item.cmpd,
             extension_list: item.extension_list,
-            extra: item.extra,
             line_dash_content: item.line_dash_content,
             line_fill_content: item.line_fill_content,
             line_head_end_style: item.line_head_end_style,
             line_join_content: item.line_join_content,
             tail_line_end_style: item.tail_line_end_style,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -19065,8 +19065,8 @@ impl From<TopLeftToBottomRightBorderMirror> for super::TopLeftToBottomRightBorde
     fn from(item: TopLeftToBottomRightBorderMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19113,13 +19113,13 @@ impl From<TopLeftToBottomRightBorderLinePropertiesMirror>
             cap: item.cap,
             cmpd: item.cmpd,
             extension_list: item.extension_list,
-            extra: item.extra,
             line_dash_content: item.line_dash_content,
             line_fill_content: item.line_fill_content,
             line_head_end_style: item.line_head_end_style,
             line_join_content: item.line_join_content,
             tail_line_end_style: item.tail_line_end_style,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -19162,8 +19162,8 @@ impl From<TopRightToBottomLeftBorderMirror> for super::TopRightToBottomLeftBorde
     fn from(item: TopRightToBottomLeftBorderMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19204,7 +19204,6 @@ where
 impl From<TransformEffectMirror> for super::TransformEffect {
     fn from(item: TransformEffectMirror) -> Self {
         Self {
-            extra: item.extra,
             kx: item.kx,
             ky: item.ky,
             sx: item.sx,
@@ -19212,6 +19211,7 @@ impl From<TransformEffectMirror> for super::TransformEffect {
             tx: item.tx,
             ty: item.ty,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19249,8 +19249,8 @@ impl From<UnderlineFillMirror> for super::UnderlineFill {
     fn from(item: UnderlineFillMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19287,8 +19287,8 @@ where
 impl From<UnderlineFillPropertiesFollowTextMirror> for super::UnderlineFillPropertiesFollowText {
     fn from(item: UnderlineFillPropertiesFollowTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19329,8 +19329,8 @@ where
 impl From<UnderlineFollowsTextMirror> for super::UnderlineFollowsText {
     fn from(item: UnderlineFollowsTextMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19374,13 +19374,13 @@ impl From<UnderlineStrokeMirror> for super::UnderlineStroke {
             cap: item.cap,
             cmpd: item.cmpd,
             extension_list: item.extension_list,
-            extra: item.extra,
             line_dash_content: item.line_dash_content,
             line_fill_content: item.line_fill_content,
             line_head_end_style: item.line_head_end_style,
             line_join_content: item.line_join_content,
             tail_line_end_style: item.tail_line_end_style,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }
@@ -19421,8 +19421,8 @@ impl From<UpVectorMirror> for super::UpVector {
             dx: item.dx,
             dy: item.dy,
             dz: item.dz,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19459,8 +19459,8 @@ where
 impl From<UseShapeTextRectangleMirror> for super::UseShapeTextRectangle {
     fn from(item: UseShapeTextRectangleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19502,9 +19502,9 @@ impl From<VerticalRatioMirror> for super::VerticalRatio {
     fn from(item: VerticalRatioMirror) -> Self {
         Self {
             d: item.d,
-            extra: item.extra,
             n: item.n,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19543,9 +19543,9 @@ impl From<VideoFromFileMirror> for super::VideoFromFile {
         Self {
             content_type: item.content_type,
             extension_list: item.extension_list,
-            extra: item.extra,
             link: item.link,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19585,10 +19585,10 @@ impl From<VisualGroupShapePropertiesMirror> for super::VisualGroupShapePropertie
             bw_mode: item.bw_mode,
             effect_properties_content: item.effect_properties_content,
             extension_list: item.extension_list,
-            extra: item.extra,
             fill_properties_content: item.fill_properties_content,
             scene3d: item.scene3d,
             unknown: item.unknown,
+            user_data: item.user_data,
             xfrm_group_transform2d: item.xfrm_group_transform2d,
         }
     }
@@ -19632,8 +19632,8 @@ impl From<WholeTableMirror> for super::WholeTable {
         Self {
             cell_style: item.cell_style,
             cell_text_style: item.cell_text_style,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19670,7 +19670,6 @@ where
 impl From<XYAdjustHandleMirror> for super::XYAdjustHandle {
     fn from(item: XYAdjustHandleMirror) -> Self {
         Self {
-            extra: item.extra,
             gd_ref_x: item.gd_ref_x,
             gd_ref_y: item.gd_ref_y,
             max_x: item.max_x,
@@ -19679,6 +19678,7 @@ impl From<XYAdjustHandleMirror> for super::XYAdjustHandle {
             min_y: item.min_y,
             shape_position_coordinate: item.shape_position_coordinate,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19718,12 +19718,12 @@ impl From<XfrmGroupTransform2DMirror> for super::XfrmGroupTransform2D {
             child_extents: item.child_extents,
             child_offset: item.child_offset,
             extents: item.extents,
-            extra: item.extra,
             flip_h: item.flip_h,
             flip_v: item.flip_v,
             offset: item.offset,
             rot: item.rot,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -19764,12 +19764,12 @@ impl From<XfrmTransform2DMirror> for super::XfrmTransform2D {
     fn from(item: XfrmTransform2DMirror) -> Self {
         Self {
             extents: item.extents,
-            extra: item.extra,
             flip_h: item.flip_h,
             flip_v: item.flip_v,
             offset: item.offset,
             rot: item.rot,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

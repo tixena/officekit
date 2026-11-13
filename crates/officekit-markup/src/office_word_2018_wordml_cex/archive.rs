@@ -226,9 +226,9 @@ pub struct CommentExtensibleMirror {
     pub date_utc: Option<String>,
     pub durable_id: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub intelligent_placeholder: Option<common_simple_types::OnOffValue>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -237,8 +237,8 @@ pub struct CommentExtensibleMirror {
 pub struct CommentsExtensibleMirror {
     pub comment_extensible: Vec<super::CommentExtensible>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -246,8 +246,8 @@ pub struct CommentsExtensibleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub ext: Vec<super::super::office_word_2018_wordml::Ext>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<CommentExtensibleMirror> for super::CommentExtensible {
@@ -256,9 +256,9 @@ impl From<CommentExtensibleMirror> for super::CommentExtensible {
             date_utc: item.date_utc,
             durable_id: item.durable_id,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             intelligent_placeholder: item.intelligent_placeholder,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -297,8 +297,8 @@ impl From<CommentsExtensibleMirror> for super::CommentsExtensible {
         Self {
             comment_extensible: item.comment_extensible,
             ext_lst: item.ext_lst,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -336,8 +336,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             ext: item.ext,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

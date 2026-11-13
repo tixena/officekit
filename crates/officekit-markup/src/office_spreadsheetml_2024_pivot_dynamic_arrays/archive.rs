@@ -222,17 +222,17 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::PivotCacheDynamicArray)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotCacheDynamicArrayMirror {
-    pub extra: (),
     pub r#ref: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<PivotCacheDynamicArrayMirror> for super::PivotCacheDynamicArray {
     fn from(item: PivotCacheDynamicArrayMirror) -> Self {
         Self {
-            extra: item.extra,
             r#ref: item.r#ref,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

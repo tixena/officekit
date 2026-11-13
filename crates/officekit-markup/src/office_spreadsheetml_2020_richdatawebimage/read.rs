@@ -223,7 +223,7 @@ use officekit_xml::element::Element;
 pub fn address(element: &Element) -> super::Address {
     let reader = officekit_markup_base::Reader::new(element, &super::ADDRESS_SHAPE);
     super::Address {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -233,7 +233,7 @@ pub fn address(element: &Element) -> super::Address {
 pub fn blip(element: &Element) -> super::Blip {
     let reader = officekit_markup_base::Reader::new(element, &super::BLIP_SHAPE);
     super::Blip {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -257,7 +257,7 @@ pub fn ext_lst(element: &Element) -> super::ExtLst {
 pub fn more_images_address(element: &Element) -> super::MoreImagesAddress {
     let reader = officekit_markup_base::Reader::new(element, &super::MORE_IMAGES_ADDRESS_SHAPE);
     super::MoreImagesAddress {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }

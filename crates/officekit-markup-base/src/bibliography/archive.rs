@@ -223,8 +223,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::AbbreviatedCaseNumber)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AbbreviatedCaseNumberMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -232,8 +232,8 @@ pub struct AbbreviatedCaseNumberMirror {
 #[rkyv(remote = super::AlbumTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlbumTitleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -241,9 +241,9 @@ pub struct AlbumTitleMirror {
 #[rkyv(remote = super::Artist)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtistMirror {
-    pub extra: (),
     pub name_list: Box<super::NameList>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -251,25 +251,25 @@ pub struct ArtistMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AuthorMirror {
     pub content: Option<Box<super::NameOrCorporateContent>>,
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BookAuthor)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BookAuthorMirror {
-    pub extra: (),
     pub name_list: Box<super::NameList>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BookTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BookTitleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -277,8 +277,8 @@ pub struct BookTitleMirror {
 #[rkyv(remote = super::BroadcastTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BroadcastTitleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -286,8 +286,8 @@ pub struct BroadcastTitleMirror {
 #[rkyv(remote = super::Broadcaster)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BroadcasterMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -295,8 +295,8 @@ pub struct BroadcasterMirror {
 #[rkyv(remote = super::CaseNumber)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CaseNumberMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -304,8 +304,8 @@ pub struct CaseNumberMirror {
 #[rkyv(remote = super::ChapterNumber)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ChapterNumberMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -313,8 +313,8 @@ pub struct ChapterNumberMirror {
 #[rkyv(remote = super::City)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CityMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -322,8 +322,8 @@ pub struct CityMirror {
 #[rkyv(remote = super::Comments)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentsMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -331,35 +331,35 @@ pub struct CommentsMirror {
 #[rkyv(remote = super::Compiler)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CompilerMirror {
-    pub extra: (),
     pub name_list: Box<super::NameList>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Composer)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ComposerMirror {
-    pub extra: (),
     pub name_list: Box<super::NameList>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Conductor)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ConductorMirror {
-    pub extra: (),
     pub name_list: Box<super::NameList>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ConferenceOrProceedingsName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ConferenceOrProceedingsNameMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -368,16 +368,16 @@ pub struct ConferenceOrProceedingsNameMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ContributorsListMirror {
     pub content: Vec<super::ContributorsListContent>,
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CorporateAuthor)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CorporateAuthorMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -385,17 +385,17 @@ pub struct CorporateAuthorMirror {
 #[rkyv(remote = super::Counsel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CounselMirror {
-    pub extra: (),
     pub name_list: Box<super::NameList>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CountryOrRegion)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CountryOrRegionMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -403,8 +403,8 @@ pub struct CountryOrRegionMirror {
 #[rkyv(remote = super::Court)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CourtMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -412,8 +412,8 @@ pub struct CourtMirror {
 #[rkyv(remote = super::Day)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DayMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -421,8 +421,8 @@ pub struct DayMirror {
 #[rkyv(remote = super::DayAccessed)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DayAccessedMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -430,8 +430,8 @@ pub struct DayAccessedMirror {
 #[rkyv(remote = super::Department)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DepartmentMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -439,17 +439,17 @@ pub struct DepartmentMirror {
 #[rkyv(remote = super::Director)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DirectorMirror {
-    pub extra: (),
     pub name_list: Box<super::NameList>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Distributor)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DistributorMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -457,17 +457,17 @@ pub struct DistributorMirror {
 #[rkyv(remote = super::Editor)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EditorMirror {
-    pub extra: (),
     pub name_list: Box<super::NameList>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::EditorEdition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EditorEditionMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -475,8 +475,8 @@ pub struct EditorEditionMirror {
 #[rkyv(remote = super::Guid)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GuidMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -484,8 +484,8 @@ pub struct GuidMirror {
 #[rkyv(remote = super::Institution)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InstitutionMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -493,8 +493,8 @@ pub struct InstitutionMirror {
 #[rkyv(remote = super::InternetSiteTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InternetSiteTitleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -502,35 +502,35 @@ pub struct InternetSiteTitleMirror {
 #[rkyv(remote = super::Interviewee)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IntervieweeMirror {
-    pub extra: (),
     pub name_list: Box<super::NameList>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Interviewer)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InterviewerMirror {
-    pub extra: (),
     pub name_list: Box<super::NameList>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Inventor)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InventorMirror {
-    pub extra: (),
     pub name_list: Box<super::NameList>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Issue)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IssueMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -538,8 +538,8 @@ pub struct IssueMirror {
 #[rkyv(remote = super::JournalName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct JournalNameMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -547,8 +547,8 @@ pub struct JournalNameMirror {
 #[rkyv(remote = super::LocaleID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LocaleIDMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -556,8 +556,8 @@ pub struct LocaleIDMirror {
 #[rkyv(remote = super::Medium)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MediumMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -565,8 +565,8 @@ pub struct MediumMirror {
 #[rkyv(remote = super::Month)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MonthMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -574,8 +574,8 @@ pub struct MonthMirror {
 #[rkyv(remote = super::MonthAccessed)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MonthAccessedMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -583,17 +583,17 @@ pub struct MonthAccessedMirror {
 #[rkyv(remote = super::NameList)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NameListMirror {
-    pub extra: (),
     pub person: Vec<super::Person>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::NumberOfVolumes)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberOfVolumesMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -601,8 +601,8 @@ pub struct NumberOfVolumesMirror {
 #[rkyv(remote = super::Pages)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PagesMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -610,8 +610,8 @@ pub struct PagesMirror {
 #[rkyv(remote = super::PatentNumber)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PatentNumberMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -619,8 +619,8 @@ pub struct PatentNumberMirror {
 #[rkyv(remote = super::PatentType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PatentTypeMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -629,16 +629,16 @@ pub struct PatentTypeMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PerformerMirror {
     pub content: Option<Box<super::NameOrCorporateContent>>,
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PeriodicalTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PeriodicalTitleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -646,19 +646,19 @@ pub struct PeriodicalTitleMirror {
 #[rkyv(remote = super::Person)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PersonMirror {
-    pub extra: (),
     pub persons_first_or_given_name: Vec<super::PersonsFirstOrGivenName>,
     pub persons_last_or_family_name: Vec<super::PersonsLastOrFamilyName>,
     pub persons_middle_or_other_name: Vec<super::PersonsMiddleOrOtherName>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PersonsFirstOrGivenName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PersonsFirstOrGivenNameMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -666,8 +666,8 @@ pub struct PersonsFirstOrGivenNameMirror {
 #[rkyv(remote = super::PersonsLastOrFamilyName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PersonsLastOrFamilyNameMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -675,8 +675,8 @@ pub struct PersonsLastOrFamilyNameMirror {
 #[rkyv(remote = super::PersonsMiddleOrOtherName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PersonsMiddleOrOtherNameMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -684,17 +684,17 @@ pub struct PersonsMiddleOrOtherNameMirror {
 #[rkyv(remote = super::ProducerName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ProducerNameMirror {
-    pub extra: (),
     pub list: Box<super::NameList>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ProductionCompany)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ProductionCompanyMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -702,8 +702,8 @@ pub struct ProductionCompanyMirror {
 #[rkyv(remote = super::PublicationTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PublicationTitleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -711,8 +711,8 @@ pub struct PublicationTitleMirror {
 #[rkyv(remote = super::Publisher)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PublisherMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -720,8 +720,8 @@ pub struct PublisherMirror {
 #[rkyv(remote = super::RecordingNumber)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RecordingNumberMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -729,8 +729,8 @@ pub struct RecordingNumberMirror {
 #[rkyv(remote = super::ReferenceOrder)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferenceOrderMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -738,8 +738,8 @@ pub struct ReferenceOrderMirror {
 #[rkyv(remote = super::Reporter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReporterMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -747,8 +747,8 @@ pub struct ReporterMirror {
 #[rkyv(remote = super::ShortTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShortTitleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -757,16 +757,16 @@ pub struct ShortTitleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SourceMirror {
     pub content: Vec<super::SourceContent>,
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SourceType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SourceTypeMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: super::BibliographicDataSourceTypes,
 }
 
@@ -774,20 +774,20 @@ pub struct SourceTypeMirror {
 #[rkyv(remote = super::Sources)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SourcesMirror {
-    pub extra: (),
     pub selected_style: Option<String>,
     pub source: Vec<super::Source>,
     pub style_name: Option<String>,
     pub unknown: crate::Unknown,
     pub uri: Option<String>,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::StandardNumber)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StandardNumberMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -795,8 +795,8 @@ pub struct StandardNumberMirror {
 #[rkyv(remote = super::StateOrProvince)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StateOrProvinceMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -804,8 +804,8 @@ pub struct StateOrProvinceMirror {
 #[rkyv(remote = super::Station)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StationMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -813,8 +813,8 @@ pub struct StationMirror {
 #[rkyv(remote = super::Tag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TagMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -822,8 +822,8 @@ pub struct TagMirror {
 #[rkyv(remote = super::Theater)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TheaterMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -831,8 +831,8 @@ pub struct TheaterMirror {
 #[rkyv(remote = super::ThesisType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ThesisTypeMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -840,8 +840,8 @@ pub struct ThesisTypeMirror {
 #[rkyv(remote = super::Title)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TitleMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -849,17 +849,17 @@ pub struct TitleMirror {
 #[rkyv(remote = super::Translator)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TranslatorMirror {
-    pub extra: (),
     pub name_list: Box<super::NameList>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Url)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UrlMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -867,8 +867,8 @@ pub struct UrlMirror {
 #[rkyv(remote = super::Version)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VersionMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -876,8 +876,8 @@ pub struct VersionMirror {
 #[rkyv(remote = super::Volume)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VolumeMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -885,17 +885,17 @@ pub struct VolumeMirror {
 #[rkyv(remote = super::Writer)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WriterMirror {
-    pub extra: (),
     pub name_list: Box<super::NameList>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::Year)]
 #[rkyv(attr(non_exhaustive))]
 pub struct YearMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -903,8 +903,8 @@ pub struct YearMirror {
 #[rkyv(remote = super::YearAccessed)]
 #[rkyv(attr(non_exhaustive))]
 pub struct YearAccessedMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -1002,8 +1002,8 @@ pub enum SourceContent {
 impl From<AbbreviatedCaseNumberMirror> for super::AbbreviatedCaseNumber {
     fn from(item: AbbreviatedCaseNumberMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1045,8 +1045,8 @@ where
 impl From<AlbumTitleMirror> for super::AlbumTitle {
     fn from(item: AlbumTitleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1084,9 +1084,9 @@ where
 impl From<ArtistMirror> for super::Artist {
     fn from(item: ArtistMirror) -> Self {
         Self {
-            extra: item.extra,
             name_list: item.name_list,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1124,8 +1124,8 @@ impl From<AuthorMirror> for super::Author {
     fn from(item: AuthorMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1162,9 +1162,9 @@ where
 impl From<BookAuthorMirror> for super::BookAuthor {
     fn from(item: BookAuthorMirror) -> Self {
         Self {
-            extra: item.extra,
             name_list: item.name_list,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1201,8 +1201,8 @@ where
 impl From<BookTitleMirror> for super::BookTitle {
     fn from(item: BookTitleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1240,8 +1240,8 @@ where
 impl From<BroadcastTitleMirror> for super::BroadcastTitle {
     fn from(item: BroadcastTitleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1279,8 +1279,8 @@ where
 impl From<BroadcasterMirror> for super::Broadcaster {
     fn from(item: BroadcasterMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1318,8 +1318,8 @@ where
 impl From<CaseNumberMirror> for super::CaseNumber {
     fn from(item: CaseNumberMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1357,8 +1357,8 @@ where
 impl From<ChapterNumberMirror> for super::ChapterNumber {
     fn from(item: ChapterNumberMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1396,8 +1396,8 @@ where
 impl From<CityMirror> for super::City {
     fn from(item: CityMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1435,8 +1435,8 @@ where
 impl From<CommentsMirror> for super::Comments {
     fn from(item: CommentsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1474,9 +1474,9 @@ where
 impl From<CompilerMirror> for super::Compiler {
     fn from(item: CompilerMirror) -> Self {
         Self {
-            extra: item.extra,
             name_list: item.name_list,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1513,9 +1513,9 @@ where
 impl From<ComposerMirror> for super::Composer {
     fn from(item: ComposerMirror) -> Self {
         Self {
-            extra: item.extra,
             name_list: item.name_list,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1552,9 +1552,9 @@ where
 impl From<ConductorMirror> for super::Conductor {
     fn from(item: ConductorMirror) -> Self {
         Self {
-            extra: item.extra,
             name_list: item.name_list,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1591,8 +1591,8 @@ where
 impl From<ConferenceOrProceedingsNameMirror> for super::ConferenceOrProceedingsName {
     fn from(item: ConferenceOrProceedingsNameMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1635,8 +1635,8 @@ impl From<ContributorsListMirror> for super::ContributorsList {
     fn from(item: ContributorsListMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1673,8 +1673,8 @@ where
 impl From<CorporateAuthorMirror> for super::CorporateAuthor {
     fn from(item: CorporateAuthorMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1712,9 +1712,9 @@ where
 impl From<CounselMirror> for super::Counsel {
     fn from(item: CounselMirror) -> Self {
         Self {
-            extra: item.extra,
             name_list: item.name_list,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1751,8 +1751,8 @@ where
 impl From<CountryOrRegionMirror> for super::CountryOrRegion {
     fn from(item: CountryOrRegionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1790,8 +1790,8 @@ where
 impl From<CourtMirror> for super::Court {
     fn from(item: CourtMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1829,8 +1829,8 @@ where
 impl From<DayMirror> for super::Day {
     fn from(item: DayMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1868,8 +1868,8 @@ where
 impl From<DayAccessedMirror> for super::DayAccessed {
     fn from(item: DayAccessedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1907,8 +1907,8 @@ where
 impl From<DepartmentMirror> for super::Department {
     fn from(item: DepartmentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1946,9 +1946,9 @@ where
 impl From<DirectorMirror> for super::Director {
     fn from(item: DirectorMirror) -> Self {
         Self {
-            extra: item.extra,
             name_list: item.name_list,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -1985,8 +1985,8 @@ where
 impl From<DistributorMirror> for super::Distributor {
     fn from(item: DistributorMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2024,9 +2024,9 @@ where
 impl From<EditorMirror> for super::Editor {
     fn from(item: EditorMirror) -> Self {
         Self {
-            extra: item.extra,
             name_list: item.name_list,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2063,8 +2063,8 @@ where
 impl From<EditorEditionMirror> for super::EditorEdition {
     fn from(item: EditorEditionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2102,8 +2102,8 @@ where
 impl From<GuidMirror> for super::Guid {
     fn from(item: GuidMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2141,8 +2141,8 @@ where
 impl From<InstitutionMirror> for super::Institution {
     fn from(item: InstitutionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2180,8 +2180,8 @@ where
 impl From<InternetSiteTitleMirror> for super::InternetSiteTitle {
     fn from(item: InternetSiteTitleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2219,9 +2219,9 @@ where
 impl From<IntervieweeMirror> for super::Interviewee {
     fn from(item: IntervieweeMirror) -> Self {
         Self {
-            extra: item.extra,
             name_list: item.name_list,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2258,9 +2258,9 @@ where
 impl From<InterviewerMirror> for super::Interviewer {
     fn from(item: InterviewerMirror) -> Self {
         Self {
-            extra: item.extra,
             name_list: item.name_list,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2297,9 +2297,9 @@ where
 impl From<InventorMirror> for super::Inventor {
     fn from(item: InventorMirror) -> Self {
         Self {
-            extra: item.extra,
             name_list: item.name_list,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2336,8 +2336,8 @@ where
 impl From<IssueMirror> for super::Issue {
     fn from(item: IssueMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2375,8 +2375,8 @@ where
 impl From<JournalNameMirror> for super::JournalName {
     fn from(item: JournalNameMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2414,8 +2414,8 @@ where
 impl From<LocaleIDMirror> for super::LocaleID {
     fn from(item: LocaleIDMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2453,8 +2453,8 @@ where
 impl From<MediumMirror> for super::Medium {
     fn from(item: MediumMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2492,8 +2492,8 @@ where
 impl From<MonthMirror> for super::Month {
     fn from(item: MonthMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2531,8 +2531,8 @@ where
 impl From<MonthAccessedMirror> for super::MonthAccessed {
     fn from(item: MonthAccessedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2570,9 +2570,9 @@ where
 impl From<NameListMirror> for super::NameList {
     fn from(item: NameListMirror) -> Self {
         Self {
-            extra: item.extra,
             person: item.person,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2609,8 +2609,8 @@ where
 impl From<NumberOfVolumesMirror> for super::NumberOfVolumes {
     fn from(item: NumberOfVolumesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2648,8 +2648,8 @@ where
 impl From<PagesMirror> for super::Pages {
     fn from(item: PagesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2687,8 +2687,8 @@ where
 impl From<PatentNumberMirror> for super::PatentNumber {
     fn from(item: PatentNumberMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2726,8 +2726,8 @@ where
 impl From<PatentTypeMirror> for super::PatentType {
     fn from(item: PatentTypeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2766,8 +2766,8 @@ impl From<PerformerMirror> for super::Performer {
     fn from(item: PerformerMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2804,8 +2804,8 @@ where
 impl From<PeriodicalTitleMirror> for super::PeriodicalTitle {
     fn from(item: PeriodicalTitleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2843,11 +2843,11 @@ where
 impl From<PersonMirror> for super::Person {
     fn from(item: PersonMirror) -> Self {
         Self {
-            extra: item.extra,
             persons_first_or_given_name: item.persons_first_or_given_name,
             persons_last_or_family_name: item.persons_last_or_family_name,
             persons_middle_or_other_name: item.persons_middle_or_other_name,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -2884,8 +2884,8 @@ where
 impl From<PersonsFirstOrGivenNameMirror> for super::PersonsFirstOrGivenName {
     fn from(item: PersonsFirstOrGivenNameMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2927,8 +2927,8 @@ where
 impl From<PersonsLastOrFamilyNameMirror> for super::PersonsLastOrFamilyName {
     fn from(item: PersonsLastOrFamilyNameMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -2970,8 +2970,8 @@ where
 impl From<PersonsMiddleOrOtherNameMirror> for super::PersonsMiddleOrOtherName {
     fn from(item: PersonsMiddleOrOtherNameMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3013,9 +3013,9 @@ where
 impl From<ProducerNameMirror> for super::ProducerName {
     fn from(item: ProducerNameMirror) -> Self {
         Self {
-            extra: item.extra,
             list: item.list,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3052,8 +3052,8 @@ where
 impl From<ProductionCompanyMirror> for super::ProductionCompany {
     fn from(item: ProductionCompanyMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3091,8 +3091,8 @@ where
 impl From<PublicationTitleMirror> for super::PublicationTitle {
     fn from(item: PublicationTitleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3130,8 +3130,8 @@ where
 impl From<PublisherMirror> for super::Publisher {
     fn from(item: PublisherMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3169,8 +3169,8 @@ where
 impl From<RecordingNumberMirror> for super::RecordingNumber {
     fn from(item: RecordingNumberMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3208,8 +3208,8 @@ where
 impl From<ReferenceOrderMirror> for super::ReferenceOrder {
     fn from(item: ReferenceOrderMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3247,8 +3247,8 @@ where
 impl From<ReporterMirror> for super::Reporter {
     fn from(item: ReporterMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3286,8 +3286,8 @@ where
 impl From<ShortTitleMirror> for super::ShortTitle {
     fn from(item: ShortTitleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3326,8 +3326,8 @@ impl From<SourceMirror> for super::Source {
     fn from(item: SourceMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3364,8 +3364,8 @@ where
 impl From<SourceTypeMirror> for super::SourceType {
     fn from(item: SourceTypeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3403,12 +3403,12 @@ where
 impl From<SourcesMirror> for super::Sources {
     fn from(item: SourcesMirror) -> Self {
         Self {
-            extra: item.extra,
             selected_style: item.selected_style,
             source: item.source,
             style_name: item.style_name,
             unknown: item.unknown,
             uri: item.uri,
+            user_data: item.user_data,
         }
     }
 }
@@ -3445,8 +3445,8 @@ where
 impl From<StandardNumberMirror> for super::StandardNumber {
     fn from(item: StandardNumberMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3484,8 +3484,8 @@ where
 impl From<StateOrProvinceMirror> for super::StateOrProvince {
     fn from(item: StateOrProvinceMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3523,8 +3523,8 @@ where
 impl From<StationMirror> for super::Station {
     fn from(item: StationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3562,8 +3562,8 @@ where
 impl From<TagMirror> for super::Tag {
     fn from(item: TagMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3601,8 +3601,8 @@ where
 impl From<TheaterMirror> for super::Theater {
     fn from(item: TheaterMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3640,8 +3640,8 @@ where
 impl From<ThesisTypeMirror> for super::ThesisType {
     fn from(item: ThesisTypeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3679,8 +3679,8 @@ where
 impl From<TitleMirror> for super::Title {
     fn from(item: TitleMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3718,9 +3718,9 @@ where
 impl From<TranslatorMirror> for super::Translator {
     fn from(item: TranslatorMirror) -> Self {
         Self {
-            extra: item.extra,
             name_list: item.name_list,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3757,8 +3757,8 @@ where
 impl From<UrlMirror> for super::Url {
     fn from(item: UrlMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3796,8 +3796,8 @@ where
 impl From<VersionMirror> for super::Version {
     fn from(item: VersionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3835,8 +3835,8 @@ where
 impl From<VolumeMirror> for super::Volume {
     fn from(item: VolumeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3874,9 +3874,9 @@ where
 impl From<WriterMirror> for super::Writer {
     fn from(item: WriterMirror) -> Self {
         Self {
-            extra: item.extra,
             name_list: item.name_list,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -3913,8 +3913,8 @@ where
 impl From<YearMirror> for super::Year {
     fn from(item: YearMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -3952,8 +3952,8 @@ where
 impl From<YearAccessedMirror> for super::YearAccessed {
     fn from(item: YearAccessedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }

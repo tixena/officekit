@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use crate::NodeExtra;
+use crate::UserData;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
@@ -281,17 +281,17 @@ pub enum CharacteristicRelationshipTypesMember {
 /// section 22.7.2.1). Its schema type is `CT_AdditionalCharacteristics`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SetOfAdditionalCharacteristicsWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::AdditionalCharacteristicsSetOfAdditionalCharacteristics,
+pub struct SetOfAdditionalCharacteristicsWith<X: UserData> {
     /// The children that are `SingleCharacteristic`, in order.
     pub single_characteristic: Vec<SingleCharacteristicWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::AdditionalCharacteristicsSetOfAdditionalCharacteristics,
 }
 
 /// The `ac:additionalCharacteristics` element of the tree a read gives:
-/// [`SetOfAdditionalCharacteristicsWith`] holding nothing in `extra`.
+/// [`SetOfAdditionalCharacteristicsWith`] holding nothing in `user_data`.
 pub type SetOfAdditionalCharacteristics = SetOfAdditionalCharacteristicsWith<()>;
 
 impl Eq for SetOfAdditionalCharacteristicsWith<()> {}
@@ -300,15 +300,15 @@ impl Eq for SetOfAdditionalCharacteristicsWith<()> {}
 /// schema type is `CT_Characteristic`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SingleCharacteristicWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::AdditionalCharacteristicsSingleCharacteristic,
+pub struct SingleCharacteristicWith<X: UserData> {
     /// The attribute `name`, when the element has it.
     pub name: Option<String>,
     /// The attribute `relation`, when the element has it.
     pub relation: Option<CharacteristicRelationshipTypes>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::AdditionalCharacteristicsSingleCharacteristic,
     /// The attribute `val`, when the element has it.
     pub val: Option<String>,
     /// The attribute `vocabulary`, when the element has it.
@@ -316,7 +316,7 @@ pub struct SingleCharacteristicWith<X: NodeExtra> {
 }
 
 /// The `ac:characteristic` element of the tree a read gives: [`SingleCharacteristicWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type SingleCharacteristic = SingleCharacteristicWith<()>;
 
 impl Eq for SingleCharacteristicWith<()> {}
@@ -377,21 +377,21 @@ impl CharacteristicRelationshipTypes {
     }
 }
 
-impl<X: NodeExtra> SetOfAdditionalCharacteristicsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SetOfAdditionalCharacteristicsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SetOfAdditionalCharacteristicsWith<Y>
+    pub fn into_user_data<Y>(self) -> SetOfAdditionalCharacteristicsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SetOfAdditionalCharacteristicsWith {
-            extra: Default::default(),
-            single_characteristic: crate::into_extra_list(
+            single_characteristic: crate::into_user_data_list(
                 self.single_characteristic,
-                SingleCharacteristicWith::into_extra,
+                SingleCharacteristicWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -415,19 +415,19 @@ impl crate::Write for SetOfAdditionalCharacteristics {
     }
 }
 
-impl<X: NodeExtra> SingleCharacteristicWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SingleCharacteristicWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SingleCharacteristicWith<Y>
+    pub fn into_user_data<Y>(self) -> SingleCharacteristicWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SingleCharacteristicWith {
-            extra: Default::default(),
             name: self.name,
             relation: self.relation,
             unknown: self.unknown,
+            user_data: Default::default(),
             val: self.val,
             vocabulary: self.vocabulary,
         }

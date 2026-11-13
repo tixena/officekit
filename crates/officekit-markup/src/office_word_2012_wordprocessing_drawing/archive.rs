@@ -223,9 +223,9 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct WebVideoPrMirror {
     pub embedded_html: Option<String>,
-    pub extra: (),
     pub h: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub w: Option<String>,
 }
 
@@ -233,9 +233,9 @@ impl From<WebVideoPrMirror> for super::WebVideoPr {
     fn from(item: WebVideoPrMirror) -> Self {
         Self {
             embedded_html: item.embedded_html,
-            extra: item.extra,
             h: item.h,
             unknown: item.unknown,
+            user_data: item.user_data,
             w: item.w,
         }
     }

@@ -221,7 +221,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use crate::NodeExtra;
+use crate::UserData;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 
@@ -255,15 +255,15 @@ pub static ALTERNATE_URLS_SHAPE: crate::Shape = crate::Shape {
 /// Its schema type is `CT_AlternateUrl`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AbsoluteUrlWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2021Extlinks2021AbsoluteUrl,
+pub struct AbsoluteUrlWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2021Extlinks2021AbsoluteUrl,
 }
 
 /// The `xxl21:absoluteUrl` element of the tree a read gives: [`AbsoluteUrlWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type AbsoluteUrl = AbsoluteUrlWith<()>;
 
 impl Eq for AbsoluteUrlWith<()> {}
@@ -272,23 +272,23 @@ impl Eq for AbsoluteUrlWith<()> {}
 /// 3.5.1. Its schema type is `CT_ExternalBookAlternateUrls`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AlternateUrlsWith<X: NodeExtra> {
+pub struct AlternateUrlsWith<X: UserData> {
     /// The child that is `AbsoluteUrl`, when there is one.
     pub absolute_url: Option<Box<AbsoluteUrlWith<X>>>,
     /// The attribute `driveId`, when the element has it.
     pub drive_id: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2021Extlinks2021AlternateUrls,
     /// The attribute `itemId`, when the element has it.
     pub item_id: Option<String>,
     /// The child that is `RelativeUrl`, when there is one.
     pub relative_url: Option<Box<RelativeUrlWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2021Extlinks2021AlternateUrls,
 }
 
 /// The `xxl21:alternateUrls` element of the tree a read gives: [`AlternateUrlsWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type AlternateUrls = AlternateUrlsWith<()>;
 
 impl Eq for AlternateUrlsWith<()> {}
@@ -297,30 +297,30 @@ impl Eq for AlternateUrlsWith<()> {}
 /// Its schema type is `CT_AlternateUrl`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RelativeUrlWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2021Extlinks2021RelativeUrl,
+pub struct RelativeUrlWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: crate::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2021Extlinks2021RelativeUrl,
 }
 
 /// The `xxl21:relativeUrl` element of the tree a read gives: [`RelativeUrlWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type RelativeUrl = RelativeUrlWith<()>;
 
 impl Eq for RelativeUrlWith<()> {}
 
-impl<X: NodeExtra> AbsoluteUrlWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AbsoluteUrlWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AbsoluteUrlWith<Y>
+    pub fn into_user_data<Y>(self) -> AbsoluteUrlWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AbsoluteUrlWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -344,27 +344,27 @@ impl crate::Write for AbsoluteUrl {
     }
 }
 
-impl<X: NodeExtra> AlternateUrlsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AlternateUrlsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> AlternateUrlsWith<Y>
+    pub fn into_user_data<Y>(mut self) -> AlternateUrlsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AlternateUrlsWith {
-            absolute_url: crate::into_extra_optional(
+            absolute_url: crate::into_user_data_optional(
                 &mut self.absolute_url,
-                AbsoluteUrlWith::into_extra,
+                AbsoluteUrlWith::into_user_data,
             ),
             drive_id: self.drive_id,
-            extra: Default::default(),
             item_id: self.item_id,
-            relative_url: crate::into_extra_optional(
+            relative_url: crate::into_user_data_optional(
                 &mut self.relative_url,
-                RelativeUrlWith::into_extra,
+                RelativeUrlWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -392,17 +392,17 @@ impl crate::Write for AlternateUrls {
     }
 }
 
-impl<X: NodeExtra> RelativeUrlWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RelativeUrlWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RelativeUrlWith<Y>
+    pub fn into_user_data<Y>(self) -> RelativeUrlWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RelativeUrlWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

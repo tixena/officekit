@@ -431,7 +431,7 @@ pub fn decimal(element: &Element) -> super::Decimal {
 pub fn empty(element: &Element) -> super::Empty {
     let reader = crate::Reader::new(element, &super::EMPTY_SHAPE);
     super::Empty {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -567,7 +567,7 @@ pub fn lpwstr(element: &Element) -> super::Lpwstr {
 pub fn null(element: &Element) -> super::Null {
     let reader = crate::Reader::new(element, &super::NULL_SHAPE);
     super::Null {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }

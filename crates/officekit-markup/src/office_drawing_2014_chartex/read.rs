@@ -244,7 +244,7 @@ pub fn address(element: &Element) -> super::Address {
 pub fn aggregation(element: &Element) -> super::Aggregation {
     let reader = officekit_markup_base::Reader::new(element, &super::AGGREGATION_SHAPE);
     super::Aggregation {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }
@@ -731,7 +731,7 @@ pub fn external_data(element: &Element) -> super::ExternalData {
 pub fn extreme_value(element: &Element) -> super::ExtremeValue {
     let reader = officekit_markup_base::Reader::new(element, &super::EXTREME_VALUE_SHAPE);
     super::ExtremeValue {
-        extra: (),
+        user_data: (),
         unknown: reader.finish(),
     }
 }

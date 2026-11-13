@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -270,19 +270,19 @@ pub trait Context: crate::Context {
 /// schema type is `CT_Version`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct VersionWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2024WorkbookCompatibilityVersionVersion,
+pub struct VersionWith<X: UserData> {
     /// The attribute `setVersion`, when the element has it.
     pub set_version: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2024WorkbookCompatibilityVersionVersion,
     /// The attribute `warnBelowVersion`, when the element has it.
     pub warn_below_version: Option<String>,
 }
 
 /// The `xlwcv:version` element of the tree a read gives: [`VersionWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Version = VersionWith<()>;
 
 impl Eq for VersionWith<()> {}
@@ -299,18 +299,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> VersionWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> VersionWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> VersionWith<Y>
+    pub fn into_user_data<Y>(self) -> VersionWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         VersionWith {
-            extra: Default::default(),
             set_version: self.set_version,
             unknown: self.unknown,
+            user_data: Default::default(),
             warn_below_version: self.warn_below_version,
         }
     }

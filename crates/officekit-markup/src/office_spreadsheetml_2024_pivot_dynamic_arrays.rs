@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -278,17 +278,17 @@ pub trait Context: crate::Context {
 /// version 3.5.1. Its schema type is `CT_PivotCacheDynamicArray`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct PivotCacheDynamicArrayWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2024PivotDynamicArraysPivotCacheDynamicArray,
+pub struct PivotCacheDynamicArrayWith<X: UserData> {
     /// The attribute `ref`, when the element has it.
     pub r#ref: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2024PivotDynamicArraysPivotCacheDynamicArray,
 }
 
 /// The `xlpda:pivotCacheDynamicArray` element of the tree a read gives:
-/// [`PivotCacheDynamicArrayWith`] holding nothing in `extra`.
+/// [`PivotCacheDynamicArrayWith`] holding nothing in `user_data`.
 pub type PivotCacheDynamicArray = PivotCacheDynamicArrayWith<()>;
 
 impl Eq for PivotCacheDynamicArrayWith<()> {}
@@ -309,18 +309,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> PivotCacheDynamicArrayWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> PivotCacheDynamicArrayWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> PivotCacheDynamicArrayWith<Y>
+    pub fn into_user_data<Y>(self) -> PivotCacheDynamicArrayWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         PivotCacheDynamicArrayWith {
-            extra: Default::default(),
             r#ref: self.r#ref,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

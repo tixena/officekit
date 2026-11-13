@@ -224,8 +224,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<spreadsheet::Extension>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -233,13 +233,13 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct MsFormMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub id: Option<String>,
     pub is_form_connected: Option<String>,
     pub latest_event_marker: Option<String>,
     pub max_response_id: Option<String>,
     pub synced_question_id: Vec<super::SyncedQuestionId>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -247,17 +247,17 @@ pub struct MsFormMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct QuestionMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SyncedQuestionId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SyncedQuestionIdMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -265,8 +265,8 @@ impl From<ExtLstMirror> for super::ExtLst {
     fn from(item: ExtLstMirror) -> Self {
         Self {
             extension: item.extension,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -304,13 +304,13 @@ impl From<MsFormMirror> for super::MsForm {
     fn from(item: MsFormMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             id: item.id,
             is_form_connected: item.is_form_connected,
             latest_event_marker: item.latest_event_marker,
             max_response_id: item.max_response_id,
             synced_question_id: item.synced_question_id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -348,9 +348,9 @@ impl From<QuestionMirror> for super::Question {
     fn from(item: QuestionMirror) -> Self {
         Self {
             ext_lst: item.ext_lst,
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -387,8 +387,8 @@ where
 impl From<SyncedQuestionIdMirror> for super::SyncedQuestionId {
     fn from(item: SyncedQuestionIdMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }

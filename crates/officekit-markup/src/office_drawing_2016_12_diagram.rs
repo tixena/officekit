@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
 use officekit_xml::element::Element;
@@ -319,13 +319,11 @@ pub trait Context: crate::Context {
 /// Its schema type is `CT_TextListStyle`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct LstStyleWith<X: NodeExtra> {
+pub struct LstStyleWith<X: UserData> {
     /// The child that is `drawing::DefaultParagraphStyle`, when there is one.
     pub default_paragraph_style: Option<Box<drawing::DefaultParagraphStyleWith<X>>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing201612DiagramLstStyle,
     /// The child that is `drawing::ListLevel1TextStyle`, when there is one.
     pub list_level_1_text_style: Option<Box<drawing::ListLevel1TextStyleWith<X>>>,
     /// The child that is `drawing::ListLevel2TextStyle`, when there is one.
@@ -346,10 +344,12 @@ pub struct LstStyleWith<X: NodeExtra> {
     pub list_level_9_text_style: Option<Box<drawing::ListLevel9TextStyleWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing201612DiagramLstStyle,
 }
 
 /// The `dgm1612:lstStyle` element of the tree a read gives: [`LstStyleWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type LstStyle = LstStyleWith<()>;
 
 impl Eq for LstStyleWith<()> {}
@@ -358,7 +358,7 @@ impl Eq for LstStyleWith<()> {}
 /// schema type is `CT_ShapeProperties`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SpPrWith<X: NodeExtra> {
+pub struct SpPrWith<X: UserData> {
     /// The child that is `drawing::Apply3DShapeProperties`, when there is one.
     pub apply_3d_shape_properties: Option<Box<drawing::Apply3DShapePropertiesWith<X>>>,
     /// The attribute `bwMode`, when the element has it.
@@ -367,8 +367,6 @@ pub struct SpPrWith<X: NodeExtra> {
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContentWith<X>>>,
     /// The child that is `drawing::ExtensionList`, when there is one.
     pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeDrawing201612DiagramSpPr,
     /// The child that is an item of `drawing::FillPropertiesContent`, when there is one.
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContentWith<X>>>,
     /// The child that is an item of `drawing::GeometryContent`, when there is one.
@@ -379,11 +377,14 @@ pub struct SpPrWith<X: NodeExtra> {
     pub scene3d: Option<Box<drawing::Scene3dWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeDrawing201612DiagramSpPr,
     /// The child that is `drawing::XfrmTransform2D`, when there is one.
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2DWith<X>>>,
 }
 
-/// The `dgm1612:spPr` element of the tree a read gives: [`SpPrWith`] holding nothing in `extra`.
+/// The `dgm1612:spPr` element of the tree a read gives: [`SpPrWith`] holding nothing in
+/// `user_data`.
 pub type SpPr = SpPrWith<()>;
 
 impl Eq for SpPrWith<()> {}
@@ -405,61 +406,61 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> LstStyleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> LstStyleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> LstStyleWith<Y>
+    pub fn into_user_data<Y>(mut self) -> LstStyleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         LstStyleWith {
-            default_paragraph_style: officekit_markup_base::into_extra_optional(
+            default_paragraph_style: officekit_markup_base::into_user_data_optional(
                 &mut self.default_paragraph_style,
-                drawing::DefaultParagraphStyleWith::into_extra,
+                drawing::DefaultParagraphStyleWith::into_user_data,
             ),
-            extension_list: officekit_markup_base::into_extra_optional(
+            extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.extension_list,
-                drawing::ExtensionListWith::into_extra,
+                drawing::ExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            list_level_1_text_style: officekit_markup_base::into_extra_optional(
+            list_level_1_text_style: officekit_markup_base::into_user_data_optional(
                 &mut self.list_level_1_text_style,
-                drawing::ListLevel1TextStyleWith::into_extra,
+                drawing::ListLevel1TextStyleWith::into_user_data,
             ),
-            list_level_2_text_style: officekit_markup_base::into_extra_optional(
+            list_level_2_text_style: officekit_markup_base::into_user_data_optional(
                 &mut self.list_level_2_text_style,
-                drawing::ListLevel2TextStyleWith::into_extra,
+                drawing::ListLevel2TextStyleWith::into_user_data,
             ),
-            list_level_3_text_style: officekit_markup_base::into_extra_optional(
+            list_level_3_text_style: officekit_markup_base::into_user_data_optional(
                 &mut self.list_level_3_text_style,
-                drawing::ListLevel3TextStyleWith::into_extra,
+                drawing::ListLevel3TextStyleWith::into_user_data,
             ),
-            list_level_4_text_style: officekit_markup_base::into_extra_optional(
+            list_level_4_text_style: officekit_markup_base::into_user_data_optional(
                 &mut self.list_level_4_text_style,
-                drawing::ListLevel4TextStyleWith::into_extra,
+                drawing::ListLevel4TextStyleWith::into_user_data,
             ),
-            list_level_5_text_style: officekit_markup_base::into_extra_optional(
+            list_level_5_text_style: officekit_markup_base::into_user_data_optional(
                 &mut self.list_level_5_text_style,
-                drawing::ListLevel5TextStyleWith::into_extra,
+                drawing::ListLevel5TextStyleWith::into_user_data,
             ),
-            list_level_6_text_style: officekit_markup_base::into_extra_optional(
+            list_level_6_text_style: officekit_markup_base::into_user_data_optional(
                 &mut self.list_level_6_text_style,
-                drawing::ListLevel6TextStyleWith::into_extra,
+                drawing::ListLevel6TextStyleWith::into_user_data,
             ),
-            list_level_7_text_style: officekit_markup_base::into_extra_optional(
+            list_level_7_text_style: officekit_markup_base::into_user_data_optional(
                 &mut self.list_level_7_text_style,
-                drawing::ListLevel7TextStyleWith::into_extra,
+                drawing::ListLevel7TextStyleWith::into_user_data,
             ),
-            list_level_8_text_style: officekit_markup_base::into_extra_optional(
+            list_level_8_text_style: officekit_markup_base::into_user_data_optional(
                 &mut self.list_level_8_text_style,
-                drawing::ListLevel8TextStyleWith::into_extra,
+                drawing::ListLevel8TextStyleWith::into_user_data,
             ),
-            list_level_9_text_style: officekit_markup_base::into_extra_optional(
+            list_level_9_text_style: officekit_markup_base::into_user_data_optional(
                 &mut self.list_level_9_text_style,
-                drawing::ListLevel9TextStyleWith::into_extra,
+                drawing::ListLevel9TextStyleWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -483,49 +484,49 @@ impl officekit_markup_base::Write for LstStyle {
     }
 }
 
-impl<X: NodeExtra> SpPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SpPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> SpPrWith<Y>
+    pub fn into_user_data<Y>(mut self) -> SpPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SpPrWith {
-            apply_3d_shape_properties: officekit_markup_base::into_extra_optional(
+            apply_3d_shape_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.apply_3d_shape_properties,
-                drawing::Apply3DShapePropertiesWith::into_extra,
+                drawing::Apply3DShapePropertiesWith::into_user_data,
             ),
             bw_mode: self.bw_mode,
-            effect_properties_content: officekit_markup_base::into_extra_optional(
+            effect_properties_content: officekit_markup_base::into_user_data_optional(
                 &mut self.effect_properties_content,
-                drawing::EffectPropertiesContentWith::into_extra,
+                drawing::EffectPropertiesContentWith::into_user_data,
             ),
-            extension_list: officekit_markup_base::into_extra_optional(
+            extension_list: officekit_markup_base::into_user_data_optional(
                 &mut self.extension_list,
-                drawing::ExtensionListWith::into_extra,
+                drawing::ExtensionListWith::into_user_data,
             ),
-            extra: Default::default(),
-            fill_properties_content: officekit_markup_base::into_extra_optional(
+            fill_properties_content: officekit_markup_base::into_user_data_optional(
                 &mut self.fill_properties_content,
-                drawing::FillPropertiesContentWith::into_extra,
+                drawing::FillPropertiesContentWith::into_user_data,
             ),
-            geometry_content: officekit_markup_base::into_extra_optional(
+            geometry_content: officekit_markup_base::into_user_data_optional(
                 &mut self.geometry_content,
-                drawing::GeometryContentWith::into_extra,
+                drawing::GeometryContentWith::into_user_data,
             ),
-            outline: officekit_markup_base::into_extra_optional(
+            outline: officekit_markup_base::into_user_data_optional(
                 &mut self.outline,
-                drawing::OutlineWith::into_extra,
+                drawing::OutlineWith::into_user_data,
             ),
-            scene3d: officekit_markup_base::into_extra_optional(
+            scene3d: officekit_markup_base::into_user_data_optional(
                 &mut self.scene3d,
-                drawing::Scene3dWith::into_extra,
+                drawing::Scene3dWith::into_user_data,
             ),
             unknown: self.unknown,
-            xfrm_transform2d: officekit_markup_base::into_extra_optional(
+            user_data: Default::default(),
+            xfrm_transform2d: officekit_markup_base::into_user_data_optional(
                 &mut self.xfrm_transform2d,
-                drawing::XfrmTransform2DWith::into_extra,
+                drawing::XfrmTransform2DWith::into_user_data,
             ),
         }
     }

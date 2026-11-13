@@ -223,9 +223,9 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentIdMirror {
     pub durable_id: Option<String>,
-    pub extra: (),
     pub para_id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -233,17 +233,17 @@ pub struct CommentIdMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentsIdsMirror {
     pub comment_id: Vec<super::CommentId>,
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<CommentIdMirror> for super::CommentId {
     fn from(item: CommentIdMirror) -> Self {
         Self {
             durable_id: item.durable_id,
-            extra: item.extra,
             para_id: item.para_id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -281,8 +281,8 @@ impl From<CommentsIdsMirror> for super::CommentsIds {
     fn from(item: CommentsIdsMirror) -> Self {
         Self {
             comment_id: item.comment_id,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

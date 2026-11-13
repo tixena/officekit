@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::spreadsheet;
 use officekit_xml::element::{Element, Node};
@@ -549,18 +549,18 @@ pub static FEATURE_PROPERTY_BAG_CONTENT_TAGS: officekit_markup_base::Accept =
 /// type is `CT_ArrayFeatureProperty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct AWith<X: NodeExtra> {
+pub struct AWith<X: UserData> {
     /// The children that are an item of `ArrayFeaturePropertyContent`, in order.
     pub content: Vec<ArrayFeaturePropertyContentWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagA,
     /// The attribute `k`, when the element has it.
     pub k: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagA,
 }
 
-/// The `xfpb:a` element of the tree a read gives: [`AWith`] holding nothing in `extra`.
+/// The `xfpb:a` element of the tree a read gives: [`AWith`] holding nothing in `user_data`.
 pub type A = AWith<()>;
 
 impl Eq for AWith<()> {}
@@ -572,7 +572,7 @@ impl Eq for AWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum ArrayFeaturePropertyContentWith<X: NodeExtra> {
+pub enum ArrayFeaturePropertyContentWith<X: UserData> {
     /// The element `xfpb:b`, a `BBoolean`.
     BBoolean(BBooleanWith<X>),
     /// The element `xfpb:bagId`, a `BagIdUnsignedInt`.
@@ -590,7 +590,7 @@ pub enum ArrayFeaturePropertyContentWith<X: NodeExtra> {
 }
 
 /// [`ArrayFeaturePropertyContentWith`] of the tree a read gives, where no node holds anything in
-/// `extra`.
+/// `user_data`.
 pub type ArrayFeaturePropertyContent = ArrayFeaturePropertyContentWith<()>;
 
 impl Eq for ArrayFeaturePropertyContentWith<()> {}
@@ -599,19 +599,19 @@ impl Eq for ArrayFeaturePropertyContentWith<()> {}
 /// type is `CT_BoolFeatureProperty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BBoolFeaturePropertyWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagBBoolFeatureProperty,
+pub struct BBoolFeaturePropertyWith<X: UserData> {
     /// The attribute `k`, when the element has it.
     pub k: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagBBoolFeatureProperty,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xfpb:b` element of the tree a read gives: [`BBoolFeaturePropertyWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type BBoolFeatureProperty = BBoolFeaturePropertyWith<()>;
 
 impl Eq for BBoolFeaturePropertyWith<()> {}
@@ -620,16 +620,16 @@ impl Eq for BBoolFeaturePropertyWith<()> {}
 /// type is `boolean`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BBooleanWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagBBoolean,
+pub struct BBooleanWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagBBoolean,
     /// The element's text.
     pub value: String,
 }
 
-/// The `xfpb:b` element of the tree a read gives: [`BBooleanWith`] holding nothing in `extra`.
+/// The `xfpb:b` element of the tree a read gives: [`BBooleanWith`] holding nothing in `user_data`.
 pub type BBoolean = BBooleanWith<()>;
 
 impl Eq for BBooleanWith<()> {}
@@ -638,7 +638,7 @@ impl Eq for BBooleanWith<()> {}
 /// schema type is `CT_FeaturePropertyBag`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BagWith<X: NodeExtra> {
+pub struct BagWith<X: UserData> {
     /// The attribute `att`, when the element has it.
     pub att: Option<String>,
     /// The attribute `bagExtId`, when the element has it.
@@ -647,15 +647,15 @@ pub struct BagWith<X: NodeExtra> {
     pub content: Vec<FeaturePropertyBagContentWith<X>>,
     /// The attribute `extRef`, when the element has it.
     pub ext_ref: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagBag,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagBag,
 }
 
-/// The `xfpb:bag` element of the tree a read gives: [`BagWith`] holding nothing in `extra`.
+/// The `xfpb:bag` element of the tree a read gives: [`BagWith`] holding nothing in `user_data`.
 pub type Bag = BagWith<()>;
 
 impl Eq for BagWith<()> {}
@@ -664,16 +664,17 @@ impl Eq for BagWith<()> {}
 /// schema type is `CT_BagExtensions`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BagExtWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagBagExt,
+pub struct BagExtWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub lst: Option<Box<ExtLstWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagBagExt,
 }
 
-/// The `xfpb:bagExt` element of the tree a read gives: [`BagExtWith`] holding nothing in `extra`.
+/// The `xfpb:bagExt` element of the tree a read gives: [`BagExtWith`] holding nothing in
+/// `user_data`.
 pub type BagExt = BagExtWith<()>;
 
 impl Eq for BagExtWith<()> {}
@@ -682,19 +683,19 @@ impl Eq for BagExtWith<()> {}
 /// schema type is `CT_BagFeatureProperty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BagIdBagFeaturePropertyWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagBagIdBagFeatureProperty,
+pub struct BagIdBagFeaturePropertyWith<X: UserData> {
     /// The attribute `k`, when the element has it.
     pub k: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagBagIdBagFeatureProperty,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xfpb:bagId` element of the tree a read gives: [`BagIdBagFeaturePropertyWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type BagIdBagFeatureProperty = BagIdBagFeaturePropertyWith<()>;
 
 impl Eq for BagIdBagFeaturePropertyWith<()> {}
@@ -703,17 +704,17 @@ impl Eq for BagIdBagFeaturePropertyWith<()> {}
 /// schema type is `unsignedInt`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct BagIdUnsignedIntWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagBagIdUnsignedInt,
+pub struct BagIdUnsignedIntWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagBagIdUnsignedInt,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xfpb:bagId` element of the tree a read gives: [`BagIdUnsignedIntWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type BagIdUnsignedInt = BagIdUnsignedIntWith<()>;
 
 impl Eq for BagIdUnsignedIntWith<()> {}
@@ -722,19 +723,19 @@ impl Eq for BagIdUnsignedIntWith<()> {}
 /// 3.5.1. Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColumnBodyRevDxfWith<X: NodeExtra> {
+pub struct ColumnBodyRevDxfWith<X: UserData> {
     /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<DxfWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagColumnBodyRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagColumnBodyRevDxf,
 }
 
 /// The `xfpb:columnBodyRevDxf` element of the tree a read gives: [`ColumnBodyRevDxfWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ColumnBodyRevDxf = ColumnBodyRevDxfWith<()>;
 
 impl Eq for ColumnBodyRevDxfWith<()> {}
@@ -743,19 +744,19 @@ impl Eq for ColumnBodyRevDxfWith<()> {}
 /// 3.5.1. Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColumnHeaderRevDxfWith<X: NodeExtra> {
+pub struct ColumnHeaderRevDxfWith<X: UserData> {
     /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<DxfWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagColumnHeaderRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagColumnHeaderRevDxf,
 }
 
 /// The `xfpb:columnHeaderRevDxf` element of the tree a read gives: [`ColumnHeaderRevDxfWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ColumnHeaderRevDxf = ColumnHeaderRevDxfWith<()>;
 
 impl Eq for ColumnHeaderRevDxfWith<()> {}
@@ -764,19 +765,19 @@ impl Eq for ColumnHeaderRevDxfWith<()> {}
 /// 3.5.1. Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ColumnTotalsRevDxfWith<X: NodeExtra> {
+pub struct ColumnTotalsRevDxfWith<X: UserData> {
     /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<DxfWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagColumnTotalsRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagColumnTotalsRevDxf,
 }
 
 /// The `xfpb:columnTotalsRevDxf` element of the tree a read gives: [`ColumnTotalsRevDxfWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type ColumnTotalsRevDxf = ColumnTotalsRevDxfWith<()>;
 
 impl Eq for ColumnTotalsRevDxfWith<()> {}
@@ -1507,19 +1508,19 @@ pub trait Context: crate::Context {
 /// type is `CT_DecimalFeatureProperty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DDecimalFeaturePropertyWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagDDecimalFeatureProperty,
+pub struct DDecimalFeaturePropertyWith<X: UserData> {
     /// The attribute `k`, when the element has it.
     pub k: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagDDecimalFeatureProperty,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xfpb:d` element of the tree a read gives: [`DDecimalFeaturePropertyWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type DDecimalFeatureProperty = DDecimalFeaturePropertyWith<()>;
 
 impl Eq for DDecimalFeaturePropertyWith<()> {}
@@ -1528,16 +1529,16 @@ impl Eq for DDecimalFeaturePropertyWith<()> {}
 /// type is `double`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DDoubleWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagDDouble,
+pub struct DDoubleWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagDDouble,
     /// The element's text.
     pub value: String,
 }
 
-/// The `xfpb:d` element of the tree a read gives: [`DDoubleWith`] holding nothing in `extra`.
+/// The `xfpb:d` element of the tree a read gives: [`DDoubleWith`] holding nothing in `user_data`.
 pub type DDouble = DDoubleWith<()>;
 
 impl Eq for DDoubleWith<()> {}
@@ -1546,17 +1547,17 @@ impl Eq for DDoubleWith<()> {}
 /// 3.5.1. Its schema type is `CT_DXFComplement`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DXFComplementWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagDXFComplement,
+pub struct DXFComplementWith<X: UserData> {
     /// The attribute `i`, when the element has it.
     pub i: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagDXFComplement,
 }
 
 /// The `xfpb:DXFComplement` element of the tree a read gives: [`DXFComplementWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type DXFComplement = DXFComplementWith<()>;
 
 impl Eq for DXFComplementWith<()> {}
@@ -1565,19 +1566,19 @@ impl Eq for DXFComplementWith<()> {}
 /// Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DataRevDxfWith<X: NodeExtra> {
+pub struct DataRevDxfWith<X: UserData> {
     /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<DxfWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagDataRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagDataRevDxf,
 }
 
 /// The `xfpb:dataRevDxf` element of the tree a read gives: [`DataRevDxfWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type DataRevDxf = DataRevDxfWith<()>;
 
 impl Eq for DataRevDxfWith<()> {}
@@ -1586,13 +1587,11 @@ impl Eq for DataRevDxfWith<()> {}
 /// schema type is `CT_Dxf`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct DxfWith<X: NodeExtra> {
+pub struct DxfWith<X: UserData> {
     /// The child that is `spreadsheet::Alignment`, when there is one.
     pub alignment: Option<Box<spreadsheet::AlignmentWith<X>>>,
     /// The child that is `spreadsheet::Border`, when there is one.
     pub border: Option<Box<spreadsheet::BorderWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagDxf,
     /// The child that is `spreadsheet::Fill`, when there is one.
     pub fill: Option<Box<spreadsheet::FillWith<X>>>,
     /// The child that is `spreadsheet::Font`, when there is one.
@@ -1606,9 +1605,11 @@ pub struct DxfWith<X: NodeExtra> {
     pub protection_properties: Option<Box<spreadsheet::ProtectionPropertiesWith<X>>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagDxf,
 }
 
-/// The `xfpb:dxf` element of the tree a read gives: [`DxfWith`] holding nothing in `extra`.
+/// The `xfpb:dxf` element of the tree a read gives: [`DxfWith`] holding nothing in `user_data`.
 pub type Dxf = DxfWith<()>;
 
 impl Eq for DxfWith<()> {}
@@ -1617,16 +1618,17 @@ impl Eq for DxfWith<()> {}
 /// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagExtLst,
 }
 
-/// The `xfpb:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `xfpb:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -1638,7 +1640,7 @@ impl Eq for ExtLstWith<()> {}
 /// `Other` holds an element or node the schemas do not declare at this position, in its place.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
-pub enum FeaturePropertyBagContentWith<X: NodeExtra> {
+pub enum FeaturePropertyBagContentWith<X: UserData> {
     /// The element `xfpb:a`, a `A`.
     A(AWith<X>),
     /// The element `xfpb:b`, a `BBoolFeatureProperty`.
@@ -1658,7 +1660,7 @@ pub enum FeaturePropertyBagContentWith<X: NodeExtra> {
 }
 
 /// [`FeaturePropertyBagContentWith`] of the tree a read gives, where no node holds anything in
-/// `extra`.
+/// `user_data`.
 pub type FeaturePropertyBagContent = FeaturePropertyBagContentWith<()>;
 
 impl Eq for FeaturePropertyBagContentWith<()> {}
@@ -1667,7 +1669,7 @@ impl Eq for FeaturePropertyBagContentWith<()> {}
 /// 3.5.1. Its schema type is `CT_FeaturePropertyBags`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FeaturePropertyBagsWith<X: NodeExtra> {
+pub struct FeaturePropertyBagsWith<X: UserData> {
     /// The children that are `Bag`, in order.
     pub bag: Vec<BagWith<X>>,
     /// The children that are `BagExt`, in order.
@@ -1676,14 +1678,14 @@ pub struct FeaturePropertyBagsWith<X: NodeExtra> {
     pub count: Option<String>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagFeaturePropertyBags,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagFeaturePropertyBags,
 }
 
 /// The `xfpb:FeaturePropertyBags` element of the tree a read gives: [`FeaturePropertyBagsWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type FeaturePropertyBags = FeaturePropertyBagsWith<()>;
 
 impl Eq for FeaturePropertyBagsWith<()> {}
@@ -1692,20 +1694,20 @@ impl Eq for FeaturePropertyBagsWith<()> {}
 /// schema type is `CT_FeaturePropertyBags`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct FpbsWith<X: NodeExtra> {
+pub struct FpbsWith<X: UserData> {
     /// The children that are `Bag`, in order.
     pub bag: Vec<BagWith<X>>,
     /// The children that are `BagExt`, in order.
     pub bag_ext: Vec<BagExtWith<X>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagFpbs,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagFpbs,
 }
 
-/// The `xfpb:fpbs` element of the tree a read gives: [`FpbsWith`] holding nothing in `extra`.
+/// The `xfpb:fpbs` element of the tree a read gives: [`FpbsWith`] holding nothing in `user_data`.
 pub type Fpbs = FpbsWith<()>;
 
 impl Eq for FpbsWith<()> {}
@@ -1714,19 +1716,19 @@ impl Eq for FpbsWith<()> {}
 /// version 3.5.1. Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HeaderRowBorderRevDxfWith<X: NodeExtra> {
+pub struct HeaderRowBorderRevDxfWith<X: UserData> {
     /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<DxfWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagHeaderRowBorderRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagHeaderRowBorderRevDxf,
 }
 
 /// The `xfpb:headerRowBorderRevDxf` element of the tree a read gives: [`HeaderRowBorderRevDxfWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type HeaderRowBorderRevDxf = HeaderRowBorderRevDxfWith<()>;
 
 impl Eq for HeaderRowBorderRevDxfWith<()> {}
@@ -1735,19 +1737,19 @@ impl Eq for HeaderRowBorderRevDxfWith<()> {}
 /// 3.5.1. Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HeaderRowRevDxfWith<X: NodeExtra> {
+pub struct HeaderRowRevDxfWith<X: UserData> {
     /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<DxfWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagHeaderRowRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagHeaderRowRevDxf,
 }
 
 /// The `xfpb:headerRowRevDxf` element of the tree a read gives: [`HeaderRowRevDxfWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type HeaderRowRevDxf = HeaderRowRevDxfWith<()>;
 
 impl Eq for HeaderRowRevDxfWith<()> {}
@@ -1756,19 +1758,19 @@ impl Eq for HeaderRowRevDxfWith<()> {}
 /// type is `CT_IntFeatureProperty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IIntFeaturePropertyWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagIIntFeatureProperty,
+pub struct IIntFeaturePropertyWith<X: UserData> {
     /// The attribute `k`, when the element has it.
     pub k: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagIIntFeatureProperty,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xfpb:i` element of the tree a read gives: [`IIntFeaturePropertyWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type IIntFeatureProperty = IIntFeaturePropertyWith<()>;
 
 impl Eq for IIntFeaturePropertyWith<()> {}
@@ -1777,16 +1779,16 @@ impl Eq for IIntFeaturePropertyWith<()> {}
 /// type is `integer`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct IIntegerWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagIInteger,
+pub struct IIntegerWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagIInteger,
     /// The element's text.
     pub value: String,
 }
 
-/// The `xfpb:i` element of the tree a read gives: [`IIntegerWith`] holding nothing in `extra`.
+/// The `xfpb:i` element of the tree a read gives: [`IIntegerWith`] holding nothing in `user_data`.
 pub type IInteger = IIntegerWith<()>;
 
 impl Eq for IIntegerWith<()> {}
@@ -1795,19 +1797,19 @@ impl Eq for IIntegerWith<()> {}
 /// schema type is `CT_RelFeatureProperty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RelRelFeaturePropertyWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagRelRelFeatureProperty,
+pub struct RelRelFeaturePropertyWith<X: UserData> {
     /// The attribute `k`, when the element has it.
     pub k: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagRelRelFeatureProperty,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xfpb:rel` element of the tree a read gives: [`RelRelFeaturePropertyWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type RelRelFeatureProperty = RelRelFeaturePropertyWith<()>;
 
 impl Eq for RelRelFeaturePropertyWith<()> {}
@@ -1816,16 +1818,17 @@ impl Eq for RelRelFeaturePropertyWith<()> {}
 /// schema type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RelStringWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagRelString,
+pub struct RelStringWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagRelString,
     /// The element's text.
     pub value: String,
 }
 
-/// The `xfpb:rel` element of the tree a read gives: [`RelStringWith`] holding nothing in `extra`.
+/// The `xfpb:rel` element of the tree a read gives: [`RelStringWith`] holding nothing in
+/// `user_data`.
 pub type RelString = RelStringWith<()>;
 
 impl Eq for RelStringWith<()> {}
@@ -1834,18 +1837,19 @@ impl Eq for RelStringWith<()> {}
 /// schema type is `CT_RevDxf`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct RevdxfWith<X: NodeExtra> {
+pub struct RevdxfWith<X: UserData> {
     /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<DxfWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagRevdxf,
     /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagRevdxf,
 }
 
-/// The `xfpb:revdxf` element of the tree a read gives: [`RevdxfWith`] holding nothing in `extra`.
+/// The `xfpb:revdxf` element of the tree a read gives: [`RevdxfWith`] holding nothing in
+/// `user_data`.
 pub type Revdxf = RevdxfWith<()>;
 
 impl Eq for RevdxfWith<()> {}
@@ -1854,16 +1858,16 @@ impl Eq for RevdxfWith<()> {}
 /// type is `string`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SStringWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagSString,
+pub struct SStringWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagSString,
     /// The element's text.
     pub value: String,
 }
 
-/// The `xfpb:s` element of the tree a read gives: [`SStringWith`] holding nothing in `extra`.
+/// The `xfpb:s` element of the tree a read gives: [`SStringWith`] holding nothing in `user_data`.
 pub type SString = SStringWith<()>;
 
 impl Eq for SStringWith<()> {}
@@ -1872,19 +1876,19 @@ impl Eq for SStringWith<()> {}
 /// type is `CT_StringFeatureProperty`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct SStringFeaturePropertyWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagSStringFeatureProperty,
+pub struct SStringFeaturePropertyWith<X: UserData> {
     /// The attribute `k`, when the element has it.
     pub k: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagSStringFeatureProperty,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xfpb:s` element of the tree a read gives: [`SStringFeaturePropertyWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type SStringFeatureProperty = SStringFeaturePropertyWith<()>;
 
 impl Eq for SStringFeaturePropertyWith<()> {}
@@ -1893,19 +1897,19 @@ impl Eq for SStringFeaturePropertyWith<()> {}
 /// 3.5.1. Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TableBorderRevDxfWith<X: NodeExtra> {
+pub struct TableBorderRevDxfWith<X: UserData> {
     /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<DxfWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagTableBorderRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagTableBorderRevDxf,
 }
 
 /// The `xfpb:tableBorderRevDxf` element of the tree a read gives: [`TableBorderRevDxfWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type TableBorderRevDxf = TableBorderRevDxfWith<()>;
 
 impl Eq for TableBorderRevDxfWith<()> {}
@@ -1914,19 +1918,19 @@ impl Eq for TableBorderRevDxfWith<()> {}
 /// version 3.5.1. Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TotalsRowBorderRevDxfWith<X: NodeExtra> {
+pub struct TotalsRowBorderRevDxfWith<X: UserData> {
     /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<DxfWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagTotalsRowBorderRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagTotalsRowBorderRevDxf,
 }
 
 /// The `xfpb:totalsRowBorderRevDxf` element of the tree a read gives: [`TotalsRowBorderRevDxfWith`]
-/// holding nothing in `extra`.
+/// holding nothing in `user_data`.
 pub type TotalsRowBorderRevDxf = TotalsRowBorderRevDxfWith<()>;
 
 impl Eq for TotalsRowBorderRevDxfWith<()> {}
@@ -1935,19 +1939,19 @@ impl Eq for TotalsRowBorderRevDxfWith<()> {}
 /// 3.5.1. Its schema type is `CT_TableRevDxf`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct TotalsRowRevDxfWith<X: NodeExtra> {
+pub struct TotalsRowRevDxfWith<X: UserData> {
     /// The child that is `Dxf`, when there is one.
     pub dxf: Option<Box<DxfWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagTotalsRowRevDxf,
     /// The child that is `Fpbs`, which the schema requires.
     pub fpbs: Box<FpbsWith<X>>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagTotalsRowRevDxf,
 }
 
 /// The `xfpb:totalsRowRevDxf` element of the tree a read gives: [`TotalsRowRevDxfWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type TotalsRowRevDxf = TotalsRowRevDxfWith<()>;
 
 impl Eq for TotalsRowRevDxfWith<()> {}
@@ -2192,37 +2196,37 @@ pub trait Visitor: crate::Visitor {
 /// Its schema type is `CT_XfComplement`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct XfComplementWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2022FeaturepropertybagXfComplement,
+pub struct XfComplementWith<X: UserData> {
     /// The attribute `i`, when the element has it.
     pub i: Option<String>,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2022FeaturepropertybagXfComplement,
 }
 
 /// The `xfpb:xfComplement` element of the tree a read gives: [`XfComplementWith`] holding nothing
-/// in `extra`.
+/// in `user_data`.
 pub type XfComplement = XfComplementWith<()>;
 
 impl Eq for XfComplementWith<()> {}
 
-impl<X: NodeExtra> AWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> AWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> AWith<Y>
+    pub fn into_user_data<Y>(self) -> AWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         AWith {
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                ArrayFeaturePropertyContentWith::into_extra,
+                ArrayFeaturePropertyContentWith::into_user_data,
             ),
-            extra: Default::default(),
             k: self.k,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2249,23 +2253,29 @@ impl officekit_markup_base::Write for A {
     }
 }
 
-impl<X: NodeExtra> ArrayFeaturePropertyContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> ArrayFeaturePropertyContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ArrayFeaturePropertyContentWith<Y>
+    pub fn into_user_data<Y>(self) -> ArrayFeaturePropertyContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
-            Self::BBoolean(node) => ArrayFeaturePropertyContentWith::BBoolean(node.into_extra()),
-            Self::BagIdUnsignedInt(node) => {
-                ArrayFeaturePropertyContentWith::BagIdUnsignedInt(node.into_extra())
+            Self::BBoolean(node) => {
+                ArrayFeaturePropertyContentWith::BBoolean(node.into_user_data())
             }
-            Self::DDouble(node) => ArrayFeaturePropertyContentWith::DDouble(node.into_extra()),
-            Self::IInteger(node) => ArrayFeaturePropertyContentWith::IInteger(node.into_extra()),
+            Self::BagIdUnsignedInt(node) => {
+                ArrayFeaturePropertyContentWith::BagIdUnsignedInt(node.into_user_data())
+            }
+            Self::DDouble(node) => ArrayFeaturePropertyContentWith::DDouble(node.into_user_data()),
+            Self::IInteger(node) => {
+                ArrayFeaturePropertyContentWith::IInteger(node.into_user_data())
+            }
             Self::Other(node) => ArrayFeaturePropertyContentWith::Other(node),
-            Self::RelString(node) => ArrayFeaturePropertyContentWith::RelString(node.into_extra()),
-            Self::SString(node) => ArrayFeaturePropertyContentWith::SString(node.into_extra()),
+            Self::RelString(node) => {
+                ArrayFeaturePropertyContentWith::RelString(node.into_user_data())
+            }
+            Self::SString(node) => ArrayFeaturePropertyContentWith::SString(node.into_user_data()),
         }
     }
 }
@@ -2304,18 +2314,18 @@ impl officekit_markup_base::Write for ArrayFeaturePropertyContent {
     }
 }
 
-impl<X: NodeExtra> BBoolFeaturePropertyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BBoolFeaturePropertyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BBoolFeaturePropertyWith<Y>
+    pub fn into_user_data<Y>(self) -> BBoolFeaturePropertyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BBoolFeaturePropertyWith {
-            extra: Default::default(),
             k: self.k,
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2344,17 +2354,17 @@ impl officekit_markup_base::Write for BBoolFeatureProperty {
     }
 }
 
-impl<X: NodeExtra> BBooleanWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BBooleanWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BBooleanWith<Y>
+    pub fn into_user_data<Y>(self) -> BBooleanWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BBooleanWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2382,25 +2392,25 @@ impl officekit_markup_base::Write for BBoolean {
     }
 }
 
-impl<X: NodeExtra> BagWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BagWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BagWith<Y>
+    pub fn into_user_data<Y>(self) -> BagWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BagWith {
             att: self.att,
             bag_ext_id: self.bag_ext_id,
-            content: officekit_markup_base::into_extra_list(
+            content: officekit_markup_base::into_user_data_list(
                 self.content,
-                FeaturePropertyBagContentWith::into_extra,
+                FeaturePropertyBagContentWith::into_user_data,
             ),
             ext_ref: self.ext_ref,
-            extra: Default::default(),
             r#type: self.r#type,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2430,18 +2440,21 @@ impl officekit_markup_base::Write for Bag {
     }
 }
 
-impl<X: NodeExtra> BagExtWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BagExtWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> BagExtWith<Y>
+    pub fn into_user_data<Y>(mut self) -> BagExtWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BagExtWith {
-            extra: Default::default(),
-            lst: officekit_markup_base::into_extra_optional(&mut self.lst, ExtLstWith::into_extra),
+            lst: officekit_markup_base::into_user_data_optional(
+                &mut self.lst,
+                ExtLstWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2465,18 +2478,18 @@ impl officekit_markup_base::Write for BagExt {
     }
 }
 
-impl<X: NodeExtra> BagIdBagFeaturePropertyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BagIdBagFeaturePropertyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BagIdBagFeaturePropertyWith<Y>
+    pub fn into_user_data<Y>(self) -> BagIdBagFeaturePropertyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BagIdBagFeaturePropertyWith {
-            extra: Default::default(),
             k: self.k,
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2505,17 +2518,17 @@ impl officekit_markup_base::Write for BagIdBagFeatureProperty {
     }
 }
 
-impl<X: NodeExtra> BagIdUnsignedIntWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> BagIdUnsignedIntWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> BagIdUnsignedIntWith<Y>
+    pub fn into_user_data<Y>(self) -> BagIdUnsignedIntWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         BagIdUnsignedIntWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2543,19 +2556,25 @@ impl officekit_markup_base::Write for BagIdUnsignedInt {
     }
 }
 
-impl<X: NodeExtra> ColumnBodyRevDxfWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ColumnBodyRevDxfWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ColumnBodyRevDxfWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ColumnBodyRevDxfWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ColumnBodyRevDxfWith {
-            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
-            extra: Default::default(),
-            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            dxf: officekit_markup_base::into_user_data_optional(
+                &mut self.dxf,
+                DxfWith::into_user_data,
+            ),
+            fpbs: officekit_markup_base::into_user_data_required(
+                *self.fpbs,
+                FpbsWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2579,19 +2598,25 @@ impl officekit_markup_base::Write for ColumnBodyRevDxf {
     }
 }
 
-impl<X: NodeExtra> ColumnHeaderRevDxfWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ColumnHeaderRevDxfWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ColumnHeaderRevDxfWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ColumnHeaderRevDxfWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ColumnHeaderRevDxfWith {
-            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
-            extra: Default::default(),
-            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            dxf: officekit_markup_base::into_user_data_optional(
+                &mut self.dxf,
+                DxfWith::into_user_data,
+            ),
+            fpbs: officekit_markup_base::into_user_data_required(
+                *self.fpbs,
+                FpbsWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2615,19 +2640,25 @@ impl officekit_markup_base::Write for ColumnHeaderRevDxf {
     }
 }
 
-impl<X: NodeExtra> ColumnTotalsRevDxfWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ColumnTotalsRevDxfWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> ColumnTotalsRevDxfWith<Y>
+    pub fn into_user_data<Y>(mut self) -> ColumnTotalsRevDxfWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ColumnTotalsRevDxfWith {
-            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
-            extra: Default::default(),
-            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            dxf: officekit_markup_base::into_user_data_optional(
+                &mut self.dxf,
+                DxfWith::into_user_data,
+            ),
+            fpbs: officekit_markup_base::into_user_data_required(
+                *self.fpbs,
+                FpbsWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2651,18 +2682,18 @@ impl officekit_markup_base::Write for ColumnTotalsRevDxf {
     }
 }
 
-impl<X: NodeExtra> DDecimalFeaturePropertyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DDecimalFeaturePropertyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DDecimalFeaturePropertyWith<Y>
+    pub fn into_user_data<Y>(self) -> DDecimalFeaturePropertyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DDecimalFeaturePropertyWith {
-            extra: Default::default(),
             k: self.k,
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2691,17 +2722,17 @@ impl officekit_markup_base::Write for DDecimalFeatureProperty {
     }
 }
 
-impl<X: NodeExtra> DDoubleWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DDoubleWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DDoubleWith<Y>
+    pub fn into_user_data<Y>(self) -> DDoubleWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DDoubleWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -2729,18 +2760,18 @@ impl officekit_markup_base::Write for DDouble {
     }
 }
 
-impl<X: NodeExtra> DXFComplementWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DXFComplementWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> DXFComplementWith<Y>
+    pub fn into_user_data<Y>(self) -> DXFComplementWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DXFComplementWith {
-            extra: Default::default(),
             i: self.i,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2767,19 +2798,25 @@ impl officekit_markup_base::Write for DXFComplement {
     }
 }
 
-impl<X: NodeExtra> DataRevDxfWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DataRevDxfWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> DataRevDxfWith<Y>
+    pub fn into_user_data<Y>(mut self) -> DataRevDxfWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DataRevDxfWith {
-            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
-            extra: Default::default(),
-            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            dxf: officekit_markup_base::into_user_data_optional(
+                &mut self.dxf,
+                DxfWith::into_user_data,
+            ),
+            fpbs: officekit_markup_base::into_user_data_required(
+                *self.fpbs,
+                FpbsWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2803,45 +2840,45 @@ impl officekit_markup_base::Write for DataRevDxf {
     }
 }
 
-impl<X: NodeExtra> DxfWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> DxfWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> DxfWith<Y>
+    pub fn into_user_data<Y>(mut self) -> DxfWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         DxfWith {
-            alignment: officekit_markup_base::into_extra_optional(
+            alignment: officekit_markup_base::into_user_data_optional(
                 &mut self.alignment,
-                spreadsheet::AlignmentWith::into_extra,
+                spreadsheet::AlignmentWith::into_user_data,
             ),
-            border: officekit_markup_base::into_extra_optional(
+            border: officekit_markup_base::into_user_data_optional(
                 &mut self.border,
-                spreadsheet::BorderWith::into_extra,
+                spreadsheet::BorderWith::into_user_data,
             ),
-            extra: Default::default(),
-            fill: officekit_markup_base::into_extra_optional(
+            fill: officekit_markup_base::into_user_data_optional(
                 &mut self.fill,
-                spreadsheet::FillWith::into_extra,
+                spreadsheet::FillWith::into_user_data,
             ),
-            font: officekit_markup_base::into_extra_optional(
+            font: officekit_markup_base::into_user_data_optional(
                 &mut self.font,
-                spreadsheet::FontWith::into_extra,
+                spreadsheet::FontWith::into_user_data,
             ),
-            future_feature_data_storage_area: officekit_markup_base::into_extra_optional(
+            future_feature_data_storage_area: officekit_markup_base::into_user_data_optional(
                 &mut self.future_feature_data_storage_area,
-                spreadsheet::FutureFeatureDataStorageAreaWith::into_extra,
+                spreadsheet::FutureFeatureDataStorageAreaWith::into_user_data,
             ),
-            number_format: officekit_markup_base::into_extra_optional(
+            number_format: officekit_markup_base::into_user_data_optional(
                 &mut self.number_format,
-                spreadsheet::NumberFormatWith::into_extra,
+                spreadsheet::NumberFormatWith::into_user_data,
             ),
-            protection_properties: officekit_markup_base::into_extra_optional(
+            protection_properties: officekit_markup_base::into_user_data_optional(
                 &mut self.protection_properties,
-                spreadsheet::ProtectionPropertiesWith::into_extra,
+                spreadsheet::ProtectionPropertiesWith::into_user_data,
             ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2865,21 +2902,21 @@ impl officekit_markup_base::Write for Dxf {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                spreadsheet::ExtensionWith::into_extra,
+                spreadsheet::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -2903,33 +2940,33 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> FeaturePropertyBagContentWith<X> {
-    /// This item and every node under it with each `extra` at `Y`'s default.
+impl<X: UserData> FeaturePropertyBagContentWith<X> {
+    /// This item and every node under it with each `user_data` at `Y`'s default.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> FeaturePropertyBagContentWith<Y>
+    pub fn into_user_data<Y>(self) -> FeaturePropertyBagContentWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         match self {
-            Self::A(node) => FeaturePropertyBagContentWith::A(node.into_extra()),
+            Self::A(node) => FeaturePropertyBagContentWith::A(node.into_user_data()),
             Self::BBoolFeatureProperty(node) => {
-                FeaturePropertyBagContentWith::BBoolFeatureProperty(node.into_extra())
+                FeaturePropertyBagContentWith::BBoolFeatureProperty(node.into_user_data())
             }
             Self::BagIdBagFeatureProperty(node) => {
-                FeaturePropertyBagContentWith::BagIdBagFeatureProperty(node.into_extra())
+                FeaturePropertyBagContentWith::BagIdBagFeatureProperty(node.into_user_data())
             }
             Self::DDecimalFeatureProperty(node) => {
-                FeaturePropertyBagContentWith::DDecimalFeatureProperty(node.into_extra())
+                FeaturePropertyBagContentWith::DDecimalFeatureProperty(node.into_user_data())
             }
             Self::IIntFeatureProperty(node) => {
-                FeaturePropertyBagContentWith::IIntFeatureProperty(node.into_extra())
+                FeaturePropertyBagContentWith::IIntFeatureProperty(node.into_user_data())
             }
             Self::Other(node) => FeaturePropertyBagContentWith::Other(node),
             Self::RelRelFeatureProperty(node) => {
-                FeaturePropertyBagContentWith::RelRelFeatureProperty(node.into_extra())
+                FeaturePropertyBagContentWith::RelRelFeatureProperty(node.into_user_data())
             }
             Self::SStringFeatureProperty(node) => {
-                FeaturePropertyBagContentWith::SStringFeatureProperty(node.into_extra())
+                FeaturePropertyBagContentWith::SStringFeatureProperty(node.into_user_data())
             }
         }
     }
@@ -2979,24 +3016,27 @@ impl officekit_markup_base::Write for FeaturePropertyBagContent {
     }
 }
 
-impl<X: NodeExtra> FeaturePropertyBagsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FeaturePropertyBagsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> FeaturePropertyBagsWith<Y>
+    pub fn into_user_data<Y>(mut self) -> FeaturePropertyBagsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FeaturePropertyBagsWith {
-            bag: officekit_markup_base::into_extra_list(self.bag, BagWith::into_extra),
-            bag_ext: officekit_markup_base::into_extra_list(self.bag_ext, BagExtWith::into_extra),
-            count: self.count,
-            ext_lst: officekit_markup_base::into_extra_optional(
-                &mut self.ext_lst,
-                ExtLstWith::into_extra,
+            bag: officekit_markup_base::into_user_data_list(self.bag, BagWith::into_user_data),
+            bag_ext: officekit_markup_base::into_user_data_list(
+                self.bag_ext,
+                BagExtWith::into_user_data,
             ),
-            extra: Default::default(),
+            count: self.count,
+            ext_lst: officekit_markup_base::into_user_data_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3023,23 +3063,26 @@ impl officekit_markup_base::Write for FeaturePropertyBags {
     }
 }
 
-impl<X: NodeExtra> FpbsWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> FpbsWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> FpbsWith<Y>
+    pub fn into_user_data<Y>(mut self) -> FpbsWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         FpbsWith {
-            bag: officekit_markup_base::into_extra_list(self.bag, BagWith::into_extra),
-            bag_ext: officekit_markup_base::into_extra_list(self.bag_ext, BagExtWith::into_extra),
-            ext_lst: officekit_markup_base::into_extra_optional(
-                &mut self.ext_lst,
-                ExtLstWith::into_extra,
+            bag: officekit_markup_base::into_user_data_list(self.bag, BagWith::into_user_data),
+            bag_ext: officekit_markup_base::into_user_data_list(
+                self.bag_ext,
+                BagExtWith::into_user_data,
             ),
-            extra: Default::default(),
+            ext_lst: officekit_markup_base::into_user_data_optional(
+                &mut self.ext_lst,
+                ExtLstWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3063,19 +3106,25 @@ impl officekit_markup_base::Write for Fpbs {
     }
 }
 
-impl<X: NodeExtra> HeaderRowBorderRevDxfWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HeaderRowBorderRevDxfWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> HeaderRowBorderRevDxfWith<Y>
+    pub fn into_user_data<Y>(mut self) -> HeaderRowBorderRevDxfWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HeaderRowBorderRevDxfWith {
-            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
-            extra: Default::default(),
-            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            dxf: officekit_markup_base::into_user_data_optional(
+                &mut self.dxf,
+                DxfWith::into_user_data,
+            ),
+            fpbs: officekit_markup_base::into_user_data_required(
+                *self.fpbs,
+                FpbsWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3099,19 +3148,25 @@ impl officekit_markup_base::Write for HeaderRowBorderRevDxf {
     }
 }
 
-impl<X: NodeExtra> HeaderRowRevDxfWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HeaderRowRevDxfWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> HeaderRowRevDxfWith<Y>
+    pub fn into_user_data<Y>(mut self) -> HeaderRowRevDxfWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HeaderRowRevDxfWith {
-            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
-            extra: Default::default(),
-            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            dxf: officekit_markup_base::into_user_data_optional(
+                &mut self.dxf,
+                DxfWith::into_user_data,
+            ),
+            fpbs: officekit_markup_base::into_user_data_required(
+                *self.fpbs,
+                FpbsWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3135,18 +3190,18 @@ impl officekit_markup_base::Write for HeaderRowRevDxf {
     }
 }
 
-impl<X: NodeExtra> IIntFeaturePropertyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> IIntFeaturePropertyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> IIntFeaturePropertyWith<Y>
+    pub fn into_user_data<Y>(self) -> IIntFeaturePropertyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         IIntFeaturePropertyWith {
-            extra: Default::default(),
             k: self.k,
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3175,17 +3230,17 @@ impl officekit_markup_base::Write for IIntFeatureProperty {
     }
 }
 
-impl<X: NodeExtra> IIntegerWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> IIntegerWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> IIntegerWith<Y>
+    pub fn into_user_data<Y>(self) -> IIntegerWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         IIntegerWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3213,18 +3268,18 @@ impl officekit_markup_base::Write for IInteger {
     }
 }
 
-impl<X: NodeExtra> RelRelFeaturePropertyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RelRelFeaturePropertyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RelRelFeaturePropertyWith<Y>
+    pub fn into_user_data<Y>(self) -> RelRelFeaturePropertyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RelRelFeaturePropertyWith {
-            extra: Default::default(),
             k: self.k,
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3253,17 +3308,17 @@ impl officekit_markup_base::Write for RelRelFeatureProperty {
     }
 }
 
-impl<X: NodeExtra> RelStringWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RelStringWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> RelStringWith<Y>
+    pub fn into_user_data<Y>(self) -> RelStringWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RelStringWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3291,19 +3346,25 @@ impl officekit_markup_base::Write for RelString {
     }
 }
 
-impl<X: NodeExtra> RevdxfWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> RevdxfWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> RevdxfWith<Y>
+    pub fn into_user_data<Y>(mut self) -> RevdxfWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         RevdxfWith {
-            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
-            extra: Default::default(),
-            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            dxf: officekit_markup_base::into_user_data_optional(
+                &mut self.dxf,
+                DxfWith::into_user_data,
+            ),
+            fpbs: officekit_markup_base::into_user_data_required(
+                *self.fpbs,
+                FpbsWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3327,17 +3388,17 @@ impl officekit_markup_base::Write for Revdxf {
     }
 }
 
-impl<X: NodeExtra> SStringWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SStringWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SStringWith<Y>
+    pub fn into_user_data<Y>(self) -> SStringWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SStringWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3365,18 +3426,18 @@ impl officekit_markup_base::Write for SString {
     }
 }
 
-impl<X: NodeExtra> SStringFeaturePropertyWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> SStringFeaturePropertyWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> SStringFeaturePropertyWith<Y>
+    pub fn into_user_data<Y>(self) -> SStringFeaturePropertyWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         SStringFeaturePropertyWith {
-            extra: Default::default(),
             k: self.k,
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -3405,19 +3466,25 @@ impl officekit_markup_base::Write for SStringFeatureProperty {
     }
 }
 
-impl<X: NodeExtra> TableBorderRevDxfWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TableBorderRevDxfWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> TableBorderRevDxfWith<Y>
+    pub fn into_user_data<Y>(mut self) -> TableBorderRevDxfWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TableBorderRevDxfWith {
-            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
-            extra: Default::default(),
-            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            dxf: officekit_markup_base::into_user_data_optional(
+                &mut self.dxf,
+                DxfWith::into_user_data,
+            ),
+            fpbs: officekit_markup_base::into_user_data_required(
+                *self.fpbs,
+                FpbsWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3441,19 +3508,25 @@ impl officekit_markup_base::Write for TableBorderRevDxf {
     }
 }
 
-impl<X: NodeExtra> TotalsRowBorderRevDxfWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TotalsRowBorderRevDxfWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> TotalsRowBorderRevDxfWith<Y>
+    pub fn into_user_data<Y>(mut self) -> TotalsRowBorderRevDxfWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TotalsRowBorderRevDxfWith {
-            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
-            extra: Default::default(),
-            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            dxf: officekit_markup_base::into_user_data_optional(
+                &mut self.dxf,
+                DxfWith::into_user_data,
+            ),
+            fpbs: officekit_markup_base::into_user_data_required(
+                *self.fpbs,
+                FpbsWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3477,19 +3550,25 @@ impl officekit_markup_base::Write for TotalsRowBorderRevDxf {
     }
 }
 
-impl<X: NodeExtra> TotalsRowRevDxfWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> TotalsRowRevDxfWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> TotalsRowRevDxfWith<Y>
+    pub fn into_user_data<Y>(mut self) -> TotalsRowRevDxfWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         TotalsRowRevDxfWith {
-            dxf: officekit_markup_base::into_extra_optional(&mut self.dxf, DxfWith::into_extra),
-            extra: Default::default(),
-            fpbs: officekit_markup_base::into_extra_required(*self.fpbs, FpbsWith::into_extra),
+            dxf: officekit_markup_base::into_user_data_optional(
+                &mut self.dxf,
+                DxfWith::into_user_data,
+            ),
+            fpbs: officekit_markup_base::into_user_data_required(
+                *self.fpbs,
+                FpbsWith::into_user_data,
+            ),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -3513,18 +3592,18 @@ impl officekit_markup_base::Write for TotalsRowRevDxf {
     }
 }
 
-impl<X: NodeExtra> XfComplementWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> XfComplementWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> XfComplementWith<Y>
+    pub fn into_user_data<Y>(self) -> XfComplementWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         XfComplementWith {
-            extra: Default::default(),
             i: self.i,
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

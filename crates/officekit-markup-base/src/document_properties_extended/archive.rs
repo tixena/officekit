@@ -223,8 +223,8 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::ApplicationName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ApplicationNameMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -233,16 +233,16 @@ pub struct ApplicationNameMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ApplicationSpecificFilePropertiesMirror {
     pub content: Vec<super::ApplicationSpecificFilePropertiesContent>,
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ApplicationVersion)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ApplicationVersionMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -250,8 +250,8 @@ pub struct ApplicationVersionMirror {
 #[rkyv(remote = super::CharactersWithSpaces)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CharactersWithSpacesMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -260,16 +260,16 @@ pub struct CharactersWithSpacesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DigitalSignatureMirror {
     pub binary_blob: Box<super::super::document_properties_variant_types::BinaryBlob>,
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DocumentSecurity)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentSecurityMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -277,8 +277,8 @@ pub struct DocumentSecurityMirror {
 #[rkyv(remote = super::HeadingPairs)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HeadingPairsMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub vector: Box<super::super::document_properties_variant_types::Vector>,
 }
 
@@ -286,8 +286,8 @@ pub struct HeadingPairsMirror {
 #[rkyv(remote = super::HyperlinkList)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HyperlinkListMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub vector: Box<super::super::document_properties_variant_types::Vector>,
 }
 
@@ -295,8 +295,8 @@ pub struct HyperlinkListMirror {
 #[rkyv(remote = super::HyperlinksChanged)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HyperlinksChangedMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -304,8 +304,8 @@ pub struct HyperlinksChangedMirror {
 #[rkyv(remote = super::IntendedFormatOfPresentation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IntendedFormatOfPresentationMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -313,8 +313,8 @@ pub struct IntendedFormatOfPresentationMirror {
 #[rkyv(remote = super::LinksUpToDate)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LinksUpToDateMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -322,8 +322,8 @@ pub struct LinksUpToDateMirror {
 #[rkyv(remote = super::NameOfCompany)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NameOfCompanyMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -331,8 +331,8 @@ pub struct NameOfCompanyMirror {
 #[rkyv(remote = super::NameOfDocumentTemplate)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NameOfDocumentTemplateMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -340,8 +340,8 @@ pub struct NameOfDocumentTemplateMirror {
 #[rkyv(remote = super::NameOfManager)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NameOfManagerMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -349,8 +349,8 @@ pub struct NameOfManagerMirror {
 #[rkyv(remote = super::NumberOfHiddenSlides)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberOfHiddenSlidesMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -358,8 +358,8 @@ pub struct NumberOfHiddenSlidesMirror {
 #[rkyv(remote = super::NumberOfLines)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberOfLinesMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -367,8 +367,8 @@ pub struct NumberOfLinesMirror {
 #[rkyv(remote = super::NumberOfSlidesContainingNotes)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberOfSlidesContainingNotesMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -376,8 +376,8 @@ pub struct NumberOfSlidesContainingNotesMirror {
 #[rkyv(remote = super::PartTitles)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PartTitlesMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub vector: Box<super::super::document_properties_variant_types::Vector>,
 }
 
@@ -385,8 +385,8 @@ pub struct PartTitlesMirror {
 #[rkyv(remote = super::RelativeHyperlinkBase)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RelativeHyperlinkBaseMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -394,8 +394,8 @@ pub struct RelativeHyperlinkBaseMirror {
 #[rkyv(remote = super::SharedDocument)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SharedDocumentMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -403,8 +403,8 @@ pub struct SharedDocumentMirror {
 #[rkyv(remote = super::SlidesMetadataElement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SlidesMetadataElementMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -412,8 +412,8 @@ pub struct SlidesMetadataElementMirror {
 #[rkyv(remote = super::ThumbnailDisplayMode)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ThumbnailDisplayModeMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -421,8 +421,8 @@ pub struct ThumbnailDisplayModeMirror {
 #[rkyv(remote = super::TotalEditTimeMetadataElement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TotalEditTimeMetadataElementMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -430,8 +430,8 @@ pub struct TotalEditTimeMetadataElementMirror {
 #[rkyv(remote = super::TotalNumberOfCharacters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TotalNumberOfCharactersMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -439,8 +439,8 @@ pub struct TotalNumberOfCharactersMirror {
 #[rkyv(remote = super::TotalNumberOfMultimediaClips)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TotalNumberOfMultimediaClipsMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -448,8 +448,8 @@ pub struct TotalNumberOfMultimediaClipsMirror {
 #[rkyv(remote = super::TotalNumberOfPages)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TotalNumberOfPagesMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -457,8 +457,8 @@ pub struct TotalNumberOfPagesMirror {
 #[rkyv(remote = super::TotalNumberOfParagraphs)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TotalNumberOfParagraphsMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -466,8 +466,8 @@ pub struct TotalNumberOfParagraphsMirror {
 #[rkyv(remote = super::WordCount)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WordCountMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
@@ -508,8 +508,8 @@ pub enum ApplicationSpecificFilePropertiesContent {
 impl From<ApplicationNameMirror> for super::ApplicationName {
     fn from(item: ApplicationNameMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -548,8 +548,8 @@ impl From<ApplicationSpecificFilePropertiesMirror> for super::ApplicationSpecifi
     fn from(item: ApplicationSpecificFilePropertiesMirror) -> Self {
         Self {
             content: item.content,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -590,8 +590,8 @@ where
 impl From<ApplicationVersionMirror> for super::ApplicationVersion {
     fn from(item: ApplicationVersionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -629,8 +629,8 @@ where
 impl From<CharactersWithSpacesMirror> for super::CharactersWithSpaces {
     fn from(item: CharactersWithSpacesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -672,8 +672,8 @@ impl From<DigitalSignatureMirror> for super::DigitalSignature {
     fn from(item: DigitalSignatureMirror) -> Self {
         Self {
             binary_blob: item.binary_blob,
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -710,8 +710,8 @@ where
 impl From<DocumentSecurityMirror> for super::DocumentSecurity {
     fn from(item: DocumentSecurityMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -749,8 +749,8 @@ where
 impl From<HeadingPairsMirror> for super::HeadingPairs {
     fn from(item: HeadingPairsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             vector: item.vector,
         }
     }
@@ -788,8 +788,8 @@ where
 impl From<HyperlinkListMirror> for super::HyperlinkList {
     fn from(item: HyperlinkListMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             vector: item.vector,
         }
     }
@@ -827,8 +827,8 @@ where
 impl From<HyperlinksChangedMirror> for super::HyperlinksChanged {
     fn from(item: HyperlinksChangedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -866,8 +866,8 @@ where
 impl From<IntendedFormatOfPresentationMirror> for super::IntendedFormatOfPresentation {
     fn from(item: IntendedFormatOfPresentationMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -909,8 +909,8 @@ where
 impl From<LinksUpToDateMirror> for super::LinksUpToDate {
     fn from(item: LinksUpToDateMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -948,8 +948,8 @@ where
 impl From<NameOfCompanyMirror> for super::NameOfCompany {
     fn from(item: NameOfCompanyMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -987,8 +987,8 @@ where
 impl From<NameOfDocumentTemplateMirror> for super::NameOfDocumentTemplate {
     fn from(item: NameOfDocumentTemplateMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1030,8 +1030,8 @@ where
 impl From<NameOfManagerMirror> for super::NameOfManager {
     fn from(item: NameOfManagerMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1069,8 +1069,8 @@ where
 impl From<NumberOfHiddenSlidesMirror> for super::NumberOfHiddenSlides {
     fn from(item: NumberOfHiddenSlidesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1111,8 +1111,8 @@ where
 impl From<NumberOfLinesMirror> for super::NumberOfLines {
     fn from(item: NumberOfLinesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1150,8 +1150,8 @@ where
 impl From<NumberOfSlidesContainingNotesMirror> for super::NumberOfSlidesContainingNotes {
     fn from(item: NumberOfSlidesContainingNotesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1193,8 +1193,8 @@ where
 impl From<PartTitlesMirror> for super::PartTitles {
     fn from(item: PartTitlesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             vector: item.vector,
         }
     }
@@ -1232,8 +1232,8 @@ where
 impl From<RelativeHyperlinkBaseMirror> for super::RelativeHyperlinkBase {
     fn from(item: RelativeHyperlinkBaseMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1275,8 +1275,8 @@ where
 impl From<SharedDocumentMirror> for super::SharedDocument {
     fn from(item: SharedDocumentMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1314,8 +1314,8 @@ where
 impl From<SlidesMetadataElementMirror> for super::SlidesMetadataElement {
     fn from(item: SlidesMetadataElementMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1357,8 +1357,8 @@ where
 impl From<ThumbnailDisplayModeMirror> for super::ThumbnailDisplayMode {
     fn from(item: ThumbnailDisplayModeMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1399,8 +1399,8 @@ where
 impl From<TotalEditTimeMetadataElementMirror> for super::TotalEditTimeMetadataElement {
     fn from(item: TotalEditTimeMetadataElementMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1442,8 +1442,8 @@ where
 impl From<TotalNumberOfCharactersMirror> for super::TotalNumberOfCharacters {
     fn from(item: TotalNumberOfCharactersMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1485,8 +1485,8 @@ where
 impl From<TotalNumberOfMultimediaClipsMirror> for super::TotalNumberOfMultimediaClips {
     fn from(item: TotalNumberOfMultimediaClipsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1528,8 +1528,8 @@ where
 impl From<TotalNumberOfPagesMirror> for super::TotalNumberOfPages {
     fn from(item: TotalNumberOfPagesMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1567,8 +1567,8 @@ where
 impl From<TotalNumberOfParagraphsMirror> for super::TotalNumberOfParagraphs {
     fn from(item: TotalNumberOfParagraphsMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }
@@ -1610,8 +1610,8 @@ where
 impl From<WordCountMirror> for super::WordCount {
     fn from(item: WordCountMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }

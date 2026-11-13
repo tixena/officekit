@@ -222,17 +222,17 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::PicAttrSrcUrl)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PicAttrSrcUrlMirror {
-    pub extra: (),
     pub id: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<PicAttrSrcUrlMirror> for super::PicAttrSrcUrl {
     fn from(item: PicAttrSrcUrlMirror) -> Self {
         Self {
-            extra: item.extra,
             id: item.id,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

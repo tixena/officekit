@@ -1,5 +1,5 @@
-//! The `#[node_extra]` attribute of officekit's typed tree. Use it through
-//! `officekit_markup::node_extra`.
+//! The `#[user_data]` attribute of officekit's typed tree. Use it through
+//! `officekit_markup::user_data`.
 
 extern crate alloc;
 
@@ -15,15 +15,15 @@ use syn::{Error, Ident, ImplItem, ItemImpl, Result, parse_quote};
 #[cfg(test)]
 mod tests;
 
-const NOT_AN_IMPL: &str = "`#[node_extra]` goes on an `impl` of `NodeExtra`";
+const NOT_AN_IMPL: &str = "`#[user_data]` goes on an `impl` of `UserData`";
 
 const ONLY_TYPES: &str =
-    "`#[node_extra]` takes only `type` items: `NodeExtra` has no functions or constants";
+    "`#[user_data]` takes only `type` items: `UserData` has no functions or constants";
 
-/// An `impl` of `officekit_markup::NodeExtra` that names only the kinds it fills: every kind it
+/// An `impl` of `officekit_markup::UserData` that names only the kinds it fills: every kind it
 /// leaves out holds `()`.
 #[proc_macro_attribute]
-pub fn node_extra(arguments: TokenStream, item: TokenStream) -> TokenStream {
+pub fn user_data(arguments: TokenStream, item: TokenStream) -> TokenStream {
     expand(arguments.into(), item.into())
         .unwrap_or_else(Error::into_compile_error)
         .into()
@@ -35,7 +35,7 @@ fn expand(arguments: Tokens, item: Tokens) -> Result<Tokens> {
     if !arguments.is_empty() {
         return Err(Error::new_spanned(
             arguments,
-            "`#[node_extra]` takes no arguments",
+            "`#[user_data]` takes no arguments",
         ));
     }
     let mut parsed: ItemImpl = match syn::parse2(item) {

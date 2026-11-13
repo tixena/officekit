@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
@@ -273,17 +273,17 @@ pub trait Context: crate::Context {
 /// 3.5.1. Its schema type is `CT_ExternalLinksPr`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExternalLinksPrWith<X: NodeExtra> {
+pub struct ExternalLinksPrWith<X: UserData> {
     /// The attribute `autoRefresh`, when the element has it.
     pub auto_refresh: Option<String>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2019ExtlinkspropsExternalLinksPr,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2019ExtlinkspropsExternalLinksPr,
 }
 
 /// The `xxlnp:externalLinksPr` element of the tree a read gives: [`ExternalLinksPrWith`] holding
-/// nothing in `extra`.
+/// nothing in `user_data`.
 pub type ExternalLinksPr = ExternalLinksPrWith<()>;
 
 impl Eq for ExternalLinksPrWith<()> {}
@@ -301,18 +301,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> ExternalLinksPrWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExternalLinksPrWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExternalLinksPrWith<Y>
+    pub fn into_user_data<Y>(self) -> ExternalLinksPrWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExternalLinksPrWith {
             auto_refresh: self.auto_refresh,
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 

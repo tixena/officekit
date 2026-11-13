@@ -223,7 +223,7 @@ mod archive;
 pub mod read;
 pub mod write;
 
-use officekit_markup_base::NodeExtra;
+use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::spreadsheet;
 use officekit_xml::element::Element;
@@ -259,17 +259,17 @@ pub static CHECKSUM_SHAPE: officekit_markup_base::Shape = officekit_markup_base:
 /// Its schema type is `unsignedInt`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ChecksumWith<X: NodeExtra> {
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2020Threadedcomments2Checksum,
+pub struct ChecksumWith<X: UserData> {
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2020Threadedcomments2Checksum,
     /// The element's text.
     pub value: String,
 }
 
 /// The `xltc2:checksum` element of the tree a read gives: [`ChecksumWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Checksum = ChecksumWith<()>;
 
 impl Eq for ChecksumWith<()> {}
@@ -345,16 +345,17 @@ pub trait Context: crate::Context {
 /// schema type is `CT_ExtensionList`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct ExtLstWith<X: NodeExtra> {
+pub struct ExtLstWith<X: UserData> {
     /// The children that are `spreadsheet::Extension`, in order.
     pub extension: Vec<spreadsheet::ExtensionWith<X>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2020Threadedcomments2ExtLst,
     /// What a read found that the schemas do not declare, which a write gives back.
     pub unknown: officekit_markup_base::Unknown,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2020Threadedcomments2ExtLst,
 }
 
-/// The `xltc2:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in `extra`.
+/// The `xltc2:extLst` element of the tree a read gives: [`ExtLstWith`] holding nothing in
+/// `user_data`.
 pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
@@ -363,11 +364,9 @@ impl Eq for ExtLstWith<()> {}
 /// Its schema type is `CT_CommentHyperlink`.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
-pub struct HyperlinkWith<X: NodeExtra> {
+pub struct HyperlinkWith<X: UserData> {
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What `X` holds for this node. For the tree a read gives, nothing.
-    pub extra: X::OfficeSpreadsheetml2020Threadedcomments2Hyperlink,
     /// The attribute `length`, when the element has it.
     pub length: Option<String>,
     /// The attribute `startIndex`, when the element has it.
@@ -376,10 +375,12 @@ pub struct HyperlinkWith<X: NodeExtra> {
     pub unknown: officekit_markup_base::Unknown,
     /// The attribute `url`, when the element has it.
     pub url: Option<String>,
+    /// What `X` holds for this node. For the tree a read gives, nothing.
+    pub user_data: X::OfficeSpreadsheetml2020Threadedcomments2Hyperlink,
 }
 
 /// The `xltc2:hyperlink` element of the tree a read gives: [`HyperlinkWith`] holding nothing in
-/// `extra`.
+/// `user_data`.
 pub type Hyperlink = HyperlinkWith<()>;
 
 impl Eq for HyperlinkWith<()> {}
@@ -407,17 +408,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
-impl<X: NodeExtra> ChecksumWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ChecksumWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ChecksumWith<Y>
+    pub fn into_user_data<Y>(self) -> ChecksumWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ChecksumWith {
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
             value: self.value,
         }
     }
@@ -445,21 +446,21 @@ impl officekit_markup_base::Write for Checksum {
     }
 }
 
-impl<X: NodeExtra> ExtLstWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> ExtLstWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(self) -> ExtLstWith<Y>
+    pub fn into_user_data<Y>(self) -> ExtLstWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         ExtLstWith {
-            extension: officekit_markup_base::into_extra_list(
+            extension: officekit_markup_base::into_user_data_list(
                 self.extension,
-                spreadsheet::ExtensionWith::into_extra,
+                spreadsheet::ExtensionWith::into_user_data,
             ),
-            extra: Default::default(),
             unknown: self.unknown,
+            user_data: Default::default(),
         }
     }
 
@@ -483,24 +484,24 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl<X: NodeExtra> HyperlinkWith<X> {
-    /// This node and every node under it with each `extra` at `Y`'s default; every other field
+impl<X: UserData> HyperlinkWith<X> {
+    /// This node and every node under it with each `user_data` at `Y`'s default; every other field
     /// moves as it is.
     #[must_use = "the tree moves into the one returned; dropping it drops the tree"]
-    pub fn into_extra<Y>(mut self) -> HyperlinkWith<Y>
+    pub fn into_user_data<Y>(mut self) -> HyperlinkWith<Y>
     where
-        Y: NodeExtra,
+        Y: UserData,
     {
         HyperlinkWith {
-            ext_lst: officekit_markup_base::into_extra_optional(
+            ext_lst: officekit_markup_base::into_user_data_optional(
                 &mut self.ext_lst,
-                ExtLstWith::into_extra,
+                ExtLstWith::into_user_data,
             ),
-            extra: Default::default(),
             length: self.length,
             start_index: self.start_index,
             unknown: self.unknown,
             url: self.url,
+            user_data: Default::default(),
         }
     }
 

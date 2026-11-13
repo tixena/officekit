@@ -223,18 +223,18 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct SymExMirror {
     pub char: Option<String>,
-    pub extra: (),
     pub font: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
 }
 
 impl From<SymExMirror> for super::SymEx {
     fn from(item: SymExMirror) -> Self {
         Self {
             char: item.char,
-            extra: item.extra,
             font: item.font,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }

@@ -222,9 +222,9 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::DataFieldFutureData)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataFieldFutureDataMirror {
-    pub extra: (),
     pub source_field: Option<String>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub version: Option<String>,
 }
 
@@ -232,8 +232,8 @@ pub struct DataFieldFutureDataMirror {
 #[rkyv(remote = super::IgnorableAfterVersion)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnorableAfterVersionMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub version: Option<String>,
 }
 
@@ -241,17 +241,17 @@ pub struct IgnorableAfterVersionMirror {
 #[rkyv(remote = super::ImplicitMeasureSupport)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ImplicitMeasureSupportMirror {
-    pub extra: (),
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     pub value: String,
 }
 
 impl From<DataFieldFutureDataMirror> for super::DataFieldFutureData {
     fn from(item: DataFieldFutureDataMirror) -> Self {
         Self {
-            extra: item.extra,
             source_field: item.source_field,
             unknown: item.unknown,
+            user_data: item.user_data,
             version: item.version,
         }
     }
@@ -292,8 +292,8 @@ where
 impl From<IgnorableAfterVersionMirror> for super::IgnorableAfterVersion {
     fn from(item: IgnorableAfterVersionMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             version: item.version,
         }
     }
@@ -335,8 +335,8 @@ where
 impl From<ImplicitMeasureSupportMirror> for super::ImplicitMeasureSupport {
     fn from(item: ImplicitMeasureSupportMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
             value: item.value,
         }
     }

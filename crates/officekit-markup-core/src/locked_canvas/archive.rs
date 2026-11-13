@@ -230,11 +230,11 @@ pub struct LockedCanvasContainerMirror {
     pub content: Vec<super::super::drawing::GroupShapeContent>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub extra: (),
     #[rkyv(omit_bounds)]
     pub non_visual_properties_for_a_group_shape:
         Box<super::super::drawing::NonVisualPropertiesForAGroupShape>,
     pub unknown: officekit_markup_base::Unknown,
+    pub user_data: (),
     #[rkyv(omit_bounds)]
     pub visual_group_shape_properties: Box<super::super::drawing::VisualGroupShapeProperties>,
 }
@@ -244,9 +244,9 @@ impl From<LockedCanvasContainerMirror> for super::LockedCanvasContainer {
         Self {
             content: item.content,
             extension_list: item.extension_list,
-            extra: item.extra,
             non_visual_properties_for_a_group_shape: item.non_visual_properties_for_a_group_shape,
             unknown: item.unknown,
+            user_data: item.user_data,
             visual_group_shape_properties: item.visual_group_shape_properties,
         }
     }

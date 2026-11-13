@@ -80,18 +80,18 @@ fn a_generic_type_named_like_another_type_of_its_module_is_refused() {
 }
 
 #[test]
-fn a_field_named_extra_is_refused() {
+fn a_field_named_user_data_is_refused() {
     let mut found = node(0, "Run");
     found.attributes.push(Attribute {
-        field: "extra".to_owned(),
-        local: "extra".to_owned(),
+        field: "user_data".to_owned(),
+        local: "user_data".to_owned(),
         namespace: None,
         value: Value::Text,
     });
     let error = check(&catalog(&["a"], vec![found]))
         .unwrap_err()
         .to_string();
-    assert_eq!(error, "a::Run has a field named extra");
+    assert_eq!(error, "a::Run has a field named user_data");
 }
 
 #[test]
@@ -103,18 +103,18 @@ fn the_trait_has_one_associated_type_for_each_struct_in_alphabetical_order() {
     let text = text("// header\n", &catalog).unwrap();
     let declared: Vec<&str> = text
         .lines()
-        .filter(|line| line.starts_with("    type ") && line.ends_with(": ExtraSlot;"))
+        .filter(|line| line.starts_with("    type ") && line.ends_with(": UserDataSlot;"))
         .collect();
     assert_eq!(
         declared,
         [
-            "    type DrawingLine: ExtraSlot;",
-            "    type WordprocessingParagraph: ExtraSlot;",
-            "    type WordprocessingText: ExtraSlot;",
+            "    type DrawingLine: UserDataSlot;",
+            "    type WordprocessingParagraph: UserDataSlot;",
+            "    type WordprocessingText: UserDataSlot;",
         ]
     );
     assert!(text.contains("    /// What a `wordprocessing::ParagraphWith` holds.\n"));
-    assert!(text.contains("impl NodeExtra for () {\n    type DrawingLine = ();\n"));
+    assert!(text.contains("impl UserData for () {\n    type DrawingLine = ();\n"));
 }
 
 #[test]
@@ -127,7 +127,7 @@ fn the_list_of_kinds_is_the_trait_s_associated_types_in_its_order() {
         .unwrap()
         .lines()
         .filter_map(|line| line.strip_prefix("    type "))
-        .filter_map(|line| line.strip_suffix(": ExtraSlot;"))
+        .filter_map(|line| line.strip_suffix(": UserDataSlot;"))
         .map(str::to_owned)
         .collect();
     let listed: Vec<String> = kinds_text("// header\n", &catalog)

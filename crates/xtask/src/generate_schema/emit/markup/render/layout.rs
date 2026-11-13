@@ -991,7 +991,7 @@ pub fn impl_header(trait_part: &str, target: &str) -> String {
     generic_impl_header("", trait_part, target)
 }
 
-/// `impl_header` of an `impl` that declares `generics`, `<X: NodeExtra>`.
+/// `impl_header` of an `impl` that declares `generics`, `<X: UserData>`.
 #[must_use = "this only returns the value"]
 pub fn generic_impl_header(generics: &str, trait_part: &str, target: &str) -> String {
     let flat = format!("impl{generics} {trait_part} for {target} {{\n");

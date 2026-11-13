@@ -222,18 +222,18 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::AnchorLocationIsLocked)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AnchorLocationIsLockedMirror {
-    pub extra: (),
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BottomBorder)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BottomBorderMirror {
-    pub extra: (),
     pub shadow: Option<super::BorderShadowType>,
     pub r#type: Option<super::BorderType>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub width: Option<String>,
 }
 
@@ -241,10 +241,10 @@ pub struct BottomBorderMirror {
 #[rkyv(remote = super::LeftBorder)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LeftBorderMirror {
-    pub extra: (),
     pub shadow: Option<super::BorderShadowType>,
     pub r#type: Option<super::BorderType>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub width: Option<String>,
 }
 
@@ -252,10 +252,10 @@ pub struct LeftBorderMirror {
 #[rkyv(remote = super::RightBorder)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RightBorderMirror {
-    pub extra: (),
     pub shadow: Option<super::BorderShadowType>,
     pub r#type: Option<super::BorderType>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub width: Option<String>,
 }
 
@@ -265,28 +265,28 @@ pub struct RightBorderMirror {
 pub struct TextWrappingMirror {
     pub anchorx: Option<super::HorizontalAnchorType>,
     pub anchory: Option<super::VerticalAnchorType>,
-    pub extra: (),
     pub side: Option<super::TextWrappingSide>,
     pub r#type: Option<super::TextWrappingType>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TopBorder)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TopBorderMirror {
-    pub extra: (),
     pub shadow: Option<super::BorderShadowType>,
     pub r#type: Option<super::BorderType>,
     pub unknown: crate::Unknown,
+    pub user_data: (),
     pub width: Option<String>,
 }
 
 impl From<AnchorLocationIsLockedMirror> for super::AnchorLocationIsLocked {
     fn from(item: AnchorLocationIsLockedMirror) -> Self {
         Self {
-            extra: item.extra,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -327,10 +327,10 @@ where
 impl From<BottomBorderMirror> for super::BottomBorder {
     fn from(item: BottomBorderMirror) -> Self {
         Self {
-            extra: item.extra,
             shadow: item.shadow,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             width: item.width,
         }
     }
@@ -368,10 +368,10 @@ where
 impl From<LeftBorderMirror> for super::LeftBorder {
     fn from(item: LeftBorderMirror) -> Self {
         Self {
-            extra: item.extra,
             shadow: item.shadow,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             width: item.width,
         }
     }
@@ -409,10 +409,10 @@ where
 impl From<RightBorderMirror> for super::RightBorder {
     fn from(item: RightBorderMirror) -> Self {
         Self {
-            extra: item.extra,
             shadow: item.shadow,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             width: item.width,
         }
     }
@@ -452,10 +452,10 @@ impl From<TextWrappingMirror> for super::TextWrapping {
         Self {
             anchorx: item.anchorx,
             anchory: item.anchory,
-            extra: item.extra,
             side: item.side,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
         }
     }
 }
@@ -492,10 +492,10 @@ where
 impl From<TopBorderMirror> for super::TopBorder {
     fn from(item: TopBorderMirror) -> Self {
         Self {
-            extra: item.extra,
             shadow: item.shadow,
             r#type: item.r#type,
             unknown: item.unknown,
+            user_data: item.user_data,
             width: item.width,
         }
     }
