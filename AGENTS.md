@@ -26,6 +26,7 @@ is:
 ```
 docx, xlsx, pptx   the file types: a package with its main part, class, and kind; saves; operations
 office_file        a .docx, .xlsx or .pptx opened from its bytes without knowing which
+drawing            what ECMA-376 writes about DrawingML, for every file type that holds it
 binary             officekit's binary form: a file's whole model as an rkyv archive, and back
 embedded           a document stored in a part of another
 compact            the merge of neighbouring runs that render the same

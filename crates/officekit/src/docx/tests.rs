@@ -9,8 +9,15 @@ use crate::parts::font_table;
 #[cfg(feature = "transitional")]
 use crate::parts::kinds::SpreadsheetKind;
 use crate::parts::kinds::WordprocessingKind;
+#[cfg(feature = "transitional")]
+use crate::parts::theme;
+use officekit_markup::drawing::StSchemeColorValMember;
+#[cfg(feature = "transitional")]
+use officekit_markup::drawing::{ColorContent, ColorScheme};
 #[cfg(feature = "strict")]
 use officekit_markup::wordprocessing;
+#[cfg(feature = "transitional")]
+use officekit_markup::wordprocessing::ThemeColorMappings;
 use officekit_markup::wordprocessing::{
     BlockContent, Document, DocumentBody, Paragraph, ParagraphContent, Text, TextRun,
     TextRunContent,
@@ -986,4 +993,145 @@ fn a_strict_save_refuses_a_bibliography_it_cannot_read_naming_the_part() {
         .unwrap();
     let failure = docx.to_bytes_strict().unwrap_err().to_string();
     assert!(failure.contains(item.as_str()), "{failure}");
+}
+
+/// An `a:srgbClr` of `text`.
+#[cfg(feature = "transitional")]
+fn hex(text: &str) -> ColorContent {
+    use officekit_markup::common_simple_types::HexadecimalColorValue;
+    use officekit_markup::drawing::RGBColorModelHexVariant;
+
+    let mut color = RGBColorModelHexVariant::default();
+    color.val = Some(HexadecimalColorValue::from(text.to_owned()));
+    ColorContent::RGBColorModelHexVariant(color)
+}
+
+/// A colour scheme whose first dark and first light colours differ.
+#[cfg(feature = "transitional")]
+fn dark_and_light() -> ColorScheme {
+    let mut scheme = ColorScheme::default();
+    scheme.dark_1.content = Box::new(hex("000000"));
+    scheme.light_1.content = Box::new(hex("FFFFFF"));
+    scheme
+}
+
+/// A new Word file whose main part relates to a theme part holding `scheme`, and to a settings
+/// part holding `mapping` when there is one.
+#[cfg(feature = "transitional")]
+fn docx_with_theme(scheme: &ColorScheme, mapping: Option<ThemeColorMappings>) -> Docx {
+    use officekit_markup::drawing::Theme;
+    use officekit_markup::wordprocessing::DocumentSettings;
+    use officekit_xml::write::WriteOptions as PartWriteOptions;
+
+    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    let main = docx.main_document_part().clone();
+    let mut root = Theme::default();
+    *root.elements.color_scheme = scheme.clone();
+    let theme_part = name("/word/theme/theme1.xml");
+    theme::store_transitional(
+        docx.package_mut(),
+        &theme_part,
+        &root,
+        PartWriteOptions::default(),
+    )
+    .unwrap();
+    docx.package_mut()
+        .relate(
+            Some(&main),
+            &theme_part,
+            theme::RELATIONSHIP_TYPE.transitional,
+        )
+        .unwrap();
+    if let Some(stated) = mapping {
+        let mut settings = DocumentSettings::default();
+        settings.theme_color_mappings = Some(Box::new(stated));
+        let settings_part = name("/word/settings.xml");
+        document_settings::store_transitional(
+            docx.package_mut(),
+            &settings_part,
+            &settings,
+            PartWriteOptions::default(),
+        )
+        .unwrap();
+        docx.package_mut()
+            .relate(
+                Some(&main),
+                &settings_part,
+                document_settings::RELATIONSHIP_TYPE.transitional,
+            )
+            .unwrap();
+    }
+    docx
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn theme_colors_maps_tx1_as_the_settings_part_s_mapping_says() {
+    use officekit_markup::wordprocessing::{ThemeColorReference, ThemeColorReferenceMember};
+
+    let scheme = dark_and_light();
+    let mut mapping = ThemeColorMappings::default();
+    mapping.t1 = Some(ThemeColorReference::from(ThemeColorReferenceMember::Light1));
+    let docx = docx_with_theme(&scheme, Some(mapping.clone()));
+    assert_eq!(
+        docx.theme()
+            .unwrap()
+            .map(|root| *root.elements.color_scheme),
+        Some(scheme.clone())
+    );
+    assert_eq!(
+        docx.settings()
+            .unwrap()
+            .and_then(|settings| settings.theme_color_mappings),
+        Some(Box::new(mapping))
+    );
+    assert_eq!(
+        docx.theme_colors()
+            .unwrap()
+            .color(StSchemeColorValMember::Tx1),
+        Some(&*scheme.light_1.content)
+    );
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn theme_colors_of_a_file_with_no_settings_part_maps_tx1_to_the_first_dark_colour() {
+    let scheme = dark_and_light();
+    let docx = docx_with_theme(&scheme, None);
+    assert_eq!(docx.settings().unwrap(), None);
+    assert_eq!(
+        docx.theme_colors()
+            .unwrap()
+            .color(StSchemeColorValMember::Tx1),
+        Some(&*scheme.dark_1.content)
+    );
+}
+
+#[test]
+fn a_word_file_with_no_theme_part_has_no_theme_no_settings_and_no_colour() {
+    let docx = Docx::new(WordprocessingKind::Document).unwrap();
+    assert_eq!(docx.theme().unwrap(), None);
+    assert_eq!(docx.settings().unwrap(), None);
+    let colors = docx.theme_colors().unwrap();
+    for member in [
+        StSchemeColorValMember::Accent1,
+        StSchemeColorValMember::Accent2,
+        StSchemeColorValMember::Accent3,
+        StSchemeColorValMember::Accent4,
+        StSchemeColorValMember::Accent5,
+        StSchemeColorValMember::Accent6,
+        StSchemeColorValMember::Bg1,
+        StSchemeColorValMember::Bg2,
+        StSchemeColorValMember::Dk1,
+        StSchemeColorValMember::Dk2,
+        StSchemeColorValMember::FolHlink,
+        StSchemeColorValMember::Hlink,
+        StSchemeColorValMember::Lt1,
+        StSchemeColorValMember::Lt2,
+        StSchemeColorValMember::PhClr,
+        StSchemeColorValMember::Tx1,
+        StSchemeColorValMember::Tx2,
+    ] {
+        assert_eq!(colors.color(member), None, "{member:?}");
+    }
 }

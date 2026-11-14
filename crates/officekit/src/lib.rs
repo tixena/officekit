@@ -457,6 +457,7 @@ extern crate alloc;
 pub mod binary;
 pub mod compact;
 pub mod docx;
+pub mod drawing;
 pub mod embedded;
 mod file;
 pub mod folder;

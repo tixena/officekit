@@ -13,9 +13,10 @@ mod tests;
 use std::path::Path;
 
 use crate::parts::kinds::WordprocessingKind;
-use crate::parts::{document_settings, header, main_document, style_definitions};
+use crate::parts::{document_settings, header, main_document, style_definitions, theme};
 #[cfg(feature = "transitional")]
 use crate::transitional::dates::SaveWarning;
+use officekit_markup::drawing::Theme;
 use officekit_markup::wordprocessing::{
     BlockContent, Document, DocumentProtectionTypesMember, DocumentSettings, Footer, Header,
     HeaderOrFooterTypeMember, TextRun,
@@ -33,6 +34,7 @@ use os_shim::bucket::Condition;
 
 use crate::compact::{self, Comments};
 use crate::docx::effective::StyleSheet;
+use crate::drawing::scheme::{SchemeMap, ThemeColors};
 use crate::file;
 use crate::new_parts;
 use crate::validation::fix::{Fix, Validation};
@@ -418,6 +420,24 @@ impl Docx {
         chart::refresh(self, chart, ranges)
     }
 
+    /// The first part the main part relates to by `relationship_type`.
+    fn related_part(
+        &self,
+        relationship_type: &RelationshipType,
+    ) -> Result<Option<PartName>, PackageError> {
+        Ok(self
+            .package
+            .related_by_type(Some(&self.main), relationship_type)?
+            .into_iter()
+            .find_map(|item| {
+                if let Target::Part(name) = item.target {
+                    Some(name)
+                } else {
+                    None
+                }
+            }))
+    }
+
     /// Remove section `section`'s footer of type `kind`; its part goes once no section references
     /// it. `w:titlePg` and `w:evenAndOddHeaders` stay as they are. Returns the removed part, if
     /// one was.
@@ -549,6 +569,17 @@ impl Docx {
         self.write_options = options;
     }
 
+    /// The settings part's root; `None` when the main part relates to no settings part.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Package::related_by_type`] and [`document_settings::load`].
+    pub fn settings(&self) -> Result<Option<DocumentSettings>, PackageError> {
+        self.related_part(&document_settings::RELATIONSHIP_TYPE)?
+            .map(|name| document_settings::load(&self.package, &name, self.options))
+            .transpose()
+    }
+
     /// Everything [`to_bytes_strict`](Self::to_bytes_strict) refuses, in one call: one row per part
     /// and refused content. Empty when the save takes every part. Needs the feature `strict`.
     ///
@@ -567,16 +598,7 @@ impl Docx {
     ///
     /// The errors of [`Package::related_by_type`] and [`style_definitions::load`].
     pub fn style_sheet(&self) -> Result<StyleSheet, PackageError> {
-        let related = self
-            .package
-            .related_by_type(Some(&self.main), &style_definitions::RELATIONSHIP_TYPE)?;
-        let Some(name) = related.into_iter().find_map(|item| {
-            if let Target::Part(name) = item.target {
-                Some(name)
-            } else {
-                None
-            }
-        }) else {
+        let Some(name) = self.related_part(&style_definitions::RELATIONSHIP_TYPE)? else {
             return Ok(StyleSheet::default());
         };
         Ok(StyleSheet::new(&style_definitions::load(
@@ -584,6 +606,36 @@ impl Docx {
             &name,
             self.options,
         )?))
+    }
+
+    /// The theme part's root; `None` when the main part relates to no theme part.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Package::related_by_type`] and [`theme::load`].
+    pub fn theme(&self) -> Result<Option<Theme>, PackageError> {
+        self.related_part(&theme::RELATIONSHIP_TYPE)?
+            .map(|name| theme::load(&self.package, &name, self.options))
+            .transpose()
+    }
+
+    /// The theme's colours under this file's mapping (ECMA-376 Part 1, section 17.15.1.20): the
+    /// settings part's `w:clrSchemeMapping`, and the mapping the standard gives a file that
+    /// states none. A file with no theme part gives no colour for any name.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Docx::theme`] and [`Docx::settings`].
+    pub fn theme_colors(&self) -> Result<ThemeColors, PackageError> {
+        let found = self.theme()?;
+        let map = self
+            .settings()?
+            .and_then(|settings| settings.theme_color_mappings)
+            .map_or_else(SchemeMap::default, |mapping| SchemeMap::from_word(&mapping));
+        Ok(ThemeColors::new(
+            found.as_ref().map(|root| &*root.elements.color_scheme),
+            map,
+        ))
     }
 
     /// The file's bytes in the Strict class: as they are when it was read Strict, else every
