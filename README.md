@@ -67,6 +67,30 @@ The crate `officekit-markdown` turns markdown into a Word document and back:
 `DocxMarkdown` and `OfficeFileMarkdown`, which add `from_arky`, `to_arky`,
 `save_markdown` and `from_input` to officekit's `Docx` and `OfficeFile`.
 
+### What a paragraph looks like in a Word file
+
+`Docx::style_sheet` reads the styles part, and `StyleSheet` applies the rule of
+ECMA-376 Part 1, sections 17.7.1 to 17.7.3: the document defaults, the
+paragraph style's chain, the character style's chain, then the node's own
+properties. Table styles and numbering levels are not applied, and a theme font
+stays a reference.
+
+```rust
+use officekit::docx::Docx;
+use officekit_markup::wordprocessing::BlockContent;
+use officekit_xml::packaging::package::OpenOptions;
+
+let docx = Docx::from_bytes(bytes, OpenOptions::default())?;
+let styles = docx.style_sheet()?;
+let document = docx.main_document()?;
+let Some(BlockContent::Paragraph(first)) = document.body.as_deref().and_then(|body| body.content.first()) else {
+    return Ok(());
+};
+let paragraph = styles.paragraph(first.properties.as_deref());
+// `paragraph.style` is `Some("Heading1")`, `paragraph.run_properties` holds the size the style
+// gives over the document defaults, and `paragraph.properties` its spacing.
+```
+
 ## Features
 
 `officekit` has three features:

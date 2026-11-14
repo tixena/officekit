@@ -1,6 +1,7 @@
 //! The `.docx` file type, and hand-written operations over the generated `WordprocessingML` types.
 
 pub mod chart;
+pub mod effective;
 mod header_footer;
 pub mod image;
 mod merge;
@@ -12,7 +13,7 @@ mod tests;
 use std::path::Path;
 
 use crate::parts::kinds::WordprocessingKind;
-use crate::parts::{document_settings, header, main_document};
+use crate::parts::{document_settings, header, main_document, style_definitions};
 #[cfg(feature = "transitional")]
 use crate::transitional::dates::SaveWarning;
 use officekit_markup::wordprocessing::{
@@ -31,6 +32,7 @@ use os_shim::System;
 use os_shim::bucket::Condition;
 
 use crate::compact::{self, Comments};
+use crate::docx::effective::StyleSheet;
 use crate::file;
 use crate::new_parts;
 use crate::validation::fix::{Fix, Validation};
@@ -556,6 +558,32 @@ impl Docx {
     #[cfg(feature = "strict")]
     pub fn strict_refusals(&self) -> Result<Vec<crate::StrictRefusal>, PackageError> {
         file::strict_refusals(&self.package, self.class, self.options)
+    }
+
+    /// The styles of this file, ready to answer what a paragraph or a run looks like; empty when
+    /// the main part relates to no styles part.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Package::related_by_type`] and [`style_definitions::load`].
+    pub fn style_sheet(&self) -> Result<StyleSheet, PackageError> {
+        let related = self
+            .package
+            .related_by_type(Some(&self.main), &style_definitions::RELATIONSHIP_TYPE)?;
+        let Some(name) = related.into_iter().find_map(|item| {
+            if let Target::Part(name) = item.target {
+                Some(name)
+            } else {
+                None
+            }
+        }) else {
+            return Ok(StyleSheet::default());
+        };
+        Ok(StyleSheet::new(&style_definitions::load(
+            &self.package,
+            &name,
+            self.options,
+        )?))
     }
 
     /// The file's bytes in the Strict class: as they are when it was read Strict, else every

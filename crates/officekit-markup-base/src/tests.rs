@@ -3,7 +3,7 @@ use officekit_xml::name::Namespace;
 use officekit_xml::parse::parse;
 use officekit_xml::write::{Layout, WriteOptions};
 
-use super::{Children, Extra, Pending, Placement, Scope, Unknown};
+use super::{Children, Extra, Pending, Placement, Scope, Shape, Slot, Unknown};
 
 const EXTENDED_PROPERTIES: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties";
@@ -13,6 +13,17 @@ const W_STRICT: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";
 const XML: &str = "http://www.w3.org/XML/1998/namespace";
 const DECLARE_W: &str = "xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"";
 const DECLARE_X: &str = "xmlns:x=\"urn:x\"";
+
+static KEEP_SHAPE: Shape = Shape {
+    attributes: &[],
+    name: (Some(97), "pPr"),
+    slots: &[
+        Slot::single((Some(97), "pStyle")),
+        Slot::single((Some(97), "keepNext")),
+        Slot::list((None, "other")),
+    ],
+    text: false,
+};
 
 /// `w:p`, written by hand the way the generator writes a struct, with its
 /// reader and writer as free functions; `w:pPr` stands in as a generic
@@ -105,6 +116,12 @@ fn read_text_run(element: &Element) -> TextRun {
         Pending::List(nodes) => run.content.extend(nodes.into_iter().map(RunContent::Other)),
     }
     run
+}
+
+fn root_of(body: &str) -> Element {
+    parse(format!("<w:root {DECLARE_W} {DECLARE_X}>{body}</w:root>").as_bytes())
+        .unwrap()
+        .root
 }
 
 /// The element `node` is when it is the `WordprocessingML` tag `local`.
@@ -350,4 +367,14 @@ fn an_attribute_never_takes_the_default_namespace() {
         to_xml(paragraph),
         format!("<p xmlns=\"{W}\" xmlns:w=\"{W}\" w:rsidR=\"1\"/>")
     );
+}
+
+#[test]
+fn a_shape_gives_the_position_that_takes_an_element() {
+    let root = root_of("<w:keepNext/><w:pStyle/><w:jc/><x:keepNext/><other/>");
+    let found: Vec<Option<usize>> = root
+        .child_elements()
+        .map(|element| KEEP_SHAPE.slot_of(element))
+        .collect();
+    assert_eq!(found, [Some(1), Some(0), None, None, Some(2)]);
 }

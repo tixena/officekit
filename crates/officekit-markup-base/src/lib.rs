@@ -328,6 +328,15 @@ pub struct Shape {
     pub text: bool,
 }
 
+impl Shape {
+    /// The index in `slots` of the first position that takes `element`; `None` when no declared
+    /// position does.
+    #[must_use = "this only returns the value"]
+    pub fn slot_of(&self, element: &Element) -> Option<usize> {
+        self.slots.iter().position(|slot| slot.accepts(element))
+    }
+}
+
 /// A declared child position of a typed node.
 #[derive(Debug)]
 pub struct Slot {

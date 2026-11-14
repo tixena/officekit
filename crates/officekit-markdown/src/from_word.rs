@@ -8,7 +8,7 @@ mod tests;
 use alloc::collections::{BTreeMap, BTreeSet};
 use alloc::string::String;
 use alloc::vec::Vec;
-use core::{iter, mem, ptr};
+use core::{iter, mem};
 
 use arky::parser::ast::{
     Alignment, Args, Block, BlockQuote, Code, CodeBlock, Document as ArkyDocument, Emphasis,
@@ -20,6 +20,7 @@ use arky::parser::ast::{
 use arky::writer::{self, WriteOptions};
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
+use officekit::docx::effective::StyleSheet;
 use officekit::parts::{numbering_definitions, style_definitions};
 use officekit_markup::wordprocessing::{
     AnchorForImportedExternalContent, AssociatedOutlineLevel, BlockContent, BreakTypesMember,
@@ -30,8 +31,8 @@ use officekit_markup::wordprocessing::{
     NumberingLevelDefinitionOverride, NumberingLevelOverrideDefinition, Paragraph,
     ParagraphContent, ParagraphIndentation, ParagraphProperties, RichTextBoxContentContainer,
     RunProperties, RunPropertiesContent, SignedMeasurementInTwentiethsOfPointMember,
-    StNumberFormat, StNumberFormatMember, StyleDefinition, StyleTypesMember, Table, TableCell,
-    TableRow, TableRowPropertiesContent, TextRun, TextRunContent, TrackedRunContent,
+    StNumberFormat, StNumberFormatMember, Table, TableCell, TableRow, TableRowPropertiesContent,
+    TextRun, TextRunContent, TrackedRunContent,
 };
 use officekit_xml::element::{Element, Node};
 use officekit_xml::mc;
@@ -219,11 +220,10 @@ struct Sections {
     open: Vec<Section>,
 }
 
-/// The styles of the styles part, by id, and the id of the default paragraph style.
+/// The styles of the styles part, with the document defaults.
 #[derive(Default)]
 pub struct Styles {
-    by_id: BTreeMap<String, StyleDefinition>,
-    default_paragraph: Option<String>,
+    sheet: StyleSheet,
 }
 
 /// The walk of a body in document order.
@@ -945,30 +945,20 @@ impl Sections {
 }
 
 impl Styles {
-    /// The style `id`, then the style it is based on, and so on, until a style is missing or one
-    /// comes again.
-    fn chain(&self, id: Option<&str>) -> Vec<&StyleDefinition> {
-        let mut chain: Vec<&StyleDefinition> = Vec::new();
-        let mut next = id;
-        while let Some(style) = next.and_then(|current| self.by_id.get(current))
-            && !chain.iter().any(|seen| ptr::eq(*seen, style))
-        {
-            chain.push(style);
-            next = style
-                .parent_style_id
-                .as_ref()
-                .and_then(|parent| parent.val.as_deref());
-        }
-        chain
-    }
-
     /// The heading level of a paragraph of `properties`, from 1 to 9: its own outline level, else
     /// the first its style's chain gives, by a style named `heading N` or by an outline level.
     fn heading_level(&self, properties: Option<&ParagraphProperties>) -> Option<usize> {
-        if let Some(level) = properties.and_then(|own| own.associated_outline_level.as_deref()) {
+        if let Some(level) = self
+            .sheet
+            .paragraph(properties)
+            .properties
+            .associated_outline_level
+            .as_deref()
+        {
             return outline_level(level);
         }
-        self.chain(self.paragraph_style(properties))
+        self.sheet
+            .chain(self.paragraph_style(properties))
             .into_iter()
             .find_map(|style| {
                 let named = style
@@ -992,8 +982,8 @@ impl Styles {
         id.is_some_and(|style| {
             style == builtin
                 || self
-                    .by_id
-                    .get(style)
+                    .sheet
+                    .style(style)
                     .and_then(|definition| definition.primary_style_name.as_ref())
                     .and_then(|primary| primary.val.as_deref())
                     .is_some_and(|named| named.eq_ignore_ascii_case(name))
@@ -1037,7 +1027,7 @@ impl Styles {
                 None
             }
         });
-        let chain = self.chain(style);
+        let chain = self.sheet.chain(style);
         let lists: Vec<&[RunPropertiesContent]> = iter::once(own)
             .chain(chain.iter().map(|definition| {
                 definition
@@ -1077,6 +1067,7 @@ impl Styles {
                 .as_deref()
         });
         let styled = self
+            .sheet
             .chain(self.paragraph_style(properties))
             .into_iter()
             .find_map(|style| {
@@ -1103,7 +1094,7 @@ impl Styles {
         properties
             .and_then(|own| own.referenced_paragraph_style.as_ref())
             .and_then(|style| style.val.as_deref())
-            .or(self.default_paragraph.as_deref())
+            .or_else(|| self.sheet.default_paragraph())
     }
 
     /// The styles of the styles part `main` relates to, read with `options`; none when it relates
@@ -1120,17 +1111,9 @@ impl Styles {
         let Some(name) = related_part(package, main, &style_definitions::RELATIONSHIP_TYPE)? else {
             return Ok(Self::default());
         };
-        let mut styles = Self::default();
-        for style in style_definitions::load(package, &name, options)?.style_definition {
-            let Some(id) = style.style_id.clone() else {
-                continue;
-            };
-            if styles.default_paragraph.is_none() && is_default_paragraph(&style) {
-                styles.default_paragraph = Some(id.clone());
-            }
-            styles.by_id.entry(id).or_insert(style);
-        }
-        Ok(styles)
+        Ok(Self {
+            sheet: StyleSheet::new(&style_definitions::load(package, &name, options)?),
+        })
     }
 }
 
@@ -2186,19 +2169,6 @@ fn twips_of(measure: &str) -> Option<i64> {
     let mantissa: i128 = format!("{whole}{fraction}").parse().ok()?;
     let twips = mantissa.checked_mul(numerator)?.checked_add(divisor / 2)? / divisor;
     i64::try_from(if negative { -twips } else { twips }).ok()
-}
-
-/// Whether `style` is the default paragraph style.
-fn is_default_paragraph(style: &StyleDefinition) -> bool {
-    let paragraph = style
-        .r#type
-        .as_ref()
-        .is_none_or(|kind| matches!(kind.value(), Ok(StyleTypesMember::Paragraph)));
-    let default = style
-        .default
-        .as_ref()
-        .is_some_and(|value| value.value().unwrap_or(false));
-    paragraph && default
 }
 
 /// Whether `row` is marked `w:tblHeader`.
