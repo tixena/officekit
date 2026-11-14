@@ -14,8 +14,8 @@ use officekit_markup::Shape;
 use officekit_markup::wordprocessing::{
     NUMBERING_DEFINITION_INSTANCE_REFERENCE_NUM_PR_SHAPE, PARAGRAPH_BORDERS_SHAPE,
     PARAGRAPH_PROPERTIES_P_PR_GENERAL_SHAPE, ParagraphProperties, ParagraphPropertiesPPrGeneral,
-    RUN_PROPERTIES_SHAPE, RunProperties, RunPropertiesContent, StyleDefinition, StyleDefinitions,
-    StyleTypesMember, write,
+    RUN_PROPERTIES_SHAPE, RunProperties, RunPropertiesContent, RunPropertiesForTheParagraphMark,
+    StyleDefinition, StyleDefinitions, StyleTypesMember, write,
 };
 use officekit_xml::element::{Attribute, Element, Node};
 use officekit_xml::name::{Namespace, QName};
@@ -47,7 +47,8 @@ const TOGGLES: [&str; 12] = [
 pub struct EffectiveParagraph {
     /// The paragraph's properties.
     pub properties: ParagraphPropertiesPPrGeneral,
-    /// The run properties the document defaults and the paragraph's style give its runs.
+    /// The run properties the document defaults and the paragraph's style give its runs. The
+    /// paragraph mark's own properties are not in it; [`StyleSheet::paragraph_mark`] gives them.
     pub run_properties: RunProperties,
     /// The id of the paragraph style that was applied, when there is one.
     pub style: Option<String>,
@@ -182,6 +183,20 @@ impl StyleSheet {
         }
     }
 
+    /// The effective run properties of a paragraph's mark (ECMA-376 Part 1, section 17.3.1.29):
+    /// what `paragraph` gives its runs, then the chain of the character style `mark` names, then
+    /// `mark` without its revision marks, with the toggle properties of section 17.7.3.
+    #[must_use = "this only returns the value"]
+    pub fn paragraph_mark(
+        &self,
+        paragraph: &EffectiveParagraph,
+        mark: Option<&RunPropertiesForTheParagraphMark>,
+    ) -> RunProperties {
+        let content = mark.map_or(&[][..], |own| own.run_properties_content.as_slice());
+        let own = mark.map(mark_element);
+        self.run_over(paragraph, own.as_ref(), character_style(content))
+    }
+
     /// The effective properties of a run of `paragraph` whose own properties are `properties`:
     /// what the paragraph gives its runs, then the character style's chain from its last
     /// ancestor down, then `properties`, with the toggle properties combined as section 17.7.3
@@ -194,17 +209,19 @@ impl StyleSheet {
         paragraph: &EffectiveParagraph,
         properties: Option<&RunProperties>,
     ) -> RunProperties {
+        let content = properties.map_or(&[][..], |run| run.content.as_slice());
         let own = properties.map(run_element);
-        let character = properties
-            .map_or(&[][..], |run| run.content.as_slice())
-            .iter()
-            .find_map(|property| {
-                if let RunPropertiesContent::ReferencedCharacterStyle(reference) = property {
-                    reference.val.as_deref()
-                } else {
-                    None
-                }
-            });
+        self.run_over(paragraph, own.as_ref(), character_style(content))
+    }
+
+    /// `own`, a `w:rPr` element, over what `paragraph` gives its runs and the chain of the
+    /// character style `character`, with the toggle properties of section 17.7.3.
+    fn run_over(
+        &self,
+        paragraph: &EffectiveParagraph,
+        own: Option<&Element>,
+        character: Option<&str>,
+    ) -> RunProperties {
         let paragraph_chain = self.chain(paragraph.style.as_deref());
         let character_chain = self.chain(character);
 
@@ -214,7 +231,7 @@ impl StyleSheet {
                 apply(&mut merged, &run_element(run), Some(&RUN_PROPERTIES_SHAPE));
             }
         }
-        if let Some(found) = &own {
+        if let Some(found) = own {
             apply(&mut merged, found, Some(&RUN_PROPERTIES_SHAPE));
         }
 
@@ -222,7 +239,7 @@ impl StyleSheet {
         let paragraph_levels = levels_of(&paragraph_chain);
         let character_levels = levels_of(&character_chain);
         for name in TOGGLES {
-            let direct = own.as_ref().and_then(|found| toggle_of(found, name));
+            let direct = own.and_then(|found| toggle_of(found, name));
             let default = defaults.as_ref().and_then(|found| toggle_of(found, name));
             set_toggle(
                 &mut merged,
@@ -269,6 +286,17 @@ fn apply(base: &mut Element, over: &Element, shape: Option<&Shape>) {
             base.children.insert(at, Node::Element(child.clone()));
         }
     }
+}
+
+/// The id of the character style `content` names with `w:rStyle`.
+fn character_style(content: &[RunPropertiesContent]) -> Option<&str> {
+    content.iter().find_map(|property| {
+        if let RunPropertiesContent::ReferencedCharacterStyle(reference) = property {
+            reference.val.as_deref()
+        } else {
+            None
+        }
+    })
 }
 
 fn empty(local: &str) -> Element {
@@ -318,6 +346,17 @@ fn levels_of(chain: &[&StyleDefinition]) -> Vec<Element> {
         .filter_map(|style| style.run_properties.as_deref())
         .map(run_element)
         .collect()
+}
+
+/// The mark's `w:rPr` with only the children a run's `w:rPr` declares, and no `w:rPrChange`: the
+/// revision and conflict marks of `CT_ParaRPr` are no run property.
+fn mark_element(mark: &RunPropertiesForTheParagraphMark) -> Element {
+    let mut element = write::run_properties_for_the_paragraph_mark(mark, &mut Scope::default());
+    element.children.retain(|node| {
+        matches!(node, Node::Element(child)
+            if RUN_PROPERTIES_SHAPE.slot_of(child).is_some() && !is_word(child, "rPrChange"))
+    });
+    element
 }
 
 fn merge_property(held: &mut Element, over: &Element) {

@@ -1,10 +1,16 @@
+use alloc::boxed::Box;
 use alloc::format;
 use alloc::vec::Vec;
 
 use officekit_markup::common_simple_types::OnOffValue;
+use officekit_markup::office_word_2010_wordml::ConflictInsTrackChange;
 use officekit_markup::wordprocessing::{
-    ParagraphProperties, ParagraphPropertiesPPrGeneral, RunFonts, RunProperties,
-    RunPropertiesContent, SpacingBetweenLinesAndAboveBelowParagraph, StyleDefinitions,
+    Bold, ConflictChangeContent, DeletedTableRow, InsertedTableRow, MeasurementInHalfPoints,
+    MoveDestinationParagraph, MoveSourceParagraph, NonComplexScriptFontSize,
+    ParagraphMarkRunPropertiesRevision, ParagraphProperties, ParagraphPropertiesPPrGeneral,
+    ReferencedCharacterStyle, RunFonts, RunProperties, RunPropertiesContent,
+    RunPropertiesForTheParagraphMark, SpacingBetweenLinesAndAboveBelowParagraph, StyleDefinition,
+    StyleDefinitions, StyleTypes, StyleTypesMember,
 };
 use officekit_xml::parse::parse;
 
@@ -526,4 +532,136 @@ fn a_toggle_pushed_after_a_style_revision_keeps_its_typed_field() {
     let run = styles.run(&paragraph, Some(&own_run(r#"<w:rStyle w:val="Strong"/>"#)));
     assert_eq!(bold(&run), Some(true));
     assert_eq!(run.unknown.children.len(), 0);
+}
+
+fn font_size(half_points: &str) -> RunPropertiesContent {
+    let mut size = NonComplexScriptFontSize::default();
+    size.val = Some(MeasurementInHalfPoints::from(half_points.to_owned()));
+    RunPropertiesContent::NonComplexScriptFontSize(size)
+}
+
+fn character_reference(id: &str) -> RunPropertiesContent {
+    let mut reference = ReferencedCharacterStyle::default();
+    reference.val = Some(id.to_owned());
+    RunPropertiesContent::ReferencedCharacterStyle(reference)
+}
+
+fn style_of(
+    id: &str,
+    kind: StyleTypesMember,
+    content: Vec<RunPropertiesContent>,
+) -> StyleDefinition {
+    let mut run = RunProperties::default();
+    run.content = content;
+    let mut style = StyleDefinition::default();
+    style.style_id = Some(id.to_owned());
+    style.r#type = Some(StyleTypes::from(kind));
+    style.run_properties = Some(Box::new(run));
+    style
+}
+
+/// A sheet whose default paragraph style, `Normal`, holds `normal`, beside `others`.
+fn typed_sheet(normal: Vec<RunPropertiesContent>, others: Vec<StyleDefinition>) -> StyleSheet {
+    let mut default = style_of("Normal", StyleTypesMember::Paragraph, normal);
+    default.default = Some(true.into());
+    let mut styles = StyleDefinitions::default();
+    styles.style_definition.push(default);
+    styles.style_definition.extend(others);
+    StyleSheet::new(&styles)
+}
+
+fn mark_of(content: Vec<RunPropertiesContent>) -> RunPropertiesForTheParagraphMark {
+    let mut mark = RunPropertiesForTheParagraphMark::default();
+    mark.run_properties_content = content;
+    mark
+}
+
+/// The effective properties of the mark of an empty paragraph whose own properties hold only
+/// `mark`.
+fn effective_mark(styles: &StyleSheet, mark: RunPropertiesForTheParagraphMark) -> RunProperties {
+    let mut own = ParagraphProperties::default();
+    own.run_properties_for_the_paragraph_mark = Some(Box::new(mark));
+    let paragraph = styles.paragraph(Some(&own));
+    styles.paragraph_mark(
+        &paragraph,
+        own.run_properties_for_the_paragraph_mark.as_deref(),
+    )
+}
+
+#[test]
+fn the_mark_size_wins_over_the_paragraph_style() {
+    let styles = typed_sheet(vec![font_size("22")], vec![]);
+    let effective = effective_mark(&styles, mark_of(vec![font_size("48")]));
+    assert_eq!(size(&effective), Some("48"));
+}
+
+#[test]
+fn a_paragraph_with_no_mark_gives_its_runs_properties() {
+    let styles = typed_sheet(vec![font_size("22")], vec![]);
+    let paragraph = styles.paragraph(Some(&ParagraphProperties::default()));
+    let effective = styles.paragraph_mark(&paragraph, None);
+    assert_eq!(size(&effective), Some("22"));
+    assert_eq!(effective, styles.run(&paragraph, None));
+}
+
+#[test]
+fn the_mark_character_style_gives_its_size() {
+    let big = style_of("Big", StyleTypesMember::Character, vec![font_size("40")]);
+    let styles = typed_sheet(vec![font_size("22")], vec![big]);
+    let effective = effective_mark(&styles, mark_of(vec![character_reference("Big")]));
+    assert_eq!(size(&effective), Some("40"));
+}
+
+#[test]
+fn the_mark_own_size_wins_over_its_character_style() {
+    let big = style_of("Big", StyleTypesMember::Character, vec![font_size("40")]);
+    let styles = typed_sheet(vec![font_size("22")], vec![big]);
+    let effective = effective_mark(
+        &styles,
+        mark_of(vec![character_reference("Big"), font_size("48")]),
+    );
+    assert_eq!(size(&effective), Some("48"));
+}
+
+#[test]
+fn a_mark_toggle_combines_like_a_run_toggle() {
+    let strong = style_of(
+        "Strong",
+        StyleTypesMember::Character,
+        vec![RunPropertiesContent::Bold(Bold::default())],
+    );
+    let styles = typed_sheet(
+        vec![RunPropertiesContent::Bold(Bold::default())],
+        vec![strong],
+    );
+    let effective = effective_mark(&styles, mark_of(vec![character_reference("Strong")]));
+    assert_eq!(bold(&effective), Some(false));
+
+    let mut own_run = RunProperties::default();
+    own_run.content.push(character_reference("Strong"));
+    let paragraph = styles.paragraph(Some(&ParagraphProperties::default()));
+    assert_eq!(bold(&styles.run(&paragraph, Some(&own_run))), Some(false));
+}
+
+#[test]
+fn the_mark_revision_marks_are_left_out() {
+    let styles = typed_sheet(vec![font_size("22")], vec![]);
+    let mut tracked = mark_of(vec![font_size("48")]);
+    tracked.inserted_table_row = Some(Box::new(InsertedTableRow::default()));
+    tracked.deleted_table_row = Some(Box::new(DeletedTableRow::default()));
+    tracked.move_source_paragraph = Some(Box::new(MoveSourceParagraph::default()));
+    tracked.move_destination_paragraph = Some(Box::new(MoveDestinationParagraph::default()));
+    tracked.conflict_change_content = Some(Box::new(
+        ConflictChangeContent::ConflictInsTrackChange(ConflictInsTrackChange::default()),
+    ));
+    tracked.run_properties_revision = Some(Box::new(ParagraphMarkRunPropertiesRevision::default()));
+
+    let effective = effective_mark(&styles, tracked);
+    assert_eq!(size(&effective), Some("48"));
+    assert_eq!(effective.unknown.children.len(), 0);
+    assert_eq!(effective.revision_information, None);
+    assert_eq!(
+        effective,
+        effective_mark(&styles, mark_of(vec![font_size("48")]))
+    );
 }
