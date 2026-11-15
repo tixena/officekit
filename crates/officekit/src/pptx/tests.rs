@@ -5,11 +5,17 @@ use std::path::Path;
 use crate::parts::kinds::PresentationKind;
 use crate::parts::part_root::store;
 use crate::parts::{slide, slide_layout, slide_master, theme};
+#[cfg(feature = "transitional")]
+use officekit_markup::drawing::{
+    Extension as DrawingExtension, ExtensionList as DrawingExtensionList,
+};
 use officekit_markup::drawing::{
     TextParagraphs, TextParagraphsContent, TextRun as DrawingRun, TextString,
 };
 #[cfg(feature = "strict")]
 use officekit_markup::presentation::ModificationVerifier;
+#[cfg(feature = "transitional")]
+use officekit_markup::presentation::{Extension, ExtensionListWithModificationFlag};
 use officekit_markup::presentation::{
     GroupShapeContent, Presentation, PresentationSlideSlide, Shape, ShapeTextBody,
 };
@@ -30,6 +36,10 @@ use os_shim::mock::MemorySystem;
 
 use super::Pptx;
 use crate::compact::Comments;
+#[cfg(feature = "transitional")]
+use crate::validation::error::{ErrorCode, ValidationError};
+#[cfg(feature = "transitional")]
+use crate::validation::validator::Validator;
 
 fn name(text: &str) -> PartName {
     PartName::new(text).unwrap()
@@ -356,6 +366,62 @@ fn compact_runs_merges_neighbouring_runs_of_a_slide_and_keeps_the_text() {
     pptx.compact_runs(Comments::Keep).unwrap();
     let stored = slide::load(pptx.package(), &part, OpenOptions::default()).unwrap();
     assert_eq!(run_texts(&stored), ["The fox"]);
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn a_slide_and_a_drawing_extension_without_their_uri_miss_it_at_every_target() {
+    let mut pptx = Pptx::new(PresentationKind::Presentation).unwrap();
+    let part = name("/ppt/slides/slide1.xml");
+    let mut extensions = ExtensionListWithModificationFlag::default();
+    extensions.extension = vec![Extension::default()];
+    let mut drawing_extensions = DrawingExtensionList::default();
+    drawing_extensions.extension = vec![DrawingExtension::default()];
+    let mut slide_root = PresentationSlideSlide::default();
+    slide_root.extension_list_with_modification_flag = Some(Box::new(extensions));
+    slide_root
+        .common_slide_data
+        .shape_tree
+        .group_shape_properties
+        .extension_list = Some(Box::new(drawing_extensions));
+    let main = pptx.presentation_part().clone();
+    let package = pptx.package_mut();
+    store(
+        package,
+        &part,
+        slide::CONTENT_TYPE,
+        &slide_root,
+        ConformanceClass::Transitional,
+        WriteOptions::default(),
+    )
+    .unwrap();
+    package
+        .relate(Some(&main), &part, RelationshipType::SLIDE.transitional)
+        .unwrap();
+    for target in [
+        OfficeVersion::Office2010,
+        OfficeVersion::Office2013,
+        OfficeVersion::Office2016,
+        OfficeVersion::Office2019,
+        OfficeVersion::Office2021,
+        OfficeVersion::Microsoft365,
+    ] {
+        let missing: Vec<String> = Validator::new(target)
+            .validate(pptx.package())
+            .iter()
+            .filter(|error| error.code == ErrorCode::MissingRequiredAttribute)
+            .map(ValidationError::line)
+            .filter(|line| line.contains("ext[1]:"))
+            .collect();
+        assert_eq!(
+            missing,
+            [
+                "/ppt/slides/slide1.xml /p:sld[1]/p:cSld[1]/p:spTree[1]/p:grpSpPr[1]/a:extLst[1]/a:ext[1]: schema MissingRequiredAttribute: the attribute uri is required and missing",
+                "/ppt/slides/slide1.xml /p:sld[1]/p:extLst[1]/p:ext[1]: schema MissingRequiredAttribute: the attribute uri is required and missing",
+            ],
+            "{target:?}"
+        );
+    }
 }
 
 #[cfg(feature = "strict")]

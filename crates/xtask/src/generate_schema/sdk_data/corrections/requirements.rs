@@ -1,6 +1,7 @@
 //! What ECMA-376 requires and SDK 3.5.1's data does not check, taken from the Transitional
 //! schemas: each attribute they make required, each content model whose order or required
-//! children the data loosens, and each wildcard child the data makes optional.
+//! children the data loosens, and each wildcard child the data makes optional; and the `uri` of
+//! the extensions they leave optional, which the data requires.
 
 use alloc::collections::{BTreeMap, BTreeSet};
 
@@ -30,12 +31,13 @@ pub(super) struct Kept {
 /// Add to `data` what the schemas of `standard` require: the required check of each attribute
 /// they make required, the content model of each type whose order or required children the
 /// data loosens, its children outside the standard allowed anywhere, and each wildcard child
-/// they require.
+/// they require; and take off the required check of each extension `uri` they leave optional.
 ///
 /// # Errors
 ///
 /// A required attribute or child the data does not declare and no row names, a row naming one
-/// the data declares, or a content model the data cannot hold.
+/// the data declares, a content model the data cannot hold, or no extension with an optional
+/// `uri`.
 pub(super) fn require(data: &mut SdkData, standard: &SchemaSet, kept: &Kept) -> Result<()> {
     let mut problems = Vec::new();
     let names: Vec<String> = data.types.keys().cloned().collect();
@@ -108,8 +110,9 @@ pub(super) fn require(data: &mut SdkData, standard: &SchemaSet, kept: &Kept) -> 
     if !problems.is_empty() {
         bail!("what ECMA-376 requires:\n  {}", problems.join("\n  "));
     }
-    require_wildcards(data, standard);
-    Ok(())
+    let types = standard_types(data, standard);
+    require_wildcards(data, standard, &types);
+    optional_extension_uris(data, standard, &types)
 }
 
 /// The data's form of `particle`, the schema's content model: each element the data leaf of the
@@ -536,10 +539,9 @@ fn raise_wildcards(particle: &mut DataParticle) {
     }
 }
 
-/// Require the wildcards of each data type whose Transitional type requires a wildcard child,
-/// as `CT_Extension` does, where the data makes them optional.
-fn require_wildcards(data: &mut SdkData, standard: &SchemaSet) {
-    let types = standard_types(data, standard);
+/// Require the wildcards of each data type whose Transitional type, of `types`, requires a
+/// wildcard child, as `CT_Extension` does, where the data makes them optional.
+fn require_wildcards(data: &mut SdkData, standard: &SchemaSet, types: &BTreeMap<String, Name>) {
     for (name, data_type) in &mut data.types {
         let Some(declared) = types
             .get(schema_type_of(name))
@@ -555,6 +557,54 @@ fn require_wildcards(data: &mut SdkData, standard: &SchemaSet) {
             raise_wildcards(held);
         }
     }
+}
+
+/// Take the required check off the `uri` of each data type whose Transitional type, of `types`,
+/// is a `CT_Extension` leaving it optional: the chart's and the spreadsheet's.
+///
+/// # Errors
+///
+/// No data type has such a type, as when the data's names change.
+fn optional_extension_uris(
+    data: &mut SdkData,
+    standard: &SchemaSet,
+    types: &BTreeMap<String, Name>,
+) -> Result<()> {
+    let mut optional = Vec::new();
+    for name in data.types.keys() {
+        let Some(declared) = types
+            .get(schema_type_of(name))
+            .and_then(|found| standard.complex_types.get(found))
+            .filter(|found| found.name.local == "CT_Extension")
+        else {
+            continue;
+        };
+        if let Some(uri) = standard
+            .effective(declared)
+            .attributes
+            .iter()
+            .find(|attribute| attribute.name.local == "uri" && !attribute.required)
+        {
+            let qname = format!("{}:uri", prefix_of(data, &uri.name.namespace)?);
+            optional.push((name.clone(), qname));
+        }
+    }
+    if optional.is_empty() {
+        bail!("no data type has a Transitional CT_Extension whose uri is optional");
+    }
+    for (name, qname) in optional {
+        if let Some(attribute) = data.types.get_mut(&name).and_then(|found| {
+            found
+                .attributes
+                .iter_mut()
+                .find(|attribute| attribute.qname == qname)
+        }) {
+            attribute
+                .validators
+                .retain(|validator| validator.name != "RequiredValidator");
+        }
+    }
+    Ok(())
 }
 
 /// The elements a schema particle requires: those every match holds.

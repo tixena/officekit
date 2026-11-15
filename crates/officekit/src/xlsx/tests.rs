@@ -14,6 +14,8 @@ use crate::parts::{pivot_table, table_definition};
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use crate::transitional::dates::SaveWarning;
 #[cfg(feature = "transitional")]
+use crate::validation::error::{ErrorCode, ValidationError};
+#[cfg(feature = "transitional")]
 use crate::validation::validator::Validator;
 use officekit_markup::spreadsheet::WorkbookProperties;
 #[cfg(feature = "strict")]
@@ -27,7 +29,9 @@ use officekit_markup::spreadsheet::{
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use officekit_markup::spreadsheet::{Cell, CellType, CellValue, Row};
 #[cfg(feature = "transitional")]
-use officekit_markup::spreadsheet::{SharedStringTable, StringItem, Text};
+use officekit_markup::spreadsheet::{
+    Extension, FutureFeatureDataStorageArea, SharedStringTable, StringItem, Text,
+};
 #[cfg(feature = "strict")]
 use officekit_strict::iso_date_time;
 use officekit_xml::conformance::ConformanceClass;
@@ -328,6 +332,40 @@ fn a_shared_string_that_keeps_its_space_has_no_validation_error() {
         Validator::new(OfficeVersion::Microsoft365).validate(xlsx.package()),
         []
     );
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn a_worksheet_extension_without_its_uri_misses_no_attribute_at_any_target() {
+    let mut xlsx = Xlsx::new(SpreadsheetKind::Workbook).unwrap();
+    let sheet = name("/xl/worksheets/sheet1.xml");
+    let mut extended = worksheet::load(xlsx.package(), &sheet, OpenOptions::default()).unwrap();
+    let mut extensions = FutureFeatureDataStorageArea::default();
+    extensions.extension = vec![Extension::default()];
+    extended.future_feature_data_storage_area = Some(Box::new(extensions));
+    worksheet::store_transitional(
+        xlsx.package_mut(),
+        &sheet,
+        &extended,
+        WriteOptions::default(),
+    )
+    .unwrap();
+    for target in [
+        OfficeVersion::Office2010,
+        OfficeVersion::Office2013,
+        OfficeVersion::Office2016,
+        OfficeVersion::Office2019,
+        OfficeVersion::Office2021,
+        OfficeVersion::Microsoft365,
+    ] {
+        let missing: Vec<String> = Validator::new(target)
+            .validate(xlsx.package())
+            .iter()
+            .filter(|error| error.code == ErrorCode::MissingRequiredAttribute)
+            .map(ValidationError::line)
+            .collect();
+        assert_eq!(missing, Vec::<String>::new(), "{target:?}");
+    }
 }
 
 #[cfg(feature = "transitional")]

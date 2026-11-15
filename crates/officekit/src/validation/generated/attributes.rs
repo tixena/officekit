@@ -28712,6 +28712,15 @@ const ATTRIBUTES_188: &[AttributeConstraint] = &[AttributeConstraint {
 }];
 
 const ATTRIBUTES_189: &[AttributeConstraint] = &[AttributeConstraint {
+    checks: CHECKS_56,
+    class: ValueClass::String,
+    name: "uri",
+    namespace: None,
+    strict_checks: None,
+    transitional_only: false,
+}];
+
+const ATTRIBUTES_190: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_151,
     class: ValueClass::Enum("c:ST_AxPos"),
     name: "val",
@@ -28720,7 +28729,7 @@ const ATTRIBUTES_189: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_190: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_191: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_152,
     class: ValueClass::Double,
     name: "val",
@@ -28729,7 +28738,7 @@ const ATTRIBUTES_190: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_191: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_192: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_153,
     class: ValueClass::Enum("c:ST_BarDir"),
     name: "val",
@@ -28738,7 +28747,7 @@ const ATTRIBUTES_191: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_192: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_193: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_154,
     class: ValueClass::Enum("c:ST_BarGrouping"),
     name: "val",
@@ -28747,7 +28756,7 @@ const ATTRIBUTES_192: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_193: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_194: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_2,
     class: ValueClass::Boolean,
     name: "val",
@@ -28756,7 +28765,7 @@ const ATTRIBUTES_193: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_194: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_195: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_155,
     class: ValueClass::UInt32,
     name: "val",
@@ -28765,7 +28774,7 @@ const ATTRIBUTES_194: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_195: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_196: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_156,
     class: ValueClass::Enum("c:ST_BuiltInUnit"),
     name: "val",
@@ -28774,7 +28783,7 @@ const ATTRIBUTES_195: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_196: &[AttributeConstraint] = &[
+const ATTRIBUTES_197: &[AttributeConstraint] = &[
     AttributeConstraint {
         checks: CHECKS_43,
         class: ValueClass::String,
@@ -28801,7 +28810,7 @@ const ATTRIBUTES_196: &[AttributeConstraint] = &[
     },
 ];
 
-const ATTRIBUTES_197: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_198: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_157,
     class: ValueClass::Enum("c:ST_CrossBetween"),
     name: "val",
@@ -28810,7 +28819,7 @@ const ATTRIBUTES_197: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_198: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_199: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_158,
     class: ValueClass::Enum("c:ST_Crosses"),
     name: "val",
@@ -28819,7 +28828,7 @@ const ATTRIBUTES_198: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_199: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_200: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_159,
     class: ValueClass::Enum("c:ST_DLblPos"),
     name: "val",
@@ -28828,7 +28837,7 @@ const ATTRIBUTES_199: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_200: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_201: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_160,
     class: ValueClass::UInt16,
     name: "val",
@@ -28837,7 +28846,7 @@ const ATTRIBUTES_200: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_201: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_202: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_161,
     class: ValueClass::Enum("c:ST_DispBlanksAs"),
     name: "val",
@@ -28846,7 +28855,7 @@ const ATTRIBUTES_201: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_202: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_203: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_162,
     class: ValueClass::Double,
     name: "val",
@@ -28855,7 +28864,7 @@ const ATTRIBUTES_202: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_203: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_204: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_163,
     class: ValueClass::Enum("c:ST_ErrBarType"),
     name: "val",
@@ -28864,7 +28873,7 @@ const ATTRIBUTES_203: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_204: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_205: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_164,
     class: ValueClass::Enum("c:ST_ErrDir"),
     name: "val",
@@ -28873,19 +28882,10 @@ const ATTRIBUTES_204: &[AttributeConstraint] = &[AttributeConstraint {
     transitional_only: false,
 }];
 
-const ATTRIBUTES_205: &[AttributeConstraint] = &[AttributeConstraint {
+const ATTRIBUTES_206: &[AttributeConstraint] = &[AttributeConstraint {
     checks: CHECKS_165,
     class: ValueClass::Enum("c:ST_ErrValType"),
     name: "val",
-    namespace: None,
-    strict_checks: None,
-    transitional_only: false,
-}];
-
-const ATTRIBUTES_206: &[AttributeConstraint] = &[AttributeConstraint {
-    checks: CHECKS_56,
-    class: ValueClass::String,
-    name: "uri",
     namespace: None,
     strict_checks: None,
     transitional_only: false,

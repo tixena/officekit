@@ -534,10 +534,10 @@ fn chart_with_extension(extension: Extension) -> Docx {
     docx
 }
 
-/// What the validator reports on the `c:ext` of `docx`'s chart, one line each.
+/// What the validator at `target` reports on the `c:ext` of `docx`'s chart, one line each.
 #[cfg(feature = "transitional")]
-fn reported_on_ext(docx: &Docx) -> Vec<String> {
-    Validator::new(OfficeVersion::Microsoft365)
+fn reported_on_ext(docx: &Docx, target: OfficeVersion) -> Vec<String> {
+    Validator::new(target)
         .validate(docx.package())
         .iter()
         .map(ValidationError::line)
@@ -562,7 +562,10 @@ fn the_validator_reports_the_child_a_default_extension_lacks() {
     let mut extension = Extension::default();
     extension.uri = Some("x".to_owned());
     assert_eq!(
-        reported_on_ext(&chart_with_extension(extension)),
+        reported_on_ext(
+            &chart_with_extension(extension),
+            OfficeVersion::Microsoft365
+        ),
         [
             "/word/charts/chart1.xml /c:chartSpace[1]/c:chart[1]/c:plotArea[1]/c:barChart[1]/c:ser[1]/c:val[1]/c:numRef[1]/c:extLst[1]/c:ext[1]: schema MissingChild: the element ends before a child it requires, expected c15:formulaRef, c15:fullRef, c15:levelRef or ##any"
         ]
@@ -573,9 +576,34 @@ fn the_validator_reports_the_child_a_default_extension_lacks() {
 #[test]
 fn the_validator_reports_nothing_on_a_unique_id_extension() {
     assert_eq!(
-        reported_on_ext(&chart_with_extension(unique_id_extension())),
+        reported_on_ext(
+            &chart_with_extension(unique_id_extension()),
+            OfficeVersion::Microsoft365
+        ),
         Vec::<String>::new()
     );
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn the_validator_reports_nothing_on_an_extension_without_its_uri_at_any_target() {
+    let mut extension = unique_id_extension();
+    extension.uri = None;
+    let docx = chart_with_extension(extension);
+    for target in [
+        OfficeVersion::Office2010,
+        OfficeVersion::Office2013,
+        OfficeVersion::Office2016,
+        OfficeVersion::Office2019,
+        OfficeVersion::Office2021,
+        OfficeVersion::Microsoft365,
+    ] {
+        assert_eq!(
+            reported_on_ext(&docx, target),
+            Vec::<String>::new(),
+            "{target:?}"
+        );
+    }
 }
 
 #[cfg(feature = "transitional")]

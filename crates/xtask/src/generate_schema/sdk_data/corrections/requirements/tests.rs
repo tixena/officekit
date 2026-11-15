@@ -8,14 +8,16 @@ use crate::generate_schema::sdk_data::{DataParticle, SdkData};
 const NAMESPACES: &str = r#"[
   {"Prefix": "", "Uri": ""},
   {"Prefix": "w", "Uri": "urn:w"},
-  {"Prefix": "w15", "Uri": "urn:w15"}
+  {"Prefix": "w15", "Uri": "urn:w15"},
+  {"Prefix": "p", "Uri": "urn:p"}
 ]"#;
 
 const TYPED_NAMESPACES: &str = r#"[{"Prefix": "w", "Namespace": "Office.Word"}]"#;
 
 /// The data: attributes the standard requires and the data leaves optional, a choice where the
 /// standard has a sequence, a child the standard requires and the data does not, and optional
-/// wildcards in an extension of the data's own type and in a type whose wildcard is optional.
+/// wildcards in an extension of the data's own type, whose uri it requires, and in a type whose
+/// wildcard is optional.
 const DATA: &str = r#"{
   "TargetNamespace": "urn:w",
   "Types": [
@@ -52,7 +54,9 @@ const DATA: &str = r#"{
     {"Name": "w:CT_HolderExtensionList/w:extLst", "Particle": {"Kind": "Sequence", "Items": [
       {"Name": "w:CT_HolderExtension/w:ext", "Occurs": [{}]}
     ]}},
-    {"Name": "w:CT_HolderExtension/w:ext", "Particle": {"Kind": "Choice", "Items": [
+    {"Name": "w:CT_HolderExtension/w:ext", "Attributes": [
+      {"QName": "w:uri", "Type": "StringValue", "Validators": [{"Name": "RequiredValidator"}]}
+    ], "Particle": {"Kind": "Choice", "Items": [
       {"Name": "w:CT_A/w:alias"},
       {"Kind": "Any", "Occurs": [{"Max": 1}]}
     ]}},
@@ -101,6 +105,7 @@ const STANDARD: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchem
     <xsd:sequence>
       <xsd:any processContents="lax"/>
     </xsd:sequence>
+    <xsd:attribute name="uri" type="xsd:token"/>
   </xsd:complexType>
   <xsd:complexType name="CT_ExtensionList">
     <xsd:sequence>
@@ -115,6 +120,34 @@ const STANDARD: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchem
   <xsd:complexType name="CT_Loose">
     <xsd:sequence>
       <xsd:any processContents="lax" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>"#;
+
+/// Data of a second namespace: an extension of its own type in a slide.
+const SLIDE_DATA: &str = r#"{
+  "TargetNamespace": "urn:p",
+  "Types": [
+    {"Name": "p:CT_Slide/p:sld", "Particle": {"Kind": "Sequence", "Items": [
+      {"Name": "p:CT_SlideExtension/p:ext", "Occurs": [{"Max": 1}]}
+    ]}},
+    {"Name": "p:CT_SlideExtension/p:ext", "Attributes": [
+      {"QName": "p:uri", "Type": "StringValue", "Validators": [{"Name": "RequiredValidator"}]}
+    ]}
+  ]
+}"#;
+
+/// The standard of the second namespace: an extension whose uri it requires.
+const SLIDE_STANDARD: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:p" targetNamespace="urn:p" elementFormDefault="qualified" attributeFormDefault="qualified">
+  <xsd:complexType name="CT_Extension">
+    <xsd:sequence>
+      <xsd:any processContents="lax" minOccurs="0"/>
+    </xsd:sequence>
+    <xsd:attribute name="uri" type="xsd:token" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType name="CT_Slide">
+    <xsd:sequence>
+      <xsd:element name="ext" type="CT_Extension" minOccurs="0"/>
     </xsd:sequence>
   </xsd:complexType>
 </xsd:schema>"#;
@@ -136,15 +169,22 @@ attribute = "w:element"
 
 /// The data with what the standard requires, under the rows of `table`.
 fn required(table: &str) -> anyhow::Result<SdkData> {
+    required_by(table, STANDARD)
+}
+
+/// The data with what `schema` and the slide's standard require, under the rows of `table`.
+fn required_by(table: &str, schema: &str) -> anyhow::Result<SdkData> {
     let system = MemorySystem::new()
         .with_file("/data/namespaces.json", NAMESPACES.as_bytes())?
         .with_file("/data/typed/namespaces.json", TYPED_NAMESPACES.as_bytes())?
         .with_file("/data/schemas/word.json", DATA.as_bytes())?
+        .with_file("/data/schemas/slide.json", SLIDE_DATA.as_bytes())?
         .with_file("/data/parts/README.md", b"no parts")?
         .with_file("/data/schematrons.json", b"[]")?
-        .with_file("/standard.xsd", STANDARD.as_bytes())?;
+        .with_file("/standard.xsd", schema.as_bytes())?
+        .with_file("/slide.xsd", SLIDE_STANDARD.as_bytes())?;
     let mut data = SdkData::read(&system, Path::new("data"))?;
-    let standard = SchemaSet::read(&system, &["standard.xsd"])?;
+    let standard = SchemaSet::read(&system, &["standard.xsd", "slide.xsd"])?;
     data.require_standard(table, &standard)?;
     Ok(data)
 }
@@ -264,4 +304,31 @@ fn a_wildcard_the_standard_requires_is_required_in_a_type_found_through_its_pare
     let data = required(TABLE).unwrap();
     assert_eq!(wildcard_minimums(&data, "w:CT_HolderExtension/w:ext"), [1]);
     assert_eq!(wildcard_minimums(&data, "w:CT_Loose/w:loose"), [0]);
+}
+
+// XSD and SDK data input: the generator reads them, forms the typed model does not hold.
+#[test]
+fn the_uri_of_an_extension_the_standard_leaves_optional_is_optional_in_a_type_found_through_its_parents()
+ {
+    let data = required(TABLE).unwrap();
+    assert!(!is_required(&data, "w:CT_HolderExtension/w:ext", "w:uri"));
+    assert!(
+        is_required(&data, "p:CT_SlideExtension/p:ext", "p:uri"),
+        "an extension whose uri the standard requires keeps it"
+    );
+}
+
+// XSD and SDK data input: the generator reads them, forms the typed model does not hold.
+#[test]
+fn no_extension_whose_uri_the_standard_leaves_optional_stops_the_build() {
+    let error = required_by(
+        TABLE,
+        &STANDARD.replace("    <xsd:attribute name=\"uri\" type=\"xsd:token\"/>\n", ""),
+    )
+    .unwrap_err()
+    .to_string();
+    assert!(
+        error.contains("CT_Extension whose uri is optional"),
+        "{error}"
+    );
 }
