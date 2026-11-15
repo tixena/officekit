@@ -2,6 +2,7 @@
 //! (ECMA-376 Part 1, sections 18.17.4 and 18.8.31; Part 4, section 15.3.4).
 
 mod calendars;
+mod names;
 #[cfg(test)]
 mod tests;
 
@@ -10,11 +11,12 @@ use core::str::Chars;
 use officekit_markup::class_rules::{BASE_1900, BASE_1904};
 use officekit_xml::values::DateTime;
 
-use self::calendars::{HIJRI_FIRST, HIJRI_LEAP_YEARS, HIJRI_MONTHS, JAPANESE, LANGUAGE_IDS, ROC};
+use self::calendars::{HIJRI_FIRST, HIJRI_LEAP_YEARS, JAPANESE, ROC};
+use self::names::{LOCALES, NAMES};
 use super::decimal::Decimal;
 use super::parse::Token;
 use super::write::Writer;
-use super::{Section, Shown};
+use super::{Section, Shown, language_tag};
 use crate::docx::fonts::likely_subtags;
 
 /// Nanoseconds in a day.
@@ -39,6 +41,10 @@ const HIJRI_CYCLE: i64 = 30;
 
 /// The days of a common year of the tabular Hijri calendar.
 const HIJRI_YEAR: i64 = 354;
+
+/// The language of the Hijri months `b2` writes in a section with no language: section 18.8.31
+/// writes the Gregorian ones in English.
+const HIJRI_LANGUAGE: &str = "en";
 
 /// The most decimals of a second a code shows (section 18.8.31, `h:mm:ss.00`).
 const MOST_DECIMALS: usize = 3;
@@ -139,39 +145,119 @@ impl Locale {
     /// The locale of the BCP 47 tag `tag`, by its language and its region, or the region CLDR's
     /// likely subtags give the tag when it names none.
     fn of(tag: &str) -> Option<Self> {
+        let Subtags {
+            language,
+            script,
+            region: named,
+        } = Subtags::of(tag)?;
+        let region = named.or_else(|| {
+            let id = script.map_or_else(|| language.clone(), |own| format!("{language}_{own}"));
+            let full = likely_subtags(&id).or_else(|| likely_subtags(&language))?;
+            full.rsplit('_').next().map(str::to_owned)
+        })?;
+        match (language.as_str(), region.as_str()) {
+            ("ja", "JP") => Some(Self::Japan),
+            ("zh", "TW") => Some(Self::Taiwan),
+            _ => None,
+        }
+    }
+}
+
+/// The language, script and region subtags of a BCP 47 tag before its first singleton: the
+/// language in lower case, the script in title case, the region in upper case.
+struct Subtags {
+    language: String,
+    region: Option<String>,
+    script: Option<String>,
+}
+
+impl Subtags {
+    fn of(tag: &str) -> Option<Self> {
         let mut subtags = tag.split(['-', '_']).take_while(|subtag| subtag.len() > 1);
         let language = subtags.next()?.to_ascii_lowercase();
         let rest: Vec<&str> = subtags.collect();
-        let script = rest.iter().find(|subtag| {
-            subtag.len() == 4 && subtag.bytes().all(|byte| byte.is_ascii_alphabetic())
-        });
+        let script = rest
+            .iter()
+            .find(|subtag| {
+                subtag.len() == 4 && subtag.bytes().all(|byte| byte.is_ascii_alphabetic())
+            })
+            .map(|own| {
+                let (first, others) = own.split_at(1);
+                format!(
+                    "{}{}",
+                    first.to_ascii_uppercase(),
+                    others.to_ascii_lowercase()
+                )
+            });
         let region = rest
             .iter()
             .find(|subtag| {
                 (subtag.len() == 2 && subtag.bytes().all(|byte| byte.is_ascii_alphabetic()))
                     || (subtag.len() == 3 && subtag.bytes().all(|byte| byte.is_ascii_digit()))
             })
-            .map(|subtag| subtag.to_ascii_uppercase())
-            .or_else(|| {
-                let id = script.map_or_else(
-                    || language.clone(),
-                    |own| {
-                        let (first, others) = own.split_at(1);
-                        format!(
-                            "{language}_{}{}",
-                            first.to_ascii_uppercase(),
-                            others.to_ascii_lowercase()
-                        )
-                    },
-                );
-                let full = likely_subtags(&id).or_else(|| likely_subtags(&language))?;
-                full.rsplit('_').next().map(str::to_owned)
-            })?;
-        match (language.as_str(), region.as_str()) {
-            ("ja", "JP") => Some(Self::Japan),
-            ("zh", "TW") => Some(Self::Taiwan),
-            _ => None,
+            .map(|subtag| subtag.to_ascii_uppercase());
+        Some(Self {
+            language,
+            region,
+            script,
+        })
+    }
+}
+
+/// The month and weekday names of a locale of Unicode CLDR, its lists in [`NAMES`] (section
+/// 18.8.31, `mmm`, `mmmm`, `mmmmm`, `ddd` and `dddd`).
+#[derive(Clone, Copy)]
+struct Names(&'static [u16; 8]);
+
+impl Names {
+    /// The name of month `month`, from 1, of the Gregorian or the Hijri calendar in `width`: 0
+    /// narrow, 1 abbreviated, 2 wide.
+    fn month(self, hijri: bool, width: usize, month: i64) -> &'static str {
+        let list = self.0.get(if hijri { 5 } else { 0 } + width);
+        list.and_then(|at| names::MONTHS.get(usize::from(*at)))
+            .map_or("", |months| name(months, month - 1))
+    }
+
+    /// The names of CLDR's locale of the BCP 47 tag `tag`: of its language, script and region,
+    /// the script CLDR's likely subtags give when it names none; CLDR's ids leave out a
+    /// language's own script.
+    fn of(tag: &str) -> Option<Self> {
+        let Subtags {
+            language,
+            region,
+            script: named,
+        } = Subtags::of(tag)?;
+        let likely = |id: &str| -> Option<&'static str> { likely_subtags(id)?.split('_').nth(1) };
+        let own = likely(&language);
+        let script = named
+            .as_deref()
+            .or_else(|| likely(&format!("{language}_{}", region.as_ref()?)))
+            .or(own);
+        let plain = script == own;
+        let mut ids = Vec::new();
+        if let (Some(writing), Some(place)) = (script, &region) {
+            ids.push(format!("{language}_{writing}_{place}"));
         }
+        if let (true, Some(place)) = (plain, &region) {
+            ids.push(format!("{language}_{place}"));
+        }
+        if let Some(writing) = script {
+            ids.push(format!("{language}_{writing}"));
+        }
+        if plain {
+            ids.push(language.clone());
+        }
+        ids.iter()
+            .find_map(|id| LOCALES.binary_search(&id.as_str()).ok())
+            .and_then(|at| NAMES.get(at))
+            .map(Self)
+    }
+
+    /// The name of `weekday`, from 0 for Sunday, in `width`: 0 abbreviated, 1 wide.
+    fn weekday(self, width: usize, weekday: i64) -> &'static str {
+        let list = self.0.get(3 + width);
+        list.and_then(|at| names::WEEKDAYS.get(usize::from(*at)))
+            .map_or("", |weekdays| name(weekdays, weekday))
     }
 }
 
@@ -243,21 +329,17 @@ impl Date {
         })
     }
 
-    /// The month's name: `mmm` when `length` is 3, `mmmm` when 4, `mmmmm` when more; the
-    /// Gregorian ones in English, the Hijri ones in CLDR's English.
-    fn month_text(&self, length: usize) -> String {
-        if self.hijri {
-            let names = usize::try_from(self.month - 1)
-                .ok()
-                .and_then(|at| HIJRI_MONTHS.get(at))
-                .copied()
-                .unwrap_or(["", "", ""]);
-            return match length {
-                3 => names[1],
-                4 => names[2],
-                _ => names[0],
-            }
-            .to_owned();
+    /// The month's name in `names`: `mmm` when `length` is 3, `mmmm` when 4, `mmmmm` when more;
+    /// with no names, the Gregorian ones in English and the Hijri ones in CLDR's English.
+    fn month_text(&self, length: usize, names: Option<Names>) -> String {
+        let width = match length {
+            3 => 1,
+            4 => 2,
+            _ => 0,
+        };
+        let chosen = names.or_else(|| self.hijri.then(|| Names::of(HIJRI_LANGUAGE)).flatten());
+        if let Some(own) = chosen {
+            return own.month(self.hijri, width, self.month).to_owned();
         }
         let full = name(&MONTHS, self.month - 1);
         match length {
@@ -267,8 +349,15 @@ impl Date {
         }
     }
 
-    fn weekday_name(&self) -> &'static str {
-        name(&WEEKDAYS, self.weekday)
+    /// The weekday's name in `names`: `ddd` when `length` is 3, `dddd` when more; with no
+    /// names, in English.
+    fn weekday_text(&self, length: usize, names: Option<Names>) -> String {
+        let width = usize::from(length > 3);
+        if let Some(own) = names {
+            return own.weekday(width, self.weekday).to_owned();
+        }
+        let full = name(&WEEKDAYS, self.weekday);
+        if length == 3 { &full[..3] } else { full }.to_owned()
     }
 }
 
@@ -328,7 +417,9 @@ pub(super) fn write(
     language: Option<&str>,
 ) -> Option<Shown> {
     let tokens = &section.tokens;
-    let (hijri, locale) = calendar(section, language);
+    let (hijri, tag) = calendar(section, language);
+    let locale = tag.filter(|_| !hijri).and_then(Locale::of);
+    let names = tag.and_then(Names::of);
     let decimals = decimals(tokens);
     let per_second = 10_i128.pow(u32::try_from(decimals).ok()?);
     let per_day = SECONDS * per_second;
@@ -380,12 +471,11 @@ pub(super) fn write(
             (Token::Date('m', length), _) if is_minute(tokens, at) => padded(clock.minute, *length),
             (Token::Date('m', length), Some(on)) => match length {
                 1 | 2 => padded(on.month.into(), *length),
-                _ => on.month_text(*length),
+                _ => on.month_text(*length, names),
             },
             (Token::Date('d', length), Some(on)) => match length {
                 1 | 2 => padded(on.day.into(), *length),
-                3 => on.weekday_name()[..3].to_owned(),
-                _ => on.weekday_name().to_owned(),
+                _ => on.weekday_text(*length, names),
             },
             (Token::Date('h', length), _) => padded(hour, *length),
             (Token::Date('s', length), _) => padded(clock.second, *length),
@@ -438,22 +528,16 @@ const fn clock(into_day: i128, per_second: i128) -> Clock {
     }
 }
 
-/// Whether `section` writes the Hijri calendar, its last calendar code being `b2`, and else the
-/// locale of its `[$-<language info>]`, or of `language` when it names none (section 18.8.31).
-fn calendar(section: &Section, language: Option<&str>) -> (bool, Option<Locale>) {
+/// Whether `section` writes the Hijri calendar, its last calendar code being `b2`, and the
+/// language tag of its `[$-<language info>]`, or `language` when it names none (section 18.8.31).
+fn calendar<'tag>(section: &Section, language: Option<&'tag str>) -> (bool, Option<&'tag str>) {
     let hijri = section
         .tokens
         .iter()
         .rev()
         .find(|token| matches!(token, Token::Calendar(_)))
         == Some(&Token::Calendar(2));
-    let tag = section.language.map_or(language, |id| {
-        LANGUAGE_IDS
-            .iter()
-            .find(|(found, _)| *found == id)
-            .map(|(_, tag)| *tag)
-    });
-    (hijri, tag.filter(|_| !hijri).and_then(Locale::of))
+    (hijri, section.language.map_or(language, language_tag))
 }
 
 /// What the era code `letter`, `length` times, writes of `on` in `era` of `locale` (section

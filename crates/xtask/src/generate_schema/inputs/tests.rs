@@ -22,6 +22,11 @@ fn layout() -> MemorySystem {
         .unwrap()
         .with_file("/inputs/open-specifications/SOURCES", b"sources")
         .unwrap()
+        .with_file(
+            "/inputs/open-specifications/MS-LCID-240423.xml",
+            b"<w:document/>",
+        )
+        .unwrap()
         .with_file("/inputs/open-specifications/aink.xsd", b"<xsd/>")
         .unwrap()
         .with_file("/inputs/open-specifications/xr2.xsd", b"<xsd/>")
@@ -163,6 +168,10 @@ fn finds_every_input() {
         Path::new("inputs/cldr/49/common/supplemental/supplementalData.xml")
     );
     assert_eq!(
+        inputs.ms_lcid,
+        Path::new("inputs/open-specifications/MS-LCID-240423.xml")
+    );
+    assert_eq!(
         inputs.open_specifications,
         [
             (
@@ -185,6 +194,13 @@ fn returns_the_checksum_and_tool_lines() {
         inputs.tools(),
         "pdftotext version 26.01.0\nopen-xml-sdk 3139\n"
     );
+}
+
+#[test]
+fn names_the_missing_language_id_reference() {
+    let path = "inputs/open-specifications/MS-LCID-240423.xml";
+    let err = Inputs::open(&without(path), Path::new("inputs")).unwrap_err();
+    assert_eq!(err.to_string(), format!("{MISSING_PREFIX}{path}"));
 }
 
 #[test]

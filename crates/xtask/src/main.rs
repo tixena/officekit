@@ -28,9 +28,9 @@ use clap::{Parser, Subcommand};
 use os_shim::real::RealSystem;
 use xtask::generate_schema::compare;
 use xtask::generate_schema::emit::{
-    builtin_number_formats, calendars, classes, digits, geometry, indexed_colors, likely_subtags,
-    markup, namespaces, paper_sizes, parts, preset_colors, rule_based, semantic, special_casing,
-    validation,
+    builtin_number_formats, calendars, classes, date_names, digits, geometry, indexed_colors,
+    language_ids, likely_subtags, markup, namespaces, paper_sizes, parts, preset_colors,
+    rule_based, semantic, special_casing, validation,
 };
 use xtask::generate_schema::inputs::Inputs;
 use xtask::generate_schema::model::{Content, Name, ParticleKind, SchemaSet, SimpleType};
@@ -399,12 +399,16 @@ fn tables(out: &mut dyn Write, system: &RealSystem, inputs: &Inputs) -> Result<(
         "wrote {}: {casings} case mappings of a language",
         special_casing::PATH
     )?;
-    let (eras, ids) = calendars::emit(system, inputs)?;
+    let eras = calendars::emit(system, inputs)?;
+    writeln!(out, "wrote {}: {eras} eras", calendars::PATH)?;
+    let (locales, lists) = date_names::emit(system, inputs)?;
     writeln!(
         out,
-        "wrote {}: {eras} eras, {ids} language ids",
-        calendars::PATH
+        "wrote {}: {locales} locales, {lists} lists of names",
+        date_names::PATH
     )?;
+    let ids = language_ids::emit(system, inputs)?;
+    writeln!(out, "wrote {}: {ids} language ids", language_ids::PATH)?;
     Ok(())
 }
 

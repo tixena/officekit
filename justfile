@@ -239,6 +239,16 @@ inputs:
     xr6|MS-XLSX|5.14|http://schemas.microsoft.com/office/spreadsheetml/2016/revision6|e47e052c-40d0-43cd-add4-73a220966b69
     xr9|MS-XLSX|5.13|http://schemas.microsoft.com/office/spreadsheetml/2016/revision9|1df7cd78-d8bc-4ec4-8952-1b61beeaee76
     TABLE
+
+    # [MS-LCID], "Windows Language Code Identifier (LCID) Reference", version 16.0 of
+    # 2024-04-23, from its page on https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/:
+    # the table of language ids and language tags a number format's [$-<language info>]
+    # names its language by. That version's PDF is protected, so its DOCX is fetched
+    # and its document part kept.
+    lcid=$osdir/MS-LCID-240423
+    fetch "https://winprotocoldocs-bhdugrdyduf5h2e4.b02.azurefd.net/MS-LCID/%5bMS-LCID%5d-240423.docx" $lcid.docx
+    [ -s $lcid.xml ] || unzip -p $lcid.docx word/document.xml > $lcid.xml
+    printf -- '-\t-\t[MS-LCID]\t16.0\t%s\n' "${lcid##*/}.docx" >> $osdir/SOURCES.part
     mv -f $osdir/SOURCES.part $osdir/SOURCES
 
     # The Unicode Character Database's UnicodeData.txt, SpecialCasing.txt and PropList.txt,

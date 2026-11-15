@@ -3,9 +3,11 @@
 pub mod builtin_number_formats;
 pub mod calendars;
 pub mod classes;
+pub mod date_names;
 pub mod digits;
 pub mod geometry;
 pub mod indexed_colors;
+pub mod language_ids;
 pub mod likely_subtags;
 pub mod markup;
 pub mod namespaces;

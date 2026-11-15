@@ -30,6 +30,7 @@
 mod date;
 mod decimal;
 mod general;
+mod language_ids;
 mod parse;
 #[cfg(test)]
 mod tests;
@@ -41,6 +42,7 @@ pub use date::{DateSystem, date_time};
 pub use general::general;
 
 use decimal::Decimal;
+use language_ids::LANGUAGE_IDS;
 use parse::{Condition, Token};
 
 use crate::drawing::color::Rgba;
@@ -270,6 +272,15 @@ impl Shown {
             })
             .collect()
     }
+}
+
+/// The language tag [MS-LCID] gives the language id of a `[$-<language info>]` (section
+/// 18.8.31); `None` for an id it does not list.
+fn language_tag<'tag>(id: u16) -> Option<&'tag str> {
+    let at = LANGUAGE_IDS
+        .binary_search_by_key(&id, |(found, _)| *found)
+        .ok()?;
+    LANGUAGE_IDS.get(at).map(|(_, tag)| *tag)
 }
 
 /// `value` under `section`, signed as [`write::number`] signs it; a section of dates and times

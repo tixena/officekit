@@ -1,8 +1,7 @@
 //! The calendars of a date's format code (section 18.8.31), from Unicode CLDR and Part 1.
 //!
 //! The eras of the Japanese and the Republic of China calendars and the tabular Hijri calendar,
-//! read from CLDR, and the language ids section 18.8.30 gives ja-jp and zh-tw, written to
-//! `crates/officekit/src/xlsx/number_format/date/calendars.rs`.
+//! read from CLDR and written to `crates/officekit/src/xlsx/number_format/date/calendars.rs`.
 
 use alloc::collections::BTreeMap;
 use core::fmt::{self, Write as _};
@@ -17,7 +16,6 @@ use super::markup::render::layout;
 use super::namespaces::{self, UNICODE_NOTICE};
 use crate::generate_schema::cldr::{self, Tree};
 use crate::generate_schema::inputs::Inputs;
-use crate::generate_schema::standard_text;
 
 #[cfg(test)]
 mod tests;
@@ -35,14 +33,18 @@ pub const TAIWAN: &str = "zh_Hant_TW";
 /// L.1.18.5's 2007-12-17 as 8 Dhu al-Hijjah 1428.
 pub const HIJRI: &str = "islamic-tbla";
 
-/// The language of the Hijri months' names: section 18.8.31 writes the Gregorian ones in English.
-pub const MONTH_LANGUAGE: &str = "en";
-
 /// The most aliases one lookup follows.
 const MOST_ALIASES: usize = 16;
 
-/// The most characters rustfmt keeps an array on one line, `array_width`.
+/// The most characters of items and separators rustfmt keeps on one line, `array_width`.
 const ARRAY_WIDTH: usize = 60;
+
+/// The most characters of an item rustfmt packs several to a line,
+/// `short_array_element_width_threshold`.
+const SHORT_ITEM: usize = 10;
+
+/// The characters of a line rustfmt fills an array's short items below, `max_width`.
+const MAX_WIDTH: usize = 100;
 
 /// A day as CLDR writes it: the year, the month and the day.
 pub type Day = (i64, i64, i64);
@@ -82,10 +84,7 @@ pub struct EraDays {
 pub struct Calendars {
     pub hijri_first: Day,
     pub hijri_leap_years: Vec<i64>,
-    /// The narrow, abbreviated and wide name of each month.
-    pub hijri_months: Vec<[String; 3]>,
     pub japanese: Vec<Era>,
-    pub language_ids: Vec<(u16, String)>,
     pub roc: Vec<Era>,
 }
 
@@ -380,13 +379,12 @@ pub fn months(
     Ok(found)
 }
 
-/// Read the inputs, check them, and write the table; the counts of eras and of language ids.
+/// Read the inputs, check them, and write the table; the count of eras.
 ///
 /// # Errors
 ///
-/// An input that cannot be read or that the readers refuse, a language the standard pairs with
-/// no id or with two, or an output that cannot be written.
-pub fn emit<S>(system: &S, inputs: &Inputs) -> Result<(usize, usize)>
+/// An input that cannot be read or that the readers refuse, or an output that cannot be written.
+pub fn emit<S>(system: &S, inputs: &Inputs) -> Result<usize>
 where
     S: System + ?Sized,
 {
@@ -401,7 +399,6 @@ where
     let parents = cldr::parent_locales(&supplemental)?;
     let japan = cldr::chain(JAPAN, &parents);
     let taiwan = cldr::chain(TAIWAN, &parents);
-    let english = cldr::chain(MONTH_LANGUAGE, &parents);
     let mut main = BTreeMap::new();
     let mut sources = vec![inputs.cldr_license.clone()];
     for path in &inputs.cldr_main {
@@ -409,12 +406,7 @@ where
             .file_stem()
             .and_then(|stem| stem.to_str())
             .with_context(|| format!("{} has no name", path.display()))?;
-        if japan
-            .iter()
-            .chain(&taiwan)
-            .chain(&english)
-            .any(|id| id == stem)
-        {
+        if japan.iter().chain(&taiwan).any(|id| id == stem) {
             main.insert(stem.to_owned(), tree(path)?);
             sources.push(path.clone());
         }
@@ -426,9 +418,7 @@ where
     let calendars = Calendars {
         hijri_first: first,
         hijri_leap_years: leap_years(&tree(&inputs.cldr_calendars)?, HIJRI)?,
-        hijri_months: months(&main, &english, HIJRI)?,
         japanese: eras(&supplemental, &main, &japan, "japanese", japanese_names)?,
-        language_ids: checked_ids(standard_text::language_ids(&read(&inputs.part1_text)?))?,
         roc: eras(&supplemental, &main, &taiwan, "roc", roc_names)?,
     };
     let license = read(&inputs.cldr_license)?;
@@ -439,7 +429,6 @@ where
     sources.extend([
         inputs.cldr_calendars.clone(),
         inputs.cldr_supplemental.clone(),
-        inputs.part1_text.clone(),
     ]);
     sources.sort();
     let header = namespaces::header(inputs.checksums(), inputs.tools(), &sources, &[])?;
@@ -450,33 +439,7 @@ where
         Condition::None,
     ))
     .with_context(|| format!("cannot write {}", out.display()))?;
-    Ok((
-        calendars.japanese.len() + calendars.roc.len(),
-        calendars.language_ids.len(),
-    ))
-}
-
-/// The ids of `found`, each once and sorted, when ja-jp and zh-tw each have one and no id names
-/// two locales.
-///
-/// # Errors
-///
-/// An id given two locales, or ja-jp or zh-tw with no id.
-pub fn checked_ids(found: Vec<(u16, String)>) -> Result<Vec<(u16, String)>> {
-    let mut ids: BTreeMap<u16, String> = BTreeMap::new();
-    for (id, locale) in found {
-        if let Some(other) = ids.insert(id, locale.clone())
-            && other != locale
-        {
-            bail!("section 18.8.30 gives the language id {id:x} to {other} and to {locale}");
-        }
-    }
-    for wanted in ["ja-jp", "zh-tw"] {
-        if !ids.values().any(|locale| locale == wanted) {
-            bail!("section 18.8.30 gives {wanted} no language id");
-        }
-    }
-    Ok(ids.into_iter().collect())
+    Ok(calendars.japanese.len() + calendars.roc.len())
 }
 
 /// A day as a call to `days_from_civil`, or `i64::MIN` for none.
@@ -487,17 +450,36 @@ fn first_day(first: Option<Day>) -> String {
     )
 }
 
-/// `items` as an array literal laid out as rustfmt lays it out at `indent` spaces: on one line
-/// when it fits, else one item to a line.
-fn array(items: &[String], indent: usize) -> String {
-    let flat = format!("[{}]", items.join(", "));
-    if flat.chars().count() <= ARRAY_WIDTH {
-        return flat;
+/// `items`, literals, as an array literal laid out as rustfmt lays it out at `indent` spaces: on
+/// one line when it fits, else as many to a line as fit when every item is short, else one item
+/// to a line.
+#[must_use = "this only returns the value"]
+pub fn array(items: &[String], indent: usize) -> String {
+    let joined = items.join(", ");
+    if joined.chars().count() <= ARRAY_WIDTH {
+        return format!("[{joined}]");
     }
     let inner = " ".repeat(indent + 4);
     let mut text = String::from("[\n");
-    for item in items {
-        let _: fmt::Result = writeln!(text, "{inner}{item},");
+    if items.iter().all(|item| item.chars().count() <= SHORT_ITEM) {
+        let mut line = String::new();
+        for item in items {
+            let wide = inner.len() + line.chars().count() + item.chars().count() + 2;
+            if !line.is_empty() && wide >= MAX_WIDTH {
+                let _: fmt::Result = writeln!(text, "{inner}{line}");
+                line.clear();
+            }
+            if !line.is_empty() {
+                line.push(' ');
+            }
+            line.push_str(item);
+            line.push(',');
+        }
+        let _: fmt::Result = writeln!(text, "{inner}{line}");
+    } else {
+        for item in items {
+            let _: fmt::Result = writeln!(text, "{inner}{item},");
+        }
     }
     let _: fmt::Result = write!(text, "{}]", " ".repeat(indent));
     text
@@ -529,9 +511,8 @@ fn render_eras(text: &mut String, table: &str, doc: &str, eras: &[Era]) {
 pub fn render(header: &str, copyright: &str, calendars: &Calendars) -> String {
     let mut text = format!(
         "{header}{UNICODE_NOTICE}\n\n//! Unicode CLDR {version}'s eras of the Japanese and the \
-         Republic of China calendars, its tabular\n//! Hijri calendar `{HIJRI}`, and the language ids section \
-         18.8.30 gives ja-jp and zh-tw.\n//! {copyright} Unicode License v3.\n\nuse \
-         super::{{Era, days_from_civil}};\n",
+         Republic of China calendars and its tabular\n//! Hijri calendar `{HIJRI}`. {copyright} \
+         Unicode License v3.\n\nuse super::{{Era, days_from_civil}};\n",
         version = cldr::VERSION,
     );
     render_eras(
@@ -554,9 +535,7 @@ pub fn render(header: &str, copyright: &str, calendars: &Calendars) -> String {
         text,
         "\n/// The first day of `{HIJRI}`, 1 Muharram of year 1.\npub(super) const HIJRI_FIRST: \
          i64 = days_from_civil({year}, {month}, {day});\n\n/// The intercalary years of each \
-         cycle of `{HIJRI}`.\npub(super) static HIJRI_LEAP_YEARS: [i64; {}] = [{}];\n\n/// The \
-         narrow, abbreviated and wide name of each month of `{HIJRI}` in `{MONTH_LANGUAGE}`.\n\
-         pub(super) static HIJRI_MONTHS: [[&str; 3]; {}] = [\n",
+         cycle of `{HIJRI}`.\npub(super) static HIJRI_LEAP_YEARS: [i64; {}] = [{}];\n",
         calendars.hijri_leap_years.len(),
         calendars
             .hijri_leap_years
@@ -564,24 +543,6 @@ pub fn render(header: &str, copyright: &str, calendars: &Calendars) -> String {
             .map(ToString::to_string)
             .collect::<Vec<String>>()
             .join(", "),
-        calendars.hijri_months.len(),
-    );
-    for named in &calendars.hijri_months {
-        let names: Vec<String> = named.iter().map(|name| layout::string(name)).collect();
-        let _: fmt::Result = writeln!(text, "    {},", array(&names, 4));
-    }
-    let ids: Vec<String> = calendars
-        .language_ids
-        .iter()
-        .map(|(id, locale)| format!("(0x{id:04x}, {})", layout::string(locale)))
-        .collect();
-    let _: fmt::Result = write!(
-        text,
-        "];\n\n/// Each language id a `[$-<language info>]` of section 18.8.30's tables carries and \
-         the locale of\n/// its column, sorted by id.\npub(super) static LANGUAGE_IDS: [(u16, \
-         &str); {}] = {};\n",
-        ids.len(),
-        array(&ids, 0),
     );
     text
 }

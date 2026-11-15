@@ -1,8 +1,8 @@
 use alloc::collections::BTreeMap;
 
 use super::{
-    Calendars, Era, array, checked_ids, day, era_days, eras, japanese_names, leap_years, months,
-    render, resolve, roc_names, step,
+    Calendars, Era, array, day, era_days, eras, japanese_names, leap_years, months, render,
+    resolve, roc_names, step,
 };
 use crate::generate_schema::cldr::{self, Tree};
 
@@ -260,30 +260,6 @@ fn the_month_names_follow_the_calendars_and_the_widths_aliases() {
 }
 
 #[test]
-fn each_language_id_once_and_ja_jp_and_zh_tw_named() {
-    let ids = vec![
-        (0x411, "ja-jp".to_owned()),
-        (0x404, "zh-tw".to_owned()),
-        (0x411, "ja-jp".to_owned()),
-    ];
-    assert_eq!(
-        checked_ids(ids).unwrap(),
-        [(0x404, "zh-tw".to_owned()), (0x411, "ja-jp".to_owned())]
-    );
-    let twice = vec![(0x411, "ja-jp".to_owned()), (0x411, "ko-kr".to_owned())];
-    assert_eq!(
-        checked_ids(twice).unwrap_err().to_string(),
-        "section 18.8.30 gives the language id 411 to ja-jp and to ko-kr"
-    );
-    assert_eq!(
-        checked_ids(vec![(0x411, "ja-jp".to_owned())])
-            .unwrap_err()
-            .to_string(),
-        "section 18.8.30 gives zh-tw no language id"
-    );
-}
-
-#[test]
 fn an_array_goes_on_one_line_when_it_fits() {
     let short = ["\"a\"".to_owned(), "\"b\"".to_owned()];
     assert_eq!(array(&short, 8), "[\"a\", \"b\"]");
@@ -299,18 +275,38 @@ fn an_array_goes_on_one_line_when_it_fits() {
 }
 
 #[test]
-fn the_table_holds_each_era_the_hijri_calendar_and_the_language_ids() {
+fn short_items_go_as_many_to_a_line_as_fit() {
+    let abbreviated: Vec<String> = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+    ]
+    .map(|name| format!("\"{name}\""))
+    .to_vec();
+    assert_eq!(
+        array(&abbreviated, 4),
+        format!("[\n        {},\n    ]", abbreviated.join(", "))
+    );
+    let ten = vec![format!("\"{}\"", "1".repeat(8)); 12];
+    assert_eq!(
+        array(&ten, 0),
+        format!(
+            "[\n    {},\n    {},\n]",
+            ten[..8].join(", "),
+            ten[8..].join(", ")
+        )
+    );
+}
+
+#[test]
+fn the_table_holds_each_era_and_the_hijri_calendar() {
     let calendars = Calendars {
         hijri_first: (622, 7, 18),
         hijri_leap_years: vec![2, 5],
-        hijri_months: vec![["1", "Muh.", "Muharram"].map(str::to_owned)],
         japanese: vec![era(
             Some((2019, 5, 1)),
             2019,
             false,
             ["R", "\u{4ee4}", "\u{4ee4}\u{548c}"],
         )],
-        language_ids: vec![(0x411, "ja-jp".to_owned())],
         roc: vec![era(None, 1911, true, ["a", "a", "b"])],
     };
     let text = render("// header\n", "Copyright", &calendars);
@@ -322,14 +318,12 @@ fn the_table_holds_each_era_the_hijri_calendar_and_the_language_ids() {
         "{text}"
     );
     for expected in [
-        "//! Copyright Unicode License v3.",
+        "//! Hijri calendar `islamic-tbla`. Copyright Unicode License v3.",
         "        backward: false,\n        first: days_from_civil(2019, 5, 1),\n        \
          names: [\"R\", \"\\u{4ee4}\", \"\\u{4ee4}\\u{548c}\"],\n        year: 2019,",
         "        backward: true,\n        first: i64::MIN,",
         "pub(super) const HIJRI_FIRST: i64 = days_from_civil(622, 7, 18);",
         "pub(super) static HIJRI_LEAP_YEARS: [i64; 2] = [2, 5];",
-        "    [\"1\", \"Muh.\", \"Muharram\"],",
-        "pub(super) static LANGUAGE_IDS: [(u16, &str); 1] = [(0x0411, \"ja-jp\")];",
     ] {
         assert!(text.contains(expected), "{expected}\n{text}");
     }

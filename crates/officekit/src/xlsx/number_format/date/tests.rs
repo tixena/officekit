@@ -1,11 +1,14 @@
 use officekit_xml::values::DateTime;
 
-use super::super::{FormatColor, NumberFormat, Piece};
+use super::super::{FormatColor, NumberFormat, Piece, language_tag};
 use super::{Date, DateSystem, FIRST, HIJRI_FIRST, LAST, Locale, date_time, days_from_civil};
 
 const STRICT: DateSystem = DateSystem::V1900;
 const TRANSITIONAL: DateSystem = DateSystem::V1900Transitional;
 const V1904: DateSystem = DateSystem::V1904;
+
+/// 2024-01-15, a Monday, in the Strict 1900 system.
+const MONDAY: &str = "45306";
 
 /// `serial` under `code` in `system`, as one text.
 fn shown(code: &str, serial: &str, system: DateSystem) -> Option<String> {
@@ -382,7 +385,7 @@ fn each_day_of_the_limits_turns_back_into_its_count() {
         let date = Date::from_days(days);
         assert_eq!(days_from_civil(date.year, date.month, date.day), days);
     }
-    assert_eq!(Date::from_days(0).weekday_name(), "Thursday");
+    assert_eq!(Date::from_days(0).weekday_text(4, None), "Thursday");
 }
 
 #[test]
@@ -583,4 +586,110 @@ fn each_hijri_day_of_the_limits_turns_back_into_its_count() {
         assert_eq!(hijri_days(date.year, date.month, date.day), days);
     }
     assert!(Date::hijri(HIJRI_FIRST - 1).is_none());
+}
+
+#[test]
+fn ms_lcid_names_the_language_of_each_id_it_lists() {
+    for (id, expected) in [
+        (0x0409, Some("en-US")),
+        (0x040A, Some("es-ES_tradnl")),
+        (0x0412, Some("ko-KR")),
+        (0x0404, Some("zh-TW")),
+        (0x0411, Some("ja-JP")),
+        (0x0000, None),
+        (0x007B, None),
+        (0xF800, None),
+    ] {
+        assert_eq!(language_tag(id), expected, "{id:x}");
+    }
+}
+
+#[test]
+fn a_spanish_section_writes_spanish_names() {
+    let codes = "mmmm dddd mmm ddd mmmmm";
+    let expected = Some("enero lunes ene lun E");
+    assert_eq!(
+        shown_in(&format!("[$-40A]{codes}"), MONDAY, None).as_deref(),
+        expected
+    );
+    assert_eq!(shown_in(codes, MONDAY, Some("es-ES")).as_deref(), expected);
+    assert_eq!(shown_in(codes, MONDAY, Some("es")).as_deref(), expected);
+    assert_eq!(
+        shown_in("[$-C0A]mmmm", MONDAY, Some("ja-JP")).as_deref(),
+        Some("enero")
+    );
+}
+
+#[test]
+fn each_id_writes_the_names_of_its_language() {
+    assert_eq!(
+        shown_in("[$-412]mmmm dddd", MONDAY, None).as_deref(),
+        Some("1\u{c6d4} \u{c6d4}\u{c694}\u{c77c}")
+    );
+    assert_eq!(
+        shown_in("[$-409]mmmm dddd mmm ddd mmmmm", MONDAY, None).as_deref(),
+        Some("January Monday Jan Mon J")
+    );
+    assert_eq!(
+        shown_in("[$-809]mmm", "45550", None).as_deref(),
+        Some("Sept")
+    );
+}
+
+#[test]
+fn a_japanese_section_writes_cldrs_japanese_names() {
+    let expected = Some("1\u{6708} \u{6708}\u{66dc}\u{65e5} \u{6708}");
+    assert_eq!(
+        shown_in("[$-411]mmmm dddd ddd", MONDAY, None).as_deref(),
+        expected
+    );
+    assert_eq!(
+        shown_in("mmmm dddd ddd", MONDAY, Some("ja-JP")).as_deref(),
+        expected
+    );
+    assert_eq!(
+        shown_in("[$-411]ggge\"\u{5e74}\"mmmm", MONDAY, None).as_deref(),
+        Some("\u{4ee4}\u{548c}6\u{5e74}1\u{6708}")
+    );
+}
+
+#[test]
+fn the_names_are_the_format_contexts() {
+    assert_eq!(
+        shown_in("d mmmm", MONDAY, Some("ru-RU")).as_deref(),
+        Some("15 \u{44f}\u{43d}\u{432}\u{430}\u{440}\u{44f}")
+    );
+}
+
+#[test]
+fn b2_writes_the_hijri_months_of_the_sections_language() {
+    assert_eq!(
+        shown("[$-40A]b2d mmmm yyyy", "39433", STRICT).as_deref(),
+        Some("8 dhu\u{2bb}l-hijjah 1428")
+    );
+    assert_eq!(
+        shown_in("b2mmm", "39433", Some("es")).as_deref(),
+        Some("dhu\u{2bb}l-h.")
+    );
+    assert_eq!(
+        shown("b2d mmmm yyyy", "39433", STRICT).as_deref(),
+        Some("8 Dhu\u{2bb}l-Hijjah 1428")
+    );
+}
+
+#[test]
+fn a_language_cldr_lacks_and_no_language_write_english() {
+    for (code, language) in [
+        ("[$-465]mmmm dddd mmm ddd mmmmm", None),
+        ("mmmm dddd mmm ddd mmmmm", Some("zz")),
+        ("mmmm dddd mmm ddd mmmmm", Some("x-private")),
+        ("mmmm dddd mmm ddd mmmmm", None),
+        ("[$-F800]mmmm dddd mmm ddd mmmmm", Some("es-ES")),
+    ] {
+        assert_eq!(
+            shown_in(code, MONDAY, language).as_deref(),
+            Some("January Monday Jan Mon J"),
+            "{code} {language:?}"
+        );
+    }
 }

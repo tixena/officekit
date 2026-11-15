@@ -35,6 +35,8 @@ pub struct Inputs {
     pub cldr_rbnf: Vec<PathBuf>,
     /// CLDR's `supplementalData.xml`, for its parent locales.
     pub cldr_supplemental: PathBuf,
+    /// The document part of [MS-LCID]'s DOCX, version 16.0, for its table of language ids.
+    pub ms_lcid: PathBuf,
     /// The OPC schemas.
     pub opc_schemas: Vec<PathBuf>,
     /// The `(prefix, XSD)` pair of each Open Specifications namespace found.
@@ -98,6 +100,7 @@ impl Inputs {
 
         let specifications = root.join("open-specifications");
         file(system, specifications.join("SOURCES"))?;
+        let ms_lcid = file(system, specifications.join("MS-LCID-240423.xml"))?;
         let open_specifications = xsds(system, &specifications)?
             .into_iter()
             .filter_map(|path| {
@@ -139,6 +142,7 @@ impl Inputs {
             cldr_plurals,
             cldr_rbnf,
             cldr_supplemental,
+            ms_lcid,
             opc_schemas,
             open_specifications,
             part1_text,

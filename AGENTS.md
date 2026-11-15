@@ -73,6 +73,8 @@ validation         the validator and its generated tables
   `crates/officekit/src/docx/fonts/likely_subtags.rs`;
   `crates/officekit/src/docx/numbering/casing/special_casing.rs`;
   `crates/officekit/src/xlsx/number_format/date/calendars.rs`;
+  `crates/officekit/src/xlsx/number_format/date/names.rs`;
+  `crates/officekit/src/xlsx/number_format/language_ids.rs`;
   `crates/officekit-markup-macros/src/kinds.rs`;
   `crates/officekit-xml/src/name/table.rs`; and
   `crates/officekit-xml/src/packaging/relationship_type.rs`. Change the generator
