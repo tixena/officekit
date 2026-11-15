@@ -1,5 +1,6 @@
 use alloc::boxed::Box;
 use alloc::format;
+use alloc::string::String;
 use alloc::vec::Vec;
 
 use officekit_markup::common_simple_types::{MeasurementInTwentiethsOfAPoint, OnOffValue};
@@ -15,14 +16,16 @@ use officekit_markup::wordprocessing::{
     NumberingDefinitionInstanceReferenceNumId, NumberingDefinitionInstanceReferenceNumPr,
     NumberingDefinitions, NumberingLevelOverrideDefinition, NumberingLevelReference,
     ParagraphAlignment, ParagraphIndentation, ParagraphMarkRunPropertiesRevision,
-    ParagraphProperties, ParagraphPropertiesPPrGeneral, ReferencedCharacterStyle,
+    ParagraphProperties, ParagraphPropertiesPPrGeneral, ParentStyleID, ReferencedCharacterStyle,
     ReferencedParagraphStyle, ReferencedTableStyle, RunContentColor, RunFonts, RunProperties,
     RunPropertiesContent, RunPropertiesForTheParagraphMark, SignedMeasurementInTwentiethsOfPoint,
     SpacingBetweenLinesAndAboveBelowParagraph, StyleConditionalTableFormattingProperties,
     StyleDefinition, StyleDefinitions, StyleTypes, StyleTypesMember, TableProperties,
-    TableStyleConditionalFormattingSettingsException, ThemeFont, ThemeFontMember,
+    TableStyleConditionalFormattingSettingsException, ThemeFont, ThemeFontMember, write,
 };
+use officekit_xml::element::Element;
 use officekit_xml::parse::parse;
+use officekit_xml::write::Scope;
 
 use super::{StyleSheet, WORDPROCESSING};
 use crate::docx::Docx;
@@ -41,6 +44,18 @@ macro_rules! toggle_arms {
             }
         )*
     };
+}
+
+/// A property of the `CT_OnOff` type `$kind`, with no `w:val` or with `w:val="0"`.
+macro_rules! on_off {
+    ($kind:ident) => {
+        officekit_markup::wordprocessing::$kind::default()
+    };
+    ($kind:ident, off) => {{
+        let mut property = officekit_markup::wordprocessing::$kind::default();
+        property.val = Some(false.into());
+        property
+    }};
 }
 
 const NORMAL: &str = r#"<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style>"#;
@@ -724,6 +739,16 @@ fn list_of(styles: &StyleSheet, run: Vec<RunPropertiesContent>) -> Numbering {
     let mut general = ParagraphPropertiesPPrGeneral::default();
     general.paragraph_indentation = Some(Box::new(indentation("720", Some("360"))));
     general.numbering_definition_instance_reference_num_pr = Some(Box::new(numbered(9, None)));
+    list_with(styles, general, run)
+}
+
+/// The instance 5 of the abstract definition 4, whose level 0 has the paragraph properties
+/// `general` and the run properties `run`.
+fn list_with(
+    styles: &StyleSheet,
+    general: ParagraphPropertiesPPrGeneral,
+    run: Vec<RunPropertiesContent>,
+) -> Numbering {
     let mut label = RunProperties::default();
     label.content = run;
     let mut level = NumberingLevelOverrideDefinition::default();
@@ -1063,4 +1088,227 @@ fn a_kind_the_later_level_does_not_state_keeps_the_earlier_font() {
         effective.and_then(|found| found.cs.as_deref()),
         Some("Arial")
     );
+}
+
+/// The local names of the children of `element`, in the order written.
+fn child_names(element: &Element) -> Vec<String> {
+    element
+        .child_elements()
+        .map(|child| child.name.local.clone())
+        .collect()
+}
+
+#[test]
+fn the_on_off_names_are_the_on_off_children_of_the_paragraph_and_run_properties() {
+    let mut paragraph = ParagraphPropertiesPPrGeneral::default();
+    paragraph.adjust_spacing_east_asian_text_numbers =
+        Some(Box::new(on_off!(AdjustSpacingEastAsianTextNumbers)));
+    paragraph.adjust_spacing_latin_east_asian_text =
+        Some(Box::new(on_off!(AdjustSpacingLatinEastAsianText)));
+    paragraph.allow_first_last_line_display = Some(Box::new(on_off!(AllowFirstLastLineDisplay)));
+    paragraph.allow_line_breaking_at_character_level =
+        Some(Box::new(on_off!(AllowLineBreakingAtCharacterLevel)));
+    paragraph.allow_punctuation_extend_past_text_extents =
+        Some(Box::new(on_off!(AllowPunctuationExtendPastTextExtents)));
+    paragraph.automatically_adjust_right_indent =
+        Some(Box::new(on_off!(AutomaticallyAdjustRightIndent)));
+    paragraph.compress_punctuation_at_start_of_line =
+        Some(Box::new(on_off!(CompressPunctuationAtStartOfLine)));
+    paragraph.document_grid_inter_line_paragraph_spacing =
+        Some(Box::new(on_off!(DocumentGridInterLineParagraphSpacing)));
+    paragraph.east_asian_typography_rules = Some(Box::new(on_off!(EastAsianTypographyRules)));
+    paragraph.ignore_spacing_above_and_below = Some(Box::new(on_off!(IgnoreSpacingAboveAndBelow)));
+    paragraph.keep_all_lines_on_one_page = Some(Box::new(on_off!(KeepAllLinesOnOnePage)));
+    paragraph.keep_paragraph_with_next_paragraph =
+        Some(Box::new(on_off!(KeepParagraphWithNextParagraph)));
+    paragraph.prevent_text_frames_from_overlapping =
+        Some(Box::new(on_off!(PreventTextFramesFromOverlapping)));
+    paragraph.right_to_left_paragraph_layout = Some(Box::new(on_off!(RightToLeftParagraphLayout)));
+    paragraph.start_paragraph_on_next_page = Some(Box::new(on_off!(StartParagraphOnNextPage)));
+    paragraph.suppress_hyphenation_for_paragraph =
+        Some(Box::new(on_off!(SuppressHyphenationForParagraph)));
+    paragraph.suppress_line_numbers_for_paragraph =
+        Some(Box::new(on_off!(SuppressLineNumbersForParagraph)));
+    paragraph.use_left_right_indents_as_inside_outside_indents =
+        Some(Box::new(on_off!(UseLeftRightIndentsAsInsideOutsideIndents)));
+    let run = run_of(vec![
+        RunPropertiesContent::Bold(on_off!(Bold)),
+        RunPropertiesContent::ComplexScriptBold(on_off!(ComplexScriptBold)),
+        RunPropertiesContent::ComplexScriptItalics(on_off!(ComplexScriptItalics)),
+        RunPropertiesContent::DisplayAllCharactersAsCapitalLetters(on_off!(
+            DisplayAllCharactersAsCapitalLetters
+        )),
+        RunPropertiesContent::DisplayCharacterOutline(on_off!(DisplayCharacterOutline)),
+        RunPropertiesContent::DoNotCheckSpellingOrGrammar(on_off!(DoNotCheckSpellingOrGrammar)),
+        RunPropertiesContent::DocumentGridInterLineParagraphSpacing(on_off!(
+            DocumentGridInterLineParagraphSpacing
+        )),
+        RunPropertiesContent::DoubleStrikethrough(on_off!(DoubleStrikethrough)),
+        RunPropertiesContent::Embossing(on_off!(Embossing)),
+        RunPropertiesContent::HiddenText(on_off!(HiddenText)),
+        RunPropertiesContent::Imprinting(on_off!(Imprinting)),
+        RunPropertiesContent::Italics(on_off!(Italics)),
+        RunPropertiesContent::OfficeOpenXMLMath(on_off!(OfficeOpenXMLMath)),
+        RunPropertiesContent::ParagraphMarkIsAlwaysHidden(on_off!(ParagraphMarkIsAlwaysHidden)),
+        RunPropertiesContent::RightToLeftText(on_off!(RightToLeftText)),
+        RunPropertiesContent::Shadow(on_off!(Shadow)),
+        RunPropertiesContent::SingleStrikethrough(on_off!(SingleStrikethrough)),
+        RunPropertiesContent::SmallCaps(on_off!(SmallCaps)),
+        RunPropertiesContent::UseComplexScriptFormattingOnRun(on_off!(
+            UseComplexScriptFormattingOnRun
+        )),
+        RunPropertiesContent::WebHiddenText(on_off!(WebHiddenText)),
+    ]);
+    let mut names = child_names(&write::paragraph_properties_p_pr_general(
+        &paragraph,
+        &mut Scope::default(),
+    ));
+    names.extend(child_names(&write::run_properties(
+        &run,
+        &mut Scope::default(),
+    )));
+    names.sort_unstable();
+    names.dedup();
+    let mut listed = super::ON_OFF.to_vec();
+    listed.sort_unstable();
+    assert_eq!(names, listed);
+}
+
+#[test]
+fn the_on_off_names_are_sorted() {
+    assert!(super::ON_OFF.is_sorted_by(|left, right| left < right));
+}
+
+/// The style `id`, based on `parent`, with the paragraph properties `general`.
+fn child_style(id: &str, parent: &str, general: ParagraphPropertiesPPrGeneral) -> StyleDefinition {
+    let mut based = ParentStyleID::default();
+    based.val = Some(parent.to_owned());
+    let mut style = paragraph_style(id, general);
+    style.parent_style_id = Some(Box::new(based));
+    style
+}
+
+fn keep_next(paragraph: &ParagraphPropertiesPPrGeneral) -> Option<bool> {
+    paragraph
+        .keep_paragraph_with_next_paragraph
+        .as_deref()
+        .map(|found| onoff(found.val.as_ref()))
+}
+
+#[test]
+fn an_on_off_property_with_no_val_turns_on_a_style_s_off() {
+    let mut off = ParagraphPropertiesPPrGeneral::default();
+    off.keep_paragraph_with_next_paragraph =
+        Some(Box::new(on_off!(KeepParagraphWithNextParagraph, off)));
+    let styles = sheet_of(vec![paragraph_style("Loose", off)]);
+    let mut own = own_of("Loose", None, None);
+    own.keep_paragraph_with_next_paragraph =
+        Some(Box::new(on_off!(KeepParagraphWithNextParagraph)));
+    let paragraph = styles.paragraph(Some(&own));
+    assert_eq!(keep_next(&paragraph.properties), Some(true));
+}
+
+#[test]
+fn a_run_property_with_no_val_turns_on_the_defaults_off() {
+    let styles = defaults_sheet(vec![RunPropertiesContent::DoNotCheckSpellingOrGrammar(
+        on_off!(DoNotCheckSpellingOrGrammar, off),
+    )]);
+    let paragraph = styles.paragraph(None);
+    let own = run_of(vec![RunPropertiesContent::DoNotCheckSpellingOrGrammar(
+        on_off!(DoNotCheckSpellingOrGrammar),
+    )]);
+    let run = styles.run(&paragraph, Some(&own));
+    let no_proof = run.content.iter().find_map(|property| {
+        if let RunPropertiesContent::DoNotCheckSpellingOrGrammar(found) = property {
+            Some(onoff(found.val.as_ref()))
+        } else {
+            None
+        }
+    });
+    assert_eq!(no_proof, Some(true));
+}
+
+#[test]
+fn an_on_off_property_off_turns_off_a_style_s_on() {
+    let mut on = ParagraphPropertiesPPrGeneral::default();
+    on.keep_all_lines_on_one_page = Some(Box::new(on_off!(KeepAllLinesOnOnePage)));
+    let styles = sheet_of(vec![paragraph_style("Kept", on)]);
+    let mut own = own_of("Kept", None, None);
+    own.keep_all_lines_on_one_page = Some(Box::new(on_off!(KeepAllLinesOnOnePage, off)));
+    let paragraph = styles.paragraph(Some(&own));
+    let keep_lines = paragraph
+        .properties
+        .keep_all_lines_on_one_page
+        .as_deref()
+        .map(|found| onoff(found.val.as_ref()));
+    assert_eq!(keep_lines, Some(false));
+}
+
+#[test]
+fn a_child_style_s_on_off_property_with_no_val_turns_on_its_parent_s_off() {
+    let mut off = ParagraphPropertiesPPrGeneral::default();
+    off.allow_first_last_line_display = Some(Box::new(on_off!(AllowFirstLastLineDisplay, off)));
+    let mut on = ParagraphPropertiesPPrGeneral::default();
+    on.allow_first_last_line_display = Some(Box::new(on_off!(AllowFirstLastLineDisplay)));
+    let styles = sheet_of(vec![
+        paragraph_style("Parent", off),
+        child_style("Child", "Parent", on),
+    ]);
+    let paragraph = styles.paragraph(Some(&own_of("Child", None, None)));
+    let widow_control = paragraph
+        .properties
+        .allow_first_last_line_display
+        .as_deref()
+        .map(|found| onoff(found.val.as_ref()));
+    assert_eq!(widow_control, Some(true));
+}
+
+#[test]
+fn a_level_s_on_off_property_with_no_val_turns_on_a_style_s_off() {
+    let mut off = ParagraphPropertiesPPrGeneral::default();
+    off.keep_paragraph_with_next_paragraph =
+        Some(Box::new(on_off!(KeepParagraphWithNextParagraph, off)));
+    let styles = sheet_of(vec![paragraph_style("Loose", off)]);
+    let mut level = ParagraphPropertiesPPrGeneral::default();
+    level.keep_paragraph_with_next_paragraph =
+        Some(Box::new(on_off!(KeepParagraphWithNextParagraph)));
+    let numbering = list_with(&styles, level, vec![]);
+
+    let own = own_of("Loose", Some(numbered(5, Some(0))), None);
+    let (paragraph, found) = styles.numbered_paragraph(&numbering, Some(&own));
+    assert_eq!(found.map(|listed| listed.ilvl), Some(0));
+    assert_eq!(keep_next(&paragraph.properties), Some(true));
+}
+
+#[test]
+fn an_indentation_still_merges_attribute_by_attribute() {
+    let mut indented = ParagraphPropertiesPPrGeneral::default();
+    indented.paragraph_indentation = Some(Box::new(indentation("100", Some("50"))));
+    let styles = sheet_of(vec![paragraph_style("Indented", indented)]);
+    let own = own_of("Indented", None, Some(indentation("200", None)));
+    let paragraph = styles.paragraph(Some(&own));
+    assert_eq!(indents(&paragraph.properties), (Some("200"), Some("50")));
+}
+
+#[test]
+fn the_last_default_paragraph_style_is_the_one() {
+    let mut first = paragraph_style("A", ParagraphPropertiesPPrGeneral::default());
+    first.default = Some(true.into());
+    let mut last = paragraph_style("B", aligned(HorizontalAlignmentTypeMember::Center));
+    last.default = Some(true.into());
+    let styles = sheet_of(vec![first, last]);
+    assert_eq!(styles.default_paragraph(), Some("B"));
+    let paragraph = styles.paragraph(None);
+    assert_eq!(paragraph.style.as_deref(), Some("B"));
+    assert_eq!(justification(&paragraph.properties), Some("center"));
+}
+
+#[test]
+fn a_default_table_style_after_the_default_paragraph_style_leaves_it() {
+    let mut paragraph = paragraph_style("A", ParagraphPropertiesPPrGeneral::default());
+    paragraph.default = Some(true.into());
+    let mut table = style_of("T", StyleTypesMember::Table, vec![]);
+    table.default = Some(true.into());
+    let styles = sheet_of(vec![paragraph, table]);
+    assert_eq!(styles.default_paragraph(), Some("A"));
 }

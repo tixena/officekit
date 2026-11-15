@@ -44,6 +44,48 @@ const TOGGLES: [&str; 12] = [
     "vanish",
 ];
 
+/// The children of `w:pPr` and `w:rPr` of the schema type `CT_OnOff` (section 17.17.4), from
+/// `CT_PPrBase` and `EG_RPrBase` of the schema in section A.1, sorted.
+const ON_OFF: [&str; 37] = [
+    "adjustRightInd",
+    "autoSpaceDE",
+    "autoSpaceDN",
+    "b",
+    "bCs",
+    "bidi",
+    "caps",
+    "contextualSpacing",
+    "cs",
+    "dstrike",
+    "emboss",
+    "i",
+    "iCs",
+    "imprint",
+    "keepLines",
+    "keepNext",
+    "kinsoku",
+    "mirrorIndents",
+    "noProof",
+    "oMath",
+    "outline",
+    "overflowPunct",
+    "pageBreakBefore",
+    "rtl",
+    "shadow",
+    "smallCaps",
+    "snapToGrid",
+    "specVanish",
+    "strike",
+    "suppressAutoHyphens",
+    "suppressLineNumbers",
+    "suppressOverlap",
+    "topLinePunct",
+    "vanish",
+    "webHidden",
+    "widowControl",
+    "wordWrap",
+];
+
 /// The plain and the theme attribute of each kind of character of `w:rFonts` (section 17.3.2.26).
 const FONT_KINDS: [(&str, &str); 4] = [
     ("ascii", "asciiTheme"),
@@ -117,7 +159,7 @@ impl StyleSheet {
     }
 
     /// The id of the style with `w:default="1"` and `w:type="paragraph"`, the one a paragraph that
-    /// names no style takes.
+    /// names no style takes; of several, the last wins (section 17.7.4.17).
     #[must_use = "this only returns the value"]
     pub fn default_paragraph(&self) -> Option<&str> {
         self.default_paragraph.as_deref()
@@ -166,7 +208,7 @@ impl StyleSheet {
             let Some(id) = style.style_id.clone() else {
                 continue;
             };
-            if sheet.default_paragraph.is_none() && is_default_paragraph(style) {
+            if is_default_paragraph(style) {
                 sheet.default_paragraph = Some(id.clone());
             }
             if is_default_table(style) {
@@ -472,8 +514,8 @@ impl StyleSheet {
 }
 
 /// `over` applied on `base`, both elements of `shape`. A property `base` lacks is added at its
-/// schema position; one both hold takes `over`'s attributes one by one, and its children are
-/// applied the same way.
+/// schema position; one both hold takes `over`'s attributes one by one, an on/off property's
+/// `w:val` with its absence, and its children are applied the same way.
 pub(super) fn apply(base: &mut Element, over: &Element, shape: Option<&Shape>) {
     for child in over.child_elements() {
         if is_word(child, "tabs") {
@@ -625,6 +667,13 @@ fn merge_property(held: &mut Element, over: &Element) {
                 });
             }
         }
+    }
+    if ON_OFF.iter().any(|local| is_word(held, local)) {
+        // An absent `w:val` of an on/off property means on, so `over` replaces it whole.
+        let namespace = Namespace::from_uri(WORDPROCESSING);
+        held.attributes.retain(|existing| {
+            existing.name.namespace != namespace || existing.name.local != "val"
+        });
     }
     for attribute in &over.attributes {
         let found = held.attributes.iter_mut().find(|existing| {
