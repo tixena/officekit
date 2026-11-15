@@ -1,5 +1,6 @@
 //! The `.xlsx` file type.
 
+pub mod number_format;
 #[cfg(test)]
 mod tests;
 
