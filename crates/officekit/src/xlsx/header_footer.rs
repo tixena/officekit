@@ -8,7 +8,7 @@
 //! assert_eq!(found.left[0].content, Content::SheetName);
 //! assert_eq!(found.center[0].content, Content::Text("Orders".to_owned()));
 //! let format = &found.center[0].format;
-//! assert_eq!((format.font.as_deref(), format.style.bold(), format.size), (Some("Arial"), true, Some(14)));
+//! assert_eq!((format.font.as_deref(), format.style.bold(), format.size), (Some("Arial"), true, Some(1400)));
 //! assert_eq!(found.right[0].content, Content::Date);
 //!
 //! let mut header = OddHeader::default();
@@ -60,7 +60,7 @@ pub struct Format {
     pub outline: bool,
     pub script: Script,
     pub shadow: bool,
-    /// The size in points.
+    /// The size in hundredths of a point (section 18.3.1.46's `&font-size`): `&10.5` is 1050.
     pub size: Option<u32>,
     pub strike: bool,
     pub style: FontStyle,
@@ -294,7 +294,8 @@ pub fn sections(text: &str) -> Sections {
     let mut rest = text;
     while let Some(at) = rest.find('&') {
         reader.text.push_str(&rest[..at]);
-        let mut after = rest[at + 1..].chars();
+        let code_on = &rest[at + 1..];
+        let mut after = code_on.chars();
         let Some(code) = after.next() else {
             rest = "";
             break;
@@ -363,13 +364,10 @@ pub fn sections(text: &str) -> Sections {
                 }
             }
             digit if digit.is_ascii_digit() => {
-                let end = rest
-                    .find(|character: char| !character.is_ascii_digit())
-                    .unwrap_or(rest.len());
-                let points = format!("{digit}{}", &rest[..end]).parse().ok();
-                rest = &rest[end..];
-                if points.is_some() {
-                    reader.change(|format| format.size = points);
+                let (hundredths, left) = size(code_on);
+                rest = left;
+                if hundredths.is_some() {
+                    reader.change(|format| format.size = hundredths);
                 }
             }
             _ => {}
@@ -423,6 +421,40 @@ fn page_offset(text: &str) -> (i32, &str) {
     text[..length]
         .parse()
         .map_or((0, text), |offset| (offset, &text[length..]))
+}
+
+/// The size of `&font-size` at the start of `text` in hundredths of a point, rounded half away from
+/// zero, and the text after it; `None` when it does not fit a `u32` (section 18.3.1.46).
+fn size(text: &str) -> (Option<u32>, &str) {
+    let digits = |from: &str| {
+        from.find(|character: char| !character.is_ascii_digit())
+            .unwrap_or(from.len())
+    };
+    let (whole, mut rest) = text.split_at(digits(text));
+    let mut places = "";
+    if let Some(after) = rest.strip_prefix('.') {
+        let (fraction, left) = after.split_at(digits(after));
+        if !fraction.is_empty() {
+            places = fraction;
+            rest = left;
+        }
+    }
+    let place = |at: usize| {
+        places
+            .chars()
+            .nth(at)
+            .and_then(|digit| digit.to_digit(10))
+            .unwrap_or(0)
+    };
+    let hundredths = whole.parse::<u32>().ok().and_then(|points| {
+        points
+            .checked_mul(10)?
+            .checked_add(place(0))?
+            .checked_mul(10)?
+            .checked_add(place(1))?
+            .checked_add(u32::from(place(2) >= 5))
+    });
+    (hundredths, rest)
 }
 
 /// Set the font of `&"name,type"`: the name unless it is `-`, and bold and italic from a type of

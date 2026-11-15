@@ -52,13 +52,17 @@ use crate::xlsx::color::Palette;
 pub enum FormatColor {
     /// The standard's indexed colour 8, which section 18.8.31 calls "black (by default)".
     Black,
-    /// No value: section 18.8.31 names it and gives it none.
+    /// The standard's indexed colour 12 (section 18.8.27), `[Color5]` by the "and so on" of
+    /// section 18.8.31's note, which names the colour and gives it no value.
     Blue,
-    /// No value: section 18.8.31 names it and gives it none.
+    /// The standard's indexed colour 15 (section 18.8.27), `[Color8]` by the "and so on" of
+    /// section 18.8.31's note, which names the colour and gives it no value.
     Cyan,
-    /// No value: section 18.8.31 names it and gives it none.
+    /// The standard's indexed colour 11 (section 18.8.27), `[Color4]` by the "and so on" of
+    /// section 18.8.31's note, which names the colour and gives it no value.
     Green,
-    /// No value: section 18.8.31 names it and gives it none.
+    /// The standard's indexed colour 14 (section 18.8.27), `[Color7]` by the "and so on" of
+    /// section 18.8.31's note, which names the colour and gives it no value.
     Magenta,
     /// `[Color1]` to `[Color56]`: the entry of the indexed palette at this number plus 7.
     Palette(u8),
@@ -66,7 +70,8 @@ pub enum FormatColor {
     Red,
     /// The standard's indexed colour 9, which section 18.8.31 calls "white (by default)".
     White,
-    /// No value: section 18.8.31 names it and gives it none.
+    /// The standard's indexed colour 13 (section 18.8.27), `[Color6]` by the "and so on" of
+    /// section 18.8.31's note, which names the colour and gives it no value.
     Yellow,
 }
 
@@ -78,15 +83,15 @@ impl FormatColor {
         let standard = Palette::default();
         let (index, from) = match self {
             Self::Black => (8, &standard),
+            Self::Blue => (12, &standard),
+            Self::Cyan => (15, &standard),
+            Self::Green => (11, &standard),
+            Self::Magenta => (14, &standard),
             Self::Palette(number @ 1..=56) => (u32::from(number) + 7, palette),
             Self::Red => (10, &standard),
             Self::White => (9, &standard),
-            Self::Blue
-            | Self::Cyan
-            | Self::Green
-            | Self::Magenta
-            | Self::Palette(_)
-            | Self::Yellow => return None,
+            Self::Yellow => (13, &standard),
+            Self::Palette(_) => return None,
         };
         let [red, green, blue] = from.get(index)?;
         Some(Rgba::new(red, green, blue, 100_000))

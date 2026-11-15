@@ -343,13 +343,13 @@ fn opaque(red: u8, green: u8, blue: u8) -> Rgba {
 fn the_red_green_and_blue_of_the_eight_names() {
     let names = [
         ("[Black]", Some(opaque(0, 0, 0))),
-        ("[Blue]", None),
-        ("[Cyan]", None),
-        ("[Green]", None),
-        ("[Magenta]", None),
+        ("[Blue]", Some(opaque(0, 0, 255))),
+        ("[Cyan]", Some(opaque(0, 255, 255))),
+        ("[Green]", Some(opaque(0, 255, 0))),
+        ("[Magenta]", Some(opaque(255, 0, 255))),
         ("[Red]", Some(opaque(255, 0, 0))),
         ("[White]", Some(opaque(255, 255, 255))),
-        ("[Yellow]", None),
+        ("[Yellow]", Some(opaque(255, 255, 0))),
     ];
     for (bracket, rgba) in names {
         let stated = format(&format!("{bracket}0"))
@@ -397,7 +397,11 @@ fn a_workbook_s_own_palette_changes_color_n_and_not_a_name() {
     assert_eq!(FormatColor::Red.rgba(&own), Some(opaque(255, 0, 0)));
     assert_eq!(FormatColor::Black.rgba(&own), Some(opaque(0, 0, 0)));
     assert_eq!(FormatColor::White.rgba(&own), Some(opaque(255, 255, 255)));
-    assert_eq!(FormatColor::Blue.rgba(&own), None);
+    assert_eq!(FormatColor::Green.rgba(&own), Some(opaque(0, 255, 0)));
+    assert_eq!(FormatColor::Blue.rgba(&own), Some(opaque(0, 0, 255)));
+    assert_eq!(FormatColor::Yellow.rgba(&own), Some(opaque(255, 255, 0)));
+    assert_eq!(FormatColor::Magenta.rgba(&own), Some(opaque(255, 0, 255)));
+    assert_eq!(FormatColor::Cyan.rgba(&own), Some(opaque(0, 255, 255)));
     let short = {
         let mut few = Colors::default();
         few.color_indexes = Some(Box::default());

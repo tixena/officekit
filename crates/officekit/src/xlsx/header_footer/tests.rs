@@ -39,7 +39,7 @@ fn the_standard_s_sample_header() {
     let format = &found.center[0].format;
     assert_eq!(
         (format.font.as_deref(), format.style.bold(), format.size),
-        (Some("Arial"), true, Some(14))
+        (Some("Arial"), true, Some(1400))
     );
     assert_eq!(contents(&found.right), [Content::Date]);
     let footer = sections("&CPage &P of &N");
@@ -235,7 +235,28 @@ fn a_size() {
         .iter()
         .map(|(content, format)| (content.as_str(), format.size))
         .collect();
-    assert_eq!(sizes, [("A", Some(18)), ("B", Some(36))]);
+    assert_eq!(sizes, [("A", Some(1800)), ("B", Some(3600))]);
+}
+
+#[test]
+fn a_size_with_a_fraction() {
+    let size = |code: &str| {
+        texts(code)
+            .into_iter()
+            .map(|(content, format)| (content, format.size))
+            .collect::<Vec<_>>()
+    };
+    let one = |content: &str, hundredths: Option<u32>| vec![(content.to_owned(), hundredths)];
+    assert_eq!(size("&18A"), one("A", Some(1800)));
+    assert_eq!(size("&10.5Text"), one("Text", Some(1050)));
+    assert_eq!(size("&10.25Text"), one("Text", Some(1025)));
+    assert_eq!(size("&10.125X"), one("X", Some(1013)));
+    assert_eq!(size("&10.124X"), one("X", Some(1012)));
+    assert_eq!(size("&10.Text"), one(".Text", Some(1000)));
+    assert_eq!(size("&99999999999A"), one("A", None));
+    assert_eq!(size("&42949673A"), one("A", None));
+    assert_eq!(size("&42949672.95A"), one("A", Some(u32::MAX)));
+    assert_eq!(size("&42949672.955A"), one("A", None));
 }
 
 #[test]
@@ -270,7 +291,7 @@ fn a_section_puts_the_format_back() {
         color: Some(HeaderColor::Rgb([255, 0, 0])),
         font: Some("Arial".to_owned()),
         script: Script::Superscript,
-        size: Some(14),
+        size: Some(1400),
         underline: Underline::Single,
         ..Format::default()
     };
