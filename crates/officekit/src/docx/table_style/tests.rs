@@ -2,15 +2,16 @@ use alloc::boxed::Box;
 use alloc::string::String;
 use alloc::vec::Vec;
 
+use officekit_markup::common_simple_types::OnOffValue;
 use officekit_markup::wordprocessing::{
     Bold, BorderStyles, BorderStylesMember, ColorValue, ConditionalTableStyleFormattingTypes,
-    ConditionalTableStyleFormattingTypesMember, DecimalNumberValue, FourDigitHexadecimalValue,
-    LeftParagraphBorderTblWidth, MeasurementInEighthsOfAPoint, MeasurementOrPercentageValue,
-    NumberOfRowsInRowBand, ParagraphBorderAboveIdenticalParagraphs,
+    ConditionalTableStyleFormattingTypesMember, DecimalNumberValue, DontWrapCellContent,
+    FourDigitHexadecimalValue, LeftParagraphBorderTblWidth, MeasurementInEighthsOfAPoint,
+    MeasurementOrPercentageValue, NumberOfRowsInRowBand, ParagraphBorderAboveIdenticalParagraphs,
     ParagraphBorderAboveIdenticalParagraphsTblWidth, ParagraphBorderBelowIdenticalParagraphs,
     ParagraphBorderBelowIdenticalParagraphsTblWidth, ParagraphShading, ParentStyleID,
-    PreferredTableWidth, PreviousTableProperties, ReferencedTableStyle, RunContentColor,
-    RunProperties, RunPropertiesContent, ShadingPatterns, ShadingPatternsMember,
+    PreferredTableWidth, PreviousTableProperties, ReferencedTableStyle, RepeatTableRow,
+    RunContentColor, RunProperties, RunPropertiesContent, ShadingPatterns, ShadingPatternsMember,
     SingleTableCellMargins, StyleConditionalTableFormattingProperties, StyleDefinition,
     StyleDefinitions, StyleTypes, StyleTypesMember, TableBorders, TableCellLeadingEdgeBorder,
     TableCellLeadingEdgeBorderTblWidth, TableCellMarginExceptions, TableCellProperties,
@@ -18,6 +19,7 @@ use officekit_markup::wordprocessing::{
     TableInsideHorizontalEdgesBorder, TableInsideVerticalEdgesBorder, TableLevelPropertyExceptions,
     TableProperties, TableRowCannotBreakAcrossPages, TableRowProperties, TableRowPropertiesContent,
     TableStyleConditionalFormattingSettingsException, TableWidthUnits, TableWidthUnitsMember,
+    VisuallyRightToLeftTable,
 };
 
 use super::CellPosition;
@@ -802,4 +804,108 @@ fn a_row_s_exception_look_turns_the_first_row_format_on_where_the_table_has_it_o
     assert_eq!(fill(&row.cell(top, None)), Some("ED1C24"));
     assert_eq!(bold(&run_at(&sheet, &row, top)), Some(true));
     assert_eq!(fill(&format.cell(top, None)), None);
+}
+
+/// Whether an on/off property with `val` is on: an absent `w:val` is on (section 17.17.4).
+fn on(val: Option<&OnOffValue>) -> bool {
+    val.is_none_or(|value| value.value().unwrap_or(true))
+}
+
+fn row_with(property: TableRowPropertiesContent) -> TableRowProperties {
+    let mut row = TableRowProperties::default();
+    row.content.push(property);
+    row
+}
+
+/// A sheet with the table style `OnOff`, whose own row properties are `row`.
+fn row_style_sheet(row: TableRowProperties) -> StyleSheet {
+    let mut style = table_style("OnOff", None, Vec::new());
+    style.table_row_properties = Some(Box::new(row));
+    sheet_of(alloc::vec![style])
+}
+
+#[test]
+fn a_row_s_bare_cant_split_turns_on_the_style_s_cant_split_that_is_off() {
+    let mut off = TableRowCannotBreakAcrossPages::default();
+    off.val = Some(false.into());
+    let sheet = row_style_sheet(row_with(
+        TableRowPropertiesContent::TableRowCannotBreakAcrossPages(off),
+    ));
+    let own = row_with(TableRowPropertiesContent::TableRowCannotBreakAcrossPages(
+        TableRowCannotBreakAcrossPages::default(),
+    ));
+    let row = sheet
+        .table(&own_table(Some("OnOff"), None))
+        .row(position(0, 1, 0, 1), Some(&own));
+    let found = row.content.iter().find_map(|property| {
+        if let TableRowPropertiesContent::TableRowCannotBreakAcrossPages(found) = property {
+            Some(on(found.val.as_ref()))
+        } else {
+            None
+        }
+    });
+    assert_eq!(found, Some(true));
+}
+
+#[test]
+fn a_row_s_header_that_is_off_turns_off_the_style_s_bare_header() {
+    let sheet = row_style_sheet(row_with(TableRowPropertiesContent::RepeatTableRow(
+        RepeatTableRow::default(),
+    )));
+    let mut off = RepeatTableRow::default();
+    off.val = Some(false.into());
+    let own = row_with(TableRowPropertiesContent::RepeatTableRow(off));
+    let row = sheet
+        .table(&own_table(Some("OnOff"), None))
+        .row(position(0, 1, 0, 1), Some(&own));
+    let found = row.content.iter().find_map(|property| {
+        if let TableRowPropertiesContent::RepeatTableRow(found) = property {
+            Some(on(found.val.as_ref()))
+        } else {
+            None
+        }
+    });
+    assert_eq!(found, Some(false));
+}
+
+#[test]
+fn a_table_s_bare_bidi_visual_turns_on_the_style_s_bidi_visual_that_is_off() {
+    let mut off = VisuallyRightToLeftTable::default();
+    off.val = Some(false.into());
+    let mut style_table = PreviousTableProperties::default();
+    style_table.visually_right_to_left_table = Some(Box::new(off));
+    let sheet = sheet_of(alloc::vec![table_style(
+        "OnOff",
+        Some(style_table),
+        Vec::new()
+    )]);
+    let mut own = own_table(Some("OnOff"), None);
+    own.visually_right_to_left_table = Some(Box::default());
+    let table = sheet.table(&own).properties();
+    let found = table
+        .visually_right_to_left_table
+        .as_deref()
+        .map(|found| on(found.val.as_ref()));
+    assert_eq!(found, Some(true));
+}
+
+#[test]
+fn a_cell_s_bare_no_wrap_turns_on_the_style_s_no_wrap_that_is_off() {
+    let mut off = DontWrapCellContent::default();
+    off.val = Some(false.into());
+    let mut style_cell = TableCellProperties::default();
+    style_cell.dont_wrap_cell_content = Some(Box::new(off));
+    let mut style = table_style("OnOff", None, Vec::new());
+    style.table_cell_properties = Some(Box::new(style_cell));
+    let sheet = sheet_of(alloc::vec![style]);
+    let mut own = TableCellProperties::default();
+    own.dont_wrap_cell_content = Some(Box::default());
+    let cell = sheet
+        .table(&own_table(Some("OnOff"), None))
+        .cell(position(0, 1, 0, 1), Some(&own));
+    let found = cell
+        .dont_wrap_cell_content
+        .as_deref()
+        .map(|found| on(found.val.as_ref()));
+    assert_eq!(found, Some(true));
 }

@@ -20,7 +20,8 @@ use officekit_markup::wordprocessing::{
     ReferencedParagraphStyle, ReferencedTableStyle, RunContentColor, RunFonts, RunProperties,
     RunPropertiesContent, RunPropertiesForTheParagraphMark, SignedMeasurementInTwentiethsOfPoint,
     SpacingBetweenLinesAndAboveBelowParagraph, StyleConditionalTableFormattingProperties,
-    StyleDefinition, StyleDefinitions, StyleTypes, StyleTypesMember, TableProperties,
+    StyleDefinition, StyleDefinitions, StyleTypes, StyleTypesMember, TableCellProperties,
+    TableProperties, TableRowProperties, TableRowPropertiesContent,
     TableStyleConditionalFormattingSettingsException, ThemeFont, ThemeFontMember, write,
 };
 use officekit_xml::element::Element;
@@ -53,7 +54,7 @@ macro_rules! on_off {
     };
     ($kind:ident, off) => {{
         let mut property = officekit_markup::wordprocessing::$kind::default();
-        property.val = Some(false.into());
+        property.val = Some(OnOffValue::from(false));
         property
     }};
 }
@@ -1099,7 +1100,7 @@ fn child_names(element: &Element) -> Vec<String> {
 }
 
 #[test]
-fn the_on_off_names_are_the_on_off_children_of_the_paragraph_and_run_properties() {
+fn the_on_off_names_are_the_on_off_children_of_the_paragraph_run_table_row_and_cell_properties() {
     let mut paragraph = ParagraphPropertiesPPrGeneral::default();
     paragraph.adjust_spacing_east_asian_text_numbers =
         Some(Box::new(on_off!(AdjustSpacingEastAsianTextNumbers)));
@@ -1165,6 +1166,33 @@ fn the_on_off_names_are_the_on_off_children_of_the_paragraph_and_run_properties(
     ));
     names.extend(child_names(&write::run_properties(
         &run,
+        &mut Scope::default(),
+    )));
+    let mut table = TableProperties::default();
+    table.visually_right_to_left_table = Some(Box::new(on_off!(VisuallyRightToLeftTable, off)));
+    names.extend(child_names(&write::table_properties(
+        &table,
+        &mut Scope::default(),
+    )));
+    let mut row = TableRowProperties::default();
+    row.content = alloc::vec![
+        TableRowPropertiesContent::HiddenTableRowMarker(on_off!(HiddenTableRowMarker, off)),
+        TableRowPropertiesContent::RepeatTableRow(on_off!(RepeatTableRow, off)),
+        TableRowPropertiesContent::TableRowCannotBreakAcrossPages(on_off!(
+            TableRowCannotBreakAcrossPages,
+            off
+        )),
+    ];
+    names.extend(child_names(&write::table_row_properties(
+        &row,
+        &mut Scope::default(),
+    )));
+    let mut cell = TableCellProperties::default();
+    cell.dont_wrap_cell_content = Some(Box::new(on_off!(DontWrapCellContent, off)));
+    cell.fit_text_within_cell = Some(Box::new(on_off!(FitTextWithinCell, off)));
+    cell.ignore_end_of_cell_marker = Some(Box::new(on_off!(IgnoreEndOfCellMarker, off)));
+    names.extend(child_names(&write::table_cell_properties(
+        &cell,
         &mut Scope::default(),
     )));
     names.sort_unstable();

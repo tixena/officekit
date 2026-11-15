@@ -44,20 +44,25 @@ const TOGGLES: [&str; 12] = [
     "vanish",
 ];
 
-/// The children of `w:pPr` and `w:rPr` of the schema type `CT_OnOff` (section 17.17.4), from
-/// `CT_PPrBase` and `EG_RPrBase` of the schema in section A.1, sorted.
-const ON_OFF: [&str; 37] = [
+/// The children of `w:pPr`, `w:rPr`, `w:tblPr`, `w:trPr` and `w:tcPr` of the schema type
+/// `CT_OnOff` (section 17.17.4), from `CT_PPrBase`, `EG_RPrBase`, `CT_TblPrBase`, `CT_TrPrBase`
+/// and `CT_TcPrBase` of the schema in section A.1, sorted.
+const ON_OFF: [&str; 44] = [
     "adjustRightInd",
     "autoSpaceDE",
     "autoSpaceDN",
     "b",
     "bCs",
     "bidi",
+    "bidiVisual",
+    "cantSplit",
     "caps",
     "contextualSpacing",
     "cs",
     "dstrike",
     "emboss",
+    "hidden",
+    "hideMark",
     "i",
     "iCs",
     "imprint",
@@ -66,6 +71,7 @@ const ON_OFF: [&str; 37] = [
     "kinsoku",
     "mirrorIndents",
     "noProof",
+    "noWrap",
     "oMath",
     "outline",
     "overflowPunct",
@@ -79,6 +85,8 @@ const ON_OFF: [&str; 37] = [
     "suppressAutoHyphens",
     "suppressLineNumbers",
     "suppressOverlap",
+    "tblHeader",
+    "tcFitText",
     "topLinePunct",
     "vanish",
     "webHidden",
